@@ -87,9 +87,11 @@ LEAD: {lead.company} (ID: {lead.id})
 2. Lies lead.researchGeneration:
    - "config" = Research-Ziele/Prioritäten der Kampagne (researchGoals, researchPriorities, additionalPrompt). Sie sind MASSGEBLICH dafür, WONACH du suchst.
    - "agent.additionalPrompt" = zusätzliche Anweisung des Research-Agents; ein "config.additionalPrompt" der Kampagne ergänzt sie, beide gelten.
+   - "researchTier" = wirksame Recherche-Stufe ("tier": basis, smart oder deep; "origin": campaign, account, tools oder agent) mit "rules". Die Regeln sind VERBINDLICH dafür, WIE VIEL du im Netz suchen darfst; der Server-Lauf hält dieselben Grenzen ein, und die Kosten des Kunden hängen daran. Fehlt "researchTier" (älterer Server), gilt Deep.
 3. Recherchiere:
    - Website (lead.website) per WebFetch laden; relevante Unterseiten (Leistungen, Über uns, Team, Referenzen, Impressum, Kontakt) gezielt nachladen.
-   - Bewertungen zuerst: WebSearch liefert nur Links, die Treffer von Bewertungsportalen und Verzeichnissen per WebFetch öffnen (Google Maps und Google-Seiten sind so nicht lesbar). Anzahl und Schnitt aus den Lead-Attributen des Imports gelten als Quelle.
+   - Suchen nur nach "researchTier.rules": Basis keine WebSearch und keine fremden Seiten (Bewertungszahlen nur aus den Lead-Attributen), außer genau einer Suche nach "<Firma> <Ort>", wenn die Website gar nichts liefert; Smart erst ohne Suche, dann höchstens eine Suche "<Firma> <Ort> Bewertungen", wenn kein starker Anker belegt ist und keine Rezensionstexte importiert sind; Deep nach Bedarf. Jede Suche unter "## Research Details" mit Suchanfrage vermerken.
+   - Bewertungen (bei Deep zuerst, bei Smart nur in der einen erlaubten Suche): WebSearch liefert nur Links, die Treffer von Bewertungsportalen und Verzeichnissen per WebFetch öffnen (Google Maps und Google-Seiten sind so nicht lesbar). Anzahl und Schnitt aus den Lead-Attributen des Imports gelten als Quelle.
    - Die Sperrliste der Kampagne (Research-Vorgaben) beachten: gesperrte Standardleistungen nicht als Aufhänger vormerken, außer als Lob aus Bewertungstexten.
    - Qualifizierungs-Kontext (lead.qualification) als Ausgangspunkt nutzen.
 4. Extrahiere gemäß den Research-Zielen, typischerweise:

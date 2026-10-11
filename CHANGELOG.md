@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-11 – outreach 0.3.29
+
+**outreach** (ListM8 MCP 2.3.0: Recherche-Stufen Basis, Smart, Deep Research)
+- `lead-agent`, `outreach-research` → Abo-Recherche hält sich an `get_lead_data.researchGeneration.researchTier.rules`: Basis nur Website und importierte Daten (eine Suche nach Firma und Ort nur, wenn die Website gar nichts liefert), Smart höchstens eine Bewertungssuche ohne starken Anker, Deep wie bisher mit Bewertungen zuerst. „Bewertungen zuerst“ gilt damit nur noch für Deep. Fehlt das Feld (älterer Server), gilt Deep. Gilt auch für „Nachbessern“ mit `art=recherche`.
+- `outreach-pipeline` → Server-Lauf: `research_tier` für einen einzelnen Lauf, nur auf Nennung des Users.
+- `outreach-campaign` → `references/research.md`: optionaler Blueprint-Schlüssel `researchAgentConfig.researchTier`, Wirkung der Stufen auf „Bewertungen zuerst“.
+
 ## 2026-10-11 – datenbeschaffung 0.3.0
 
 **datenbeschaffung** (Testreihe mit echten Läufen: Maps, B2B-Datenbanken, LinkedIn, Instagram, Impressum, Verifier)

@@ -56,6 +56,16 @@ Sperrliste (nie als Opener-Anker vormerken, außer als Lob aus Bewertungstexten)
 Heizungstausch, Wärmepumpe allgemein, Notdienst, barrierefreies Bad, Meisterbetrieb, Beratung vor Ort.
 ```
 
+## Recherche-Stufe (`researchAgentConfig.researchTier`)
+
+Wie viel der Agent im Netz sucht, steht nicht im Fokus-Text, sondern in der Stufe: `basis` (nur Website
+und importierte Daten, Bewertungszahlen aus dem Import), `smart` (danach höchstens eine Bewertungssuche,
+wenn kein starker Anker belegt ist) oder `deep` (Websuche nach Bedarf, auch Presse, Verzeichnisse,
+Register). Der Schlüssel ist optional; ohne ihn gilt die Stufe des Kontos (neue Konten Smart). Nur
+setzen, wenn der User es für diese Kampagne will, z. B. `deep` für größere B2B-Unternehmen. „Zuerst die
+Bewertungen“ im Fokus wirkt bei Basis und Smart über die Import-Werte und die eine Smart-Suche, nicht
+über zusätzliche Suchen.
+
 ## Anti-Muster
 
 - „Alles über die Firma herausfinden" — der Agent verbrennt Budget auf Irrelevantem.

@@ -38,7 +38,8 @@ Variablen) sowie die vorhandene Qualifizierung und Recherche.
 
 **Quelle der Regeln:** Der Server ist maßgeblich. Liefert `get_lead_data` die Felder
 `researchGeneration.anchorRules` (Anker-Regeln der Recherche), `researchGeneration.campaignFrame`
-(Sperrliste und Anker-Reihenfolge der Kampagne) und in `emailGeneration.systemPrompt` die Opener-Regeln
+(Sperrliste und Anker-Reihenfolge der Kampagne), `researchGeneration.researchTier` (Recherche-Stufe mit
+ihren Suchregeln) und in `emailGeneration.systemPrompt` die Opener-Regeln
 samt den Blöcken `EINSTIEG DES OPENERS` und `SCHLUSS DES OPENERS`, gelten diese; die Regeltexte in Schritt 3 und 4 unten sind dann nur
 Gedächtnisstütze und treten bei Widerspruch zurück. Fehlen die Felder (älterer Server), gelten die
 Regeln unten. Die Werkzeug-Hinweise (Suche liefert nur Links, Portale öffnen, Google nicht lesbar)
@@ -68,8 +69,19 @@ gelten immer.
 
 - `researchGeneration.config` bestimmt, WONACH du suchst; `agent.additionalPrompt` gilt zusätzlich,
   `anchorRules` und `campaignFrame` (falls vorhanden) bestimmen, was als Aufhänger zählt.
-- Bewertungen ZUERST, nicht erst wenn die Website wenig hergibt (so verlangen es die Kampagnen):
-  WebSearch nach dem Betrieb mit „Bewertungen“ liefert nur Links. Die Treffer von Bewertungsportalen
+- `researchGeneration.researchTier.rules` bestimmt verbindlich, WIE VIEL du im Netz suchen darfst
+  (Stufe Basis, Smart oder Deep Research); der Server-Lauf hält dieselben Grenzen ein, und die Kosten
+  des Kunden hängen daran. Fehlt `researchTier` (älterer Server), gilt Deep Research.
+  - Basis: keine WebSearch und keine fremden Seiten, nur die Website des Leads und die importierten
+    Daten (Anzahl und Schnitt der Bewertungen aus den Lead-Attributen). Einzige Ausnahme: liefert die
+    Website gar nichts, genau eine WebSearch nach „<Firma> <Ort>“ (bei gesperrter Websuche nicht einmal das).
+  - Smart: zuerst wie Basis. Ist danach kein starker Anker belegt (MINDESTSTÄRKE aus `anchorRules`)
+    und liegen keine Rezensionstexte im Import, genau eine WebSearch „<Firma> <Ort> Bewertungen“ und
+    deren Portal-Treffer wie unten per WebFetch öffnen; sonst keine Suche.
+  - Deep Research: Bewertungen wie im nächsten Punkt, weitere Suchen nach Bedarf.
+  Jede Suche unter „## Research Details“ mit Suchanfrage vermerken.
+- Bewertungen (bei Deep Research ZUERST, nicht erst wenn die Website wenig hergibt; bei Smart nur in
+  der einen erlaubten Suche): WebSearch nach dem Betrieb mit „Bewertungen“ liefert nur Links. Die Treffer von Bewertungsportalen
   per WebFetch öffnen (z. B. medicosearch, doktor.ch, local.ch, search.ch, jameda, docfinder,
   Trustpilot, Branchenportale) und festhalten, was Kunden konkret über DIESEN Betrieb loben und wie
   viele Bewertungen dieses Lob tragen. Google Maps und Google-Seiten sind per WebFetch nicht lesbar:
@@ -156,7 +168,7 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
      hat; lehnt das Werkzeug mit `unknown_address` ab, nichts raten, sondern `UNVERÄNDERT` melden. Danach
      `hallo` auf die Person der neuen Adresse prüfen und bei Bedarf wie bei `text` neu schreiben.
    - `recherche`: Nur die offene Frage aus dem Befund klären (Impressum, Team-Seite, Bewertungsquelle per
-     WebFetch, bei Bedarf WebSearch). Ist sie belegt beantwortet, die Recherche ergänzen: den vorhandenen
+     WebFetch, WebSearch nur, soweit `researchGeneration.researchTier.rules` sie erlaubt). Ist sie belegt beantwortet, die Recherche ergänzen: den vorhandenen
      Text vollständig übernehmen und unten `## Nachrecherche <Datum>` mit Antwort und Quelle anhängen, per
      `write_lead_details(campaign_id, lead_id, fields={research: "<gesamter Text>"})`. Nie etwas aus dem
      vorhandenen Bericht streichen. Danach weiter wie bei `text`. Bleibt die Frage offen, nichts schreiben.
