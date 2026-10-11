@@ -94,7 +94,8 @@ plugins/
   Plugins erhöhen (`.claude-plugin/plugin.json` und `plugin.json`) und `CHANGELOG.md` ergänzen.
   Ohne neue Version bekommen installierte Plugins nichts Neues.
 - MCP-Tool-Änderungen im Produkt → betroffene Skills im selben Zug nachziehen.
-- Live-Ansicht: `claude plugin test plugins/outreach`; Manifeste: `claude plugin validate .`
+- Live-Ansicht: `claude plugin test plugins/outreach`; Manifeste: `claude plugin validate .`;
+  CSV-Skript der Datenbeschaffung: `python3 -I plugins/datenbeschaffung/tests/test_build_csv.py`
 - Kein `bin/`-Ordner in einem Plugin (claude.ai lehnt das ganze Plugin sonst ab), keine Symlinks.
 - Actor-Empfehlungen/Preise (`datenbeschaffung-referenzen/references/apify-actors.md`,
   `kosten.md`) tragen ein „zuletzt geprüft“-Datum.

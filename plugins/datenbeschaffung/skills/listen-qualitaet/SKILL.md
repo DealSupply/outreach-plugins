@@ -24,8 +24,13 @@ Adressen verifizieren. Dieser Modus ist keine abgeschlossene Übergabe.
 
 - Header exakt wie `csv-spalten.md`, UTF-8, korrekte Umlaute
 - `quelle`-Spalte gefüllt (Actor + Datum): ohne Herkunft keine Übergabe
-- Auffälligkeiten aus `hinweis` zusammenfassen: Anteil `rollen-adresse` (info@ ist ok, aber
-  berichten), Anteil `keine-website` (die bekommen zwangsläufig den schwächsten
+- Einstiegsdaten prüfen (`../datenbeschaffung-referenzen/references/datenumfang.md`): Bei einer
+  Google-Maps-Liste müssen `rating`, `reviews_count` und `google_rezensionstexte` als Spalten da
+  sein. Fehlen sie ganz, wurden sie beim Bauen verloren: CSV mit `build_csv.py` neu bauen, nicht
+  ohne sie importieren. Anteil mit Rezensionstext berichten. Bei LinkedIn, Instagram,
+  Verkaufsplattformen und StoreLeads entsprechend die Plattformspalten.
+- Auffälligkeiten aus `hinweis` zusammenfassen: Anteil `rollen-adresse` (info@ ist ok, die
+  Recherche sucht die persönliche Adresse; berichten), Anteil `keine-website` (die bekommen zwangsläufig den schwächsten
   Personalisierungs-Anker: bei > 30 % dem Nutzer anbieten, sie in eine eigene Datei abzuspalten)
 
 ## Schritt 2: Dedup + Bestand-Abgleich
@@ -73,7 +78,7 @@ Dem Nutzer die Stichprobe zeigen (Firma, Website, passt/passt-nicht mit einem Ha
 `../datenbeschaffung-referenzen/references/outreach-uebergabe.md` folgen:
 
 - MIT MCP: `check_leads_exist` (Autoritäts-Check) → `create_list` (mit Herkunft + realen Kosten) →
-  `import_leads(leads, list_id, attribute_mappings)` → `get_job_status` bis `completed` → Report-Zahlen
+  `import_leads(leads, list_id, attribute_mappings)` (Attributnamen genau wie in `outreach-uebergabe.md`, Schritt 3; die Google-Spalten erkennt der Import selbst) → `get_job_status` bis `completed` → Report-Zahlen
   berichten: `imported`, `linked_to_list` sowie die Anzahl der Einträge in den Listen `duplicates`
   und `do_not_contact_hits`.
   Signaturen: `listm8-mcp.md`. In eine Kampagne (`add_leads_to_campaign`) nur auf ausdrücklichen Wunsch.

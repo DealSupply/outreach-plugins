@@ -75,7 +75,8 @@ Land, E-Mail, Telefon, Mitarbeiterzahl, geschätzter Monatsumsatz, Plattform, in
 Social-Profile. Vorher ein Sample ziehen und ansehen.
 
 Ehrlich einordnen: Die gelieferten Adressen sind überwiegend Service- und Info-Adressen des Shops.
-**Persönliche Entscheider-Adressen sind nicht dabei** — die kommen erst aus Schritt 6.
+**Persönliche Entscheider-Adressen sind nicht dabei.** Für den Import reicht die Info-Adresse; die
+persönliche Adresse sucht die Recherche der Plattform.
 
 ## Schritt 5 — Roh-CSV bauen
 
@@ -92,9 +93,9 @@ sie sind der Personalisierungs-Stoff dieses Wegs.
 
 ## Schritt 6 — Anreicherung
 
-Rollen-Adressen sind erlaubt (Trichter-Prinzip), aber der Hebel liegt beim Entscheider:
-`impressum-enrichment` über die Shop-Domains (DACH) für Geschäftsführername, Adresse und
-Registerdaten. Für die Spitze der Liste danach optional `enrichment-waterfall`.
+Rollen-Adressen sind erlaubt (Trichter-Prinzip); Geschäftsführer und persönliche Adresse findet
+die Recherche der Plattform. `impressum-enrichment` nur für Shops ganz ohne Adresse und nur für
+die Adresse. `enrichment-waterfall` erst nach der Recherche und nur für die Spitze der Liste.
 
 ## Schritt 7 — Übergabe
 

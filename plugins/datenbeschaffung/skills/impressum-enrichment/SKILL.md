@@ -1,13 +1,16 @@
 ---
 name: impressum-enrichment
-description: Anreicherungs-Baustein des Datenbeschaffungs-Pakets — liest deutsche Impressumsdaten (E-Mail, Entscheider mit Rollen, HRB, USt-Id, Adresse) für eine Domain-Liste, manuell über einen Apify-Actor im eigenen Konto; ListM8 selbst führt keine Impressum-Anreicherung aus. Wird von weg-*-Skills für Leads ohne E-Mail oder bei gewünschten Entscheider-Namen geladen, nie direkt.
+description: Anreicherungs-Baustein des Datenbeschaffungs-Pakets — holt für Domains ohne E-Mail-Adresse die Adresse aus dem deutschen Impressum, manuell über einen Apify-Actor im eigenen Konto. Entscheider, Register und persönliche Adressen findet die Recherche der Plattform; dafür wird nicht angereichert. Wird von weg-*-Skills für Leads ohne E-Mail geladen, nie direkt.
 ---
 
 # Impressum-Enrichment — der DACH-Lückenfüller
 
-Holt aus deutschen Impressumsseiten: E-Mail (validiert), Entscheider mit Rollen (Geschäftsführer,
-Inhaber), Telefon, Adresse (getrennt), HRB, USt-Id. Wird von Weg-Skills für die E-Mail-Lücke
-gerufen — er ist KEIN eigener Weg. ListM8 selbst reichert nichts per Impressum an: der Lauf findet
+Holt aus deutschen Impressumsseiten die E-Mail-Adresse, die der Import je Lead braucht (info@
+reicht). Wird von Weg-Skills für die E-Mail-Lücke gerufen — er ist KEIN eigener Weg. Den
+Ansprechpartner, seine persönliche Adresse und Registerdaten sucht danach die Recherche der
+Plattform; dafür lohnt kein eigener Lauf (`../datenbeschaffung-referenzen/references/datenumfang.md`).
+Bei Google Maps steckt das Impressum schon in der Kontaktanreicherung des Scrapes, `build_csv.py`
+nimmt die Adresse von dort: Diese Stufe läuft nur noch für die Domains, bei denen beides leer blieb. ListM8 selbst reichert nichts per Impressum an: der Lauf findet
 beim Anbieter (Apify, eigenes Konto) statt, das Ergebnis wird in die Roh-CSV gemerged und läuft
 über `listen-qualitaet` in den Import.
 
@@ -31,8 +34,11 @@ Die Regeln sind NICHT optional:
 2. **`domainBlacklist` IMMER setzen** — die Portal-Domains aus `../datenbeschaffung-referenzen/references/noise-domains.md`
    (kommagetrennt). Portale werden sonst voll berechnet: bares Geld.
 3. **Batches fahren.** Jeder Lauf kostet die Actor-Startgebühr (`kosten.md`) — nie tröpfeln, minimal ~50 Domains je Lauf.
-4. **Ein-Entwickler-Risiko:** Schlägt der Primär-Actor fehl oder liefert leer, auf Fallback A
-   ausweichen (nur schwächere Register-Felder), für die reine E-Mail-Lücke reicht Fallback B.
+4. **Actor nach Zweck wählen.** Für die reine Adresse genügt der günstigste Actor, der sie
+   liefert: Fallback A kostet rund ein Viertel des Primär-Actors, die Verifizierung folgt in
+   `listen-qualitaet`. Vor dem ersten Einsatz mit fünf Domains prüfen, ob er die Adressen liefert.
+   Den Primär-Actor nehmen, wenn Fallback A leer bleibt oder die Validierung im selben Lauf
+   gewünscht ist. Fallback B ist der Ausweg, wenn beide ausfallen (Ein-Entwickler-Risiko).
 
 ## Standard-Input (Primär-Actor)
 
@@ -53,18 +59,17 @@ Deckel setzen.
 
 - `email_status` UNDELIVERABLE → Zeile verwerfen (die Validierung ist hier schon bezahlt —
   `listen-qualitaet` verifiziert diese Leads NICHT erneut).
-- `decision_makers`: erste Person mit Rolle Geschäftsführer/Inhaber wird `firstName`/`lastName`;
-  weitere Entscheider als Zusatzspalte `entscheider` (Semikolon-getrennt) mitgeben — Research
-  und Personalisierung nutzen sie.
-- `register_number`/`vat_id` als Zusatzspalten mitführen (Custom-Attribute beim Import) —
-  sie beweisen später, dass es ein echter Betrieb ist.
+- `decision_makers`: Liefert der Actor sie ohnehin mit, wird die erste Person mit Rolle
+  Geschäftsführer/Inhaber `firstName`/`lastName` (die Recherche bestätigt sie im Impressum).
+  Weitere Entscheider, `register_number` und `vat_id` nicht übernehmen: kein Einstieg für die
+  Mail, die Recherche findet sie bei Bedarf.
 - Merge zurück in die Roh-CSV über die Root-Domain (`build_csv.py`-Format bleibt erhalten;
   `quelle` um `+impressum` ergänzen).
 
 ## Wann NICHT anreichern
 
-- Lead hat schon eine E-Mail aus dem Scrape → kein Impressum-Lauf (Geld sparen; Entscheider-Namen
-  nur auf ausdrücklichen Wunsch nachziehen).
+- Lead hat schon eine E-Mail aus dem Scrape → kein Impressum-Lauf, auch nicht für
+  Entscheider-Namen: die findet die Recherche der Plattform.
 - Nicht-DACH-Domains → der Actor ist auf deutsche Impressumspflicht gebaut; für .com/.co.uk den
   `kontaktseiten-fallback` nehmen.
 - < 20 Domains → Startgebühr frisst den Nutzen; Lücke akzeptieren oder sammeln bis zum Batch.

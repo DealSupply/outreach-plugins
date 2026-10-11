@@ -15,7 +15,7 @@
 | Schritt | Tool | Hinweise |
 |---|---|---|
 | Actor prüfen | `fetch-actor-details` (pricing, stats, inputSchema) | IMMER vor dem ersten kostenpflichtigen Lauf |
-| Lauf starten | `call-actor` mit `input` | **Pflicht:** `callOptions.maxTotalChargeUsd` setzen (Pilot: ≤ 0,50 $; Skalierung: kalkulierter Deckel + 50 %) |
+| Lauf starten | `call-actor` mit `input` | **Pflicht:** `callOptions.maxTotalChargeUsd` setzen (Pilot: ≤ 0,50 $; Skalierung: kalkulierter Deckel + 50 %). Manche Actors verlangen einen Mindestdeckel (`pricingInfo.minimalMaxTotalChargeUsd`, Google Maps: 0,50 $); ein kleinerer wird abgelehnt. Dann den Mindestwert setzen und die Menge über den Input begrenzen. |
 | Warten | `get-actor-run` mit `waitSecs` | Große Läufe: alle 2–4 Min pollen, nicht dauerpollen |
 | Ergebnis | `get-dataset-items` mit `fields=` | Nur benötigte Felder projizieren — spart Kontext |
 

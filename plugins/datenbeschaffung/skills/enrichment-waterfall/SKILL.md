@@ -1,6 +1,6 @@
 ---
 name: enrichment-waterfall
-description: Letzter Anreicherungs-Baustein des Datenbeschaffungs-Pakets — kostenpflichtiger Waterfall (FullEnrich/BetterContact, eigenes Konto beim Anbieter), der die verbleibende Kontaktlücke wertvoller Leads mit persönlichen Arbeits-E-Mails und selten Mobilnummern schließt. Wird nach impressum-enrichment und kontaktseiten-fallback geladen, nie direkt.
+description: Letzter Anreicherungs-Baustein des Datenbeschaffungs-Pakets — kostenpflichtiger Waterfall (FullEnrich/BetterContact, eigenes Konto beim Anbieter), der für wenige wertvolle Leads die persönliche Arbeits-E-Mail (selten die Mobilnummer) holt, wenn die Recherche der Plattform den Ansprechpartner gefunden hat, aber keine persönliche Adresse. Ausnahme, keine Lückenfüllung; nie direkt.
 ---
 
 # Enrichment-Waterfall — die letzte, teuerste Stufe
@@ -14,14 +14,14 @@ Sammeladresse — und, deutlich teurer, seine Mobilnummer bzw. Durchwahl.
 
 ## Die Reihenfolge (Kurs-Regel, nicht verhandelbar)
 
-1. Leads sammeln (Weg-Skill) →
-2. `impressum-enrichment` (DACH) bzw. `kontaktseiten-fallback` (international) — **immer**, auch
-   wenn danach der Waterfall folgt: Adresse, Entscheidername, HRB und die info@-Adresse gibt es
-   dort umsonst, und der Waterfall braucht Name + Domain überhaupt erst als Input →
-3. dieser Skill, **optional**, für die verbliebene Lücke wertvoller Leads.
+1. Leads sammeln (Weg-Skill), eine Adresse je Lead reicht (info@) →
+2. Import und Recherche in der Plattform: Sie liest das Impressum, findet den Ansprechpartner und
+   ersetzt die Rollen-Adresse durch die persönliche, wenn sie eine findet →
+3. dieser Skill, **optional**, nur für qualifizierte, wertvolle Leads, bei denen die Recherche einen
+   Namen, aber keine persönliche Adresse gefunden hat.
 
-Wer Schritt 2 überspringt, zahlt für Daten, die im Impressum kostenlos stehen — und liefert dem
-Tool keine Namen, mit denen es arbeiten kann.
+Wer vor der Recherche anreichert, zahlt für Namen und Adressen, die die Plattform ohnehin findet,
+und reichert auch Leads an, die die Qualifizierung danach aussortiert.
 
 ## Werkzeug
 
@@ -48,12 +48,13 @@ dem Kauf auf der Tool-Seite nachsehen und mit dem aktuellen Preis rechnen.
 
 ## Wann es sich lohnt — und wann nicht
 
-- **Nur qualifizierte Zielkontakte.** Nie eine Rohliste durchjagen. Input ist eine Liste, die durch
-  `listen-qualitaet` gegangen ist und je Zeile einen Personennamen und eine Domain trägt.
+- **Nur qualifizierte Zielkontakte.** Nie eine Rohliste durchjagen. Input sind Leads, die die
+  Qualifizierung bestanden haben und je Zeile einen Personennamen (aus der Recherche) und eine
+  Domain tragen.
 - **Ohne Personennamen kein Lauf.** Das Tool sucht die Adresse einer bestimmten Person. Leere
-  Namensfelder kosten zwar keinen Credit, liefern aber auch nichts — erst Impressum oder LinkedIn.
-- **Budget knapp oder Angebot noch nicht validiert:** Masse über das Impressum abwickeln, Waterfall
-  nur für die 50–100 Top-Prospects, und dort nur E-Mails.
+  Namensfelder kosten zwar keinen Credit, liefern aber auch nichts — den Namen liefert die Recherche.
+- **Budget knapp oder Angebot noch nicht validiert:** Masse über die Recherche der Plattform
+  abwickeln, Waterfall nur für die 50–100 Top-Prospects, und dort nur E-Mails.
 - **Angebot validiert, hoher Deckungsbeitrag, Engpass ist der Entscheiderzugang:** E-Mails für die
   ganze qualifizierte Liste sind vertretbar; Mobilnummern bleiben trotzdem der Spitze vorbehalten.
 - **Mobilnummern** sind die eine Entscheidung, die einzeln begründet wird: rund 55 Cent für einen
@@ -68,8 +69,9 @@ Mobilnummern kommen praktisch keine heraus. Nur bei kleinen Mengen und knappem B
 
 ## Ablauf
 
-1. **Lücke bestimmen.** Aus der geprüften Liste die Zeilen ziehen, die nur eine Rollen-Adresse oder
-   gar keine Adresse haben **und** im ICP oben stehen. Anzahl nennen — sie ist die Rechengrundlage.
+1. **Lücke bestimmen.** Aus der Kampagne die qualifizierten Leads ziehen, bei denen die Recherche
+   einen Ansprechpartner gefunden hat, die Versandadresse aber noch eine Rollen-Adresse ist,
+   **und** die im ICP oben stehen. Anzahl nennen — sie ist die Rechengrundlage.
 2. **Kalkulieren und freigeben lassen.** n × 1 Credit für E-Mails, dazu nur bei ausdrücklichem
    Wunsch m × 10 Credits für Mobilnummern; in Dollar umrechnen, Deckel nennen. Ohne Freigabe des
    Nutzers kein Lauf (Kostenfreigabe im Master).

@@ -128,8 +128,14 @@ Bis zu 10000 Leads je Aufruf; Aufruf asynchron, Antwort mit `job_id`.
 
 - Jede Zeile ist ein JSON-Objekt mit **Pflichtfeld `email`** (gültig). Optional: `company`,
   `website`, `phoneNumber`, `city`.
-- **Alle anderen Schlüssel** (auch `firstName`, `lastName`, `companyClean`, `hinweis`, `quelle`)
-  werden nur gespeichert, wenn sie in `attribute_mappings` deklariert sind; sonst gehen sie verloren.
+- **Bekannte Google-Maps-Schlüssel** behält der Import auch ohne Mapping: `place_id`/`placeId`,
+  `cid`, `rating`/`totalScore`, `reviews_count`/`reviewsCount`, `reviews_tags`/`reviewsTags`,
+  `google_rezensionstexte` (Zeilen `JJJJ-MM-TT · N★ · Text` oder Array aus `{text,
+  publishedAtDate, stars}`, ohne Namen der Verfasser) und `business_status`. Die Rezensionen
+  liest die Recherche als eigenen Block und sucht dann nicht noch einmal nach Bewertungen.
+- **Alle anderen Schlüssel** (auch `firstName`, `lastName`, `inhaber`, `kategorie`,
+  `companyClean`, `hinweis`, `quelle`) werden nur gespeichert, wenn sie in `attribute_mappings`
+  deklariert sind; sonst gehen sie verloren. Empfohlene Namen: `outreach-uebergabe.md`, Schritt 3.
   Mapping je Spalte entweder
   `{"action":"create_new","name":"Anzeigename","fieldType":"text"}` oder
   `{"action":"map_existing","fieldKey":"bestehender_key"}`.

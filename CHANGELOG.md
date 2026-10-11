@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-11 – datenbeschaffung 0.2.0
+
+**datenbeschaffung** (Nur beschaffen, was die Plattform nicht selbst findet)
+- `datenbeschaffung-referenzen` → neue Referenz `datenumfang.md`: was die Plattform je Lead selbst erledigt (Website, Impressum, Ansprechpartner, persönliche Adresse), was je Quelle mitkommen muss (Google-Bewertung und Rezensionen, LinkedIn-, Instagram-, Plattform- und Shopdaten), was nie hochgeladen wird, die E-Mail-Lücke und eine Empfehlung zur Recherche-Tiefe.
+- `build_csv.py` → reicht die Zusatzspalten jetzt durch. Bisher schrieb es nur elf feste Spalten; Google-Bewertung, Anzahl, Rezensionen und alle Plattformspalten der Wege (Follower, Bio, Headline, LinkedIn, Plattform, Umsatz) gingen vor dem Import verloren. Neu: `rating`, `reviews_count`, `place_id`, `reviews_tags`, `google_rezensionstexte` (5 neueste mit Text, ohne Namen der Verfasser), `inhaber`/`inhaber_rolle` aus dem Impressum des Maps-Scrapes, feste Namen für die Plattformspalten, `--keep` für weitere Rohfelder. Versandadresse: persönliche vor info@, nie bewerbung@ o. Ä., solange es eine andere gibt; Adresse aus dem Impressum, wenn der Scrape keine hat. Der Google-Maps-Link wird nie mehr als Website übernommen. Tests unter `plugins/datenbeschaffung/tests/`.
+- `weg-c-local-maps` → Rezensionen im Standard-Input (`maxReviews: 10`, neueste, ohne Personendaten), Kosten aus dem Testlauf vom 11.10.2026 (0,0036 $ je Place ohne, 0,0061 $ mit Rezensionen), E-Mail-Lücke nur noch für die Adresse.
+- `datenbeschaffung` → neuer Leitsatz und Phase 2b „Datenumfang festlegen“; Apify-Zugang erst nach der Wahl des Wegs prüfen; Maps-Weg auch für Agenturen und Kanzleien mit Maps-Eintrag; Empfehlung der Recherche-Tiefe bei der Übergabe.
+- `impressum-enrichment`, `enrichment-waterfall`, `weg-a-apollo`, `weg-b-storeleads`, `weg-d-coaches-google`, `weg-a-b2b-google` → keine Entscheider-, Register- oder Mobilnummern-Beschaffung vorab; Impressum nur für die Adresse mit dem günstigsten passenden Actor; Waterfall erst nach der Recherche; Apollo für schwer auffindbare Firmen, nicht wegen der Kontaktdaten.
+- `outreach-uebergabe.md`, `listm8-mcp.md`, `csv-spalten.md`, `listen-qualitaet` → Google-Spalten erkennt der Import selbst; empfohlene Attributnamen für alle übrigen Spalten; Prüfung vor dem Import, ob die Einstiegsdaten in der CSV stehen.
+- `kosten.md`, `apify-actors.md`, `zugriff.md` → Preise des Maps-Actors je Preisstufe, Mindestdeckel je Actor (Google Maps 0,50 $).
+
 ## 2026-10-10 – outreach 0.3.28
 
 **outreach** (Zusammenführung zweier paralleler Stände)

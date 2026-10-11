@@ -70,7 +70,11 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in seller.json \
 ```
 
 Zusatzspalten mitführen, sie tragen später die Personalisierung: `plattform`, `seller_url`,
-`vat_id`, `bewertung`, `verkaeufe`. `kategorie` bekommt die Plattform-Kategorie.
+`bewertung` und `bewertungen_anzahl` (die Bewertung auf der Plattform, nie unter dem Namen
+`rating`, der Google vorbehalten ist), `verkaeufe`. `kategorie` bekommt die Plattform-Kategorie.
+Die Plattform selbst liest diese Seiten nicht; ohne Import fehlen sie der Mail
+(`../datenbeschaffung-referenzen/references/datenumfang.md`). Eine Seller-ID oder USt-Id nur zum
+Deduplizieren nutzen, nicht hochladen.
 Deduplizierung: `build_csv.py` dedupliziert auf E-Mail; liefert der Actor eine Seller-ID oder einen
 Firmennamen, zusätzlich darauf prüfen — derselbe Händler taucht über mehrere Listings auf.
 

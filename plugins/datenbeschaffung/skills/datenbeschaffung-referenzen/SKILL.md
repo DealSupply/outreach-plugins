@@ -23,6 +23,7 @@ Preis beim Anbieter prüfen und freigeben lassen.
 | `references/kosten.md` | Belegte Actor-Kosten + Daumenregeln + Kostenfallen |
 | `references/staedte.md` | DACH-Städtelisten + Pilotstadt-Regeln |
 | `references/noise-domains.md` | DIE Ausschlussliste (SERP-Filter, domainBlacklist, -site:) |
+| `references/datenumfang.md` | Was je Quelle beschafft und hochgeladen wird und was die Plattform selbst übernimmt; E-Mail-Lücke, Recherche-Tiefe |
 | `references/csv-spalten.md` | DAS CSV-Format (deckungsgleich mit dem App-Import) |
 | `references/icp.md` | ICP-Satz, Anti-ICP, Filter-Dimensionen, Trichter-Prinzip |
 | `references/listen-und-icp.md` | Von der Zielgruppe zur versandfähigen Liste: Quellen außerhalb der Weg-Skills, Qualitäts-Check, Datenqualität vor dem Import, Sperrliste, Volumenplanung |
@@ -30,5 +31,5 @@ Preis beim Anbieter prüfen und freigeben lassen.
 | `references/outreach-uebergabe.md` | Übergabe in ListM8: Bestandsabgleich, Liste, Import, CSV-Weg |
 | `scripts/build_queries.py` | Suchbegriffe × Städte + -site:-Ausschlüsse |
 | `scripts/process_serp.py` | SERP-JSON → eindeutige Firmen-Domains (Noise gefiltert) |
-| `scripts/build_csv.py` | Rohdaten → CSV-Format, Firmennamen-Normalisierung, Hinweise |
+| `scripts/build_csv.py` | Rohdaten → CSV-Format mit den Zusatzspalten aus `datenumfang.md` (Google-Bewertungen und Rezensionen, Inhaber, Plattformfelder), Wahl der Versandadresse, Firmennamen-Normalisierung, Hinweise |
 | `scripts/dedup.py` | Vorab-Abgleich gegen den Bestandsindex (do_not_contact hart) |

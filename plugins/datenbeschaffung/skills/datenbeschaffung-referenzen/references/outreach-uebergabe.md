@@ -53,25 +53,43 @@ manuelle Scrape-Log.
 ### 3. Import in die Liste
 
 **WICHTIG — was ohne Mapping verloren geht:** `import_leads` kennt als Kernfelder nur
-`email`, `company`, `website`, `phoneNumber`, `city`, `status`. JEDE andere Spalte —
-auch `firstName`/`lastName` (die teuer beschafften Entscheider-Namen!), `companyClean`,
-`hinweis` und alle Personalisierungs-Spalten — überlebt den Import NUR, wenn sie in
-`attribute_mappings` deklariert ist. Nicht deklarierte Spalten werden stillschweigend
-verworfen. Deshalb: vor dem Import die CSV-Header auflisten und für jede Nicht-Kern-Spalte
-ein Mapping setzen.
+`email`, `company`, `website`, `phoneNumber`, `city`, `status`. Die Google-Spalten aus
+`build_csv.py` (`rating`, `reviews_count`, `place_id`, `reviews_tags`,
+`google_rezensionstexte`) erkennt der Import von selbst und legt die passenden Attribute an.
+JEDE andere Spalte — auch `firstName`/`lastName`, `inhaber`, `companyClean`, `hinweis` und alle
+Plattform-Spalten — überlebt den Import NUR, wenn sie in `attribute_mappings` deklariert ist.
+Nicht deklarierte Spalten werden stillschweigend verworfen. Deshalb: vor dem Import die
+CSV-Header auflisten und für jede weitere Spalte ein Mapping setzen.
+
+Die Attributnamen entscheiden, wie die KI der Plattform den Wert liest (Kontaktperson,
+Bewertung, Reichweite, Kategorie). Deshalb genau diese Namen verwenden:
 
 ```
 import_leads(leads=[...], list_id=<id>, attribute_mappings={
-  "firstName":    {"action":"create_new","name":"Vorname","fieldType":"text"},
-  "lastName":     {"action":"create_new","name":"Nachname","fieldType":"text"},
-  "kategorie":    {"action":"create_new","name":"Kategorie","fieldType":"text"},
-  "quelle":       {"action":"create_new","name":"Quelle","fieldType":"text"},
-  "companyClean": {"action":"create_new","name":"Firma (Ansprache)","fieldType":"text"},
-  "hinweis":      {"action":"create_new","name":"Hinweis","fieldType":"text"}
-  // ... plus jede weitere Zusatzspalte (bewertung, linkedin_url, ...)
+  "firstName":     {"action":"create_new","name":"Vorname","fieldType":"text"},
+  "lastName":      {"action":"create_new","name":"Nachname","fieldType":"text"},
+  "inhaber":       {"action":"create_new","name":"Inhaber","fieldType":"text"},
+  "inhaber_rolle": {"action":"create_new","name":"Inhaber Rolle","fieldType":"text"},
+  "kategorie":     {"action":"create_new","name":"Kategorie","fieldType":"text"},
+  "quelle":        {"action":"create_new","name":"Quelle","fieldType":"text"},
+  "companyClean":  {"action":"create_new","name":"Firma (Ansprache)","fieldType":"text"},
+  "hinweis":       {"action":"create_new","name":"Hinweis","fieldType":"text"}
+  // je nach Weg zusätzlich, nur wenn die Spalte in der CSV steht:
+  // "position": "Position" · "headline": "LinkedIn Headline" · "linkedin_url": "LinkedIn-Profil" (url)
+  // "connections": "LinkedIn Kontakte" (number) · "mitarbeiter": "Mitarbeiter" (number)
+  // "instagram_url": "Instagram-Profil" (url) · "follower": "Instagram Follower" (number)
+  // "bio": "Instagram Bio" · "link_typ": "Bio-Link" · "gefunden_via_hashtag": "Instagram Hashtag"
+  // "plattform": "Verkaufsplattform" · "seller_url": "Shop-Seite" (url) · "verkaeufe": "Verkäufe"
+  // "bewertung": "<Plattform>-Bewertung" (number) · "bewertungen_anzahl": "<Plattform>-Bewertungen Anzahl" (number)
+  // "umsatz_geschaetzt": "Umsatz geschätzt" · "apps": "Shop-Apps"
 })
 → get_job_status(job_id) pollen bis completed (höchstens 10.000 Zeilen je Call, größere Dateien in Blöcke teilen)
 ```
+
+Beim Umwandeln der CSV in `leads=[...]`: leere Zellen weglassen, Zahlen (`rating`,
+`reviews_count`, `follower`) als Zahl senden, `google_rezensionstexte` als Text mit
+Zeilenumbrüchen übernehmen. Eine Plattform-Bewertung heißt nie `rating`: Dieser Name ist der
+Google-Bewertung vorbehalten.
 
 Existiert ein Attribut aus einem früheren Lauf bereits, statt `create_new` auf das
 vorhandene Attribut mappen: `{"action":"map_existing","fieldKey":"<bestehender_key>"}`.

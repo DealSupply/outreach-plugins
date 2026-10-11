@@ -93,8 +93,10 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in linkedin.json \
   --quelle "apify:<actor-id> <datum>" --land <de|at|ch> --out leads-<nische>-<region>-<datum>.csv
 ```
 
-`linkedin_url`, `headline` und `connections` als Zusatzspalten mitgeben — sie wandern beim Import
-als Custom-Attribute mit und sind starke Personalisierungs-Anker (`csv-spalten.md`).
+`position`, `headline`, `linkedin_url` und `connections` als Zusatzspalten mitgeben — die Plattform
+liest LinkedIn nicht, ohne Import fehlen sie der Mail. `build_csv.py` übersetzt die Rohfelder
+(`jobTitle`, `linkedinUrl`, `connectionsCount`) selbst; was es nicht kennt, mit `--keep`
+mitnehmen (`csv-spalten.md`).
 
 Profile ohne E-Mail sind normal: LinkedIn ist eine Personen-, keine Kontaktdatenquelle. Wo eine
 Firmen-Website vorliegt, schließt `impressum-enrichment` die Lücke; sonst die Lücke akzeptieren

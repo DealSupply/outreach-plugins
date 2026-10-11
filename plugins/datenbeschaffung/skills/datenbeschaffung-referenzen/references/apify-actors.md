@@ -8,11 +8,12 @@
 
 | Rang | Actor | Preis (GOLD) | Warum |
 |---|---|---|---|
-| Primär | `compass/crawler-google-places` | 0,0015 $/Place · Filter +0,000525 $/Place/Filter · Kontakt-Anreicherung +0,00105 $/Place | 566k Nutzer, 4,71★. Belegt: 440 SHK-Places Köln in 10 Min, **77 % mit E-Mail** direkt aus `scrapeContacts` — der Impressum-Schritt ist nur noch Lückenfüller. Add-ons: Leads-Enrichment (Entscheider, 0,004 $/Lead), E-Mail-Verify (0,002 $, nur bei eindeutigem Ergebnis) |
+| Primär | `compass/crawler-google-places` | 0,0015 $/Place · Filter +0,000525 $/Place/Filter · Kontakt-Anreicherung +0,00105 $/Place · Rezensionen +0,00105 $/Place (Ortsdetails) + 0,00026 $/Rezension · Mindestdeckel 0,50 $ | 644k Nutzer (Stand 11.10.2026). Belegt: 440 SHK-Places Köln in 10 Min, **77 % mit E-Mail** direkt aus `scrapeContacts` — der Impressum-Schritt ist nur noch Lückenfüller. `scrapeContacts` liefert auch das Impressum mit Inhaber (11.10.2026). Add-ons Leads-Enrichment (Entscheider, 0,004 $/Lead) und E-Mail-Verify (0,002 $) aus lassen: übernimmt die Plattform bzw. `listen-qualitaet` |
 | Fallback | `vortex_data/google-maps` | 0,0007 $/Place · Kontakte +0,0012 $ nur bei Fund | Belegt: 50 Places Düsseldorf, 80 % E-Mail, 0,084 $ gesamt. Kleine Nutzerbasis (1,6k), sichtbar mehr Kontakt-Noise — Fallback, nicht Standard |
 
 Standard-Input Weg C: `searchStringsArray` (englische GMaps-Kategorien!), `locationQuery` (eine Stadt/Region),
-`language: "de"`, `website: "withWebsite"`, `skipClosedPlaces: true`, `scrapeContacts: true`.
+`language: "de"`, `website: "withWebsite"`, `skipClosedPlaces: true`, `scrapeContacts: true`,
+`maxReviews: 10`, `reviewsSort: "newest"`, `reviewsOrigin: "google"`, `scrapeReviewsPersonalData: false`.
 
 ## Google SERP (Wege A, B, D-Google)
 

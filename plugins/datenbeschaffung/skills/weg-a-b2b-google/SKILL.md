@@ -122,4 +122,4 @@ und keine Übergabe.
   „Marketingagentur München | Ihre Nr. 1" ergeben keinen brauchbaren `companyClean` — solche
   Zeilen markiert die Qualitätsstufe, hier nicht von Hand nacharbeiten.
 - **Die SERP-Stufe kennt keine Firmengröße.** Der Größen-Filter des ICP greift erst über
-  Impressum-Daten (HRB, Entscheider) und die Qualifizierung — im Piloten nicht darauf warten.
+  die Qualifizierung der Plattform (Website, Impressum) — im Piloten nicht darauf warten.

@@ -7,7 +7,9 @@ description: Weg C des Datenbeschaffungs-Pakets — lokale Betriebe (Handwerk, P
 
 Der Standardweg für die meisten DACH-Zielgruppen. Belegt (19.08.2026, SHK Köln): 440 Places in
 10 Minuten, **77 % mit E-Mail direkt aus dem Scrape** — einstufig für die große Mehrheit,
-Impressum nur noch als Lückenfüller.
+Impressum nur noch als Lückenfüller. Der zweite Vorteil dieses Wegs: **Google-Bewertung und
+Rezensionen kommen gleich mit** und sind der Einstieg, den die Plattform selbst nicht abrufen kann
+(`../datenbeschaffung-referenzen/references/datenumfang.md`).
 Der Lauf geschieht im eigenen Apify-Konto des Kunden, das Ergebnis geht als CSV über
 `listen-qualitaet` nach ListM8 (Oberfläche oder MCP `import_leads`).
 
@@ -44,11 +46,35 @@ Actor: **Primär aus `../datenbeschaffung-referenzen/references/apify-actors.md`
   "language": "de",
   "website": "withWebsite",
   "skipClosedPlaces": true,
-  "scrapeContacts": true
+  "scrapeContacts": true,
+  "maxReviews": 10,
+  "reviewsSort": "newest",
+  "reviewsOrigin": "google",
+  "scrapeReviewsPersonalData": false
 }
 ```
 
-Deckel ≤ 0,50 $. Kosten vorher nennen (Pilot liegt unter 0,25 $, siehe `kosten.md`).
+Was die Felder bringen:
+
+- `scrapeContacts`: E-Mail, Telefon und Social-Links von der Website, dazu das Impressum mit
+  Inhaber bzw. Geschäftsführer. Den Inhaber übernimmt `build_csv.py`; einen eigenen
+  Entscheider-Lauf braucht es nicht.
+- `maxReviews: 10` mit `newest`: Etwa ein Drittel der Rezensionen hat keinen Text, zehn ergeben
+  meist die fünf Texte, die der Import nutzt. Bewertung, Anzahl und Rezensions-Stichworte kommen
+  auch ohne diese Option und kosten nichts extra.
+- `scrapeReviewsPersonalData: false`: keine Namen und Profile der Verfasser. Sie dürfen nicht in die
+  Liste und werden auch nicht gebraucht.
+- Nicht einschalten: die Zusätze für Business-Leads (Entscheider), E-Mail-Verifizierung, Social-
+  Profile, Bilder. Begründung und Preise in `datenumfang.md`.
+
+Kosten (Testlauf 11.10.2026, 15 Places, Stufe GOLD): ohne Rezensionen 0,0036 $ je Place, mit
+Rezensionen 0,0061 $. Im kostenlosen Apify-Plan etwa das Doppelte (rund 0,013 $ je Place). Ein
+Pilot mit 30 Places kostet also 0,11 bis 0,39 $. Deckel 0,50 $ (Mindestdeckel dieses Actors, kleinere lehnt Apify ab);
+die Menge begrenzt `maxCrawledPlacesPerSearch`. Kosten vorher nennen (`kosten.md`).
+
+Rezensionen nur weglassen, wenn der Nutzer es ausdrücklich will oder ein Massenlauf über
+`outscraper-bulk` geplant ist. Dann im Bericht sagen, dass die Recherche Bewertungen selbst
+suchen muss (eine Websuche mehr je Lead, häufiger ein neutraler Ersatz-Einstieg).
 Auswertung: `categoryName` gegen den ICP halten — **ab ~70 % Fit skalieren**, darunter Kategorien
 schärfen und Pilot wiederholen. Beifang-Kategorien (Baumärkte, Handel, Ketten) notieren: sie werden
 in Schritt 4 herausgefiltert und wandern in den Anti-ICP.
@@ -74,10 +100,19 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in maps.json \
 Danach ICP-Fremde Kategorien aussortieren (die notierten Beifang-Kategorien) — mechanisch nach
 `kategorie`-Spalte, nicht Lead für Lead.
 
-## Schritt 5 — Die E-Mail-Lücke (die ~20–25 % ohne E-Mail)
+Das Skript schreibt neben den Kernspalten `rating`, `reviews_count`, `place_id`, `reviews_tags`,
+`google_rezensionstexte` sowie `inhaber`/`inhaber_rolle` und berichtet, wie viele Leads Bewertung,
+Rezensionstext und Inhaber haben. Fehlt der Rezensionstext bei mehr als der Hälfte, war
+`maxReviews` aus oder die Zielgruppe hat kaum Rezensionen: im Bericht nennen, nicht nachkaufen.
+Bei mehreren Adressen wählt es die persönliche vor info@ und nie bewerbung@ o. Ä., solange es eine
+andere gibt; fehlt die Adresse im Scrape, nimmt es die aus dem Impressum.
 
-Nur wenn das Volumen gebraucht wird ODER Entscheider-Namen gewünscht sind:
-`impressum-enrichment` mit den Websites der Leads ohne E-Mail aufrufen. Sonst die Lücke
+## Schritt 5 — Die E-Mail-Lücke (die Leads ohne E-Mail)
+
+Der Import braucht heute eine Adresse je Lead, info@ reicht. Für die Leads mit `keine-email`:
+`impressum-enrichment` nur für die Adresse, mit dem günstigsten passenden Actor, und nur wenn das
+Volumen gebraucht wird. Keine Entscheider-, Register- oder Mobilnummern-Daten dazukaufen: Den
+Ansprechpartner und seine persönliche Adresse sucht die Recherche der Plattform. Sonst die Lücke
 akzeptieren (Trichter-Prinzip) und weitergeben.
 
 ## Schritt 6 — Übergabe
@@ -96,3 +131,7 @@ und keine Übergabe.
   und lang: erst Pilot, dann in Abschnitten (z. B. je Bundesland) fahren, jeweils mit eigenem
   Deckel und Freigabe.
 - Jeder zusätzliche Filter kostet je Place extra — nur nutzen, was der ICP wirklich braucht.
+- Rezensionen älter als 18 Monate sind für die Plattform kein aktueller Einstieg; `newest` holt
+  deshalb die neuesten zuerst. Betriebe mit wenigen Rezensionen bringen wenig Text, das ist normal.
+- Der E-Mail-Anteil schwankt stark je Branche und Stadt (Köln SHK 77 %, Stuttgart Elektro 47 % im
+  Test vom 11.10.2026). Im Pilot messen und die Kosten der Lücke danach planen.

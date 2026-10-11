@@ -118,7 +118,12 @@ Wo Alt-Dateien noch `email_1`/`email_2`/`email_3` statt `email` enthalten (Forma
 ## Schritt 5 — Roh-CSV bauen
 
 Spalten-Zuordnung: `name` → `company`, `email` → `email`, `site` → `website`, `phone` →
-`phoneNumber`, `city` → `city`, `category` → `kategorie`. Danach in das eine Format bringen:
+`phoneNumber`, `city` → `city`, `category` → `kategorie`. `rating`, `reviews` (bei Outscraper die
+Anzahl) und `place_id` übernimmt `build_csv.py` selbst als Google-Spalten. Rezensionstexte liefert
+der Maps-Job nicht; Outscraper lädt sie nur getrennt über die `place_id` nach (eigene Kosten). Bei
+Massenläufen deshalb ohne Texte importieren und im Bericht sagen, dass die Recherche Bewertungen
+selbst suchen muss (`../datenbeschaffung-referenzen/references/datenumfang.md`). Danach in das
+eine Format bringen:
 
 ```
 python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in outscraper.json \

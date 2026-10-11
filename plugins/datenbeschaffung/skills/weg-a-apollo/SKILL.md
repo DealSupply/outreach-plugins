@@ -9,10 +9,13 @@ Für B2B-Dienstleister, Agenturen, Kanzleien, Systemhäuser, SaaS, Industrie. De
 `weg-a-b2b-google`: Hier wird nicht erst die Domain gefunden und dann das Impressum gescrapt —
 Name, Position, verifizierte E-Mail, Firmennummer, Website und LinkedIn kommen aus einem Zug.
 
-**Wann dieser Weg statt Google:** Der Kunde hat bereits einen Apollo-Zugang, ODER er braucht die
-Entscheider-Ebene sofort und will die Anreicherungsstrecke sparen. Der Kurs empfiehlt als Einstieg
-weiterhin den Google-Weg (deutlich günstiger, teils aktuellere Daten) — Apollo ist die Alternative,
-nicht der Standard.
+**Wann dieser Weg statt Google:** Die Zielgruppe lässt sich über Google Maps und die Google-Suche
+kaum finden, aber über Firmografie gut beschreiben (Industrie, Maschinenbau, Nischen nach Branche,
+Größe oder Technologie), ODER der Kunde hat bereits einen Apollo-Zugang. Kontaktdaten sind nicht
+der Grund: Den Ansprechpartner und seine persönliche Adresse sucht ohnehin die Recherche der
+Plattform (`../datenbeschaffung-referenzen/references/datenumfang.md`). Der Kurs empfiehlt als
+Einstieg weiterhin den Google-Weg (deutlich günstiger, teils aktuellere Daten) — Apollo ist die
+Alternative, nicht der Standard. Credits nur für eine Adresse je Firma, nie für Mobilnummern.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz + Anti-ICP, Apollo-Account (Free reicht zum
 Testen), Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
