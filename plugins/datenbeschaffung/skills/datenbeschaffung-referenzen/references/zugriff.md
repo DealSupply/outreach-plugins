@@ -52,3 +52,6 @@ apify datasets get-items {datasetId} --format json
 2. **Jeder Lauf hat einen Kosten-Deckel** (maxTotalChargeUsd bzw. Query-Parameter).
 3. **Pilot vor Skalierung.** Erst ~50 Ergebnisse in EINER Stadt, Trefferquote prüfen, dann hochziehen.
 4. **Actor-IDs kommen aus `apify-actors.md`** — nie raten, nie aus dem Gedächtnis.
+5. **Nie einen Actor freigeben, der Vollzugriff auf das Apify-Konto verlangt** („requires full
+   access to your account“). Er könnte mit dem Token des Kunden alles im Konto tun. Einen anderen
+   Actor wählen und den Fund in `apify-actors.md` vermerken.

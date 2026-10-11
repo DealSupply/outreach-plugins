@@ -61,6 +61,20 @@ nie aus dem Gedächtnis): **außer** der Weg hat schon validiert (Impressum-Prim
 `email_status` mit; dann nur UNDELIVERABLE aussortieren). Kosten vorher nennen (Freigabe
 im Master, Zahlen aus `kosten.md`; Abrechnung beim Anbieter). Ergebnis: nur zustellbare Adressen bleiben; Bounce-Ziel < 3 %.
 
+So wird das Ergebnis des Verifiers gelesen (Test vom 11.10.2026, 200 Adressen):
+
+| `status` / `reason` | Entscheidung |
+|---|---|
+| `good` | behalten |
+| `bad` | verwerfen |
+| `risky` + `catch_all_domain` | behalten, wenn die Adresse zur eigenen Domain gehört (bei Maps-Adressen ein Drittel; die Domain nimmt alles an, info@ kommt an) |
+| `risky` + `smtp_unreachable` | verwerfen |
+| Hinweis `geratene-adresse` | nur `good` behalten (geratene Adressen: 23 von 51 unzustellbar) |
+
+Im kostenlosen Apify-Plan kostet der Verifier 0,10 $ je Adresse statt 0,0006 $. Dort den Preis
+nennen und nur die riskanten Gruppen prüfen: geratene Adressen, fremde Domains, Adressen aus
+Datenbanken. Von den Maps-Adressen waren im Test nur 7 % unzustellbar.
+
 ## Schritt 4: 20er-Sample (die eine strenge Prüfung)
 
 20 zufällige Leads von Hand prüfen: Website öffnen ist erlaubt und erwünscht. Je Lead eine Frage:

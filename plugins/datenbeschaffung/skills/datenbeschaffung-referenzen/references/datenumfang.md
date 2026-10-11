@@ -34,7 +34,7 @@ Daraus folgt:
 
 | Quelle | Spalten | Was es kostet | Warum |
 |---|---|---|---|
-| **Google Maps** (Weg C, Outscraper) | `rating`, `reviews_count`, `place_id`, `reviews_tags`, `kategorie`, `google_rezensionstexte` (5 neueste mit Text), `inhaber` und `inhaber_rolle` aus dem Impressum | Bewertung, Anzahl und Stichworte sind im Grundpreis. Rezensionstexte etwa 0,25 Cent je Lead (Zuschlag für Ortsdetails plus 0,00026 $ je Rezension, Stufe GOLD). Der Inhaber steckt in der Kontaktanreicherung, die ohnehin läuft. | Die Recherche sucht nicht mehr selbst nach Bewertungen, wenn Rezensionstexte importiert sind (eine Websuche weniger, rund 0,7 Cent plus Tokens). Ohne Import fand sie im Praxistest bei 43 % der Leads keinen Rezensionstext. Bewertung ab 30 Rezensionen und 4,5 Sternen ist ein bewährter Einstieg. |
+| **Google Maps** (Weg C, Outscraper) | `rating`, `reviews_count`, `place_id`, `reviews_tags`, `kategorie`, `google_rezensionstexte` (5 neueste mit Text), `inhaber` und `inhaber_rolle` aus dem Impressum | Bewertung und Anzahl sind im Grundpreis. Stichworte und Rezensionstexte kommen mit den Ortsdetails: rund 0,2 bis 0,3 Cent je Lead (0,00105 $ Ortsdetails plus 0,00026 $ je Rezension, Stufe GOLD); mit `reviewsStartDate: "18 months"` nur für Rezensionen, die die Plattform nutzt, etwa halb so viele. Der Inhaber steckt in der Kontaktanreicherung, die ohnehin läuft. | Die Recherche sucht nicht mehr selbst nach Bewertungen, wenn Rezensionstexte importiert sind (eine Websuche weniger, rund 0,7 Cent plus Tokens). Ohne Import fand sie im Praxistest bei 43 % der Leads keinen Rezensionstext. Bewertung ab 30 Rezensionen und 4,5 Sternen ist ein bewährter Einstieg. |
 | **LinkedIn** (Weg D) | `firstName`, `lastName`, `position`, `headline`, `linkedin_url`, `connections` | im Profilpreis | Die Plattform liest LinkedIn nicht. |
 | **Instagram** (Weg D) | `instagram_url`, `follower`, `bio`, `link_typ`, `gefunden_via_hashtag` | im Profilpreis | Die Plattform liest Instagram nicht; Follower und Bio sind der Einstieg. |
 | **Verkaufsplattformen** (Weg E) | `plattform`, `seller_url`, `bewertung`, `bewertungen_anzahl`, `verkaeufe`, `kategorie` | im Actor-Preis | Plattform-Bewertung und Verkäufe stehen nicht auf der eigenen Website. |
@@ -63,10 +63,17 @@ Weitere Rohfelder nur mit `--keep` und nur, wenn sie einen Einstieg tragen, den 
 Treffer ohne Adresse (bei Maps 20 bis 50 %) braucht der Import heute trotzdem mit Adresse.
 Reihenfolge, jeweils mit Kostenfreigabe:
 
-1. Adresse aus dem Impressum der Maps-Kontaktanreicherung nehmen (macht `build_csv.py` selbst).
-2. Für den Rest den günstigsten Kontakt-Scraper nur für die Adresse (`impressum-enrichment`,
-   Fallback B in `apify-actors.md`). Keine Entscheider- oder Registerdaten dazukaufen.
-3. Lohnt das Volumen nicht, die Lücke akzeptieren und berichten.
+1. Adresse aus dem Impressum der Maps-Kontaktanreicherung nehmen (macht `build_csv.py` selbst,
+   nur mit eigener Domain oder Freemail; fremde Firmen-Domains im Impressum sind meist die Webagentur).
+2. **Nach Maps lohnt ein zweiter Lauf selten:** Im Test vom 11.10.2026 fanden drei Impressum- und
+   Kontakt-Actors für 28 Domains ohne Adresse nur 1 bis 5 Adressen. Die Lücke ist dann meist echt.
+   Nur bei großem Volumen einen Lauf mit `impressum-enrichment` anbieten, nur für die Adresse.
+3. **Bei Quellen ohne Kontaktdaten** (LinkedIn-Firmen, Google-Suche, Instagram-Websites) ist
+   `impressum-enrichment` der Normalfall: 29 von 40 LinkedIn-Firmen bekamen so eine Adresse.
+4. Sonst die Lücke akzeptieren und berichten.
+
+**Geratene Adressen** aus B2B-Datenbanken (`emailPatternGuess`, Hinweis `geratene-adresse`) nie
+ungeprüft importieren: Im Test waren 23 von 51 unzustellbar. Nur verifiziert „gut“ übernehmen.
 
 Persönliche Adressen eines Entscheiders nie vorab kaufen. `enrichment-waterfall` nur für wenige
 wertvolle Leads, bei denen die Recherche einen Namen, aber keine persönliche Adresse gefunden hat.

@@ -25,9 +25,12 @@ from __future__ import annotations
 
 import argparse
 import csv
+import fnmatch
 import json
+import pathlib
 import re
 from datetime import datetime
+from urllib.parse import urlparse
 
 FIELDS = ["email", "firstName", "lastName", "company", "website", "phoneNumber", "city",
           "kategorie", "quelle", "companyClean", "hinweis"]
@@ -76,6 +79,17 @@ REVIEW_TEXT_KEYS = ("textTranslated", "text", "review_text", "reviewText")
 REVIEW_DATE_KEYS = ("publishedAtDate", "review_datetime_utc", "date")
 REVIEW_STAR_KEYS = ("stars", "review_rating", "rating")
 OWNER_ROLES = ("owner", "managing_director", "ceo", "founder")
+FREEMAIL = {"gmail.com", "googlemail.com", "gmx.de", "gmx.net", "gmx.at", "gmx.ch", "web.de",
+            "t-online.de", "yahoo.de", "yahoo.com", "outlook.com", "outlook.de", "hotmail.com",
+            "hotmail.de", "live.de", "icloud.com", "me.com", "aol.com", "freenet.de", "posteo.de",
+            "mail.de", "online.de", "arcor.de", "bluewin.ch", "gmx.ch"}
+JUNK_DOMAINS = {"mysite.com", "example.com", "example.de", "example.org", "domain.com", "domain.de",
+                "beispiel.de", "musterfirma.de", "ihre-domain.de", "email.com", "sentry.io",
+                "wixpress.com", "sentry-next.wixpress.com"}
+UMLAUTS = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
+# Website-Baukästen: Kunden-Websites auf Subdomains sind echte Betriebe (wie process_serp.py).
+BUILDER_PLATFORMS = {"jimdo.com", "jimdosite.com", "wordpress.com", "wix.com", "wixsite.com",
+                     "weebly.com", "webnode.com", "webador.de", "shopify.com", "myshopify.com"}
 
 
 def clean_company(name: str) -> str:
@@ -92,6 +106,8 @@ def pick(row: dict, *keys: str) -> str:
         v = row.get(k)
         if isinstance(v, list):
             v = v[0] if v else None
+        if isinstance(v, dict):  # z. B. LinkedIn: {"number": …}
+            v = v.get("number") or v.get("value")
         if v not in (None, ""):
             return str(v).strip()
     return ""
@@ -110,31 +126,141 @@ def scalar(value) -> str:
     return re.sub(r"\s+", " ", str(value)).strip()
 
 
-def best_email(row: dict) -> str:
-    """Versandadresse wählen: persönliche vor Rollen-Adresse, Bewerbungs-/Datenschutz-Adressen
-    nur, wenn es keine andere gibt. Das Impressum (Maps-Kontaktanreicherung) ist Ersatzquelle."""
+def load_noise() -> tuple[set[str], list[str]]:
+    """Portale aus references/noise-domains.md (dieselbe Liste wie process_serp.py)."""
+    path = pathlib.Path(__file__).resolve().parent.parent / "references/noise-domains.md"
+    if not path.exists():
+        return set(), []
+    text = path.read_text(encoding="utf-8")
+    domains = set(re.findall(r"\b([a-z0-9][a-z0-9.-]+\.[a-z]{2,})\b", text))
+    patterns = re.findall(r"\b([a-z0-9][a-z0-9*.-]*\*[a-z0-9*.-]*\.[a-z]{2,})\b", text)
+    return domains, patterns
+
+
+NOISE, NOISE_PATTERNS = load_noise()
+
+
+def host_of(website: str) -> str:
+    host = (urlparse(website if "://" in website else "https://" + website).hostname or "").lower()
+    return host[4:] if host.startswith("www.") else host
+
+
+def is_portal(host: str) -> bool:
+    if not host:
+        return False
+    if host in NOISE or any(fnmatch.fnmatch(host, p) for p in NOISE_PATTERNS):
+        return True
+    return any(host.endswith("." + n) for n in NOISE if n not in BUILDER_PLATFORMS)
+
+
+def base_label(domain: str) -> str:
+    """Name der Domain ohne Endung, Umlaute ausgeschrieben: xn--schtze-...de und schuetze-...de,
+    touch5.net und touch5.de gelten als dieselbe Firma."""
+    labels = domain.split(".")
+    label = labels[-2] if len(labels) >= 2 else labels[0]
+    if label.startswith("xn--"):
+        try:
+            label = label.encode("ascii").decode("idna")
+        except UnicodeError:
+            pass
+    return label.translate(UMLAUTS)
+
+
+def same_domain(address: str, host: str) -> bool:
+    domain = address.rsplit("@", 1)[-1]
+    if not host:
+        return False
+    return (domain == host or domain.endswith("." + host) or host.endswith("." + domain)
+            or base_label(domain) == base_label(host))
+
+
+def is_freemail(address: str) -> bool:
+    return address.rsplit("@", 1)[-1] in FREEMAIL
+
+
+def is_junk(address: str) -> bool:
+    """Platzhalter aus Website-Vorlagen, technische Absender und ungültige Adressen (Umlaute vor
+    dem @ kommen aus geratenen Namensmustern und sind nie zustellbar)."""
+    domain = address.rsplit("@", 1)[-1]
+    if not address.isascii() or not re.fullmatch(r"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,24}", address):
+        return True
+    return domain in JUNK_DOMAINS or any(domain.endswith("." + j) for j in JUNK_DOMAINS)
+
+
+def normalize(row: dict) -> dict:
+    """Rohformen der Anbieter auf die generischen Schlüssel bringen (Feldnamen aus echten
+    Läufen vom 11.10.2026). Nur ergänzen, nie Vorhandenes überschreiben."""
+    r = dict(row)
+
+    def put(key: str, value) -> None:
+        if value not in (None, "", []) and r.get(key) in (None, "", []):
+            r[key] = value
+
+    if isinstance(r.get("emails"), str):  # Impressum-Actors liefern Adressen als Text
+        r["emails"] = [e for e in re.split(r"[,;\s]+", r["emails"]) if e]
+    if "username" in r and "followersCount" in r:  # Instagram-Profil
+        put("instagram_url", r.get("url") or f"https://www.instagram.com/{r['username']}/")
+        r.pop("url", None)
+        put("website", r.get("externalUrl"))
+        put("company", r.get("fullName") or r["username"])
+        put("kategorie", r.get("businessCategoryName"))
+    positions = r.get("currentPositions")
+    if isinstance(positions, list) and positions and isinstance(positions[0], dict):  # LinkedIn-Person
+        put("position", positions[0].get("title"))
+        put("company", positions[0].get("companyName"))
+        r.pop("url", None)
+    if "organizationName" in r:  # B2B-Datenbank in Apollo-Form
+        put("company", r.get("organizationName"))
+        put("position", r.get("title"))
+        put("website", r.get("organizationWebsite"))
+        put("city", r.get("organizationCity"))
+        put("kategorie", r.get("organizationIndustry"))
+        put("mitarbeiter", r.get("organizationEmployeeRange"))
+        guess = str(r.get("emailPatternGuess") or "").strip().lower()
+        if guess and guess == str(r.get("email") or "").strip().lower():
+            r["_geraten"] = True
+    if "universalName" in r and isinstance(r.get("locations"), list):  # LinkedIn-Firma
+        put("company", r.get("name"))
+        industries = r.get("industries") or []
+        if industries and isinstance(industries[0], dict):
+            put("kategorie", industries[0].get("name"))
+        put("mitarbeiter", r.get("employeeCount"))
+        hq = next((x for x in r["locations"] if isinstance(x, dict) and x.get("headquarter")), {})
+        put("city", hq.get("city"))
+    put("inhaber", r.get("managingDirector"))  # Impressum-Actor
+    return r
+
+
+def best_email(row: dict, host: str) -> str:
+    """Versandadresse wählen: Adresse der eigenen Domain vor fremder (Webagentur, Portal),
+    persönliche vor Rollen-Adresse, Bewerbungs-/Datenschutz-Adressen nur ohne Alternative.
+    Das Impressum (Maps-Kontaktanreicherung) ist Ersatzquelle, aber nur mit eigener Domain oder
+    Freemail (eine fremde Firmen-Domain im Impressum ist meist die Webagentur)."""
     candidates: list[str] = []
     for key in ("email", "emails"):
         value = row.get(key)
         for v in value if isinstance(value, list) else [value]:
             if isinstance(v, str):
-                candidates.append(v)
+                candidates.append(v.strip().lower())
     impressum = row.get("impressum") if isinstance(row.get("impressum"), dict) else {}
     for entry in impressum.get("emails") or []:
         if isinstance(entry, dict) and isinstance(entry.get("value"), str):
-            candidates.append(entry["value"])
+            address = entry["value"].strip().lower()
+            if same_domain(address, host) or is_freemail(address):
+                candidates.append(address)
     seen: list[str] = []
     for c in candidates:
-        c = c.strip().lower()
-        if "@" in c and c not in seen:
+        if "@" in c and c not in seen and not is_junk(c):
             seen.append(c)
     if not seen:
         return ""
 
-    def rank(address: str) -> int:
+    def rank(address: str) -> tuple[int, int]:
+        # Eigene Domain zuerst, dann Freemail (im Handwerk üblich), zuletzt fremde Firmen-Domains.
+        foreign = 0 if not host or same_domain(address, host) else 1 if is_freemail(address) else 2
         if address.startswith(UNWANTED_PREFIXES):
-            return 2
-        return 1 if address.startswith(ROLE_PREFIXES) else 0
+            return foreign, 2
+        return foreign, 1 if address.startswith(ROLE_PREFIXES) else 0
 
     return sorted(seen, key=rank)[0]
 
@@ -202,10 +328,13 @@ def owner(row: dict) -> tuple[str, str]:
     """Inhaber bzw. Geschäftsführer aus dem Impressum, das die Maps-Kontaktanreicherung
     ohnehin mitliest. Nur übernehmen, nie eigens beschaffen (die Recherche prüft ihn)."""
     impressum = row.get("impressum") if isinstance(row.get("impressum"), dict) else {}
-    people = [p for p in impressum.get("people") or [] if isinstance(p, dict) and p.get("name")]
+    # Nur Inhaber, Geschäftsführung, Gründer: „redaktionell verantwortlich“ o. Ä. ist oft
+    # eine Agentur oder ein Portal, nie der Ansprechpartner.
+    people = [p for p in impressum.get("people") or []
+              if isinstance(p, dict) and p.get("name") and p.get("roleType") in OWNER_ROLES]
     if not people:
         return "", ""
-    people.sort(key=lambda p: OWNER_ROLES.index(p.get("roleType")) if p.get("roleType") in OWNER_ROLES else len(OWNER_ROLES))
+    people.sort(key=lambda p: OWNER_ROLES.index(p["roleType"]))
     return scalar(people[0].get("name")), scalar(people[0].get("role"))
 
 
@@ -256,16 +385,23 @@ def main() -> int:
     for row in data if isinstance(data, list) else [data]:
         if not isinstance(row, dict):
             continue
+        row = normalize(row)
         if args.land and str(row.get("countryCode", "")).lower() not in (args.land.lower(), ""):
             continue
         is_google = any(row.get(k) not in (None, "") for k in GOOGLE_MARKERS)
-        email = best_email(row)
         company = pick(row, "company", "title", "company_name", "companyName", "name")
         # Bei Maps ist "url" der Google-Maps-Link, nie die Website des Betriebs.
         website = pick(row, "website", "site", "target_url", "domain") if is_google \
             else pick(row, "website", "site", "url", "target_url", "domain")
         if website and "://" not in website:
             website = "https://" + website
+        host = host_of(website) if website else ""
+        portal = is_portal(host)
+        if portal:
+            # Eintrag auf einem Branchenportal: Adresse und Impressum gehören dem Portal.
+            website, host, email = "", "", ""
+        else:
+            email = best_email(row, host)
         if not email:
             if args.require_email:
                 skipped_no_email += 1
@@ -283,9 +419,13 @@ def main() -> int:
         )
         if key in out:
             continue
-        hints = []
+        hints = ["portal-website"] if portal else []
         if email and email.startswith(ROLE_PREFIXES):
             hints.append("rollen-adresse")
+        if email and host and not same_domain(email, host) and not is_freemail(email):
+            hints.append("fremde-domain")
+        if email and row.get("_geraten"):
+            hints.append("geratene-adresse")
         if not email:
             hints.append("keine-email")
         if not website:
@@ -306,11 +446,13 @@ def main() -> int:
         }
         if is_google:
             google = google_fields(row, args.max_reviews)
-            if record["firstName"] or record["lastName"]:
+            if portal or record["firstName"] or record["lastName"]:
                 google["inhaber"] = google["inhaber_rolle"] = ""
             if not google["google_rezensionstexte"]:
                 hints.append("keine-rezensionstexte")
             record.update(google)
+        elif row.get("inhaber") and not (record["firstName"] or record["lastName"]):
+            record["inhaber"] = scalar(row["inhaber"])
         for column, aliases in EXTRA_ALIASES.items():
             value = next((row[a] for a in aliases if row.get(a) not in (None, "", [])), None)
             if value is not None:
@@ -332,8 +474,14 @@ def main() -> int:
     no_web = sum(1 for r in out.values() if "keine-website" in r["hinweis"])
     no_mail = sum(1 for r in out.values() if "keine-email" in r["hinweis"])
     roles = sum(1 for r in out.values() if "rollen-adresse" in r["hinweis"])
+    portals = sum(1 for r in out.values() if "portal-website" in r["hinweis"])
+    foreign = sum(1 for r in out.values() if "fremde-domain" in r["hinweis"])
+    guessed = sum(1 for r in out.values() if "geratene-adresse" in r["hinweis"])
     report = (f"Leads: {len(out)} | ohne E-Mail (Impressum-Kandidaten): {no_mail} | "
-              f"ohne Website: {no_web} | Rollen-Adressen: {roles}")
+              f"ohne Website: {no_web} (davon Portal statt eigener Website: {portals}) | "
+              f"Rollen-Adressen: {roles} | Adresse fremder Domain: {foreign}")
+    if guessed:
+        report += f" | geratene Adressen (vor Import verifizieren): {guessed}"
     google_rows = [r for r in out.values() if "rating" in r]
     if google_rows:
         report += (f" | Google: mit Bewertung {sum(1 for r in google_rows if r['rating'])}, "

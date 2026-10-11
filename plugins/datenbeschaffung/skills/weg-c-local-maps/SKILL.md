@@ -18,14 +18,19 @@ Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")`
 
 ## Schritt 1 — Kategorien statt Freitext
 
-**Nie Freitext-Queries.** Google Maps arbeitet mit englischen Kategorien — Freitext liefert
-überwiegend Beifang. 3–5 verwandte Kategorien je Lauf, nicht 20:
+**Nie Freitext-Queries.** Google Maps arbeitet mit Kategorien — Freitext liefert überwiegend
+Beifang. Englische Kategorienamen treffen oft, aber nicht immer; das deutsche Branchenwort ist der
+Gegentest, `categoryFilterWords` die strenge Variante. 3–5 verwandte Kategorien je Lauf, nicht 20
+(belegte Treffer: `erfahrungswerte.md`):
 
 | Zielgruppe | Kategorien (searchStringsArray) |
 |---|---|
 | SHK / Sanitär / Heizung | `plumber`, `heating contractor`, `hvac contractor` |
 | Elektro | `electrician`, `electrical installation service` |
-| Dachdecker / Bau | `roofing contractor`, `general contractor` |
+| Dachdecker | `Dachdecker` (deutsch: 57 % Treffer statt 12 % mit `roofing contractor`) oder `roofing contractor` mit `categoryFilterWords` |
+| Bau allgemein | `general contractor` |
+| Agenturen | `marketing agency`, `advertising agency`, `website designer` (~90 % passend) |
+| Maschinenbau / Industrie | `Maschinenbau` mit Bundesland als Ort (~85 % passend, 95 % mit E-Mail) |
 | Zahnärzte / Praxen | `dentist`, `dental clinic` (Vorsicht: `doctor` ist zu breit) |
 | Gastro | `restaurant` gezielt mit Küche/Stadtteil eingrenzen — sonst Massen-Beifang |
 | Kfz | `auto repair shop`, `car dealer` |
@@ -50,6 +55,7 @@ Actor: **Primär aus `../datenbeschaffung-referenzen/references/apify-actors.md`
   "maxReviews": 10,
   "reviewsSort": "newest",
   "reviewsOrigin": "google",
+  "reviewsStartDate": "18 months",
   "scrapeReviewsPersonalData": false
 }
 ```
@@ -60,15 +66,18 @@ Was die Felder bringen:
   Inhaber bzw. Geschäftsführer. Den Inhaber übernimmt `build_csv.py`; einen eigenen
   Entscheider-Lauf braucht es nicht.
 - `maxReviews: 10` mit `newest`: Etwa ein Drittel der Rezensionen hat keinen Text, zehn ergeben
-  meist die fünf Texte, die der Import nutzt. Bewertung, Anzahl und Rezensions-Stichworte kommen
-  auch ohne diese Option und kosten nichts extra.
+  meist die fünf Texte, die der Import nutzt. Bewertung und Anzahl kommen auch ohne diese Option
+  und kosten nichts extra; die Rezensions-Stichworte nur mit Rezensionen.
+- `reviewsStartDate: "18 months"`: Ältere Rezensionen nutzt die Plattform nicht als Einstieg. Mit
+  der Grenze kamen im Test weniger als halb so viele Rezensionen je Place (3,3 statt 7,7); bezahlt
+  wird nur, was als Einstieg zählt.
 - `scrapeReviewsPersonalData: false`: keine Namen und Profile der Verfasser. Sie dürfen nicht in die
   Liste und werden auch nicht gebraucht.
 - Nicht einschalten: die Zusätze für Business-Leads (Entscheider), E-Mail-Verifizierung, Social-
   Profile, Bilder. Begründung und Preise in `datenumfang.md`.
 
-Kosten (Testlauf 11.10.2026, 15 Places, Stufe GOLD): ohne Rezensionen 0,0036 $ je Place, mit
-Rezensionen 0,0061 $. Im kostenlosen Apify-Plan etwa das Doppelte (rund 0,013 $ je Place). Ein
+Kosten (Testläufe 11.10.2026, Stufe GOLD): ohne Rezensionen 0,0036 $ je Place, mit Rezensionen
+0,0054 bis 0,0067 $ (mit 18-Monats-Grenze am unteren Ende). Im kostenlosen Apify-Plan etwa das Doppelte (rund 0,013 $ je Place). Ein
 Pilot mit 30 Places kostet also 0,11 bis 0,39 $. Deckel 0,50 $ (Mindestdeckel dieses Actors, kleinere lehnt Apify ab);
 die Menge begrenzt `maxCrawledPlacesPerSearch`. Kosten vorher nennen (`kosten.md`).
 
@@ -76,7 +85,11 @@ Rezensionen nur weglassen, wenn der Nutzer es ausdrücklich will oder ein Massen
 `outscraper-bulk` geplant ist. Dann im Bericht sagen, dass die Recherche Bewertungen selbst
 suchen muss (eine Websuche mehr je Lead, häufiger ein neutraler Ersatz-Einstieg).
 Auswertung: `categoryName` gegen den ICP halten — **ab ~70 % Fit skalieren**, darunter Kategorien
-schärfen und Pilot wiederholen. Beifang-Kategorien (Baumärkte, Handel, Ketten) notieren: sie werden
+schärfen und Pilot wiederholen. Nicht jede englische Kategorie trifft: `roofing contractor` lieferte
+in Freiburg 12 % Dachdecker und sonst Bau, Boden und Garten; das deutsche Suchwort `Dachdecker`
+57 %, mit `categoryFilterWords: ["roofing contractor"]` 86 % (Filter kostet je Place extra und
+liefert weniger Treffer). Bei schwachem Fit zuerst das deutsche Suchwort probieren
+(`erfahrungswerte.md`, Testreihe vom 11.10.2026). Beifang-Kategorien (Baumärkte, Handel, Ketten) notieren: sie werden
 in Schritt 4 herausgefiltert und wandern in den Anti-ICP.
 
 Hinweis zum `website`-Filter: `withWebsite` ist für Cold Mail fast immer richtig (ohne Website kein

@@ -22,6 +22,67 @@
 | SERP allgemein | 60 Treffer (scraperlink) | 40 eindeutige Firmen-Domains, keine Dubletten | Lauf 19.08.2026 |
 | Google Maps | SHK Köln, `scrapeContacts` | 440 Places, 77 % mit E-Mail direkt aus dem Scrape | Lauf 19.08.2026 |
 
+## Google Maps: Testreihe vom 11.10.2026
+
+Alle Läufe mit `withWebsite`, `skipClosedPlaces`, `scrapeContacts`; „mit E-Mail“ nach
+`build_csv.py` (Impressum-Adresse der eigenen Domain eingerechnet, Portale entfernt).
+
+| Suche | Places | passt zur Zielgruppe | mit E-Mail | mit Rezensionstext < 18 Mon. | Inhaber aus Impressum | Kosten je Place |
+|---|---|---|---|---|---|---|
+| `electrician`, Stuttgart | 15 | 100 % | 53 % | 53 % | 47 % | 0,0061 $ |
+| `plumber` + `heating contractor`, Karlsruhe | 50 | ~95 % | 90 % | 66 % | 53 % | 0,0067 $ |
+| `marketing agency` + `advertising agency` + `website designer`, Stuttgart | 60 | ~90 % | 80 % | 47 % | 40 % | 0,0062 $ |
+| `roofing contractor`, Freiburg | 50 | **12 %** (Bau, Boden, Garten) | 75 % | 58 % | 31 % | 0,0055 $ |
+| `Dachdecker`, Freiburg | 30 | 57 % (+17 % Zimmerer) | 93 % | 57 % | – | 0,0054 $ |
+| `roofing contractor` + `categoryFilterWords`, Freiburg | 14 | 86 % | 83 % | – | – | 0,0059 $ |
+| `Maschinenbau`, Baden-Württemberg (ohne Rezensionen) | 40 | ~85 % | 95 % | – | 56 % | 0,0036 $ |
+
+Lehren:
+1. **Kategorie im Pilot prüfen, nicht der Übersetzung trauen.** Englische Kategorien treffen bei
+   SHK und Elektro, bei `roofing contractor` kamen fast nur Fremdgewerke. Das deutsche Suchwort oder
+   `categoryFilterWords` (kostet einen Filter je Place, liefert weniger, aber passende Treffer) lösen es.
+2. **E-Mail-Quote schwankt mit Branche und Stadt** (53 bis 95 %); im Pilot messen.
+3. **Industrie ist auf Maps gut vertreten:** Maschinenbau in Baden-Württemberg lieferte 95 % mit
+   Adresse, günstiger als jede B2B-Datenbank (siehe unten).
+4. **1 bis 3 von 50 Einträgen haben ein Branchenportal als Website**; `build_csv.py` erkennt sie
+   über `noise-domains.md` und verwirft deren Adressen.
+
+## B2B-Quellen im Vergleich (Maschinenbau Baden-Württemberg, 11.10.2026)
+
+| Quelle | passt | mit Adresse | zustellbar (Verifier) | Kosten |
+|---|---|---|---|---|
+| Google Maps `Maschinenbau` | ~85 % | 95 % | (Maps-Adressen allgemein: 60 % gut, 33 % unsicher, 7 % schlecht) | 0,0036 $/Place |
+| LinkedIn-Firmensuche + Impressum (haketa) | 95 % | 73 % | nicht gemessen | 0,003 + 0,0017 $ |
+| `peakydev/leads-scraper-ppe` (Personen) | 78 % (Branche „Mechanical or Industrial Engineering“ liefert Bauingenieure) | 100 % | **37 % gut, 40 % unsicher, 23 % schlecht** | 0,0012 $/Lead, mind. 100 Leads + 0,10 $ Start |
+
+Bei `peakydev` waren 51 von 100 Adressen nur aus dem Namensmuster geraten (`emailPatternGuess`):
+davon 6 gut und 23 schlecht. Die übrigen 49: 31 gut, 0 schlecht. 8 Adressen hatten Umlaute vor dem @.
+
+## E-Mail-Lücke nach Maps (11.10.2026)
+
+28 Domains, für die Maps (mit Impressum-Auswertung) keine Adresse fand:
+
+| Actor | gefunden | Kosten |
+|---|---|---|
+| `winningsolutions/german-imprint-scraper` | 5/28 | 0,12 $ |
+| `haketa/impressum-legal-notice-extractor` | 4/28 | 0,04 $ |
+| `vdrmota/contact-info-scraper` (5 Seiten je Domain) | 1/28 | 0,07 $ |
+
+Lehre: Nach Maps ist die Lücke meist echt (keine Adresse auf der Website). Ein zweiter Lauf
+lohnt nur bei großem Volumen. Auf Quellen ohne Kontaktdaten (LinkedIn-Firmen) brachte derselbe
+haketa-Lauf dagegen 29/40 (73 %).
+
+## Coaches (11.10.2026)
+
+| Quelle | Ergebnis |
+|---|---|
+| LinkedIn-Personensuche (Short), Vertriebs- und Business-Coaches BW | 50 Profile, ~68 % selbstständig, 32 % angestellt (z. B. Bank); ohne Website und E-Mail |
+| Instagram-Hashtags `businesscoaching`, `vertriebscoach` | 27 Konten, 31 von 50 Beiträgen deutsch; Profile: 15/27 mit Website, 0 mit Adresse in der Bio, Follower-Median 136 |
+
+Lehre: Beide Quellen liefern Kandidaten, keine Kontakte. Der zweite Schritt läuft über die
+Website und das Impressum; bei LinkedIn zusätzlich nach selbstständigen Coaches filtern
+(Firma = eigener Name, „Selbstständig“, „Freiberuflich“, „Coaching“ im Firmennamen).
+
 ## Query-Formulierung — was messbar wirkt
 
 1. **„Coach" statt „Trainer".** „Coach" zieht Premium-Positionierung, „Trainer" günstige

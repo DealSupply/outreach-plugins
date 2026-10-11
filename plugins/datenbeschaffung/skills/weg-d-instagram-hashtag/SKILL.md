@@ -129,6 +129,13 @@ An `listen-qualitaet` — immer, ohne Ausnahme. Diesem Skill gehört kein Qualit
 
 ## Bekannte Fallen und Plattform-Risiken
 
+- **Englische Hashtags ziehen international:** `businesscoaching` lieferte überwiegend
+  englischsprachige Konten, nur 31 von 50 Beiträgen waren deutsch (Test 11.10.2026). Deutsche
+  Hashtags (`vertriebscoach`) treffen DACH besser.
+- **Profile bringen keine Adresse:** 15 von 27 Profilen hatten eine Website, keines eine Adresse in
+  der Bio. Der Kontakt kommt über die Website und `impressum-enrichment`; Profile ohne Website sind
+  für Cold Mail verloren.
+
 - **Instagram-Scraping ist volatil.** Hashtag-Actors brechen nach Plattform-Änderungen; leere
   Ergebnisse zuerst am Actor-Status prüfen, nicht an den Tags. Auch die Reichweite einzelner Tags
   schwankt — Werte aus einem alten Lauf sind keine Zusage für den nächsten.

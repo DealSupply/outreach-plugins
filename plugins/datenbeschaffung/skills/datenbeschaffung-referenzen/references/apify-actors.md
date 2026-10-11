@@ -31,13 +31,31 @@ Geotargeting unterhalb Land ist unnötig, solange der Ort in der Query steht (be
 |---|---|---|---|
 | Primär | `winningsolutions/german-imprint-scraper` | 0,0076 $ bei Erfolg (inkl. Validierung) + **0,04 $ Actor-Start je Lauf** | Einziger mit Entscheidern inkl. Rollen, HRB, USt-Id, getrennter Adresse. **Betriebsregeln:** nur Domain-Modus (der `searchTerms`-Modus bricht mit Stadt als `locationName` — Bug belegt), `domainBlacklist` IMMER setzen (Portale werden sonst mitberechnet), Batches fahren (Startgebühr). Ein-Entwickler-Actor (239 Nutzer) → Fallback bereithalten |
 | Fallback A | `haketa/impressum-legal-notice-extractor` | 0,0017 $/Domain | Belegt am selben Domain-Set: findet Impressumsseiten zuverlässig, schwächer bei Register-Feldern. 4,5× billiger |
-| Fallback B | `vdrmota/contact-info-scraper` | 0,00105 $/Seite | 57k Nutzer, aktiv gepflegt. E-Mail/Telefon/Social, KEINE Firmendaten — für die reine E-Mail-Lücke |
+| Fallback B | `vdrmota/contact-info-scraper` | 0,00105 $/Seite, Mindestdeckel 0,50 $ | 57k Nutzer, aktiv gepflegt. E-Mail/Telefon/Social, KEINE Firmendaten. Im Lückentest nach Maps nur 1/28 (11.10.2026): als Lückenfüller hinter Maps schwach. |
+
+## B2B-Datenbanken (Apollo-ähnlich, über Apify) — geprüft 11.10.2026
+
+| Rang | Actor | Preis (GOLD) | Bewertung |
+|---|---|---|---|
+| Nur mit Verifizierung | `peakydev/leads-scraper-ppe` | 0,0012 $/Lead (FREE 0,0016 $), mind. 100 Leads, 0,10 $ Start | Firmografie-Filter wie Apollo (Branche, Größe, Bundesland, Senioritätsstufe). Liefert Person, Firma, Website, Größe, Umsatz. **Rund die Hälfte der Adressen ist geraten** (`emailPatternGuess`); davon fast die Hälfte unzustellbar. `build_csv.py` markiert sie, `listen-qualitaet` lässt nur verifiziert „gut“ durch. |
+| Ausgeschlossen | `code_crafter/leads-finder` | 0,0015 $/Lead | verlangt Vollzugriff auf das Apify-Konto |
+| Nicht getestet | `pipelinelabs/*`, `olympus/b2b-leads-finder`, `atomus/leads-finder` | 0,0008–0,006 $/Lead | erst mit Mini-Pilot und Verifizierung |
+
+Für B2B nach Firmografie ist **Google Maps der erste Weg** (Suchwort der Branche plus Bundesland),
+danach die LinkedIn-Firmensuche plus Impressum; Datenbanken erst, wenn beides nicht trägt
+(`erfahrungswerte.md`, B2B-Quellen im Vergleich).
+
+## LinkedIn-Firmen (account-based) — geprüft 11.10.2026
+
+| Actor | Preis (GOLD) | Warum |
+|---|---|---|
+| `harvestapi/linkedin-company-search` | Short 0,001 $, Full 0,003 $/Firma | Ohne Login. Filter: Suchwort, Ort, Größe, Branchen-ID. Full liefert Website, Telefon, Mitarbeiterzahl, Branche, Sitz. 38/40 passend (Maschinenbau BW). Keine E-Mail: danach `impressum-enrichment` (73 % Treffer). |
 
 ## E-Mail-Verifizierung (eigener Schritt hinter jedem Weg)
 
 | Rang | Actor | Preis | Hinweis |
 |---|---|---|---|
-| Primär | `michael.g/email-verifier-validator` | **0,0006 $/Adresse** | Größte Nutzerbasis der Kategorie. Entfällt, wenn der Weg schon validiert (Impressum-Primär liefert `email_status` mit; Maps-Add-on möglich) |
+| Primär | `michael.g/email-verifier-validator` | **0,0006 $/Adresse (GOLD), 0,001 $ (BRONZE), aber 0,10 $ im kostenlosen Plan** | Größte Nutzerbasis der Kategorie. Ergebnis `status` = good/risky/bad mit `reason` (`catch_all_domain`, `smtp_unreachable`). Im kostenlosen Plan kosten 1.000 Adressen 100 $: dort vorher Preis nennen und nur geratene oder fremde Adressen prüfen. Entfällt, wenn der Weg schon validiert (Impressum-Primär liefert `email_status` mit). |
 
 ## LinkedIn (Weg D)
 
@@ -67,5 +85,9 @@ Geotargeting unterhalb Land ist unnötig, solange der Ort in der Query steht (be
 
 Nutzerzahlen + Rating + Preis pro Ergebnis (Tier-normalisiert!) + Output-Feldqualität (DACH: Umlaute,
 HRB/USt-Id) + Pflege-Risiko (Ein-Entwickler-Actors nur mit Fallback) + Account-/Sperr-Risiko für den
-Kunden (Login-pflichtige Actors sind ausgeschlossen). Mini-Pilot mit hartem Deckel (≤ 0,50 $), Ergebnis
-vorlegen, Fund HIER dokumentieren.
+Kunden (Login-pflichtige Actors sind ausgeschlossen). **Ausgeschlossen sind auch Actors, die
+Vollzugriff auf das Apify-Konto verlangen** (Meldung „requires full access to your account“): Sie
+könnten mit dem Token des Kunden alles im Konto tun. Beispiel: `code_crafter/leads-finder`
+(11.10.2026), trotz 48k Nutzern. Mini-Pilot mit hartem Deckel (≤ 0,50 $), Ergebnis
+vorlegen, Fund HIER dokumentieren. Mindestwerte im Input beachten (manche Actors verlangen
+z. B. mindestens 100 Ergebnisse); sie stehen erst in der Fehlermeldung.

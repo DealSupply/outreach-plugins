@@ -19,7 +19,8 @@ firmendb.de, koelnerbranchen.de, dein-heizungsbauer.de, handwerksblatt.de
 ## Vermittlungs- & Auftragsportale
 
 myhammer.de, check24.de, aroundhome.de, blauarbeit.de, houzz.de, homify.de, wirsindhandwerk.de,
-listando.de, fixando.de, anbieter-finden.de, 11880-*.com
+listando.de, fixando.de, anbieter-finden.de, 11880-*.com, elektrikerportal.com, sanitaerfinden.com,
+firmenmap.com (Maps-Einträge mit Portal statt eigener Website, 11.10.2026)
 
 ## Job-Portale
 

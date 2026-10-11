@@ -68,6 +68,11 @@ Deckel setzen.
 
 ## Wann NICHT anreichern
 
+- Nach einem Maps-Lauf mit Kontaktanreicherung bringt ein Impressum-Lauf wenig: Im Test vom
+  11.10.2026 fanden drei Actors für 28 Domains ohne Adresse nur 1 bis 5. Nur bei großem Volumen
+  anbieten. Bei Quellen ohne Kontaktdaten (LinkedIn-Firmen, Google-Suche) ist er dagegen der
+  Normalfall: 29 von 40 LinkedIn-Firmen bekamen eine Adresse (haketa, 0,0017 $ je Domain).
+
 - Lead hat schon eine E-Mail aus dem Scrape → kein Impressum-Lauf, auch nicht für
   Entscheider-Namen: die findet die Recherche der Plattform.
 - Nicht-DACH-Domains → der Actor ist auf deutsche Impressumspflicht gebaut; für .com/.co.uk den

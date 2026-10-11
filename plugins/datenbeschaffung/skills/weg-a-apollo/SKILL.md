@@ -17,6 +17,15 @@ Plattform (`../datenbeschaffung-referenzen/references/datenumfang.md`). Der Kurs
 Einstieg weiterhin den Google-Weg (deutlich günstiger, teils aktuellere Daten) — Apollo ist die
 Alternative, nicht der Standard. Credits nur für eine Adresse je Firma, nie für Mobilnummern.
 
+**Für Industrie zuerst Maps prüfen:** `Maschinenbau` in Baden-Württemberg lieferte auf Google Maps
+85 % passende Firmen, 95 % davon mit Adresse, für 0,0036 $ je Firma (Test 11.10.2026).
+
+**Ohne Apollo-Zugang: Datenbanken über Apify** (`apify-actors.md`, Abschnitt B2B-Datenbanken).
+Gleiche Filter wie Apollo, Abrechnung je Lead. Zwei harte Regeln: Actors mit Vollzugriff auf das
+Konto nie freigeben; Adressen mit Hinweis `geratene-adresse` nur nach Verifizierung übernehmen
+(im Test waren 23 von 51 unzustellbar). Branchen-Filter im Pilot prüfen: „Mechanical or Industrial
+Engineering“ lieferte Bauingenieure.
+
 Voraussetzungen vom Master: bestätigter ICP-Satz + Anti-ICP, Apollo-Account (Free reicht zum
 Testen), Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 

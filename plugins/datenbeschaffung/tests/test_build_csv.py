@@ -114,6 +114,77 @@ class MapsTest(unittest.TestCase):
         self.assertIn("mit Bewertung 1, mit Rezensionstext 1, mit Inhaber 1", self.report)
 
 
+class ForeignDataTest(unittest.TestCase):
+    """Echte Fälle aus dem Lauf vom 11.10.2026: Portal als Website, Agentur im Impressum."""
+
+    def test_portal_website_drops_portal_address_and_person(self) -> None:
+        row = {"title": "Elektro Portal-Eintrag", "placeId": "ChIJmuster0004", "countryCode": "DE",
+               "website": "https://www.gelbeseiten.de/gsbiz/1234", "emails": ["info@gelbeseiten.de"],
+               "impressum": {"people": [{"name": "Petra Portal", "role": "Geschäftsführerin", "roleType": "managing_director"}],
+                             "emails": [{"value": "info@gelbeseiten.de"}]}}
+        rows, _, report = run([row])
+        lead = rows[0]
+        self.assertEqual((lead["email"], lead["website"], lead.get("inhaber", "")), ("", "", ""))
+        self.assertIn("portal-website", lead["hinweis"])
+        self.assertIn("Portal statt eigener Website: 1", report)
+
+    def test_impressum_address_of_other_domain_is_ignored(self) -> None:
+        row = {**MAPS_ROW, "emails": [], "impressum": {
+            "people": [{"name": "Rita Redaktion", "role": "Redaktionell verantwortlich", "roleType": "content_responsible"}],
+            "emails": [{"value": "info@webagentur-beispiel.de"}]}}
+        lead = run([row])[0][0]
+        self.assertEqual(lead["email"], "")
+        self.assertEqual(lead.get("inhaber", ""), "", "redaktionell Verantwortliche sind kein Inhaber")
+
+    def test_own_domain_beats_foreign_scraped_address(self) -> None:
+        row = {**MAPS_ROW, "emails": ["kontakt@webagentur-beispiel.de", "info@elektro-muster.de"]}
+        self.assertEqual(run([row])[0][0]["email"], "info@elektro-muster.de")
+
+
+class ProviderShapesTest(unittest.TestCase):
+    """Feldnamen echter Läufe vom 11.10.2026 (Daten erfunden)."""
+
+    def test_b2b_database_marks_guessed_and_drops_invalid_addresses(self) -> None:
+        base = {"organizationName": "Muster Maschinenbau GmbH", "organizationWebsite": "muster-mb.de",
+                "organizationCity": "Ulm", "organizationIndustry": "Machinery", "organizationEmployeeRange": "11 - 50",
+                "title": "Geschäftsführer", "firstName": "Max", "lastName": "Muster",
+                "linkedinUrl": "https://www.linkedin.com/in/max-muster"}
+        rows, _, report = run([
+            {**base, "email": "max.muster@muster-mb.de", "emailPatternGuess": "max.muster@muster-mb.de"},
+            {**base, "organizationWebsite": "zweite-mb.de", "email": "jörg.muster@zweite-mb.de"},
+        ])
+        guessed, invalid = rows
+        self.assertEqual((guessed["company"], guessed["position"], guessed["city"]), ("Muster Maschinenbau GmbH", "Geschäftsführer", "Ulm"))
+        self.assertIn("geratene-adresse", guessed["hinweis"])
+        self.assertEqual(invalid["email"], "", "Umlaut vor dem @ ist nie zustellbar")
+        self.assertIn("geratene Adressen (vor Import verifizieren): 1", report)
+
+    def test_instagram_profile_uses_external_url_as_website(self) -> None:
+        lead = run([{"username": "coach.beispiel", "url": "https://www.instagram.com/coach.beispiel",
+                     "followersCount": 1200, "fullName": "Coaching Beispiel", "biography": "Business-Coaching",
+                     "externalUrl": "https://coaching-beispiel.de", "businessCategoryName": "Coach"}])[0][0]
+        self.assertEqual((lead["website"], lead["instagram_url"], lead["follower"], lead["kategorie"]),
+                         ("https://coaching-beispiel.de", "https://www.instagram.com/coach.beispiel", "1200", "Coach"))
+
+    def test_linkedin_person_and_company_shapes(self) -> None:
+        person, company = run([
+            {"firstName": "Erika", "lastName": "Beispiel", "linkedinUrl": "https://www.linkedin.com/in/erika",
+             "currentPositions": [{"title": "Vertriebscoach", "companyName": "Beispiel Coaching"}]},
+            {"universalName": "muster-mb", "name": "Muster MB GmbH", "website": "https://muster-mb.de",
+             "phone": {"number": "0711000000", "extension": None}, "employeeCount": 21,
+             "industries": [{"name": "Machinery Manufacturing"}],
+             "locations": [{"city": "Ulm", "headquarter": True}], "linkedinUrl": "https://www.linkedin.com/company/muster-mb"},
+        ])[0]
+        self.assertEqual((person["position"], person["company"]), ("Vertriebscoach", "Beispiel Coaching"))
+        self.assertEqual((company["phoneNumber"], company["city"], company["mitarbeiter"], company["kategorie"]),
+                         ("0711000000", "Ulm", "21", "Machinery Manufacturing"))
+
+    def test_impressum_actor_text_addresses_and_managing_director(self) -> None:
+        lead = run([{"domain": "muster-mb.de", "companyName": "Muster MB GmbH",
+                     "emails": "info@muster-mb.de, vertrieb@muster-mb.de", "managingDirector": "Max Muster"}])[0][0]
+        self.assertEqual((lead["email"], lead["inhaber"]), ("vertrieb@muster-mb.de", "Max Muster"))
+
+
 class OutscraperTest(unittest.TestCase):
     def test_review_count_from_text_is_no_review_text(self) -> None:
         rows, _, _ = run([{"name": "Sanitär Beispiel", "site": "sanitaer-beispiel.de", "email": "info@sanitaer-beispiel.de",

@@ -61,5 +61,24 @@
 | Rezension | 0,0005 $ | 0,0005 $ | 0,00037 $ | 0,00026 $ |
 
 Im kostenlosen Plan kostet ein Place mit zwei Filtern, Kontakten und rund sechs Rezensionen etwa
-0,013 $, also gut doppelt so viel wie bei GOLD. Bewertung, Anzahl und Rezensions-Stichworte sind in
-jeder Stufe im Place-Preis enthalten.
+0,013 $, also gut doppelt so viel wie bei GOLD. Bewertung und Anzahl sind in jeder Stufe im
+Place-Preis enthalten; Rezensions-Stichworte nur mit den Ortsdetails (fallen mit Rezensionen an).
+
+## Weitere belegte Kosten (11.10.2026, GOLD)
+
+| Schritt | Kosten | Beleg |
+|---|---|---|
+| Maps mit Rezensionen, 50 Places, ohne Datumsgrenze | 0,333 $ (0,0067 $/Place, 387 Rezensionen) | SHK Karlsruhe |
+| Maps mit Rezensionen der letzten 18 Monate, 50 Places | 0,275 $ (0,0055 $/Place, 167 Rezensionen) | Dach Freiburg |
+| Maps ohne Rezensionen, 40 Places | 0,143 $ (0,0036 $/Place) | Maschinenbau BW |
+| LinkedIn-Firmensuche Full, 40 Firmen | 0,12 $ | Maschinenbau BW |
+| LinkedIn-Personensuche Short, 50 Profile | 0,10 $ (2 Suchseiten) | Coaches BW |
+| B2B-Datenbank `peakydev`, 100 Leads (Minimum) | 0,22 $ | Maschinenbau BW |
+| Impressum haketa, 40 Domains | 0,068 $ | LinkedIn-Firmen |
+| Instagram Hashtag-Beiträge 50 / Profile 27 | 0,075 $ / 0,043 $ | Coaches |
+| E-Mail-Verifizierung 200 Adressen | 0,12 $ | GOLD; **im kostenlosen Plan 20 $** |
+
+**Preisfalle im kostenlosen Apify-Plan:** Einige Zusätze kosten dort ein Vielfaches: der Verifier
+0,10 $ je Adresse (GOLD 0,0006 $), Business-Leads und E-Mail-Verifizierung im Maps- und
+Kontakt-Actor 0,10 $ je Treffer. Bei Kunden im kostenlosen Plan diese Schritte nur mit genanntem
+Preis und kleiner Menge; die Preisstufe steht in der Apify-Konsole unter Billing.

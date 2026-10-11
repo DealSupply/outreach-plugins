@@ -36,6 +36,12 @@ wie sechs Läufe, nur schneller und ohne Dubletten. Beispiel Vertriebscoach:
 Für eine Nische ohne Vorlage: deutschen und englischen Begriff nehmen, jeweils mit „Coach",
 „Coaching" und „Trainer" kombinieren, alles in ein Array.
 
+**Angestellte aussortieren:** Im Test vom 11.10.2026 waren 32 % der „Vertriebscoaches“ bei
+Firmen angestellt (z. B. Volksbank). Für Selbstständige zählen: Firmenname = eigener Name,
+„Selbstständig“, „Freiberuflich“, „Self-employed“ oder „Coaching“/„Training“ im Firmennamen.
+Die Personensuche liefert keine Website und keine Adresse; den Kontakt bringt erst das Profil
+(Full) oder die Website über `impressum-enrichment`.
+
 ### Vorfilter, die vor dem Download greifen
 
 | Filter | Wofür |

@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-11 – datenbeschaffung 0.3.0
+
+**datenbeschaffung** (Testreihe mit echten Läufen: Maps, B2B-Datenbanken, LinkedIn, Instagram, Impressum, Verifier)
+- `erfahrungswerte.md` → Messwerte vom 11.10.2026: Maps-Treffer, E-Mail-Quote und Rezensionen je Branche (Elektro, SHK, Agenturen, Dachdecker, Maschinenbau), B2B-Quellen im Vergleich, E-Mail-Lücke nach Maps, Coaches über LinkedIn und Instagram.
+- `weg-c-local-maps` → `reviewsStartDate: "18 months"` im Standard-Input (halb so viele bezahlte Rezensionen); Kategorie im Pilot prüfen statt der Übersetzung zu trauen (`roofing contractor` 12 % Treffer, `Dachdecker` 57 %, mit `categoryFilterWords` 86 %); Suchwörter für Agenturen und Maschinenbau.
+- `datenbeschaffung` → Industrie und Maschinenbau zuerst über Maps (85 % passend, 95 % mit Adresse), dann LinkedIn-Firmensuche plus Impressum, dann Datenbank.
+- `build_csv.py` → erkennt Branchenportale als Website und verwirft deren Adressen; Adresse der eigenen Domain vor Freemail vor fremder Domain (Umlaut-Domains und andere Endungen zählen als eigene); Impressum-Adressen nur von der eigenen Domain oder Freemail; Inhaber nur bei Inhaber, Geschäftsführung, Gründer; Platzhalter- und Umlaut-Adressen verworfen; versteht die Formen von B2B-Datenbanken, LinkedIn-Personen und -Firmen, Instagram-Profilen und Impressum-Actors; markiert geratene Adressen. 18 Tests.
+- `listen-qualitaet` → Entscheidungstabelle für das Verifier-Ergebnis; geratene Adressen nur „gut“; Preisfalle im kostenlosen Apify-Plan (0,10 $ je Adresse).
+- `apify-actors.md`, `zugriff.md` → Actors mit Vollzugriff auf das Apify-Konto ausgeschlossen (`code_crafter/leads-finder`); neue Abschnitte B2B-Datenbanken und LinkedIn-Firmen; Verifier-Preise je Stufe.
+- `kosten.md`, `datenumfang.md`, `impressum-enrichment`, `weg-a-apollo`, `weg-d-coaches-linkedin`, `weg-d-instagram-hashtag` → belegte Kosten je Quelle; Rezensions-Stichworte nur mit Ortsdetails; zweiter Impressum-Lauf nach Maps lohnt selten, bei LinkedIn-Firmen ist er der Normalfall; Angestellte bei LinkedIn-Coaches aussortieren; deutsche Hashtags.
+- `noise-domains.md` → drei Branchenportale aus den Maps-Läufen.
+
 ## 2026-10-11 – datenbeschaffung 0.2.0
 
 **datenbeschaffung** (Nur beschaffen, was die Plattform nicht selbst findet)

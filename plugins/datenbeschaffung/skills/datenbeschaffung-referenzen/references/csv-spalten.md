@@ -13,7 +13,7 @@
 
 | Spalte | Pflicht | Regeln |
 |---|---|---|
-| `email` | ja* | lowercase, getrimmt. *Pflicht erst in der ÜBERGABE-CSV (Import/CSV-Fallback). Während der Anreicherung darf sie leer sein — genau diese Zeilen füttern die Impressum-/Kontaktseiten-Stufe (build_csv.py behält sie und markiert `keine-email` in `hinweis`; erst `--require-email` bei der finalen Fassung verwirft sie). Bei mehreren Adressen wählt build_csv.py die persönliche vor der Rollen-Adresse, Bewerbungs- und Datenschutz-Adressen nur ohne Alternative. |
+| `email` | ja* | lowercase, getrimmt. *Pflicht erst in der ÜBERGABE-CSV (Import/CSV-Fallback). Während der Anreicherung darf sie leer sein — genau diese Zeilen füttern die Impressum-/Kontaktseiten-Stufe (build_csv.py behält sie und markiert `keine-email` in `hinweis`; erst `--require-email` bei der finalen Fassung verwirft sie). Bei mehreren Adressen wählt build_csv.py die der eigenen Domain vor Freemail vor fremden Domains, die persönliche vor der Rollen-Adresse, Bewerbungs- und Datenschutz-Adressen nur ohne Alternative. Platzhalter (`info@mysite.com`) und Adressen mit Umlaut vor dem @ verwirft es. |
 | `firstName` | nein | leer lassen statt raten — eine kaputte Anrede killt die Mail. Nur übernehmen, wenn die Quelle ihn ohnehin liefert (LinkedIn, Apollo); nie eigens beschaffen. |
 | `lastName` | nein | dito |
 | `company` | nein | Anzeigename; Normalisierung (GmbH-Zusätze) macht build_csv.py in `companyClean` |
@@ -23,7 +23,7 @@
 | `kategorie` | nein | Branche/Kategorie aus der Quelle (z. B. Google-Maps-categoryName) |
 | `quelle` | ja | Herkunftsvermerk: `apify:<actor> <datum>` — macht Läufe rückverfolgbar |
 | `companyClean` | nein | normalisierter Firmenname für die Ansprache („Müller Bau" statt „Müller Bau GmbH & Co. KG") |
-| `hinweis` | nein | maschinelle Anmerkungen: `rollen-adresse`, `keine-email`, `keine-website`, `keine-rezensionstexte` |
+| `hinweis` | nein | maschinelle Anmerkungen: `rollen-adresse`, `keine-email`, `keine-website`, `keine-rezensionstexte`, `portal-website` (Maps-Eintrag mit Branchenportal statt eigener Website; Adresse verworfen), `fremde-domain` (Adresse einer anderen Firmen-Domain; Freemail zählt nicht), `geratene-adresse` (aus dem Namensmuster einer Datenbank geraten; nur verifiziert übernehmen) |
 
 ## Zusatzspalten (werden beim Import zu Attributen)
 
