@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fulfillment",
+  "version": "0.1.0",
+  "description": "Das Marketing-Offer einer Kampagne liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, veröffentlichen und den Link zurück an den Lead schreiben.",
+  "author": {
+    "name": "RankM8"
+  },
+  "repository": "https://github.com/RankM8/outreach-plugins",
+  "keywords": [
+    "fulfillment",
+    "demo",
+    "webseite",
+    "seo",
+    "anzeigen"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Fulfillment",
+        "shortDescription": "Demos für Leads bauen, veröffentlichen und zurückmelden",
+        "developerName": "RankM8",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ]
+      }
+    }
+  }
+}

@@ -1,12 +1,13 @@
 # Outreach Plugins
 
-Ein Marketplace mit zwei Plugins für Kunden der Outreach-Plattform – für Claude (App, claude.ai,
+Ein Marketplace mit drei Plugins für Kunden der Outreach-Plattform – für Claude (App, claude.ai,
 Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 
 | Plugin | Inhalt | Für wen |
 |---|---|---|
 | **outreach** | Kampagnen anlegen und ändern, Cold-Mail-Copy nach SOP, Leads importieren, qualifizieren, recherchieren, Mails generieren und prüfen, Launch vorbereiten. Bringt die MCP-Verbindung `akquise` (`outreach.akquise.de`) und in Claude Code die Live-Ansicht (Lead-Vorschau, Fortschritt der Läufe) mit. | alle |
 | **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
+| **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Akquise-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
 Die Skills passen zum Outreach-MCP mit **32 Tools** und **7 Prompts**. Der MCP verarbeitet
 Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
@@ -20,10 +21,11 @@ Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim K
 /plugin marketplace add RankM8/outreach-plugins
 /plugin install outreach@outreach-plugins
 /plugin install datenbeschaffung@outreach-plugins     (optional)
+/plugin install fulfillment@outreach-plugins          (optional)
 ```
 
 **Claude App / claude.ai / Cowork:** Customize → Plugins → Add marketplace →
-`RankM8/outreach-plugins` → `outreach` (und optional `datenbeschaffung`) installieren →
+`RankM8/outreach-plugins` → `outreach` (und optional `datenbeschaffung`, `fulfillment`) installieren →
 im Plugin unter „Connectors“ die Verbindung `akquise` verbinden.
 
 **ChatGPT Desktop / Codex**
@@ -38,7 +40,7 @@ danach unter `/plugins` installieren und neue Session starten.
 MCP-Verbindung separat über die App-Seite „MCP & Skills“.
 
 Nach der Installation: Skill **`outreach-setup`** aufrufen (bzw. **`datenbeschaffung-setup`** für das
-Plugin datenbeschaffung). Er prüft die Verbindung, räumt alte Skill-Kopien auf und zeigt die ersten Schritte.
+Plugin datenbeschaffung, **`fulfillment-setup`** für das Plugin fulfillment). Er prüft die Verbindung, räumt alte Skill-Kopien auf und zeigt die ersten Schritte.
 
 **Kunden einer anderen Outreach-App als Akquise:** Die mitgelieferte Verbindung `akquise`
 unverbunden lassen und den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen.
@@ -86,6 +88,19 @@ plugins/
       listen-qualitaet    Pflicht-Endstation: Dedup → Verifizierung → Stichprobe → Übergabe
       datenbeschaffung-referenzen   geteilte Referenzen und Skripte
                                     (die Skills lesen über ../datenbeschaffung-referenzen/)
+  fulfillment/
+    .claude-plugin/plugin.json  plugin.json
+    skills/
+      fulfillment          Einstieg: Offer finden (vor der Kampagne) oder Demo liefern (nach der Antwort)
+      fulfillment-setup    Einrichtung: Outreach-Verbindung, Plugins, Netlify, optional RankM8
+      fulfillment-update   Aktualisieren
+      demo-webseite        Webseiten-Entwurf aus der bestehenden Website des Leads (eine index.html)
+      demo-seo             SEO-Ergebnis: Suchbegriffe auf Seite 2, lokale Suche, Titel, KI-Suchmaschinen
+      demo-anzeigen        Meta-/Google-Anzeigen, Stellenanzeige, Content-Plan
+      demo-leadliste       Lead-System mit 30–50 passenden Wunschkunden (datenbeschaffung im Geschenk-Modus)
+      demo-akquise-kampagne  Muster-Kampagne mit Sequenz und 3 Beispiel-Mails (nach outreach-copy)
+      demo-ausliefern      Netlify (Connector, CLI oder Drop), noindex, demo-url am Lead, Antwort-Text
+      fulfillment-referenzen   Demo-Katalog, Lead-Kontext, Umgebungen, Netlify, Qualität, Recht, Webseiten-Bauplan
 ```
 
 ## Pflege

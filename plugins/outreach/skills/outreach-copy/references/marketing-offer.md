@@ -20,7 +20,7 @@ In dieser Reihenfolge:
 2. Sonst aus dem Angebot des Nutzers abgeleitet (seine Leistungen und Kanäle aus dem Gespräch).
 3. Sonst einen Vorschlag nach Karte A machen und vom Nutzer bestätigen lassen.
 
-Ein Offer, das der Nutzer nicht liefern kann, wird nicht geschrieben. Auch das On-Top-Detail im Feinheiten-Satz kommt aus seinen Angaben.
+Ein Offer, das der Nutzer nicht liefern kann, wird nicht geschrieben. Auch das On-Top-Detail im Feinheiten-Satz kommt aus seinen Angaben. Was sich mit KI so liefern lässt, dass dem Nutzer nach der Antwort 5-10 Minuten eigene Arbeit bleiben, steht im Demo-Katalog des Plugins **fulfillment** (Einstieg `fulfillment`, Modus „Offer finden“); dort liegen auch die Bau-Skills für die Lieferung nach der Antwort.
 
 ## Die 5 bewährten Offer-Typen
 

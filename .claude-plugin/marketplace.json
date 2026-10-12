@@ -1,7 +1,7 @@
 {
   "name": "outreach-plugins",
   "owner": { "name": "RankM8" },
-  "metadata": { "description": "Plugins für Outreach: Kampagnen bauen, Leads verarbeiten, Leads beschaffen." },
+  "metadata": { "description": "Plugins für Outreach: Kampagnen bauen, Leads verarbeiten, Leads beschaffen, Marketing-Offers liefern." },
   "plugins": [
     {
       "name": "outreach",
@@ -13,6 +13,12 @@
       "name": "datenbeschaffung",
       "source": "./plugins/datenbeschaffung",
       "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und als CSV importieren.",
+      "category": "productivity"
+    },
+    {
+      "name": "fulfillment",
+      "source": "./plugins/fulfillment",
+      "description": "Das Marketing-Offer liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, nicht auffindbar veröffentlichen und den Link am Lead speichern.",
       "category": "productivity"
     }
   ]

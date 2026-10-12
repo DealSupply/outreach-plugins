@@ -1,6 +1,6 @@
 ---
 name: outreach-update
-description: Aktualisiert die Outreach-Plugins (outreach, datenbeschaffung). Verwenden bei „outreach aktualisieren“, „Plugin updaten“, „gibt es eine neue Version“, „Skills sind veraltet“ oder wenn ein Skill ein Tool aufruft, das es nicht gibt.
+description: Aktualisiert die Outreach-Plugins (outreach, datenbeschaffung, fulfillment). Verwenden bei „outreach aktualisieren“, „Plugin updaten“, „gibt es eine neue Version“, „Skills sind veraltet“ oder wenn ein Skill ein Tool aufruft, das es nicht gibt.
 ---
 
 # Outreach-Plugins aktualisieren
@@ -9,7 +9,7 @@ Nenne dem Nutzer den Befehl für seine Umgebung und führe ihn aus, wo du das ka
 
 | Umgebung | Aktualisieren |
 |---|---|
-| Claude Code | `claude plugin marketplace update outreach-plugins`, danach `claude plugin update outreach@outreach-plugins` (und ggf. `datenbeschaffung@outreach-plugins`), dann `/reload-plugins` |
+| Claude Code | `claude plugin marketplace update outreach-plugins`, danach `claude plugin update outreach@outreach-plugins` (und ggf. `datenbeschaffung@outreach-plugins`, `fulfillment@outreach-plugins`), dann `/reload-plugins` |
 | Claude App / claude.ai / Cowork | Customize → Plugins → Marketplace `outreach-plugins` → „Check for updates“ bzw. „Sync automatically“ |
 | Codex | `codex plugin marketplace upgrade outreach-plugins`, danach neue Session |
 | ChatGPT Desktop | App neu starten |
