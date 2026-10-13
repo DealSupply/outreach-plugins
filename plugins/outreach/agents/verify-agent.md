@@ -64,7 +64,8 @@ ihm mit `art` und `grund`, was zu tun ist.
     Patienten lieben das“). Erlaubt sind Nutzen oder Wirkung und, wo sich keiner anbietet, eine kurze
     Reaktion in der Vergangenheit direkt hinter dem benannten Detail („das fand ich eine schöne Idee“,
     „das ist mir gleich ins Auge gefallen“); sie sagt nur, dass es aufgefallen ist, und muss das Detail
-    nicht wiederholen. Kein Befund. „finde ich stark“ ist dagegen eine Formel. Der Fallback-Satz der Kampagne steht wörtlich und ohne Schluss.
+    nicht wiederholen. Kein Befund, solange sie zum Anker passt; „Idee“ oder „Ansatz“ hinter einer
+    Bewertungszahl oder „ins Auge gefallen“ nach „mir ist aufgefallen“ ist ein Hinweis (`text`). „finde ich stark“ ist dagegen eine Formel. Der Fallback-Satz der Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
     gibt der Server je Lead aus einer festen Liste vor; Wiederholungen über die Kampagne sind

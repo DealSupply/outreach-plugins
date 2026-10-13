@@ -273,7 +273,8 @@ MUSS:
   Bewertung jemanden ohne Namen („die Zahnärztin“) und hat der Betrieb mehrere davon, das Lob
   dem Betrieb zuschreiben („in deiner Praxis nimmt man sich Zeit“), nie „bei dir“. Wachstum,
   Filialzahlen, Auszeichnungen oder Konzepte eines Franchisegebers, einer Kette oder einer
-  Muttergesellschaft gehören nicht dem angeschriebenen Standort.
+  Muttergesellschaft gehören nicht dem angeschriebenen Standort; was der Standort selbst anbietet
+  (Verfahren, Geräte, Behandlungen) und was Kunden über ihn schreiben, bleibt ein Anker.
 - Maximal 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich).
 - Beginnt mit Kleinbuchstaben (folgt direkt auf „Hallo …,“). Nur der erste Buchstabe ist klein,
   jeder weitere Satz beginnt groß. Substantive und Namen bleiben auch am Anfang groß („Kunden
