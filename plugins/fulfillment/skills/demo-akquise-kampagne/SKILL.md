@@ -1,6 +1,6 @@
 ---
 name: demo-akquise-kampagne
-description: Baut eine fertige, hochpersonalisierte Muster-Akquise-Kampagne für einen Lead, der selbst Kunden gewinnen will (Agenturen, Coaches, Berater, Webdesigner, Dienstleister): Zielgruppe, Marketing-Offer, 4er-Mail-Sequenz und drei Beispiel-Mails an echte Wunschkunden des Leads. Verwenden bei „Demo-Akquise-Kampagne“, „KI-Akquise-System als Demo“, „Muster-Kampagne für den Lead“, „Outreach-Kampagne für … entwerfen“, „Kaltakquise-Demo“ oder wenn das Offer der Kampagne ein Akquise-System ist. Nichts wird versendet.
+description: "Baut eine fertige, hochpersonalisierte Muster-Akquise-Kampagne für einen Lead, der selbst Kunden gewinnen will (Agenturen, Coaches, Berater, Webdesigner, Dienstleister): Zielgruppe, Marketing-Offer, 4er-Mail-Sequenz und drei Beispiel-Mails an echte Wunschkunden des Leads. Verwenden bei „Demo-Akquise-Kampagne“, „KI-Akquise-System als Demo“, „Muster-Kampagne für den Lead“, „Outreach-Kampagne für … entwerfen“, „Kaltakquise-Demo“ oder wenn das Offer der Kampagne ein Akquise-System ist. Nichts wird versendet."
 ---
 
 # Demo-Akquise-Kampagne

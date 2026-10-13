@@ -17,6 +17,7 @@
 - `outreach` → Weiterleitung an `fulfillment` (Offer-Lieferbarkeit prüfen, Demo für einen Antworter bauen).
 - `outreach-copy` → `references/marketing-offer.md`: Verweis auf den Demo-Katalog des Plugins fulfillment bei der Frage, ob ein Offer lieferbar ist.
 - `outreach-update` → nennt das Plugin fulfillment.
+- `outreach-abo-lauf` → Beschreibung in Anführungszeichen: Der Doppelpunkt brach das YAML, `npx skills add` übersprang den Skill bisher.
 
 ## 2026-10-11 – outreach 0.3.29
 
