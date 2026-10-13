@@ -225,8 +225,9 @@ MUSS:
   Leistung gesperrt ist, trägt kein Intro, außer als Lob aus Bewertungstexten.
 - Positiver Schluss: Nach der Beobachtung folgt ein kurzer Halbsatz, in dieser Rangfolge:
   1) Nutzen oder Wirkung, wenn sie sich aus dem Detail anbietet (wem nützt es, was bewirkt es);
-  2) sonst eine kurze persönliche Reaktion, die am Detail hängt und es benennt, in der Vergangenheit
-  erzählt wie unter Kollegen, nie allein; welche Reaktion gilt, gibt der Block `SCHLUSS DES OPENERS`
+  2) sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der Vergangenheit
+  erzählt wie unter Kollegen; sie sagt nur, dass es aufgefallen ist oder gefallen hat („…, das ist mir
+  gleich ins Auge gefallen“), muss das Detail nicht wiederholen und steht nie ohne das Detail; welche Reaktion gilt, gibt der Block `SCHLUSS DES OPENERS`
   im System-Prompt (`emailGeneration.systemPrompt`) wörtlich vor; fehlt er (älterer Server), die
   Reaktion je Lead selbst variieren und die zwei bekannten Muster („das fand ich eine schöne Idee“,
   „hat mir gut gefallen“) nicht wörtlich übernehmen; 3) nie ein Prüfer-Urteil über die
@@ -248,8 +249,10 @@ MUSS:
   Stellenanzeige als Erkenntnis 3) Anzahl und Schnitt der Bewertungen als eigener Anker, nur bei
   mindestens 30 Bewertungen und einem Schnitt ab 4,5; Zahl gerundet („über 200“), Schnitt mit Komma
   („4,8“); Werte aus dem Import (Google-Profil) gelten als Quelle, bei widersprüchlichen Quellen
-  der kleinere Wert; unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen 4) Fallback der
-  Kampagne. Die Reihenfolge
+  der kleinere Wert; unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen; die Zahl kommt erst,
+  wenn weder Bewertungslob noch ein abhebendes Website-Detail besteht (eine hohe Zahl überholt keine
+  eigene Akademie und kein eigenes Verfahren), und schließt mit der Reaktion, nie mit „so können sich
+  Interessierte vorab orientieren“ 4) Fallback der Kampagne. Die Reihenfolge
   der Kampagne hat Vorrang, wo sie etwas anderes festlegt.
 - Einstiege abwechseln, keiner ist Standard: nach der letzten Ziffer der Lead-ID 0-2 „mir ist
   aufgefallen, dass …“, 3-5 „ich hab mir … angeschaut“, 6-7 „beim Stöbern auf deiner Website …“,
@@ -268,7 +271,9 @@ MUSS:
   gehört (der Podcast der Inhaberin bei einer Mail an eine Mitarbeiterin). Die Person beim
   Namen nennen oder einen Anker wählen, der zur angeschriebenen Person gehört. Meint eine
   Bewertung jemanden ohne Namen („die Zahnärztin“) und hat der Betrieb mehrere davon, das Lob
-  dem Betrieb zuschreiben („in deiner Praxis nimmt man sich Zeit“), nie „bei dir“.
+  dem Betrieb zuschreiben („in deiner Praxis nimmt man sich Zeit“), nie „bei dir“. Wachstum,
+  Filialzahlen, Auszeichnungen oder Konzepte eines Franchisegebers, einer Kette oder einer
+  Muttergesellschaft gehören nicht dem angeschriebenen Standort.
 - Maximal 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich).
 - Beginnt mit Kleinbuchstaben (folgt direkt auf „Hallo …,“). Nur der erste Buchstabe ist klein,
   jeder weitere Satz beginnt groß. Substantive und Namen bleiben auch am Anfang groß („Kunden
@@ -343,8 +348,8 @@ Der `intro`-Prompt MUSS enthalten:
   als Erkenntnis statt „du suchst“ > Anzahl und Schnitt > Fallback) samt Sterne-Regel: Zahlen
   nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, gerundet, mit Komma, Import-Werte
   als Quelle, bei Widerspruch der kleinere Wert;
-- den positiven Schluss mit Rangfolge (Nutzen oder Wirkung, sonst kurze Reaktion am benannten
-  Detail, nie ein Prüfer-Urteil über die Qualität der Arbeit) und Leitplanken (nichts erfinden,
+- den positiven Schluss mit Rangfolge (Nutzen oder Wirkung, sonst kurze Reaktion direkt hinter dem
+  benannten Detail, nie ein Prüfer-Urteil über die Qualität der Arbeit) und Leitplanken (nichts erfinden,
   keine Floskel, kein Superlativ, keine feste Wendung), ohne ausformulierte Beispiel-Schlüsse;
 - den Einstiegswechsel nach der letzten Ziffer der Lead-ID, mit Quelle im Einstieg bei
   Bewertungsankern;

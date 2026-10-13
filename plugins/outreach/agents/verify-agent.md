@@ -59,15 +59,18 @@ ihm mit `art` und `grund`, was zu tun ist.
     „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“, „das spricht für
     sich“), ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „so
     einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft
-    man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“), ist eine Reaktion ohne
-    benanntes Detail, oder er behauptet etwas, das nicht direkt aus dem Detail folgt („deine
+    man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“), ist eine Reaktion, vor der
+    im selben Satz kein Detail steht, oder er behauptet etwas, das nicht direkt aus dem Detail folgt („deine
     Patienten lieben das“). Erlaubt sind Nutzen oder Wirkung und, wo sich keiner anbietet, eine kurze
-    Reaktion in der Vergangenheit am benannten Detail („das fand ich eine schöne Idee“); „finde ich
-    stark“ ist dagegen eine Formel. Der Fallback-Satz der Kampagne steht wörtlich und ohne Schluss.
+    Reaktion in der Vergangenheit direkt hinter dem benannten Detail („das fand ich eine schöne Idee“,
+    „das ist mir gleich ins Auge gefallen“); sie sagt nur, dass es aufgefallen ist, und muss das Detail
+    nicht wiederholen. Kein Befund. „finde ich stark“ ist dagegen eine Formel. Der Fallback-Satz der Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
-    in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Taucht
-    dieselbe Reaktion bei mehreren Leads einer Kampagne auf, meldet der Bericht das als
-    systematischen Befund.
+    in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
+    gibt der Server je Lead aus einer festen Liste vor; Wiederholungen über die Kampagne sind
+    erwartet und kein Befund. Gleich lautende Nutzen-Schlüsse über mehrere Leads (etwa „so können sich
+    Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als systematischen
+    Befund.
   - Sterne: Anzahl oder Schnitt bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5,
     ungerundete Zahl, Schnitt ohne Komma, der größere von zwei widersprüchlichen Werten, oder nur Zahlen, obwohl die Recherche ein Lob aus
     Bewertungstexten oder ein abhebendes Website-Detail belegt.

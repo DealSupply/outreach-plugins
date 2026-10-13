@@ -134,7 +134,8 @@ gelten immer.
     Unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen: nächster Anker bzw. Fallback.
   - Positiver Schluss: Nach der Beobachtung ein kurzer Halbsatz aus diesem Detail. Zuerst Nutzen oder
     Wirkung (wem nützt es, was bewirkt es), wenn sie sich anbietet; sonst eine kurze persönliche
-    Reaktion, die das Detail benennt, in der Vergangenheit, nie allein. Die Reaktion nimmst du wörtlich
+    Reaktion direkt hinter dem benannten Detail, in der Vergangenheit, nie allein; sie muss das Detail
+    nicht wiederholen. Die Reaktion nimmst du wörtlich
     aus dem Block `SCHLUSS DES OPENERS` des System-Prompts; fehlt er (älterer Server), variiere sie
     selbst und übernimm die zwei bekannten Muster („das fand ich eine schöne Idee“, „hat mir gut
     gefallen“) nicht wörtlich. Nie ein Prüfer-Urteil

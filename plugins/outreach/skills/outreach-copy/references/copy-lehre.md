@@ -92,7 +92,7 @@ Gegensatzpaare (die Spalte „besteht“ zeigt den Fund, nicht den fertigen Satz
 Nach der Beobachtung folgt ein kurzer positiver Halbsatz, in dieser Rangfolge:
 
 1. **Nutzen oder Wirkung**, wenn sie sich aus dem Detail anbietet (wem nützt es, was bewirkt es): „…, so passt ein Termin auch nach der Arbeit.“
-2. **Sonst eine kurze persönliche Reaktion**, die am Detail hängt und es benennt, in der Vergangenheit erzählt wie unter Kollegen: „…, das fand ich eine schöne Idee.“, „…, hat mir gut gefallen.“ Sie steht neben dem Detail, nie allein, und wird je Lead aus dem Detail gebildet, nie als feste Wendung.
+2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, in der Vergangenheit erzählt wie unter Kollegen: „…, das fand ich eine schöne Idee.“, „…, das ist mir gleich ins Auge gefallen.“ Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein, und wird je Lead aus dem Detail gebildet, nie als feste Wendung.
 3. **Nie ein Prüfer-Urteil über die Qualität ihrer Arbeit.** Es klingt wie die Begutachtung durch einen Fremden: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“. (Messrunde 08.10.2026: ein Drittel der neuen Schlüsse waren solche Urteile.)
 
 Leitplanken:
@@ -100,7 +100,7 @@ Leitplanken:
 - nichts erfinden, nur was direkt aus dem Detail folgt (nie „deine Patienten lieben das“, nie „alle positiv“);
 - keine inhaltsleere Formel und kein Vergleich oder Superlativ („finde ich stark/spannend/bemerkenswert“, „Hammer“, „beeindruckend“, „das sieht man selten“, „das sieht man nicht immer“, „hat man nicht alle Tage“, „das spricht für sich“);
 - Abgrenzung: „das fand ich eine schöne Idee“ ist eine Reaktion auf ein benanntes Detail und erlaubt; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
-- keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; taucht dieselbe Reaktion bei mehreren Leads einer Kampagne auf, meldet die Prüfung das als systematischen Befund;
+- keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; die Reaktion gibt der Server je Lead aus einer festen Liste vor, Wiederholungen über eine Kampagne sind deshalb erwartet; gleich lautende Nutzen-Schlüsse über mehrere Leads (etwa „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen) sind ein systematischer Befund;
 - gilt auch bei Bewertungsankern; insgesamt weiter höchstens 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich);
 - der Fallback-Satz der Kampagne bleibt wörtlich, ohne angehängten Schluss.
 
@@ -289,8 +289,8 @@ ANKER-REIHENFOLGE (nimm den ersten, der den Austauschtest besteht):
 
 POSITIVER SCHLUSS: Nach der Beobachtung folgt ein kurzer Halbsatz. Zuerst
 Nutzen oder Wirkung, wenn sie sich aus dem Detail anbietet (wem nützt es,
-was bewirkt es). Sonst eine kurze persönliche Reaktion, die am Detail hängt
-und es benennt, in der Vergangenheit erzählt (Muster: "das fand ich eine
+was bewirkt es). Sonst eine kurze persönliche Reaktion direkt hinter dem
+benannten Detail (muss es nicht wiederholen), in der Vergangenheit erzählt (Muster: "das fand ich eine
 schöne Idee", "hat mir gut gefallen"; nie allein und nie als feste
 Wendung). Nie ein Prüfer-Urteil über die Qualität der Arbeit ("das wirkt
 vertrauenswürdig", "so einen Schnitt hält man nur, wenn die Arbeit
@@ -372,7 +372,7 @@ Vor dem Export immer mindestens 10 Leads im Review (`outreach-verify`, `get_lead
 | Tonalität | Enthält Kritik, Mangel, Konjunktiv-Wunsch oder einen Ratschlag |
 | Austauschtest | Würde genauso auf zehn andere Betriebe derselben Branche in der Stadt passen, nennt eine Standardleistung (auch mit Nutzen), oder das Lob besteht nur aus einem Adjektiv ohne Inhalt |
 | Sperrliste | Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten |
-| Positiver Schluss | Fehlt, ist eine Floskel oder ein Superlativ, ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion ohne benanntes Detail, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Dieselbe Reaktion bei mehreren Leads einer Kampagne ist ein systematischer Befund |
+| Positiver Schluss | Fehlt, ist eine Floskel oder ein Superlativ, ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion, vor der kein Detail steht, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Gleich lautende Nutzen-Schlüsse über mehrere Leads sind ein systematischer Befund; wiederholte Reaktionen aus der Server-Liste sind es nicht |
 | Bewertungsanker | Zahlen bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5, ungerundete Zahl, Schnitt mit Punkt, der größere von zwei widersprüchlichen Werten, nur Zahlen, obwohl ein Lob aus Bewertungstexten belegt ist; „mehrere“/„immer wieder“ ohne mindestens 2 Bewertungen; Einstieg ohne Quelle |
 | Zuschreibung | Schreibt der angesprochenen Person etwas zu, das einer anderen gehört |
 | Wahrheit | Enthält Zahl, Name oder Fakt, der nicht aus dem Research kommt |

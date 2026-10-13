@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-13 – outreach 0.3.31
+
+**outreach** (gleichauf mit dem ListM8-Server, A/B-Vergleich App gegen MCP vom 13.10.2026)
+- `outreach-copy`, `verify-agent`, `lead-agent`, `outreach-verify` → Positiver Schluss: Eine kurze Reaktion direkt hinter dem benannten Detail („…, das ist mir gleich ins Auge gefallen“) muss das Detail nicht wiederholen und ist kein Befund. Wiederholte Reaktionen über eine Kampagne sind erwartet (der Server gibt sie je Lead aus einer festen Liste vor); gleich lautende Nutzen-Schlüsse wie „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen bleiben ein systematischer Befund.
+- `outreach-copy` → Bewertungszahlen erst, wenn weder Bewertungslob noch ein abhebendes Website-Detail besteht, Schluss dann mit der Reaktion; Wachstum oder Auszeichnungen eines Franchisegebers gehören nicht dem angeschriebenen Standort.
+
 ## 2026-10-12 – fulfillment 0.1.0, outreach 0.3.30
 
 **fulfillment** (neues Plugin: das Marketing-Offer liefern)
