@@ -47,7 +47,8 @@ Frage: „Hast du ein Netlify-Konto?“ Ohne Konto werden Demos nach einer Stund
 ## 5. RankM8 (optional, für `demo-seo`)
 
 Nur nötig für Suchbegriffe, Positionen und lokale Suche. Erkennbar an den Tools `domain_keywords`
-und `serp_search`.
+und `serp_search`; mit dem Tool `quick_check` (Schnellcheck mit fertigem Report-Link) geht
+`demo-seo` am schnellsten.
 
 - **Kein RankM8-Konto:** `demo-seo` liefert dann nur die Bausteine ohne Messdaten (Titel,
   KI-Suchmaschinen). Ein Konto gibt es auf rankm8.com.
