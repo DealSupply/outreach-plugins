@@ -13,6 +13,12 @@
       "source": { "source": "local", "path": "./plugins/datenbeschaffung" },
       "policy": { "installation": "AVAILABLE", "authentication": "ON_USE" },
       "category": "Productivity"
+    },
+    {
+      "name": "fulfillment",
+      "source": { "source": "local", "path": "./plugins/fulfillment" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_USE" },
+      "category": "Productivity"
     }
   ]
 }

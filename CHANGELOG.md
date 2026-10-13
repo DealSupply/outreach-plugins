@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-10-12 – fulfillment 0.1.0, outreach 0.3.30
+
+**fulfillment** (neues Plugin: das Marketing-Offer liefern)
+- `fulfillment` → Einstieg mit zwei Modi: „Offer finden“ (welches Offer lässt sich mit KI so liefern, dass dem Nutzer 5-10 Minuten bleiben; Übergabe an `outreach-copy`) und „Demo liefern“ (Offer aus `blueprint.campaign.intelligence.offer_contract`, Antworter über `list_leads(contact_status="replied")` mit leeren Queue-Filtern, Weiterleitung an den Bau-Skill). `get_lead_data` sperrt angeschriebene Leads (`contact_gate`); die Demo-Skills lesen deshalb die Website des Leads live.
+- `demo-webseite` → Webseiten-Entwurf aus der bestehenden Website des Leads: Steckbrief, Struktur, eine `index.html` (überall machbar, auch ohne Dateisystem), Qualitätsprüfung, Abstimmung.
+- `demo-seo` → SEO-Ergebnis statt „Analyse“: Suchbegriffe auf Platz 11–20 (`domain_keywords`), lokale Suche (`serp_search`), neue Title-Tags, KI-Suchmaschinen mit fertiger `llms.txt`. RankM8 optional; ohne Verbindung die Bausteine ohne Messdaten. Mit dem RankM8-Tool `quick_check` misst ein Aufruf Seite-2-Begriffe, lokale Suche, KI-Crawler und `llms.txt`; `share_quick_check` liefert eine fertige, nicht auffindbare Report-Seite als Alternative zur eigenen Netlify-Seite.
+- `demo-anzeigen` → 3 Meta-Anzeigen, Google-Suchanzeige, Stellenanzeige oder 30-Tage-Content-Plan; nichts wird geschaltet.
+- `demo-leadliste` → Lead-System als Demo, das schon 30–50 passende Wunschkunden gefunden hat; `datenbeschaffung` im Geschenk-Modus (ICP, Pilot, harter Deckel 2 $; kein Bestandsabgleich, kein Import, keine Kampagne), nur Firmendaten.
+- `demo-akquise-kampagne` → Muster-Kampagne für Leads, die selbst Kunden gewinnen wollen: Zielgruppe, Offer, Sequenz und 3 Beispiel-Mails nach `outreach-copy`; nichts wird versendet.
+- `demo-ausliefern` → nicht auffindbar veröffentlichen bei Netlify (Connector, CLI oder Drop; Gratisplan etwa 20 Veröffentlichungen im Monat), `noindex` per Meta-Tag (plus `_headers`, wenn die KI Dateien schreibt), schwer erratbare Adresse, Link als `demo-url` und `demo-datum` per `bulk_set_lead_attributes` am Lead (Bindestrich-Schlüssel, sonst legt die App das Feld doppelt an), Antwort-Text zum Kopieren, Löschen nach 30 Tagen.
+- `fulfillment-setup`, `fulfillment-update` → Einrichtung (Outreach-Verbindung, Plugins, Netlify, optional RankM8) und Aktualisierung.
+- `fulfillment-referenzen` → Demo-Katalog, Lead-Kontext, Umgebungen, Netlify, Demo-Link und Antwort-Vorlagen, Qualitätsprüfung, Recht und Grenzen, Webseiten-Bauplan (Erfahrungswerte aus über 60 Demo-Seiten).
+
+**outreach**
+- `outreach` → Weiterleitung an `fulfillment` (Offer-Lieferbarkeit prüfen, Demo für einen Antworter bauen).
+- `outreach-copy` → `references/marketing-offer.md`: Verweis auf den Demo-Katalog des Plugins fulfillment bei der Frage, ob ein Offer lieferbar ist.
+- `outreach-update` → nennt das Plugin fulfillment.
+- `outreach-abo-lauf` → Beschreibung in Anführungszeichen: Der Doppelpunkt brach das YAML, `npx skills add` übersprang den Skill bisher.
+
 ## 2026-10-11 – outreach 0.3.29
 
 **outreach** (ListM8 MCP 2.3.0: Recherche-Stufen Basis, Smart, Deep Research)

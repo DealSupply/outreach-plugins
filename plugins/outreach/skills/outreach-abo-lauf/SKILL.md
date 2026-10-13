@@ -1,6 +1,6 @@
 ---
 name: outreach-abo-lauf
-description: Führt einen Abo-Lauf aus – Leads einer Kampagne mit Agents im eigenen Claude- bzw. ChatGPT-Abo verarbeiten statt auf dem Server (keine OpenRouter-Kosten). Wird von outreach-pipeline (Laufart Abo) und outreach-verify (Prüfen im Abo) geladen; direkt verwenden bei „abo-lauf als workflow“, „workflow für leads“, „leads im workflow verarbeiten“, „abo-lauf fortsetzen“. In Claude Code als ein Workflow: Haiku baut, Sonnet prüft eine Stichprobe, Haiku bessert nach, Sonnet prüft gegen.
+description: "Führt einen Abo-Lauf aus – Leads einer Kampagne mit Agents im eigenen Claude- bzw. ChatGPT-Abo verarbeiten statt auf dem Server (keine OpenRouter-Kosten). Wird von outreach-pipeline (Laufart Abo) und outreach-verify (Prüfen im Abo) geladen; direkt verwenden bei „abo-lauf als workflow“, „workflow für leads“, „leads im workflow verarbeiten“, „abo-lauf fortsetzen“. In Claude Code als ein Workflow: Haiku baut, Sonnet prüft eine Stichprobe, Haiku bessert nach, Sonnet prüft gegen."
 ---
 
 # Abo-Lauf – Leads mit Agents im eigenen Abo verarbeiten
