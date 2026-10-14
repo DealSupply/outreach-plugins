@@ -40,6 +40,7 @@ Daraus folgt:
 | **Verkaufsplattformen** (Weg E) | `plattform`, `seller_url`, `bewertung`, `bewertungen_anzahl`, `verkaeufe`, `kategorie` | im Actor-Preis | Plattform-Bewertung und Verkäufe stehen nicht auf der eigenen Website. |
 | **StoreLeads** (Weg B) | `plattform`, `umsatz_geschaetzt`, `apps` | im Export | Technologie und Umsatz findet keine Recherche. |
 | **Apollo** (Weg A) | `firstName`, `lastName`, `position`, `linkedin_url`, `mitarbeiter` | im Export | Kommt ohnehin mit; den Entscheider muss die Recherche dann nur bestätigen. |
+| **SaaS-Verzeichnisse und LinkedIn-Firmen** (Weg F) | `kategorie`, `plattform`, `bewertung`, `bewertungen_anzahl` (OMR), `linkedin_url`, `mitarbeiter`, `follower`; per `--keep` `omr_url`, `kostenlos_testen`, `quellen`, `gruendung` | OMR und Startbase kostenlos, LinkedIn im Firmenpreis | Die OMR-Bewertung und die Kategorie sind öffentlich und nachprüfbar, die Plattform liest OMR nicht. `quellen` zeigt, in wie vielen Verzeichnissen die Firma steht. |
 | **Google-Suche** (Wege A, B, D) | nur die Pflichtfelder und `kategorie` (die Nische der Query) | – | Der Suchtreffer selbst trägt keinen Einstieg. Für Zielgruppen mit Maps-Eintrag den Maps-Weg vorziehen, weil Bewertungen dabei sind. |
 
 Weitere Rohfelder nur mit `--keep` und nur, wenn sie einen Einstieg tragen, den die Website nicht hat.

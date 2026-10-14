@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-14 – datenbeschaffung 0.4.0
+
+**datenbeschaffung** (neuer Weg F: SaaS- und Software-Firmen in DACH, Testreihe vom 14.10.2026)
+- `weg-f-saas` → neuer Weg für „alle SaaS in DACH“: OMR Reviews und Startbase kostenlos, dazu die LinkedIn-Firmensuche segmentiert nach Region und Größe, Einordnung SaaS gegen Agentur durch Claude, Details nur für SaaS, die noch keine Quelle kennt, Zusammenführen auf die Domain und Sitzprüfung im Impressum. Kernbefund aus der Vollerhebung Hamburg: LinkedIn 387, OMR 246, nur 62 in beiden; keine Quelle allein findet mehr als etwa ein Viertel (Startbase dazu: 135, mit LinkedIn nur 27 gemeinsam; geschätzt 1.500 bis 2.000 SaaS in Hamburg).
+- `datenbeschaffung` → Routing: Software- und SaaS-Firmen gehen an `weg-f-saas`, nicht mehr an `weg-a-b2b-google`.
+- Neue Skripte: `omr_products.py` (OMR-Schnittstelle, 14.023 Produkte in einer Minute), `startbase_saas.py` (Geschäftsmodell SaaS, Zielgruppe B2B), `linkedin_saas.py` (Segmente zusammenlegen, Sitzfilter, Tabelle zum Einordnen, Details-Input), `website_suche.py` (Website über Rechtsträger und Ort, 52 bis 58 % Treffer), `quellen_zusammenfuehren.py` (Domain-Abgleich, Herkunft in `quellen`), `sitz_check.py` (Sitz, PLZ, Impressum-Adresse und Produkt-Signale, kostenlos). 8 Tests.
+- `apify-actors.md` → LinkedIn-Firmendetails (`harvestapi/linkedin-company`), Trefferzahl je Segment über `totalResultCount`; Capterra-Actors ausgeschlossen bzw. nicht empfohlen; Impressum-Actor an JavaScript-Lücken schwach und langsam.
+- `kosten.md`, `erfahrungswerte.md`, `datenumfang.md` → belegte Kosten und Trefferquoten der SaaS-Quellen, Spalten für OMR- und LinkedIn-Daten.
+
 ## 2026-10-13 – outreach 0.3.31
 
 **outreach** (gleichauf mit dem ListM8-Server, A/B-Vergleich App gegen MCP vom 13.10.2026)

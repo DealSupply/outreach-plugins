@@ -389,7 +389,7 @@ def main() -> int:
         if args.land and str(row.get("countryCode", "")).lower() not in (args.land.lower(), ""):
             continue
         is_google = any(row.get(k) not in (None, "") for k in GOOGLE_MARKERS)
-        company = pick(row, "company", "title", "company_name", "companyName", "name")
+        company = pick(row, "company", "title", "company_name", "companyName", "name", "produkt")
         # Bei Maps ist "url" der Google-Maps-Link, nie die Website des Betriebs.
         website = pick(row, "website", "site", "target_url", "domain") if is_google \
             else pick(row, "website", "site", "url", "target_url", "domain")

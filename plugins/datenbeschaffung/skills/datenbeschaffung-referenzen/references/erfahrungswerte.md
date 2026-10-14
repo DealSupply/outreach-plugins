@@ -83,6 +83,46 @@ Lehre: Beide Quellen liefern Kandidaten, keine Kontakte. Der zweite Schritt läu
 Website und das Impressum; bei LinkedIn zusätzlich nach selbstständigen Coaches filtern
 (Firma = eigener Name, „Selbstständig“, „Freiberuflich“, „Coaching“ im Firmennamen).
 
+## SaaS-Firmen in DACH (14.10.2026, Weg F)
+
+Vollerhebung Hamburg plus Berlin und München (11 bis 200 Mitarbeiter), dazu alle OMR-Produkte.
+
+| Quelle | Menge | Sitz in DACH | B2B-SaaS-Anteil | Kosten |
+|---|---|---|---|---|
+| LinkedIn Branche 4, Standort Berlin, 11–200 MA (Full) | 50 | 30 % | – | 0,145 $ |
+| LinkedIn Branche 4, Standort „Germany“, 11–50 MA (Full) | 50 | 24 % | – | 0,145 $ |
+| LinkedIn Suchwort „SaaS“, „Germany“ (Full) | 50 | 16 % | hoch, aber viele Agenturen | 0,15 $ |
+| LinkedIn Suchwort „SaaS“ + Branche 4, drei BW-Städte (Full) | 47 | 83 % | fast alle | 0,115 $ |
+| LinkedIn Branche 4, Hamburg alle Größen (Short, segmentiert) | 1.427 | 81 % Sitz Hamburg | 34 % | 1,36 $ |
+| LinkedIn Branche 4, Berlin + München 11–200 MA (Short) | 2.745 | 51 % Sitz in der Stadt | 50 % | 2,64 $ |
+| OMR Reviews, alle Produkte | 12.593 Domains | 4.640 mit Sitz in DACH (37 %; DE 4.023, AT 343, CH 274), davon 1.565 mit .com | Software-Verzeichnis | 0 $ |
+| Startbase, alle Profile | 9.665 | 100 % DE | 23 % aktive B2B-SaaS (2.209) | 0 $ |
+| Google-Footprints („kostenlos testen“, „Demo vereinbaren“ + Hamburg), 6 Queries | 237 Domains | 44 mit Sitz Hamburg | gemischt | 0,014 $ |
+
+**Abdeckung Hamburg:** LinkedIn 387 B2B-SaaS, OMR 246 mit Hamburger Impressum, Startbase 135
+B2B-SaaS. LinkedIn und OMR teilen 62, LinkedIn und Startbase 27; von den 135 Startbase-Firmen
+stehen 90 in keiner der beiden anderen Quellen. Schätzung (Lincoln-Petersen) 1.500 bis 2.000 SaaS
+mit Sitz Hamburg; jede Quelle allein findet 7 bis 26 %. Irgendwo auf OMR (unabhängig vom
+Impressum) stehen 23 % der Hamburger und 27 % der Berliner und Münchner LinkedIn-SaaS. Die Google-Footprints
+fanden 30 Hamburger SaaS, davon etwa 20 auch auf LinkedIn; die übrigen stehen dort unter anderer
+Branche (IT Services, Technology/Internet) oder haben keine Firmenseite.
+
+**Sitzprüfung im Impressum** (`sitz_check.py`, 379 Hamburger SaaS-Websites, 27 s): 71 % Sitz in
+DACH erkannt, 73 % mit Adresse, 15 % Impressum nur per JavaScript, 7 % nicht erreichbar.
+
+**Startbase komplett** (9.665 Profile, 25 min): 2.209 aktive B2B-SaaS; Berlin 529, Bayern 423,
+NRW 357, Baden-Württemberg 252, Hessen 140, Hamburg 135; 54 % mit 1 bis 10, 35 % mit 11 bis 50
+Mitarbeitern.
+
+**Website-Suche für Startbase** (Rechtsträger + Ort): Stichprobe 116 Firmen 58 %, alle 1.670
+Firmen ohne Website 52 % (871).
+
+**Gesamtliste DACH aus der Testreihe** (OMR komplett, Startbase komplett, LinkedIn Hamburg sowie
+Berlin und München 11 bis 200 Mitarbeiter, alle mit Sitzprüfung): 6.135 Firmen, 5.333 mit
+Adresse, 1.581 mit OMR-Bewertung; DE 5.512 (inkl. 457 aus LinkedIn und Startbase ohne erkannten
+Sitz), AT 343, CH 280. Herkunft: nur OMR 4.112, nur Startbase 774, nur LinkedIn 625, mehrere
+Quellen 624. Apify-Kosten der ganzen Testreihe 8,67 $.
+
 ## Query-Formulierung — was messbar wirkt
 
 1. **„Coach" statt „Trainer".** „Coach" zieht Premium-Positionierung, „Trainer" günstige

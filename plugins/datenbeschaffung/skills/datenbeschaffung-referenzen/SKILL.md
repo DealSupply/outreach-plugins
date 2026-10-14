@@ -33,3 +33,9 @@ Preis beim Anbieter prüfen und freigeben lassen.
 | `scripts/process_serp.py` | SERP-JSON → eindeutige Firmen-Domains (Noise gefiltert) |
 | `scripts/build_csv.py` | Rohdaten → CSV-Format mit den Zusatzspalten aus `datenumfang.md` (Google-Bewertungen und Rezensionen, Inhaber, Plattformfelder), Wahl der Versandadresse, Firmennamen-Normalisierung, Hinweise |
 | `scripts/dedup.py` | Vorab-Abgleich gegen den Bestandsindex (do_not_contact hart) |
+| `scripts/omr_products.py` | OMR Reviews: alle Software-Produkte über die öffentliche Schnittstelle, kostenlos (Weg F) |
+| `scripts/startbase_saas.py` | Startbase: deutsche B2B-SaaS mit Rechtsträger, Ort, Teamgröße, kostenlos (Weg F) |
+| `scripts/linkedin_saas.py` | LinkedIn-Firmensuche: Segmente zusammenlegen, Sitzfilter, Tabelle zum Einordnen, Details-Input (Weg F) |
+| `scripts/website_suche.py` | Website zu Firmen ohne Domain über die Google-Suche finden (Rechtsträger + Ort) |
+| `scripts/quellen_zusammenfuehren.py` | Mehrere Quellen auf die Domain zusammenführen, Herkunft in `quellen` |
+| `scripts/sitz_check.py` | Firmensitz, PLZ, Ort, Impressum-Adresse und Produkt-Signale je Website, kostenlos und lokal |

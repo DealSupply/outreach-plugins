@@ -49,7 +49,18 @@ danach die LinkedIn-Firmensuche plus Impressum; Datenbanken erst, wenn beides ni
 
 | Actor | Preis (GOLD) | Warum |
 |---|---|---|
-| `harvestapi/linkedin-company-search` | Short 0,001 $, Full 0,003 $/Firma | Ohne Login. Filter: Suchwort, Ort, Größe, Branchen-ID. Full liefert Website, Telefon, Mitarbeiterzahl, Branche, Sitz. 38/40 passend (Maschinenbau BW). Keine E-Mail: danach `impressum-enrichment` (73 % Treffer). |
+| `harvestapi/linkedin-company-search` | Short 0,001 $, Full 0,003 $/Firma, Start 0,0005 $ | Ohne Login. Filter: Suchwort, Ort, Größe, Branchen-ID. Full liefert Website, Telefon, Mitarbeiterzahl, Branche, Sitz. 38/40 passend (Maschinenbau BW). Keine E-Mail: danach `impressum-enrichment` (73 % Treffer). Höchstens 1.000 Firmen je Suche; `_meta.pagination.totalResultCount` im Short-Ergebnis nennt die Gesamtzahl (Zählung mit `maxItems: 1` kostet 0,0015 $). |
+| `harvestapi/linkedin-company` | 0,003 $/Firma (GOLD), Start 0,00005 $ | Details zu bekannten Firmen-URLs (`companies: [...]`): Website, Mitarbeiterzahl, Beschreibung, Standorte. Für Weg F: erst Short-Suche und Einordnung, dann Details nur für die SaaS (14.10.2026: 387 + 514 Firmen ohne Ausfall). |
+
+## SaaS- und Software-Verzeichnisse (Weg F) — geprüft 14.10.2026
+
+| Quelle | Zugang | Bewertung |
+|---|---|---|
+| OMR Reviews | **kein Actor nötig**: öffentliche GraphQL-Schnittstelle, `omr_products.py` | 14.023 Produkte in einer Minute, kostenlos. `easyapi/omr-reviews-scraper` (11 Nutzer, 0,005 $ je Rezension + 0,09 $ Start) ist überflüssig |
+| Startbase | **kein Actor nötig**: statische Profile, `startbase_saas.py` | 9.665 Profile, Geschäftsmodell und Zielgruppe gepflegt; Website nur mit Login, deshalb `website_suche.py` |
+| Capterra | `epctex/capterra-scraper` | **Ausgeschlossen**: 0 Treffer (Cloudflare), Lauf trotzdem berechnet |
+| Capterra | `dionysus_way/capterra-software-service-category-scraper` | **Nicht empfehlen**: 25 Einträge kosteten 0,137 $ (4 Starts), US-Reihenfolge, kein Firmensitz, Website nur geraten |
+| Impressum für JavaScript-Seiten | `haketa/impressum-legal-notice-extractor` | An 58 Lücken nach `sitz_check.py`: 19 mit Anschrift, 14 mit E-Mail-Adresse; hing über 20 Minuten bei 50 von 60 und musste abgebrochen werden. Nur für kleine, wertvolle Restmengen |
 
 ## E-Mail-Verifizierung (eigener Schritt hinter jedem Weg)
 
