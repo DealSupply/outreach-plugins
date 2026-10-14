@@ -1,6 +1,6 @@
 # ListM8-MCP: Import- und Bestands-Tools
 
-Vertragsstand: 2026-10-03 (ListM8 `develop` plus `feat/develop-ui-polish`). Die Referenz deckt die
+Vertragsstand: 2026-10-14 (ListM8 MCP 3.0.0, Credits zum festen Preis). Die Referenz deckt die
 Tools ab, die in der Datenbeschaffung gebraucht werden. Die vollständige Werkzeugliste liefert die
 Tool-Discovery des MCP-Servers; jede Werkzeugbeschreibung dort ist der aktuelle Vertrag und geht
 dieser Referenz im Zweifel vor.
@@ -14,6 +14,8 @@ dieser Referenz im Zweifel vor.
   optional in eine Liste (`create_list`, `list_id`).
 - Kosten fallen beim Anbieter an. ListM8 erfasst sie nicht; wer sie festhalten will, trägt sie in
   `source` der Liste ein (`costUsd`).
+- Import und Listen kosten in ListM8 keine Credits; Credits kostet nur die KI-Verarbeitung im
+  Server-Lauf (`start_lead_run`). Jeder neue Lead belegt aber einen Platz im Lead-Limit des Plans.
 - Es gibt keinen Probelauf als Produktfunktion. Der Pilot ist ein kleiner, freigegebener Scrape beim
   Anbieter.
 
@@ -35,6 +37,7 @@ dieser Referenz im Zweifel vor.
 | `list_lists` | Eigene Listen mit Zählern und Herkunft | read |
 | `get_list` | Eine Liste mit Metadaten und Leads (paginiert) | read |
 | `search_leads` | Globale Suche im Lead-Bestand | read |
+| `get_credit_balance` | Konto: freie Plätze im Lead-Limit (`account`), Guthaben und Abrechnungsmodus; nur lesend | read |
 | `create_list` | Liste mit Herkunft anlegen | write |
 | `import_leads` | Leads importieren (asynchron, `job_id`) | write |
 | `get_job_status` | Status eines asynchronen Jobs | read |
@@ -55,8 +58,9 @@ search_leads(query?: string = "", contact_status?: string = "", attribute_key?: 
              attribute_value?: string = "", in_campaign?: string = "",
              limit?: integer = 20, offset?: integer = 0)
 create_list(name: string, description?: string = "", source?: object)
+get_credit_balance()
 import_leads(leads: object[], campaign_id?: integer, list_id?: integer,
-             attribute_mappings?: object)
+             attribute_mappings?: object, allow_partial?: boolean = false)
 get_job_status(job_id: string)
 bulk_set_lead_attributes(lead_ids: integer[], attributes: object, create_missing?: boolean = false)
 add_leads_to_campaign(campaign_id: integer, list_id?: integer, lead_ids?: integer[])
@@ -145,11 +149,20 @@ Bis zu 10000 Leads je Aufruf; Aufruf asynchron, Antwort mit `job_id`.
   bekannte.
 - Der Import startet **keine** KI-Verarbeitung. Qualifizierung, Recherche und E-Mail-Texte starten
   erst über `start_lead_run`.
-- Antwort: `status`, `job_id`, `received`, `queued`, `campaign_id`, `list_id`, `appUrl`, `message`.
+- **Lead-Limit:** Nur neue E-Mail-Adressen belegen einen Platz im Account; bekannte werden
+  kostenlos verlinkt und angereichert. Vorher `get_credit_balance` lesen: `account.free_slots`
+  (`null` = unbegrenzt) muss die neuen Adressen fassen. Passen sie nicht, lehnt der Server den
+  ganzen Aufruf mit `limit_reached` ab und nennt belegte, erlaubte und freie Plätze.
+  `allow_partial=true` importiert dann nur die ersten neuen Leads in Listenreihenfolge bis zur Grenze;
+  das nur nach Rückfrage beim Nutzer. `account.subscription_required: true` heißt kein aktives Abo:
+  Dann lässt sich nichts importieren, zuerst einen Plan wählen.
+- Antwort: `status`, `job_id`, `received`, `queued`, `campaign_id`, `list_id`, `new_leads`,
+  `known_leads`, `free_slots`, `expected_skipped_over_limit`, `appUrl`, `message`.
 
 Fehler: `validation_failed` (leere Liste, ungültige oder fehlende E-Mail mit Zeilennummer, die ersten
-20 Zeilen werden genannt, ungültiges Mapping), `limit_reached` (mehr als 10000 Zeilen oder
-Plan-Kontingent erschöpft), `import_failed`. Zu große Dateien in Blöcke von höchstens 10000 teilen.
+20 Zeilen werden genannt, ungültiges Mapping), `limit_reached` (mehr als 10000 Zeilen, Lead-Limit
+des Plans: die neuen Adressen passen nicht in die freien Plätze, der Aufruf importiert dann nichts;
+oder kein aktives Abo), `import_failed`. Zu große Dateien in Blöcke von höchstens 10000 teilen.
 
 ### get_job_status
 
@@ -170,6 +183,7 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
 | `do_not_contact_hits` | Liste der Treffer mit `do_not_contact` (`leadId`, `email`) |
 | `linked_to_list` | Bei `list_id`: `list_id`, `name`, `newly_linked`; sonst null |
 | `errors` | Liste der Zeilenfehler (Text) |
+| `limit_reached`, `skipped_over_limit` | Wegen des Lead-Limits nicht importierte neue Leads (nur mit `allow_partial`), die ersten in `skipped_over_limit_rows`; dazu `lead_limit`, `free_slots_before`, `leads_in_account`. Ein Job `failed` mit `limit_reached` hat nichts importiert |
 
 ## Nachbearbeiten
 
@@ -206,7 +220,8 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
 Gruppierung, alle Leads bleiben. Mit `delete_leads=true` (verlangt `confirm_delete=true`, sonst
 `confirmation_required`) werden zusätzlich nur Leads gelöscht, die nie kontaktiert wurden, in keiner
 Kampagne und in keiner anderen Liste sind; alle übrigen werden nur gelöst. Das macht Test-Importe
-rückgängig und gibt das `max_leads`-Kontingent wieder frei. Antwort: `deleted_list`,
+rückgängig und gibt die Plätze im Lead-Limit sofort wieder frei; schon gebuchte Credits für
+gelöschte Leads werden nicht erstattet. Antwort: `deleted_list`,
 `leads_deleted`, `leads_detached`. Das Löschen von Leads ist unwiderruflich: nur auf ausdrücklichen
 Wunsch.
 
@@ -215,5 +230,6 @@ Wunsch.
 Nach dem Import: Liste prüfen (`get_list`), auf Wunsch einer bestätigten Kampagne zuordnen
 (`add_leads_to_campaign`) und über den Outreach-Workflow `start_lead_run` für `qualification`,
 `research`, `email` verarbeiten. `start_lead_run` nimmt keine `list_id`; die Auswahl der Leads
-erfolgt über die Kampagne. Vorher aktive Lead-Läufe prüfen (`list_lead_runs`). Kosten des KI-Laufs
-sind getrennt vom Scrape beim Anbieter abzustimmen.
+erfolgt über die Kampagne. Vorher aktive Lead-Läufe prüfen (`list_lead_runs`). Der KI-Lauf kostet
+Credits zum festen Preis je Lead, vorher zeigt `quote_lead_run` den Preis; im Abo-Lauf kostet er
+keine Credits. Beides ist getrennt vom Scrape beim Anbieter abzustimmen.

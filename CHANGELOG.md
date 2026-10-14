@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-10-14 – outreach 0.4.0, datenbeschaffung 0.3.1
+
+Setzt ListM8 MCP 3.0.0 voraus (Credits zum festen Preis je Lead). Meldet `ping` eine ältere Version, kennt der Server noch keine Credits; dafür steht in `outreach-pipeline` genau ein Satz.
+
+**outreach** (Credits zum festen Preis, Angebot vor dem Lauf, Account-Limit)
+- `outreach-pipeline` → Server-Lauf mit Credits zum festen Preis je Lead statt OpenRouter-Guthaben: einmal je Lauf `get_credit_balance` (`billing_mode`, `available`, `purchase`), dann Pflicht-Angebot `quote_lead_run` (Preis je Lead, aussortierter Lead, `max_credits`, Leads ohne Arbeit, Kappung) und Start mit `quote_hash` nach Zustimmung. Lauf-Budget nur noch `budget_percent` (Anteil am verfügbaren Guthaben); `budget_usd` ist veraltet und wird vom Server ignoriert. BYOK-Konten (eigener OpenRouter-Key): keine Preise, kein Lauf-Budget, kein Nachkauf. Preise nur als Beispiel im Standardmodell (Basis 0,75, Smart 1, Deep 2, aussortiert 0,25), verbindlich ist das Angebot.
+- `outreach-pipeline` → neue Startfehler als Tabelle: `price_changed`, `model_not_priced`, `effort_not_priced`, `model_missing`, `credits_exhausted`, `limit_reached` (auch ohne aktives Abo), `run_not_startable`. Neuer Endzustand `credits_exhausted`: Nachkauf nur bei `purchase.allowed` (Link `purchase.app_url`), danach `resume_lead_run` für denselben Lauf; `billing_mode_changed` heißt neuer Lauf. `budget_exhausted` meint nur noch das Lauf-Budget aus `budget_percent`. Abbruch: laufende Stufen buchen ihren eingefrorenen Festpreis. Bericht nennt gebuchte Credits und das Guthaben danach, bei BYOK das eigene OpenRouter-Konto, im Abo „keine Credits“.
+- `outreach` → Fragen zu Guthaben, Credits, Limits, freien Plätzen und Nachkauf beantwortet ein Aufruf von `get_credit_balance` (`account`, `by_origin`, `purchase`); kein Nachkauf, wenn `purchase.allowed` false ist; Jahresabo wechselt erst nach Laufzeitende auf monatlich.
+- `outreach-setup` → nach der Verbindung `ping` (Version) und `get_credit_balance` (Abrechnungsmodus, verfügbare Credits, Leads im Account, fehlendes Abo); ein eigener OpenRouter-Key nur bei BYOK.
+- `outreach-import` → Platzprüfung vor dem Import gegen `account.free_slots`: nur neue E-Mail-Adressen belegen einen Platz. Passt es nicht, lehnt der Server den ganzen Aufruf mit `limit_reached` ab; Teilimport mit `allow_partial=true` nur nach Rückfrage. Neue Antwortfelder (`new_leads`, `known_leads`, `free_slots`) und Job-Felder (`skipped_over_limit`).
+- `outreach-lists` → Löschen mit `delete_leads=true` gibt Plätze sofort frei; schon gebuchte Credits werden nicht erstattet.
+- `outreach-campaign` → `limit_reached` bei Kampagnen nur ohne aktives Abo bzw. hinter der Paywall; `references/research.md`: die Recherche-Stufe bestimmt den Credit-Preis je Lead, `deep` nur mit Zustimmung.
+- `outreach-abo-lauf`, `outreach-qualify`, `outreach-research`, `outreach-generate`, `outreach-verify`, `lead-agent` → Abo-Lauf und Manuell-Modus kosten keine Credits und kein OpenRouter-Guthaben, nur Abo-Kontingent.
+- Live-Ansicht → Kosten in Credits mit deutschem Zahlformat (bis drei Nachkommastellen, „12,25 Credits“, Budget als „12,25/50 Credits“), bei BYOK ohne Betrag; `credits_exhausted` ist ein Endzustand („Credits aufgebraucht“), `budget_exhausted` heißt „Lauf-Budget erreicht“; `resume_lead_run` holt denselben Lauf zurück ins Band und zeigt „Lead-Run fortgesetzt“.
+
+**datenbeschaffung** (Platzprüfung vor dem Import)
+- `datenbeschaffung` → Phase 3 liest mit MCP `get_credit_balance.account.free_slots`: Die geplanten neuen Leads müssen vor dem bezahlten Scrape in die freien Plätze passen (sonst kleinere Menge, Leads löschen oder Plan wechseln); ohne aktives Abo lässt sich nichts importieren. Der KI-Lauf danach hat einen eigenen Preis in Credits (`quote_lead_run`) oder läuft im Abo ohne Credits.
+- `listen-qualitaet` → Platzprüfung vor `import_leads` wiederholen, wenn die bereinigte Liste mehr neue Adressen hat als geplant.
+- `listm8-mcp.md` → Vertragsstand MCP 3.0.0: Import und Listen kosten keine Credits; neue Zeile `get_credit_balance`; Lead-Limit beim Import (`limit_reached`, `allow_partial`, neue Antwort- und Job-Felder); Löschen gibt Plätze sofort frei, gebuchte Credits werden nicht erstattet; der KI-Lauf kostet Credits zum festen Preis je Lead.
+- `outreach-uebergabe.md` → Platzprüfung beim Import, `start_lead_run` nach Preis-Angebot oder Abo-Lauf, Löschen gibt Plätze sofort frei.
+- `datenumfang.md` → die Recherche-Tiefe steuert nur das Seitenbudget; den Credit-Preis bestimmt die Recherche-Stufe.
+
 ## 2026-10-12 – fulfillment 0.1.0, outreach 0.3.30
 
 **fulfillment** (neues Plugin: das Marketing-Offer liefern)

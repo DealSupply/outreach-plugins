@@ -33,8 +33,9 @@ Scope: `leads:read` fürs Lesen/Exportieren, `leads:write` für Anlegen/Löschen
 - Ohne `delete_leads`: nur die Klammer verschwindet, jeder Lead bleibt.
 - Mit `delete_leads=true` (verlangt `confirm_delete=true`): gelöscht werden NUR Leads, die nie
   kontaktiert wurden, in keiner Kampagne und in keiner anderen Liste sind — alles andere wird
-  entkoppelt. Der Report nennt beide Zahlen. Das ist das Undo für Test-Importe und gibt das
-  `max_leads`-Limit frei.
+  entkoppelt. Der Report nennt beide Zahlen. Das ist das Undo für Test-Importe und gibt die Plätze
+  im Lead-Limit des Accounts sofort frei (`get_credit_balance.account.free_slots`); schon gebuchte
+  Credits für gelöschte Leads werden nicht erstattet.
 - Löschen ist endgültig — immer erst `get_list` zeigen, dann die ausdrückliche Bestätigung des
   Nutzers einholen, dann löschen.
 

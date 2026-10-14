@@ -22,8 +22,11 @@ const RUN_STATUS = {
   status: 'running',
   stages: ['qualification', 'research'],
   leadTotal: 150,
-  budgetUsd: 5,
-  spentUsd: 0.12,
+  budgetCredits: 50,
+  spentCredits: 12.25,
+  billing_mode: 'credits',
+  budget_credits: 50,
+  spent_credits: 12.25,
   stageProgress: [
     { stage: 'qualification', pending: 3, running: 2, completed: 40, failed: 1, noResult: 0, cancelled: 0, total: 46 },
   ],
@@ -158,22 +161,83 @@ describe('which MCP server is ours', () => {
 
 describe('run status', () => {
   test('a started run is one line in the chat', async $ => {
-    const started = { status: 'success', lead_run_id: 'run-1', campaign_id: 12, run_status: 'preparing', stages: ['qualification'], lead_total: 10, budget_usd: 1, queued: true }
+    const started = { status: 'success', lead_run_id: 'run-1', campaign_id: 12, run_status: 'preparing', stages: ['qualification'], lead_total: 10, billing_mode: 'credits', budget_credits: 12.5, spent_credits: 0, queued: true }
     const ui = await $.ui.mount({ ...toolRow('mcp__akquise__start_lead_run', started), surface: 'terminal' })
-    expect(await ui.find({ text: /Lead-Run gestartet · 10 Leads · Qualifizierung · Budget 1.00 \$/ })).toBeDefined()
+    expect(await ui.find({ text: /Lead-Run gestartet · 10 Leads · Qualifizierung · Budget 12,5 Credits/ })).toBeDefined()
     await ui.unmount()
   })
 
   test('a run just started counts no lead as through, not all of them', async ($, on) => {
     engineDraws(on)
     mock.clock(on)
-    const started = { status: 'success', lead_run_id: 'run-new', campaign_id: 12, run_status: 'preparing', stages: ['qualification', 'research', 'email'], lead_total: 10, budget_usd: 2, queued: true }
+    const started = { status: 'success', lead_run_id: 'run-new', campaign_id: 12, run_status: 'preparing', stages: ['qualification', 'research', 'email'], lead_total: 10, billing_mode: 'credits', budget_credits: 2, spent_credits: 0, queued: true }
     on('tool.call', () => ({ result: started }))
     await toolCall($, 'mcp__akquise__start_lead_run', { campaign_id: 12, stages: ['qualification'] })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '0/10' })).toBeDefined()
     expect(await band.find({ text: '10/10' })).toBeUndefined()
     await band.unmount()
+  })
+
+  test('a byok run starts without a budget and the band shows no amount', async ($, on) => {
+    engineDraws(on)
+    mock.clock(on)
+    const started = { status: 'success', lead_run_id: 'run-byok', campaign_id: 12, run_status: 'preparing', stages: ['qualification'], lead_total: 10, billing_mode: 'byok', budget_credits: null, spent_credits: null, queued: true }
+    const byok = { ...RUN_STATUS, id: 'run-byok', billing_mode: 'byok', budgetCredits: null, spentCredits: null, budget_credits: null, spent_credits: null }
+    on('tool.call', () => ({ result: byok }))
+    const card = await $.ui.mount({ ...toolRow('mcp__akquise__start_lead_run', started), surface: 'terminal' })
+    expect(await card.find({ text: /Lead-Run gestartet · 10 Leads · Qualifizierung$/ })).toBeDefined()
+    expect(await card.find({ text: /Budget|Credits|\$/ })).toBeUndefined()
+    await card.unmount()
+
+    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-byok' })
+    const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '40/46' })).toBeDefined()
+    expect(await band.find({ text: /Credits|\$/ })).toBeUndefined()
+    await band.unmount()
+  })
+
+  test('the band shows what a run has charged in credits, German notation', async ($, on) => {
+    engineDraws(on)
+    mock.clock(on)
+    on('tool.call', () => ({ result: RUN_STATUS }))
+    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '12,25/50 Credits' })).toBeDefined()
+    await band.unmount()
+  })
+
+  test('credits_exhausted ends a run; resume_lead_run brings the same run back into the band', async ($, on) => {
+    engineDraws(on)
+    const clock = mock.clock(on)
+    // No is_terminal flag: the status alone has to end the run.
+    const exhausted = { ...RUN_STATUS, status: 'credits_exhausted', is_terminal: undefined, statusReason: 'Guthaben aufgebraucht' }
+    const resumed = { status: 'success', lead_run_id: 'run-1', run_status: 'preparing', lead_total: 150, dispatched_chunks: 1 }
+    let asked = 0
+    on('tool.call', ($, e) => ({ result: String((e as { tool: string }).tool).endsWith('resume_lead_run') ? resumed : exhausted }))
+    on('mcp.call', (_$, e) => {
+      asked += 1
+      const body = (e as { tool: string }).tool === 'list_lead_runs' ? { runs: [RUN_STATUS], count: 1 } : RUN_STATUS
+      return { value: { content: [{ type: 'text', text: JSON.stringify(body) }], isError: false } }
+    })
+    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    let band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '· Credits aufgebraucht' })).toBeDefined()
+    await band.unmount()
+    await clock.advance(20_000)
+    expect(asked).toBe(0)
+
+    await toolCall($, 'mcp__akquise__resume_lead_run', { lead_run_id: 'run-1' })
+    band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '· Credits aufgebraucht' })).toBeUndefined()
+    expect(await band.find({ text: '· 150 Leads' })).toBeDefined()
+    await band.unmount()
+    await clock.advance(20_000)
+    expect(asked).toBeGreaterThan(0)
+
+    const card = await $.ui.mount({ ...toolRow('mcp__akquise__resume_lead_run', resumed), surface: 'terminal' })
+    expect(await card.find({ text: /Lead-Run fortgesetzt · 150 Leads/ })).toBeDefined()
+    await card.unmount()
   })
 
   test('a checked run shows in the band, not as a card in the chat', async ($, on) => {

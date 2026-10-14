@@ -127,7 +127,7 @@ Richtwerte aus der Vorlage ohne Prüfdatum. Vor dem Kauf den aktuellen Preis bei
 | Instantly (Hypergrowth, empfohlen: 25.000 Kontakte, 100.000+ Mails/Monat) | ca. 97 USD/Monat, jährlich ca. 78 USD/Monat |
 | **Gesamt** | **ca. 100 EUR/Monat im empfohlenen Hypergrowth-Zuschnitt** — mit dem kleineren Growth-Plan (47 USD, 1.000 Kontakte) als Einstieg gut 50 EUR |
 
-Dazu kommen je nach Vorgehen die Kosten für Leads (beim Datenanbieter) und für die Verarbeitung in ListM8. Wer das Setup sparen will, spart am einzigen Teil, der nicht verhandelbar ist.
+Dazu kommen je nach Vorgehen die Kosten für Leads (beim Datenanbieter) und für die Verarbeitung in ListM8 (Credits zum festen Preis je Lead im Server-Lauf, im Abo-Lauf keine Credits). Wer das Setup sparen will, spart am einzigen Teil, der nicht verhandelbar ist.
 
 ## Checkliste: Setup fertig?
 
