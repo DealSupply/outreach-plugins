@@ -1,13 +1,13 @@
 ---
 name: outreach-campaign
-description: 'Use when user says "outreach:campaign", "mcp:campaign", "erstelle kampagne via mcp", "kampagne per mcp anlegen", "campaign blueprint erstellen", "bearbeite kampagne via mcp", "Kampagne mit guter Copy bauen", "Qualifizierungskriterien formulieren", or triggers /mcp:campaign. Guided campaign builder (create_campaign, export_campaign_blueprint, edit_campaign) that enforces the cold-mailing SOP: copy via the outreach-copy skill (loaded before any sequence or variable prompt is written), open qualification and research anchors via the bundled references.'
+description: 'Use when user says "outreach:campaign", "mcp:campaign", "erstelle kampagne via mcp", "kampagne per mcp anlegen", "campaign blueprint erstellen", "bearbeite kampagne via mcp", "Kampagne mit guter Copy bauen", "Qualifizierungskriterien formulieren", or triggers /mcp:campaign. Guided campaign builder (create_campaign, export_campaign_blueprint, edit_campaign, update_ai_variable) that enforces the cold-mailing SOP: copy via the outreach-copy skill (loaded before any sequence or variable prompt is written), open qualification and research anchors via the bundled references.'
 ---
 
 # MCP Campaign — Kampagnen erstellen & bearbeiten via Blueprint
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
-Dieser Skill erstellt vollständige Kampagnen über `create_campaign` und ändert vorhandene über den Dreischritt `export_campaign_blueprint` → Blueprint anpassen → `edit_campaign` (Scope `campaigns:write`, Lesen: `campaigns:read`). Grundlage ist das CampaignBlueprint-Schema v1; die vollständige Referenz liefert der MCP-Prompt `campaign_blueprint_guide`.
+Dieser Skill erstellt vollständige Kampagnen über `create_campaign` und ändert vorhandene über den Dreischritt `export_campaign_blueprint` → Blueprint anpassen → `edit_campaign` (Scope `campaigns:write`, Lesen: `campaigns:read`). Ändert sich nur der Prompt einer KI-Variable, reicht `update_ai_variable` (ab ListM8-MCP 2.4.0). Grundlage ist das CampaignBlueprint-Schema v1; die vollständige Referenz liefert der MCP-Prompt `campaign_blueprint_guide`.
 
 ## Aufruf
 
@@ -122,15 +122,19 @@ Blueprint dem User zur Bestätigung zeigen (kompakt: Name, Variablen, Step-Betre
 
 **Neu:** `create_campaign(blueprint=<object>)` → Response enthält `campaign_id`, `imported` (steps/variables/intelligence/configs) und `warnings`. Warnungen zur Sequenz (z. B. „letzte Woche" in einer Mail, die nur 3 Tage nach der vorigen kommt) dem Nutzer nennen und den Text anpassen. Die Kampagne startet in der abgeleiteten Lifecycle-Stufe `draft` — der Lebenszyklus (`lifecycle` in `list_campaigns`: `draft` → `in_progress` → `exported` → `active` → `completed`) wird aus den Lead-Signalen berechnet, nicht gespeichert, und kann nicht manuell gesetzt werden. Atomar: bei einem Fehler wird nichts angelegt.
 
+**Nur einen Variablen-Prompt ändern:** `update_ai_variable(campaign_id=<id>, name="intro", prompt=<kompletter neuer Prompt>)`. Kein Export und kein Voll-Blueprint nötig; Sequenz, andere Variablen und die erzeugten Werte aller Leads bleiben unberührt. Der Prompt braucht 10 bis 10.000 Zeichen. Neue Werte entstehen erst bei der nächsten Generierung; ob die schon erzeugten Leads neu generiert werden sollen (kostet erneut), mit dem Nutzer klären. Fehlt das Tool in der Tool-Liste, ist der Server älter: dann `edit_campaign` wie unten.
+
 **Bearbeiten (immer Vollersatz):** `edit_campaign(campaign_id=<id>, blueprint=<object>, confirm_overwrite=true)` — **Replace-all**: Immer das KOMPLETTE Ziel-Blueprint senden, nie nur die Änderung. Ablauf:
 
-1. `export_campaign_blueprint(campaign_id)` holen (nie aus dem Gedächtnis rekonstruieren — alles, was im gesendeten Blueprint fehlt, wird gelöscht).
+1. `export_campaign_blueprint(campaign_id)` holen (nie aus dem Gedächtnis rekonstruieren — fehlende Schritte und fehlende Intelligence werden gelöscht).
 2. Nur die gewünschte Stelle ändern, den Rest unverändert lassen.
 3. Dem Nutzer die Änderung und die Konsequenz (siehe Warnung) nennen und bestätigen lassen.
 4. `edit_campaign` mit `confirm_overwrite=true` senden. Ohne `confirm_overwrite` antwortet das Tool bei bestehender Konfiguration mit `confirm_overwrite_required`. NUR dieser Code darf mit `confirm_overwrite=true` beantwortet werden.
 5. Danach `warnings` der Antwort lesen und mit erneutem `export_campaign_blueprint` kontrollieren, dass Config-Blöcke, Variablen und Schritte wie beabsichtigt stehen.
 
-**WARNUNG Neugenerierung:** Das Ersetzen der AI-Variablen LÖSCHT alle erzeugten Variablenwerte aller Leads der Kampagne (Cascade). Die Generierungsarbeit ist verloren, die Leads müssen neu generiert werden, und das kostet erneut. Vor dem Edit prüfen, ob schon Variablen erzeugt wurden (`list_leads` mit `campaign_status="pending_review"` bzw. `"approved"`). Wenn ja, dem Nutzer die Konsequenz ausdrücklich nennen und bestätigen lassen — `confirm_overwrite=true` allein ist KEINE informierte Zustimmung. Wer nur Schritte oder Config-Blöcke ändern will, sendet die Variablen unverändert aus dem Export zurück (der Server gleicht sie per Name ab); die Tool-Beschreibung warnt trotzdem ohne Einschränkung vor dem Verlust der Werte — nicht darauf verlassen, sondern bei vorhandenen Werten immer den Nutzer fragen. Änderungen an Prompt oder Name einer Variable machen ihre bisherigen Werte unbrauchbar. Nie bei aktivem Lead-Run editieren (`list_lead_runs(active_only=true)` vorher prüfen): die E-Mail-Stufe würde gegen den neuen Variablensatz generieren.
+**Was mit erzeugten Werten passiert:** Der Server gleicht die KI-Variablen per Name ab. Eine Variable mit gleichem Namen behält ihre erzeugten Werte, auch wenn sich ihr Prompt ändert; nichts wird gelöscht. Ein neuer Name legt eine neue Variable an, eine Variable, die im Blueprint fehlt, verschwindet nur, wenn keine Leads Werte für sie tragen. Die Sequenz-Schritte werden dagegen vollständig ersetzt. Ältere Server-Versionen warnten in der Tool-Beschreibung, das Ersetzen lösche alle Werte; das stimmt seit August 2026 nicht mehr und ist kein Grund, eine Prompt-Änderung abzulehnen.
+
+Was der Nutzer trotzdem wissen muss: Schon erzeugte Werte stammen aus dem alten Prompt. Sollen sie zum neuen passen, müssen die betroffenen Leads neu generiert werden, und das kostet erneut. Vorher prüfen, ob schon Werte da sind (`list_leads` mit `campaign_status="pending_review"` bzw. `"approved"`), und die Neugenerierung nur nach Rückfrage starten. `confirm_overwrite=true` allein ist keine informierte Zustimmung. Nicht während eines aktiven Lead-Laufs mit E-Mail-Stufe ändern (`list_lead_runs(active_only=true)` vorher prüfen): Die noch offenen Leads würden mit der neuen Konfiguration erzeugt.
 
 ## Phase 4: Setup prüfen (Pflicht vor Leads)
 
