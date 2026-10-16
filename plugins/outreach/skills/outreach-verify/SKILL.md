@@ -11,7 +11,7 @@ Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen 
 
 > **Hinweis zur Parallelisierung:** Wenn dein Client parallele Subagents unterstützt (z.B. Claude Code), spawne pro Lead einen Subagent wie beschrieben. Andernfalls arbeite die Leads **sequentiell** mit exakt denselben Schritten ab — das Ergebnis ist identisch, nur langsamer.
 
-> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt nur den Status `approved` (bereit für den CSV-Export, `export_leads`) und überträgt nichts nach Instantly; Push und Export sind eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
+> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt nur den Status `approved` (bereit für den CSV-Export, `export_leads`) und überträgt nichts nach Instantly; Push und Export sind eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`, für Mails im Review mit `regenerate_emails=true`; ohne den Schalter überspringt der Lauf sie); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
 
 ## Standard: Stichprobe statt Vollprüfung
 
@@ -107,7 +107,7 @@ Wenn KEINE campaign_id als Argument übergeben wurde:
 2. Zeige dem User die Kampagnen mit `leadCounts.pending_review > 0`
 3. Frage: "Für welche Kampagne soll ich Variablen reviewen?"
 4. Merke dir die campaign_id
-5. Vorprüfung: `list_lead_runs(campaign_id, active_only=true)` — solange für einen Lead ein Job der E-Mail- oder der Research-Stufe wartet oder läuft, lehnen `approve_lead_variables`/`reject_lead_variables` diesen Lead mit `lead_run_active` ab (Rennschutz). Erst nach dem Terminal-Status des Laufs reviewen. Nach einer Änderung der Kampagnenkonfiguration (Variablen, Schritte) vorhandene Werte nicht blind freigeben, sondern gegen die aktuelle Konfiguration prüfen (`export_campaign_blueprint`) und bei Abweichung neu generieren.
+5. Vorprüfung: `list_lead_runs(campaign_id, active_only=true)` — solange für einen Lead ein E-Mail-Job wartet oder läuft (`email_generation_active`) oder ein aktiver Lauf seine E-Mail-Stufe noch vor sich hat (`lead_run_active`), lehnen `approve_lead_variables`/`reject_lead_variables` genau diesen Lead ab (Rennschutz); die übrigen Leads lassen sich reviewen. Erst nach dem Terminal-Status des Laufs reviewen. Nach einer Änderung der Kampagnenkonfiguration (Variablen, Schritte) vorhandene Werte nicht blind freigeben, sondern gegen die aktuelle Konfiguration prüfen (`export_campaign_blueprint`) und bei Abweichung neu generieren.
 
 Wenn campaign_id als Argument übergeben wurde: Direkt zur Copy-Prüfung.
 
@@ -366,6 +366,7 @@ Success-Response:
 | `variables_not_found` | Keine erzeugten Werte — Lead gehört in die Generierung, nicht ins Review |
 | `validation_failed` (reject) | `reason` fehlt oder ist leer — konkreten Grund nachliefern |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Review pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen |
+| `email_generation_active` | Die Mail dieses Leads wird gerade generiert — Lead überspringen und nach dem Job erneut prüfen, die übrigen weiter reviewen |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, im Report erwähnen |
 | Alle Agents eines Batches fehlgeschlagen | Warnung ausgeben, User fragen ob fortfahren |
 | Netzwerk/MCP-Verbindungsfehler | 1x Retry, dann STOP mit Fehlermeldung |
