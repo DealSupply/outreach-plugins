@@ -22,7 +22,7 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei vollständig mit Read.
 - Allgemeine Werbehinweise auf Website oder im Impressum nur als Hinweis mit Quelle festhalten; sie
   ändern weder Fit noch Score. Gespeicherte Kontaktstatus nie ändern oder aus Website-Text ableiten.
-- Lehnt ein Werkzeug mit `lead_run_active`, `contact_gate` oder `verdict_final` ab: aufhören und das melden.
+- Lehnt ein Werkzeug mit `lead_run_active`, `email_generation_active`, `contact_gate` oder `verdict_final` ab: aufhören und das melden.
 
 ## Ablauf
 

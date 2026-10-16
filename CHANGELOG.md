@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 – outreach 0.3.33
+
+**outreach** (ListM8-MCP 2.5.0: E-Mails neu generieren, Sperre je Lead)
+- `outreach-pipeline` → `start_lead_run` kennt `regenerate_emails` für Mails im Review (nur mit Stufe `email`, kostet erneut, nur mit Zustimmung); mit `select_by_filter` gilt dann `campaign_status=pending_review`. Während eines Laufs sperren die Variablen-Werkzeuge nur noch den einzelnen Lead.
+- `outreach-verify`, `outreach-generate`, Lead-Agent → kennen den Code `email_generation_active` (Mail dieses Leads wird gerade generiert) und überspringen nur diesen Lead; Neugenerierung im Review über `regenerate_emails=true`.
+
 ## 2026-10-15 – outreach 0.3.32
 
 **outreach** (Kundenfall 15.10.2026: Claude lehnte eine Prompt-Änderung über den MCP ab)
