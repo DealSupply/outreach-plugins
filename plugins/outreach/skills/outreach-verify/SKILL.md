@@ -166,7 +166,7 @@ Du reviewst AI-generierte Variablen für einen Lead via MCP Tools.
 
 KAMPAGNE: {campaign.name} (ID: {campaign.id})
 LEAD: {lead.company} (ID: {lead.id})
-LEAD EMAIL: {lead.email}
+LEAD VERSANDADRESSE: {lead.sendingEmail || lead.email}
 LEAD WEBSITE: {lead.website}
 
 ## Schritte
@@ -364,6 +364,8 @@ Success-Response:
 | `list_leads` gibt leere leads[] | "Keine Leads zur Review" -> STOP |
 | Sub-Agent approve/reject Error | Fehler notieren, weitermachen mit nächstem Lead |
 | `variables_not_found` | Keine erzeugten Werte — Lead gehört in die Generierung, nicht ins Review |
+| `no_contact_email` (approve) | Ab MCP 3.0.0: der Lead hat keine Versandadresse und darf nicht freigegeben werden. Überspringen, im Report nennen; mit `reject_lead_variables` ablehnen, wenn er aus dem Review verschwinden soll |
+| `foreign_sending_address` (approve) | Die Versandadresse gehört laut Recherche einem anderen Unternehmen: überspringen, im Report nennen |
 | `validation_failed` (reject) | `reason` fehlt oder ist leer — konkreten Grund nachliefern |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Review pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, im Report erwähnen |

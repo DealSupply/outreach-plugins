@@ -46,11 +46,15 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
    `aufhänger=`-Angaben der `bau`-Zeilen mit `mail=gespeichert` auszählen: Zeigt mehr als ein Drittel
    dasselbe Anker-Thema (z. B. lauter Angstpatienten), im Bericht als systematischen Befund melden und
    vorschlagen, Sperrliste und `intro`-Prompt über `outreach-campaign` nachzuschärfen (bei
-   `nur_pruefen` fehlt die Angabe, dann entfällt die Zählung). Danach alle angemeldeten
+   `nur_pruefen` fehlt die Angabe, dann entfällt die Zählung). Zeilen mit `grund=keine-adresse`
+   (ab MCP 3.0.0: Lead ohne E-Mail importiert, Recherche fand keine eigene Adresse, keine Mail)
+   zählen als „ohne Adresse“ und sind kein Fehler. Danach alle angemeldeten
    Phasen mit `outreach_progress(action="end", campaign_id, phase=…)` schließen, auch wenn alles gezählt
    scheint: Leads ohne Schreibaufruf (Recherche vorhanden, aussortiert, Fehler) hält das Band sonst offen.
 4. **Rennschutz:** Meldet ein Agent `lead_run_active`, läuft parallel ein Server-Lauf über dieselben Leads.
    Abwarten (`get_lead_run_status`), dann diese Leads erneut starten.
+5. **Ohne Adresse:** `no_contact_email` (Lead ohne Versandadresse) beendet einen Lead ohne Fehler; nicht
+   erneut starten.
 
 ## Workflow-Skript (Claude Code)
 

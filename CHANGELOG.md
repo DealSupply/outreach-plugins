@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-10-16 – outreach 0.4.0, datenbeschaffung 0.5.0
+
+Leads ohne E-Mail-Adresse (ListM8 MCP 3.0.0). Ein Lead braucht beim Import eine gültige E-Mail oder eine eigene Website; die Recherche sucht die Kontaktadresse dann selbst. Alles Neue gilt erst ab Server-Version 3.0.0 (`ping`); ältere Server behalten den alten Ablauf, jeder Lead braucht dort eine E-Mail.
+
+**outreach**
+- `outreach-import` → Prüft zuerst die Server-Version. Ab 3.0.0 reicht E-Mail ODER eigene Website (Baukasten-Unterseiten wie `name.jimdosite.com` zählen, reine Profil- oder Plattform-Links nicht). Ungültige E-Mail mit brauchbarer Website wird ohne Adresse importiert. Teilimport statt Komplett-Ablehnung: `accepted`, `rejected_total`, `rejected_rows` mit Codes (`missing_contact`, `invalid_email`, `platform_only_website` usw.); `validation_failed` nur, wenn nichts importierbar ist. Bericht nennt Abgelehnte, Hinweise und Duplikate nach `matchedVia` (E-Mail oder Domain).
+- `outreach-research`, `lead-agent` → Ein Lead ohne Adresse bekommt als erstes Ziel die eigene Kontaktadresse (Regeln aus `researchGeneration.contactEmail`): persönliche Adresse von Inhaber oder Geschäftsführung vor info@, nie geraten, nie Plattform-, Verzeichnis-, Agentur- oder Kammeradressen. Fund als `bestEmail` schreiben (der Server macht sie zur Identität; `address_conflict` nicht wiederholen). Kein Fund: Recherche mit Abschnitt „## Kontakt“ und den geprüften Seiten speichern, der Lead scheidet mit `no_contact_email` aus und bekommt keine Mail-Variablen. Antwortzeile mit `adresse=` bzw. `grund=keine-adresse`.
+- `outreach-generate`, `outreach-verify`, `verify-agent` → `no_contact_email` beim Speichern oder Freigeben ist kein Fehler, nicht wiederholen. Versandadresse ist `sendingEmail`, sonst `email`; ein Lead ohne beide wird nie freigegeben.
+- `outreach-pipeline`, `outreach-abo-lauf` → Bericht zählt „ohne Adresse“ aus den `skipReasons` des Laufs bzw. den Antwortzeilen der Agents.
+- `outreach-lists`, `outreach-launch` → `check_leads_exist` meldet `matched_via` und `match_kind`, der Dedup-Index trägt in `e` die Versandadresse (leer, wenn keine) und in `se` die übrigen Adressen; `mark_leads_contacted` trifft auch Versand- und übergebene Adressen.
+- `outreach-setup` → nennt die Server-Version und was ab 3.0.0 gilt. `outreach-campaign` (Recherche-Referenz) → Hinweis, dass die Regeln zur Kontaktadresse vom Server kommen.
+- Live-Ansicht → Import zeigt abgelehnte Zeilen („470 importiert · 3 abgelehnt“); ein Lead, dessen Recherche keine Adresse fand, verlässt im Abo-Lauf die Mail-Phase; Leads ohne E-Mail erscheinen mit Website bzw. Versandadresse. 3 neue Tests.
+
+**datenbeschaffung**
+- `build_csv.py` → `--uebergabe kontakt` (E-Mail oder eigene Website, Standard für ListM8 ab 3.0.0) und `--uebergabe email` (alter Vertrag, `--require-email` bleibt als Alias); verworfene Zeilen mit Grund per `--verworfen` in eine eigene CSV; Hinweis `nur-plattform-url`; CSV als Eingabe, ein zweiter Durchlauf behält Inhaber, Zusatzspalten und frühere Hinweise. Neue Referenz `plattform-hosts.md` (Spiegel der Server-Liste: Profil-Plattformen, Marken mit Länderdomains, Baukästen).
+- `dedup.py` → Index-Zeilen ohne Adresse zählen über ihre Domain; Zeilen ohne E-Mail auf bekannter Domain fallen als derselbe Lead weg; `--drop-known-domains-ohne-email`. 6 neue Tests.
+- `datenbeschaffung`, `listen-qualitaet`, alle Wege, `impressum-enrichment`, `kontaktseiten-fallback`, `enrichment-waterfall`, `outscraper-bulk` → Die Kontaktlücke: vorab anreichern oder der ListM8-Recherche überlassen (Kosten- und Entscheidungstabelle in `datenumfang.md`); Anreicherung ist ab 3.0.0 optional. Bei ungültiger Adresse aus der Verifizierung bleibt die Zeile mit Website erhalten (Adresse raus, Hinweis `adresse-verworfen`).
+- `listm8-mcp.md`, `csv-spalten.md`, `outreach-uebergabe.md`, `listen-und-icp.md`, `erfahrungswerte.md` → neuer Import-Vertrag, Antwortfelder, Dedup über die Website, Platzhalter für die Fundquote der Recherche.
+
 ## 2026-10-15 – outreach 0.3.32
 
 **outreach** (Kundenfall 15.10.2026: Claude lehnte eine Prompt-Änderung über den MCP ab)

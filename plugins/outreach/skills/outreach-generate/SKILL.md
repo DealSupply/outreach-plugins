@@ -173,7 +173,7 @@ Verbleibend: {remaining}
 
 ### Phase 6: Nächster Batch oder Abschluss
 
-Wenn `remaining > 0`: Zurück zu Phase 2 (nächster list_leads Aufruf).
+Wenn `remaining > 0`: Zurück zu Phase 2 (nächster list_leads Aufruf). **Schleifenschutz:** Kommen im nächsten Batch dieselben Lead-IDs zurück, die eben schon bearbeitet wurden (z. B. weil sie ohne Versandadresse mit `no_contact_email` übersprungen wurden), abbrechen und dem Nutzer die IDs nennen, statt sie erneut zu bearbeiten.
 
 Wenn `remaining == 0` oder keine Leads mehr: Zeige Abschluss-Report:
 ```
@@ -273,7 +273,7 @@ validation_failed: Variable(s) missing from submission: 'intro'
 
 Die fehlenden Namen stehen im Fehlertext — alle Variablen aus `emailGeneration.expectedOutput` nachliefern und erneut senden.
 
-Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturierte Fehler-Response. Mögliche Codes: `validation_failed` (ungültiges JSON oder fehlende Variablen), `contact_gate` (Kontaktstatus des Leads blockiert — Lead überspringen), `variables_not_configured` (Kampagne hat keine AI-Variablen), `campaign_not_found`, `lead_not_found`, `lead_not_in_campaign`, `lead_run_active`, `insufficient_scope` und `internal_error`. Ist ein Wert kein String, speichert das Tool die Variable mit Status `error`.
+Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturierte Fehler-Response. Mögliche Codes: `validation_failed` (ungültiges JSON oder fehlende Variablen), `contact_gate` (Kontaktstatus des Leads blockiert: Lead überspringen), `no_contact_email` (ab MCP 3.0.0: der Lead hat keine Versandadresse, weder importiert noch von der Recherche gefunden: Lead überspringen, nicht wiederholen), `foreign_sending_address` (die Versandadresse gehört laut Recherche einem anderen Unternehmen: Lead überspringen), `variables_not_configured` (Kampagne hat keine AI-Variablen), `campaign_not_found`, `lead_not_found`, `lead_not_in_campaign`, `lead_run_active`, `insufficient_scope` und `internal_error`. Ist ein Wert kein String, speichert das Tool die Variable mit Status `error`.
 
 ### Verification-Tools (siehe `/outreach-verify`)
 
@@ -291,6 +291,7 @@ Details: siehe `/outreach-verify` Skill.
 |--------|--------|
 | `list_leads` gibt leere leads[] | "Keine Leads in Queue" -> STOP |
 | Sub-Agent save_lead_variables Error | Fehler notieren, weitermachen mit nächstem Lead |
+| `no_contact_email` | Kein Fehler: der Lead hat keine Versandadresse und bekommt keine Mail. Als „ohne Adresse“ zählen, nicht wiederholen. Die Standard-Warteschlange (`list_leads`) enthält solche Leads ab MCP 3.0.0 nicht; tauchen sie trotzdem auf, greift der Schleifenschutz aus Phase 6 |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Batch pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen (Queue ist idempotent) |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, im Report erwähnen |
 | Alle Agents eines Batches fehlgeschlagen | Warnung ausgeben, User fragen ob fortfahren |

@@ -23,6 +23,8 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Allgemeine Werbehinweise auf Website oder im Impressum nur als Hinweis mit Quelle festhalten; sie
   ändern weder Fit noch Score. Gespeicherte Kontaktstatus nie ändern oder aus Website-Text ableiten.
 - Lehnt ein Werkzeug mit `lead_run_active`, `contact_gate` oder `verdict_final` ab: aufhören und das melden.
+- Lehnt `save_lead_variables` mit `no_contact_email` ab (der Lead hat keine Versandadresse): keine
+  Wiederholung, kein `FEHLER`, sondern die Antwort mit `mail=übersprungen grund=keine-adresse`.
 
 ## Ablauf
 
@@ -34,12 +36,16 @@ eine als Datei abgelegte Antwort von einem anderen Agenten überschrieben sein. 
 `get_lead_data` erneut aufrufen; stimmt sie dann immer noch nicht, nichts schreiben und
 `FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. Darin stehen `qualificationGeneration`
 (Kriterien), `researchGeneration` (Recherche-Vorgaben), `emailGeneration` (System-Prompt, Ansprache,
-Variablen) sowie die vorhandene Qualifizierung und Recherche.
+Variablen) sowie die vorhandene Qualifizierung und Recherche. `lead.contactEmailState` (ab MCP 3.0.0)
+sagt, ob der Lead eine Adresse hat (`present`), noch eine sucht (`searching`) oder ohne Fund
+ausgeschieden ist (`not_found`). Bei `not_found` nichts schreiben und
+`OK lead=<id> fit=<…> recherche=vorhanden mail=übersprungen grund=keine-adresse aufhänger=-` melden.
 
 **Quelle der Regeln:** Der Server ist maßgeblich. Liefert `get_lead_data` die Felder
 `researchGeneration.anchorRules` (Anker-Regeln der Recherche), `researchGeneration.campaignFrame`
 (Sperrliste und Anker-Reihenfolge der Kampagne), `researchGeneration.researchTier` (Recherche-Stufe mit
-ihren Suchregeln) und in `emailGeneration.systemPrompt` die Opener-Regeln
+ihren Suchregeln), `researchGeneration.contactEmail` (Pflicht und Regeln der Kontaktadresse) und in
+`emailGeneration.systemPrompt` die Opener-Regeln
 samt den Blöcken `EINSTIEG DES OPENERS` und `SCHLUSS DES OPENERS`, gelten diese; die Regeltexte in Schritt 3 und 4 unten sind dann nur
 Gedächtnisstütze und treten bei Widerspruch zurück. Fehlen die Felder (älterer Server), gelten die
 Regeln unten. Die Werkzeug-Hinweise (Suche liefert nur Links, Portale öffnen, Google nicht lesbar)
@@ -94,6 +100,17 @@ gelten immer.
 - Sperrliste der Kampagne (in den Research-Vorgaben oder im `intro`-Prompt) beachten: gesperrte
   Standardleistungen nie als Aufhänger vormerken, außer als Lob aus Bewertungstexten. Ebenso nichts,
   was auf zehn andere Betriebe derselben Branche in der Stadt passt (Austauschtest).
+- **Lead ohne Adresse** (`researchGeneration.contactEmail.required` true bzw. `lead.email` und
+  `lead.sendingEmail` leer): Die eigene Kontaktadresse des Betriebs ist Ziel 0. Impressum, Kontakt-,
+  Team- und Datenschutzseite sowie den Footer der Website per WebFetch lesen (Suche nur nach
+  `researchTier.rules`). Eine gefundene eigene Adresse wird `bestEmail` (persönliche von Inhaber oder
+  Geschäftsführung vor Funktionsadresse vor info@/kontakt@; Adressen auf der eigenen Domain oder
+  Freemail mit Fundstelle). Der Server macht sie auch zur Identität des Leads. Nie Adressen einer
+  Plattform, eines Verzeichnisses, des Webdesigners, Hosters, einer Kammer oder eines Portals, nie
+  geraten, nie Platzhalter. Findet sich keine: `bestEmail` weglassen, unter „## Kontakt“ die geprüften
+  URLs nennen, trotzdem `status: "researched"`, Schritt 4 entfällt (Antwort
+  `mail=übersprungen grund=keine-adresse`). Meldet `warnings` `address_conflict`, gehört die Adresse
+  einem anderen Lead: nicht wiederholen, ebenfalls ohne Mail weiter.
 - Ermitteln: konkrete, belegte Aufhänger; Entscheider (Name, Rolle); die Versandadresse, über die die
   Entscheidungsperson am wahrscheinlichsten erreicht wird (belegte persönliche Adresse vor
   Funktionsadresse vor info@/kontakt@, auch Freemail; nur mit Fundstelle, nie geraten, nie als Bounce bekannt).
@@ -109,6 +126,8 @@ gelten immer.
 
 ### 4. Mail-Variablen schreiben
 
+- Nur mit Versandadresse: Steht nach Schritt 3 weder `lead.email` bzw. `lead.sendingEmail` noch eine
+  eben geschriebene `bestEmail` am Lead, entfällt dieser Schritt (`mail=übersprungen grund=keine-adresse`).
 - Maßgeblich ist `emailGeneration.systemPrompt` (Server-Regeln für Anrede, Opener, Einstieg). Nur wenn
   er keine Opener-Regeln enthält (älterer Server), den Skill `outreach:outreach-copy` laden (Abschnitte
   „Anrede und Ansprache“ und „Intro-Regeln“).
@@ -166,7 +185,8 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
 2. Nach Art:
    - `adresse`: Die belegte bessere Adresse aus dem Befund bzw. der Recherche per
      `switch_primary_email(campaign_id, lead_id, email, reason)` setzen. Nur Adressen, die der Lead schon
-     hat; lehnt das Werkzeug mit `unknown_address` ab, nichts raten, sondern `UNVERÄNDERT` melden. Danach
+     hat; lehnt das Werkzeug mit `unknown_address` ab (bei einem Lead ohne jede Adresse immer), nichts
+     raten, sondern `UNVERÄNDERT` melden. Danach
      `hallo` auf die Person der neuen Adresse prüfen und bei Bedarf wie bei `text` neu schreiben.
    - `recherche`: Nur die offene Frage aus dem Befund klären (Impressum, Team-Seite, Bewertungsquelle per
      WebFetch, WebSearch nur, soweit `researchGeneration.researchTier.rules` sie erlaubt). Ist sie belegt beantwortet, die Recherche ergänzen: den vorhandenen
@@ -187,7 +207,8 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
 ## Antwort
 
 Am Ende NUR eine Zeile:
-`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
+`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
+(`grund` nur bei `mail=übersprungen` wegen fehlender oder fremder Versandadresse)
 bzw. nach „Nachbessern“
 `NACHGEBESSERT lead=<id> art=<…> geändert=<z. B. intro, hallo, adresse, recherche> neu=<kurz: neuer Anker bzw. Adresse>`
 oder `UNVERÄNDERT lead=<id> art=<…>: <warum nicht behebbar>`

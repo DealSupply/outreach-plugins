@@ -678,16 +678,32 @@ const withLead = (local: LocalRun, leadId: number, how: 'done' | 'skipped'): Loc
   return { ...local, doneLeadIds, skippedLeadIds, isTerminal, finishedAt: isTerminal ? Date.now() : null }
 }
 
+/** The lead a write answers with says the research found no address to send to (MCP 3.0.0 and later). */
+const leftWithoutAddress = (answer: Record<string, unknown> | null): boolean => {
+  const lead = answer !== null && typeof answer.lead === 'object' && answer.lead !== null
+    ? (answer.lead as Record<string, unknown>)
+    : answer
+  return lead?.contactEmailState === 'not_found'
+}
+
 /**
  * Counts one lead as done for its phase. A lead judged not qualified also leaves the research and
- * email phases of its campaign still going: they will never write it, and must not wait for it.
+ * email phases of its campaign still going: they will never write it, and must not wait for it. So
+ * does a lead imported without an address whose research found none: it gets no mail.
  */
-const countWrite = async ($: EngineInterface, phase: Phase, input: Record<string, unknown>, server: string) => {
+const countWrite = async (
+  $: EngineInterface,
+  phase: Phase,
+  input: Record<string, unknown>,
+  server: string,
+  answer: Record<string, unknown> | null = null,
+) => {
   const campaignId = Number(input.campaign_id)
   const leadId = Number(input.lead_id)
   if (!Number.isFinite(campaignId) || !Number.isFinite(leadId)) return
   const fields = typeof input.fields === 'object' && input.fields !== null ? (input.fields as Record<string, unknown>) : {}
   const leaves = phase === 'qualification' && fields.qualificationFitLevel === 'not_qualified'
+  const noAddress = phase === 'research' && leftWithoutAddress(answer)
   const ended: LocalRun[] = []
   await update($, locals, all => {
     const next = { ...all }
@@ -706,6 +722,7 @@ const countWrite = async ($: EngineInterface, phase: Phase, input: Record<string
       touch(localKey(campaignId, 'research'), 'skipped')
       touch(localKey(campaignId, 'email'), 'skipped')
     }
+    if (noAddress) touch(localKey(campaignId, 'email'), 'skipped')
     return next
   })
   for (const local of ended) await endLocal($, local)
@@ -1039,7 +1056,7 @@ export const register: Register = (on, options) => {
     await learnOrigin($, server, payloadOf(ran.result))
     const written = phaseOfWrite(name, e as unknown as Record<string, unknown>)
     if (written !== null) {
-      await countWrite($, written, e as unknown as Record<string, unknown>, server)
+      await countWrite($, written, e as unknown as Record<string, unknown>, server, payloadOf(ran.result))
       return ran
     }
     if (name === 'import_leads' || name === 'get_job_status') {

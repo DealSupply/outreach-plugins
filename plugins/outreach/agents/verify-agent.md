@@ -16,7 +16,9 @@ ihm mit `art` und `grund`, was zu tun ist.
 - Modus laut Auftrag:
   - „Modus: nur Urteil“ (Standard, wenn nichts genannt ist): nichts schreiben, nur die Antwortzeile.
   - „Modus: entscheiden“: bei `freigeben` `approve_lead_variables`, bei `ablehnen`
-    `reject_lead_variables(reason=…)`; bei `hinweis` nichts schreiben.
+    `reject_lead_variables(reason=…)`; bei `hinweis` nichts schreiben. Lehnt `approve_lead_variables`
+    mit `no_contact_email` (keine Versandadresse) oder `foreign_sending_address` ab: nicht wiederholen,
+    `FEHLER lead=<id>: keine Versandadresse` bzw. `…: fremde Versandadresse` melden.
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei. Prüfe danach, dass `lead.id`
   und `campaign.id` genau deinem Auftrag entsprechen; parallel laufende Agents können eine abgelegte
   Antwort überschreiben. Stimmt die ID nicht, erneut abrufen; stimmt sie dann immer noch nicht,
@@ -26,7 +28,8 @@ ihm mit `art` und `grund`, was zu tun ist.
 
 1. `get_lead_variables(campaign_id, lead_id)`: Variablen, Recherche, Qualifizierung. Die Versandadresse ist
    `lead.sendingEmail` (kann eine persönliche Adresse aus der Recherche sein); `lead.email` ist nur die
-   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`.
+   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`. Fehlen beide (Lead ohne Adresse, ab MCP
+   3.0.0 möglich): nie `freigeben`, sondern `URTEIL … ergebnis=hinweis art=recht grund=keine Versandadresse`.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede) und
    die festen Steps. Die Regeln der Kampagne gehen allgemeinen Regeln vor. Die Person wird nie mit
    ihr/euch angesprochen; Tatsachen über einen Betrieb mit mehreren Personen mit ihr/euer („dass ihr … habt“)

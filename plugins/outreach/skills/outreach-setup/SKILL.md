@@ -24,7 +24,9 @@ Stelle fest, wo du läufst, und nenne es dem Nutzer in einem Satz:
 
 Rufe `list_campaigns` auf (nur lesend).
 
-- **Antwort kommt:** Verbindung steht. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
+- **Antwort kommt:** Verbindung steht. Zusätzlich `ping` aufrufen und die Server-Version nennen. Ab
+  `3.0.0` lassen sich Leads auch nur mit Website (ohne E-Mail) importieren; darunter braucht jeder
+  Lead eine E-Mail. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
 - **Kein Outreach-Tool verfügbar oder Anmeldung nötig:**
   - **Akquise-Kunden:** Das Plugin bringt die Verbindung `akquise` mit (`outreach.akquise.de`).
     - Claude Code: `/mcp` öffnen → `akquise` → anmelden.

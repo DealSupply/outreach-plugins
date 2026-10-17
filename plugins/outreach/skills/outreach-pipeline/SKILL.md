@@ -78,14 +78,14 @@ Das MCP-Tool `start_lead_run` verkettet Qualifizierung, Research und E-Mail-Vari
 
 Hinweis zu den Kosten: `spentUsd` ist der Betrag, an dem `budgetUsd` stoppt. Laufende Jobs können nach dem Stopp noch Kosten nachbuchen.
 
-Hinweis zu den Zahlen: `not_qualified`-Leads und Leads mit blockierendem Kontaktstatus verlassen die Kette OHNE Job — sie erscheinen in keinem Stufen-Zähler; `completed` kann deshalb legitim unter `leadTotal` bleiben.
+Hinweis zu den Zahlen: `not_qualified`-Leads und Leads mit blockierendem Kontaktstatus verlassen die Kette OHNE Job: sie erscheinen in keinem Stufen-Zähler; `completed` kann deshalb legitim unter `leadTotal` bleiben. Ab MCP 3.0.0 gilt das auch für Leads ohne Kontaktadresse: Hat ein ohne E-Mail importierter Lead nach der Recherche keine eigene Adresse, verlässt er die Kette vor der E-Mail-Stufe (Grund `no_contact_email`, kein Job, keine Kosten). `get_lead_run_status` zählt die Gründe in `skipReasons` (u. a. `no_contact_email`, `foreign_address`, `contacted`, `not_qualified`).
 
 ## Bericht (beide Laufarten)
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Lead-Lauf abgeschlossen — Kampagne {campaign.name} · {Server-Lauf | Abo-Lauf} ({status})
-Stufen: {stages} | Leads: {fertig}/{gesamt} | aussortiert: {not_qualified} | Fehler: {failed}
+Stufen: {stages} | Leads: {fertig}/{gesamt} | aussortiert: {not_qualified} | ohne Adresse: {no_contact_email} | Fehler: {failed}
 Kosten: {spentUsd} USD{von budgetUsd USD}  bzw.  im Abo, keine Server-Kosten
 Stichprobe: {geprüft} geprüft · {frei} ohne Befund · {nachgebessert} nachgebessert · {offen} offen
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
