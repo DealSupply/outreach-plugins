@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-17 – outreach 0.3.32
+
+**outreach** (gleichauf mit dem ListM8-Server: der Schluss im Intro ist keine Pflicht mehr)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-verify`, `outreach-generate` → Ein Lob aus Bewertungstexten trägt das Intro allein; ein Schluss, der das Lob nur wiederholt, fällt weg, und neben einem lobenden festen Folgesatz wird nie zweimal gelobt. Ein neutrales Faktum und eine Bewertungszahl bekommen weiter einen kurzen Schluss. Grund: Bei der einzigen Kampagne mit Antwortdaten kamen alle Interessenten aus Intros ohne Schluss.
+- Die Reaktion aus dem Block `SCHLUSS DES OPENERS` ist ein Vorschlag, keine Vorgabe. `verify-agent`: fehlender Schluss hinter Kundenlob ist kein Befund, doppeltes Lob ein Hinweis.
+- `copy-lehre` → Beispiel zur Bewertungszahl schließt mit einer Reaktion statt mit einem Nutzen (Widerspruch zur Server-Regel behoben).
+
 ## 2026-10-14 – datenbeschaffung 0.4.0
 
 **datenbeschaffung** (neuer Weg F: SaaS- und Software-Firmen in DACH, Testreihe vom 14.10.2026)

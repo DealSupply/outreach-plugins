@@ -55,7 +55,7 @@ ihm mit `art` und `grund`, was zu tun ist.
   - Austauschtest: Der Anker passt auf zehn andere Betriebe derselben Branche in der Stadt
     (Standardleistung, auch mit angehängtem Nutzen, oder Leistungsaufzählung).
   - Sperrliste: Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten.
-  - Positiver Schluss: fehlt, ist leer oder eine Floskel bzw. ein Superlativ („finde ich stark“,
+  - Positiver Schluss: fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, ist leer oder eine Floskel bzw. ein Superlativ („finde ich stark“,
     „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“, „das spricht für
     sich“), ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „so
     einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft
@@ -64,11 +64,13 @@ ihm mit `art` und `grund`, was zu tun ist.
     Patienten lieben das“). Erlaubt sind Nutzen oder Wirkung und, wo sich keiner anbietet, eine kurze
     Reaktion in der Vergangenheit direkt hinter dem benannten Detail („das fand ich eine schöne Idee“,
     „das ist mir gleich ins Auge gefallen“); sie sagt nur, dass es aufgefallen ist, und muss das Detail
-    nicht wiederholen. Kein Befund, solange sie zum Anker passt; „Idee“ oder „Ansatz“ hinter einer
+    nicht wiederholen. Hinter einem Lob aus Bewertungstexten ist ein fehlender Schluss kein Befund; ein Schluss,
+    der dasselbe Lob nur noch einmal sagt oder neben einem lobenden festen Folgesatz doppelt lobt, ist ein
+    Hinweis (`text`). Eine Reaktion ist kein Befund, solange sie zum Anker passt; „Idee“ oder „Ansatz“ hinter einer
     Bewertungszahl oder „ins Auge gefallen“ nach „mir ist aufgefallen“ ist ein Hinweis (`text`). „finde ich stark“ ist dagegen eine Formel. Der Fallback-Satz der Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
-    gibt der Server je Lead aus einer festen Liste vor; Wiederholungen über die Kampagne sind
+    schlägt der Server je Lead aus einer festen Liste vor; Wiederholungen über die Kampagne sind
     erwartet und kein Befund. Gleich lautende Nutzen-Schlüsse über mehrere Leads (etwa „so können sich
     Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als systematischen
     Befund.
@@ -108,7 +110,7 @@ Zu `ablehnen` und `hinweis` gehört immer die Art des Befunds. Sie bestimmt, wer
   falsch (Lob einer anderen Person zugeschrieben, zugespitzt, Wirkaussage, die nicht direkt aus dem
   Detail folgt, Selbstangabe als Anker,
   obwohl ein besserer belegt ist, Standardleistung oder Sperrlisten-Thema statt Abhebung, positiver
-  Schluss fehlt oder ist erfunden, Fallback passt nicht zur angeschriebenen Person).
+  Schluss fehlt hinter einem neutralen Faktum oder ist erfunden, Fallback passt nicht zur angeschriebenen Person).
 - `recherche`: Für einen richtigen Text fehlt ein Beleg (Entscheider unklar, Quelle des Ankers
   ungeprüft, Rolle der angeschriebenen Person offen). `grund` nennt die offene Frage.
 - `adresse`: Die Versandadresse gehört keiner belegten Person, und die Recherche belegt eine bessere

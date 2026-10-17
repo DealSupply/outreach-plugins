@@ -132,18 +132,20 @@ gelten immer.
   - Sterne: Anzahl und Schnitt nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, Zahl
     gerundet („über 200“), Schnitt mit Komma („4,8“), bei widersprüchlichen Quellen der kleinere Wert.
     Unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen: nächster Anker bzw. Fallback.
-  - Positiver Schluss: Nach der Beobachtung ein kurzer Halbsatz aus diesem Detail. Zuerst Nutzen oder
+  - Positiver Schluss: Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es
+    das Intro allein; einen Schluss, der das Lob nur wiederholt, lässt du weg. Ein neutrales Faktum und eine
+    Bewertungszahl bekommen einen kurzen Halbsatz aus diesem Detail. Zuerst Nutzen oder
     Wirkung (wem nützt es, was bewirkt es), wenn sie sich anbietet; sonst eine kurze persönliche
     Reaktion direkt hinter dem benannten Detail, in der Vergangenheit, nie allein; sie muss das Detail
-    nicht wiederholen. Die Reaktion nimmst du wörtlich
-    aus dem Block `SCHLUSS DES OPENERS` des System-Prompts; fehlt er (älterer Server), variiere sie
+    nicht wiederholen. Eine passende Reaktion schlägt der Block
+    `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie
     selbst und übernimm die zwei bekannten Muster („das fand ich eine schöne Idee“, „hat mir gut
     gefallen“) nicht wörtlich. Nie ein Prüfer-Urteil
     über die Qualität der Arbeit: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn
     die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“,
     „zeigt, dass die Behandlung ankommt“. Nichts erfinden, keine Formel („finde ich stark“, „hat man
-    nicht alle Tage“), kein Superlativ, keine Wendung aus Beispielen. Gilt auch bei Bewertungsankern;
-    der Fallback-Satz bleibt wörtlich und ohne Schluss.
+    nicht alle Tage“), kein Superlativ, keine Wendung aus Beispielen. Lobt schon der erste Satz des festen
+    Mailtexts selbst, entfällt der Schluss. Der Fallback-Satz bleibt wörtlich und ohne Schluss.
   - Einstieg: wie im Block `EINSTIEG DES OPENERS` des System-Prompts; fehlt er, nach der letzten Ziffer deiner Lead-ID: 0-2 „mir ist aufgefallen, dass …“, 3-5 „ich hab
     mir … angeschaut“, 6-7 „beim Stöbern auf deiner Website …“, 8-9 direkt mit dem Detail. Ein
     Bewertungsanker nennt immer die Quelle im Einstieg („ich hab mir deine Bewertungen angeschaut,

@@ -89,7 +89,7 @@ Gegensatzpaare (die Spalte „besteht“ zeigt den Fund, nicht den fertigen Satz
 
 ### Positiver Schluss
 
-Nach der Beobachtung folgt ein kurzer positiver Halbsatz, in dieser Rangfolge:
+Das Intro endet als Lob, damit der feste Folgesatz („Deshalb …“) einen Grund hat. Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es das Intro allein; ein Schluss ist frei, und einer, der das Lob nur wiederholt, fällt weg. Lobt schon der erste Satz des festen Mailtexts selbst, entfällt der Schluss: nie zweimal loben. Ein neutrales Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt, Auszeichnung) und eine Bewertungszahl bekommen einen kurzen positiven Halbsatz, in dieser Rangfolge:
 
 1. **Nutzen oder Wirkung**, wenn sie sich aus dem Detail anbietet (wem nützt es, was bewirkt es): „…, so passt ein Termin auch nach der Arbeit.“
 2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, in der Vergangenheit erzählt wie unter Kollegen: „…, das fand ich eine schöne Idee.“, „…, das ist mir gleich ins Auge gefallen.“ Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein, und wird je Lead aus dem Detail gebildet, nie als feste Wendung.
@@ -100,8 +100,8 @@ Leitplanken:
 - nichts erfinden, nur was direkt aus dem Detail folgt (nie „deine Patienten lieben das“, nie „alle positiv“);
 - keine inhaltsleere Formel und kein Vergleich oder Superlativ („finde ich stark/spannend/bemerkenswert“, „Hammer“, „beeindruckend“, „das sieht man selten“, „das sieht man nicht immer“, „hat man nicht alle Tage“, „das spricht für sich“);
 - Abgrenzung: „das fand ich eine schöne Idee“ ist eine Reaktion auf ein benanntes Detail und erlaubt; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
-- keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; die Reaktion gibt der Server je Lead aus einer festen Liste vor, Wiederholungen über eine Kampagne sind deshalb erwartet; gleich lautende Nutzen-Schlüsse über mehrere Leads (etwa „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen) sind ein systematischer Befund;
-- gilt auch bei Bewertungsankern; insgesamt weiter höchstens 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich);
+- keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; die Reaktion schlägt der Server je Lead aus einer festen Liste vor, Wiederholungen über eine Kampagne sind deshalb erwartet; gleich lautende Nutzen-Schlüsse über mehrere Leads (etwa „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen) sind ein systematischer Befund;
+- eine Bewertungszahl bekommt immer einen Schluss; insgesamt weiter höchstens 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich);
 - der Fallback-Satz der Kampagne bleibt wörtlich, ohne angehängten Schluss.
 
 **Beispiele, nicht wörtlich übernehmen.** Sie zeigen, wie verschieden ein Schluss aus dem jeweiligen Detail entsteht. Wer einen davon in einen Prompt kopiert, macht alle Opener gleich.
@@ -158,8 +158,8 @@ Die Rangfolge aus „Bewertungen: Rangfolge der Anker“ im Detail. Jeder Angle 
 
 | Vorlage | Echtes Beispiel |
 |:--------|:---------------|
-| „ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, [PARAPHRASE]. [Kurzer positiver Schluss aus dem Lob]" | „ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen." |
-| „in deinen Bewertungen schreiben mehrere Kunden, dass [konkretes Lob]. [Kurzer positiver Schluss]" (nur wenn mindestens 2 Bewertungen das Lob tragen) | „in deinen Bewertungen schreiben mehrere Kunden, dass du ehrlich berätst und auch mal von einer Reparatur abrätst, die sich nicht lohnt. Da weiß jeder vorher, woran er ist." |
+| „ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, [PARAPHRASE]. [optional: kurzer Schluss, der das Lob nicht wiederholt]" | „ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen." |
+| „in deinen Bewertungen schreiben mehrere Kunden, dass [konkretes Lob]." (nur wenn mindestens 2 Bewertungen das Lob tragen) | „in deinen Bewertungen schreiben mehrere Kunden, dass du ehrlich berätst und auch mal von einer Reparatur abrätst, die sich nicht lohnt." (das Kundenlob trägt sich selbst) |
 
 ### Angle 2: Abhebendes Detail von der Website
 
@@ -183,7 +183,7 @@ Die Rangfolge aus „Bewertungen: Rangfolge der Anker“ im Detail. Jeder Angle 
 
 | Vorlage | Echtes Beispiel |
 |:--------|:---------------|
-| „ich hab mir deine Bewertungen angeschaut: [über N] Rezensionen mit einem Schnitt von [X,Y]. [Kurzer positiver Schluss]" | „ich hab mir deine Bewertungen angeschaut: über 200 Rezensionen mit einem Schnitt von 4,8. Wer neu einen Zahnarzt sucht, sieht daran, dass viele vor ihm gute Erfahrungen gemacht haben." |
+| „ich hab mir deine Bewertungen angeschaut: [über N] Rezensionen mit einem Schnitt von [X,Y]. [Kurzer positiver Schluss]" | „ich hab mir deine Bewertungen angeschaut: über 200 Rezensionen mit einem Schnitt von 4,8, das ist mir direkt aufgefallen." |
 
 ### Angle 4: Fallback der Kampagne (Branchen-/Regional-Bezug)
 
@@ -210,7 +210,7 @@ Einstiege: keiner ist Standard. Die letzte Ziffer der Lead-ID entscheidet, ein B
 **MUSS:**
 
 - Abhebung statt Leistungsnennung: Der Opener besteht den Austauschtest und nennt kein Thema von der Sperrliste der Kampagne (außer als Lob aus Bewertungstexten). Ein Nutzen rettet keine Standardleistung
-- Nach der Beobachtung ein kurzer positiver Schluss aus dem konkreten Detail: Nutzen oder Wirkung, sonst eine kurze Reaktion am benannten Detail, nie ein Prüfer-Urteil über die Qualität der Arbeit (Rangfolge und Leitplanken unter „Positiver Schluss“); der Fallback-Satz bleibt ohne Schluss
+- Nach einem neutralen Faktum oder einer Bewertungszahl ein kurzer positiver Schluss aus dem konkreten Detail (ein Lob aus Bewertungstexten trägt sich selbst, nie zweimal loben): Nutzen oder Wirkung, sonst eine kurze Reaktion am benannten Detail, nie ein Prüfer-Urteil über die Qualität der Arbeit (Rangfolge und Leitplanken unter „Positiver Schluss“); der Fallback-Satz bleibt ohne Schluss
 - Ausschließlich positiv: echtes Lob oder anerkennende Beobachtung, getragen vom konkreten Detail. Austauschbare Bewertungsfloskeln und Superlative („das spricht für sich", „das sieht man selten", „das sieht man nicht immer", „hat man nicht alle Tage", „finde ich stark", „finde ich spannend", „Hammer", „beeindruckend", auch umgestellt wie „ich finde spannend, dass …") sind verboten (ListM8-Regel), und zwar auch als Beispielsatz: Modelle kopieren Beispiele
 - Anker in der Rangfolge: Lob aus Bewertungstexten (Paraphrase; Plural oder „immer wieder" nur, wenn mindestens 2 Bewertungen dieses Lob tragen), dann abhebendes Website-Detail, dann Anzahl und Schnitt als eigener Anker (nur ab 30 Bewertungen und 4,5, Zahl gerundet, Schnitt mit Komma, bei widersprüchlichen Quellen der kleinere Wert), dann der Fallback
 - Stellenanzeige: die Erkenntnis über den Betrieb nutzen (Wachstum, Spezialisierung, Projekt), ohne anzukündigen, dass der Betrieb sucht oder einstellt
@@ -287,7 +287,9 @@ ANKER-REIHENFOLGE (nimm den ersten, der den Austauschtest besteht):
    Bewertungszahlen.
 4. FALLBACK.
 
-POSITIVER SCHLUSS: Nach der Beobachtung folgt ein kurzer Halbsatz. Zuerst
+POSITIVER SCHLUSS: Ein Lob aus Bewertungstexten trägt das Intro allein
+(kein Schluss, der es nur wiederholt). Nach einem neutralen Faktum oder
+einer Bewertungszahl folgt ein kurzer Halbsatz. Zuerst
 Nutzen oder Wirkung, wenn sie sich aus dem Detail anbietet (wem nützt es,
 was bewirkt es). Sonst eine kurze persönliche Reaktion direkt hinter dem
 benannten Detail (muss es nicht wiederholen), in der Vergangenheit erzählt (Muster: "das fand ich eine
@@ -300,8 +302,8 @@ erfinden, nur was direkt aus dem Detail folgt (nie "deine Kunden lieben
 das", nie "alle positiv"). Keine inhaltsleere Formel und kein Superlativ
 ("finde ich stark", "Hammer", "das sieht man selten", "das sieht man nicht
 immer", "hat man nicht alle Tage", "beeindruckend", "das spricht für
-sich"). Bilde jeden Schluss aus dem konkreten Detail. Gilt auch bei
-Bewertungsankern, nicht beim FALLBACK.
+sich"). Bilde jeden Schluss aus dem konkreten Detail. Lobt schon der feste
+Folgesatz selbst, entfällt der Schluss. Nicht beim FALLBACK.
 
 EINSTIEG: Kein Einstieg ist Standard. Wähle ihn nach der letzten Ziffer
 der Lead-ID: 0-2 "mir ist aufgefallen, dass ...", 3-5 "ich hab mir ...
@@ -372,7 +374,7 @@ Vor dem Export immer mindestens 10 Leads im Review (`outreach-verify`, `get_lead
 | Tonalität | Enthält Kritik, Mangel, Konjunktiv-Wunsch oder einen Ratschlag |
 | Austauschtest | Würde genauso auf zehn andere Betriebe derselben Branche in der Stadt passen, nennt eine Standardleistung (auch mit Nutzen), oder das Lob besteht nur aus einem Adjektiv ohne Inhalt |
 | Sperrliste | Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten |
-| Positiver Schluss | Fehlt, ist eine Floskel oder ein Superlativ, ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion, vor der kein Detail steht, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Gleich lautende Nutzen-Schlüsse über mehrere Leads sind ein systematischer Befund; wiederholte Reaktionen aus der Server-Liste sind es nicht |
+| Positiver Schluss | Fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, lobt dasselbe doppelt, ist eine Floskel oder ein Superlativ, ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion, vor der kein Detail steht, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Gleich lautende Nutzen-Schlüsse über mehrere Leads sind ein systematischer Befund; wiederholte Reaktionen aus der Server-Liste sind es nicht |
 | Bewertungsanker | Zahlen bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5, ungerundete Zahl, Schnitt mit Punkt, der größere von zwei widersprüchlichen Werten, nur Zahlen, obwohl ein Lob aus Bewertungstexten belegt ist; „mehrere“/„immer wieder“ ohne mindestens 2 Bewertungen; Einstieg ohne Quelle |
 | Zuschreibung | Schreibt der angesprochenen Person etwas zu, das einer anderen gehört |
 | Wahrheit | Enthält Zahl, Name oder Fakt, der nicht aus dem Research kommt |
@@ -920,7 +922,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 **Inhalt:**
 
 - [ ] Schreibe ich über den EMPFÄNGER oder über uns?
-- [ ] Besteht der individuelle Bezug den Austauschtest (passt nicht auf zehn andere Betriebe der Branche, nichts von der Sperrliste außer als Bewertungslob), mit kurzem positivem Schluss aus dem Detail (Nutzen oder Reaktion am Detail, kein Prüfer-Urteil) und ohne Lobadjektiv ohne Inhalt? Bewertungszahlen nur ab 30 Bewertungen und einem Schnitt von 4,5?
+- [ ] Besteht der individuelle Bezug den Austauschtest (passt nicht auf zehn andere Betriebe der Branche, nichts von der Sperrliste außer als Bewertungslob), mit kurzem positivem Schluss aus dem Detail, wo es nicht schon selbst ein Kundenlob ist (Nutzen oder Reaktion am Detail, kein Prüfer-Urteil) und ohne Lobadjektiv ohne Inhalt? Bewertungszahlen nur ab 30 Bewertungen und einem Schnitt von 4,5?
 - [ ] Stimmt die Anrede (Du-Form: Vorname der Person, der die Adresse gehört, bei generischen Adressen der Entscheider; sonst „Hallo,“)?
 - [ ] Ist das Offer konkret genug? (Würde ICH antworten?)
 - [ ] Kommt Social Proof erst im FUP2 (Step 3, neuer Thread), NICHT in der Entry Mail?

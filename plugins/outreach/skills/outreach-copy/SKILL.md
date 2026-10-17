@@ -223,19 +223,23 @@ MUSS:
   „jedes Bad vorab als begehbarer 3D-Rundgang“ besteht.
 - Sperrliste der Kampagne: Was in den Research-Vorgaben oder im `intro`-Prompt als branchenübliche
   Leistung gesperrt ist, trägt kein Intro, außer als Lob aus Bewertungstexten.
-- Positiver Schluss: Nach der Beobachtung folgt ein kurzer Halbsatz, in dieser Rangfolge:
+- Positiver Schluss: Das Intro endet als Lob, damit der feste Folgesatz („Deshalb …“) einen Grund hat.
+  Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es das Intro allein; ein Schluss ist frei, und einer, der das Lob nur wiederholt, fällt weg.
+  Ein neutrales Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt, Auszeichnung) und eine
+  Bewertungszahl bekommen einen kurzen Halbsatz, in dieser Rangfolge:
   1) Nutzen oder Wirkung, wenn sie sich aus dem Detail anbietet (wem nützt es, was bewirkt es);
   2) sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der Vergangenheit
   erzählt wie unter Kollegen; sie sagt nur, dass es aufgefallen ist oder gefallen hat („…, das ist mir
-  gleich ins Auge gefallen“), muss das Detail nicht wiederholen und steht nie ohne das Detail; welche Reaktion gilt, gibt der Block `SCHLUSS DES OPENERS`
-  im System-Prompt (`emailGeneration.systemPrompt`) wörtlich vor; fehlt er (älterer Server), die
+  gleich ins Auge gefallen“), muss das Detail nicht wiederholen und steht nie ohne das Detail; eine passende Reaktion schlägt der Block `SCHLUSS DES OPENERS`
+  im System-Prompt (`emailGeneration.systemPrompt`) vor; fehlt er (älterer Server), die
   Reaktion je Lead selbst variieren und die zwei bekannten Muster („das fand ich eine schöne Idee“,
   „hat mir gut gefallen“) nicht wörtlich übernehmen; 3) nie ein Prüfer-Urteil über die
   Qualität ihrer Arbeit, verboten sind etwa „das wirkt vertrauenswürdig“, „so einen Schnitt hält man
   nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes
   Arbeiten“, „zeigt, dass die Behandlung ankommt“. Nichts erfinden, nur was direkt aus dem Detail
   folgt. Keine feste Wendung aus Beispielen: den Nutzen aus dem konkreten Detail bilden, die
-  Reaktion aus dem Block. Gilt auch bei Bewertungsankern; der Fallback-Satz bleibt ohne Schluss.
+  Reaktion nie aus Beispielen. Lobt schon der erste Satz des festen Mailtexts selbst, entfällt der
+  Schluss: nie zweimal loben. Der Fallback-Satz bleibt ohne Schluss.
 - Ausschließlich positiv, getragen vom konkreten Detail selbst. Verboten sind austauschbare
   Bewertungsfloskeln und Superlative wie „das spricht für sich“, „das sieht man selten“, „das sieht
   man nicht immer“, „hat man nicht alle Tage“, „finde ich stark“, „finde ich spannend“, „finde ich
@@ -349,7 +353,8 @@ Der `intro`-Prompt MUSS enthalten:
   als Erkenntnis statt „du suchst“ > Anzahl und Schnitt > Fallback) samt Sterne-Regel: Zahlen
   nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, gerundet, mit Komma, Import-Werte
   als Quelle, bei Widerspruch der kleinere Wert;
-- den positiven Schluss mit Rangfolge (Nutzen oder Wirkung, sonst kurze Reaktion direkt hinter dem
+- den positiven Schluss (Kundenlob trägt sich selbst, ein neutrales Faktum und eine Bewertungszahl
+  bekommen einen) mit Rangfolge (Nutzen oder Wirkung, sonst kurze Reaktion direkt hinter dem
   benannten Detail, nie ein Prüfer-Urteil über die Qualität der Arbeit) und Leitplanken (nichts erfinden,
   keine Floskel, kein Superlativ, keine feste Wendung), ohne ausformulierte Beispiel-Schlüsse;
 - den Einstiegswechsel nach der letzten Ziffer der Lead-ID, mit Quelle im Einstieg bei
