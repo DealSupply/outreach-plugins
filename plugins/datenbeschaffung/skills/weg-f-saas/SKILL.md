@@ -179,7 +179,8 @@ dort schon gesichert), reine OMR-Einträge fallen heraus.
 
 Belegt an 379 Hamburger SaaS-Websites (27 Sekunden): 71 % mit Sitz in DACH erkannt, 73 % mit
 Adresse. Ohne Treffer bleiben Seiten, die das Impressum per JavaScript laden (15 %), und
-eingestellte Firmen (7 %). Diese Lücke füllt `impressum-enrichment` nur schlecht: Der
+eingestellte Firmen (7 %). Fehlt nur die Adresse, kann ab ListM8 MCP 3.0.0 die Recherche der
+Plattform sie auf der Website suchen (Lead mit Website importieren). Diese Lücke füllt `impressum-enrichment` nur schlecht: Der
 Impressum-Actor fand an 58 solchen Seiten 19 Anschriften und 14 Adressen und brauchte über
 20 Minuten. Nur für kleine, wertvolle Restmengen.
 

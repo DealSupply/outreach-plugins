@@ -6,8 +6,9 @@ description: Weg A des Datenbeschaffungs-Pakets — B2B-Dienstleister (Agenturen
 # Weg A — B2B-Dienstleister über Google
 
 Der Weg für Firmen, die man über ihre Website findet, nicht über einen Maps-Eintrag: Agenturen,
-Kanzleien, Beratungen, Systemhäuser, Makler-, Architektur- und Ingenieurbüros. Zweistufig —
-SERP liefert Domains, Kontaktdaten kommen erst danach über `impressum-enrichment`. Der Ablauf ist
+Kanzleien, Beratungen, Systemhäuser, Makler-, Architektur- und Ingenieurbüros. SERP liefert
+Domains; Kontaktdaten kommen danach optional über `impressum-enrichment` (ab ListM8 MCP 3.0.0 kann
+auch die Recherche der Plattform sie suchen). Der Ablauf ist
 manuell: Actor im eigenen Apify-Konto starten, Ergebnis prüfen, als CSV an `listen-qualitaet`, von
 dort Import nach ListM8 (Oberfläche oder MCP `import_leads`).
 
@@ -90,10 +91,17 @@ der Dedup auf Root-Domain wirkt dadurch über Städte hinweg.
 
 Deckel: kalkulierte Kosten + 50 %. Läuft ein Lauf länger als ein paar Minuten: pollen, nicht neu starten.
 
-## Schritt 4 — Kontaktdaten holen
+## Schritt 4 — Kontaktdaten holen (optional)
 
-Die Domain-CSV aus Schritt 3 an `impressum-enrichment` geben (dort stehen Actor, Betriebsregeln
-und Kosten). Wichtig: **Domain-Liste vorher gegen den Bestand abgleichen** (`check_leads_exist`
+Ab ListM8 MCP 3.0.0 gibt es zwei Wege, Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“
+(SERP-Domains haben keine Kontaktdaten, ab etwa 50 Domains ist der Impressum-Lauf meist billiger):
+
+- **Vorab anreichern:** die Domain-CSV aus Schritt 3 an `impressum-enrichment` geben (dort stehen
+  Actor, Betriebsregeln und Kosten). Auf älteren Servern der einzige Weg.
+- **Ohne Anreicherung:** die Domain-CSV direkt in `build_csv.py` geben (`--in domains.csv`,
+  Schritt 5); die Recherche sucht die Adresse.
+
+Beim Anreichern: Wichtig: **Domain-Liste vorher gegen den Bestand abgleichen** (`check_leads_exist`
 mit `domains`, oder `dedup.py` gegen `export_leads(format="index")`) — bekannte Leads dürfen keine
 Anreicherung kosten. Nicht-DACH-Domains und Onepager ohne Impressum landen im
 `kontaktseiten-fallback`, nicht in einer zweiten Impressum-Runde.

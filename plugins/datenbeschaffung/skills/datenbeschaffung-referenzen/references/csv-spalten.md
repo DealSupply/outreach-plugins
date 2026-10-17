@@ -13,17 +13,17 @@
 
 | Spalte | Pflicht | Regeln |
 |---|---|---|
-| `email` | ja* | lowercase, getrimmt. *Pflicht erst in der ÜBERGABE-CSV (Import/CSV-Fallback). Während der Anreicherung darf sie leer sein — genau diese Zeilen füttern die Impressum-/Kontaktseiten-Stufe (build_csv.py behält sie und markiert `keine-email` in `hinweis`; erst `--require-email` bei der finalen Fassung verwirft sie). Bei mehreren Adressen wählt build_csv.py die der eigenen Domain vor Freemail vor fremden Domains, die persönliche vor der Rollen-Adresse, Bewerbungs- und Datenschutz-Adressen nur ohne Alternative. Platzhalter (`info@mysite.com`) und Adressen mit Umlaut vor dem @ verwirft es. |
+| `email` | nein* | lowercase, getrimmt. *Ab ListM8 MCP 3.0.0 braucht jede Zeile der ÜBERGABE-CSV eine E-Mail **oder** eine eigene Website (`build_csv.py --uebergabe kontakt`); ohne E-Mail sucht die Recherche der Plattform die Adresse. Auf älteren Servern ist die E-Mail in der Übergabe-CSV Pflicht (`--uebergabe email`). Während der Anreicherung darf sie leer sein (build_csv.py behält die Zeile und markiert `keine-email` in `hinweis`). Bei mehreren Adressen wählt build_csv.py die der eigenen Domain vor Freemail vor fremden Domains, die persönliche vor der Rollen-Adresse, Bewerbungs- und Datenschutz-Adressen nur ohne Alternative. Platzhalter (`info@mysite.com`) und Adressen mit Umlaut vor dem @ verwirft es. |
 | `firstName` | nein | leer lassen statt raten — eine kaputte Anrede killt die Mail. Nur übernehmen, wenn die Quelle ihn ohnehin liefert (LinkedIn, Apollo); nie eigens beschaffen. |
 | `lastName` | nein | dito |
 | `company` | nein | Anzeigename; Normalisierung (GmbH-Zusätze) macht build_csv.py in `companyClean` |
-| `website` | nein* | mit Protokoll (https://…). *Praktisch Pflicht: ohne Website kein Startpunkt für die Recherche — Leads ohne Website markiert build_csv.py in `hinweis`. Bei Google Maps ist `url` der Maps-Link und wird nie als Website übernommen. |
+| `website` | ja* | mit Protokoll (https://…). *Pflicht, wenn die E-Mail fehlt, und praktisch immer: ohne Website kein Startpunkt für die Recherche (Leads ohne Website markiert build_csv.py in `hinweis`). Ein Profil-Link (Instagram, Linktree, Branchenportal …, Liste `plattform-hosts.md`) zählt nicht als Website; Baukasten-Subdomains (`praxis.jimdosite.com`) schon. Bei Google Maps ist `url` der Maps-Link und wird nie als Website übernommen. |
 | `phoneNumber` | nein | E.164 bevorzugt (+49 …) |
 | `city` | nein | Stadtname ohne PLZ |
 | `kategorie` | nein | Branche/Kategorie aus der Quelle (z. B. Google-Maps-categoryName) |
 | `quelle` | ja | Herkunftsvermerk: `apify:<actor> <datum>` — macht Läufe rückverfolgbar |
 | `companyClean` | nein | normalisierter Firmenname für die Ansprache („Müller Bau" statt „Müller Bau GmbH & Co. KG") |
-| `hinweis` | nein | maschinelle Anmerkungen: `rollen-adresse`, `keine-email`, `keine-website`, `keine-rezensionstexte`, `portal-website` (Maps-Eintrag mit Branchenportal statt eigener Website; Adresse verworfen), `fremde-domain` (Adresse einer anderen Firmen-Domain; Freemail zählt nicht), `geratene-adresse` (aus dem Namensmuster einer Datenbank geraten; nur verifiziert übernehmen) |
+| `hinweis` | nein | maschinelle Anmerkungen: `rollen-adresse`, `keine-email`, `keine-website`, `keine-rezensionstexte`, `portal-website` (Maps-Eintrag mit Branchenportal statt eigener Website; Adresse verworfen), `fremde-domain` (Adresse einer anderen Firmen-Domain; Freemail zählt nicht), `geratene-adresse` (aus dem Namensmuster einer Datenbank geraten; nur verifiziert übernehmen), `nur-plattform-url` (keine E-Mail und nur ein Profil-Link als Website; die Übergabe mit `--uebergabe kontakt` verwirft solche Zeilen), `adresse-verworfen` (der Verifier hat die Adresse aussortiert, die Zeile bleibt über ihre Website im Rennen) |
 
 ## Zusatzspalten (werden beim Import zu Attributen)
 
@@ -50,7 +50,12 @@ wenn sie einen Einstieg tragen (`datenumfang.md`).
 ## Regeln
 
 1. **UTF-8 mit korrekten Umlauten.** Niemals ae/oe/ue-Ersatz.
-2. **Eine Zeile = ein Lead = eine eindeutige E-Mail.** Dedup passiert VOR dem Schreiben (dedup.py).
+2. **Eine Zeile = ein Lead = eine eindeutige E-Mail, ohne E-Mail eine eindeutige Website.** Dedup
+   passiert VOR dem Schreiben (dedup.py); der Import gleicht Zeilen ohne E-Mail ebenfalls über die
+   Website ab.
+7. **Verworfene Zeilen** der Übergabe schreibt `build_csv.py --verworfen <datei>` mit Spalte `grund`
+   (`nur-plattform-url`, `kein-kontaktmerkmal`, `keine-email`) in eine eigene CSV; die Zahl gehört
+   in den Bericht.
 3. **Länder-Split:** je Land eine Datei (`leads-de.csv`, `leads-at.csv`, `leads-ch.csv`).
 4. **Rollen-Adressen** (info@, kontakt@, office@) sind erlaubt und werden in `hinweis` markiert —
    die Recherche sucht die persönliche Adresse, die Qualifizierung entscheidet (Trichter-Prinzip).

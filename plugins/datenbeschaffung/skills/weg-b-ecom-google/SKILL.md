@@ -89,11 +89,13 @@ Lauf (der Länder-Code gilt pro Lauf); DE/AT/CH getrennt, gern parallel. Alle Da
 zusammenführen und einmal durch `process_serp.py` — der Dedup auf Root-Domain wirkt so über alle
 Queries hinweg. Deckel: kalkulierte Kosten + 50 %.
 
-## Schritt 5 — Kontaktdaten holen
+## Schritt 5 — Kontaktdaten holen (optional)
 
 Die Shop-Domains an `impressum-enrichment` geben (Actor, Betriebsregeln und Kosten stehen dort).
 Shops sind impressumspflichtig und liefern hier überdurchschnittlich gut. `.com`-Marken ohne
-deutsches Impressum gehen in den `kontaktseiten-fallback`.
+deutsches Impressum gehen in den `kontaktseiten-fallback`. Ab ListM8 MCP 3.0.0 ist das optional
+(Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“): Ohne Anreicherung die Domain-CSV direkt
+in `build_csv.py` geben (`--in domains.csv`), dann sucht die Recherche die Adresse.
 
 ## Schritt 6 — Roh-CSV bauen
 

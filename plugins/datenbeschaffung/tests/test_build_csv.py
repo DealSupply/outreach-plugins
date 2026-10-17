@@ -213,7 +213,127 @@ class ExtraColumnsTest(unittest.TestCase):
     def test_require_email_drops_rows_without_address(self) -> None:
         rows, _, report = run([MAPS_ROW, MAPS_ROW_NO_WEBSITE], "--require-email")
         self.assertEqual(len(rows), 1)
-        self.assertIn("verworfen (--require-email): 1", report)
+        self.assertIn("verworfen (--uebergabe email): 1 (keine-email 1)", report)
+
+
+def run_with_rejected(rows: list[dict], *extra: str) -> tuple[list[dict], list[dict], str]:
+    with tempfile.TemporaryDirectory() as tmp:
+        src, out, rej = Path(tmp) / "in.json", Path(tmp) / "out.csv", Path(tmp) / "verworfen.csv"
+        src.write_text(json.dumps(rows), encoding="utf-8")
+        result = subprocess.run([sys.executable, "-I", str(SCRIPT), "--in", str(src), "--out", str(out),
+                                 "--quelle", "apify:test 2026-10-16", "--verworfen", str(rej), *extra],
+                                capture_output=True, text=True, check=True)
+        with out.open(encoding="utf-8", newline="") as fh:
+            kept = list(csv.DictReader(fh))
+        rejected = []
+        if rej.exists():
+            with rej.open(encoding="utf-8", newline="") as fh:
+                rejected = list(csv.DictReader(fh))
+        return kept, rejected, result.stdout
+
+
+WEBSITE_ONLY = {"title": "Praxis Ohne Mail", "placeId": "ChIJmuster0010", "countryCode": "DE",
+                "website": "https://praxis-ohne-mail.de", "emails": [], "city": "Ulm"}
+
+
+class HandoverTest(unittest.TestCase):
+    """Übergabe-CSV ab ListM8 MCP 3.0.0: E-Mail ODER eigene Website (references/plattform-hosts.md)."""
+
+    def test_kontakt_keeps_website_only_row(self) -> None:
+        kept, rejected, report = run_with_rejected([WEBSITE_ONLY], "--uebergabe", "kontakt")
+        self.assertEqual([r["website"] for r in kept], ["https://praxis-ohne-mail.de"])
+        self.assertEqual(rejected, [])
+        self.assertIn("ohne E-Mail, mit eigener Website (Recherche sucht die Adresse): 1", report)
+
+    def test_kontakt_rejects_platform_only_with_reason(self) -> None:
+        rows = [{**WEBSITE_ONLY, "placeId": f"ChIJp{i}", "website": url} for i, url in enumerate([
+            "https://www.instagram.com/praxis", "https://linktr.ee/praxis", "https://www.facebook.com/praxis",
+            "https://www.doctolib.fr/praxis"])]
+        kept, rejected, report = run_with_rejected(rows, "--uebergabe", "kontakt")
+        self.assertEqual(kept, [])
+        self.assertEqual({r["grund"] for r in rejected}, {"nur-plattform-url"})
+        self.assertIn("verworfen (--uebergabe kontakt): 4 (nur-plattform-url 4)", report)
+
+    def test_kontakt_rejects_without_any_contact(self) -> None:
+        kept, rejected, _ = run_with_rejected([MAPS_ROW_NO_WEBSITE], "--uebergabe", "kontakt")
+        self.assertEqual(kept, [])
+        self.assertEqual(rejected[0]["grund"], "kein-kontaktmerkmal")
+
+    def test_portal_website_without_email_is_platform_only(self) -> None:
+        row = {**WEBSITE_ONLY, "website": "https://www.gelbeseiten.de/gsbiz/1234", "emails": ["info@gelbeseiten.de"]}
+        kept, rejected, _ = run_with_rejected([row], "--uebergabe", "kontakt")
+        self.assertEqual((kept, rejected[0]["grund"]), ([], "nur-plattform-url"))
+
+    def test_builder_subdomain_counts_as_website(self) -> None:
+        rows = [{**WEBSITE_ONLY, "placeId": "ChIJb1", "website": "https://praxis.jimdosite.com"},
+                {**WEBSITE_ONLY, "placeId": "ChIJb2", "website": "https://salon.wixsite.com/start"},
+                {**WEBSITE_ONLY, "placeId": "ChIJb3", "website": "https://www.jimdosite.com"}]
+        kept, rejected, _ = run_with_rejected(rows, "--uebergabe", "kontakt")
+        self.assertEqual(len(kept), 2, "Kunden-Subdomains eines Baukastens sind eigene Websites")
+        self.assertEqual([r["grund"] for r in rejected], ["nur-plattform-url"])
+
+    def test_platform_link_with_email_stays(self) -> None:
+        # Instagram & Co. stehen zusätzlich in noise-domains.md: dort gehört die Adresse dem Portal.
+        row = {**WEBSITE_ONLY, "website": "https://linktr.ee/praxis", "emails": ["hallo@praxis-beispiel.de"]}
+        kept, rejected, _ = run_with_rejected([row], "--uebergabe", "kontakt")
+        self.assertEqual((len(kept), rejected), (1, []))
+
+    def test_email_mode_equals_require_email_alias(self) -> None:
+        a = run_with_rejected([MAPS_ROW, WEBSITE_ONLY], "--uebergabe", "email")
+        b = run_with_rejected([MAPS_ROW, WEBSITE_ONLY], "--require-email")
+        self.assertEqual(a, b)
+        self.assertEqual(a[1][0]["grund"], "keine-email")
+
+    def test_without_mode_platform_only_is_kept_and_marked(self) -> None:
+        row = {**WEBSITE_ONLY, "website": "https://linktr.ee/praxis"}
+        kept, rejected, report = run_with_rejected([row])
+        self.assertEqual(rejected, [])
+        self.assertIn("nur-plattform-url", kept[0]["hinweis"])
+        self.assertIn("ohne E-Mail, nur Plattform-Link: 1", report)
+
+    def test_platform_list_loaded_from_reference(self) -> None:
+        sys.path.insert(0, str(SCRIPT.parent))
+        try:
+            import build_csv
+        finally:
+            sys.path.pop(0)
+        self.assertIn("instagram.com", build_csv.PLATFORM_HOSTS)
+        self.assertIn("jimdosite.com", build_csv.PLATFORM_BUILDERS)
+        self.assertIn("treatwell", build_csv.PLATFORM_BRANDS)
+        self.assertTrue(build_csv.is_platform("treatwell.es"))
+        self.assertFalse(build_csv.is_platform("praxis.jimdosite.com"))
+
+    def test_second_pass_on_built_csv_keeps_columns_and_hints(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            first, second = Path(tmp) / "roh.csv", Path(tmp) / "uebergabe.csv"
+            src = Path(tmp) / "in.json"
+            src.write_text(json.dumps([MAPS_ROW, {**WEBSITE_ONLY, "omr_url": "https://omr.com/x"}]), encoding="utf-8")
+            subprocess.run([sys.executable, "-I", str(SCRIPT), "--in", str(src), "--out", str(first),
+                            "--quelle", "apify:test 2026-10-16", "--keep", "omr_url"], check=True, capture_output=True)
+            text = first.read_text(encoding="utf-8").replace("keine-email", "keine-email;adresse-verworfen")
+            first.write_text(text, encoding="utf-8")
+            subprocess.run([sys.executable, "-I", str(SCRIPT), "--in", str(first), "--out", str(second),
+                            "--quelle", "apify:test 2026-10-16", "--uebergabe", "kontakt"], check=True, capture_output=True)
+            with second.open(encoding="utf-8", newline="") as fh:
+                rows = list(csv.DictReader(fh))
+        lead, website_only = rows
+        self.assertEqual((lead["inhaber"], lead["rating"]), ("Max Muster", "4.8"))
+        self.assertEqual(website_only["omr_url"], "https://omr.com/x")
+        self.assertIn("adresse-verworfen", website_only["hinweis"])
+        self.assertEqual(website_only["hinweis"].count("keine-email"), 1)
+
+    def test_csv_input_from_process_serp(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = Path(tmp) / "domains.csv", Path(tmp) / "out.csv"
+            src.write_text("domain,website,titel,query\nmuster-mb.de,https://muster-mb.de/,Startseite | Muster,"
+                           "maschinenbau ulm\n", encoding="utf-8")
+            result = subprocess.run([sys.executable, "-I", str(SCRIPT), "--in", str(src), "--out", str(out),
+                                     "--quelle", "serp 2026-10-16", "--uebergabe", "kontakt"],
+                                    capture_output=True, text=True, check=True)
+            with out.open(encoding="utf-8", newline="") as fh:
+                rows = list(csv.DictReader(fh))
+        self.assertEqual((rows[0]["website"], rows[0]["company"]), ("https://muster-mb.de/", ""))
+        self.assertIn("Leads: 1", result.stdout)
 
 
 if __name__ == "__main__":

@@ -14,11 +14,14 @@ Sammeladresse — und, deutlich teurer, seine Mobilnummer bzw. Durchwahl.
 
 ## Die Reihenfolge (Kurs-Regel, nicht verhandelbar)
 
-1. Leads sammeln (Weg-Skill), eine Adresse je Lead reicht (info@) →
+1. Leads sammeln (Weg-Skill), eine Adresse je Lead reicht (info@), ab ListM8 MCP 3.0.0 auch nur
+   die eigene Website →
 2. Import und Recherche in der Plattform: Sie liest das Impressum, findet den Ansprechpartner und
    ersetzt die Rollen-Adresse durch die persönliche, wenn sie eine findet →
 3. dieser Skill, **optional**, nur für qualifizierte, wertvolle Leads, bei denen die Recherche einen
-   Namen, aber keine persönliche Adresse gefunden hat.
+   Namen, aber keine persönliche Adresse gefunden hat. Ab ListM8 MCP 3.0.0 auch für wertvolle
+   Leads, die ohne E-Mail importiert wurden und mangels Adresse ausgeschieden sind
+   (`contactEmailState: not_found`), sofern die Recherche einen Namen fand.
 
 Wer vor der Recherche anreichert, zahlt für Namen und Adressen, die die Plattform ohnehin findet,
 und reichert auch Leads an, die die Qualifizierung danach aussortiert.
@@ -81,8 +84,8 @@ Mobilnummern kommen praktisch keine heraus. Nur bei kleinen Mengen und knappem B
    Zusatzspalte `email_rollen` stehen (die info@ zusätzlich anzuschreiben erhöht laut Kurs die
    Kontaktchance). `quelle` um `+waterfall` ergänzen, `hinweis` um `persoenliche-adresse`, und die
    Provider-Angabe je Treffer als Zusatzspalte mitführen — sie macht den Lauf nachvollziehbar.
-6. **Zurück an `listen-qualitaet`** (Qualitätsstufe, Import per Oberfläche oder `import_leads`). Auch dieser Baustein übergibt nichts selbst. Bereits importierte Leads nicht blind neu importieren, vorher `check_leads_exist` mit den neuen Adressen. Neue Adressen
-   laufen dort durch die Verifizierung, sofern das Tool keinen eigenen Zustellbarkeits-Status
+6. **Zurück an `listen-qualitaet`** (Qualitätsstufe, Import per Oberfläche oder `import_leads`). Auch dieser Baustein übergibt nichts selbst. Bereits importierte Leads nicht neu importieren (ein Re-Import überschreibt keine Kernfelder), sondern die gefundene Adresse am Lead ergänzen: per `write_lead_details(bestEmail=…)` oder in der App. Bei einem Lead ohne E-Mail wird sie dabei auch seine Identität, und die Sperre `no_contact_email` fällt weg; meldet die Antwort `address_conflict`, gehört die Adresse schon einem anderen Lead. Vorher `check_leads_exist` mit den neuen Adressen. Neue Adressen
+   laufen durch die Verifizierung, sofern das Tool keinen eigenen Zustellbarkeits-Status
    mitliefert.
 
 ## Bekannte Fallen

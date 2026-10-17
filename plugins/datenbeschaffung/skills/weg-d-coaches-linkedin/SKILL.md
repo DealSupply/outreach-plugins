@@ -105,8 +105,10 @@ liest LinkedIn nicht, ohne Import fehlen sie der Mail. `build_csv.py` übersetzt
 mitnehmen (`csv-spalten.md`).
 
 Profile ohne E-Mail sind normal: LinkedIn ist eine Personen-, keine Kontaktdatenquelle. Wo eine
-Firmen-Website vorliegt, schließt `impressum-enrichment` die Lücke; sonst die Lücke akzeptieren
-(Trichter-Prinzip) und weitergeben.
+Firmen-Website vorliegt, schließt `impressum-enrichment` die Lücke, oder ab ListM8 MCP 3.0.0 die
+Recherche der Plattform (Lead mit Website importieren). Personen ohne Website und ohne E-Mail
+haben kein Kontaktmerkmal: Sie fallen bei der Übergabe heraus (der LinkedIn-Link ist ein
+Profil-Link, keine Website).
 
 ## Schritt 6 — Übergabe
 

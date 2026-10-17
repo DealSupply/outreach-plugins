@@ -75,14 +75,19 @@ Zusatzspalten mitführen, sie tragen später die Personalisierung: `plattform`, 
 Die Plattform selbst liest diese Seiten nicht; ohne Import fehlen sie der Mail
 (`../datenbeschaffung-referenzen/references/datenumfang.md`). Eine Seller-ID oder USt-Id nur zum
 Deduplizieren nutzen, nicht hochladen.
-Deduplizierung: `build_csv.py` dedupliziert auf E-Mail; liefert der Actor eine Seller-ID oder einen
-Firmennamen, zusätzlich darauf prüfen — derselbe Händler taucht über mehrere Listings auf.
+Deduplizierung: `build_csv.py` dedupliziert auf E-Mail, ohne E-Mail auf die Website; liefert der
+Actor eine Seller-ID oder einen Firmennamen, zusätzlich darauf prüfen: derselbe Händler taucht
+über mehrere Listings auf. Als `website` zählt nur die eigene Händler-Domain: Seller- und
+Shop-Seiten auf dem Marktplatz (amazon.de, etsy.com, ebay.de) sind Profil-Links, sie gehören in
+`seller_url`, nie in `website`.
 
 ## Schritt 6 — Die Kontakt-Lücke
 
 Etsy und die eBay-Fallbacks liefern oft nur Shop-URLs. Dann `impressum-enrichment` (deutsche Shops
 mit eigener Website) oder `kontaktseiten-fallback` (internationale Domains) über die **eigenen
-Domains der Händler** laufen lassen. Die Marktplatz-Domains selbst (amazon.de, etsy.com, ebay.de)
+Domains der Händler** laufen lassen; ab ListM8 MCP 3.0.0 optional, dann sucht die Recherche die
+Adresse auf der Händler-Domain (Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“). Händler
+ohne eigene Domain und ohne Adresse sind nicht importierbar. Die Marktplatz-Domains selbst (amazon.de, etsy.com, ebay.de)
 werden **nie** angereichert — sie gehören in die `domainBlacklist` aus `noise-domains.md`, sonst
 werden sie voll berechnet.
 

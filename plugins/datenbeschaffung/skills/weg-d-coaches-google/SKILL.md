@@ -107,7 +107,9 @@ kalkulierte Kosten + 50 %. Für die Schweiz Begriffe prüfen („Personal Traine
 
 ## Schritt 5 — Kontaktdaten und Roh-CSV
 
-Domain-CSV an `impressum-enrichment` (Actor, Betriebsregeln, Kosten stehen dort). Bei Coaches ist
+Domain-CSV an `impressum-enrichment` (Actor, Betriebsregeln, Kosten stehen dort), oder ab ListM8
+MCP 3.0.0 ohne Anreicherung direkt in `build_csv.py --in domains.csv` (die Recherche sucht die
+Adresse; Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“). Bei Coaches ist
 der Entscheider die Person selbst: Liefert der Impressum-Actor den Namen ohnehin mit, wird er
 `firstName`/`lastName`; eigens beschaffen muss man ihn nicht, die Recherche findet ihn.
 Onepager ohne auslesbares Impressum gehen in den `kontaktseiten-fallback`.

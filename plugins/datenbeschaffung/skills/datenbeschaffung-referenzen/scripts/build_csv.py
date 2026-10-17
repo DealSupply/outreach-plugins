@@ -3,6 +3,9 @@
 
     python3 build_csv.py --in maps.json --quelle "apify:compass/crawler-google-places 2026-10-11" \
         --out leads-elektro-stuttgart-20261011.csv [--land de] [--keep spalte1,spalte2]
+        [--uebergabe kontakt|email] [--verworfen verworfen.csv]
+
+--in nimmt ein Apify-Dataset (JSON) oder eine CSV (z. B. domains.csv aus process_serp.py).
 
 Versteht die Feldnamen der gepinnten Actors (Maps: title/website/emails/phone/city/categoryName,
 totalScore/reviewsCount/placeId/reviewsTags/reviews/impressum; Outscraper: name/site/rating/
@@ -17,9 +20,13 @@ dem Impressum mit. Die Zusatzspalten der anderen Wege (linkedin_url, follower, b
 werden unter festen Namen durchgereicht; weitere Rohfelder nur mit --keep. Eine Zusatzspalte
 erscheint nur, wenn mindestens eine Zeile einen Wert hat.
 
-Zeilen OHNE E-Mail bleiben standardmäßig erhalten (`keine-email` in `hinweis`) — sie sind der
-Input für die Impressum-/Kontaktseiten-Stufe. Erst die finale Übergabe-CSV läuft mit
---require-email (verwirft E-Mail-lose Zeilen, siehe references/csv-spalten.md).
+Zeilen OHNE E-Mail bleiben standardmäßig erhalten (`keine-email` in `hinweis`): Sie sind der
+Input für die optionale Impressum-/Kontaktseiten-Stufe. Die finale Übergabe-CSV läuft mit
+--uebergabe (references/csv-spalten.md, references/plattform-hosts.md):
+  kontakt  ab ListM8 MCP 3.0.0: E-Mail ODER eigene Website. Zeilen nur mit Plattform-Link
+           (Instagram, Linktree, Branchenportal …) oder ganz ohne Kontaktmerkmal fliegen raus.
+  email    ältere Server: nur Zeilen mit E-Mail (gleich dem früheren --require-email).
+Verworfene Zeilen schreibt --verworfen mit Spalte `grund` in eine eigene CSV.
 """
 from __future__ import annotations
 
@@ -90,6 +97,10 @@ UMLAUTS = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
 # Website-Baukästen: Kunden-Websites auf Subdomains sind echte Betriebe (wie process_serp.py).
 BUILDER_PLATFORMS = {"jimdo.com", "jimdosite.com", "wordpress.com", "wix.com", "wixsite.com",
                      "weebly.com", "webnode.com", "webador.de", "shopify.com", "myshopify.com"}
+REJECTED_FIELDS = ["grund", "email", "company", "website", "city", "quelle"]
+# Hinweise, die build_csv.py bei jedem Lauf selbst neu berechnet.
+COMPUTED_HINTS = {"portal-website", "rollen-adresse", "fremde-domain", "keine-email",
+                  "nur-plattform-url", "keine-website", "keine-rezensionstexte"}
 
 
 def clean_company(name: str) -> str:
@@ -140,6 +151,33 @@ def load_noise() -> tuple[set[str], list[str]]:
 NOISE, NOISE_PATTERNS = load_noise()
 
 
+def load_platforms() -> tuple[set[str], set[str], list[str]]:
+    """Profil-Plattformen, Baukästen und Marken aus references/plattform-hosts.md (Spiegel der
+    Server-Liste; maßgeblich bleibt der Server)."""
+    path = pathlib.Path(__file__).resolve().parent.parent / "references/plattform-hosts.md"
+    hosts: set[str] = set()
+    builders: set[str] = set()
+    brands: list[str] = []
+    if not path.exists():
+        return hosts, builders, brands
+    section = ""
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            section = line.lower()
+        elif line.startswith("- "):
+            value = line[2:].strip().lower()
+            if "profil" in section:
+                hosts.add(value)
+            elif "marken" in section:
+                brands.append(value)
+            elif "baukäst" in section:
+                builders.add(value)
+    return hosts, builders, brands
+
+
+PLATFORM_HOSTS, PLATFORM_BUILDERS, PLATFORM_BRANDS = load_platforms()
+
+
 def host_of(website: str) -> str:
     host = (urlparse(website if "://" in website else "https://" + website).hostname or "").lower()
     return host[4:] if host.startswith("www.") else host
@@ -151,6 +189,20 @@ def is_portal(host: str) -> bool:
     if host in NOISE or any(fnmatch.fnmatch(host, p) for p in NOISE_PATTERNS):
         return True
     return any(host.endswith("." + n) for n in NOISE if n not in BUILDER_PLATFORMS)
+
+
+def is_platform(host: str) -> bool:
+    """Ein Profil-Link statt eigener Website: Profil-Plattform (samt Subdomains), Markendomain
+    oder die Baukasten-Domain selbst. Baukasten-Subdomains (praxis.jimdosite.com) zählen als
+    eigene Website."""
+    if not host:
+        return False
+    if any(host == p or host.endswith("." + p) for p in PLATFORM_HOSTS):
+        return True
+    if host in PLATFORM_BUILDERS:
+        return True
+    return any(re.search(r"(?:^|\.)" + re.escape(b) + r"\.(?:[a-z]{2,3}\.)?[a-z]{2,}$", host)
+               for b in PLATFORM_BRANDS)
 
 
 def base_label(domain: str) -> str:
@@ -333,7 +385,8 @@ def owner(row: dict) -> tuple[str, str]:
     people = [p for p in impressum.get("people") or []
               if isinstance(p, dict) and p.get("name") and p.get("roleType") in OWNER_ROLES]
     if not people:
-        return "", ""
+        # Eine schon gebaute CSV (zweiter Durchlauf zur Übergabe) trägt den Inhaber als Spalte.
+        return scalar(row.get("inhaber")), scalar(row.get("inhaber_rolle"))
     people.sort(key=lambda p: OWNER_ROLES.index(p["roleType"]))
     return scalar(people[0].get("name")), scalar(people[0].get("role"))
 
@@ -361,28 +414,64 @@ def google_fields(row: dict, max_reviews: int) -> dict[str, str]:
     }
 
 
+def rejection(mode: str | None, website: str, platform_only: bool) -> str:
+    """Grund, warum eine Zeile ohne E-Mail nicht in die Übergabe-CSV darf ("" = behalten)."""
+    if mode == "email":
+        return "keine-email"
+    if mode == "kontakt" and (not website or platform_only):
+        return "nur-plattform-url" if platform_only else "kein-kontaktmerkmal"
+    return ""
+
+
+SERP_ONLY_COLUMNS = ("titel", "query", "domain")
+
+
+def load_rows(path: str) -> tuple[list, list[str]]:
+    """Apify-Dataset (JSON) oder CSV, dazu die Zusatzspalten einer CSV (die bleiben erhalten, auch
+    wenn eine schon gebaute CSV für die Übergabe noch einmal durchläuft). Bei SERP-Domains
+    (process_serp.py) zählen domain/website; der Suchtitel wird nie Firmenname (zu unzuverlässig)."""
+    if path.lower().endswith(".csv"):
+        with open(path, encoding="utf-8-sig", newline="") as fh:
+            reader = csv.DictReader(fh)
+            rows = [dict(r) for r in reader]
+            header = list(reader.fieldnames or [])
+        for r in rows:
+            r.pop("titel", None)
+            r.pop("query", None)
+        extra = [c for c in header if c not in FIELDS and c not in GOOGLE_COLUMNS
+                 and c not in EXTRA_ALIASES and c not in SERP_ONLY_COLUMNS]
+        return rows, extra
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+    return (data if isinstance(data, list) else [data]), []
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--in", dest="infile", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--quelle", required=True, help='z. B. "apify:compass/crawler-google-places 2026-10-11"')
     ap.add_argument("--land", help="nur Zeilen mit diesem countryCode behalten (de/at/ch)")
-    ap.add_argument("--require-email", action="store_true",
-                    help="Zeilen ohne E-Mail verwerfen — NUR für die finale Übergabe-CSV")
+    ap.add_argument("--uebergabe", choices=["kontakt", "email"],
+                    help="finale Übergabe-CSV: kontakt = E-Mail oder eigene Website (ListM8 >= 3.0.0), "
+                         "email = nur Zeilen mit E-Mail (ältere Server)")
+    ap.add_argument("--require-email", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--verworfen", help="verworfene Zeilen mit Spalte grund in diese CSV schreiben")
     ap.add_argument("--keep", default="",
                     help="weitere Rohfelder unverändert als Zusatzspalte mitnehmen (kommagetrennt)")
     ap.add_argument("--max-reviews", type=int, default=MAX_REVIEWS,
                     help=f"Rezensionstexte je Lead (Standard {MAX_REVIEWS}, so viele nutzt der Import)")
     args = ap.parse_args()
     keep = [k.strip() for k in args.keep.split(",") if k.strip()]
+    mode = "email" if args.require_email else args.uebergabe
 
-    with open(args.infile, encoding="utf-8") as fh:
-        data = json.load(fh)
+    data, csv_extra = load_rows(args.infile)
+    keep = list(dict.fromkeys([*keep, *csv_extra]))
 
     out: dict[str, dict] = {}
-    skipped_no_email = 0
+    rejected: list[dict] = []
     skipped_unusable = 0
-    for row in data if isinstance(data, list) else [data]:
+    for row in data:
         if not isinstance(row, dict):
             continue
         row = normalize(row)
@@ -397,14 +486,19 @@ def main() -> int:
             website = "https://" + website
         host = host_of(website) if website else ""
         portal = is_portal(host)
+        platform_only = portal or is_platform(host)
+        raw_website = website
         if portal:
             # Eintrag auf einem Branchenportal: Adresse und Impressum gehören dem Portal.
             website, host, email = "", "", ""
         else:
             email = best_email(row, host)
+        city = pick(row, "city") or pick(row.get("company_address") or {}, "city")
         if not email:
-            if args.require_email:
-                skipped_no_email += 1
+            grund = rejection(mode, website, platform_only)
+            if grund:
+                rejected.append({"grund": grund, "email": "", "company": company, "website": raw_website,
+                                 "city": city, "quelle": args.quelle})
                 continue
             if not website and not company:
                 # weder anschreibbar noch anreicherbar — nutzlos
@@ -412,7 +506,6 @@ def main() -> int:
                 continue
         # Dedup-Schlüssel: E-Mail; ohne E-Mail die Website (gleicher Betrieb doppelt
         # gescrapt), sonst Firma+Stadt.
-        city = pick(row, "city") or pick(row.get("company_address") or {}, "city")
         key = email or (
             "site:" + re.sub(r"^https?://(www\.)?", "", website).rstrip("/").lower()
             if website else "co:" + company.lower() + "|" + city.lower()
@@ -428,6 +521,8 @@ def main() -> int:
             hints.append("geratene-adresse")
         if not email:
             hints.append("keine-email")
+            if platform_only and not portal:
+                hints.append("nur-plattform-url")
         if not website:
             hints.append("keine-website")
         contact = row.get("contact_person") or {}
@@ -460,7 +555,9 @@ def main() -> int:
         for column in keep:
             if column in row and column not in record:
                 record[column] = scalar(row[column])
-        record["hinweis"] = ";".join(hints)
+        # Fremde Hinweise einer schon gebauten CSV (z. B. adresse-verworfen) bleiben erhalten.
+        earlier = [h for h in str(row.get("hinweis") or "").split(";") if h and h not in COMPUTED_HINTS]
+        record["hinweis"] = ";".join(dict.fromkeys([*earlier, *hints]))
         out[key] = record
 
     extras = [c for c in [*GOOGLE_COLUMNS, *EXTRA_ALIASES, *keep]
@@ -471,13 +568,22 @@ def main() -> int:
         writer.writeheader()
         writer.writerows(out.values())
 
+    if args.verworfen and rejected:
+        with open(args.verworfen, "w", encoding="utf-8", newline="") as fh:
+            writer = csv.DictWriter(fh, fieldnames=REJECTED_FIELDS, extrasaction="ignore")
+            writer.writeheader()
+            writer.writerows(rejected)
+
     no_web = sum(1 for r in out.values() if "keine-website" in r["hinweis"])
     no_mail = sum(1 for r in out.values() if "keine-email" in r["hinweis"])
+    only_platform = sum(1 for r in out.values() if "nur-plattform-url" in r["hinweis"])
     roles = sum(1 for r in out.values() if "rollen-adresse" in r["hinweis"])
     portals = sum(1 for r in out.values() if "portal-website" in r["hinweis"])
     foreign = sum(1 for r in out.values() if "fremde-domain" in r["hinweis"])
     guessed = sum(1 for r in out.values() if "geratene-adresse" in r["hinweis"])
-    report = (f"Leads: {len(out)} | ohne E-Mail (Impressum-Kandidaten): {no_mail} | "
+    no_mail_label = ("ohne E-Mail, mit eigener Website (Recherche sucht die Adresse)" if mode == "kontakt"
+                     else "ohne E-Mail (Impressum-Kandidaten)")
+    report = (f"Leads: {len(out)} | {no_mail_label}: {no_mail} | "
               f"ohne Website: {no_web} (davon Portal statt eigener Website: {portals}) | "
               f"Rollen-Adressen: {roles} | Adresse fremder Domain: {foreign}")
     if guessed:
@@ -489,8 +595,14 @@ def main() -> int:
                    f"mit Inhaber {sum(1 for r in google_rows if r['inhaber'])}")
     if extras:
         report += f" | Zusatzspalten: {', '.join(dict.fromkeys(extras))}"
-    if skipped_no_email:
-        report += f" | verworfen (--require-email): {skipped_no_email}"
+    if only_platform:
+        report += f" | ohne E-Mail, nur Plattform-Link: {only_platform}"
+    if rejected:
+        counts: dict[str, int] = {}
+        for r in rejected:
+            counts[r["grund"]] = counts.get(r["grund"], 0) + 1
+        report += f" | verworfen (--uebergabe {mode}): {len(rejected)} (" + ", ".join(
+            f"{g} {n}" for g, n in sorted(counts.items())) + ")"
     if skipped_unusable:
         report += f" | verworfen (weder E-Mail noch Website/Firma): {skipped_unusable}"
     print(report)

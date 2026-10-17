@@ -16,16 +16,17 @@ Daraus folgt:
 
 - **Nicht beschaffen:** Entscheider-Namen, persönliche E-Mail-Adressen, Handelsregister, USt-Id,
   Firmenbeschreibungen von der Website. Das macht die Recherche, und sie prüft es auch.
-- **Immer beschaffen:** die Liste selbst (wer gehört zur Zielgruppe), eine E-Mail-Adresse je Lead
-  und alles, was nur auf der Quelle steht und einen Einstieg trägt: Google-Bewertungen und
-  Rezensionen, Follower und Bio, Plattform-Bewertung, Shop-Technologie.
+- **Immer beschaffen:** die Liste selbst (wer gehört zur Zielgruppe), je Lead eine E-Mail-Adresse
+  **oder** die eigene Website (ab ListM8 MCP 3.0.0; ohne Adresse sucht die Recherche sie) und alles,
+  was nur auf der Quelle steht und einen Einstieg trägt: Google-Bewertungen und Rezensionen,
+  Follower und Bio, Plattform-Bewertung, Shop-Technologie.
 
 ## Pflichtfelder je Lead
 
 | Feld | Warum |
 |---|---|
-| `email` | Der Import verlangt heute eine gültige Adresse je Lead. **info@ reicht**, die Recherche sucht die persönliche Adresse selbst. |
-| `website` | Ohne Website hat die Recherche keinen Startpunkt (Ausnahme: Zielgruppe ohne Website, siehe Maps-Weg). |
+| `email` **oder** `website` | Ab ListM8 MCP 3.0.0 reicht eins von beiden. **info@ reicht**, die Recherche sucht die persönliche Adresse selbst. Ohne Adresse sucht sie auf der Website eine; findet sie keine, scheidet der Lead aus (keine Mail). Ein Profil-Link (Instagram, Linktree, Portal) zählt nicht als Website. Ältere Server verlangen weiter eine Adresse je Lead. |
+| `website` | Auch mit Adresse fast immer nötig: ohne Website hat die Recherche keinen Startpunkt (Ausnahme: Zielgruppe ohne Website, siehe Maps-Weg). |
 | `company` | Anzeige und Anrede. |
 
 ## Je Quelle: immer mitnehmen
@@ -59,19 +60,37 @@ Weitere Rohfelder nur mit `--keep` und nur, wenn sie einen Einstieg tragen, den 
 | E-Mail-Verifizierung im Actor | 0,002 $ je Adresse | Der eigene Verifier kostet 0,0006 $ (`listen-qualitaet`). |
 | Social-Profile, Bilder, Wettbewerber-Analyse | ab 0,00026 $ je Stück | Kein Einstieg für die Mail. |
 
-## Die E-Mail-Lücke
+## Die Kontaktlücke: vorab anreichern oder der Recherche überlassen
 
-Treffer ohne Adresse (bei Maps 20 bis 50 %) braucht der Import heute trotzdem mit Adresse.
-Reihenfolge, jeweils mit Kostenfreigabe:
+Treffer ohne Adresse (bei Maps 20 bis 50 %) dürfen ab ListM8 MCP 3.0.0 mit ihrer eigenen Website
+importiert werden: Die Recherche sucht dann die Kontaktadresse (Impressum, Kontaktseite, Footer).
+Findet sie keine, scheidet der Lead aus und bekommt keine Mail. Auf älteren Servern braucht jede
+Zeile weiter eine Adresse; dann gilt die Reihenfolge unten als Pflicht.
 
-1. Adresse aus dem Impressum der Maps-Kontaktanreicherung nehmen (macht `build_csv.py` selbst,
-   nur mit eigener Domain oder Freemail; fremde Firmen-Domains im Impressum sind meist die Webagentur).
-2. **Nach Maps lohnt ein zweiter Lauf selten:** Im Test vom 11.10.2026 fanden drei Impressum- und
-   Kontakt-Actors für 28 Domains ohne Adresse nur 1 bis 5 Adressen. Die Lücke ist dann meist echt.
-   Nur bei großem Volumen einen Lauf mit `impressum-enrichment` anbieten, nur für die Adresse.
-3. **Bei Quellen ohne Kontaktdaten** (LinkedIn-Firmen, Google-Suche, Instagram-Websites) ist
-   `impressum-enrichment` der Normalfall: 29 von 40 LinkedIn-Firmen bekamen so eine Adresse.
-4. Sonst die Lücke akzeptieren und berichten.
+Was eine Lücke kostet:
+
+| Weg | Kosten je Lead |
+|---|---|
+| Impressum-Actor vorab (`impressum-enrichment`) | rund 0,2 Cent je Domain plus Startgebühr, Batches ab etwa 50 Domains (`kosten.md`) |
+| ListM8-Server-Lauf | Qualifizierung plus Recherche, rund 2 bis 3 Cent je Lead, auch wenn am Ende keine Adresse kommt; dazu ein Platz im Lead-Kontingent |
+| Abo-Lauf | kein Geld, aber Abo-Kontingent je Lead |
+
+Entscheidung, jeweils mit dem Nutzer:
+
+| Lage | Empfehlung |
+|---|---|
+| Quelle ohne Kontaktdaten (Google-Suche, LinkedIn-Firmen, Instagram-Websites, Händlerdomains) **und** ab etwa 50 Domains | Vorab `impressum-enrichment`: rund 10-mal billiger als die Recherche, und es läuft vor der Qualifizierung (29 von 40 LinkedIn-Firmen bekamen so eine Adresse). |
+| Maps-Lauf (Kontaktanreicherung ist schon im Preis) | Kein Zusatzlauf: Im Test vom 11.10.2026 fanden drei Impressum- und Kontakt-Actors für 28 Domains ohne Adresse nur 1 bis 5 Adressen. Leads mit eigener Website importieren (die Recherche sucht) oder abspalten; die niedrige Erwartung nennen. |
+| Liste unter 50 Leads oder Pilot | Nicht anreichern, die Recherche erledigt es. |
+| `max_leads` knapp | Vorab anreichern oder Leads ohne Adresse weglassen: jeder importierte Lead belegt einen Platz, auch wenn er später ausscheidet. |
+| Abo-Lauf mit knappem Kontingent und großer Liste | Vorab anreichern. |
+| Verifizierte Adressen vor dem Import gewünscht (Bounce unter 3 %) | Vorab anreichern: Adressen aus der Recherche laufen nicht durch den Verifier (`listen-qualitaet`). |
+| Nicht-DACH-Domains | Optional `kontaktseiten-fallback`, sonst die Recherche. |
+
+Immer zuerst: die Adresse aus dem Impressum der Maps-Kontaktanreicherung nehmen (macht
+`build_csv.py` selbst, nur mit eigener Domain oder Freemail; fremde Firmen-Domains im Impressum sind
+meist die Webagentur). Leads ganz ohne eigene Website (nur Profil-Link oder gar nichts) kann
+niemand recherchieren: Sie fliegen bei der Übergabe raus und werden berichtet.
 
 **Geratene Adressen** aus B2B-Datenbanken (`emailPatternGuess`, Hinweis `geratene-adresse`) nie
 ungeprüft importieren: Im Test waren 23 von 51 unzustellbar. Nur verifiziert „gut“ übernehmen.
@@ -81,13 +100,14 @@ wertvolle Leads, bei denen die Recherche einen Namen, aber keine persönliche Ad
 
 ## Recherche-Tiefe empfehlen
 
-Die Tiefe ist eine Einstellung der Kampagne (`researchAgentConfig.researchDepth`, gesetzt über den
-Outreach-Workflow `outreach-campaign`). Bei der Übergabe eine Empfehlung aussprechen:
+Die Stufe ist eine Einstellung der Kampagne (`researchAgentConfig.researchTier`: `basis`, `smart`,
+`deep`, gesetzt über den Outreach-Workflow `outreach-campaign`). Bei der Übergabe eine Empfehlung
+aussprechen:
 
 | Liste | Empfehlung |
 |---|---|
-| Lokale Betriebe mit Website und Rezensionstexten | `quick`: Impressum, Startseite und Rezensionen reichen für Anrede und Einstieg. |
-| Kleine Firmen ohne Rezensionen | `standard` |
+| Lokale Betriebe mit Website und Rezensionstexten | `basis`: Impressum, Startseite und Rezensionen reichen für Anrede und Einstieg. |
+| Kleine Firmen ohne Rezensionen, oder viele Leads ohne Adresse | `smart`: Fehlt die Adresse auf der Website, sucht die Recherche einmal gezielt nach dem Impressum. |
 | Größere Firmen, die Informationen von Drittquellen brauchen | `deep` |
 
 Die Empfehlung ändert nichts von selbst; der Nutzer entscheidet in der Kampagne.

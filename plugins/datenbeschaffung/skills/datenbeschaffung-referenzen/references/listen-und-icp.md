@@ -38,8 +38,8 @@ Apollo ist als Quelle in Europa DSGVO-verifiziert - bei Rückfragen ist „die D
 
 ## Listen-Qualitäts-Check
 
-- [ ] **Spalten vorhanden:** E-Mail, Firma, Website, Vorname, Nachname (optional: Branche, MA-Größe, Region); Format nach `csv-spalten.md`
-- [ ] **E-Mails verifiziert:** Verifier-Schritt in `listen-qualitaet` oder in Instantly (Bounce Rate unter 3 % halten)
+- [ ] **Spalten vorhanden:** E-Mail oder eigene Website je Zeile (ab ListM8 MCP 3.0.0; ältere Server: E-Mail), Firma, Website, Vorname, Nachname (optional: Branche, MA-Größe, Region); Format nach `csv-spalten.md`
+- [ ] **E-Mails verifiziert:** Verifier-Schritt in `listen-qualitaet` oder in Instantly (Bounce Rate unter 3 % halten). Adressen, die erst die Recherche der Plattform findet, laufen nicht durch den Verifier: vor dem Versand in Instantly prüfen
 - [ ] **Sperrliste abgeglichen:** Bestandskunden, bereits kontaktierte Leads, Wettbewerber entfernt
 - [ ] **ICP-Check:** Stichprobe von 20 Leads manuell prüfen - sind das wirklich potenzielle Kunden? (Schwelle: `listen-qualitaet`, Schritt 4)
 - [ ] **Nur geschäftliche Adressen:** keine privaten Postfächer in der Liste

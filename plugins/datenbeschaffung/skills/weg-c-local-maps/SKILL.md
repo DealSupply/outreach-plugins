@@ -120,13 +120,20 @@ Rezensionstext und Inhaber haben. Fehlt der Rezensionstext bei mehr als der Häl
 Bei mehreren Adressen wählt es die persönliche vor info@ und nie bewerbung@ o. Ä., solange es eine
 andere gibt; fehlt die Adresse im Scrape, nimmt es die aus dem Impressum.
 
-## Schritt 5 — Die E-Mail-Lücke (die Leads ohne E-Mail)
+## Schritt 5 — Die Kontaktlücke (die Leads ohne E-Mail)
 
-Der Import braucht heute eine Adresse je Lead, info@ reicht. Für die Leads mit `keine-email`:
-`impressum-enrichment` nur für die Adresse, mit dem günstigsten passenden Actor, und nur wenn das
-Volumen gebraucht wird. Keine Entscheider-, Register- oder Mobilnummern-Daten dazukaufen: Den
-Ansprechpartner und seine persönliche Adresse sucht die Recherche der Plattform. Sonst die Lücke
-akzeptieren (Trichter-Prinzip) und weitergeben.
+Ab ListM8 MCP 3.0.0 dürfen Leads mit eigener Website ohne Adresse importiert werden; die Recherche
+sucht die Adresse dann selbst (Impressum, Kontaktseite). Nach Maps ist die Lücke aber meist echt:
+Im Test fanden Impressum- und Kontakt-Actors für 28 Domains ohne Adresse nur 1 bis 5
+(`erfahrungswerte.md`). Dem Nutzer die Zahl nennen und fragen: importieren (kostet Qualifizierung
+und Recherche je Lead, der Lead scheidet ohne Fund aus) oder abspalten. Einen zusätzlichen
+`impressum-enrichment`-Lauf nur bei großem Volumen anbieten, nur für die Adresse und mit dem
+günstigsten passenden Actor (Entscheidungstabelle: `datenumfang.md`, „Die Kontaktlücke“).
+Leads mit `keine-website` oder nur einem Profil-Link (Facebook, Instagram, Portal) kann niemand
+recherchieren: ohne Adresse fallen sie bei der Übergabe heraus. Auf älteren Servern braucht der
+Import eine Adresse je Lead (info@ reicht). Keine Entscheider-, Register- oder
+Mobilnummern-Daten dazukaufen: Den Ansprechpartner und seine persönliche Adresse sucht die
+Recherche der Plattform.
 
 ## Schritt 6 — Übergabe
 
@@ -138,8 +145,9 @@ und keine Übergabe.
 
 - Duplikate über Kategorien hinweg dedupliziert der Actor per placeId selbst; über LÄUFE hinweg
   fängt es `dedup.py` (Bestand-Index) — deshalb Vorab-Abgleich nicht überspringen.
-- Ballungsräume doppeln Betriebe mit mehreren Standorten — gleiche E-Mail = ein Lead
-  (macht build_csv.py automatisch; 440 Places → ~308 eindeutige E-Mail-Leads ist normal).
+- Ballungsräume doppeln Betriebe mit mehreren Standorten: gleiche E-Mail = ein Lead, ohne E-Mail
+  gleiche Website = ein Lead (macht build_csv.py automatisch, der Import ebenso; 440 Places →
+  ~308 eindeutige E-Mail-Leads ist normal).
 - Große Flächen (Bundesland, Land) lassen sich beim Anbieter in einem Lauf angeben, werden aber teuer
   und lang: erst Pilot, dann in Abschnitten (z. B. je Bundesland) fahren, jeweils mit eigenem
   Deckel und Freigabe.
