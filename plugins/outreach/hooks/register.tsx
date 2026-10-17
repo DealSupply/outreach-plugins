@@ -661,6 +661,8 @@ type Phase = (typeof PHASES)[number]
 
 const localKey = (campaignId: number, phase: Phase) => `${campaignId}:${phase}`
 
+const RESEARCH_FIELDS = new Set(['research', 'status', 'bestEmail', 'decisionMaker', 'contactRecommendation'])
+
 /** Which phase a successful write belongs to: email variables, a verdict, or research. */
 const phaseOfWrite = (name: string | null, input: Record<string, unknown>): Phase | null => {
   if (name === 'save_lead_variables') return 'email'
@@ -703,7 +705,9 @@ const countWrite = async (
   if (!Number.isFinite(campaignId) || !Number.isFinite(leadId)) return
   const fields = typeof input.fields === 'object' && input.fields !== null ? (input.fields as Record<string, unknown>) : {}
   const leaves = phase === 'qualification' && fields.qualificationFitLevel === 'not_qualified'
-  const noAddress = phase === 'research' && leftWithoutAddress(answer)
+  // A combined write (verdict plus research in one call) also completes the research phase.
+  const carriesResearch = phase === 'research' || Object.keys(fields).some(f => RESEARCH_FIELDS.has(f))
+  const noAddress = carriesResearch && leftWithoutAddress(answer)
   const ended: LocalRun[] = []
   await update($, locals, all => {
     const next = { ...all }
@@ -716,6 +720,7 @@ const countWrite = async (
       next[key] = changed
     }
     touch(localKey(campaignId, phase), 'done')
+    if (phase === 'qualification' && carriesResearch && !leaves) touch(localKey(campaignId, 'research'), 'done')
     // Mail written without a research write: the lead's research already existed (it holds across campaigns).
     if (phase === 'email') touch(localKey(campaignId, 'research'), 'done')
     if (leaves) {

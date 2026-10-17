@@ -6,11 +6,14 @@
 
 --index: Antwort von export_leads(format="index") — {"index": [{"e","d","s","se"?}, ...]}
          (auch als reines Array akzeptiert). Älter als 24 h → Warnung.
-         `e` ist die Versandadresse (ab ListM8 MCP 3.0.0; leer bei Leads ohne Adresse, ältere
-         Server: auch null), `se` alle übrigen Adressen des Leads, `d` die Website-Domain.
-Entfernt: exakte E-Mail-Treffer (Versand-, Identitäts- und Zweitadressen), do_not_contact-Treffer
+         `e` ist die E-Mail des Leads (ab ListM8 MCP 3.0.0 leer bei Leads ohne E-Mail, auch null
+         möglich), `se` seine Zweitadressen, `d` die Website-Domain.
+Entfernt: exakte E-Mail-Treffer (E-Mail und Zweitadressen), do_not_contact-Treffer
 (hart: auch Zeilen ohne E-Mail, deren Domain gesperrt ist), und Zeilen ohne E-Mail, deren
-Website schon ein Lead ohne E-Mail im Bestand trägt (der Import würde sie nur verknüpfen).
+Website-Host schon ein Lead ohne E-Mail im Bestand trägt (der Import würde sie nur verknüpfen).
+Domains wie check_leads_exist nach ganzen Labels (ohne `www.`, Umlaut-Domains in Punycode):
+Derselbe Lead nur bei exakt gleichem Host; eine Zeile `praxis.de` gegen einen Bestands-Lead auf
+`shop.praxis.de` ist nur eine Warnung, `baeckerei-praxis.de` trifft nie.
 Markiert: übrige Domain-Treffer ("Firma schon im Bestand") in der Spalte `hinweis`: kein
 Ausschluss, es sei denn --drop-known-domains (alle) bzw. --drop-known-domains-ohne-email
 (nur Zeilen ohne E-Mail) ist gesetzt.
@@ -27,12 +30,29 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
 
 
+def host_key(host: str | None) -> str | None:
+    """Host ohne `www.`, Umlaut-Domains als Punycode — derselbe Host ist derselbe Schlüssel."""
+    if not host:
+        return None
+    host = host.strip().lower().rstrip(".")
+    if host.startswith("www."):
+        host = host[4:]
+    try:
+        host = host.encode("idna").decode("ascii")
+    except UnicodeError:
+        pass
+    return host or None
+
+
 def root_domain(value: str | None) -> str | None:
     if not value or not value.strip():
         return None
     value = value.strip().lower()
-    host = urlparse(value if "://" in value else f"http://{value}").hostname or value.split("/")[0]
-    return host[4:] if host.startswith("www.") else host or None
+    try:
+        host = urlparse(value if "://" in value else f"http://{value}").hostname
+    except ValueError:
+        host = None
+    return host_key(host or value.split("/")[0])
 
 
 def address(value) -> str:
@@ -66,6 +86,8 @@ def main() -> int:
 
     known_emails: dict[str, str] = {}
     known_domains: dict[str, str] = {}
+    # Parent domains of known hosts: a row on `kette.de` meets a lead on `filiale.kette.de`.
+    known_parents: dict[str, str] = {}
     # Domains, unter denen ein Lead OHNE E-Mail bekannt ist: dieselbe Website ist derselbe Lead.
     addressless_domains: set[str] = set()
     for r in rows:
@@ -74,12 +96,18 @@ def main() -> int:
         for a in addresses:
             if a:
                 known_emails[a] = status
-        if r.get("d"):
+        d = host_key(r.get("d"))
+        if d:
             # do_not_contact gewinnt, wenn eine Domain mehrfach vorkommt
-            if r["d"] not in known_domains or status == "do_not_contact":
-                known_domains[r["d"]] = status
+            if d not in known_domains or status == "do_not_contact":
+                known_domains[d] = status
             if not any(addresses):
-                addressless_domains.add(r["d"])
+                addressless_domains.add(d)
+            labels = d.split(".")
+            for i in range(1, len(labels) - 1):
+                parent = ".".join(labels[i:])
+                if parent not in known_parents or status == "do_not_contact":
+                    known_parents[parent] = status
 
     kept, dropped_known, dropped_dnc, domain_hits, no_email_kept = [], [], [], 0, 0
     with open(args.infile, encoding="utf-8-sig", newline="") as fh:
@@ -97,8 +125,8 @@ def main() -> int:
                 if status is not None:
                     dropped_known.append(email)
                     continue
-            dom = root_domain(row.get("website")) or (email.split("@", 1)[1] if "@" in email else None)
-            dom_status = known_domains.get(dom) if dom else None
+            dom = root_domain(row.get("website")) or (host_key(email.split("@", 1)[1]) if "@" in email else None)
+            dom_status = (known_domains.get(dom) or known_parents.get(dom)) if dom else None
             if dom_status == "do_not_contact":
                 dropped_dnc.append(email or f"(ohne E-Mail: {dom})")
                 continue

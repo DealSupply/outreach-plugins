@@ -8,8 +8,9 @@ dieser Referenz im Zweifel vor.
 **Versionsprüfung:** `ping` liefert `version`. Ab `3.0.0` gilt diese Referenz („E-Mail ODER eigene
 Website“). Älterer Server oder `ping` ohne Version: Jede Zeile braucht weiter eine gültige E-Mail
 (alter Kontrakt, `build_csv.py --uebergabe email`), und `import_leads` lehnt den ganzen Aufruf ab,
-sobald eine Zeile ohne gültige E-Mail dabei ist. Meldet ein 3.0.0-Server trotzdem
-`validation_failed … "email"`, ebenfalls auf den alten Kontrakt zurückfallen und es dem Nutzer sagen.
+sobald eine Zeile ohne gültige E-Mail dabei ist. Welcher Kontrakt gilt, entscheidet allein die
+`ping`-Version, nie der Wortlaut einer Fehlermeldung: Auch die Meldung eines 3.0.0-Servers nennt
+`"email"` („needs a valid "email" or a usable "website"“).
 
 ## Was ListM8 heute (nicht) kann
 
@@ -77,40 +78,41 @@ delete_list(list_id: integer, delete_leads?: boolean = false, confirm_delete?: b
 
 Bis zu 1000 Einträge je Aufruf (E-Mails und Domains zusammen).
 
-- **E-Mail-Treffer** treffen jede bekannte Adresse eines Leads. `matched_via` sagt, welche:
-  `primary` (Identität), `sending` (Versandadresse, z. B. von der Recherche gefunden),
-  `handed_over` (an Instantly oder per CSV übergebene Adresse), `secondary` (Zweitadresse).
-- **Domain-Treffer** (`firma.de`, ohne Protokoll und `www`) treffen Websites und E-Mail-Domains
-  exakt (Subdomains zählen mit, `e.de` trifft nicht mehr `home.de`). `match_kind` unterscheidet:
-  - `website_identity`: Ein Lead **ohne E-Mail** ist unter genau dieser Website bekannt. Der Import
-    behandelt eine Zeile mit dieser Website als denselben Lead, also wie einen E-Mail-Treffer.
-  - `company_known`: Die Firma ist unter einer anderen Adresse bekannt. Ein Warnsignal, kein
-    automatischer Ausschluss.
+- **E-Mail-Treffer** berücksichtigen auch Zweitadressen (`matched_via`: `primary` oder
+  `secondary`).
+- **Domain-Treffer** (`firma.de`, ohne Protokoll und `www`) treffen Website-Host und E-Mail-Domain
+  nach ganzen Labels: `mueller.de` trifft `mueller.de` und `shop.mueller.de`, nie
+  `baeckerei-mueller.de`. Umlaut-Eingaben rechnet der Server in Punycode um.
+- **`match_kind`** je Domain-Treffer:
+  - `website_identity`: Die Website des getroffenen Leads ist genau diese Domain. Für eine Zeile
+    ohne E-Mail ist das derselbe Lead: Der Import würde sie nur verknüpfen.
+  - `company_known`: Treffer über Subdomain oder E-Mail-Domain, nur „Firma ist bekannt“. Ein
+    Warnsignal, kein automatischer Ausschluss.
+- **Älterer Server ohne `match_kind`** (verglich per Teilstring): selbst nachprüfen. Derselbe Lead
+  nur, wenn der Host der `website` des Treffers (ohne `www.`) gleich der geprüften Domain ist;
+  alles andere als „Firma bekannt“ werten.
 - Zeilen ohne E-Mail lassen sich nur über `domains` prüfen.
-- Treffer sind pro Eintrag auf 10 begrenzt; `summary.truncated=true` meldet das (meist eine zu breite
-  Domain, Eingabe eingrenzen).
+- Treffer sind pro Eintrag auf 10 begrenzt; `summary.truncated=true` meldet das (meist viele Leads
+  auf demselben Host, etwa einer Kette).
 
-Antwort: `email_matches[]` (`query`, `lead_id`, `email` (kann null sein), `sending_email`,
-`contact_status`, `in_campaigns`, `matched_via`), `domain_matches[]` (`domain`, `lead_id`, `email`,
-`sending_email`, `website`, `contact_status`, `match_kind`) und `summary` mit `emails_checked`,
-`emails_found`, `emails_new`, `domains_checked`, `domains_matched`, `website_identity_matches`,
-`do_not_contact_hits`, `truncated`. Vor bezahlter Anreicherung und noch einmal unmittelbar vor
+Antwort: `email_matches[]` (`query`, `lead_id`, `email`, `contact_status`, `in_campaigns`,
+`matched_via`), `domain_matches[]` (`domain`, `lead_id`, `email` (kann null sein), `website`,
+`contact_status`, `match_kind`) und `summary` mit `emails_checked`, `emails_found`, `emails_new`,
+`domains_checked`, `domains_matched`, `do_not_contact_hits`, `truncated`. Vor bezahlter Anreicherung und noch einmal unmittelbar vor
 `import_leads` ausführen. `do_not_contact`-Leads niemals in eine Kampagne importieren.
 
 ### export_leads
 
 - `format="index"`: je Lead nur `{e, d, s}` plus `se`:
-  - `e`: die **Versandadresse** (sonst die Identität). Bei Leads ohne jede Adresse leer (`""`);
-    ältere Server lieferten dort auch `null`. Skripte müssen beides vertragen (`dedup.py` tut das).
-  - `se`: alle übrigen bekannten Adressen (Identität, falls abweichend, Zweitadressen, übergebene
-    Adressen).
+  - `e`: die E-Mail des Leads. Bei Leads ohne E-Mail leer (`""`, ab MCP 3.0.0). Skripte müssen
+    auch `null` vertragen (`dedup.py` tut das).
+  - `se`: Zweitadressen (nur wenn vorhanden).
   - `d`: Domain der Website oder null; `s`: Kontaktstatus.
   Einmal vor einem Scrape ziehen, lokal gegen die Scrape-Ergebnisse matchen (über `e`, `se` UND `d`:
   ein Lead ohne E-Mail ist nur über seine Domain bekannt) und bekannte Domains in die
   Query-Ausschlüsse geben.
-- `format="json"` liefert Zeilen (mit `sendingEmail` und `contactEmailState`), `format="csv"`
-  CSV-Text (`email` = Versandadresse, `identity_email` als letzte Spalte). Beide ohne
-  Qualifizierungsinfo (Urteile gelten pro Kampagne).
+- `format="json"` liefert Zeilen (`email` kann null sein), `format="csv"` CSV-Text (Zelle `email`
+  dann leer). Beide ohne Qualifizierungsinfo (Urteile gelten pro Kampagne).
 - `list_id` begrenzt auf eine Liste, ohne Angabe gilt der gesamte Bestand. `contact_status` filtert
   (leer = alle). `limit` 1 bis 10000 (Standard 1000, beim Index 10000), paginiert über `offset`;
   die Antwort trägt `total` und `remaining`.
@@ -121,14 +123,15 @@ Antwort: `email_matches[]` (`query`, `lead_id`, `email` (kann null sein), `sendi
   `leads_in_campaigns`, `leads_contacted`. Beantwortet „was habe ich schon gescrapt?“; vor einem
   neuen Scrape ansehen.
 - `get_list` (`limit` 1 bis 200): Metadaten plus eine Seite Leads (`id`, `email` (null bei Leads ohne
-  Adresse), `sendingEmail`, `contactEmailState`, `company`, `website`, `city`, Kontaktstatus,
+  Adresse), `sendingEmail` (Versandadresse: von der Recherche gefundene Adresse, sonst `email`),
+  `contactEmailState`, `company`, `website`, `city`, Kontaktstatus,
   Kampagnenzugehörigkeit), ohne Qualifizierungsinfo; `total`, `remaining`.
 - `search_leads`: Suchtext (mindestens 2 Zeichen, leer erlaubt bei gesetztem Strukturfilter) gegen
   E-Mail, Firma, Website und Ort. Filter `contact_status` (`not_contacted`,
   `exported_to_instantly`, `contacted`, `replied`, `opportunity`, `do_not_contact`),
   `attribute_key` plus `attribute_value` (Custom-Attribut, exakte Übereinstimmung ohne
-  Groß-/Kleinschreibung), `in_campaign` (`none` oder `any`). `limit` 1 bis 100. Liefert Kontaktstatus
-  sowie Kampagnen- und Listenzugehörigkeit. Für einzelne Existenzprüfungen im Bulk
+  Groß-/Kleinschreibung), `in_campaign` (`none` oder `any`). `limit` 1 bis 100. Liefert je Lead
+  `email` (kann null sein), `sendingEmail`, Kontaktstatus sowie Kampagnen- und Listenzugehörigkeit. Für einzelne Existenzprüfungen im Bulk
   `check_leads_exist` bevorzugen.
 
 ## Importieren
@@ -180,14 +183,19 @@ Bis zu 10000 Leads je Aufruf; Aufruf asynchron, Antwort mit `job_id`.
 - Der Import startet **keine** KI-Verarbeitung. Qualifizierung, Recherche und E-Mail-Texte starten
   erst über `start_lead_run`.
 - **Teilimport:** Zeilen, die die Regel nicht erfüllen, werden einzeln abgelehnt und sofort
-  gemeldet; alle übrigen gehen in den Job.
+  gemeldet; alle übrigen gehen in den Job. Nur wenn keine einzige Zeile importierbar ist, kommt
+  `validation_failed`.
 - Antwort: `status`, `job_id`, `received`, `accepted`, `rejected_total`, `rejected_rows` (höchstens
   100: `[{row, code, field, reason}]`, `row` ist der nullbasierte Index der Eingabe),
   `notices_count`, `queued`, `campaign_id`, `list_id`, `appUrl`, `message`. Die vollständige Liste
-  steht im Job-Ergebnis.
-- Ablehnungscodes: `not_an_object`, `missing_contact` (weder E-Mail noch Website), `invalid_email`
-  (ungültige E-Mail ohne brauchbare Website), `invalid_website`, `platform_only_website` (nur
-  Plattform-URL, keine E-Mail), `website_too_long`, `limit_reached` (Kontingent im Lauf erschöpft).
+  steht im Job-Ergebnis (`rejected`, dort heißt der Index `rowIndex` statt `row`, die Werte sind
+  gleich).
+- Ablehnungscodes in `rejected_rows`: `not_an_object`, `missing_contact` (weder E-Mail noch
+  Website), `invalid_email` (ungültige E-Mail ohne brauchbare Website), `invalid_website`,
+  `platform_only_website` (nur Plattform-URL, keine E-Mail), `website_too_long`.
+- `limit_reached` ist in der Tool-Antwort kein Zeilencode, sondern ein Fehler für den ganzen Aufruf
+  (siehe unten). Als Zeilencode steht es nur im Job-Ergebnis `rejected`: Zeilen, die erst während
+  des Jobs am Kontingent scheiterten.
 
 Fehler: `validation_failed` (leere Liste, **keine einzige importierbare Zeile** mit Zeilennummern und
 Codes der ersten 20, ungültiges Mapping), `limit_reached` (mehr als 10000 Zeilen oder
@@ -213,7 +221,6 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
 | `duplicates` | Liste der Zeilen, die als Bestands-Lead nur verlinkt wurden (nie doppelt angelegt) – Anzahl = Länge. Je Eintrag `email` (kann null sein), `website`, `matchedVia` (`email` oder `domain`) |
 | `internalDuplicates` | Liste der Dubletten innerhalb der Eingabe, mit `matchedVia` und `duplicateOfRowIndex` |
 | `do_not_contact_hits` | Liste der Treffer mit `do_not_contact` (`leadId`, `email`, kann null sein) |
-| `contact_blocked_hits` | Bestands-Leads, die schon kontaktiert sind und deshalb nicht neu verknüpft wurden |
 | `rejected` / `rejected_count` / `rejected_by_code` | Abgelehnte Zeilen (`rowIndex`, `code`, `field`, `value`; höchstens 500) mit Gesamtzahl und Zahl je Code |
 | `notices` / `notices_count` | Hinweise zu angenommenen Zeilen (`invalid_email_ignored`, `website_ignored`, `website_shortened`, `phone_dropped`, `field_truncated`) |
 | `linked_to_list` | Bei `list_id`: `list_id`, `name`, `newly_linked`; sonst null |
@@ -237,10 +244,7 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
 - `mark_leads_contacted`: setzt den globalen Kontaktstatus (höchstens 1000), entweder `emails` oder
   `lead_ids`. `status` ist `contacted` (Standard), `replied`, `opportunity`, `do_not_contact` oder
   `not_contacted` (Zurücksetzen nur mit `confirm_reset=true`). Status werden nie herabgestuft;
-  `exported_to_instantly` setzt nur der Instantly-Push. Eine Adresse trifft Identität,
-  Versandadresse, übergebene Adressen und (nur beim Hochsetzen, nicht beim Zurücksetzen)
-  Zweitadressen; trifft sie mehrere Leads, gilt der Status für alle (`leads_matched`, `matched_via`).
-  Leads ganz ohne Adresse nur über `lead_ids`. Nicht gefundene Einträge stehen in
+  `exported_to_instantly` setzt nur der Instantly-Push. Leads ohne E-Mail nur über `lead_ids`. Nicht gefundene Einträge stehen in
   `unmatched_emails` beziehungsweise `unmatched_lead_ids`. Dient dazu, extern kontaktierte Leads
   abzugleichen, damit niemand doppelt angeschrieben wird.
   Zurückgesetzt werden nur kontaktierte Leads ohne Reaktion (keine Antwort, kein Interesse, keine

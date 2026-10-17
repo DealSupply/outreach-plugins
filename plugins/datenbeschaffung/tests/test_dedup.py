@@ -2,7 +2,7 @@
 """Tests für dedup.py: python3 -I plugins/datenbeschaffung/tests/test_dedup.py
 
 Bestandsindex im Format von export_leads(format="index") ab ListM8 MCP 3.0.0
-(`e` = Versandadresse, leer bei Leads ohne Adresse; ältere Server lieferten auch null).
+(`e` = E-Mail des Leads, leer bei Leads ohne E-Mail; auch null möglich).
 """
 from __future__ import annotations
 
@@ -22,6 +22,9 @@ INDEX = {"index": [
     {"e": None, "d": "altserver.de", "s": "not_contacted"},
     {"e": "info@gesperrt.de", "d": "gesperrt.de", "s": "do_not_contact"},
     {"e": "kontakt@firma-b.de", "d": "firma-b.de", "s": "contacted"},
+    {"e": "", "d": "mueller.de", "s": "not_contacted"},
+    {"e": "", "d": "bäckerei-müller.de", "s": "not_contacted"},
+    {"e": "", "d": "filiale.kette.de", "s": "not_contacted"},
 ]}
 
 FIELDS = ["email", "company", "website", "hinweis"]
@@ -73,6 +76,23 @@ class DedupTest(unittest.TestCase):
         kept, report = run([{"company": "G", "website": "https://gesperrt.de"}])
         self.assertEqual(kept, [])
         self.assertIn("do_not_contact entfernt: 1", report)
+
+    def test_similar_or_sub_hosts_are_not_the_same_lead(self) -> None:
+        kept, report = run([{"company": "Bäckerei Müller", "website": "https://baeckerei-mueller.de"},
+                            {"company": "Shop", "website": "https://shop.mueller.de"}])
+        self.assertEqual(len(kept), 2)
+        self.assertEqual([r["hinweis"] for r in kept], ["", ""])
+        self.assertIn("Domain-Warnungen: 0", report)
+
+    def test_parent_domain_of_a_known_host_is_only_a_warning(self) -> None:
+        kept, report = run([{"company": "Kette", "website": "https://kette.de"}])
+        self.assertEqual(len(kept), 1)
+        self.assertIn("firma-schon-im-bestand", kept[0]["hinweis"])
+        self.assertIn("Domain-Warnungen: 1", report)
+
+    def test_umlaut_and_punycode_hosts_match(self) -> None:
+        kept, _ = run([{"company": "Müller", "website": "https://www.xn--bckerei-mller-bfb28a.de/impressum"}])
+        self.assertEqual(kept, [])
 
 
 if __name__ == "__main__":

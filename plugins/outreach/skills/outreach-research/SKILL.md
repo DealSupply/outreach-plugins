@@ -166,8 +166,10 @@ Abschluss-Report + Hinweis: "Nächster Schritt: /outreach-generate — AI-Variab
 | `validation_failed` bei write_lead_details (z. B. ungültige E-Mail oder Website) | Feld aus dem Text korrigieren oder weglassen und einmal neu schreiben; klappt es nicht, Lead als Fehler notieren und weiter. Kein Verbindungsfehler, NIE den Batch stoppen |
 | `contact_gate` | Kontaktstatus des Leads ist nicht `not_contacted` (kontaktiert, exportiert, gesperrt …) — Lead überspringen, nicht erneut schreiben |
 | write_lead_details error (sonstiger Code) | Fehler notieren, weiter mit nächstem Lead |
-| `bestEmail` in `skipped_fields` | Kein Fehler: eine manuell gewählte Versandadresse bleibt bestehen, oder (Warnung `address_conflict`) die Adresse gehört schon einem anderen Lead (Hinweis in `warnings`): respektieren, im Report vermerken, nicht wiederholen |
-| `IDENTITY_IMMUTABLE` bei `email` | Die Identitätsadresse eines Leads ist nicht änderbar; nur `bestEmail` schreiben |
+| `bestEmail` in `skipped_fields` | Kein Fehler: eine manuell gewählte Versandadresse bleibt bestehen, oder (Warnung `address_conflict`, auch wenn ein paralleler Agent sie gerade übernommen hat) die Adresse gehört schon einem anderen Lead (Hinweis in `warnings`): respektieren, im Report vermerken, nicht wiederholen |
+| `identity_immutable` bei `email` | Die Identitätsadresse eines Leads ist nicht änderbar; nur `bestEmail` schreiben |
+| `validation_failed` bei `website` eines Leads ohne E-Mail | Die Website ist dann seine Identität: nicht leeren und nicht durch ein Plattform-Profil oder eine ungültige URL ersetzen. `website` weglassen und den Rest neu schreiben |
+| `duplicate_website` | Ein anderer Lead trägt schon diese Website: `website` weglassen und den Rest neu schreiben, im Report vermerken, nicht wiederholen |
 | `lead_run_active` | Parallel läuft ein Server-Lauf — Batch pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen (Queue ist idempotent) |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, Lead bleibt in der Queue |
 | MCP-Verbindungsfehler (JSON-RPC-Fehler ohne Tool-Ergebnis, Transport weg) | 1x Retry, dann STOP |

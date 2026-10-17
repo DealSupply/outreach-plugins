@@ -38,7 +38,10 @@ eine als Datei abgelegte Antwort von einem anderen Agenten überschrieben sein. 
 (Kriterien), `researchGeneration` (Recherche-Vorgaben), `emailGeneration` (System-Prompt, Ansprache,
 Variablen) sowie die vorhandene Qualifizierung und Recherche. `lead.contactEmailState` (ab MCP 3.0.0)
 sagt, ob der Lead eine Adresse hat (`present`), noch eine sucht (`searching`) oder ohne Fund
-ausgeschieden ist (`not_found`). Bei `not_found` nichts schreiben und
+ausgeschieden ist (`not_found`). Bei `not_found` entfallen Recherche und Mail (keine neue Recherche,
+nie eine Adresse erfinden). Liegt in dieser Kampagne noch kein Urteil `completed` vor, trotzdem
+Schritt 2 ausführen und das Urteil schreiben, sonst bleibt der Lead in der Qualifizierungs-Warteschlange
+und wird bei jedem Lauf erneut vergeben. Danach
 `OK lead=<id> fit=<…> recherche=vorhanden mail=übersprungen grund=keine-adresse aufhänger=-` melden.
 
 **Quelle der Regeln:** Der Server ist maßgeblich. Liefert `get_lead_data` die Felder

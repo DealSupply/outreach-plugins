@@ -63,8 +63,8 @@ describe('lead preview', () => {
     const withoutEmail = {
       ...LIST_LEADS,
       leads: [
-        { id: 8, email: null, sendingEmail: null, contactEmailState: 'searching', company: '', website: 'https://zahnarzt-berg.de', city: 'München', score: null, contactStatus: 'not_contacted', qualification: null },
-        { id: 9, email: null, sendingEmail: 'praxis@mueller.de', contactEmailState: 'present', company: 'Praxis Müller', city: 'München', score: 70, contactStatus: 'not_contacted', qualification: null },
+        { id: 8, email: null, contactEmailState: 'searching', company: '', website: 'https://zahnarzt-berg.de', city: 'München', score: null, contactStatus: 'not_contacted', qualification: null },
+        { id: 9, email: 'praxis@mueller.de', contactEmailState: 'present', company: 'Praxis Müller', city: 'München', score: 70, contactStatus: 'not_contacted', qualification: null },
       ],
     }
     const ui = await $.ui.mount({ ...toolRow('mcp__akquise__list_leads', withoutEmail), surface: 'terminal' })
@@ -478,7 +478,7 @@ describe('local workflow phases', () => {
     on('tool.call', (_$, e) => {
       const leadId = (e as unknown as { lead_id: number }).lead_id
       const contactEmailState = leadId === 2 ? 'not_found' : 'present'
-      return { result: { status: 'success', lead: { id: leadId, email: null, sendingEmail: null, contactEmailState } } }
+      return { result: { status: 'success', lead: { id: leadId, email: null, contactEmailState } } }
     })
     for (const phase of ['research', 'email']) await progress($, { action: 'start', campaign_id: 2280, phase, total: 2 })
     const write = (tool: string, leadId: number, fields: Record<string, unknown>) =>
@@ -490,6 +490,29 @@ describe('local workflow phases', () => {
 
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '· Rech 2/2 · Mail 1/1 · im Abo' })).toBeDefined()
+    expect(await band.find({ text: 'alle beendet' })).toBeDefined()
+    await band.unmount()
+  })
+
+  test('a combined verdict and research write counts both phases and, without an address, leaves the email phase', async ($, on) => {
+    engineDraws(on)
+    mock.clock(on)
+    on('tool.call', (_$, e) => {
+      const leadId = (e as unknown as { lead_id: number }).lead_id
+      const contactEmailState = leadId === 2 ? 'not_found' : 'present'
+      return { result: { status: 'success', lead: { id: leadId, email: null, contactEmailState } } }
+    })
+    for (const phase of ['qualification', 'research', 'email']) await progress($, { action: 'start', campaign_id: 2281, phase, total: 2 })
+    const write = (tool: string, leadId: number, fields: Record<string, unknown>) =>
+      toolCall($, `mcp__akquise__${tool}`, { campaign_id: 2281, lead_id: leadId, fields, variables: '{}' })
+
+    await write('write_lead_details', 1, { qualificationStatus: 'completed', qualificationFitLevel: 'qualified' })
+    await write('write_lead_details', 1, { research: 'Bericht', status: 'researched' })
+    await write('save_lead_variables', 1, {})
+    await write('write_lead_details', 2, { qualificationStatus: 'completed', qualificationFitLevel: 'qualified', research: 'Bericht\n\n## Kontakt\nkeine Adresse', status: 'researched' })
+
+    const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '· Qual 2/2 · Rech 2/2 · Mail 1/1 · im Abo' })).toBeDefined()
     expect(await band.find({ text: 'alle beendet' })).toBeDefined()
     await band.unmount()
   })

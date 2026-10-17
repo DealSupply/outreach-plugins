@@ -13,17 +13,20 @@
 Einmal je Lauf den Bestandsindex ziehen und lokal matchen:
 
 ```
-export_leads(format="index")            # kompakter Index: {e: Versandadresse, d: Domain, s: Status, se: übrige Adressen}
+export_leads(format="index")            # kompakter Index: {e: email, d: Website-Host, s: status, se: Zweitadressen}
 → als bestand-index.json speichern
 python3 ../datenbeschaffung-referenzen/scripts/dedup.py --index bestand-index.json --in roh.csv --out neu.csv
 ```
 
-`dedup.py` entfernt: exakte E-Mail-Treffer (Versand-, Identitäts- und Zweitadressen),
+`dedup.py` entfernt: exakte E-Mail-Treffer (inkl. secondaryEmails),
 `do_not_contact`-Leads (hart, landen in einer eigenen Report-Zeile) und Zeilen ohne E-Mail, deren
-Website schon ein Lead ohne E-Mail im Bestand trägt (derselbe Lead). Übrige Domain-Treffer
+Website-Host schon ein Lead ohne E-Mail im Bestand trägt (derselbe Lead, nur bei exakt gleichem
+Host). Domains vergleicht es wie `check_leads_exist` nach ganzen Labels (ohne `www.`, Umlaut-Domains
+als Punycode): `mueller.de` trifft nie `baeckerei-mueller.de`, ein Bestands-Lead auf
+`shop.mueller.de` macht eine Zeile `mueller.de` nur zur Warnung. Übrige Domain-Treffer
 markiert es als Warnung („Firma schon im Bestand“): KEIN automatischer Ausschluss, neue
 Ansprechpartner sind legitim. Bei Zeilen ohne E-Mail ist ein Domain-Treffer meist dieselbe Firma;
-dann `--drop-known-domains-ohne-email`. `e` ist bei Leads ohne Adresse leer (ältere Server: null);
+dann `--drop-known-domains-ohne-email`. `e` ist bei Leads ohne E-Mail leer (auch null möglich);
 `dedup.py` verträgt beides. Bekannte Domains zusätzlich in die Query-Ausschlüsse des nächsten
 Laufs geben.
 
@@ -39,7 +42,11 @@ check_leads_exist(emails=[...], domains=[...])     # bis 1.000 Einträge je Call
 ```
 
 E-Mails aller Zeilen mit Adresse und die Domains aller Zeilen ohne Adresse prüfen (ab ListM8 MCP
-3.0.0). Ein Domain-Treffer mit `match_kind: website_identity` ist derselbe Lead wie ein E-Mail-Treffer.
+3.0.0). Für eine Zeile ohne E-Mail ist ein Domain-Treffer mit `match_kind: website_identity`
+derselbe Lead (wird nur verlinkt); `company_known` heißt „Firma bekannt“ (Warnung, kein
+Ausschluss). Liefert der Server kein `match_kind` (älterer Server, Teilstring-Vergleich), selbst
+nachprüfen: derselbe Lead nur, wenn der Host der `website` des Treffers (ohne `www.`) gleich der
+geprüften Domain ist.
 Ergebnis dem Nutzer zeigen: „X neu, Y schon im Bestand (werden nur verlinkt), Z do_not_contact
 (werden nie angeschrieben)."
 
@@ -107,10 +114,10 @@ vorhandene Attribut mappen: `{"action":"map_existing","fieldKey":"<bestehender_k
 
 Die Antwort von `import_leads` meldet sofort `accepted` und `rejected_total` mit den ersten
 `rejected_rows` (Zeile, Code, Grund): Abgelehnte Zeilen nennen, nicht wiederholen. Der Job-Report
-(`result` aus `get_job_status`) liefert die Zahlen `imported`, `created`, `relinked`,
+(`result` aus `get_job_status`) liefert die Zahlen `imported`, `created` (davon `created_without_email` ohne E-Mail, auf neueren Servern), `relinked`,
 `consolidated`, `email_filled`, `total`, `rejected_count` (mit `rejected_by_code`) und
 `notices_count`, dazu `linked_to_list` und die **Listen** `duplicates` (nur verlinkt, nie doppelt),
-`internalDuplicates`, `do_not_contact_hits`, `contact_blocked_hits` und `errors` – davon die Anzahl
+`internalDuplicates`, `do_not_contact_hits` und `errors` – davon die Anzahl
 der Einträge berichten. Importieren startet keine KI-Verarbeitung.
 
 ### 4. Optional: direkt in eine Kampagne
