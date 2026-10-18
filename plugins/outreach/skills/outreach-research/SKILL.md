@@ -30,7 +30,7 @@ Vor dem Workflow `ping` und `list_campaigns` mit dem Auftrag abgleichen. Allgeme
    -> {batch_size} qualifizierte, unrecherchierte Leads
    |
 3. Für jeden Lead: Sub-Agent spawnen (parallel)
-   -> get_lead_data() -> Research-Vorgaben lesen -> Website/Quellen analysieren
+   -> get_lead_data(stage="research") -> Research-Vorgaben lesen -> Website/Quellen analysieren
    -> write_lead_details(research=<Report>, bestEmail, decisionMaker, ..., status="researched")
    |
 4. Batch-Report -> nächster Batch (Queue idempotent: recherchierte Leads
@@ -83,7 +83,7 @@ LEAD: {lead.company} (ID: {lead.id})
 
 ## Schritte
 
-1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}) auf.
+1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}, stage="research") auf. Die Antwort enthält nur die Recherche-Vorgaben samt vorhandener Recherche; Qualifizierungs- und Mail-Blöcke stehen unter `omitted`. Antwortet der Server mit `invalid_stage` (älterer Server), ohne `stage` aufrufen.
 2. Lies lead.researchGeneration:
    - "config" = Research-Ziele/Prioritäten der Kampagne (researchGoals, researchPriorities, additionalPrompt). Sie sind MASSGEBLICH dafür, WONACH du suchst.
    - "agent.additionalPrompt" = zusätzliche Anweisung des Research-Agents; ein "config.additionalPrompt" der Kampagne ergänzt sie, beide gelten.

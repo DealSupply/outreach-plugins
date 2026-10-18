@@ -33,7 +33,7 @@ Ansprache und Kampagnenkontext kommen pro Lead aus `get_lead_data` (`emailGenera
    -> {batch_size} Leads mit Basisdaten (~0.5 KB/Lead)
    |
 3. Für jeden Lead: Sub-Agent spawnen (parallel, bis zu {batch_size} gleichzeitig)
-   -> Jeder Agent: get_lead_data() -> generiert Variablen -> save_lead_variables()
+   -> Jeder Agent: get_lead_data(stage="email") -> generiert Variablen -> save_lead_variables()
    |
 4. Batch-Report: "Batch 1/N done, X/Y leads processed"
    |
@@ -120,7 +120,7 @@ LEAD: {lead.company} (ID: {lead.id})
 
 ## Schritte
 
-1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}) auf
+1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}, stage="email") auf (nur die Mail-Vorgaben samt Recherche; Qualifizierungs- und Recherche-Vorgaben stehen unter `omitted`; antwortet der Server mit `invalid_stage`, ohne `stage` aufrufen)
 2. Lies den emailGeneration.systemPrompt sorgfältig — er definiert Ton, Stil und Kontext; dazu emailGeneration.salutation/salutationRule (Ansprache) und campaignContext. Halte die Copy-Regeln „Anrede und Ansprache“ und „Intro-Regeln“ ein, die unten an diesen Auftrag angehängt sind
 3. Analysiere Research, Qualification und Custom Attributes
 4. Optional: Besuche die Lead-Website (lead.website), falls dein Client Websites laden kann — get_lead_data liefert KEINE Screenshots
@@ -230,8 +230,9 @@ Ab MCP 2.1.0 hat `list_leads` zusätzlich einen Listen-Modus: Mit `run_stages` o
 |-----------|-----|---------|--------------|
 | `campaign_id` | int | **required** | Kampagnen-ID |
 | `lead_id` | int | **required** | Lead-ID |
+| `stage` | string | alle | `qualification`, `research` oder `email`: nur der Block dieser Stufe (ListM8-MCP ab 18.10.2026). Die übrigen Blöcke stehen unter `omitted`; alles Gelieferte ist identisch mit der vollen Antwort. Die volle Antwort ist über 60.000 Zeichen groß. |
 
-Gibt vollen Generierungs-Context zurück. Bei bereits kontaktierten Leads (Kontaktstatus blockiert) antwortet das Tool mit `contact_gate` — Lead überspringen:
+Gibt vollen Generierungs-Context zurück (mit `stage` nur den Teil dieser Stufe). Bei bereits kontaktierten Leads (Kontaktstatus blockiert) antwortet das Tool mit `contact_gate` — Lead überspringen:
 - Stammdaten (email, company, website, city, phoneNumber, score, sendingEmail, secondaryEmails, contactStatus) und `appUrl`-Links
 - `qualification` — Urteil DIESER Kampagne (status, fitLevel, category, summary, completedAt, snapshot); in einer anderen Kampagne qualifizierte Leads zeigen hier ein leeres Urteil
 - `research` (text, bestEmail, decisionMaker, contactRecommendation)

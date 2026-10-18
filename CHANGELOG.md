@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-18 – outreach 0.3.33
+
+**outreach** (MCP-Test auf Staging vom 18.10.2026: `get_lead_data` lieferte über 60.000 Zeichen, zu viel für einen Subagenten)
+- `lead-agent` → ruft `get_lead_data` je Stufe mit `stage` auf (`qualification`, `research`, `email`) statt einmal vorab. Die Mail-Vorgaben kommen erst nach dem Recherche-Speichern: Der System-Prompt der Mail enthält die Recherche so, wie sie beim Aufruf gespeichert ist; vorher schrieb der Agent die Mail gegen einen Prompt ohne seine eigene Recherche. Fällt auf den vollen Aufruf zurück, wenn der Server `stage` nicht kennt.
+- `outreach-qualify`, `outreach-research`, `outreach-generate` → je Agent nur der Block der eigenen Stufe; `outreach-generate` beschreibt den neuen Parameter. Braucht den ListM8-Server ab dem Release mit `stage` (nach v4.12.0-rc.2).
+
 ## 2026-10-15 – outreach 0.3.32
 
 **outreach** (Kundenfall 15.10.2026: Claude lehnte eine Prompt-Änderung über den MCP ab)

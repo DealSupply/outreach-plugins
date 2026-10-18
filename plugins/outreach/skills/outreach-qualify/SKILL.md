@@ -32,7 +32,7 @@ Vor dem Workflow `ping` und `list_campaigns` mit dem Auftrag abgleichen. Ausschl
    -> {batch_size} unqualifizierte Leads
    |
 3. Für jeden Lead: Sub-Agent spawnen (parallel)
-   -> get_lead_data() -> Kriterien lesen -> Website analysieren -> bewerten
+   -> get_lead_data(stage="qualification") -> Kriterien lesen -> Website analysieren -> bewerten
    -> write_lead_details(qualificationStatus=completed, fitLevel, score, ...)
    |
 4. Batch-Report -> nächster Batch (Queue ist idempotent: qualifizierte Leads
@@ -84,7 +84,7 @@ LEAD: {lead.company} (ID: {lead.id})
 
 ## Schritte
 
-1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}) auf.
+1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}, stage="qualification") auf. Die Antwort enthält nur die Qualifizierungs-Vorgaben; Recherche- und Mail-Blöcke stehen unter `omitted`. Antwortet der Server mit `invalid_stage` (älterer Server), ohne `stage` aufrufen.
 2. Lies lead.qualificationGeneration:
    - "settings" = die Kampagnen-Kriterien (Zielkunde, Fit-Kriterien, Disqualifier). Sie sind MASSGEBLICH.
    - "agent.additionalPrompt" = zusätzliche Anweisung des Qualifizierungs-Agents; sie ergänzt die Kriterien, ersetzt sie nicht.

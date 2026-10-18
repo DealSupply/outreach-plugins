@@ -28,13 +28,22 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 
 ### 1. Daten lesen
 
-`get_lead_data(campaign_id, lead_id)` einmal aufrufen. Danach prüfen, dass `lead.id` und
-`campaign.id` in der Antwort genau deinem Auftrag entsprechen. Laufen mehrere Agents parallel, kann
-eine als Datei abgelegte Antwort von einem anderen Agenten überschrieben sein. Stimmt die ID nicht,
-`get_lead_data` erneut aufrufen; stimmt sie dann immer noch nicht, nichts schreiben und
-`FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. Darin stehen `qualificationGeneration`
-(Kriterien), `researchGeneration` (Recherche-Vorgaben), `emailGeneration` (System-Prompt, Ansprache,
-Variablen) sowie die vorhandene Qualifizierung und Recherche.
+`get_lead_data` **je Stufe** aufrufen, direkt vor der Stufe und mit dem Parameter `stage`:
+`stage: "qualification"` vor Schritt 2, `stage: "research"` vor Schritt 3, `stage: "email"` vor
+Schritt 4. Jede Antwort enthält nur die Vorgaben dieser Stufe (`qualificationGeneration`,
+`researchGeneration` bzw. `emailGeneration`) samt Stammdaten, Urteil und Attributen; die Felder der
+anderen Stufen stehen unter `omitted` und sind absichtlich weg, nicht leer. Die volle Antwort ohne
+`stage` ist zu groß für einen Agenten (über 60.000 Zeichen). Die Mail-Vorgaben erst NACH deinem
+Recherche-Speichern holen: `emailGeneration.systemPrompt` enthält die Recherche so, wie sie beim Aufruf
+gespeichert ist. Nach jedem Aufruf prüfen, dass `lead.id` und `campaign.id` genau deinem Auftrag
+entsprechen. Laufen mehrere Agents parallel, kann eine als Datei abgelegte Antwort von einem anderen
+Agenten überschrieben sein. Stimmt die ID nicht, erneut aufrufen; stimmt sie dann immer noch nicht,
+nichts schreiben und `FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. Antwortet der
+Server mit `invalid_stage` oder kennt `stage` nicht (älterer Server), einmal ohne `stage` aufrufen.
+
+Übersprungene Stufen brauchen keinen Aufruf: Liegt schon ein Urteil `completed` vor, entfällt
+`stage: "qualification"`; liegt schon eine Recherche vor (die Antwort mit `stage: "research"` zeigt sie
+unter `research.text`), entfällt Schritt 3.
 
 **Quelle der Regeln:** Der Server ist maßgeblich. Liefert `get_lead_data` die Felder
 `researchGeneration.anchorRules` (Anker-Regeln der Recherche), `researchGeneration.campaignFrame`
@@ -61,8 +70,9 @@ gelten immer.
 
 ### 3. Recherchieren (wenn noch keine Recherche vorliegt; eine vorhandene gilt kampagnenübergreifend)
 
-- Vorher prüfen: Steht in `get_lead_data` unter `research.text` schon ein Text (kam die Antwort als
-  Datei, dieses Feld gezielt darin suchen), ist dieser Schritt übersprungen. Dann kein
+- Vorher prüfen: Steht in der Antwort von `get_lead_data(..., stage: "research")` unter
+  `research.text` schon ein Text (kam die Antwort als Datei, dieses Feld gezielt darin suchen), ist
+  dieser Schritt übersprungen. Dann kein
   `write_lead_details` mit `research`, `bestEmail`, `decisionMaker` oder `contactRecommendation`;
   eine vorhandene Recherche wird nie überschrieben, auch nicht mit einer besseren. Einzige Ausnahme ist
   der Auftrag „Nachbessern“ mit `art=recherche` (unten): Er ergänzt, ohne zu kürzen.
@@ -109,6 +119,8 @@ gelten immer.
 
 ### 4. Mail-Variablen schreiben
 
+- Zuerst `get_lead_data(campaign_id, lead_id, stage: "email")` aufrufen (nach dem Recherche-Speichern
+  aus Schritt 3, damit der System-Prompt die Recherche enthält); IDs wie in Schritt 1 prüfen.
 - Maßgeblich ist `emailGeneration.systemPrompt` (Server-Regeln für Anrede, Opener, Einstieg). Nur wenn
   er keine Opener-Regeln enthält (älterer Server), den Skill `outreach:outreach-copy` laden (Abschnitte
   „Anrede und Ansprache“ und „Intro-Regeln“).
@@ -162,7 +174,8 @@ Prüf-Urteil (`outreach-verify`). Dann gelten nur diese Schritte statt 2–4; Qu
 vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
 
 1. `get_lead_variables(campaign_id, lead_id)` (aktuelle Werte, Recherche, `sendingEmail`) und
-   `get_lead_data(campaign_id, lead_id)` (Variablen-Prompts, `salutationRule`); IDs wie in Schritt 1 prüfen.
+   `get_lead_data(campaign_id, lead_id, stage: "email")` (Variablen-Prompts, `salutationRule`); IDs wie in Schritt 1 prüfen.
+   Bei `art=recherche` zusätzlich `stage: "research"` für die Recherche-Vorgaben.
 2. Nach Art:
    - `adresse`: Die belegte bessere Adresse aus dem Befund bzw. der Recherche per
      `switch_primary_email(campaign_id, lead_id, email, reason)` setzen. Nur Adressen, die der Lead schon
