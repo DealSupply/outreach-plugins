@@ -26,7 +26,8 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
 - Kein Status wird freigegeben: Der Lauf endet bei `pending_review`; freigeben entscheidet der Nutzer
   (`outreach-verify`).
 - **Power-ups** (ListM8-MCP ab 3.1.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
-  nennen, was eingeschaltet ist und was ein Treffer kostet. Eingeschaltete Tools nutzt der `lead-agent`
+  nennen, was eingeschaltet ist, was ein Treffer kostet und dass jede andere Antwort die Anbietergebühr
+  kostet (meist Hundertstel Credits). Eingeschaltete Tools nutzt der `lead-agent`
   über `run_power_up` (Regeln dort). Ein Power-up nur mit ausdrücklicher Zustimmung des Nutzers per
   `set_power_up` einschalten, nie von sich aus. Im Bericht: Anzahl der Treffer und die gebuchten Credits
   (`credits` in den `run_power_up`-Antworten).

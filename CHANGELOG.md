@@ -3,7 +3,7 @@
 ## 2026-10-19 – outreach 0.4.0
 
 **outreach** (Power-ups, ListM8-MCP 3.1.0, LISTM8-75)
-- `lead-agent`, `outreach-research` → Eingeschaltete Power-ups aus `get_lead_data.researchGeneration.powerUps` über `run_power_up`: `verify_email` prüft alle belegten Kandidaten in einem Aufruf (kostenlos, nur Adressen mit Herkunft), `find_person_email` sucht die persönliche Adresse des Entscheiders (Credits je Treffer, höchstens drei Personen). `invalid` und `catch_all_unconfirmed` werden nie `bestEmail`; bei `failed`, `unavailable`, `limit_reached` kein zweiter Aufruf mit derselben Eingabe.
+- `lead-agent`, `outreach-research` → Eingeschaltete Power-ups aus `get_lead_data.researchGeneration.powerUps` über `run_power_up`: `verify_email` prüft alle belegten Kandidaten in einem Aufruf (Anbietergebühr ohne Marge, nur Adressen mit Herkunft), `find_person_email` sucht die persönliche Adresse des Entscheiders (Treffer zum Stückpreis, ohne Treffer die Anbietergebühr; höchstens drei Personen). `invalid` und `catch_all_unconfirmed` werden nie `bestEmail`; bei `failed`, `unavailable`, `limit_reached` kein zweiter Aufruf mit derselben Eingabe.
 - `verify-agent` → Eine Versandadresse mit Urteil `invalid` in `emailVerdicts` ist ein Befund (`art=adresse`, ohne gültige Alternative `art=recht`).
 - `outreach-abo-lauf`, `outreach-pipeline` → `list_power_ups` vor dem Lauf, Einschalten mit `set_power_up` nur mit Zustimmung; der Power-up-Block von `quote_lead_run` gehört in die Preisnennung, Treffer und Credits aus `get_lead_run_status.powerUps` in den Bericht.
 - `outreach-campaign` → Power-ups stehen nicht im Blueprint, sie werden nach dem Anlegen mit `set_power_up` geschaltet.

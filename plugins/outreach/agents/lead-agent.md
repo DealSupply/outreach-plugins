@@ -103,10 +103,12 @@ gelten immer.
 - Power-ups (ListM8-MCP ab 3.1.0): Nennt `get_lead_data` unter `researchGeneration.powerUps` die Tools
   `verify_email` oder `find_person_email`, sind sie in der Kampagne eingeschaltet. Aufruf über
   `run_power_up(campaign_id, lead_id, tool, input)`, Eingabe nach `inputSchema`, Leitlinie aus `guidance`.
-  - `verify_email`: kostenlos. Vor dem Speichern von `bestEmail` alle belegten Kandidaten dieses Betriebs
+  - `verify_email`: kostet nur die Anbietergebühr (rund 0,02 Credits je Adresse, schon geprüfte Adressen
+    kostenlos). Vor dem Speichern von `bestEmail` alle belegten Kandidaten dieses Betriebs
     in EINEM Aufruf prüfen (`{"emails": [...]}`, höchstens 10). Nur Adressen, die der Lead hat oder die
     auf einer gelesenen Seite stehen; geratene lehnt das Tool ab.
-  - `find_person_email`: kostet Credits je bestätigter persönlicher Adresse. Nur für den Entscheider ohne
+  - `find_person_email`: ein Treffer kostet `credits_per_hit`, jede Suche ohne Treffer die Anbietergebühr
+    (meist deutlich unter einem Credit). Nur für den Entscheider ohne
     bekannte persönliche Adresse, höchstens drei Personen, die wichtigste zuerst, Domain = eigene Domain
     der Firma (`{"first_name", "last_name", "domain"}`). Ein Treffer landet im Kontaktprofil.
   - Nie als `bestEmail`: Urteil `invalid` oder Ergebnis `catch_all_unconfirmed`. Ein `valid` geht einer
