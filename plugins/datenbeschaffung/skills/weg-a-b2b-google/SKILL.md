@@ -7,7 +7,7 @@ description: Weg A des Datenbeschaffungs-Pakets — B2B-Dienstleister (Agenturen
 
 Der Weg für Firmen, die man über ihre Website findet, nicht über einen Maps-Eintrag: Agenturen,
 Kanzleien, Beratungen, Systemhäuser, Makler-, Architektur- und Ingenieurbüros. SERP liefert
-Domains; Kontaktdaten kommen danach optional über `impressum-enrichment` (ab ListM8 MCP 3.0.0 kann
+Domains; Kontaktdaten kommen danach optional über `impressum-enrichment` (ab ListM8 MCP 4.0.0 kann
 auch die Recherche der Plattform sie suchen). Der Ablauf ist
 manuell: Actor im eigenen Apify-Konto starten, Ergebnis prüfen, als CSV an `listen-qualitaet`, von
 dort Import nach ListM8 (Oberfläche oder MCP `import_leads`).
@@ -93,7 +93,7 @@ Deckel: kalkulierte Kosten + 50 %. Läuft ein Lauf länger als ein paar Minuten:
 
 ## Schritt 4 — Kontaktdaten holen (optional)
 
-Ab ListM8 MCP 3.0.0 gibt es zwei Wege, Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“
+Ab ListM8 MCP 4.0.0 gibt es zwei Wege, Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“
 (SERP-Domains haben keine Kontaktdaten, ab etwa 50 Domains ist der Impressum-Lauf meist billiger):
 
 - **Vorab anreichern:** die Domain-CSV aus Schritt 3 an `impressum-enrichment` geben (dort stehen

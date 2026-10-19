@@ -1,11 +1,11 @@
 # Plattform-Hosts: wann eine Website keine eigene Website ist
 
-> Stand: ListM8 MCP 3.0.0, abgeglichen am 16.10.2026 mit der Server-Liste (`Model/Web/SharedHosts`).
+> Stand: ListM8 MCP 4.0.0, abgeglichen am 16.10.2026 mit der Server-Liste (`Model/Web/SharedHosts`).
 > **Maßgeblich ist der Server.** Die aktuelle Liste liefert die App unter
 > `GET /api/leads/import-rules` (`platformHosts`, `platformBrands`, `builderHosts`). Weicht sie ab,
 > kostet das nur eine Ablehnung mit Grund `platform_only_website`, keine Daten. Dann hier nachziehen.
 
-Ab ListM8 3.0.0 darf ein Lead ohne E-Mail importiert werden, wenn er eine **eigene** Website hat;
+Ab ListM8 4.0.0 darf ein Lead ohne E-Mail importiert werden, wenn er eine **eigene** Website hat;
 die Recherche sucht dort die Kontaktadresse. Ein Link auf ein Profil bei einer Plattform ist keine
 eigene Website: Ohne E-Mail lehnt der Import solche Zeilen ab. Mit E-Mail bleibt der Link erhalten
 (er hilft der Recherche).

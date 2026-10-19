@@ -12,7 +12,7 @@ Trichter-Prinzip beachten: Diese Stufe sortiert MECHANISCH (Duplikate, Sperren, 
 prüft per Stichprobe. Sie beurteilt NICHT die inhaltliche Passung einzelner Leads: das macht die
 Qualifizierung in der App, und die arbeitet bewusst offen.
 
-**Übergabemodus:** Der Master merkt sich `ping.version`. Ab ListM8 MCP 3.0.0 gilt `kontakt`
+**Übergabemodus:** Der Master merkt sich `ping.version`. Ab ListM8 MCP 4.0.0 gilt `kontakt`
 (E-Mail oder eigene Website je Zeile), darunter oder ohne Version `email` (jede Zeile braucht eine
 Adresse). Fehlt die Angabe, hier selbst `ping` aufrufen.
 
@@ -36,7 +36,7 @@ Adressen verifizieren. Dieser Modus ist keine abgeschlossene Übergabe.
 - Auffälligkeiten aus `hinweis` zusammenfassen: Anteil `rollen-adresse` (info@ ist ok, die
   Recherche sucht die persönliche Adresse; berichten), Anteil `keine-website` (die bekommen zwangsläufig den schwächsten
   Personalisierungs-Anker: bei > 30 % dem Nutzer anbieten, sie in eine eigene Datei abzuspalten),
-  Anteil `keine-email` (mit eigener Website sucht ab 3.0.0 die Recherche die Adresse) und
+  Anteil `keine-email` (mit eigener Website sucht ab 4.0.0 die Recherche die Adresse) und
   `nur-plattform-url` (ohne E-Mail nicht importierbar)
 
 ## Schritt 2: Dedup + Bestand-Abgleich
@@ -55,7 +55,7 @@ schon ein Lead ohne E-Mail im Bestand trägt, entfernt `dedup.py` als Dublette. 
 dieser Schritt. Duplikate innerhalb der Datei hat `build_csv.py` bereits entfernt; im Bericht
 ausdrücklich sagen, dass der Bestand-Abgleich fehlte.
 
-**Kontakt-Gate** (ab ListM8 MCP 3.0.0): Zeilen mit E-Mail **oder** eigener Website gehen in die
+**Kontakt-Gate** (ab ListM8 MCP 4.0.0): Zeilen mit E-Mail **oder** eigener Website gehen in die
 Übergabe. Zeilen nur mit Plattform-Link oder ganz ohne Kontaktmerkmal in eine eigene Datei
 abspalten und die Zahl je Grund berichten:
 
@@ -81,7 +81,7 @@ So wird das Ergebnis des Verifiers gelesen (Test vom 11.10.2026, 200 Adressen):
 | `status` / `reason` | Entscheidung |
 |---|---|
 | `good` | behalten |
-| `bad` | Adresse verwerfen. Ab ListM8 3.0.0: Zeile mit eigener Website ohne Adresse behalten (Hinweis `adresse-verworfen`, die Recherche sucht neu), ohne Website verwerfen. Darunter: Zeile verwerfen |
+| `bad` | Adresse verwerfen. Ab ListM8 4.0.0: Zeile mit eigener Website ohne Adresse behalten (Hinweis `adresse-verworfen`, die Recherche sucht neu), ohne Website verwerfen. Darunter: Zeile verwerfen |
 | `risky` + `catch_all_domain` | behalten, wenn die Adresse zur eigenen Domain gehört (bei Maps-Adressen ein Drittel; die Domain nimmt alles an, info@ kommt an) |
 | `risky` + `smtp_unreachable` | wie `bad` |
 | Hinweis `geratene-adresse` | nur `good` behalten (geratene Adressen: 23 von 51 unzustellbar) |

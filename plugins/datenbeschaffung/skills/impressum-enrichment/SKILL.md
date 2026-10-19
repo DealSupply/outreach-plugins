@@ -1,12 +1,12 @@
 ---
 name: impressum-enrichment
-description: Optionaler Anreicherungs-Baustein des Datenbeschaffungs-Pakets: holt für Domains ohne E-Mail-Adresse die Adresse aus dem deutschen Impressum, manuell über einen Apify-Actor im eigenen Konto. Spart Recherche-Kosten und liefert geprüfte Adressen vor dem Import; seit ListM8 MCP 3.0.0 keine Pflicht mehr (Leads mit eigener Website dürfen ohne E-Mail importiert werden). Entscheider, Register und persönliche Adressen findet die Recherche der Plattform. Wird von weg-*-Skills für Leads ohne E-Mail geladen, nie direkt.
+description: Optionaler Anreicherungs-Baustein des Datenbeschaffungs-Pakets: holt für Domains ohne E-Mail-Adresse die Adresse aus dem deutschen Impressum, manuell über einen Apify-Actor im eigenen Konto. Spart Recherche-Kosten und liefert geprüfte Adressen vor dem Import; seit ListM8 MCP 4.0.0 keine Pflicht mehr (Leads mit eigener Website dürfen ohne E-Mail importiert werden). Entscheider, Register und persönliche Adressen findet die Recherche der Plattform. Wird von weg-*-Skills für Leads ohne E-Mail geladen, nie direkt.
 ---
 
 # Impressum-Enrichment — der DACH-Lückenfüller
 
 Holt aus deutschen Impressumsseiten eine E-Mail-Adresse je Lead (info@ reicht). Wird von
-Weg-Skills für die Kontaktlücke gerufen: er ist KEIN eigener Weg. Ab ListM8 MCP 3.0.0 ist er
+Weg-Skills für die Kontaktlücke gerufen: er ist KEIN eigener Weg. Ab ListM8 MCP 4.0.0 ist er
 **optional**: Leads mit eigener Website dürfen ohne E-Mail importiert werden, dann sucht die
 Recherche die Adresse. Er lohnt, wenn er billiger ist als die Recherche und vor der Qualifizierung
 liegt (Kriterien unten unter „Wann es sich lohnt“). Auf älteren Servern ist er der Weg, Leads ohne
@@ -81,7 +81,7 @@ ausscheiden kann.
 
 ## Wann NICHT anreichern
 
-- Kleine Liste oder Pilot auf einem 3.0.0-Server → direkt mit Website importieren, die Recherche
+- Kleine Liste oder Pilot auf einem 4.0.0-Server → direkt mit Website importieren, die Recherche
   sucht die Adresse.
 - Nach einem Maps-Lauf mit Kontaktanreicherung bringt ein Impressum-Lauf wenig: Im Test vom
   11.10.2026 fanden drei Actors für 28 Domains ohne Adresse nur 1 bis 5. Nur bei großem Volumen

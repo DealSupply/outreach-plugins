@@ -36,7 +36,7 @@ eine als Datei abgelegte Antwort von einem anderen Agenten überschrieben sein. 
 `get_lead_data` erneut aufrufen; stimmt sie dann immer noch nicht, nichts schreiben und
 `FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. Darin stehen `qualificationGeneration`
 (Kriterien), `researchGeneration` (Recherche-Vorgaben), `emailGeneration` (System-Prompt, Ansprache,
-Variablen) sowie die vorhandene Qualifizierung und Recherche. `lead.contactEmailState` (ab MCP 3.0.0)
+Variablen) sowie die vorhandene Qualifizierung und Recherche. `lead.contactEmailState` (ab MCP 4.0.0)
 sagt, ob der Lead eine Adresse hat (`present`), noch eine sucht (`searching`) oder ohne Fund
 ausgeschieden ist (`not_found`). Bei `not_found` entfallen Recherche und Mail (keine neue Recherche,
 nie eine Adresse erfinden). Liegt in dieser Kampagne noch kein Urteil `completed` vor, trotzdem

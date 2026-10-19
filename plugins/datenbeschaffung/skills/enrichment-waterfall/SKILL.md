@@ -14,12 +14,12 @@ Sammeladresse — und, deutlich teurer, seine Mobilnummer bzw. Durchwahl.
 
 ## Die Reihenfolge (Kurs-Regel, nicht verhandelbar)
 
-1. Leads sammeln (Weg-Skill), eine Adresse je Lead reicht (info@), ab ListM8 MCP 3.0.0 auch nur
+1. Leads sammeln (Weg-Skill), eine Adresse je Lead reicht (info@), ab ListM8 MCP 4.0.0 auch nur
    die eigene Website →
 2. Import und Recherche in der Plattform: Sie liest das Impressum, findet den Ansprechpartner und
    ersetzt die Rollen-Adresse durch die persönliche, wenn sie eine findet →
 3. dieser Skill, **optional**, nur für qualifizierte, wertvolle Leads, bei denen die Recherche einen
-   Namen, aber keine persönliche Adresse gefunden hat. Ab ListM8 MCP 3.0.0 auch für wertvolle
+   Namen, aber keine persönliche Adresse gefunden hat. Ab ListM8 MCP 4.0.0 auch für wertvolle
    Leads, die ohne E-Mail importiert wurden und mangels Adresse ausgeschieden sind
    (`contactEmailState: not_found`), sofern die Recherche einen Namen fand.
 

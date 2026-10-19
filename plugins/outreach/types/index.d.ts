@@ -39,7 +39,7 @@ export type ImportView = {
   campaignId: number | null
   imported: number | null
   duplicates: number | null
-  /** Rows the server refused (no contact feature, only a platform link); null on servers before MCP 3.0.0. */
+  /** Rows the server refused (no contact feature, only a platform link); null on servers before MCP 4.0.0. */
   rejected: number | null
   isTerminal: boolean
   isDemo: boolean

@@ -109,7 +109,7 @@ Klassifiziert wird mit exakt denselben Regeln wie im Piloten — sonst sind die 
 
 Erst danach die Profile der bestätigten Treffer anreichern (Qualifizierungs-Actor aus
 `apify-actors.md`): Bio, Followerzahl, Link in Bio. Den Link nach Typ sortieren — eigene Website
-(→ optional `impressum-enrichment`; ab ListM8 MCP 3.0.0 kann auch die Recherche die Adresse dort
+(→ optional `impressum-enrichment`; ab ListM8 MCP 4.0.0 kann auch die Recherche die Adresse dort
 suchen), Linktree (Profil-Link, keine Website: ohne E-Mail nicht importierbar), Calendly, kein
 Link (nur per DM erreichbar, für Cold Mail wertlos). E-Mail und Telefon zusätzlich aus dem
 Bio-Text lesen, wo vorhanden.
@@ -136,7 +136,7 @@ An `listen-qualitaet` — immer, ohne Ausnahme. Diesem Skill gehört kein Qualit
   Hashtags (`vertriebscoach`) treffen DACH besser.
 - **Profile bringen keine Adresse:** 15 von 27 Profilen hatten eine Website, keines eine Adresse in
   der Bio. Der Kontakt kommt über die Website (vorab `impressum-enrichment` oder ab ListM8 MCP
-  3.0.0 die Recherche der Plattform); Profile ohne eigene Website sind für Cold Mail verloren.
+  4.0.0 die Recherche der Plattform); Profile ohne eigene Website sind für Cold Mail verloren.
 
 - **Instagram-Scraping ist volatil.** Hashtag-Actors brechen nach Plattform-Änderungen; leere
   Ergebnisse zuerst am Actor-Status prüfen, nicht an den Tags. Auch die Reichweite einzelner Tags

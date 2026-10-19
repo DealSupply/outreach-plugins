@@ -47,7 +47,7 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
    dasselbe Anker-Thema (z. B. lauter Angstpatienten), im Bericht als systematischen Befund melden und
    vorschlagen, Sperrliste und `intro`-Prompt über `outreach-campaign` nachzuschärfen (bei
    `nur_pruefen` fehlt die Angabe, dann entfällt die Zählung). Zeilen mit `grund=keine-adresse`
-   (ab MCP 3.0.0: Lead ohne E-Mail importiert, Recherche fand keine eigene Adresse, keine Mail)
+   (ab MCP 4.0.0: Lead ohne E-Mail importiert, Recherche fand keine eigene Adresse, keine Mail)
    zählen als „ohne Adresse“ und sind kein Fehler. Danach alle angemeldeten
    Phasen mit `outreach_progress(action="end", campaign_id, phase=…)` schließen, auch wenn alles gezählt
    scheint: Leads ohne Schreibaufruf (Recherche vorhanden, aussortiert, Fehler) hält das Band sonst offen.

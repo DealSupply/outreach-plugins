@@ -72,7 +72,7 @@ Lehre: Nach Maps ist die Lücke meist echt (keine Adresse auf der Website). Ein 
 lohnt nur bei großem Volumen. Auf Quellen ohne Kontaktdaten (LinkedIn-Firmen) brachte derselbe
 haketa-Lauf dagegen 29/40 (73 %).
 
-## Fundquote der ListM8-Recherche bei Leads ohne Adresse (ab MCP 3.0.0)
+## Fundquote der ListM8-Recherche bei Leads ohne Adresse (ab MCP 4.0.0)
 
 Noch nicht gemessen. Nach den ersten Läufen hier je Quelle eintragen: Leads ohne E-Mail
 importiert, davon mit gefundener Adresse (`contactEmailState: present`), ausgeschieden

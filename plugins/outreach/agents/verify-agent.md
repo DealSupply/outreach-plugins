@@ -29,7 +29,7 @@ ihm mit `art` und `grund`, was zu tun ist.
 1. `get_lead_variables(campaign_id, lead_id)`: Variablen, Recherche, Qualifizierung. Die Versandadresse ist
    `lead.sendingEmail` (kann eine persönliche Adresse aus der Recherche sein); `lead.email` ist nur die
    Importadresse. Fehlt `sendingEmail`, gilt `lead.email`. Fehlen beide (Lead ohne Adresse, ab MCP
-   3.0.0 möglich): nie `freigeben`, sondern `URTEIL … ergebnis=hinweis art=recht grund=keine Versandadresse`.
+   4.0.0 möglich): nie `freigeben`, sondern `URTEIL … ergebnis=hinweis art=recht grund=keine Versandadresse`.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede) und
    die festen Steps. Die Regeln der Kampagne gehen allgemeinen Regeln vor. Die Person wird nie mit
    ihr/euch angesprochen; Tatsachen über einen Betrieb mit mehreren Personen mit ihr/euer („dass ihr … habt“)

@@ -88,7 +88,7 @@ LEAD: {lead.company} (ID: {lead.id})
    - "config" = Research-Ziele/Prioritäten der Kampagne (researchGoals, researchPriorities, additionalPrompt). Sie sind MASSGEBLICH dafür, WONACH du suchst.
    - "agent.additionalPrompt" = zusätzliche Anweisung des Research-Agents; ein "config.additionalPrompt" der Kampagne ergänzt sie, beide gelten.
    - "researchTier" = wirksame Recherche-Stufe ("tier": basis, smart oder deep; "origin": campaign, account, tools oder agent) mit "rules". Die Regeln sind VERBINDLICH dafür, WIE VIEL du im Netz suchen darfst; der Server-Lauf hält dieselben Grenzen ein, und die Kosten des Kunden hängen daran. Fehlt "researchTier" (älterer Server), gilt Deep.
-   - "contactEmail" (ab MCP 3.0.0) = {required, rules}. Ist "required" true (der Lead hat noch keine Adresse, `lead.contactEmailState` ist nicht "present"), ist die eigene Kontaktadresse des Betriebs ZIEL 0 der Recherche; "rules" sagen, welche Adressen zählen, und gehen den Plugin-Regeln unten vor.
+   - "contactEmail" (ab MCP 4.0.0) = {required, rules}. Ist "required" true (der Lead hat noch keine Adresse, `lead.contactEmailState` ist nicht "present"), ist die eigene Kontaktadresse des Betriebs ZIEL 0 der Recherche; "rules" sagen, welche Adressen zählen, und gehen den Plugin-Regeln unten vor.
 3. Recherchiere:
    - ZIEL 0, nur wenn der Lead keine Adresse hat: Impressum, Kontakt-, Team- und Datenschutzseite sowie den Footer der eigenen Website nach einer Adresse des Betriebs selbst durchsuchen (innerhalb von "researchTier.rules"; Basis erlaubt die Website, das genügt meist). Persönliche Adresse von Inhaber oder Geschäftsführung vor Funktionsadresse vor info@/kontakt@; info@ ist erlaubt. Nur wörtlich auf einer Seite stehende Adressen mit Fundstelle.
    - Website (lead.website) per WebFetch laden; relevante Unterseiten (Leistungen, Über uns, Team, Referenzen, Impressum, Kontakt) gezielt nachladen.
@@ -117,7 +117,7 @@ LEAD: {lead.company} (ID: {lead.id})
    Nur Adressen mit Fundstelle; nie eine aus Vor- und Nachname
    geratene, nie eine als unzustellbar bekannte (Bounce), nie Platzhalter wie "null". Ohne
    belegte Adresse `bestEmail` weglassen.
-   Lead ohne Adresse (ab MCP 3.0.0): Eine gefundene eigene Adresse des Betriebs wird `bestEmail`
+   Lead ohne Adresse (ab MCP 4.0.0): Eine gefundene eigene Adresse des Betriebs wird `bestEmail`
    (Reihenfolge wie oben: persönliche vor Funktionsadresse vor info@/kontakt@, Adressen auf der
    eigenen Domain oder Freemail mit Fundstelle). Der Server macht sie auch zur Identität des Leads
    (`warnings` meldet das). Nie Adressen einer Plattform, eines Verzeichnisses, des Webdesigners,

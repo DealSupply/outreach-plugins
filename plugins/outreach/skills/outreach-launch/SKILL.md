@@ -71,7 +71,7 @@ abhaken.
    dann die Leads pushen. Auto-Push überträgt Freigaben aus der Oberfläche sofort; nach Freigaben
    über den MCP das offene Delta (Pipeline-Streifen „Ausstehend") per Push-Button übertragen.
    Ohne Integration: CSV-Export der Kampagne in Instantly hochladen und die Variablen dort zuordnen.
-   Export und Push nehmen nie Leads ohne Versandadresse mit (ab MCP 3.0.0).
+   Export und Push nehmen nie Leads ohne Versandadresse mit (ab MCP 4.0.0).
    Adressen, die erst die Recherche gefunden hat (Leads ohne E-Mail importiert), sind nicht
    verifiziert: vor dem Versand die Verifizierung in Instantly einschalten oder die Adressen
    nachprüfen (`listen-qualitaet`, Schritt 3).
@@ -118,7 +118,7 @@ Instantly samt dort angelegter Varianten.
   Abmeldungen (`do_not_contact`) aus dem ganzen Workspace.
 - Ohne Integration oder für Abmeldungen per Antwort, Telefon oder Brief:
   `mark_leads_contacted(emails=[…], status="do_not_contact" | "contacted" | "replied" | "opportunity")`.
-  Leads ohne E-Mail (ab MCP 3.0.0) nur über `lead_ids`.
+  Leads ohne E-Mail (ab MCP 4.0.0) nur über `lead_ids`.
   Status werden nie herabgestuft; ein Zurücksetzen auf `not_contacted` nur auf ausdrücklichen
   Wunsch und nie für gesperrte Leads.
 - Neue Ansprache versendeter Leads ohne Reaktion (etwa über eine neue Domain): In ListM8 fragt der

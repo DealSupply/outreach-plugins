@@ -59,7 +59,7 @@ describe('lead preview', () => {
     }
   })
 
-  test('a lead without an address (MCP 3.0.0) draws with its website and the address research found', async $ => {
+  test('a lead without an address (MCP 4.0.0) draws with its website and the address research found', async $ => {
     const withoutEmail = {
       ...LIST_LEADS,
       leads: [
@@ -472,7 +472,7 @@ describe('local workflow phases', () => {
     await band.unmount()
   })
 
-  test('a lead whose research found no address leaves the email phase (MCP 3.0.0)', async ($, on) => {
+  test('a lead whose research found no address leaves the email phase (MCP 4.0.0)', async ($, on) => {
     engineDraws(on)
     mock.clock(on)
     on('tool.call', (_$, e) => {
@@ -663,7 +663,7 @@ describe('imports', () => {
     expect(asked.length).toBe(2)
   })
 
-  test('rows the server refused show next to the imported ones (MCP 3.0.0)', async ($, on) => {
+  test('rows the server refused show next to the imported ones (MCP 4.0.0)', async ($, on) => {
     engineDraws(on)
     const clock = mock.clock(on)
     mcpAnswers(on, [jobStatus('completed', { status: 'success', imported: 470, total: 497, duplicates: [], rejected_count: 3 })])

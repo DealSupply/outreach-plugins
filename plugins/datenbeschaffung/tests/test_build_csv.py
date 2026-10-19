@@ -237,7 +237,7 @@ WEBSITE_ONLY = {"title": "Praxis Ohne Mail", "placeId": "ChIJmuster0010", "count
 
 
 class HandoverTest(unittest.TestCase):
-    """Übergabe-CSV ab ListM8 MCP 3.0.0: E-Mail ODER eigene Website (references/plattform-hosts.md)."""
+    """Übergabe-CSV ab ListM8 MCP 4.0.0: E-Mail ODER eigene Website (references/plattform-hosts.md)."""
 
     def test_kontakt_keeps_website_only_row(self) -> None:
         kept, rejected, report = run_with_rejected([WEBSITE_ONLY], "--uebergabe", "kontakt")

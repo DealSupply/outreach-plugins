@@ -1,6 +1,6 @@
 ---
 name: kontaktseiten-fallback
-description: Optionaler Fallback-Baustein des Datenbeschaffungs-Pakets: fills the remaining email and phone gaps by crawling contact pages (/kontakt, /contact, /impressum, /pages/kontakt …) for rows an Impressum run could not resolve; typical cases are non-DACH domains and modern onepagers. Since ListM8 MCP 3.0.0 optional: leads with an own website may be imported without email and the platform's research looks for the address. Invoked by weg-* skills or after impressum-enrichment; never triggered directly by the user.
+description: Optionaler Fallback-Baustein des Datenbeschaffungs-Pakets: fills the remaining email and phone gaps by crawling contact pages (/kontakt, /contact, /impressum, /pages/kontakt …) for rows an Impressum run could not resolve; typical cases are non-DACH domains and modern onepagers. Since ListM8 MCP 4.0.0 optional: leads with an own website may be imported without email and the platform's research looks for the address. Invoked by weg-* skills or after impressum-enrichment; never triggered directly by the user.
 ---
 
 # Kontaktseiten-Fallback — die zweite Runde
@@ -23,7 +23,7 @@ Die wichtigste Regel steht am Anfang, weil sie am häufigsten verletzt wird:
 - **Nicht für DACH-Domains, die noch keinen Impressum-Lauf hatten.** Erst Impressum, dann die Lücke.
 - **Nicht bei kleinen Restmengen.** Bleiben nach dem Impressum-Lauf nur eine Handvoll Zeilen
   offen, ist die Lücke billiger akzeptiert als geschlossen (Trichter-Prinzip).
-- **Meist nicht nötig ab ListM8 MCP 3.0.0, wenn die Liste klein ist:** Zeilen mit eigener Website
+- **Meist nicht nötig ab ListM8 MCP 4.0.0, wenn die Liste klein ist:** Zeilen mit eigener Website
   dürfen ohne E-Mail importiert werden, die Recherche liest dann selbst Kontakt- und
   Impressumsseite. Entscheidung nach `../datenbeschaffung-referenzen/references/datenumfang.md`,
   Abschnitt „Die Kontaktlücke“.
@@ -36,7 +36,7 @@ stehen, und Zeilen, die der Impressum-Actor ohne Ergebnis zurückgegeben hat.
 
 Die angereicherte CSV auswerten, bevor Geld ausgegeben wird: Wie viele Zeilen haben keine E-Mail,
 wie viele keine Telefonnummer? Beide Zahlen dem Nutzer nennen. Sind es weniger als ~20 Zeilen:
-Lücke akzeptieren und zurück an den rufenden Weg-Skill. Auf einem Server ab 3.0.0 zusätzlich die
+Lücke akzeptieren und zurück an den rufenden Weg-Skill. Auf einem Server ab 4.0.0 zusätzlich die
 Option nennen, die Lücke ohne Anreicherung an die Recherche zu geben (Zeilen mit eigener Website).
 
 ## Schritt 2 — Kontaktseiten-URLs bauen

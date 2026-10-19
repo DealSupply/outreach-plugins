@@ -85,7 +85,7 @@ Shop-Seiten auf dem Marktplatz (amazon.de, etsy.com, ebay.de) sind Profil-Links,
 
 Etsy und die eBay-Fallbacks liefern oft nur Shop-URLs. Dann `impressum-enrichment` (deutsche Shops
 mit eigener Website) oder `kontaktseiten-fallback` (internationale Domains) über die **eigenen
-Domains der Händler** laufen lassen; ab ListM8 MCP 3.0.0 optional, dann sucht die Recherche die
+Domains der Händler** laufen lassen; ab ListM8 MCP 4.0.0 optional, dann sucht die Recherche die
 Adresse auf der Händler-Domain (Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“). Händler
 ohne eigene Domain und ohne Adresse sind nicht importierbar. Die Marktplatz-Domains selbst (amazon.de, etsy.com, ebay.de)
 werden **nie** angereichert — sie gehören in die `domainBlacklist` aus `noise-domains.md`, sonst

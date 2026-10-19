@@ -42,7 +42,7 @@ check_leads_exist(emails=[...], domains=[...])     # bis 1.000 Einträge je Call
 ```
 
 E-Mails aller Zeilen mit Adresse und die Domains aller Zeilen ohne Adresse prüfen (ab ListM8 MCP
-3.0.0). Für eine Zeile ohne E-Mail ist ein Domain-Treffer mit `match_kind: website_identity`
+4.0.0). Für eine Zeile ohne E-Mail ist ein Domain-Treffer mit `match_kind: website_identity`
 derselbe Lead (wird nur verlinkt); `company_known` heißt „Firma bekannt“ (Warnung, kein
 Ausschluss). Liefert der Server kein `match_kind` (älterer Server, Teilstring-Vergleich), selbst
 nachprüfen: derselbe Lead nur, wenn der Host der `website` des Treffers (ohne `www.`) gleich der
@@ -66,7 +66,7 @@ manuelle Scrape-Log.
 ### 3. Import in die Liste
 
 **Kernfelder:** Jede Zeile braucht eine gültige `email` **oder** eine eigene `website` (ab ListM8
-MCP 3.0.0; Profil-Links wie Instagram oder Linktree zählen nicht, Baukasten-Subdomains schon). Fehlt
+MCP 4.0.0; Profil-Links wie Instagram oder Linktree zählen nicht, Baukasten-Subdomains schon). Fehlt
 die E-Mail, das Feld weglassen. Ältere Server verlangen die E-Mail in jeder Zeile und lehnen sonst
 den ganzen Aufruf ab (`listm8-mcp.md`, Versionsprüfung).
 
@@ -150,7 +150,7 @@ entkoppelt und gemeldet. Das gibt auch das `max_leads`-Limit wieder frei.
 Die geprüfte Liste als CSV im Format aus `csv-spalten.md` liefern, dazu die Anleitung:
 „In der App: Leads → CSV-Import, Datei hochladen und Spalten zuordnen; die Zusatzspalten werden als Attribute angeboten."
 Der App-Import folgt derselben Regel wie `import_leads` (E-Mail oder eigene Website, abgelehnte
-Zeilen mit Grund im Ergebnis). Läuft die App noch mit einem älteren Server (unter 3.0.0), die
+Zeilen mit Grund im Ergebnis). Läuft die App noch mit einem älteren Server (unter 4.0.0), die
 Übergabe-CSV mit `build_csv.py --uebergabe email` bauen.
 Der Vorab-Abgleich entfällt dann — im Bericht ausdrücklich sagen, dass Duplikate erst der
 App-Import abfängt und `do_not_contact` NICHT vorab geprüft werden konnte.

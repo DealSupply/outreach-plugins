@@ -122,7 +122,7 @@ andere gibt; fehlt die Adresse im Scrape, nimmt es die aus dem Impressum.
 
 ## Schritt 5 — Die Kontaktlücke (die Leads ohne E-Mail)
 
-Ab ListM8 MCP 3.0.0 dürfen Leads mit eigener Website ohne Adresse importiert werden; die Recherche
+Ab ListM8 MCP 4.0.0 dürfen Leads mit eigener Website ohne Adresse importiert werden; die Recherche
 sucht die Adresse dann selbst (Impressum, Kontaktseite). Nach Maps ist die Lücke aber meist echt:
 Im Test fanden Impressum- und Kontakt-Actors für 28 Domains ohne Adresse nur 1 bis 5
 (`erfahrungswerte.md`). Dem Nutzer die Zahl nennen und fragen: importieren (kostet Qualifizierung

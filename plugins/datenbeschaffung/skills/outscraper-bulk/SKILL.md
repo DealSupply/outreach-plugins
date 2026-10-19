@@ -107,12 +107,12 @@ Die Spalte `email.emails_validator.status` entscheidet:
 | `BLACKLISTED` | Adresse entfernen |
 | leer | keine Adresse |
 
-Ab ListM8 MCP 3.0.0 bleibt eine Zeile ohne (brauchbare) Adresse erhalten, wenn sie eine eigene
+Ab ListM8 MCP 4.0.0 bleibt eine Zeile ohne (brauchbare) Adresse erhalten, wenn sie eine eigene
 Website hat: Die Recherche sucht dann die Adresse; nur Zeilen ohne eigene Website fliegen raus.
 Auf älteren Servern fällt jede Zeile ohne `RECEIVING`-Adresse weg.
 
 Erfahrungswert der Verteilung: **~71 % RECEIVING, ~15 % INVALID, ~13 % UNKNOWN.** Auf älteren
-Servern fällt hier also gut ein Viertel des Rohergebnisses weg; ab 3.0.0 entsprechend weniger
+Servern fällt hier also gut ein Viertel des Rohergebnisses weg; ab 4.0.0 entsprechend weniger
 (nur Zeilen ohne eigene Website). Die Zahl vorher nennen, sonst wirkt die fertige Liste überraschend
 klein. `UNKNOWN` ist bewusst kein Grenzfall: Catch-All-Adressen treiben die Bounce-Rate, und die
 Zustellbarkeit der Domain ist wertvoller als der einzelne Lead.

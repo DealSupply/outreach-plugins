@@ -680,7 +680,7 @@ const withLead = (local: LocalRun, leadId: number, how: 'done' | 'skipped'): Loc
   return { ...local, doneLeadIds, skippedLeadIds, isTerminal, finishedAt: isTerminal ? Date.now() : null }
 }
 
-/** The lead a write answers with says the research found no address to send to (MCP 3.0.0 and later). */
+/** The lead a write answers with says the research found no address to send to (MCP 4.0.0 and later). */
 const leftWithoutAddress = (answer: Record<string, unknown> | null): boolean => {
   const lead = answer !== null && typeof answer.lead === 'object' && answer.lead !== null
     ? (answer.lead as Record<string, unknown>)

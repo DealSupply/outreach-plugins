@@ -1,15 +1,15 @@
 # ListM8-MCP: Import- und Bestands-Tools
 
-Vertragsstand: ListM8 MCP 3.0.0 (16.10.2026: Leads ohne E-Mail). Die Referenz deckt die Tools ab,
+Vertragsstand: ListM8 MCP 4.0.0 (16.10.2026: Leads ohne E-Mail). Die Referenz deckt die Tools ab,
 die in der Datenbeschaffung gebraucht werden. Die vollständige Werkzeugliste liefert die
 Tool-Discovery des MCP-Servers; jede Werkzeugbeschreibung dort ist der aktuelle Vertrag und geht
 dieser Referenz im Zweifel vor.
 
-**Versionsprüfung:** `ping` liefert `version`. Ab `3.0.0` gilt diese Referenz („E-Mail ODER eigene
-Website“). Älterer Server oder `ping` ohne Version: Jede Zeile braucht weiter eine gültige E-Mail
+**Versionsprüfung:** `ping` liefert `version`. Ab `4.0.0` gilt diese Referenz („E-Mail ODER eigene
+Website“). Älterer Server (auch 3.x, der Stand mit Credits zum Festpreis) oder `ping` ohne Version: Jede Zeile braucht weiter eine gültige E-Mail
 (alter Kontrakt, `build_csv.py --uebergabe email`), und `import_leads` lehnt den ganzen Aufruf ab,
 sobald eine Zeile ohne gültige E-Mail dabei ist. Welcher Kontrakt gilt, entscheidet allein die
-`ping`-Version, nie der Wortlaut einer Fehlermeldung: Auch die Meldung eines 3.0.0-Servers nennt
+`ping`-Version, nie der Wortlaut einer Fehlermeldung: Auch die Meldung eines 4.0.0-Servers nennt
 `"email"` („needs a valid "email" or a usable "website"“).
 
 ## Was ListM8 heute (nicht) kann
@@ -104,7 +104,7 @@ Antwort: `email_matches[]` (`query`, `lead_id`, `email`, `contact_status`, `in_c
 ### export_leads
 
 - `format="index"`: je Lead nur `{e, d, s}` plus `se`:
-  - `e`: die E-Mail des Leads. Bei Leads ohne E-Mail leer (`""`, ab MCP 3.0.0). Skripte müssen
+  - `e`: die E-Mail des Leads. Bei Leads ohne E-Mail leer (`""`, ab MCP 4.0.0). Skripte müssen
     auch `null` vertragen (`dedup.py` tut das).
   - `se`: Zweitadressen (nur wenn vorhanden).
   - `d`: Domain der Website oder null; `s`: Kontaktstatus.

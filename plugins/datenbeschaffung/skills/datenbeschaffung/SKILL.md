@@ -17,7 +17,7 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
 2. **Nur beschaffen, was die Plattform nicht selbst findet.** Die Recherche liest Website und
    Impressum, findet den Ansprechpartner und dessen persönliche Adresse. Die Beschaffung liefert
    die Liste, je Lead eine Adresse (info@ reicht) **oder** die eigene Website (ab ListM8 MCP
-   3.0.0: fehlt die Adresse, sucht die Recherche sie; ein Profil-Link wie Instagram oder Linktree
+   4.0.0: fehlt die Adresse, sucht die Recherche sie; ein Profil-Link wie Instagram oder Linktree
    reicht nicht) und das, was nur auf der Quelle steht: Google-Bewertung und Rezensionen,
    Follower, Plattform-Bewertung, Shop-Technologie. Details je Quelle:
    `../datenbeschaffung-referenzen/references/datenumfang.md`.
@@ -41,7 +41,7 @@ Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst k
 - **ListM8-MCP verbunden?** `ping` aufrufen. Mit MCP sind Bestandsabgleich und direkter Import
   möglich; ohne MCP am Ende CSV-Übergabe über die Oberfläche und den fehlenden Bestandsabgleich
   ausdrücklich melden. Fehlen die Tools, zuerst Verbindung und Berechtigungen klären.
-- **Server-Version merken:** `ping.version` ab `3.0.0` heißt Übergabemodus `kontakt` (E-Mail oder
+- **Server-Version merken:** `ping.version` ab `4.0.0` heißt Übergabemodus `kontakt` (E-Mail oder
   eigene Website je Lead), darunter oder ohne Version `email` (jede Zeile braucht eine Adresse).
   Den Modus an `listen-qualitaet` weitergeben (`build_csv.py --uebergabe …`).
 - **Scraping-Zugang:** erst nach der Wahl des Wegs (Phase 2) prüfen und nur, wenn der Weg ihn
@@ -102,7 +102,7 @@ Adresse sucht danach die Recherche der Plattform.“
   nach ausdrücklichem Ja einen Anreicherungs-Lauf planen.
 - Der Weg-Skill schreibt die Spalten über `build_csv.py`; nur Rohfelder mit Einstieg zusätzlich
   per `--keep`.
-- **Kontaktlücke** (Leads mit eigener Website, aber ohne Adresse): ab ListM8 3.0.0 entscheidet der
+- **Kontaktlücke** (Leads mit eigener Website, aber ohne Adresse): ab ListM8 4.0.0 entscheidet der
   Nutzer, ob vorab angereichert wird oder die Recherche sucht. Entscheidungstabelle in
   `datenumfang.md`, Abschnitt „Die Kontaktlücke“. Dem Nutzer sinngemäß sagen: „N Leads haben eine
   eigene Website, aber keine Adresse. Ich kann sie so importieren, dann sucht die Recherche in
@@ -133,7 +133,7 @@ gar nicht erst Geld kosten. `list_lists` zeigt außerdem, was bereits gescrapt u
    `../datenbeschaffung-referenzen/references/zugriff.md`.
 4. Bei Leads ohne Adresse **optional** `impressum-enrichment` (DACH) bzw. `kontaktseiten-fallback`
    nur für die Adresse nutzen, nach der Entscheidung aus Phase 2b und mit Kostenfreigabe (auf
-   Servern unter 3.0.0 ist das der einzige Weg, sie zu importieren). `enrichment-waterfall` ist
+   Servern unter 4.0.0 ist das der einzige Weg, sie zu importieren). `enrichment-waterfall` ist
    keine Lückenfüllung, sondern eine Ausnahme für wenige wertvolle Leads nach der Recherche
    (siehe dort).
 

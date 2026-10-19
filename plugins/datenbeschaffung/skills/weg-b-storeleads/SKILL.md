@@ -95,7 +95,7 @@ sie sind der Personalisierungs-Stoff dieses Wegs.
 
 Rollen-Adressen sind erlaubt (Trichter-Prinzip); Geschäftsführer und persönliche Adresse findet
 die Recherche der Plattform. `impressum-enrichment` optional, nur für Shops ganz ohne Adresse und
-nur für die Adresse; ab ListM8 MCP 3.0.0 kann die Recherche auch diese Adresse auf der Shop-Website
+nur für die Adresse; ab ListM8 MCP 4.0.0 kann die Recherche auch diese Adresse auf der Shop-Website
 suchen (Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“). `enrichment-waterfall` erst nach
 der Recherche und nur für die Spitze der Liste.
 

@@ -6,7 +6,7 @@
 
 --index: Antwort von export_leads(format="index") — {"index": [{"e","d","s","se"?}, ...]}
          (auch als reines Array akzeptiert). Älter als 24 h → Warnung.
-         `e` ist die E-Mail des Leads (ab ListM8 MCP 3.0.0 leer bei Leads ohne E-Mail, auch null
+         `e` ist die E-Mail des Leads (ab ListM8 MCP 4.0.0 leer bei Leads ohne E-Mail, auch null
          möglich), `se` seine Zweitadressen, `d` die Website-Domain.
 Entfernt: exakte E-Mail-Treffer (E-Mail und Zweitadressen), do_not_contact-Treffer
 (hart: auch Zeilen ohne E-Mail, deren Domain gesperrt ist), und Zeilen ohne E-Mail, deren
@@ -17,7 +17,7 @@ Derselbe Lead nur bei exakt gleichem Host; eine Zeile `praxis.de` gegen einen Be
 Markiert: übrige Domain-Treffer ("Firma schon im Bestand") in der Spalte `hinweis`: kein
 Ausschluss, es sei denn --drop-known-domains (alle) bzw. --drop-known-domains-ohne-email
 (nur Zeilen ohne E-Mail) ist gesetzt.
-Zeilen OHNE E-Mail bleiben sonst erhalten: ab ListM8 3.0.0 sucht die Recherche die Adresse auf
+Zeilen OHNE E-Mail bleiben sonst erhalten: ab ListM8 4.0.0 sucht die Recherche die Adresse auf
 der Website, auf älteren Servern sind sie Anreicherungs-Kandidaten.
 """
 from __future__ import annotations

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Tests für dedup.py: python3 -I plugins/datenbeschaffung/tests/test_dedup.py
 
-Bestandsindex im Format von export_leads(format="index") ab ListM8 MCP 3.0.0
+Bestandsindex im Format von export_leads(format="index") ab ListM8 MCP 4.0.0
 (`e` = E-Mail des Leads, leer bei Leads ohne E-Mail; auch null möglich).
 """
 from __future__ import annotations

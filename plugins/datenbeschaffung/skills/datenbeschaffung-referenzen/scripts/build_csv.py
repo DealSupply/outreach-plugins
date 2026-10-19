@@ -23,7 +23,7 @@ erscheint nur, wenn mindestens eine Zeile einen Wert hat.
 Zeilen OHNE E-Mail bleiben standardmäßig erhalten (`keine-email` in `hinweis`): Sie sind der
 Input für die optionale Impressum-/Kontaktseiten-Stufe. Die finale Übergabe-CSV läuft mit
 --uebergabe (references/csv-spalten.md, references/plattform-hosts.md):
-  kontakt  ab ListM8 MCP 3.0.0: E-Mail ODER eigene Website. Zeilen nur mit Plattform-Link
+  kontakt  ab ListM8 MCP 4.0.0: E-Mail ODER eigene Website. Zeilen nur mit Plattform-Link
            (Instagram, Linktree, Branchenportal …) oder ganz ohne Kontaktmerkmal fliegen raus.
   email    ältere Server: nur Zeilen mit E-Mail (gleich dem früheren --require-email).
 Verworfene Zeilen schreibt --verworfen mit Spalte `grund` in eine eigene CSV.
@@ -453,7 +453,7 @@ def main() -> int:
     ap.add_argument("--quelle", required=True, help='z. B. "apify:compass/crawler-google-places 2026-10-11"')
     ap.add_argument("--land", help="nur Zeilen mit diesem countryCode behalten (de/at/ch)")
     ap.add_argument("--uebergabe", choices=["kontakt", "email"],
-                    help="finale Übergabe-CSV: kontakt = E-Mail oder eigene Website (ListM8 >= 3.0.0), "
+                    help="finale Übergabe-CSV: kontakt = E-Mail oder eigene Website (ListM8 >= 4.0.0), "
                          "email = nur Zeilen mit E-Mail (ältere Server)")
     ap.add_argument("--require-email", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--verworfen", help="verworfene Zeilen mit Spalte grund in diese CSV schreiben")

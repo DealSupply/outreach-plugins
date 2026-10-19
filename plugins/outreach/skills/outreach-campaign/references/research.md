@@ -56,7 +56,7 @@ Sperrliste (nie als Opener-Anker vormerken, außer als Lob aus Bewertungstexten)
 Heizungstausch, Wärmepumpe allgemein, Notdienst, barrierefreies Bad, Meisterbetrieb, Beratung vor Ort.
 ```
 
-Die eigene Kontaktadresse eines Leads, der ohne E-Mail importiert wurde (ab ListM8 MCP 3.0.0), muss
+Die eigene Kontaktadresse eines Leads, der ohne E-Mail importiert wurde (ab ListM8 MCP 4.0.0), muss
 nicht in den Fokus-Text: Die Regeln dafür bringt der Server selbst mit (`researchGeneration.contactEmail`
 in `get_lead_data`). Ein Punkt „Kontaktadresse“ im Fokus-Text ist nur eine Gedächtnisstütze; maßgeblich
 bleiben die Regeln des Servers (persönliche Adresse von Inhaber oder Geschäftsführung vor info@, nie
