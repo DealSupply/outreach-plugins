@@ -88,7 +88,9 @@ LEAD: {lead.company} (ID: {lead.id})
    - "config" = Research-Ziele/Prioritäten der Kampagne (researchGoals, researchPriorities, additionalPrompt). Sie sind MASSGEBLICH dafür, WONACH du suchst.
    - "agent.additionalPrompt" = zusätzliche Anweisung des Research-Agents; ein "config.additionalPrompt" der Kampagne ergänzt sie, beide gelten.
    - "researchTier" = wirksame Recherche-Stufe ("tier": basis, smart oder deep; "origin": campaign, account, tools oder agent) mit "rules". Die Regeln sind VERBINDLICH dafür, WIE VIEL du im Netz suchen darfst; der Server-Lauf hält dieselben Grenzen ein, und die Kosten des Kunden hängen daran. Fehlt "researchTier" (älterer Server), gilt Deep.
+   - "contactEmail" (ab MCP 4.0.0) = {required, rules}. Ist "required" true (der Lead hat noch keine Adresse, `lead.contactEmailState` ist nicht "present"), ist die eigene Kontaktadresse des Betriebs ZIEL 0 der Recherche; "rules" sagen, welche Adressen zählen, und gehen den Plugin-Regeln unten vor.
 3. Recherchiere:
+   - ZIEL 0, nur wenn der Lead keine Adresse hat: Impressum, Kontakt-, Team- und Datenschutzseite sowie den Footer der eigenen Website nach einer Adresse des Betriebs selbst durchsuchen (innerhalb von "researchTier.rules"; Basis erlaubt die Website, das genügt meist). Persönliche Adresse von Inhaber oder Geschäftsführung vor Funktionsadresse vor info@/kontakt@; info@ ist erlaubt. Nur wörtlich auf einer Seite stehende Adressen mit Fundstelle.
    - Website (lead.website) per WebFetch laden; relevante Unterseiten (Leistungen, Über uns, Team, Referenzen, Impressum, Kontakt) gezielt nachladen.
    - Suchen nur nach "researchTier.rules": Basis keine WebSearch und keine fremden Seiten (Bewertungszahlen nur aus den Lead-Attributen), außer genau einer Suche nach "<Firma> <Ort>", wenn die Website gar nichts liefert; Smart erst ohne Suche, dann höchstens eine Suche "<Firma> <Ort> Bewertungen", wenn kein starker Anker belegt ist und keine Rezensionstexte importiert sind; Deep nach Bedarf. Jede Suche unter "## Research Details" mit Suchanfrage vermerken.
    - Bewertungen (bei Deep zuerst, bei Smart nur in der einen erlaubten Suche): WebSearch liefert nur Links, die Treffer von Bewertungsportalen und Verzeichnissen per WebFetch öffnen (Google Maps und Google-Seiten sind so nicht lesbar). Anzahl und Schnitt aus den Lead-Attributen des Imports gelten als Quelle.
@@ -115,6 +117,15 @@ LEAD: {lead.company} (ID: {lead.id})
    Nur Adressen mit Fundstelle; nie eine aus Vor- und Nachname
    geratene, nie eine als unzustellbar bekannte (Bounce), nie Platzhalter wie "null". Ohne
    belegte Adresse `bestEmail` weglassen.
+   Lead ohne Adresse (ab MCP 4.0.0): Eine gefundene eigene Adresse des Betriebs wird `bestEmail`
+   (Reihenfolge wie oben: persönliche vor Funktionsadresse vor info@/kontakt@, Adressen auf der
+   eigenen Domain oder Freemail mit Fundstelle). Der Server macht sie auch zur Identität des Leads
+   (`warnings` meldet das). Nie Adressen einer Plattform, eines Verzeichnisses, des Webdesigners,
+   Hosters, einer Kammer oder eines Portals, nie geraten, nie Platzhalter. Meldet `warnings`
+   `address_conflict`, gehört die Adresse schon einem anderen Lead: nicht wiederholen, im Report
+   vermerken. Findet sich keine Adresse: `bestEmail` WEGLASSEN, unter "## Kontakt" die geprüften
+   URLs nennen und trotzdem status="researched" setzen. Der Lead scheidet dann mit dem Grund
+   `no_contact_email` aus und bekommt keine Mail.
    Fremde Importadresse: Gehört die Importadresse laut Recherche belegt einem Dritten (Kammer,
    Verband, Portal, Agentur, andere Firma) und findest du keine eigene belegte Adresse des
    Betriebs, `bestEmail` weglassen und die fremde Adresse im Report vermerken. Der Lead bekommt
@@ -134,18 +145,18 @@ LEAD: {lead.company} (ID: {lead.id})
 - Keine internen Metriken/Scores in den Report-Text.
 - Allgemeine Website-/Impressums-Werbehinweise ausschließlich als Information mit Quelle dokumentieren. Dadurch allein keinen Score/Fit abwerten, Research unterdrücken oder einen Kontaktstatus setzen. Echte gespeicherte Sperren erhalten; Opt-in und Versandentscheidung bleiben beim Kunden.
 - Deutsch, korrekte Umlaute (Ä/Ö/Ü/ß — niemals AE/OE/UE/ss).
-- Antworte am Ende NUR mit: "OK lead={lead.id} aufhänger=<kurz>" oder "FEHLER lead={lead.id}: <Grund>".
+- Antworte am Ende NUR mit: "OK lead={lead.id} aufhänger=<kurz> adresse=<gefunden|keine|vorhanden>" oder "FEHLER lead={lead.id}: <Grund>".
 ```
 
 ## Phase 3: Report & nächster Batch
 
-Wie /outreach-generate: Batch-Report, dann erneut `list_leads` bis `remaining == 0`. Fehlgeschlagene Leads bleiben `research_status=pending`.
+Wie /outreach-generate: Batch-Report, dann erneut `list_leads` bis `remaining == 0`. Fehlgeschlagene Leads bleiben `research_status=pending`. Im Report zählen, wie viele Leads ohne Adresse eine gefunden haben (`adresse=gefunden`) und wie viele ausscheiden (`adresse=keine`).
 
 Abschluss-Report + Hinweis: "Nächster Schritt: /outreach-generate — AI-Variablen generieren".
 
 ## Versandadresse auf Wunsch des Users wechseln
 
-`switch_primary_email(campaign_id, lead_id, email, reason?)` macht eine Adresse, die schon am Lead steht (`get_lead_data`: `lead.email`, `lead.sendingEmail`, `lead.secondaryEmails`, `lead.research.bestEmail`, `lead.research.contactProfile`), zur Versandadresse. Die Wahl gilt danach als Menschenwahl: weder Research noch `write_lead_details` überschreiben sie. Nur auf ausdrückliche Entscheidung des Users aufrufen, nie aus einem Sub-Agent und nie, um eine gerade recherchierte Adresse "aufzuräumen". `unknown_address` nennt die wählbaren Adressen; bei `address_conflict` versendet schon ein anderer Lead an diese Adresse — die beiden Leads zusammenführen statt doppelt zu schreiben. Leads mit Kontaktstatus `do_not_contact` lehnt das Tool ab; bei bereits kontaktierten Leads meldet es `already_contacted` (die an Instantly übergebene Adresse ändert sich dort nicht).
+`switch_primary_email(campaign_id, lead_id, email, reason?)` macht eine Adresse, die schon am Lead steht (`get_lead_data`: `lead.email`, `lead.sendingEmail`, `lead.secondaryEmails`, `lead.research.bestEmail`, `lead.research.contactProfile`), zur Versandadresse. Bei einem Lead ohne jede Adresse gibt es nichts zu wählen: `unknown_address` mit leerer Kandidatenliste ist dann erwartet. Die Wahl gilt danach als Menschenwahl: weder Research noch `write_lead_details` überschreiben sie. Nur auf ausdrückliche Entscheidung des Users aufrufen, nie aus einem Sub-Agent und nie, um eine gerade recherchierte Adresse "aufzuräumen". `unknown_address` nennt die wählbaren Adressen; bei `address_conflict` versendet schon ein anderer Lead an diese Adresse: die beiden Leads zusammenführen statt doppelt zu schreiben. Leads mit Kontaktstatus `do_not_contact` lehnt das Tool ab; bei bereits kontaktierten Leads meldet es `already_contacted` (die an Instantly übergebene Adresse ändert sich dort nicht).
 
 ## Fehlerbehandlung
 
@@ -155,7 +166,10 @@ Abschluss-Report + Hinweis: "Nächster Schritt: /outreach-generate — AI-Variab
 | `validation_failed` bei write_lead_details (z. B. ungültige E-Mail oder Website) | Feld aus dem Text korrigieren oder weglassen und einmal neu schreiben; klappt es nicht, Lead als Fehler notieren und weiter. Kein Verbindungsfehler, NIE den Batch stoppen |
 | `contact_gate` | Kontaktstatus des Leads ist nicht `not_contacted` (kontaktiert, exportiert, gesperrt …) — Lead überspringen, nicht erneut schreiben |
 | write_lead_details error (sonstiger Code) | Fehler notieren, weiter mit nächstem Lead |
-| `bestEmail` in `skipped_fields` | Kein Fehler: eine manuell gewählte Versandadresse bleibt bestehen (Hinweis in `warnings`) — respektieren, im Report vermerken |
+| `bestEmail` in `skipped_fields` | Kein Fehler: eine manuell gewählte Versandadresse bleibt bestehen, oder (Warnung `address_conflict`, auch wenn ein paralleler Agent sie gerade übernommen hat) die Adresse gehört schon einem anderen Lead (Hinweis in `warnings`): respektieren, im Report vermerken, nicht wiederholen |
+| `identity_immutable` bei `email` | Die Identitätsadresse eines Leads ist nicht änderbar; nur `bestEmail` schreiben |
+| `validation_failed` bei `website` eines Leads ohne E-Mail | Die Website ist dann seine Identität: nicht leeren und nicht durch ein Plattform-Profil oder eine ungültige URL ersetzen. `website` weglassen und den Rest neu schreiben |
+| `duplicate_website` | Ein anderer Lead trägt schon diese Website: `website` weglassen und den Rest neu schreiben, im Report vermerken, nicht wiederholen |
 | `lead_run_active` | Parallel läuft ein Server-Lauf — Batch pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen (Queue ist idempotent) |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, Lead bleibt in der Queue |
 | MCP-Verbindungsfehler (JSON-RPC-Fehler ohne Tool-Ergebnis, Transport weg) | 1x Retry, dann STOP |

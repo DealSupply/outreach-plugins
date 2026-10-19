@@ -23,16 +23,17 @@ Preis beim Anbieter prüfen und freigeben lassen.
 | `references/kosten.md` | Belegte Actor-Kosten + Daumenregeln + Kostenfallen |
 | `references/staedte.md` | DACH-Städtelisten + Pilotstadt-Regeln |
 | `references/noise-domains.md` | DIE Ausschlussliste (SERP-Filter, domainBlacklist, -site:) |
-| `references/datenumfang.md` | Was je Quelle beschafft und hochgeladen wird und was die Plattform selbst übernimmt; E-Mail-Lücke, Recherche-Tiefe |
+| `references/datenumfang.md` | Was je Quelle beschafft und hochgeladen wird und was die Plattform selbst übernimmt; Kontaktlücke (vorab anreichern oder der Recherche überlassen), Recherche-Stufe |
 | `references/csv-spalten.md` | DAS CSV-Format (deckungsgleich mit dem App-Import) |
+| `references/plattform-hosts.md` | Wann eine Website keine eigene Website ist (Profil-Plattformen, Baukästen); Spiegel der Server-Liste für `build_csv.py` |
 | `references/icp.md` | ICP-Satz, Anti-ICP, Filter-Dimensionen, Trichter-Prinzip |
 | `references/listen-und-icp.md` | Von der Zielgruppe zur versandfähigen Liste: Quellen außerhalb der Weg-Skills, Qualitäts-Check, Datenqualität vor dem Import, Sperrliste, Volumenplanung |
 | `references/erfahrungswerte.md` | Belegte Query-Trefferquoten (wächst mit jedem Lauf) |
 | `references/outreach-uebergabe.md` | Übergabe in ListM8: Bestandsabgleich, Liste, Import, CSV-Weg |
 | `scripts/build_queries.py` | Suchbegriffe × Städte + -site:-Ausschlüsse |
 | `scripts/process_serp.py` | SERP-JSON → eindeutige Firmen-Domains (Noise gefiltert) |
-| `scripts/build_csv.py` | Rohdaten → CSV-Format mit den Zusatzspalten aus `datenumfang.md` (Google-Bewertungen und Rezensionen, Inhaber, Plattformfelder), Wahl der Versandadresse, Firmennamen-Normalisierung, Hinweise |
-| `scripts/dedup.py` | Vorab-Abgleich gegen den Bestandsindex (do_not_contact hart) |
+| `scripts/build_csv.py` | Rohdaten (JSON oder CSV) → CSV-Format mit den Zusatzspalten aus `datenumfang.md` (Google-Bewertungen und Rezensionen, Inhaber, Plattformfelder), Wahl der Versandadresse, Firmennamen-Normalisierung, Hinweise; Übergabe-CSV mit `--uebergabe kontakt` (E-Mail oder eigene Website) bzw. `email` (ältere Server), verworfene Zeilen per `--verworfen` |
+| `scripts/dedup.py` | Vorab-Abgleich gegen den Bestandsindex über Adressen und Domains (do_not_contact hart, Leads ohne E-Mail über die Website) |
 | `scripts/omr_products.py` | OMR Reviews: alle Software-Produkte über die öffentliche Schnittstelle, kostenlos (Weg F) |
 | `scripts/startbase_saas.py` | Startbase: deutsche B2B-SaaS mit Rechtsträger, Ort, Teamgröße, kostenlos (Weg F) |
 | `scripts/linkedin_saas.py` | LinkedIn-Firmensuche: Segmente zusammenlegen, Sitzfilter, Tabelle zum Einordnen, Details-Input (Weg F) |

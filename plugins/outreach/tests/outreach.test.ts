@@ -59,6 +59,21 @@ describe('lead preview', () => {
     }
   })
 
+  test('a lead without an address (MCP 4.0.0) draws with its website and the address research found', async $ => {
+    const withoutEmail = {
+      ...LIST_LEADS,
+      leads: [
+        { id: 8, email: null, contactEmailState: 'searching', company: '', website: 'https://zahnarzt-berg.de', city: 'München', score: null, contactStatus: 'not_contacted', qualification: null },
+        { id: 9, email: 'praxis@mueller.de', contactEmailState: 'present', company: 'Praxis Müller', city: 'München', score: 70, contactStatus: 'not_contacted', qualification: null },
+      ],
+    }
+    const ui = await $.ui.mount({ ...toolRow('mcp__akquise__list_leads', withoutEmail), surface: 'terminal' })
+    expect(await ui.find({ text: /zahnarzt-berg\.de/ })).toBeDefined()
+    expect(await ui.find({ text: /Praxis Müller/ })).toBeDefined()
+    expect(await ui.find({ text: /null/ })).toBeUndefined()
+    await ui.unmount()
+  })
+
   test('a list-mode answer (MCP 2.1.0) draws like the queue', async $ => {
     const listMode = {
       ...LIST_LEADS,
@@ -457,6 +472,51 @@ describe('local workflow phases', () => {
     await band.unmount()
   })
 
+  test('a lead whose research found no address leaves the email phase (MCP 4.0.0)', async ($, on) => {
+    engineDraws(on)
+    mock.clock(on)
+    on('tool.call', (_$, e) => {
+      const leadId = (e as unknown as { lead_id: number }).lead_id
+      const contactEmailState = leadId === 2 ? 'not_found' : 'present'
+      return { result: { status: 'success', lead: { id: leadId, email: null, contactEmailState } } }
+    })
+    for (const phase of ['research', 'email']) await progress($, { action: 'start', campaign_id: 2280, phase, total: 2 })
+    const write = (tool: string, leadId: number, fields: Record<string, unknown>) =>
+      toolCall($, `mcp__akquise__${tool}`, { campaign_id: 2280, lead_id: leadId, fields, variables: '{}' })
+
+    await write('write_lead_details', 1, { research: 'Bericht', status: 'researched' })
+    await write('write_lead_details', 2, { research: 'Bericht\n\n## Kontakt\nkeine Adresse', status: 'researched' })
+    await write('save_lead_variables', 1, {})
+
+    const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '· Rech 2/2 · Mail 1/1 · im Abo' })).toBeDefined()
+    expect(await band.find({ text: 'alle beendet' })).toBeDefined()
+    await band.unmount()
+  })
+
+  test('a combined verdict and research write counts both phases and, without an address, leaves the email phase', async ($, on) => {
+    engineDraws(on)
+    mock.clock(on)
+    on('tool.call', (_$, e) => {
+      const leadId = (e as unknown as { lead_id: number }).lead_id
+      const contactEmailState = leadId === 2 ? 'not_found' : 'present'
+      return { result: { status: 'success', lead: { id: leadId, email: null, contactEmailState } } }
+    })
+    for (const phase of ['qualification', 'research', 'email']) await progress($, { action: 'start', campaign_id: 2281, phase, total: 2 })
+    const write = (tool: string, leadId: number, fields: Record<string, unknown>) =>
+      toolCall($, `mcp__akquise__${tool}`, { campaign_id: 2281, lead_id: leadId, fields, variables: '{}' })
+
+    await write('write_lead_details', 1, { qualificationStatus: 'completed', qualificationFitLevel: 'qualified' })
+    await write('write_lead_details', 1, { research: 'Bericht', status: 'researched' })
+    await write('save_lead_variables', 1, {})
+    await write('write_lead_details', 2, { qualificationStatus: 'completed', qualificationFitLevel: 'qualified', research: 'Bericht\n\n## Kontakt\nkeine Adresse', status: 'researched' })
+
+    const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '· Qual 2/2 · Rech 2/2 · Mail 1/1 · im Abo' })).toBeDefined()
+    expect(await band.find({ text: 'alle beendet' })).toBeDefined()
+    await band.unmount()
+  })
+
   test('a local phase links into the app only once its server has named its origin', async ($, on) => {
     engineDraws(on)
     mock.clock(on)
@@ -601,6 +661,18 @@ describe('imports', () => {
 
     await clock.advance(30_000)
     expect(asked.length).toBe(2)
+  })
+
+  test('rows the server refused show next to the imported ones (MCP 4.0.0)', async ($, on) => {
+    engineDraws(on)
+    const clock = mock.clock(on)
+    mcpAnswers(on, [jobStatus('completed', { status: 'success', imported: 470, total: 497, duplicates: [], rejected_count: 3 })])
+    on('tool.call', () => ({ result: { ...IMPORT_QUEUED, received: 500, accepted: 497, rejected_total: 3 } }))
+    await toolCall($, 'mcp__akquise__import_leads', { campaign_id: 12, leads: [] })
+    await clock.advance(20_000)
+    const done = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await done.find({ text: '470 importiert · 3 abgelehnt' })).toBeDefined()
+    await done.unmount()
   })
 
   test('a failed import says why, in the band and when Claude checks it', async ($, on) => {
