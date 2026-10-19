@@ -87,7 +87,9 @@ ihm mit `art` und `grund`, was zu tun ist.
   einem Dritten zugeordnet, untersagt das Impressum Werbung oder gibt es einen Kontaktsperre-Hinweis:
   Urteil `hinweis` mit `art=recht`, nie `freigeben`. Gehört die Versandadresse keiner belegten Person
   und empfiehlt die Recherche eine andere Adresse desselben Betriebs: `art=adresse`. `bestEmail`
-  immer gegen die Adress-Hinweise der Recherche halten.
+  immer gegen die Adress-Hinweise der Recherche halten. Steht die Versandadresse in
+  `get_lead_data.lead.emailVerdicts` mit Urteil `invalid`, ist sie nicht zustellbar: gibt es eine andere
+  Adresse desselben Betriebs mit Urteil `valid`, `art=adresse`, sonst `hinweis` mit `art=recht`.
 - **Kein Kleinkram:** Ob `routing` Fall B oder C gewählt wurde oder eine belegte Alternative weniger
   genannt ist, ist kein Grund für `hinweis`, solange der Text zum gewählten Fall passt und niemand
   Falsches genannt wird.

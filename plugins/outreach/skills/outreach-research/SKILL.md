@@ -120,6 +120,12 @@ LEAD: {lead.company} (ID: {lead.id})
    Betriebs, `bestEmail` weglassen und die fremde Adresse im Report vermerken. Der Lead bekommt
    dann keine Mail (der ListM8-Server überspringt ihn in der E-Mail-Stufe). Eine eigene DNS- oder
    MX-Prüfung der Adresse gibt es nicht und gehört nicht zur Recherche.
+   Power-ups (ListM8-MCP ab 3.1.0): Nennt `researchGeneration.powerUps` die Tools `verify_email`
+   oder `find_person_email`, prüft bzw. sucht der Sub-Agent die Adresse über
+   `run_power_up(campaign_id, lead_id, tool, input)` nach den Regeln im `lead-agent`: Kandidaten in
+   einem `verify_email`-Aufruf prüfen (kostenlos), `find_person_email` nur für den Entscheider
+   ohne persönliche Adresse (kostet Credits je Treffer, höchstens drei Personen). Eine Adresse mit
+   Urteil `invalid` oder Ergebnis `catch_all_unconfirmed` wird nie `bestEmail`.
    Steht `bestEmail` danach in `skipped_fields`, hat ein Mensch die Versandadresse schon
    gewählt (Text in `warnings`). Die Wahl gilt: nicht erneut schreiben, nicht selbst per
    `switch_primary_email` ändern, im Report vermerken.
