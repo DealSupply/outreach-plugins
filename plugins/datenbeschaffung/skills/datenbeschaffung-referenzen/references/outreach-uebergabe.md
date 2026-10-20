@@ -13,15 +13,22 @@
 Einmal je Lauf den Bestandsindex ziehen und lokal matchen:
 
 ```
-export_leads(format="index")            # kompakter Index: {e: email, d: root-domain, s: status}
+export_leads(format="index")            # kompakter Index: {e: email, d: Website-Host, s: status, se: Zweitadressen}
 → als bestand-index.json speichern
 python3 ../datenbeschaffung-referenzen/scripts/dedup.py --index bestand-index.json --in roh.csv --out neu.csv
 ```
 
-`dedup.py` entfernt: exakte E-Mail-Treffer (inkl. secondaryEmails), `do_not_contact`-Leads
-(hart, landen in einer eigenen Report-Zeile) und markiert Domain-Treffer („Firma schon im
-Bestand") als Warnung — Domain-Treffer sind KEIN automatischer Ausschluss, neue Ansprechpartner
-sind legitim. Bekannte Domains zusätzlich in die Query-Ausschlüsse des nächsten Laufs geben.
+`dedup.py` entfernt: exakte E-Mail-Treffer (inkl. secondaryEmails),
+`do_not_contact`-Leads (hart, landen in einer eigenen Report-Zeile) und Zeilen ohne E-Mail, deren
+Website-Host schon ein Lead ohne E-Mail im Bestand trägt (derselbe Lead, nur bei exakt gleichem
+Host). Domains vergleicht es wie `check_leads_exist` nach ganzen Labels (ohne `www.`, Umlaut-Domains
+als Punycode): `mueller.de` trifft nie `baeckerei-mueller.de`, ein Bestands-Lead auf
+`shop.mueller.de` macht eine Zeile `mueller.de` nur zur Warnung. Übrige Domain-Treffer
+markiert es als Warnung („Firma schon im Bestand“): KEIN automatischer Ausschluss, neue
+Ansprechpartner sind legitim. Bei Zeilen ohne E-Mail ist ein Domain-Treffer meist dieselbe Firma;
+dann `--drop-known-domains-ohne-email`. `e` ist bei Leads ohne E-Mail leer (auch null möglich);
+`dedup.py` verträgt beides. Bekannte Domains zusätzlich in die Query-Ausschlüsse des nächsten
+Laufs geben.
 
 **Warum vorab:** Jeder bekannte Lead, der trotzdem durch Impressum/Verify läuft, ist verbranntes
 Geld. Der Import würde ihn später ohnehin deduplizieren — aber dann ist das Geld schon weg.
@@ -34,6 +41,12 @@ Der Index kann Minuten alt sein — die Übergabe prüft gegen die Wahrheit:
 check_leads_exist(emails=[...], domains=[...])     # bis 1.000 Einträge je Call (E-Mails und Domains zusammen)
 ```
 
+E-Mails aller Zeilen mit Adresse und die Domains aller Zeilen ohne Adresse prüfen (ab ListM8 MCP
+4.0.0). Für eine Zeile ohne E-Mail ist ein Domain-Treffer mit `match_kind: website_identity`
+derselbe Lead (wird nur verlinkt); `company_known` heißt „Firma bekannt“ (Warnung, kein
+Ausschluss). Liefert der Server kein `match_kind` (älterer Server, Teilstring-Vergleich), selbst
+nachprüfen: derselbe Lead nur, wenn der Host der `website` des Treffers (ohne `www.`) gleich der
+geprüften Domain ist.
 Ergebnis dem Nutzer zeigen: „X neu, Y schon im Bestand (werden nur verlinkt), Z do_not_contact
 (werden nie angeschrieben)."
 
@@ -51,6 +64,11 @@ Die Herkunft beantwortet später „was habe ich schon gescrapt?" (`list_lists`)
 manuelle Scrape-Log.
 
 ### 3. Import in die Liste
+
+**Kernfelder:** Jede Zeile braucht eine gültige `email` **oder** eine eigene `website` (ab ListM8
+MCP 4.0.0; Profil-Links wie Instagram oder Linktree zählen nicht, Baukasten-Subdomains schon). Fehlt
+die E-Mail, das Feld weglassen. Ältere Server verlangen die E-Mail in jeder Zeile und lehnen sonst
+den ganzen Aufruf ab (`listm8-mcp.md`, Versionsprüfung).
 
 **WICHTIG — was ohne Mapping verloren geht:** `import_leads` kennt als Kernfelder nur
 `email`, `company`, `website`, `phoneNumber`, `city`, `status`. Die Google-Spalten aus
@@ -94,10 +112,13 @@ Google-Bewertung vorbehalten.
 Existiert ein Attribut aus einem früheren Lauf bereits, statt `create_new` auf das
 vorhandene Attribut mappen: `{"action":"map_existing","fieldKey":"<bestehender_key>"}`.
 
-Der Job-Report (`result` aus `get_job_status`) liefert die Zahlen `imported`, `consolidated` und
-`total`, dazu `linked_to_list` und die **Listen** `duplicates` (nur verlinkt, nie doppelt),
-`internalDuplicates`, `do_not_contact_hits` und `errors` – davon die Anzahl der Einträge berichten.
-Importieren startet keine KI-Verarbeitung.
+Die Antwort von `import_leads` meldet sofort `accepted` und `rejected_total` mit den ersten
+`rejected_rows` (Zeile, Code, Grund): Abgelehnte Zeilen nennen, nicht wiederholen. Der Job-Report
+(`result` aus `get_job_status`) liefert die Zahlen `imported`, `created` (davon `created_without_email` ohne E-Mail, auf neueren Servern), `relinked`,
+`consolidated`, `email_filled`, `total`, `rejected_count` (mit `rejected_by_code`) und
+`notices_count`, dazu `linked_to_list` und die **Listen** `duplicates` (nur verlinkt, nie doppelt),
+`internalDuplicates`, `do_not_contact_hits` und `errors` – davon die Anzahl
+der Einträge berichten. Importieren startet keine KI-Verarbeitung.
 
 ### 4. Optional: direkt in eine Kampagne
 
@@ -128,5 +149,8 @@ entkoppelt und gemeldet. Das gibt auch das `max_leads`-Limit wieder frei.
 
 Die geprüfte Liste als CSV im Format aus `csv-spalten.md` liefern, dazu die Anleitung:
 „In der App: Leads → CSV-Import, Datei hochladen und Spalten zuordnen; die Zusatzspalten werden als Attribute angeboten."
+Der App-Import folgt derselben Regel wie `import_leads` (E-Mail oder eigene Website, abgelehnte
+Zeilen mit Grund im Ergebnis). Läuft die App noch mit einem älteren Server (unter 4.0.0), die
+Übergabe-CSV mit `build_csv.py --uebergabe email` bauen.
 Der Vorab-Abgleich entfällt dann — im Bericht ausdrücklich sagen, dass Duplikate erst der
 App-Import abfängt und `do_not_contact` NICHT vorab geprüft werden konnte.

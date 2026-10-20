@@ -1,6 +1,6 @@
 {
   "name": "datenbeschaffung",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und als CSV importieren.",
   "author": {
     "name": "RankM8"
