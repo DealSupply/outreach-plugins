@@ -25,7 +25,7 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
   Ergebnis. Während er läuft, nichts weiter tun und nicht nachfragen; die Meldung kommt von selbst.
 - Kein Status wird freigegeben: Der Lauf endet bei `pending_review`; freigeben entscheidet der Nutzer
   (`outreach-verify`).
-- **Power-ups** (ListM8-MCP ab 3.1.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
+- **Power-ups** (ListM8-MCP ab 4.1.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
   nennen, was eingeschaltet ist, was ein Treffer kostet und dass jede andere Antwort die Anbietergebühr
   kostet (meist Hundertstel Credits). Eingeschaltete Tools nutzt der `lead-agent`
   über `run_power_up` (Regeln dort). Ein Power-up nur mit ausdrücklicher Zustimmung des Nutzers per
@@ -60,7 +60,8 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
 4. **Rennschutz:** Meldet ein Agent `lead_run_active`, läuft parallel ein Server-Lauf über dieselben Leads.
    Abwarten (`get_lead_run_status`), dann diese Leads erneut starten.
 5. **Ohne Adresse:** `no_contact_email` (Lead ohne Versandadresse) beendet einen Lead ohne Fehler; nicht
-   erneut starten.
+   erneut starten. Dasselbe gilt für `undeliverable_address` (Postfach der Versandadresse existiert laut
+   Prüfung nicht, MCP ab 4.1.0); im Bericht als „Adresse unzustellbar“ zählen.
 
 ## Workflow-Skript (Claude Code)
 

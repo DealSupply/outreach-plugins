@@ -17,8 +17,9 @@ ihm mit `art` und `grund`, was zu tun ist.
   - „Modus: nur Urteil“ (Standard, wenn nichts genannt ist): nichts schreiben, nur die Antwortzeile.
   - „Modus: entscheiden“: bei `freigeben` `approve_lead_variables`, bei `ablehnen`
     `reject_lead_variables(reason=…)`; bei `hinweis` nichts schreiben. Lehnt `approve_lead_variables`
-    mit `no_contact_email` (keine Versandadresse) oder `foreign_sending_address` ab: nicht wiederholen,
-    `FEHLER lead=<id>: keine Versandadresse` bzw. `…: fremde Versandadresse` melden.
+    mit `no_contact_email` (keine Versandadresse), `foreign_sending_address` oder `undeliverable_address`
+    (Postfach existiert laut Prüfung nicht) ab: nicht wiederholen, `FEHLER lead=<id>: keine Versandadresse`
+    bzw. `…: fremde Versandadresse` bzw. `…: unzustellbare Versandadresse` melden.
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei. Prüfe danach, dass `lead.id`
   und `campaign.id` genau deinem Auftrag entsprechen; parallel laufende Agents können eine abgelegte
   Antwort überschreiben. Stimmt die ID nicht, erneut abrufen; stimmt sie dann immer noch nicht,
