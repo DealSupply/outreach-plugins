@@ -136,7 +136,9 @@ LEAD: {lead.company} (ID: {lead.id})
    `run_power_up(campaign_id, lead_id, tool, input)` nach den Regeln im `lead-agent`: Kandidaten in
    einem `verify_email`-Aufruf prüfen (Anbietergebühr, rund 0,02 Credits je Adresse), `find_person_email`
    erst nach Impressum, Team- und Kontaktseite und nur für einen genannten Entscheider, dessen persönliche
-   Adresse auf keiner gelesenen Seite steht (Treffer `credits_per_hit`, ohne Treffer die
+   Adresse auf keiner gelesenen Seite steht. Eine nur gelesene Adresse erst als `bestEmail` speichern,
+   dann prüfen (der Server prüft nur Adressen, die er kennt); ein Treffer von `find_person_email` mit
+   Urteil `valid` ist belegt und wird `bestEmail` (Treffer `credits_per_hit`, ohne Treffer die
    Anbietergebühr; höchstens drei Personen). Eine Adresse mit
    Urteil `invalid` oder Ergebnis `catch_all_unconfirmed` wird nie `bestEmail`.
    Steht `bestEmail` danach in `skipped_fields`, hat ein Mensch die Versandadresse schon
