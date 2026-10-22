@@ -1,6 +1,7 @@
 # ListM8-MCP: Import- und Bestands-Tools
 
-Vertragsstand: 2026-10-03 (ListM8 `develop` plus `feat/develop-ui-polish`). Die Referenz deckt die
+Vertragsstand: 2026-10-03 (ListM8 `develop` plus `feat/develop-ui-polish`), Workspaces 2026-10-22
+(ListM8 #95). Die Referenz deckt die
 Tools ab, die in der Datenbeschaffung gebraucht werden. Die vollständige Werkzeugliste liefert die
 Tool-Discovery des MCP-Servers; jede Werkzeugbeschreibung dort ist der aktuelle Vertrag und geht
 dieser Referenz im Zweifel vor.
@@ -26,15 +27,39 @@ dieser Referenz im Zweifel vor.
   Verbindung und Berechtigungen der MCP-Verbindung klären.
 - Antworten tragen teils ein Feld `appUrl` mit einem Link in die App; dem Nutzer gern weitergeben.
 
+## Workspace
+
+Eine Verbindung reicht für alle Workspaces des Nutzers in der App. Leads, Listen und Bestand gehören
+zu genau einem Workspace. Abgleich, Liste und Import laufen deshalb immer im selben, gewählten
+Workspace; ein Bestandsindex oder eine Prüfung aus einem anderen Workspace zählt nicht.
+
+- **Workspace klären,** bevor abgeglichen wird: `list_workspaces` (nur lesend) zeigt je Workspace
+  `uuid`, Name, `role`, Plan und mit `default: true` den, den Aufrufe ohne Angabe nehmen. Bei
+  mehreren fragen, in welchen importiert wird, und die Wahl für das Gespräch merken.
+- **Aufrufe ohne Objekt-ID** (`check_leads_exist`, `export_leads` ohne `list_id`, `list_lists`,
+  `search_leads`, `create_list`, `import_leads` ohne Liste und Kampagne, `mark_leads_contacted` mit
+  E-Mail-Adressen) bekommen `workspace=<uuid>`, wenn der gewählte nicht der Standard ist. Ohne Angabe
+  gilt der Standard-Workspace; eine unbekannte uuid lehnt der Server mit `workspace_not_found` ab.
+- **Aufrufe mit `list_id`, `lead_ids`, `campaign_id` oder `job_id`** laufen von selbst im Workspace
+  des Objekts; dort kein `workspace` mitgeben. Liste und Kampagne eines Aufrufs müssen im selben
+  Workspace liegen, sonst `workspace_mismatch`.
+- **Vor dem Anlegen der Liste und vor dem Import den Workspace nennen** („Import in Agentur Nord“).
+  Jede Antwort nennt ihn (`workspace` mit `uuid`, `name`, `role`).
+- **Rolle `viewer`:** nur lesen. `create_list`, `import_leads` und die anderen Schreib-Werkzeuge
+  lehnt der Server mit `workspace_read_only` ab.
+- **Älterer Server** (kein `list_workspaces`): Alles läuft im Standard-Workspace, `workspace` nie
+  mitgeben.
+
 ## Überblick
 
 | Tool | Zweck | Scope |
 |---|---|---|
+| `list_workspaces` | Workspaces mit Rolle, Plan und Standard (`default`) | read |
 | `check_leads_exist` | E-Mails und Domains gegen den Bestand prüfen (Dedup vor Anreicherung und Import) | read |
 | `export_leads` | Bestand als `json`, `csv` oder kompakter Index (`index`) | read |
 | `list_lists` | Eigene Listen mit Zählern und Herkunft | read |
 | `get_list` | Eine Liste mit Metadaten und Leads (paginiert) | read |
-| `search_leads` | Globale Suche im Lead-Bestand | read |
+| `search_leads` | Suche im Lead-Bestand des Workspaces | read |
 | `create_list` | Liste mit Herkunft anlegen | write |
 | `import_leads` | Leads importieren (asynchron, `job_id`) | write |
 | `get_job_status` | Status eines asynchronen Jobs | read |
@@ -46,24 +71,29 @@ dieser Referenz im Zweifel vor.
 ## Signaturen
 
 ```text
-check_leads_exist(emails?: string[], domains?: string[])
+list_workspaces()
+check_leads_exist(emails?: string[], domains?: string[], workspace?: string)
 export_leads(format?: "json"|"csv"|"index" = "json", list_id?: integer,
-             contact_status?: string = "", limit?: integer, offset?: integer = 0)
-list_lists(limit?: integer = 25, offset?: integer = 0)
+             contact_status?: string = "", limit?: integer, offset?: integer = 0,
+             workspace?: string)
+list_lists(limit?: integer = 25, offset?: integer = 0, workspace?: string)
 get_list(list_id: integer, limit?: integer = 25, offset?: integer = 0)
 search_leads(query?: string = "", contact_status?: string = "", attribute_key?: string = "",
              attribute_value?: string = "", in_campaign?: string = "",
-             limit?: integer = 20, offset?: integer = 0)
-create_list(name: string, description?: string = "", source?: object)
+             limit?: integer = 20, offset?: integer = 0, workspace?: string)
+create_list(name: string, description?: string = "", source?: object, workspace?: string)
 import_leads(leads: object[], campaign_id?: integer, list_id?: integer,
-             attribute_mappings?: object)
+             attribute_mappings?: object, workspace?: string)
 get_job_status(job_id: string)
 bulk_set_lead_attributes(lead_ids: integer[], attributes: object, create_missing?: boolean = false)
 add_leads_to_campaign(campaign_id: integer, list_id?: integer, lead_ids?: integer[])
 mark_leads_contacted(emails?: string[], lead_ids?: integer[], status?: string = "contacted",
-                     source?: string = "mcp", confirm_reset?: boolean = false)
+                     source?: string = "mcp", confirm_reset?: boolean = false, workspace?: string)
 delete_list(list_id: integer, delete_leads?: boolean = false, confirm_delete?: boolean = false)
 ```
+
+`workspace` ist die uuid aus `list_workspaces` und gehört nur in Aufrufe ohne Objekt-ID (Abschnitt
+„Workspace“). Ältere Server kennen das Argument nicht.
 
 ## Bestand prüfen
 
@@ -87,7 +117,7 @@ niemals in eine Kampagne importieren.
   bekannte Domains in die Query-Ausschlüsse geben.
 - `format="json"` liefert Zeilen, `format="csv"` CSV-Text. Beide ohne Qualifizierungsinfo
   (Urteile gelten pro Kampagne).
-- `list_id` begrenzt auf eine Liste, ohne Angabe gilt der gesamte Bestand. `contact_status` filtert
+- `list_id` begrenzt auf eine Liste, ohne Angabe gilt der gesamte Bestand des Workspaces. `contact_status` filtert
   (leer = alle). `limit` 1 bis 10000 (Standard 1000, beim Index 10000), paginiert über `offset`;
   die Antwort trägt `total` und `remaining`.
 
@@ -186,8 +216,8 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
   Antwort: `added`, `already_in_campaign`, `skipped_do_not_contact`. Die Qualifizierung beginnt in
   der Zielkampagne von vorn (Urteile gelten pro Kampagne), vorhandene Recherche wird wiederverwendet.
   Danach `start_lead_run`.
-- `mark_leads_contacted`: setzt den globalen Kontaktstatus (höchstens 1000), entweder `emails` oder
-  `lead_ids`. `status` ist `contacted` (Standard), `replied`, `opportunity`, `do_not_contact` oder
+- `mark_leads_contacted`: setzt den Kontaktstatus über alle Kampagnen des Workspaces (höchstens
+  1000), entweder `emails` oder `lead_ids`. `status` ist `contacted` (Standard), `replied`, `opportunity`, `do_not_contact` oder
   `not_contacted` (Zurücksetzen nur mit `confirm_reset=true`). Status werden nie herabgestuft;
   `exported_to_instantly` setzt nur der Instantly-Push. Nicht gefundene Einträge stehen in
   `unmatched_emails` beziehungsweise `unmatched_lead_ids`. Dient dazu, extern kontaktierte Leads

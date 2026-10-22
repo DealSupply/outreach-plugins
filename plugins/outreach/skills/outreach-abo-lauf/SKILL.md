@@ -25,6 +25,9 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
   Ergebnis. Während er läuft, nichts weiter tun und nicht nachfragen; die Meldung kommt von selbst.
 - Kein Status wird freigegeben: Der Lauf endet bei `pending_review`; freigeben entscheidet der Nutzer
   (`outreach-verify`).
+- **Workspace:** Alle Aufrufe des Laufs tragen `campaign_id` und `lead_id` und laufen damit im Workspace
+  der Kampagne. Den Agents keinen Workspace mitgeben (Workspace-Regel im Skill `outreach`). Vor dem
+  Start den Workspace nennen.
 
 ## Ablauf
 

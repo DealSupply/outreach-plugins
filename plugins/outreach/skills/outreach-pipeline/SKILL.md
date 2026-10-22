@@ -7,6 +7,8 @@ description: Use when user says "outreach:pipeline", "mcp:pipeline", "kompletter
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Dieser Skill verarbeitet die Leads einer Kampagne komplett: qualifizieren → recherchieren → Mail-Variablen
 schreiben. Dafür gibt es zwei **gleichwertige Laufarten**. Beide nutzen dieselbe Kampagne, dieselben
 Stufen und dieselbe Lead-Auswahl, enden im selben Bericht und führen zum selben nächsten Schritt.
@@ -40,7 +42,7 @@ gemeinsam: Bericht -> Stichprobe prüfen und freigeben (outreach-verify)
 
 ## Gemeinsamer Ablauf (beide Laufarten)
 
-0. **Umgebung und Konfiguration (Pflicht)**: `ping` und `list_campaigns` — Konto und Kampagne müssen zum Auftrag passen. Dann `export_campaign_blueprint(campaign_id)` lesen: Qualifizierungskriterien, Research-Vorgaben, E-Mail-Schritte und AI-Variablen müssen vorhanden und sinnvoll sein (Details: `/outreach-campaign`). Fehlt etwas, NICHT starten, sondern erst ergänzen. Ein Lauf auf unvollständigem Setup kostet Geld bzw. Kontingent, und ein abgeschlossenes Qualifizierungsurteil ist pro Kampagne final: jeder spätere Lauf überspringt es, `write_lead_details` lehnt Änderungen mit `verdict_final` ab.
+0. **Umgebung und Konfiguration (Pflicht)**: `ping` und `list_campaigns` — Konto, Workspace und Kampagne müssen zum Auftrag passen. Dann `export_campaign_blueprint(campaign_id)` lesen: Qualifizierungskriterien, Research-Vorgaben, E-Mail-Schritte und AI-Variablen müssen vorhanden und sinnvoll sein (Details: `/outreach-campaign`). Fehlt etwas, NICHT starten, sondern erst ergänzen. Ein Lauf auf unvollständigem Setup kostet Geld bzw. Kontingent, und ein abgeschlossenes Qualifizierungsurteil ist pro Kampagne final: jeder spätere Lauf überspringt es, `write_lead_details` lehnt Änderungen mit `verdict_final` ab.
 1. **Vorprüfung (Pflicht)**: `list_lead_runs(campaign_id, active_only=true)`. Ist ein Server-Lauf aktiv: NICHT starten — parallele Läufe über dieselben Leads blockieren sich und können Leads still überspringen. Stattdessen den aktiven Lauf verfolgen oder mit `cancel_lead_run` stoppen.
 2. **Leads und Stufen wählen**:
    - Stufen: Default alle 3 (`qualification`, `research`, `email`); Teilmengen und Lücken erlaubt, z. B. nur `email`. Bereits erfüllte Stufen werden je Lead übersprungen.

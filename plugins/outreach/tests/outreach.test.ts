@@ -357,6 +357,46 @@ describe('run status', () => {
     await band.unmount()
   })
 
+  test('the band lists a run in the workspace its answer names, a run without one as before', async ($, on) => {
+    engineDraws(on)
+    const clock = mock.clock(on)
+    const nord = { uuid: 'ws-nord', name: 'Agentur Nord', role: 'member' }
+    const lists: string[] = []
+    let n = 0
+    on('tool.call', () => {
+      n += 1
+      return { result: n === 1 ? RUN_STATUS : { ...RUN_STATUS, id: 'run-2', workspace: nord } }
+    })
+    on('mcp.call', (_$, e) => {
+      if ((e as { tool: string }).tool === 'list_lead_runs') lists.push(JSON.stringify(e))
+      const body = { runs: [RUN_STATUS, { ...RUN_STATUS, id: 'run-2' }], count: 2 }
+      return { value: { content: [{ type: 'text', text: JSON.stringify(body) }], isError: false } }
+    })
+    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-2' })
+    await clock.advance(20_000)
+    expect(lists.length).toBe(2)
+    expect(lists.filter(l => l.includes('"workspace":"ws-nord"')).length).toBe(1)
+    expect(lists.filter(l => !l.includes('workspace')).length).toBe(1)
+  })
+
+  test('a run Claude lists keeps the workspace of the list answer', async ($, on) => {
+    engineDraws(on)
+    const clock = mock.clock(on)
+    const nord = { uuid: 'ws-nord', name: 'Agentur Nord', role: 'member' }
+    const lists: string[] = []
+    on('tool.call', () => ({ result: { runs: [RUN_STATUS], count: 1, workspace: nord } }))
+    on('mcp.call', (_$, e) => {
+      lists.push(JSON.stringify(e))
+      const body = { runs: [RUN_STATUS], count: 1, workspace: nord }
+      return { value: { content: [{ type: 'text', text: JSON.stringify(body) }], isError: false } }
+    })
+    await toolCall($, 'mcp__akquise__list_lead_runs', { active_only: true, workspace: 'ws-nord' })
+    await clock.advance(20_000)
+    expect(lists.length).toBe(1)
+    expect(lists[0]).toContain('"workspace":"ws-nord"')
+  })
+
   test('the spinner turns while a stage works and stops once the run has ended', async ($, on) => {
     engineDraws(on)
     const clock = mock.clock(on)

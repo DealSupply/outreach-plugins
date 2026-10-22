@@ -1,6 +1,6 @@
 ---
 name: outreach-setup
-description: Richtet das Outreach-Plugin ein und prüft die Einrichtung. Verwenden bei „outreach einrichten“, „setup“, „Plugin einrichten“, „MCP verbinden“, „funktioniert die Verbindung“, „alte Skills aufräumen“ oder direkt nach der Installation. Führt durch Verbindung, Prüfung, Aufräumen alter Skill-Kopien und erste Schritte – ohne kostenpflichtige Aktionen.
+description: Richtet das Outreach-Plugin ein und prüft die Einrichtung. Verwenden bei „outreach einrichten“, „setup“, „Plugin einrichten“, „MCP verbinden“, „funktioniert die Verbindung“, „welche Workspaces habe ich“, „Workspace wechseln“, „alte Skills aufräumen“ oder direkt nach der Installation. Führt durch Verbindung, Workspace-Wahl, Prüfung, Aufräumen alter Skill-Kopien und erste Schritte – ohne kostenpflichtige Aktionen.
 ---
 
 # Outreach einrichten
@@ -36,6 +36,21 @@ Rufe `list_campaigns` auf (nur lesend).
   - Danach `list_campaigns` erneut aufrufen.
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
   Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
+
+## 2b. Workspace wählen
+
+Rufe `list_workspaces` auf (nur lesend). Eine Verbindung gilt für alle Workspaces des Nutzers.
+
+- **Ein Workspace:** in einem Satz nennen („Du arbeitest im Workspace Muster GmbH.“) und weiter.
+- **Mehrere:** kurz zeigen (Name, Rolle, Plan; den Standard mit `default: true` markieren) und
+  fragen, in welchem gearbeitet wird. Die Wahl gilt für das ganze Gespräch. Ist es nicht der
+  Standard, die Kampagnen mit `list_campaigns(workspace=<uuid>)` neu zählen. Wie die Skills den
+  Workspace mitgeben: Workspace-Regel im Skill `outreach`.
+- **Rolle `viewer`:** sagen, dass dort nur Lesen geht (ansehen und exportieren, kein Import, kein
+  Lauf, keine Freigabe).
+- **Offene Einladungen** in der Antwort nur nennen; annehmen geht in der App.
+- **Kein `list_workspaces`** (älterer Server): Schritt still überspringen, alles läuft im
+  Standard-Workspace.
 
 ## 3. Alte Skill-Kopien aufräumen (nur Claude Code, Codex, Cursor)
 
@@ -73,5 +88,5 @@ In Claude Code sind Updates fremder Marketplaces standardmäßig aus. Empfehlen:
 
 ## Abschluss
 
-Kurz berichten: Umgebung, Verbindung (ja/nein, Anzahl Kampagnen), aufgeräumte Kopien,
-Datenbeschaffung installiert ja/nein, Auto-Update ja/nein.
+Kurz berichten: Umgebung, Verbindung (ja/nein, Anzahl Kampagnen), Workspace (Name und Rolle, bei
+mehreren der gewählte), aufgeräumte Kopien, Datenbeschaffung installiert ja/nein, Auto-Update ja/nein.

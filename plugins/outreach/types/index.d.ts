@@ -22,6 +22,8 @@ export type RunView = {
   finishedAt: number | null
   /** The MCP server the run came from, as its tool names spell it; the band asks that one. */
   server: string
+  /** The workspace the run belongs to (uuid) as its answers name it; null from servers without workspaces. */
+  workspace: string | null
   /** When the run was created, epoch ms: the band orders runs by it. */
   createdAt: number
   /** The run's page in the app as the server names it, tenant-correct; null when it names none. */

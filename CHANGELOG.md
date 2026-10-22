@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-22 – outreach 0.5.0, datenbeschaffung 0.5.1, fulfillment 0.1.1
+
+**outreach** (ListM8 #95: MCP über alle Workspaces einer Person, neues Tool `list_workspaces`)
+- `outreach` → neuer Abschnitt „Workspace-Regel“, auf den alle Outreach-Skills verweisen: Workspace kennen (`list_workspaces`, bei mehreren fragen), `workspace=<uuid>` nur bei Aufrufen ohne Objekt-ID (`list_campaigns`, `search_leads`, `list_lists`, `list_lead_runs`, `export_leads`, `check_leads_exist`, `import_leads`, `create_campaign`, `create_list`, `get_credit_balance`, `mark_leads_contacted` mit E-Mails), nie bei `campaign_id`, `lead_id(s)`, `list_id`, `lead_run_id`, `job_id`; vor jedem Schreiben oder Lauf den Workspace nennen; `workspace` in den Antworten lesen; Betrachter (`viewer`) nur lesend; Fehlercodes `workspace_not_found`, `workspace_mismatch`, `workspace_read_only`.
+- `outreach-setup` → neuer Schritt 2b: `list_workspaces` nach der Verbindungsprüfung. Ein Workspace wird nur genannt, bei mehreren fragt der Skill, in welchem gearbeitet wird; Betrachter erfahren, dass dort nur Lesen geht; offene Einladungen werden nur genannt.
+- `outreach-campaign`, `outreach-generate`, `outreach-import`, `outreach-launch`, `outreach-lists`, `outreach-pipeline`, `outreach-qualify`, `outreach-research`, `outreach-verify` → Verweis auf die Workspace-Regel. Dazu: `create_campaign` im gewählten Workspace, Import und Dubletten-Abgleich im selben Workspace, Liste und Kampagne nur aus einem Workspace, `list_campaigns` nimmt optional `workspace`, Sperren per `mark_leads_contacted(lead_ids=…)` statt E-Mail-Liste, Sperren gelten im ganzen Workspace.
+- `outreach-abo-lauf`, `lead-agent`, `verify-agent` → Aufrufe mit `campaign_id`/`lead_id` laufen im Workspace der Kampagne, nie `workspace` mitgeben; `workspace_read_only` beendet die Arbeit am Lead.
+- Live-Ansicht → Das Band fragt `list_lead_runs` im Workspace, den die Antworten eines Laufs nennen; Läufe ohne Workspace-Angabe wie bisher. Zwei Tests.
+- Ältere Server ohne `list_workspaces`: Die Skills fallen still auf den Standard-Workspace zurück und geben `workspace` nie mit.
+
+**datenbeschaffung**
+- `listm8-mcp.md` → Abschnitt „Workspace“: Abgleich, Liste und Import immer im selben, gewählten Workspace; ein Bestandsindex aus einem anderen Workspace zählt nicht. Signaturen mit `workspace` und `list_workspaces`.
+- `outreach-uebergabe.md`, `setup.md`, `listen-qualitaet`, `datenbeschaffung` → Index, Prüfung, Liste und Import im selben Workspace; Kampagne und Liste aus demselben Workspace.
+- `datenbeschaffung-setup` → nennt den Workspace bei der Prüfung der Outreach-Verbindung, fragt bei mehreren, in welchen importiert wird.
+
+**fulfillment**
+- `fulfillment`, `fulfillment-setup`, `lead-kontext.md`, `demo-link.md` → bei mehreren Workspaces nach dem Workspace der Kampagne fragen, `list_campaigns` und `search_leads` dort aufrufen; der Demo-Link (`bulk_set_lead_attributes` mit `lead_ids`) braucht keine Angabe und scheitert für Betrachter mit `workspace_read_only`.
+
 ## 2026-10-15 – outreach 0.3.32
 
 **outreach** (Kundenfall 15.10.2026: Claude lehnte eine Prompt-Änderung über den MCP ab)

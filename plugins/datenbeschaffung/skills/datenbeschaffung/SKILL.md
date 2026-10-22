@@ -39,6 +39,9 @@ Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst k
 - **ListM8-MCP verbunden?** `ping` aufrufen. Mit MCP sind Bestandsabgleich und direkter Import
   möglich; ohne MCP am Ende CSV-Übergabe über die Oberfläche und den fehlenden Bestandsabgleich
   ausdrücklich melden. Fehlen die Tools, zuerst Verbindung und Berechtigungen klären.
+- **Workspace:** Abgleich, Liste und Import laufen im gewählten Workspace der App. Vor dem ersten
+  Abgleich klären, welcher es ist (Regel: `../datenbeschaffung-referenzen/references/listm8-mcp.md`,
+  Abschnitt „Workspace“).
 - **Scraping-Zugang:** erst nach der Wahl des Wegs (Phase 2) prüfen und nur, wenn der Weg ihn
   braucht. Fast alle Wege laufen über ein eigenes Apify-Konto samt Token (Details:
   `../datenbeschaffung-referenzen/references/setup.md`); Apollo mit eigenem Zugang und StoreLeads

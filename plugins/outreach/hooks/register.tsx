@@ -11,6 +11,7 @@ import {
   bar,
   importFrom,
   importOutcome,
+  inWorkspaceOf,
   leadsThrough,
   leadsFrom,
   payloadOf,
@@ -569,19 +570,25 @@ const tick = async ($: EngineInterface) => {
       // Not connected right now: the next tick tries again.
     }
   }
-  // One list_lead_runs per server answers for all its runs at once; only a run that list leaves
-  // out (older than its newest 20) is asked for on its own. Fewer calls keep a busy server quiet.
+  // One list_lead_runs per server and workspace answers for all its runs at once; only a run that
+  // list leaves out (older than its newest 20) is asked for on its own. Fewer calls keep a busy server
+  // quiet. Without a workspace the list holds the standard workspace only, so a run that names its
+  // workspace is asked for there.
   const going = Object.values(await read($, runs)).filter(r => !r.isTerminal)
-  const byServer = new Map<string, RunView[]>()
+  const groups = new Map<string, { server: string; workspace: string | null; serverRuns: RunView[] }>()
   for (const run of going) {
     const server = run.server || configuredServer
-    byServer.set(server, [...(byServer.get(server) ?? []), run])
+    const workspace = run.workspace ?? null
+    const key = `${server} ${workspace ?? ''}`
+    const group = groups.get(key) ?? { server, workspace, serverRuns: [] }
+    group.serverRuns.push(run)
+    groups.set(key, group)
   }
-  for (const [server, serverRuns] of byServer) {
+  for (const { server, workspace, serverRuns } of groups.values()) {
     const listed = new Set<string>()
     const answered = new Set<string>()
     try {
-      const answer = await call($, server, 'list_lead_runs', {})
+      const answer = await call($, server, 'list_lead_runs', workspace === null ? {} : { workspace })
       for (const one of Array.isArray(answer?.runs) ? answer.runs : []) {
         if (typeof one !== 'object' || one === null) continue
         const row = one as Record<string, unknown>
@@ -589,7 +596,7 @@ const tick = async ($: EngineInterface) => {
         if (!serverRuns.some(r => r.id === id)) continue
         listed.add(id)
         answered.add(id)
-        await putRun($, row, server)
+        await putRun($, answer === null ? row : inWorkspaceOf(row, answer), server)
       }
     } catch {
       // Not connected right now: the next tick tries again.
@@ -805,7 +812,7 @@ const putActiveRuns = async ($: EngineInterface, payload: Record<string, unknown
     if (typeof run !== 'object' || run === null) continue
     const one = run as Record<string, unknown>
     if (one.is_terminal === true) continue
-    await putRun($, one, server)
+    await putRun($, inWorkspaceOf(one, payload), server)
     active += 1
   }
   if (active > 0) watch($)

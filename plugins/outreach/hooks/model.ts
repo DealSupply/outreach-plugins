@@ -85,6 +85,16 @@ export const FIT_LABEL: Record<string, { text: string; color: string }> = {
   not_qualified: { text: 'passt nicht', color: BRAND.error },
 }
 
+/** The workspace an answer names (`workspace: {uuid, name, role}`); null from servers without workspaces. */
+export function workspaceOf(p: Obj): string | null {
+  return isObj(p.workspace) ? str(p.workspace.uuid) || null : null
+}
+
+/** A row of a list answer; the answer names the workspace once, for all its rows. */
+export function inWorkspaceOf(row: Obj, answer: Obj): Obj {
+  return isObj(row.workspace) || !isObj(answer.workspace) ? row : { ...row, workspace: answer.workspace }
+}
+
 /** A run from get_lead_run_status / list_lead_runs (camelCase) or start_lead_run (snake_case). */
 export function runFrom(p: Obj, previous?: RunView): RunView | null {
   const id = str(p.id) || str(p.lead_run_id)
@@ -118,6 +128,7 @@ export function runFrom(p: Obj, previous?: RunView): RunView | null {
     isDemo: previous?.isDemo ?? false,
     finishedAt: previous?.finishedAt ?? null,
     server: previous?.server ?? '',
+    workspace: workspaceOf(p) ?? previous?.workspace ?? null,
     createdAt: previous?.createdAt ?? (Date.parse(str(p.createdAt)) || Date.now()),
     appUrl: urlOf(p.appUrl) ?? previous?.appUrl ?? null,
     reason: isTerminal && status !== 'completed' ? str(p.statusReason) || str(p.status_description) || null : null,

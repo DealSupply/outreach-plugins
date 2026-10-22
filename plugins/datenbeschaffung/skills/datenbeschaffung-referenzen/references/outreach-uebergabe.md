@@ -5,6 +5,9 @@
 > `get_job_status`, `add_leads_to_campaign`, `export_leads`; Signaturen in `listm8-mcp.md`).
 > Ohne MCP: CSV-Weg über die Oberfläche am Ende. Gescrapt wird beim Kunden mit eigenem Apify- oder
 > Outscraper-Konto; ListM8 importiert nur das fertige Ergebnis.
+> Workspace: Index, Prüfung, Liste und Import laufen im selben, gewählten Workspace; außerhalb des
+> Standards bekommen Aufrufe ohne Objekt-ID `workspace=<uuid>` (Regel: `listm8-mcp.md`, Abschnitt
+> „Workspace“).
 
 ## Der Ablauf (E2E-verifiziert am 19.08.2026)
 
@@ -17,6 +20,9 @@ export_leads(format="index")            # kompakter Index: {e: email, d: root-do
 → als bestand-index.json speichern
 python3 ../datenbeschaffung-referenzen/scripts/dedup.py --index bestand-index.json --in roh.csv --out neu.csv
 ```
+
+Der Index gilt nur für den Workspace, aus dem er stammt. Wird in einen anderen Workspace importiert,
+dort neu ziehen.
 
 `dedup.py` entfernt: exakte E-Mail-Treffer (inkl. secondaryEmails), `do_not_contact`-Leads
 (hart, landen in einer eigenen Report-Zeile) und markiert Domain-Treffer („Firma schon im
@@ -34,8 +40,8 @@ Der Index kann Minuten alt sein — die Übergabe prüft gegen die Wahrheit:
 check_leads_exist(emails=[...], domains=[...])     # bis 1.000 Einträge je Call (E-Mails und Domains zusammen)
 ```
 
-Ergebnis dem Nutzer zeigen: „X neu, Y schon im Bestand (werden nur verlinkt), Z do_not_contact
-(werden nie angeschrieben)."
+Im selben Workspace wie der Index. Ergebnis dem Nutzer zeigen: „X neu, Y schon im Bestand (werden
+nur verlinkt), Z do_not_contact (werden nie angeschrieben)."
 
 ### 2. Liste anlegen — mit Herkunft
 
@@ -48,7 +54,8 @@ create_list(
 ```
 
 Die Herkunft beantwortet später „was habe ich schon gescrapt?" (`list_lists`) — sie ersetzt jedes
-manuelle Scrape-Log.
+manuelle Scrape-Log. Die Liste entsteht im gewählten Workspace; vorher sagen, in welchem. Der Import
+mit ihrer `list_id` landet dann von selbst dort, ohne `workspace`.
 
 ### 3. Import in die Liste
 
@@ -107,6 +114,7 @@ Nur wenn der Nutzer es will — Rohmaterial darf als Liste liegen bleiben (Quara
 add_leads_to_campaign(campaign_id=<id>, list_id=<id>)
 ```
 
+Kampagne und Liste müssen im selben Workspace liegen, sonst `workspace_mismatch`.
 `do_not_contact`-Leads werden vom Tool selbst übersprungen und gemeldet. Mit `list_id` nimmt das
 Tool höchstens 1000 Leads je Aufruf (sonst `limit_reached`); größere Listen in `lead_ids`-Chunks
 verlinken (siehe `outreach-lists`) oder in der Oberfläche über „Zur Kampagne hinzufügen“ an der

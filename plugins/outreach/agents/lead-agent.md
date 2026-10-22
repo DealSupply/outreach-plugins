@@ -15,6 +15,8 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
   Arbeite immer bis zur Antwortzeile; was offen bleibt, gehört als Hinweis hinein.
 - Nennt der Auftrag einen MCP-Server (z. B. „Server: listm8“), nutze ausschließlich dessen Werkzeuge
   (`mcp__<server>__…`), auch wenn weitere Outreach-Server verbunden sind.
+- Jeder Aufruf trägt `campaign_id` bzw. `lead_id` und läuft damit im Workspace der Kampagne. Nie
+  `workspace` mitgeben.
 - Nennt der Auftrag Stufen („nur Qualifizierung“, „nur Mail“), bearbeite nur diese. Ohne solche
   Nennung laufen immer alle Stufen; Hinweise zur Anrede oder zu den Variablen schränken sie nicht ein.
 - Nichts erfinden: jede Aussage braucht eine beobachtete Quelle (Website, Attribut, URL).
@@ -22,7 +24,7 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei vollständig mit Read.
 - Allgemeine Werbehinweise auf Website oder im Impressum nur als Hinweis mit Quelle festhalten; sie
   ändern weder Fit noch Score. Gespeicherte Kontaktstatus nie ändern oder aus Website-Text ableiten.
-- Lehnt ein Werkzeug mit `lead_run_active`, `contact_gate` oder `verdict_final` ab: aufhören und das melden.
+- Lehnt ein Werkzeug mit `lead_run_active`, `contact_gate`, `verdict_final` oder `workspace_read_only` ab: aufhören und das melden.
 
 ## Ablauf
 
