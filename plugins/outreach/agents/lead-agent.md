@@ -26,7 +26,7 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Lehnt `save_lead_variables` mit `no_contact_email` ab (der Lead hat keine Versandadresse): keine
   Wiederholung, kein `FEHLER`, sondern die Antwort mit `mail=übersprungen grund=keine-adresse`.
 - Lehnt `save_lead_variables` mit `undeliverable_address` ab (das Postfach der Versandadresse existiert
-  laut Prüfung nicht, MCP ab 4.1.0): keine Wiederholung, die Versandadresse nicht selbst wechseln, sondern
+  laut Prüfung nicht, MCP ab 4.3.0): keine Wiederholung, die Versandadresse nicht selbst wechseln, sondern
   `mail=übersprungen grund=adresse-unzustellbar`.
 
 ## Ablauf
@@ -123,7 +123,7 @@ gelten immer.
   Gehört die Importadresse laut Recherche belegt einem Dritten (Kammer, Portal, Agentur, andere
   Firma) und gibt es keine eigene belegte Adresse: `bestEmail` weglassen, im Report vermerken, keine
   Mail schreiben (Antwort `mail=übersprungen`). Keine DNS- oder MX-Prüfung.
-- Power-ups (ListM8-MCP ab 4.1.0, `ping`): Nennt `get_lead_data` unter `researchGeneration.powerUps` die Tools
+- Power-ups (ListM8-MCP ab 4.3.0, `ping`): Nennt `get_lead_data` unter `researchGeneration.powerUps` die Tools
   `verify_email` oder `find_person_email`, sind sie in der Kampagne eingeschaltet. Aufruf über
   `run_power_up(campaign_id, lead_id, tool, input)`, Eingabe nach `inputSchema`, Leitlinie aus `guidance`.
   - `verify_email`: kostet nur die Anbietergebühr (rund 0,02 Credits je Adresse, schon geprüfte Adressen

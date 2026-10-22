@@ -292,7 +292,7 @@ Details: siehe `/outreach-verify` Skill.
 | `list_leads` gibt leere leads[] | "Keine Leads in Queue" -> STOP |
 | Sub-Agent save_lead_variables Error | Fehler notieren, weitermachen mit nächstem Lead |
 | `no_contact_email` | Kein Fehler: der Lead hat keine Versandadresse und bekommt keine Mail. Als „ohne Adresse“ zählen, nicht wiederholen. Die Standard-Warteschlange (`list_leads`) enthält solche Leads ab MCP 4.0.0 nicht; tauchen sie trotzdem auf, greift der Schleifenschutz aus Phase 6 |
-| `undeliverable_address` | Ab MCP 4.1.0: Das Postfach der Versandadresse existiert laut Prüfung nicht; der Lead bekommt keine Mail. Als „Adresse unzustellbar“ zählen, nicht wiederholen. Eine andere Adresse wählt nur der Nutzer (`switch_primary_email`) |
+| `undeliverable_address` | Ab MCP 4.3.0: Das Postfach der Versandadresse existiert laut Prüfung nicht; der Lead bekommt keine Mail. Als „Adresse unzustellbar“ zählen, nicht wiederholen. Eine andere Adresse wählt nur der Nutzer (`switch_primary_email`) |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Batch pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen (Queue ist idempotent) |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, im Report erwähnen |
 | Alle Agents eines Batches fehlgeschlagen | Warnung ausgeben, User fragen ob fortfahren |
