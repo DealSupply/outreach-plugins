@@ -7,6 +7,8 @@ description: 'Use when user says "outreach:campaign", "mcp:campaign", "erstelle 
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Dieser Skill erstellt vollständige Kampagnen über `create_campaign` und ändert vorhandene über den Dreischritt `export_campaign_blueprint` → Blueprint anpassen → `edit_campaign` (Scope `campaigns:write`, Lesen: `campaigns:read`). Ändert sich nur der Prompt einer KI-Variable, reicht `update_ai_variable` (ab ListM8-MCP 2.4.0). Grundlage ist das CampaignBlueprint-Schema v1; die vollständige Referenz liefert der MCP-Prompt `campaign_blueprint_guide`.
 
 ## Aufruf
@@ -120,7 +122,7 @@ Blueprint dem User zur Bestätigung zeigen (kompakt: Name, Variablen, Step-Betre
 
 ## Phase 3: Erstellen / Bearbeiten
 
-**Neu:** `create_campaign(blueprint=<object>)` → Response enthält `campaign_id`, `imported` (steps/variables/intelligence/configs) und `warnings`. Warnungen zur Sequenz (z. B. „letzte Woche" in einer Mail, die nur 3 Tage nach der vorigen kommt) dem Nutzer nennen und den Text anpassen. Die Kampagne startet in der abgeleiteten Lifecycle-Stufe `draft` — der Lebenszyklus (`lifecycle` in `list_campaigns`: `draft` → `in_progress` → `exported` → `active` → `completed`) wird aus den Lead-Signalen berechnet, nicht gespeichert, und kann nicht manuell gesetzt werden. Atomar: bei einem Fehler wird nichts angelegt.
+**Neu:** `create_campaign(blueprint=<object>)`, außerhalb des Standard-Workspaces mit `workspace=<uuid>` (vorher sagen, in welchem Workspace die Kampagne entsteht) → Response enthält `campaign_id`, `imported` (steps/variables/intelligence/configs) und `warnings`. Warnungen zur Sequenz (z. B. „letzte Woche" in einer Mail, die nur 3 Tage nach der vorigen kommt) dem Nutzer nennen und den Text anpassen. Die Kampagne startet in der abgeleiteten Lifecycle-Stufe `draft` — der Lebenszyklus (`lifecycle` in `list_campaigns`: `draft` → `in_progress` → `exported` → `active` → `completed`) wird aus den Lead-Signalen berechnet, nicht gespeichert, und kann nicht manuell gesetzt werden. Atomar: bei einem Fehler wird nichts angelegt.
 
 **Nur einen Variablen-Prompt ändern:** `update_ai_variable(campaign_id=<id>, name="intro", prompt=<kompletter neuer Prompt>)`. Kein Export und kein Voll-Blueprint nötig; Sequenz, andere Variablen und die erzeugten Werte aller Leads bleiben unberührt. Der Prompt braucht 10 bis 10.000 Zeichen. Neue Werte entstehen erst bei der nächsten Generierung; ob die schon erzeugten Leads neu generiert werden sollen (kostet erneut), mit dem Nutzer klären. Fehlt das Tool in der Tool-Liste, ist der Server älter: dann `edit_campaign` wie unten.
 

@@ -7,6 +7,8 @@ description: Use when user says "outreach:generate", "mcp:generate", "generiere 
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Dieser Skill orchestriert die vollautomatische AI-Variablen-Generierung für Leads via MCP Business Tools. Claude generiert AI-Variablen basierend auf Research, Qualification und Custom Attributes, und speichert sie via `save_lead_variables`. Email-Body und Subject werden NICHT durch diesen Skill erzeugt — sie sind in der Email-Sequenz hardcoded und werden beim CSV-Export live mit den Variablen gerendert. Dieser Skill ist der **Manuell-Modus**; Standard ist der serverseitige Lauf via `/outreach-pipeline` (Tool `start_lead_run`, Stufe `email`). Vor dem Start `list_lead_runs(campaign_id, active_only=true)` prüfen: bei aktivem Lauf mit E-Mail-Stufe blockt `save_lead_variables` mit `lead_run_active`.
 
 > **Abo-Lauf (Subagents im Claude- bzw. ChatGPT-Abo):**
@@ -18,7 +20,7 @@ Dieser Skill orchestriert die vollautomatische AI-Variablen-Generierung für Lea
 
 ## Phase 0: Umgebung und Konfiguration prüfen
 
-Vor jeder Generierung `ping` und `list_campaigns` mit dem Auftrag abgleichen (richtige Kampagne, Variablen und E-Mail-Sequenz vorhanden); bei Unklarheit stoppen. Die vollständige Konfiguration (E-Mail-Schritte, AI-Variablen, Kampagnenkontext) liefert `export_campaign_blueprint(campaign_id)`. Einen einzelnen Variablen-Prompt ändert `update_ai_variable`; Änderungen an Schritten oder mehreren Variablen laufen über `edit_campaign` mit dem vollständigen Blueprint (Replace-all, kein Teil-Patch). Bereits generierte Werte bleiben dabei erhalten (Abgleich per Name), stammen aber aus dem alten Prompt; eine Neugenerierung nur mit ausdrücklicher Zustimmung des Users und nie während eines aktiven Laufs.
+Vor jeder Generierung `ping` und `list_campaigns` mit dem Auftrag abgleichen (richtiger Workspace, richtige Kampagne, Variablen und E-Mail-Sequenz vorhanden); bei Unklarheit stoppen. Die vollständige Konfiguration (E-Mail-Schritte, AI-Variablen, Kampagnenkontext) liefert `export_campaign_blueprint(campaign_id)`. Einen einzelnen Variablen-Prompt ändert `update_ai_variable`; Änderungen an Schritten oder mehreren Variablen laufen über `edit_campaign` mit dem vollständigen Blueprint (Replace-all, kein Teil-Patch). Bereits generierte Werte bleiben dabei erhalten (Abgleich per Name), stammen aber aus dem alten Prompt; eine Neugenerierung nur mit ausdrücklicher Zustimmung des Users und nie während eines aktiven Laufs.
 
 Ansprache und Kampagnenkontext kommen pro Lead aus `get_lead_data` (`emailGeneration.salutation`, `salutationRule`, `campaignContext`); die Ansprache gilt durchgängig für alle Variablen eines Leads. Den fertigen Text einzelner Leads prüfst du nicht über ein Vorschau-Tool, sondern über `get_lead_variables` nach dem Speichern.
 
@@ -193,7 +195,7 @@ Nächster Schritt: Stichprobe mit /outreach-verify (10 Leads) bei neuer Kampagne
 
 ### list_campaigns
 
-**Keine Parameter.** Gibt alle Kampagnen des Users zurück.
+**Optional `workspace`** (uuid aus `list_workspaces`, siehe Workspace-Regel). Gibt die Kampagnen des Workspaces zurück, ohne Angabe die des Standard-Workspaces.
 
 Response-Felder:
 - `campaigns[].id` — Kampagnen-ID
@@ -281,7 +283,7 @@ Die folgenden Tools werden im Verification-Workflow verwendet, NICHT in der Gene
 
 - **get_lead_variables** — lädt aktuelle Variablen-Werte (Name, Wert, Status, generatedAt) zur Prüfung
 - **approve_lead_variables** — gibt Variablen frei (`LeadCampaignStatus = approved`, ready für CSV-Export)
-- **reject_lead_variables** — lehnt Variablen ab mit `reason` (`LeadCampaignStatus = rejected`; NICHT final: der Lead zählt wieder als generierungsbedürftig und wird beim nächsten Generate/Run neu erzeugt. Dauerhaft raus = aus Kampagne entfernen oder `mark_leads_contacted(emails, status="do_not_contact")`)
+- **reject_lead_variables** — lehnt Variablen ab mit `reason` (`LeadCampaignStatus = rejected`; NICHT final: der Lead zählt wieder als generierungsbedürftig und wird beim nächsten Generate/Run neu erzeugt. Dauerhaft raus = aus Kampagne entfernen oder `mark_leads_contacted(lead_ids=[<lead_id>], status="do_not_contact")`)
 
 Details: siehe `/outreach-verify` Skill.
 

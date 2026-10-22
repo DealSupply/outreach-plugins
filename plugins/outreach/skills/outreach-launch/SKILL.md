@@ -7,6 +7,8 @@ description: 'Use when user says "Kampagne launchen", "Kampagne live schalten", 
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 ListM8 versendet keine Mails. Es qualifiziert, recherchiert, erzeugt die AI-Variablen und übergibt
 die freigegebenen Leads per CSV-Export oder Push an Instantly. Domains, Postfächer, Warm-up,
 Versand, Antworten und Telefonate laufen beim Kunden in Instantly (oder einem vergleichbaren
@@ -45,8 +47,8 @@ Käufe und Abos (Domains, Zapmail, Instantly) entscheidet und bezahlt der Kunde.
    langsam hochfahren (Woche 1: 100-150, Woche 2: 200-250, ab Woche 3: 300 bei 10 Inboxen).
 3. **Stopp vor Optimierung.** Beschwerdequote über 0,3 % oder Bounce Rate über 5 %: Versand
    anhalten, nicht weiterlaufen lassen.
-4. **Sperren gelten global und dauerhaft.** Abmeldungen und Beschwerden werden in ListM8 zu
-   `do_not_contact`; einen Lead nur aus der Kampagne zu nehmen reicht nicht. `do_not_contact` nie
+4. **Sperren gelten im ganzen Workspace und dauerhaft.** Abmeldungen und Beschwerden werden in
+   ListM8 zu `do_not_contact`; einen Lead nur aus der Kampagne zu nehmen reicht nicht. `do_not_contact` nie
    zurücksetzen.
 5. **Nichts behaupten, was nicht passiert ist.** Weder Versand noch Zustellung noch Antworten aus
    ListM8 ableiten, solange der Nutzer oder der Kontaktstatus es nicht belegt.
@@ -113,8 +115,9 @@ Instantly samt dort angelegter Varianten.
   kontaktierte Leads, Antworten (`replied`), Interessierte (`opportunity`) sowie Bounces und
   Abmeldungen (`do_not_contact`) aus dem ganzen Workspace.
 - Ohne Integration oder für Abmeldungen per Antwort, Telefon oder Brief:
-  `mark_leads_contacted(emails=[…], status="do_not_contact" | "contacted" | "replied" | "opportunity")`.
-  Status werden nie herabgestuft; ein Zurücksetzen auf `not_contacted` nur auf ausdrücklichen
+  `mark_leads_contacted(emails=[…], status="do_not_contact" | "contacted" | "replied" | "opportunity")`,
+  im Workspace der Kampagne (`workspace=<uuid>` außerhalb des Standards). Status werden nie
+  herabgestuft; ein Zurücksetzen auf `not_contacted` nur auf ausdrücklichen
   Wunsch und nie für gesperrte Leads.
 - Neue Ansprache versendeter Leads ohne Reaktion (etwa über eine neue Domain): In ListM8 fragt der
   KI-Lauf beim Start, ob sie neu bearbeitet werden sollen. Per MCP erst

@@ -7,6 +7,8 @@ description: Use when user says "outreach:research", "mcp:research", "recherchie
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Dieser Skill orchestriert das Lead-Research via MCP Business Tools. Claude-Subagents recherchieren jeden Lead (Website, öffentliche Quellen) nach den Kampagnen-Vorgaben (aus `get_lead_data.researchGeneration`) und schreiben den Report via `write_lead_details` zurück. Die serverseitige Research-Pipeline (OpenRouter, serverseitiges Website-Scraping) wird dabei bewusst NICHT verwendet — dieser Skill ist der **Manuell-Modus** (eigenes Modell/eigene Quellen); entsprechend entstehen keine Screenshot-Artefakte. Der serverseitige Lauf (`/outreach-pipeline`, Tool `start_lead_run`) erzeugt sie dagegen. Vor dem Start `list_lead_runs(campaign_id, active_only=true)` prüfen: bei aktivem Lauf mit Research- ODER Qualifizierungs-Stufe blockt `write_lead_details` mit `lead_run_active`.
 
 > **Abo-Lauf (Subagents im Claude- bzw. ChatGPT-Abo):**

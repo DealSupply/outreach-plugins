@@ -7,6 +7,8 @@ description: Use when user says "outreach:import", "mcp:import", "importiere lea
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Dieser Skill lädt Lead-Listen über das MCP-Tool `import_leads` (Scope `leads:write`) in ListM8 — aus CSV-Dateien (z. B. Apify- oder Outscraper-Exporte), JSON oder Inline-Daten. Das Scraping selbst passiert außerhalb von ListM8 (der Kunde nutzt Apify, Outscraper o. Ä.); der MCP bekommt nur das Ergebnis. Mit `campaign_id` werden die Leads der Kampagne zugeordnet (Status `processing`); ohne entstehen unkategorisierte Leads im globalen Bestand. Der Import startet KEINE Verarbeitung — anschließend `/outreach-pipeline` (serverseitiger Lauf via `start_lead_run`) oder die Einzel-Skills.
 
 ## Aufruf
@@ -44,6 +46,7 @@ import_leads(leads=[…], campaign_id=…, list_id=…, attribute_mappings={…}
 - `list_id` für beschaffte Listen immer setzen (Herkunft + späteres Aufräumen via `delete_list`); die Liste vorher mit `create_list` anlegen und die Herkunft in `source` festhalten. Listen-Verwaltung: `/outreach-lists`.
 - Mehrere Pakete sequentiell importieren (Größe siehe Phase 1, im Chat etwa 100–300 je Aufruf) und jeweils den Job abwarten; so bleibt ein Fehler eingrenzbar.
 - Response: `job_id` (der Import läuft asynchron) und `received`; bei den Links der Antwort (`appUrl`) kann der Nutzer den Stand in der Oberfläche sehen.
+- Workspace: Mit `campaign_id` oder `list_id` landet der Import im Workspace der Kampagne bzw. Liste, ohne beides im gewählten (`workspace=<uuid>` außerhalb des Standards). Kampagne und Liste müssen im selben Workspace liegen, sonst `workspace_mismatch`. `check_leads_exist` und `create_list` vorher im selben Workspace.
 - Dedup macht das Backend: listenintern und gegen bestehende Leads; bestehende Leads werden nur zur Kampagne bzw. Liste verlinkt (kein Duplikat, keine Feld-Überschreibung). `do_not_contact`-Leads werden nicht in Kampagnen aufgenommen und im Ergebnis gemeldet.
 
 ## Phase 3: Job pollen & Report

@@ -17,13 +17,15 @@ Desktop / Codex oder ein anderes KI-Werkzeug. In einem Satz nennen; was je Umgeb
 ## 2. Outreach-Verbindung prüfen
 
 - `list_campaigns` aufrufen (nur lesend).
-  - **Antwort kommt:** Verbindung steht, Anzahl der Kampagnen nennen.
+  - **Antwort kommt:** Verbindung steht, Anzahl der Kampagnen nennen. Gibt es `list_workspaces` und
+    mehr als einen Workspace, sie kurz nennen (Name, Rolle); welcher gilt, fragt `fulfillment` beim
+    Liefern.
   - **Kein Outreach-Tool:** Das Plugin `outreach` aus demselben Marketplace installieren (bringt die
     Verbindung mit) und dort `outreach-setup` ausführen. Ohne Verbindung geht Fulfillment trotzdem,
     aber Offer und Lead-Daten kommen dann vom Nutzer, und der Demo-Link wird von Hand eingetragen.
 - Schreibrecht für den Demo-Link: Der Link wird über `bulk_set_lead_attributes` gespeichert
-  (Berechtigung `leads:write`). Nicht testweise schreiben; erst beim ersten echten Link zeigt sich,
-  ob das Recht fehlt.
+  (Berechtigung `leads:write`, im Workspace des Leads nicht als `viewer`). Nicht testweise
+  schreiben; erst beim ersten echten Link zeigt sich, ob das Recht fehlt.
 
 ## 3. Plugins im selben Marketplace
 

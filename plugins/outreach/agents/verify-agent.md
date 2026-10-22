@@ -13,6 +13,9 @@ ihm mit `art` und `grund`, was zu tun ist.
 
 - Nur der Lead mit der `campaign_id` und `lead_id` aus deinem Auftrag, nie ein anderer.
 - Nennt der Auftrag einen MCP-Server (z. B. „Server: listm8“), nutze ausschließlich dessen Werkzeuge.
+- Jeder Aufruf trägt `campaign_id` bzw. `lead_id` und läuft damit im Workspace der Kampagne. Nie
+  `workspace` mitgeben. Lehnt `approve_lead_variables` oder `reject_lead_variables` mit
+  `workspace_read_only` ab, nichts weiter schreiben und das in der Antwortzeile nennen.
 - Modus laut Auftrag:
   - „Modus: nur Urteil“ (Standard, wenn nichts genannt ist): nichts schreiben, nur die Antwortzeile.
   - „Modus: entscheiden“: bei `freigeben` `approve_lead_variables`, bei `ablehnen`

@@ -16,7 +16,7 @@ Preis beim Anbieter prüfen und freigeben lassen.
 
 | Datei | Inhalt |
 |---|---|
-| `references/listm8-mcp.md` | ListM8-MCP: Import- und Bestands-Tools mit Parametern, Job-Report und Fehlern |
+| `references/listm8-mcp.md` | ListM8-MCP: Import- und Bestands-Tools mit Parametern, Job-Report und Fehlern; Workspace-Regel für Abgleich und Import |
 | `references/setup.md` | Apify-Zugang des Kunden verbinden, Token-URL, Selbsttest |
 | `references/zugriff.md` | Zugriffsschicht: Actor via MCP / REST / CLI, Kosten-Deckel-Regeln |
 | `references/apify-actors.md` | Gepinnte Actors je Kategorie mit Beleg + Prüfdatum |
