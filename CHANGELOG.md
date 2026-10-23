@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.33
+
+**outreach** (gleichauf mit dem ListM8-Server: Abschluss-Stufen statt Nutzen zuerst)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-verify`, `outreach-generate` → Intro = Einstieg + Anker + Abschluss, der Abschluss bleibt keine Pflicht. Stufen: 1) Würdigung am Detail (Folgerung, Anerkennung, Seltenheit mit dem Detail, Kundensicht, lobender Nutzen), 2) Reaktion in der Vergangenheit am Detail, lieber schlicht als gesteigert, 3) Superlativ nur bei wirklich beeindruckendem Anker und am Detail. Hinter einer Bewertungszahl bleibt die Reaktion.
+- Verboten: Mechanik-Nutzen (ein Schluss, der erklärt, was man dank des Details tun kann, etwa „so können sich Interessierte vorab ein Bild machen“), Lob ohne Detail, doppeltes Lob. Das Prüfer-Verbot gilt nur noch für leere Urteile, die aus dem Detail nicht folgen. Grund: In etwa einem Drittel der Intros stand ein Mechanik-Nutzen.
+- `copy-lehre` → Beispieltabelle nach Stufen, Kundenlob ohne Schluss, Gegenbeispiel Mechanik-Nutzen. `verify-agent` → Mechanik-Nutzen ist ein Befund, eine Reaktion statt möglicher Würdigung nicht.
+
 ## 2026-10-17 – outreach 0.3.32
 
 **outreach** (gleichauf mit dem ListM8-Server: der Schluss im Intro ist keine Pflicht mehr)

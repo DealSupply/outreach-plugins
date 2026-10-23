@@ -134,17 +134,24 @@ gelten immer.
     Unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen: nächster Anker bzw. Fallback.
   - Positiver Schluss: Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es
     das Intro allein; einen Schluss, der das Lob nur wiederholt, lässt du weg. Ein neutrales Faktum und eine
-    Bewertungszahl bekommen einen kurzen Halbsatz aus diesem Detail. Zuerst Nutzen oder
-    Wirkung (wem nützt es, was bewirkt es), wenn sie sich anbietet; sonst eine kurze persönliche
-    Reaktion direkt hinter dem benannten Detail, in der Vergangenheit, nie allein; sie muss das Detail
-    nicht wiederholen. Eine passende Reaktion schlägt der Block
+    Bewertungszahl bekommen einen kurzen Halbsatz aus diesem Detail, in diesen Stufen: 1) Würdigung am
+    Detail, also was genau dieses Detail über den Betrieb zeigt (Folgerung „das zeigt, dass euch eure
+    Kundinnen auch nach dem Termin wichtig sind“, Anerkennung „das spricht für eure Arbeit“, Seltenheit
+    mit dem Detail „so eine Nachsorge erlebt man nicht oft“, Kundensicht „da weiß man als Kunde, dass
+    man richtig ist“, lobender Nutzen „das spart Zeit bei der Behandlung“); hinter einer Bewertungszahl
+    gleich Stufe 2. 2) Sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
+    Vergangenheit, nie allein, lieber schlicht („das ist mir direkt aufgefallen“) als gesteigert; sie
+    muss das Detail nicht wiederholen. 3) Ein Superlativ („wirklich beeindruckend“) nur, wenn der Anker
+    wirklich beeindruckt und 1 und 2 nicht gut klingen, immer am Detail. Nie ein Mechanik-Nutzen, der
+    erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“,
+    „so kann man unverbindlich nachfragen“). Eine passende Reaktion schlägt der Block
     `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie
     selbst und übernimm die zwei bekannten Muster („das fand ich eine schöne Idee“, „hat mir gut
-    gefallen“) nicht wörtlich. Nie ein Prüfer-Urteil
-    über die Qualität der Arbeit: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn
+    gefallen“) nicht wörtlich. Nie ein leeres Prüfer-Urteil
+    über die Qualität der Arbeit, das aus dem Detail nicht folgt: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn
     die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“,
     „zeigt, dass die Behandlung ankommt“. Nichts erfinden, keine Formel („finde ich stark“, „hat man
-    nicht alle Tage“), kein Superlativ, keine Wendung aus Beispielen. Lobt schon der erste Satz des festen
+    nicht alle Tage“), kein Superlativ ohne Detail, keine Wendung aus Beispielen. Lobt schon der erste Satz des festen
     Mailtexts selbst, entfällt der Schluss. Der Fallback-Satz bleibt wörtlich und ohne Schluss.
   - Einstieg: wie im Block `EINSTIEG DES OPENERS` des System-Prompts; fehlt er, nach der letzten Ziffer deiner Lead-ID: 0-2 „mir ist aufgefallen, dass …“, 3-5 „ich hab
     mir … angeschaut“, 6-7 „beim Stöbern auf deiner Website …“, 8-9 direkt mit dem Detail. Ein

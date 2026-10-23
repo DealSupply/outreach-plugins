@@ -83,36 +83,46 @@ Gegensatzpaare (die Spalte „besteht“ zeigt den Fund, nicht den fertigen Satz
 | Branche | Fällt durch | Besteht | Warum |
 |:--------|:------------|:--------|:------|
 | Dental | Lachgas für Angstpatienten | „Krone To Go“: die Krone am selben Termin, unter eigenem Namen | Lachgas steht bei vielen Praxen auf der Leistungsseite, ein eigenes Kronen-Konzept am selben Tag nicht |
-| Dental | digitaler Scan statt Abdruck, „hilft bei Würgereiz“ | Sprechstunde donnerstags bis 20 Uhr, mit dem Nutzen für Berufstätige | Der Nutzen rettet die Standardleistung nicht; die ungewöhnliche Zeit ist selbst die Abhebung, der Nutzen wird zum positiven Schluss |
+| Dental | digitaler Scan statt Abdruck, „hilft bei Würgereiz“ | Sprechstunde donnerstags bis 20 Uhr | Der Nutzen rettet die Standardleistung nicht; die ungewöhnliche Zeit ist selbst die Abhebung, eine Würdigung am Detail wird zum positiven Schluss |
 | Dental | „du behandelst Angstpatienten“ von der Leistungsseite | mehrere Bewertungen schreiben, dass Patienten trotz Angst ruhig durch die Behandlung kamen | gleiches Thema, aber als Lob über diesen Betrieb |
 | Handwerk | du bietest Badsanierung an | jedes Bad vorab als begehbarer 3D-Rundgang | Badsanierung macht jeder Sanitärbetrieb, den Rundgang vor dem ersten Handgriff kaum einer |
 
 ### Positiver Schluss
 
-Das Intro endet als Lob, damit der feste Folgesatz („Deshalb …“) einen Grund hat. Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es das Intro allein; ein Schluss ist frei, und einer, der das Lob nur wiederholt, fällt weg. Lobt schon der erste Satz des festen Mailtexts selbst, entfällt der Schluss: nie zweimal loben. Ein neutrales Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt, Auszeichnung) und eine Bewertungszahl bekommen einen kurzen positiven Halbsatz, in dieser Rangfolge:
+Das Intro besteht aus Einstieg, Anker und Abschluss. Der Abschluss ist keine Pflicht: Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es das Intro allein; ein Schluss ist frei, und einer, der das Lob nur wiederholt, fällt weg. Lobt schon der erste Satz des festen Mailtexts selbst, entfällt der Schluss: nie zweimal loben. Ein neutrales Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt, Auszeichnung) und eine Bewertungszahl bekommen einen kurzen positiven Halbsatz, damit der feste Folgesatz („Deshalb …“) einen Grund hat, in diesen Stufen (hinter einer Bewertungszahl gleich Stufe 2):
 
-1. **Nutzen oder Wirkung**, wenn sie sich aus dem Detail anbietet (wem nützt es, was bewirkt es): „…, so passt ein Termin auch nach der Arbeit.“
-2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, in der Vergangenheit erzählt wie unter Kollegen: „…, das fand ich eine schöne Idee.“, „…, das ist mir gleich ins Auge gefallen.“ Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein, und wird je Lead aus dem Detail gebildet, nie als feste Wendung.
-3. **Nie ein Prüfer-Urteil über die Qualität ihrer Arbeit.** Es klingt wie die Begutachtung durch einen Fremden: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“. (Messrunde 08.10.2026: ein Drittel der neuen Schlüsse waren solche Urteile.)
+1. **Würdigung am Detail**: was genau dieses Detail über den Betrieb zeigt, als Folgerung („das zeigt, dass euch eure Kundinnen auch nach dem Termin wichtig sind“), Anerkennung („das spricht für eure Arbeit“), Seltenheit, die das Detail selbst nennt („so eine Nachsorge erlebt man nicht oft“), Kundensicht („da weiß man als Kunde, dass man richtig ist“) oder lobender Nutzen, der sagt, was das Detail wert ist („das spart Zeit bei der Behandlung“).
+2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, in der Vergangenheit erzählt wie unter Kollegen: „…, das ist mir direkt aufgefallen.“ (lieber schlicht als „richtig gut gefallen“). Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein, und wird je Lead aus dem Detail gebildet, nie als feste Wendung.
+3. **Ein Superlativ** („wirklich beeindruckend“) nur, wenn der Anker wirklich beeindruckt und weder Stufe 1 noch Stufe 2 gut klingt, und immer direkt am Detail.
+
+Verboten:
+
+- **Mechanik-Nutzen**: ein Schluss, der erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“). Er beschreibt eine Funktion, statt den Betrieb zu würdigen (Prüfung 23.10.2026: in etwa einem Drittel der Intros).
+- **Lob ohne Detail** („finde ich stark“, „Hammer“) und **doppeltes Lob**.
+- **Leeres Prüfer-Urteil** über die Qualität ihrer Arbeit, das aus dem Detail nicht folgt und auf jeden Betrieb passt; es klingt wie die Begutachtung durch einen Fremden: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“ (Messrunde 08.10.2026: ein Drittel der damaligen Schlüsse). Eine Würdigung ist dagegen erlaubt, weil sie am konkreten Detail hängt und nichts darüber hinaus behauptet.
 
 Leitplanken:
 
 - nichts erfinden, nur was direkt aus dem Detail folgt (nie „deine Patienten lieben das“, nie „alle positiv“);
-- keine inhaltsleere Formel und kein Vergleich oder Superlativ („finde ich stark/spannend/bemerkenswert“, „Hammer“, „beeindruckend“, „das sieht man selten“, „das sieht man nicht immer“, „hat man nicht alle Tage“, „das spricht für sich“);
-- Abgrenzung: „das fand ich eine schöne Idee“ ist eine Reaktion auf ein benanntes Detail und erlaubt; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
-- keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; die Reaktion schlägt der Server je Lead aus einer festen Liste vor, Wiederholungen über eine Kampagne sind deshalb erwartet; gleich lautende Nutzen-Schlüsse über mehrere Leads (etwa „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen) sind ein systematischer Befund;
-- eine Bewertungszahl bekommt immer einen Schluss; insgesamt weiter höchstens 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich);
+- keine inhaltsleere Formel, keine Seltenheit und kein Superlativ ohne das Detail („finde ich stark/spannend/bemerkenswert“, „Hammer“, „beeindruckend“, „das sieht man selten“, „das sieht man nicht immer“, „hat man nicht alle Tage“, „das spricht für sich“);
+- Abgrenzung: „das fand ich eine schöne Idee“ ist eine Reaktion auf ein benanntes Detail und erlaubt, „so eine Nachsorge erlebt man nicht oft“ eine Würdigung mit dem Detail; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
+- keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; die Reaktion schlägt der Server je Lead aus einer festen Liste vor, Wiederholungen über eine Kampagne sind deshalb erwartet; gleich lautende Würdigungen über mehrere Leads und jeder Mechanik-Nutzen (etwa „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen) sind ein systematischer Befund;
+- eine Bewertungszahl bekommt immer einen Schluss, und zwar eine Reaktion; insgesamt weiter höchstens 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich);
 - der Fallback-Satz der Kampagne bleibt wörtlich, ohne angehängten Schluss.
 
 **Beispiele, nicht wörtlich übernehmen.** Sie zeigen, wie verschieden ein Schluss aus dem jeweiligen Detail entsteht. Wer einen davon in einen Prompt kopiert, macht alle Opener gleich.
 
 | Anker | Opener |
 |:------|:-------|
-| Eigenes Verfahren (Handwerk) | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang. So steht der Kunde schon in seinem neuen Bad, bevor die erste Fliese fällt.“ |
-| Ungewöhnliche Zeit (Dental) | „mir ist aufgefallen, dass deine Praxis donnerstags bis 20 Uhr Termine hat, da kommt man auch nach einem vollen Arbeitstag noch dran.“ |
-| Eigenes Konzept (Dental) | „beim Stöbern auf deiner Website hab ich ‚Krone To Go‘ entdeckt, die Krone am selben Termin. Das erspart deinen Patienten den zweiten Termin und die Zeit mit Provisorium.“ |
-| Lob aus Bewertungen (Dental) | „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst. So weiß man im Stuhl immer, was als Nächstes kommt.“ |
-| Eigenname (Café), Reaktion statt Nutzen | „mir ist aufgefallen, dass jede Torte bei dir nach einem Stammgast benannt ist, über die Torte ‚Herr Albers‘ hab ich mich beim Lesen gefreut.“ |
+| Eigenes Verfahren (Handwerk), Würdigung: Seltenheit | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang, so eine Vorschau bekommt man beim Badumbau nicht oft.“ |
+| Ungewöhnliche Zeit (Dental), Würdigung: Folgerung | „mir ist aufgefallen, dass deine Praxis donnerstags bis 20 Uhr Termine hat, das zeigt, dass du an Patienten mit vollem Arbeitstag denkst.“ |
+| Eigenes Konzept (Dental), Würdigung: lobender Nutzen | „beim Stöbern auf deiner Website hab ich ‚Krone To Go‘ entdeckt, die Krone am selben Termin. Das spart deinen Patienten den zweiten Termin mit Provisorium.“ |
+| Seltene Spezialisierung (Handwerk), Würdigung: Kundensicht | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, da weiß man als Eigentümer eines Baudenkmals gleich, dass man richtig ist.“ |
+| Lob aus Bewertungen (Dental), ohne Schluss | „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ |
+| Eigenname (Café), Reaktion | „mir ist aufgefallen, dass jede Torte bei dir nach einem Stammgast benannt ist, über die Torte ‚Herr Albers‘ hab ich mich beim Lesen gefreut.“ |
+| Projekt (Orgelbau), Superlativ nur bei wirklich beeindruckendem Anker | „ich hab gesehen, dass ihr die Orgel der Stadtkirche von Grund auf restauriert habt, das ist wirklich beeindruckend.“ |
+
+Gegenbeispiel Mechanik-Nutzen: „mir ist aufgefallen, dass auf deiner Website alle Preise offen stehen, so können sich Interessierte vorab ein Bild machen.“ Besser mit Würdigung: „…, das zeigt, dass bei dir nichts versteckt wird.“
 
 ### Bewertungen: Rangfolge der Anker
 
@@ -210,8 +220,8 @@ Einstiege: keiner ist Standard. Die letzte Ziffer der Lead-ID entscheidet, ein B
 **MUSS:**
 
 - Abhebung statt Leistungsnennung: Der Opener besteht den Austauschtest und nennt kein Thema von der Sperrliste der Kampagne (außer als Lob aus Bewertungstexten). Ein Nutzen rettet keine Standardleistung
-- Nach einem neutralen Faktum oder einer Bewertungszahl ein kurzer positiver Schluss aus dem konkreten Detail (ein Lob aus Bewertungstexten trägt sich selbst, nie zweimal loben): Nutzen oder Wirkung, sonst eine kurze Reaktion am benannten Detail, nie ein Prüfer-Urteil über die Qualität der Arbeit (Rangfolge und Leitplanken unter „Positiver Schluss“); der Fallback-Satz bleibt ohne Schluss
-- Ausschließlich positiv: echtes Lob oder anerkennende Beobachtung, getragen vom konkreten Detail. Austauschbare Bewertungsfloskeln und Superlative („das spricht für sich", „das sieht man selten", „das sieht man nicht immer", „hat man nicht alle Tage", „finde ich stark", „finde ich spannend", „Hammer", „beeindruckend", auch umgestellt wie „ich finde spannend, dass …") sind verboten (ListM8-Regel), und zwar auch als Beispielsatz: Modelle kopieren Beispiele
+- Nach einem neutralen Faktum oder einer Bewertungszahl ein kurzer positiver Schluss aus dem konkreten Detail (ein Lob aus Bewertungstexten trägt sich selbst, nie zweimal loben): Würdigung am Detail, sonst eine kurze Reaktion am benannten Detail, ein Superlativ nur bei wirklich beeindruckendem Anker; nie ein Mechanik-Nutzen und nie ein leeres Prüfer-Urteil (Stufen und Leitplanken unter „Positiver Schluss“); der Fallback-Satz bleibt ohne Schluss
+- Ausschließlich positiv: echtes Lob oder anerkennende Beobachtung, getragen vom konkreten Detail. Austauschbare Bewertungsfloskeln und Superlative ohne Detail („das spricht für sich", „das sieht man selten", „das sieht man nicht immer", „hat man nicht alle Tage", „finde ich stark", „finde ich spannend", „Hammer", „beeindruckend", auch umgestellt wie „ich finde spannend, dass …") sind verboten (ListM8-Regel), und zwar auch als Beispielsatz: Modelle kopieren Beispiele
 - Anker in der Rangfolge: Lob aus Bewertungstexten (Paraphrase; Plural oder „immer wieder" nur, wenn mindestens 2 Bewertungen dieses Lob tragen), dann abhebendes Website-Detail, dann Anzahl und Schnitt als eigener Anker (nur ab 30 Bewertungen und 4,5, Zahl gerundet, Schnitt mit Komma, bei widersprüchlichen Quellen der kleinere Wert), dann der Fallback
 - Stellenanzeige: die Erkenntnis über den Betrieb nutzen (Wachstum, Spezialisierung, Projekt), ohne anzukündigen, dass der Betrieb sucht oder einstellt
 - Ein zweiter Satz ist konkret und wiederholt oder nimmt nicht vorweg, was der feste Text danach sagt. Beginnt der feste Text mit „Das hat mich neugierig gemacht.", darf kein Intro-Satz mit dieser Aussage davor stehen
@@ -250,8 +260,8 @@ ich so frei ...]" beginnt.
 Aufgabe:
 Schreibe 1-2 Sätze, insgesamt etwa 30 Wörter: eine Beobachtung, die diesen
 Betrieb von anderen seiner Branche abhebt, und danach einen kurzen
-positiven Halbsatz: Nutzen oder Wirkung, sonst eine kurze Reaktion am
-Detail. Der Opener muss
+positiven Halbsatz: eine Würdigung am Detail, sonst eine kurze Reaktion
+am Detail. Der Opener muss
 natürlich in das Marketing Offer überleiten.
 
 Was abhebt: ein Eigenname oder eigenes Konzept, eine ungewöhnliche Zeit
@@ -290,19 +300,26 @@ ANKER-REIHENFOLGE (nimm den ersten, der den Austauschtest besteht):
 POSITIVER SCHLUSS: Ein Lob aus Bewertungstexten trägt das Intro allein
 (kein Schluss, der es nur wiederholt). Nach einem neutralen Faktum oder
 einer Bewertungszahl folgt ein kurzer Halbsatz. Zuerst
-Nutzen oder Wirkung, wenn sie sich aus dem Detail anbietet (wem nützt es,
-was bewirkt es). Sonst eine kurze persönliche Reaktion direkt hinter dem
-benannten Detail (muss es nicht wiederholen), in der Vergangenheit erzählt (Muster: "das fand ich eine
-schöne Idee", "hat mir gut gefallen"; nie allein und nie als feste
-Wendung). Nie ein Prüfer-Urteil über die Qualität der Arbeit ("das wirkt
+eine Würdigung am Detail: was genau dieses Detail über den Betrieb zeigt
+(Folgerung, Anerkennung, Seltenheit mit dem Detail, Kundensicht oder
+lobender Nutzen, der sagt, was das Detail wert ist); hinter einer
+Bewertungszahl gleich die Reaktion. Sonst eine kurze persönliche Reaktion
+direkt hinter dem benannten Detail (muss es nicht wiederholen), in der
+Vergangenheit erzählt (Muster: "das fand ich eine schöne Idee", "hat mir
+gut gefallen"; nie allein und nie als feste Wendung). Ein Superlativ nur,
+wenn der Anker wirklich beeindruckt, und immer am Detail. Nie ein
+Mechanik-Nutzen, der erklärt, was man dank des Details tun kann ("so
+können sich Interessierte vorab ein Bild machen", "so kann man
+unverbindlich nachfragen"). Nie ein leeres Prüfer-Urteil über die
+Qualität der Arbeit, das aus dem Detail nicht folgt ("das wirkt
 vertrauenswürdig", "so einen Schnitt hält man nur, wenn die Arbeit
 stimmt", "da machst du vieles richtig", "das schafft man nicht ohne
 sauberes Arbeiten", "zeigt, dass die Behandlung ankommt"). Nichts
 erfinden, nur was direkt aus dem Detail folgt (nie "deine Kunden lieben
 das", nie "alle positiv"). Keine inhaltsleere Formel und kein Superlativ
 ("finde ich stark", "Hammer", "das sieht man selten", "das sieht man nicht
-immer", "hat man nicht alle Tage", "beeindruckend", "das spricht für
-sich"). Bilde jeden Schluss aus dem konkreten Detail. Lobt schon der feste
+immer", "hat man nicht alle Tage", "beeindruckend" ohne Detail, "das
+spricht für sich"). Bilde jeden Schluss aus dem konkreten Detail. Lobt schon der feste
 Folgesatz selbst, entfällt der Schluss. Nicht beim FALLBACK.
 
 EINSTIEG: Kein Einstieg ist Standard. Wähle ihn nach der letzten Ziffer
@@ -374,7 +391,7 @@ Vor dem Export immer mindestens 10 Leads im Review (`outreach-verify`, `get_lead
 | Tonalität | Enthält Kritik, Mangel, Konjunktiv-Wunsch oder einen Ratschlag |
 | Austauschtest | Würde genauso auf zehn andere Betriebe derselben Branche in der Stadt passen, nennt eine Standardleistung (auch mit Nutzen), oder das Lob besteht nur aus einem Adjektiv ohne Inhalt |
 | Sperrliste | Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten |
-| Positiver Schluss | Fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, lobt dasselbe doppelt, ist eine Floskel oder ein Superlativ, ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion, vor der kein Detail steht, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Gleich lautende Nutzen-Schlüsse über mehrere Leads sind ein systematischer Befund; wiederholte Reaktionen aus der Server-Liste sind es nicht |
+| Positiver Schluss | Fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, lobt dasselbe doppelt, ist eine Floskel oder ein Superlativ, ist ein Mechanik-Nutzen („so können sich Interessierte vorab ein Bild machen“), ist ein leeres Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion oder Würdigung, vor der kein Detail steht, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Gleich lautende Schlüsse über mehrere Leads sind ein systematischer Befund; wiederholte Reaktionen aus der Server-Liste sind es nicht |
 | Bewertungsanker | Zahlen bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5, ungerundete Zahl, Schnitt mit Punkt, der größere von zwei widersprüchlichen Werten, nur Zahlen, obwohl ein Lob aus Bewertungstexten belegt ist; „mehrere“/„immer wieder“ ohne mindestens 2 Bewertungen; Einstieg ohne Quelle |
 | Zuschreibung | Schreibt der angesprochenen Person etwas zu, das einer anderen gehört |
 | Wahrheit | Enthält Zahl, Name oder Fakt, der nicht aus dem Research kommt |
@@ -922,7 +939,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 **Inhalt:**
 
 - [ ] Schreibe ich über den EMPFÄNGER oder über uns?
-- [ ] Besteht der individuelle Bezug den Austauschtest (passt nicht auf zehn andere Betriebe der Branche, nichts von der Sperrliste außer als Bewertungslob), mit kurzem positivem Schluss aus dem Detail, wo es nicht schon selbst ein Kundenlob ist (Nutzen oder Reaktion am Detail, kein Prüfer-Urteil) und ohne Lobadjektiv ohne Inhalt? Bewertungszahlen nur ab 30 Bewertungen und einem Schnitt von 4,5?
+- [ ] Besteht der individuelle Bezug den Austauschtest (passt nicht auf zehn andere Betriebe der Branche, nichts von der Sperrliste außer als Bewertungslob), mit kurzem positivem Schluss aus dem Detail, wo es nicht schon selbst ein Kundenlob ist (Würdigung oder Reaktion am Detail, kein Mechanik-Nutzen, kein leeres Prüfer-Urteil) und ohne Lobadjektiv ohne Inhalt? Bewertungszahlen nur ab 30 Bewertungen und einem Schnitt von 4,5?
 - [ ] Stimmt die Anrede (Du-Form: Vorname der Person, der die Adresse gehört, bei generischen Adressen der Entscheider; sonst „Hallo,“)?
 - [ ] Ist das Offer konkret genug? (Würde ICH antworten?)
 - [ ] Kommt Social Proof erst im FUP2 (Step 3, neuer Thread), NICHT in der Entry Mail?

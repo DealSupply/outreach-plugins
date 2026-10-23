@@ -57,23 +57,31 @@ ihm mit `art` und `grund`, was zu tun ist.
   - Sperrliste: Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten.
   - Positiver Schluss: fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, ist leer oder eine Floskel bzw. ein Superlativ („finde ich stark“,
     „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“, „das spricht für
-    sich“), ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „so
+    sich“; Seltenheit und Superlativ sind nur ohne das Detail ein Befund), ist ein Mechanik-Nutzen, also ein Schluss, der
+    erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“,
+    „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“), ist ein leeres
+    Prüfer-Urteil über die Qualität der Arbeit, das aus dem Detail nicht folgt („das wirkt vertrauenswürdig“, „so
     einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft
     man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“), ist eine Reaktion, vor der
     im selben Satz kein Detail steht, oder er behauptet etwas, das nicht direkt aus dem Detail folgt („deine
-    Patienten lieben das“). Erlaubt sind Nutzen oder Wirkung und, wo sich keiner anbietet, eine kurze
+    Patienten lieben das“). Erlaubt sind in dieser Reihenfolge: eine Würdigung am Detail (Folgerung „das
+    zeigt, dass euch eure Kundinnen auch nach dem Termin wichtig sind“, Anerkennung „das spricht für eure
+    Arbeit“, Seltenheit mit dem Detail „so eine Nachsorge erlebt man nicht oft“, Kundensicht „da weiß man
+    als Kunde, dass man richtig ist“, lobender Nutzen „das spart Zeit bei der Behandlung“), sonst eine kurze
     Reaktion in der Vergangenheit direkt hinter dem benannten Detail („das fand ich eine schöne Idee“,
-    „das ist mir gleich ins Auge gefallen“); sie sagt nur, dass es aufgefallen ist, und muss das Detail
-    nicht wiederholen. Hinter einem Lob aus Bewertungstexten ist ein fehlender Schluss kein Befund; ein Schluss,
+    „das ist mir direkt aufgefallen“), die nur sagt, dass es aufgefallen ist, und das Detail nicht
+    wiederholen muss, zuletzt ein Superlativ am Detail („wirklich beeindruckend“), wenn der Anker
+    wirklich beeindruckt. Eine Reaktion, wo eine Würdigung gut geklungen hätte, ist kein Befund; hinter
+    einer Bewertungszahl steht die Reaktion. Hinter einem Lob aus Bewertungstexten ist ein fehlender Schluss kein Befund; ein Schluss,
     der dasselbe Lob nur noch einmal sagt oder neben einem lobenden festen Folgesatz doppelt lobt, ist ein
     Hinweis (`text`). Eine Reaktion ist kein Befund, solange sie zum Anker passt; „Idee“ oder „Ansatz“ hinter einer
     Bewertungszahl oder „ins Auge gefallen“ nach „mir ist aufgefallen“ ist ein Hinweis (`text`). „finde ich stark“ ist dagegen eine Formel. Der Fallback-Satz der Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
     schlägt der Server je Lead aus einer festen Liste vor; Wiederholungen über die Kampagne sind
-    erwartet und kein Befund. Gleich lautende Nutzen-Schlüsse über mehrere Leads (etwa „so können sich
-    Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als systematischen
-    Befund.
+    erwartet und kein Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
+    „so können sich Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als
+    systematischen Befund.
   - Sterne: Anzahl oder Schnitt bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5,
     ungerundete Zahl, Schnitt ohne Komma, der größere von zwei widersprüchlichen Werten, oder nur Zahlen, obwohl die Recherche ein Lob aus
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
