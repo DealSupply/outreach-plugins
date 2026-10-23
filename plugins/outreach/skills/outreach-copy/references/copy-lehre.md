@@ -411,7 +411,7 @@ Vor dem Export immer mindestens 10 Leads im Review (`outreach-verify`, `get_lead
 | Übergang | Der feste Folgesatz („Genau deshalb ...", „Deswegen war ich so frei ...") schließt sich nicht flüssig an |
 | Absender | Schreibt über uns statt über den Empfänger |
 
-Wenn mehr als 2 von 10 Openern durchfallen, ist der Prompt das Problem, nicht der Lead. Dasselbe gilt, wenn mehr als ein Drittel gleich beginnt oder denselben Anker trägt. Dann Prompt nachschärfen (`export_campaign_blueprint` → `edit_campaign`, mit Zustimmung des Nutzers, weil das die erzeugten Werte löscht) und neu generieren.
+Wenn mehr als 2 von 10 Openern durchfallen, ist der Prompt das Problem, nicht der Lead. Dasselbe gilt, wenn mehr als ein Drittel gleich beginnt oder denselben Anker trägt. Dann Prompt nachschärfen (`update_ai_variable`) und die betroffenen Leads neu generieren, mit Zustimmung des Nutzers, weil die Neugenerierung erneut kostet.
 
 ## Wo der Opener steht - und wo nicht
 

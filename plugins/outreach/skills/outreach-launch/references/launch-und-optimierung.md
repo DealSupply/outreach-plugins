@@ -38,7 +38,7 @@ Auch nach dem Warmup ist ein Postfach nicht auf 30 Mails am Tag eingestellt. Der
 - [ ] Sperrliste geladen: Kontaktstatus in ListM8 aktuell (`do_not_contact`, bereits Kontaktierte) und Blockliste in Instantly gepflegt
 - [ ] Abmeldehinweis vorhanden, List-Unsubscribe-Header aktiv
 
-Der wichtigste Punkt ist die Stichprobe der AI-Opener. Wenn dort mehr als 8 von 40 durchfallen, wird nicht gestartet, sondern der Prompt nachgeschärft: Ablehnungen mit Begründung (`reject_lead_variables`, dazu `set_lead_email_feedback`), Prompt-Änderung über `outreach-campaign` (`export_campaign_blueprint` → `edit_campaign`; das Ersetzen der AI-Variablen löscht alle erzeugten Werte, nur mit ausdrücklicher Zustimmung).
+Der wichtigste Punkt ist die Stichprobe der AI-Opener. Wenn dort mehr als 8 von 40 durchfallen, wird nicht gestartet, sondern der Prompt nachgeschärft: Ablehnungen mit Begründung (`reject_lead_variables`, dazu `set_lead_email_feedback`), Prompt-Änderung über `outreach-campaign` (`update_ai_variable`; erzeugte Werte bleiben stehen, die betroffenen Leads neu zu generieren kostet erneut und nur mit ausdrücklicher Zustimmung).
 
 ## Nachtelefonieren (PFLICHT - ab Tag 1)
 

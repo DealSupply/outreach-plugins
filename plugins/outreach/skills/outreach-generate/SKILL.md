@@ -18,7 +18,7 @@ Dieser Skill orchestriert die vollautomatische AI-Variablen-Generierung für Lea
 
 ## Phase 0: Umgebung und Konfiguration prüfen
 
-Vor jeder Generierung `ping` und `list_campaigns` mit dem Auftrag abgleichen (richtige Kampagne, Variablen und E-Mail-Sequenz vorhanden); bei Unklarheit stoppen. Die vollständige Konfiguration (E-Mail-Schritte, AI-Variablen, Kampagnenkontext) liefert `export_campaign_blueprint(campaign_id)`. Änderungen an Variablen oder Schritten laufen über `edit_campaign` mit dem vollständigen Blueprint (Replace-all, kein Teil-Patch). ACHTUNG: Das Ersetzen der AI-Variablen löscht ALLE bereits generierten Variablenwerte der Kampagne — nie ohne ausdrückliche Zustimmung des Users und nie während eines aktiven Laufs.
+Vor jeder Generierung `ping` und `list_campaigns` mit dem Auftrag abgleichen (richtige Kampagne, Variablen und E-Mail-Sequenz vorhanden); bei Unklarheit stoppen. Die vollständige Konfiguration (E-Mail-Schritte, AI-Variablen, Kampagnenkontext) liefert `export_campaign_blueprint(campaign_id)`. Einen einzelnen Variablen-Prompt ändert `update_ai_variable`; Änderungen an Schritten oder mehreren Variablen laufen über `edit_campaign` mit dem vollständigen Blueprint (Replace-all, kein Teil-Patch). Bereits generierte Werte bleiben dabei erhalten (Abgleich per Name), stammen aber aus dem alten Prompt; eine Neugenerierung nur mit ausdrücklicher Zustimmung des Users und nie während eines aktiven Laufs.
 
 Ansprache und Kampagnenkontext kommen pro Lead aus `get_lead_data` (`emailGeneration.salutation`, `salutationRule`, `campaignContext`); die Ansprache gilt durchgängig für alle Variablen eines Leads. Den fertigen Text einzelner Leads prüfst du nicht über ein Vorschau-Tool, sondern über `get_lead_variables` nach dem Speichern.
 

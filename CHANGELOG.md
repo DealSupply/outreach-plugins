@@ -63,6 +63,12 @@
 - Die Reaktion aus dem Block `SCHLUSS DES OPENERS` ist ein Vorschlag, keine Vorgabe. `verify-agent`: fehlender Schluss hinter Kundenlob ist kein Befund, doppeltes Lob ein Hinweis.
 - `copy-lehre` → Beispiel zur Bewertungszahl schließt mit einer Reaktion statt mit einem Nutzen (Widerspruch zur Server-Regel behoben).
 
+## 2026-10-15 – outreach 0.3.32 (parallel auf main, update_ai_variable)
+
+**outreach** (Kundenfall 15.10.2026: Claude lehnte eine Prompt-Änderung über den MCP ab)
+- `outreach-campaign` → Einen Variablen-Prompt ändert `update_ai_variable` (ListM8-MCP 2.4.0) ohne Export und Voll-Blueprint. Die Warnung, `edit_campaign` lösche alle erzeugten Werte, ist ersetzt: Der Server gleicht Variablen seit August 2026 per Name ab, Werte bleiben. Rückfrage bleibt Pflicht, bevor schon erzeugte Leads neu generiert werden.
+- `outreach-launch`, `outreach-generate`, `outreach-verify`, `outreach-copy` (Copy-Lehre) → nennen `update_ai_variable` für Prompt-Änderungen und korrigieren dieselbe Löschwarnung.
+
 ## 2026-10-14 – datenbeschaffung 0.4.0
 
 **datenbeschaffung** (neuer Weg F: SaaS- und Software-Firmen in DACH, Testreihe vom 14.10.2026)
