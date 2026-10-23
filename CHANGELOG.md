@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.41
+
+**outreach** (gleichauf mit dem ListM8-Server)
+- `outreach-research`, `lead-agent` → Quelle im Bericht ist die Seite oder Plattform (URL, Impressum, Google-Profil, Import), nie ein Arbeitsschritt wie „Vorqualifizierung“ oder „Recherche“. Grund: Im Gegencheck vom 23.10. nannte ein Modell in 10 von 15 Berichten „Vorqualifizierung“ als Quelle.
+
 ## 2026-10-23 – outreach 0.3.40
 
 **outreach** (gleichauf mit dem ListM8-Server: Reaktion als Richtung, Mittelweg)
