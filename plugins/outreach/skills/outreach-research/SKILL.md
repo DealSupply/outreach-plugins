@@ -133,7 +133,8 @@ LEAD: {lead.company} (ID: {lead.id})
    MX-Prüfung der Adresse gibt es nicht und gehört nicht zur Recherche.
    Power-ups (ListM8-MCP ab 4.4.0): Nennt `researchGeneration.powerUps` die Tools `verify_email`
    oder `find_person_email`, prüft bzw. sucht der Sub-Agent die Adresse über
-   `run_power_up(campaign_id, lead_id, tool, input)` nach den Regeln im `lead-agent`: Kandidaten in
+   `run_power_up(campaign_id, lead_id, tool, input)` nach den Regeln im `lead-agent` (schon geprüfte
+   Adressen aus `lead.emailVerdicts` und `lead.powerUpCalls` nicht erneut prüfen): Kandidaten in
    einem `verify_email`-Aufruf prüfen (Anbietergebühr, rund 0,02 Credits je Adresse), `find_person_email`
    erst nach Impressum, Team- und Kontaktseite und nur für einen genannten Entscheider, dessen persönliche
    Adresse auf keiner gelesenen Seite steht. Eine nur gelesene Adresse erst als `bestEmail` speichern,

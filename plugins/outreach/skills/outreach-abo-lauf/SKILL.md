@@ -30,7 +30,10 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
   kostet (meist Hundertstel Credits). Mit eingeschalteten Power-ups bucht also auch der Abo-Lauf
   Credits. Eingeschaltete Tools nutzt der `lead-agent`
   über `run_power_up` (Regeln dort). Ein Power-up nur mit ausdrücklicher Zustimmung des Nutzers per
-  `set_power_up` einschalten, nie von sich aus. Im Bericht: Anzahl der Treffer und die gebuchten Credits
+  `set_power_up` einschalten, nie von sich aus. Jede Stufe hat ihren eigenen Schalter (`stage`:
+  `research`, der Standard, oder `qualification`; ab Werk überall aus, `list_power_ups` zeigt `stages`).
+  Der Quali-Schalter prüft in Server-Läufen nach jedem passenden Urteil die Adressen des Leads; im
+  Abo-Lauf erlaubt er `verify_email`, `find_person_email` nur der Recherche-Schalter. Im Bericht: Anzahl der Treffer und die gebuchten Credits
   (`credits` in den `run_power_up`-Antworten).
 
 ## Ablauf

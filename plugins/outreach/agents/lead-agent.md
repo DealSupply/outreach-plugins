@@ -126,6 +126,10 @@ gelten immer.
 - Power-ups (ListM8-MCP ab 4.4.0, `ping`): Nennt `get_lead_data` unter `researchGeneration.powerUps` die Tools
   `verify_email` oder `find_person_email`, sind sie in der Kampagne eingeschaltet. Aufruf über
   `run_power_up(campaign_id, lead_id, tool, input)`, Eingabe nach `inputSchema`, Leitlinie aus `guidance`.
+  - Erst nachsehen, was schon geprüft ist: `lead.emailVerdicts` und `lead.powerUpCalls` aus `get_lead_data`
+    (auch die Prüfung der Qualifizierung steht dort). Eine Adresse mit `valid` oder `invalid` nicht erneut
+    prüfen, `catch_all` oder `unknown` mit `secondOpinion: true` ebenfalls nicht; ohne zweite Meinung lohnt
+    ein Aufruf. Eine schon gesuchte Person nicht noch einmal suchen.
   - `verify_email`: kostet nur die Anbietergebühr (rund 0,02 Credits je Adresse, schon geprüfte Adressen
     kostenlos). Geprüft werden nur Adressen, die der Server schon kennt (Import, gespeicherte `bestEmail`,
     Kontaktprofil, Treffer von `find_person_email`); eine nur auf einer Seite gelesene Adresse lehnt das Tool
