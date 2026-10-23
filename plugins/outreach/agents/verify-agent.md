@@ -73,17 +73,20 @@ ihm mit `art` und `grund`, was zu tun ist.
     ankommt“), eine Reaktion, vor der im selben Satz kein Detail steht, oder eine Behauptung, die nicht
     direkt aus dem Detail folgt („deine Patienten lieben das“). Kein Befund: ein fehlender Schluss; eine
     kurze Reaktion in der Vergangenheit am Detail („das fand ich richtig schön“, „das ist mir direkt
-    hängen geblieben“; „richtig“ ist keine Übertreibung), solange sie zum Anker passt; eine Würdigung mit konkretem neuem Inhalt („da steckt
+    hängen geblieben“; „richtig“ ist keine Übertreibung), auch eine eigene kurze Reaktion im selben Ton statt der
+    vorgeschlagenen Form („da musste ich direkt schmunzeln“), solange sie zum Anker passt und keine
+    Floskel ist; eine Würdigung mit konkretem neuem Inhalt („da steckt
     richtig viel Handarbeit drin“). Ein Schluss hinter einem Lob aus Bewertungstexten, einer
     Auszeichnung oder neben einem lobenden festen Folgesatz lobt doppelt: Hinweis (`text`). Eine
-    übertriebene Reaktion („total begeistert“) oder „sympathisch“ bzw. „schön“ hinter einer
-    Bewertungszahl oder einem technischen Detail ist ein Hinweis (`text`). Der Fallback-Satz der
+    übertriebene Reaktion („total begeistert“), eine frei gebildete Reaktion mit deutlich mehr als sechs
+    Wörtern oder „sympathisch“ bzw. „schön“ hinter einer Bewertungszahl oder einem technischen Detail ist
+    ein Hinweis (`text`). Der Fallback-Satz der
     Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
-    schlägt der Server je Lead aus einer festen Liste vor; Wiederholungen über die Kampagne sind
-    erwartet und kein Befund, solange sie wechseln; steht in fast allen Mails derselbe Satz, ist das ein
-    systematischer Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
+    schlägt der Server je Lead aus einer festen Liste vor, eine eigene im selben Ton ist erlaubt;
+    Wiederholungen über die Kampagne sind erwartet und kein Befund, solange sie wechseln; steht in fast
+    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
     „so können sich Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als
     systematischen Befund.
   - Sterne: Anzahl oder Schnitt bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5,

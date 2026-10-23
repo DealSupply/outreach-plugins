@@ -139,11 +139,12 @@ gelten immer.
     Pflicht. Rangfolge: 1) Kein Schluss, wenn das Detail schon selbst ein Lob ist (was Kunden in
     Bewertungen schreiben, eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst
     lobt. 2) Sonst, bei einem neutralen Faktum oder einer Bewertungszahl, eine kurze persönliche Reaktion
-    direkt hinter dem benannten Detail, in der Vergangenheit, in einer dieser Formen: „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“
+    direkt hinter dem benannten Detail, in der Vergangenheit, im Ton der erprobten Formen „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“
     („richtig“ ist erlaubt, Übertreibung nicht); sie muss das Detail
-    nicht wiederholen und wechselt von Lead zu Lead. Eine passende Reaktion schlägt der Block
-    `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie selbst und
-    übernimm die bekannten Muster nicht wörtlich. Hinter einer Bewertungszahl steht immer die Reaktion.
+    nicht wiederholen und wechselt von Lead zu Lead. Eine Form schlägt der Block `SCHLUSS DES OPENERS`
+    des System-Prompts vor, als Richtung, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel;
+    passt der Vorschlag nicht (etwa „schön“ hinter einer Bewertungszahl), eine eigene bilden. Fehlt der
+    Block (älterer Server), variiere sie selbst; nie derselbe Satz in allen Mails. Hinter einer Bewertungszahl steht immer die Reaktion.
     3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt, das
     nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,
     Seltenheit als eigene Erfahrung „so eine Nachsorge ist mir noch nicht begegnet“). Nie Gutachten-Ton,

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.40
+
+**outreach** (gleichauf mit dem ListM8-Server: Reaktion als Richtung, Mittelweg)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent` → Die fünf erprobten Reaktionen sind Richtung und Tonlage, keine Pflicht. Der Server schlägt je Lead eine vor; passt eine eigene kurze Reaktion besser zum Detail, wird sie im selben Ton formuliert (etwa „da musste ich direkt schmunzeln“ bei einer historischen Kegelbahn), höchstens etwa sechs Wörter, keine Floskel. Passt der Vorschlag nicht, eine eigene statt einer festen Ausweichform. Nie derselbe Satz in allen Mails.
+- `verify-agent` → Eine eigene, passende Reaktion ist kein Befund; Gutachten-Ton, Übertreibung und Floskeln bleiben Befunde, eine deutlich zu lange freie Reaktion ist ein Hinweis.
+
 ## 2026-10-23 – outreach 0.3.39
 
 **outreach** (gleichauf mit dem ListM8-Server: Reaktionsliste nach Antwortdaten)

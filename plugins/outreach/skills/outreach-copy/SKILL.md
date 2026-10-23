@@ -232,12 +232,13 @@ MUSS:
   loben.
   2) Sonst, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer
   Bewertungszahl, eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
-  Vergangenheit erzählt wie unter Kollegen, in einer der fünf Formen mit den besten Antwortquoten
+  Vergangenheit erzählt wie unter Kollegen, im Ton der fünf Formen mit den besten Antwortquoten
   (Prod-Dump 23.10.2026): „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“; „richtig“ ist erlaubt, Übertreibung („total begeistert“)
   und Floskeln nicht; am Detail und nie ohne es. Sie wechselt von Lead zu Lead, nie steht in allen Mails
-  derselbe Satz: eine passende Reaktion schlägt der Block `SCHLUSS DES OPENERS` im System-Prompt
-  (`emailGeneration.systemPrompt`) je Lead vor; fehlt er (älterer Server), die Reaktion je Lead
-  selbst variieren. Hinter einer Bewertungszahl steht immer die Reaktion.
+  derselbe Satz: Der Block `SCHLUSS DES OPENERS` im System-Prompt (`emailGeneration.systemPrompt`)
+  schlägt je Lead eine Form vor, als Richtung und Tonlage, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel; passt der
+  Vorschlag nicht („schön“ oder „sympathisch“ hinter einer Bewertungszahl oder einem technischen
+  Detail), eine eigene bilden. Fehlt der Block (älterer Server), die Reaktion je Lead selbst variieren. Hinter einer Bewertungszahl steht immer die Reaktion.
   3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt,
   das nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,
   Seltenheit als eigene Erfahrung „so eine Nachsorge ist mir noch nicht begegnet“; ebenso ein
