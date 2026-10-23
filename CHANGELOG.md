@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.38
+
+**outreach** (gleichauf mit dem ListM8-Server: Reaktion vor Würdigung)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-generate`, `outreach-verify` → Neue Rangfolge im Intro-Schluss: 1) kein Schluss, wenn das Detail selbst ein Lob ist (Kundenstimme, Auszeichnung, Bewertungslob) oder der feste Folgesatz lobt; 2) sonst eine kurze, schlichte Reaktion in der Vergangenheit am Detail („das ist mir direkt aufgefallen“, „das fand ich direkt spannend“), je Lead wechselnd; 3) eine Würdigung nur ausnahmsweise mit etwas Neuem und Konkretem, nie im Gutachten-Ton und nie als „das zeigt, wie …“. Grund: In den Blindtests vom 23.10. geriet die Würdigung in 18 von 77 Mails zum Gutachten oder wiederholte das Detail, Reaktionen wurden kaum bemängelt.
+- `verify-agent` → Ein fehlender Schluss ist kein Befund mehr; Folgerung im Gutachten-Ton ist einer, eine gesteigerte Reaktion ein Hinweis. Derselbe Reaktionssatz in fast allen Mails einer Kampagne ist ein systematischer Befund.
+- `copy-lehre` → Beispiele ohne Schluss oder mit Reaktion, Würdigung und Superlativ nur als Ausnahme, Gegenbeispiel mit dem Herrenstudio.
+
 ## 2026-10-23 – outreach 0.3.37
 
 **outreach** (gleichauf mit dem ListM8-Server: Kern-Passung vor dem offenen Vorfilter)

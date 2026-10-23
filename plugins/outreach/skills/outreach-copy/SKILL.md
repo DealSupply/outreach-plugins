@@ -224,44 +224,42 @@ MUSS:
 - Sperrliste der Kampagne: Was in den Research-Vorgaben oder im `intro`-Prompt als branchenübliche
   Leistung gesperrt ist, trägt kein Intro, außer als Lob aus Bewertungstexten.
 - Positiver Schluss: Das Intro besteht aus Einstieg, Anker und Abschluss; der Abschluss ist keine
-  Pflicht, gibt dem festen Folgesatz („Deshalb …“) aber einen Grund, wo das Detail noch kein Lob ist.
-  Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es das Intro allein; ein Schluss ist frei, und einer, der das Lob nur wiederholt, fällt weg.
-  Ein neutrales Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt, Auszeichnung) und eine
-  Bewertungszahl bekommen einen kurzen Halbsatz, in diesen Stufen (hinter einer Bewertungszahl gleich
-  Stufe 2):
-  1) Würdigung am Detail: was genau dieses Detail über den Betrieb zeigt, als Folgerung („das zeigt,
-  dass euch eure Kundinnen auch nach dem Termin wichtig sind“), Anerkennung mit Inhalt, die sagt, wofür
-  („da steckt richtig viel Handarbeit drin“), Seltenheit als eigene Erfahrung, die das Detail selbst
-  nennt („so eine Nachsorge ist mir noch nicht begegnet“),
-  Kundensicht („da weiß man als Kunde, dass man richtig ist“) oder lobender Nutzen, der kurz würdigt,
-  was das Detail über den Betrieb sagt („das spart Zeit bei der Behandlung“);
-  2) sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der Vergangenheit
-  erzählt wie unter Kollegen; sie sagt nur, dass es aufgefallen ist oder gefallen hat („…, das ist mir
-  direkt aufgefallen“, lieber schlicht als „richtig gut gefallen“), muss das Detail nicht wiederholen und steht nie ohne das Detail; eine passende Reaktion schlägt der Block `SCHLUSS DES OPENERS`
-  im System-Prompt (`emailGeneration.systemPrompt`) vor; fehlt er (älterer Server), die
-  Reaktion je Lead selbst variieren und die zwei bekannten Muster („das fand ich eine schöne Idee“,
-  „hat mir gut gefallen“) nicht wörtlich übernehmen;
-  3) ein Superlativ („wirklich beeindruckend“) nur, wenn der Anker wirklich beeindruckt und weder
-  Stufe 1 noch Stufe 2 gut klingt, immer direkt am Detail.
-  Die Würdigung sagt etwas Neues über den Betrieb (was das Detail über seine Haltung zeigt oder was
-  es Kunden bringt), statt das Detail umzuformulieren: „seit 2004 in der Branche, das spricht für
-  viel Branchenerfahrung“ sagt dasselbe zweimal, „macht das Angebot schön konkret“ urteilt wie ein
-  Gutachten. Seltenheit steht als eigene Erfahrung am Detail, nie im allgemeinen „man“
-  („erlebt man nicht oft“) und nie als Vergleich mit anderen Betrieben („hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein Studio an“): Solche
-  Vergleiche belegt keine Quelle. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das Faktum
-  ohne Schluss. Genau eine Schlussform, nie Würdigung und Reaktion hintereinander.
+  Pflicht. Rangfolge (Entscheidung 23.10.2026 nach Blindtests: Würdigungen gerieten in 18 von 77
+  Mails zum Gutachten oder wiederholten das Detail, Reaktionen kaum; bei Kampagne 301 kamen alle
+  Interessenten aus Intros ohne Schluss):
+  1) Kein Schluss, wenn das Detail schon selbst ein Lob ist (was Kunden in Bewertungen schreiben,
+  eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst lobt: nie zweimal
+  loben.
+  2) Sonst, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer
+  Bewertungszahl, eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
+  Vergangenheit erzählt wie unter Kollegen („…, das ist mir direkt aufgefallen“, „…, das fand ich
+  direkt spannend“, „…, das hat mir gefallen“), schlicht und nie gesteigert („richtig gut
+  gefallen“), am Detail und nie ohne es. Sie wechselt von Lead zu Lead, nie steht in allen Mails
+  derselbe Satz: eine passende Reaktion schlägt der Block `SCHLUSS DES OPENERS` im System-Prompt
+  (`emailGeneration.systemPrompt`) je Lead vor; fehlt er (älterer Server), die Reaktion je Lead
+  selbst variieren. Hinter einer Bewertungszahl steht immer die Reaktion.
+  3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt,
+  das nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,
+  Seltenheit als eigene Erfahrung „so eine Nachsorge ist mir noch nicht begegnet“; ebenso ein
+  Superlativ am Detail nur bei wirklich beeindruckendem Anker). Nie Gutachten-Ton und nie eine
+  Folgerung mit „das zeigt, wie …“, „das zeigt, dass …“ oder „das spricht für …“ über Ausrichtung,
+  Erfahrung oder Qualität: „du betreibst ein Herren-Kosmetikstudio mit separatem Eingang, das zeigt,
+  wie klar der Betrieb auf seine Kundschaft ausgerichtet ist“ und „seit 2004 in der Branche, das
+  spricht für viel Branchenerfahrung“ sagen das Detail noch einmal, „macht das Angebot schön
+  konkret“ urteilt wie ein Gutachten. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das
+  Faktum ohne Schluss.
   Verboten: der Mechanik-Nutzen, also ein Schluss, der erklärt, was man dank des Details tun kann
   („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“,
   „so bekommen Kunden schneller einen Termin“), in jeder Satzform: ein Schluss, der ausmalt, was
   Kunden dank des Details tun können oder sich sparen (wer, wann, wofür), auch „das spart
-  Berufstätigen den Urlaubstag für den Reifenwechsel“; Lob ohne Detail („finde ich stark“, „Hammer“);
-  doppeltes Lob; das leere Prüfer-Urteil über die Qualität ihrer Arbeit, das aus dem Detail nicht
-  folgt und auf jeden Betrieb passt („das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur,
-  wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes
-  Arbeiten“, „zeigt, dass die Behandlung ankommt“). Eine Würdigung ist erlaubt, weil sie am konkreten
-  Detail hängt. Nichts erfinden, nur was direkt aus dem Detail folgt. Keine feste Wendung aus
-  Beispielen: jede Würdigung aus dem konkreten Detail bilden, die Reaktion nie aus Beispielen. Lobt
-  schon der erste Satz des festen Mailtexts selbst, entfällt der Schluss: nie zweimal loben. Der
+  Berufstätigen den Urlaubstag für den Reifenwechsel“; Seltenheit im allgemeinen „man“ („erlebt man
+  nicht oft“) und Vergleiche mit anderen Betrieben ohne Beleg („hebt dich von jeder anderen Agentur
+  ab“, „bietet sonst kaum ein Studio an“); Lob ohne Detail („finde ich stark“, „Hammer“); doppeltes
+  Lob; Würdigung und Reaktion hintereinander; das leere Prüfer-Urteil über die Qualität ihrer
+  Arbeit, das aus dem Detail nicht folgt und auf jeden Betrieb passt („das wirkt vertrauenswürdig“,
+  „so einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das
+  schafft man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“). Nichts
+  erfinden, nur was direkt aus dem Detail folgt. Keine feste Wendung aus Beispielen. Der
   Fallback-Satz bleibt ohne Schluss.
 - Ausschließlich positiv, getragen vom konkreten Detail selbst. Verboten sind austauschbare
   Bewertungsfloskeln und Superlative wie „das spricht für sich“, „das sieht man selten“, „das sieht
@@ -381,9 +379,9 @@ Der `intro`-Prompt MUSS enthalten:
   als Erkenntnis statt „du suchst“ > Anzahl und Schnitt > Fallback) samt Sterne-Regel: Zahlen
   nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, gerundet, mit Komma, Import-Werte
   als Quelle, bei Widerspruch der kleinere Wert;
-- den positiven Schluss (Kundenlob trägt sich selbst, ein neutrales Faktum und eine Bewertungszahl
-  bekommen einen) mit den Stufen (Würdigung am Detail, sonst kurze Reaktion direkt hinter dem
-  benannten Detail, Superlativ nur bei wirklich beeindruckendem Anker und am Detail; nie ein
+- den positiven Schluss mit der Rangfolge (kein Schluss, wenn das Detail selbst ein Lob ist,
+  Kundenstimme oder Auszeichnung; sonst eine kurze, schlichte Reaktion am Detail, je Lead wechselnd;
+  eine Würdigung nur ausnahmsweise mit etwas Neuem und Konkretem, nie „das zeigt, wie …“; nie ein
   Mechanik-Nutzen, nie ein leeres Prüfer-Urteil) und Leitplanken (nichts erfinden, keine Floskel,
   keine feste Wendung), ohne ausformulierte Beispiel-Schlüsse;
 - den Einstiegswechsel nach der letzten Ziffer der Lead-ID, mit Quelle im Einstieg bei

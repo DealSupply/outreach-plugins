@@ -135,34 +135,29 @@ gelten immer.
   - Sterne: Anzahl und Schnitt nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, Zahl
     gerundet („über 200“), Schnitt mit Komma („4,8“), bei widersprüchlichen Quellen der kleinere Wert.
     Unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen: nächster Anker bzw. Fallback.
-  - Positiver Schluss: Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es
-    das Intro allein; einen Schluss, der das Lob nur wiederholt, lässt du weg. Ein neutrales Faktum und eine
-    Bewertungszahl bekommen einen kurzen Halbsatz aus diesem Detail, in diesen Stufen: 1) Würdigung am
-    Detail, also was genau dieses Detail über den Betrieb zeigt (Folgerung „das zeigt, dass euch eure
-    Kundinnen auch nach dem Termin wichtig sind“, Anerkennung mit Inhalt „da steckt richtig viel Handarbeit
-    drin“, Seltenheit als eigene Erfahrung mit dem Detail „so eine Nachsorge ist mir noch nicht begegnet“, Kundensicht „da weiß man als Kunde, dass
-    man richtig ist“, lobender Nutzen, der kurz würdigt, was das Detail über den Betrieb sagt, „das spart Zeit bei der
-    Behandlung“); hinter einer Bewertungszahl
-    gleich Stufe 2. 2) Sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
-    Vergangenheit, nie allein, lieber schlicht („das ist mir direkt aufgefallen“) als gesteigert; sie
-    muss das Detail nicht wiederholen. 3) Ein Superlativ („wirklich beeindruckend“) nur, wenn der Anker
-    wirklich beeindruckt und 1 und 2 nicht gut klingen, immer am Detail. Die Würdigung sagt etwas Neues
-    über den Betrieb, statt das Detail umzuformulieren („seit 2004 in der Branche, das spricht für viel
-    Branchenerfahrung“ und „macht das Angebot schön konkret“ sagen nichts); Seltenheit nur als eigene
-    Erfahrung am Detail, nie als Vergleich mit anderen Betrieben („hebt dich von jeder anderen Agentur
-    ab“, „bietet sonst kaum ein Studio an“). Im Zweifel die Reaktion, klingt auch sie nicht, kein
-    Schluss; nie Würdigung und Reaktion hintereinander. Nie ein Mechanik-Nutzen, der
-    erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“,
-    „so kann man unverbindlich nachfragen“). Das gilt in jeder Satzform: Ein Schluss, der ausmalt, was Kunden dank des Details tun können oder sich sparen (wer, wann, wofür), ist Mechanik-Nutzen, auch als „das spart Berufstätigen den Urlaubstag für den Reifenwechsel“. Seltenheit nie im allgemeinen „man“
-    („erlebt man nicht oft“). Eine passende Reaktion schlägt der Block
-    `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie
-    selbst und übernimm die zwei bekannten Muster („das fand ich eine schöne Idee“, „hat mir gut
-    gefallen“) nicht wörtlich. Nie ein leeres Prüfer-Urteil
-    über die Qualität der Arbeit, das aus dem Detail nicht folgt: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn
-    die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“,
-    „zeigt, dass die Behandlung ankommt“. Nichts erfinden, keine Formel („finde ich stark“, „hat man
-    nicht alle Tage“), kein Superlativ ohne Detail, keine Wendung aus Beispielen. Lobt schon der erste Satz des festen
-    Mailtexts selbst, entfällt der Schluss. Der Fallback-Satz bleibt wörtlich und ohne Schluss.
+  - Positiver Schluss: Das Intro besteht aus Einstieg, Anker und Abschluss; der Abschluss ist keine
+    Pflicht. Rangfolge: 1) Kein Schluss, wenn das Detail schon selbst ein Lob ist (was Kunden in
+    Bewertungen schreiben, eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst
+    lobt. 2) Sonst, bei einem neutralen Faktum oder einer Bewertungszahl, eine kurze persönliche Reaktion
+    direkt hinter dem benannten Detail, in der Vergangenheit, schlicht und nie gesteigert („das ist mir
+    direkt aufgefallen“, „das fand ich direkt spannend“, „das hat mir gefallen“); sie muss das Detail
+    nicht wiederholen und wechselt von Lead zu Lead. Eine passende Reaktion schlägt der Block
+    `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie selbst und
+    übernimm die bekannten Muster nicht wörtlich. Hinter einer Bewertungszahl steht immer die Reaktion.
+    3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt, das
+    nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,
+    Seltenheit als eigene Erfahrung „so eine Nachsorge ist mir noch nicht begegnet“). Nie Gutachten-Ton,
+    nie „das zeigt, wie …“, „das zeigt, dass …“ oder „das spricht für …“ über Ausrichtung, Erfahrung oder
+    Qualität („ein Herren-Kosmetikstudio mit separatem Eingang, das zeigt, wie klar der Betrieb auf seine
+    Kundschaft ausgerichtet ist“, „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“).
+    Im Zweifel die Reaktion, klingt auch sie nicht, kein Schluss; nie Würdigung und Reaktion
+    hintereinander. Verboten: Mechanik-Nutzen in jeder Satzform (ein Schluss, der erklärt oder ausmalt,
+    was Kunden dank des Details tun können oder sich sparen: „so können sich Interessierte vorab ein Bild
+    machen“, „das spart Berufstätigen den Urlaubstag für den Reifenwechsel“); Seltenheit im allgemeinen
+    „man“ und Vergleiche mit anderen Betrieben ohne Beleg („bietet sonst kaum ein Studio an“); das leere
+    Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles
+    richtig“); Lob ohne Detail („finde ich stark“, „hat man nicht alle Tage“); doppeltes Lob. Nichts
+    erfinden, keine Wendung aus Beispielen. Der Fallback-Satz bleibt wörtlich und ohne Schluss.
   - Einstieg: wie im Block `EINSTIEG DES OPENERS` des System-Prompts; fehlt er, nach der letzten Ziffer deiner Lead-ID: 0-2 „mir ist aufgefallen, dass …“, 3-5 „ich hab
     mir … angeschaut“, 6-7 „beim Stöbern auf deiner Website …“, 8-9 direkt mit dem Detail. Ein
     Bewertungsanker nennt immer die Quelle im Einstieg („ich hab mir deine Bewertungen angeschaut,
