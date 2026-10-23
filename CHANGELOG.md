@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.36
+
+**outreach** (gleichauf mit dem ListM8-Server: Recherche-Bericht in Kundensprache)
+- `outreach-research`, `lead-agent` → Der Bericht enthält nur Ergebnisse über die Firma in Alltagssprache. Regeln aus `anchorRules`, `campaignFrame` und `researchTier` stehen weder mit Namen noch mit Inhalt darin: keine Schwellen, keine Abwägung, ob ein Anker trägt, keine Abhakliste der Ausschlussgründe (stattdessen die Tatsache über den Betrieb), kein Seitenbudget, keine Recherche-Stufe, keine Herkunft „aus der Vorqualifizierung“, kein Prüfstatus von Adressen, keine Suchvorlagen. Grund: Im Blindtest mit fünf Modellen stand Arbeitssprache in 49 von 80 Berichten.
+
 ## 2026-10-23 – outreach 0.3.35
 
 **outreach** (gleichauf mit dem ListM8-Server, Beispiele folgen den eigenen Schluss-Regeln)
