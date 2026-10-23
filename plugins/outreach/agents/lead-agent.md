@@ -139,8 +139,8 @@ gelten immer.
     Pflicht. Rangfolge: 1) Kein Schluss, wenn das Detail schon selbst ein Lob ist (was Kunden in
     Bewertungen schreiben, eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst
     lobt. 2) Sonst, bei einem neutralen Faktum oder einer Bewertungszahl, eine kurze persönliche Reaktion
-    direkt hinter dem benannten Detail, in der Vergangenheit, schlicht und nie gesteigert („das ist mir
-    direkt aufgefallen“, „das fand ich direkt spannend“, „das hat mir gefallen“); sie muss das Detail
+    direkt hinter dem benannten Detail, in der Vergangenheit, in einer dieser Formen: „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“
+    („richtig“ ist erlaubt, Übertreibung nicht); sie muss das Detail
     nicht wiederholen und wechselt von Lead zu Lead. Eine passende Reaktion schlägt der Block
     `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie selbst und
     übernimm die bekannten Muster nicht wörtlich. Hinter einer Bewertungszahl steht immer die Reaktion.

@@ -56,7 +56,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     (Standardleistung, auch mit angehängtem Nutzen, oder Leistungsaufzählung).
   - Sperrliste: Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten.
   - Positiver Schluss (Rangfolge: kein Schluss, wenn das Detail selbst ein Lob ist oder der feste
-    Folgesatz lobt; sonst eine kurze, schlichte Reaktion am Detail; eine Würdigung nur ausnahmsweise mit
+    Folgesatz lobt; sonst eine kurze Reaktion am Detail; eine Würdigung nur ausnahmsweise mit
     etwas Neuem und Konkretem). Verstoß ist ein Schluss, der eine Floskel oder ein Superlativ ohne Detail
     ist („finde ich stark“, „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“,
     „das spricht für sich“), eine Würdigung im Gutachten-Ton oder als Folgerung über Ausrichtung,
@@ -72,12 +72,12 @@ ihm mit `art` und `grund`, was zu tun ist.
     hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „zeigt, dass die Behandlung
     ankommt“), eine Reaktion, vor der im selben Satz kein Detail steht, oder eine Behauptung, die nicht
     direkt aus dem Detail folgt („deine Patienten lieben das“). Kein Befund: ein fehlender Schluss; eine
-    kurze Reaktion in der Vergangenheit am Detail („das ist mir direkt aufgefallen“, „das fand ich direkt
-    spannend“), solange sie zum Anker passt; eine Würdigung mit konkretem neuem Inhalt („da steckt
+    kurze Reaktion in der Vergangenheit am Detail („das fand ich richtig schön“, „das ist mir direkt
+    hängen geblieben“; „richtig“ ist keine Übertreibung), solange sie zum Anker passt; eine Würdigung mit konkretem neuem Inhalt („da steckt
     richtig viel Handarbeit drin“). Ein Schluss hinter einem Lob aus Bewertungstexten, einer
     Auszeichnung oder neben einem lobenden festen Folgesatz lobt doppelt: Hinweis (`text`). Eine
-    gesteigerte Reaktion („richtig gut gefallen“), „Idee“ oder „Ansatz“ hinter einer Bewertungszahl oder
-    „ins Auge gefallen“ nach „mir ist aufgefallen“ ist ein Hinweis (`text`). Der Fallback-Satz der
+    übertriebene Reaktion („total begeistert“) oder „sympathisch“ bzw. „schön“ hinter einer
+    Bewertungszahl oder einem technischen Detail ist ein Hinweis (`text`). Der Fallback-Satz der
     Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion

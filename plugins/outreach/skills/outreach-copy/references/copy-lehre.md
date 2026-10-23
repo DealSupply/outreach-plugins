@@ -92,7 +92,7 @@ Gegensatzpaare (die Spalte „besteht“ zeigt den Fund, nicht den fertigen Satz
 Das Intro besteht aus Einstieg, Anker und Abschluss; der Abschluss ist keine Pflicht. Rangfolge (Entscheidung 23.10.2026 nach Blindtests: Würdigungen gerieten in 18 von 77 Mails zum Gutachten oder wiederholten das Detail, Reaktionen wurden kaum bemängelt; bei Kampagne 301 kamen alle Interessenten aus Intros ohne Schluss):
 
 1. **Kein Schluss**, wenn das Detail schon selbst ein Lob ist (was Kunden in Bewertungen schreiben, eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst lobt: nie zweimal loben.
-2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer Bewertungszahl, in der Vergangenheit erzählt wie unter Kollegen: „…, das ist mir direkt aufgefallen.“, „…, das fand ich direkt spannend.“, „…, das hat mir gefallen.“ Schlicht, nie gesteigert („richtig gut gefallen“). Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein und wechselt von Lead zu Lead: nie derselbe Satz in allen Mails einer Kampagne.
+2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer Bewertungszahl, in der Vergangenheit erzählt wie unter Kollegen. Die Formen stammen aus den Antwortdaten (Prod-Dump 23.10.2026, 725 kontaktierte Intros, Antwortquote 13,0 bis 6,1 %): „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“. „richtig“ ist erlaubt, Übertreibung („total begeistert“) und Floskeln nicht. Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein und wechselt von Lead zu Lead: nie derselbe Satz in allen Mails einer Kampagne.
 3. **Eine Würdigung nur ausnahmsweise**, wenn sie etwas Neues und Konkretes über den Betrieb sagt, das nicht schon im Detail steht: Anerkennung mit Inhalt („da steckt richtig viel Handarbeit drin“), Seltenheit als eigene Erfahrung („so eine Nachsorge ist mir noch nicht begegnet“), ein Superlativ am Detail nur bei wirklich beeindruckendem Anker. Nie Gutachten-Ton, nie „das zeigt, wie …“, „das zeigt, dass …“ oder „das spricht für …“ über Ausrichtung, Erfahrung oder Qualität. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das Faktum ohne Schluss. Nie Würdigung und Reaktion hintereinander.
 
 Verboten:
@@ -107,7 +107,7 @@ Leitplanken:
 
 - nichts erfinden, nur was direkt aus dem Detail folgt (nie „deine Patienten lieben das“, nie „alle positiv“);
 - keine inhaltsleere Formel, keine Seltenheit und kein Superlativ ohne das Detail („finde ich stark/spannend/bemerkenswert“, „Hammer“, „beeindruckend“, „das sieht man selten“, „das sieht man nicht immer“, „hat man nicht alle Tage“, „das spricht für sich“);
-- Abgrenzung: „das fand ich eine schöne Idee“ ist eine Reaktion auf ein benanntes Detail und erlaubt, „so eine Nachsorge ist mir noch nicht begegnet“ eine Würdigung mit dem Detail; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
+- Abgrenzung: „das fand ich richtig schön“ ist eine Reaktion auf ein benanntes Detail und erlaubt, „so eine Nachsorge ist mir noch nicht begegnet“ eine Würdigung mit dem Detail; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
 - keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; die Reaktion schlägt der Server je Lead aus einer festen Liste vor, Wiederholungen über eine Kampagne sind deshalb erwartet, derselbe Satz in fast allen Mails nicht; gleich lautende Würdigungen über mehrere Leads und jeder Mechanik-Nutzen (etwa „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen) sind ein systematischer Befund;
 - eine Bewertungszahl bekommt immer einen Schluss, und zwar eine Reaktion; insgesamt weiter höchstens 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich);
 - der Fallback-Satz der Kampagne bleibt wörtlich, ohne angehängten Schluss.
@@ -116,10 +116,10 @@ Leitplanken:
 
 | Anker | Opener |
 |:------|:-------|
-| Eigenes Verfahren (Handwerk), Reaktion | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang, das fand ich direkt spannend.“ |
+| Eigenes Verfahren (Handwerk), Reaktion | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang, das fand ich richtig schön.“ |
 | Ungewöhnliche Zeit (Dental), Reaktion | „mir ist aufgefallen, dass deine Praxis donnerstags bis 20 Uhr Termine hat, das hat mich angesprochen.“ |
 | Eigenes Konzept (Dental), Würdigung als Ausnahme: Anerkennung mit Inhalt | „beim Stöbern auf deiner Website hab ich ‚Krone To Go‘ entdeckt, die Krone am selben Termin. Respekt, dass du das an einem Tag hinbekommst.“ |
-| Seltene Spezialisierung (Handwerk), Reaktion | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, das ist mir direkt aufgefallen.“ |
+| Seltene Spezialisierung (Handwerk), Reaktion | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, das ist mir direkt hängen geblieben.“ |
 | Auszeichnung (Handwerk), ohne Schluss | „ich hab mir deine Website angeschaut und den Handwerkspreis für deine Fachwerksanierung entdeckt.“ |
 | Lob aus Bewertungen (Dental), ohne Schluss | „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ |
 | Eigenname (Café), Reaktion | „mir ist aufgefallen, dass jede Torte bei dir nach einem Stammgast benannt ist, über die Torte ‚Herr Albers‘ hab ich mich beim Lesen gefreut.“ |
@@ -127,9 +127,9 @@ Leitplanken:
 
 Gegenbeispiel gestapelte Lobpunkte (42 Wörter): „ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass du ihm eine moderne, übersichtliche Website gebaut hast, die genau auf seine Bedürfnisse abgestimmt war, und dass sich seine Sichtbarkeit bei Google spürbar verbessert hat, dazu schnelle, zuverlässige Arbeit.“ Besser ein Detail: „ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass nach der neuen Website spürbar mehr Anfragen über Google kamen.“
 
-Gegenbeispiel Mechanik-Nutzen: „mir ist aufgefallen, dass auf deiner Website alle Preise offen stehen, so können sich Interessierte vorab ein Bild machen.“ Besser mit Reaktion: „…, das fand ich sympathisch.“
+Gegenbeispiel Mechanik-Nutzen: „mir ist aufgefallen, dass auf deiner Website alle Preise offen stehen, so können sich Interessierte vorab ein Bild machen.“ Besser mit Reaktion: „…, das fand ich richtig sympathisch.“
 
-Gegenbeispiel Folgerung im Gutachten-Ton: „du betreibst ein Herren-Kosmetikstudio mit separatem Eingang, das zeigt, wie klar der Betrieb auf seine Kundschaft ausgerichtet ist.“ Besser: „…, das fand ich direkt spannend.“ oder ohne Schluss.
+Gegenbeispiel Folgerung im Gutachten-Ton: „du betreibst ein Herren-Kosmetikstudio mit separatem Eingang, das zeigt, wie klar der Betrieb auf seine Kundschaft ausgerichtet ist.“ Besser ohne Schluss oder mit einer Reaktion: „…, das hat mich angesprochen.“
 
 ### Bewertungen: Rangfolge der Anker
 
@@ -200,7 +200,7 @@ Die Rangfolge aus „Bewertungen: Rangfolge der Anker“ im Detail. Jeder Angle 
 
 | Vorlage | Echtes Beispiel |
 |:--------|:---------------|
-| „ich hab mir deine Bewertungen angeschaut: [über N] Rezensionen mit einem Schnitt von [X,Y]. [Kurzer positiver Schluss]" | „ich hab mir deine Bewertungen angeschaut: über 200 Rezensionen mit einem Schnitt von 4,8, das ist mir direkt aufgefallen." |
+| „ich hab mir deine Bewertungen angeschaut: [über N] Rezensionen mit einem Schnitt von [X,Y]. [Kurzer positiver Schluss]" | „ich hab mir deine Bewertungen angeschaut: über 200 Rezensionen mit einem Schnitt von 4,8, das hat mir gut gefallen." |
 
 ### Angle 4: Fallback der Kampagne (Branchen-/Regional-Bezug)
 
@@ -307,9 +307,9 @@ POSITIVER SCHLUSS: Kein Schluss, wenn das Detail schon selbst ein Lob ist
 (ein Lob aus Bewertungstexten, eine Auszeichnung) oder der feste Folgesatz
 lobt. Sonst, nach einem neutralen Faktum oder einer Bewertungszahl, eine
 kurze persönliche Reaktion direkt hinter dem benannten Detail (muss es
-nicht wiederholen), in der Vergangenheit erzählt, schlicht und nie
-gesteigert (Muster: "das ist mir direkt aufgefallen", "das fand ich
-direkt spannend", "das hat mir gefallen"; nie allein, nie als feste
+nicht wiederholen), in der Vergangenheit erzählt, kurz und ohne
+Übertreibung (Muster: "das fand ich richtig schön", "das hat mir gut
+gefallen", "das hat mich angesprochen"; nie allein, nie als feste
 Wendung, von Lead zu Lead wechselnd). Eine Würdigung nur ausnahmsweise,
 wenn sie etwas Neues und Konkretes über den Betrieb sagt, das nicht schon
 im Detail steht; nie im Gutachten-Ton und nie als "das zeigt, wie ..."

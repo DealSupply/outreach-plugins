@@ -232,9 +232,9 @@ MUSS:
   loben.
   2) Sonst, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer
   Bewertungszahl, eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
-  Vergangenheit erzählt wie unter Kollegen („…, das ist mir direkt aufgefallen“, „…, das fand ich
-  direkt spannend“, „…, das hat mir gefallen“), schlicht und nie gesteigert („richtig gut
-  gefallen“), am Detail und nie ohne es. Sie wechselt von Lead zu Lead, nie steht in allen Mails
+  Vergangenheit erzählt wie unter Kollegen, in einer der fünf Formen mit den besten Antwortquoten
+  (Prod-Dump 23.10.2026): „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“; „richtig“ ist erlaubt, Übertreibung („total begeistert“)
+  und Floskeln nicht; am Detail und nie ohne es. Sie wechselt von Lead zu Lead, nie steht in allen Mails
   derselbe Satz: eine passende Reaktion schlägt der Block `SCHLUSS DES OPENERS` im System-Prompt
   (`emailGeneration.systemPrompt`) je Lead vor; fehlt er (älterer Server), die Reaktion je Lead
   selbst variieren. Hinter einer Bewertungszahl steht immer die Reaktion.
@@ -380,7 +380,7 @@ Der `intro`-Prompt MUSS enthalten:
   nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, gerundet, mit Komma, Import-Werte
   als Quelle, bei Widerspruch der kleinere Wert;
 - den positiven Schluss mit der Rangfolge (kein Schluss, wenn das Detail selbst ein Lob ist,
-  Kundenstimme oder Auszeichnung; sonst eine kurze, schlichte Reaktion am Detail, je Lead wechselnd;
+  Kundenstimme oder Auszeichnung; sonst eine kurze Reaktion am Detail, je Lead wechselnd;
   eine Würdigung nur ausnahmsweise mit etwas Neuem und Konkretem, nie „das zeigt, wie …“; nie ein
   Mechanik-Nutzen, nie ein leeres Prüfer-Urteil) und Leitplanken (nichts erfinden, keine Floskel,
   keine feste Wendung), ohne ausformulierte Beispiel-Schlüsse;

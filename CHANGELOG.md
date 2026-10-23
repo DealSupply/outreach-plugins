@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.39
+
+**outreach** (gleichauf mit dem ListM8-Server: Reaktionsliste nach Antwortdaten)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent` → Die Reaktion im Intro-Schluss nutzt die fünf Formen mit den besten Antwortquoten im Prod-Dump vom 23.10.2026 (725 kontaktierte Intros): „das fand ich richtig schön“ (13,0 %), „das ist mir direkt hängen geblieben“ (9,6 %), „das hat mir gut gefallen“ (8,9 %), „das fand ich richtig sympathisch“ (8,2 %), „das hat mich angesprochen“ (6,1 %). „schöne Idee“ und „schöner Ansatz“ sind raus, ebenso die ungetesteten Formen. „richtig“ in einer Reaktion ist erlaubt, Übertreibung und Floskeln nicht.
+- `verify-agent` → Hinweis bei übertriebener Reaktion oder „sympathisch“/„schön“ hinter einer Bewertungszahl, nicht mehr bei „richtig“.
+
 ## 2026-10-23 – outreach 0.3.38
 
 **outreach** (gleichauf mit dem ListM8-Server: Reaktion vor Würdigung)
