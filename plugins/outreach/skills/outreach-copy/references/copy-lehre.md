@@ -95,10 +95,14 @@ Das Intro besteht aus Einstieg, Anker und Abschluss. Der Abschluss ist keine Pfl
 2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, in der Vergangenheit erzählt wie unter Kollegen: „…, das ist mir direkt aufgefallen.“ (lieber schlicht als „richtig gut gefallen“). Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein, und wird je Lead aus dem Detail gebildet, nie als feste Wendung.
 3. **Ein Superlativ** („wirklich beeindruckend“) nur, wenn der Anker wirklich beeindruckt und weder Stufe 1 noch Stufe 2 gut klingt, und immer direkt am Detail.
 
+Die Würdigung sagt etwas Neues über den Betrieb (was das Detail über seine Haltung zeigt oder was es Kunden bringt), statt das Detail umzuformulieren. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das Faktum ohne Schluss. Genau eine Schlussform, nie Würdigung und Reaktion hintereinander (Blindvergleich 23.10.2026).
+
 Verboten:
 
 - **Mechanik-Nutzen**: ein Schluss, der erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“). Er beschreibt eine Funktion, statt den Betrieb zu würdigen (Prüfung 23.10.2026: in etwa einem Drittel der Intros).
 - **Lob ohne Detail** („finde ich stark“, „Hammer“) und **doppeltes Lob**.
+- **Detail umformuliert oder Gutachten-Urteil**: „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“, „eigenes CMS, das spricht für viel eigene Entwicklung“, „macht das Angebot schön konkret“, „ein bemerkenswert breiter Zuschnitt“.
+- **Vergleich ohne Beleg**: „hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein Studio an“, „weist nicht jede Agentur der Region vor“. Seltenheit steht nur als eigene Erfahrung am Detail („so eine Nachsorge erlebt man nicht oft“).
 - **Leeres Prüfer-Urteil** über die Qualität ihrer Arbeit, das aus dem Detail nicht folgt und auf jeden Betrieb passt; es klingt wie die Begutachtung durch einen Fremden: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“ (Messrunde 08.10.2026: ein Drittel der damaligen Schlüsse). Eine Würdigung ist dagegen erlaubt, weil sie am konkreten Detail hängt und nichts darüber hinaus behauptet.
 
 Leitplanken:
@@ -121,6 +125,8 @@ Leitplanken:
 | Lob aus Bewertungen (Dental), ohne Schluss | „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ |
 | Eigenname (Café), Reaktion | „mir ist aufgefallen, dass jede Torte bei dir nach einem Stammgast benannt ist, über die Torte ‚Herr Albers‘ hab ich mich beim Lesen gefreut.“ |
 | Projekt (Orgelbau), Superlativ nur bei wirklich beeindruckendem Anker | „ich hab gesehen, dass ihr die Orgel der Stadtkirche von Grund auf restauriert habt, das ist wirklich beeindruckend.“ |
+
+Gegenbeispiel gestapelte Lobpunkte (42 Wörter): „ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass du ihm eine moderne, übersichtliche Website gebaut hast, die genau auf seine Bedürfnisse abgestimmt war, und dass sich seine Sichtbarkeit bei Google spürbar verbessert hat, dazu schnelle, zuverlässige Arbeit.“ Besser ein Detail: „ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass nach der neuen Website spürbar mehr Anfragen über Google kamen.“
 
 Gegenbeispiel Mechanik-Nutzen: „mir ist aufgefallen, dass auf deiner Website alle Preise offen stehen, so können sich Interessierte vorab ein Bild machen.“ Besser mit Würdigung: „…, das zeigt, dass bei dir nichts versteckt wird.“
 
@@ -227,7 +233,7 @@ Einstiege: keiner ist Standard. Die letzte Ziffer der Lead-ID entscheidet, ein B
 - Ein zweiter Satz ist konkret und wiederholt oder nimmt nicht vorweg, was der feste Text danach sagt. Beginnt der feste Text mit „Das hat mich neugierig gemacht.", darf kein Intro-Satz mit dieser Aussage davor stehen
 - Zuschreibung stimmt: Der angeschriebenen Person nie etwas zuschreiben, das einer anderen gehört (etwa den Podcast der Inhaberin in einer Mail an eine Mitarbeiterin). Die Person beim Namen nennen oder einen Anker wählen, der zur angeschriebenen Person gehört
 - Konkreter, verifizierbarer Bezug, den man nur kennt, wenn man wirklich auf Website/Shop/Bewertungen war
-- Maximal 2 Sätze, etwa 30 Wörter
+- Maximal 2 Sätze, zusammen höchstens 30 Wörter, EIN Detail statt gestapelter Lobpunkte
 - Beginnt mit Kleinbuchstaben (folgt direkt auf „Hallo …,"); nur der erste Buchstabe ist klein, jeder weitere Satz beginnt groß. Substantive und Namen bleiben auch am Anfang groß („Kunden loben …“, nie „kunden loben …“)
 - Inhaltlich über den EMPFÄNGER schreiben, nie über den Absender; Einstiegsrahmen wie „ich hab mir … angeschaut“ oder „mir ist aufgefallen“ sind erlaubt und keine Selbstvorstellung
 - Locker und authentisch, Ton wie eine kurze Nachricht an einen Bekannten
@@ -258,7 +264,7 @@ festen Satz fortgesetzt, der mit "[FESTER FOLGESATZ, z. B. Deswegen war
 ich so frei ...]" beginnt.
 
 Aufgabe:
-Schreibe 1-2 Sätze, insgesamt etwa 30 Wörter: eine Beobachtung, die diesen
+Schreibe 1-2 Sätze, zusammen höchstens 30 Wörter: EINE Beobachtung, die diesen
 Betrieb von anderen seiner Branche abhebt, und danach einen kurzen
 positiven Halbsatz: eine Würdigung am Detail, sonst eine kurze Reaktion
 am Detail. Der Opener muss
@@ -307,7 +313,11 @@ Bewertungszahl gleich die Reaktion. Sonst eine kurze persönliche Reaktion
 direkt hinter dem benannten Detail (muss es nicht wiederholen), in der
 Vergangenheit erzählt (Muster: "das fand ich eine schöne Idee", "hat mir
 gut gefallen"; nie allein und nie als feste Wendung). Ein Superlativ nur,
-wenn der Anker wirklich beeindruckt, und immer am Detail. Nie ein
+wenn der Anker wirklich beeindruckt, und immer am Detail. Die Würdigung
+sagt etwas Neues über den Betrieb, statt das Detail umzuformulieren;
+Seltenheit nie als Vergleich mit anderen Betrieben ("bietet sonst kaum
+ein Studio an"); im Zweifel die Reaktion oder gar kein Schluss, nie zwei
+Schlussformen hintereinander. Nie ein
 Mechanik-Nutzen, der erklärt, was man dank des Details tun kann ("so
 können sich Interessierte vorab ein Bild machen", "so kann man
 unverbindlich nachfragen"). Nie ein leeres Prüfer-Urteil über die
@@ -334,7 +344,7 @@ REGELN:
 - KEINE M-Striche und keine Gedankenstriche als Trenner, auch kein
   Bindestrich mit Leerzeichen; Bindestriche nur innerhalb von Wörtern;
   Komma statt Strich
-- Max. 2 Sätze, etwa 30 Wörter
+- Max. 2 Sätze, zusammen höchstens 30 Wörter, EIN Detail
 - Locker und authentisch, NICHT werblich
 - Beginne mit Kleinbuchstabe (wird nach "Hallo ...," eingefügt); nur der
   erste Buchstabe ist klein, jeder weitere Satz beginnt groß; Substantive
@@ -386,12 +396,12 @@ Vor dem Export immer mindestens 10 Leads im Review (`outreach-verify`, `get_lead
 
 | Prüfung | Verwerfen wenn |
 |:--------|:---------------|
-| Länge | Mehr als 2 Sätze oder deutlich über 30 Wörter |
+| Länge | Mehr als 2 Sätze, über 30 Wörter oder mehrere Lobpunkte, Projekte oder Titel aneinandergereiht |
 | Groß-/Kleinschreibung | Beginnt mit Großbuchstaben (passt dann nicht hinter die Anrede) |
 | Tonalität | Enthält Kritik, Mangel, Konjunktiv-Wunsch oder einen Ratschlag |
 | Austauschtest | Würde genauso auf zehn andere Betriebe derselben Branche in der Stadt passen, nennt eine Standardleistung (auch mit Nutzen), oder das Lob besteht nur aus einem Adjektiv ohne Inhalt |
 | Sperrliste | Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten |
-| Positiver Schluss | Fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, lobt dasselbe doppelt, ist eine Floskel oder ein Superlativ, ist ein Mechanik-Nutzen („so können sich Interessierte vorab ein Bild machen“), ist ein leeres Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion oder Würdigung, vor der kein Detail steht, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Gleich lautende Schlüsse über mehrere Leads sind ein systematischer Befund; wiederholte Reaktionen aus der Server-Liste sind es nicht |
+| Positiver Schluss | Fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, lobt dasselbe doppelt, ist eine Floskel oder ein Superlativ, ist ein Mechanik-Nutzen („so können sich Interessierte vorab ein Bild machen“), wiederholt nur das Detail oder urteilt wie ein Gutachten („macht das Angebot schön konkret“), vergleicht ohne Beleg mit anderen Betrieben („hebt dich von jeder anderen Agentur ab“), ist ein leeres Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ist eine Reaktion oder Würdigung, vor der kein Detail steht, behauptet etwas, das nicht direkt aus dem Detail folgt, oder hängt am Fallback-Satz. Gleich lautende Schlüsse über mehrere Leads sind ein systematischer Befund; wiederholte Reaktionen aus der Server-Liste sind es nicht |
 | Bewertungsanker | Zahlen bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5, ungerundete Zahl, Schnitt mit Punkt, der größere von zwei widersprüchlichen Werten, nur Zahlen, obwohl ein Lob aus Bewertungstexten belegt ist; „mehrere“/„immer wieder“ ohne mindestens 2 Bewertungen; Einstieg ohne Quelle |
 | Zuschreibung | Schreibt der angesprochenen Person etwas zu, das einer anderen gehört |
 | Wahrheit | Enthält Zahl, Name oder Fakt, der nicht aus dem Research kommt |

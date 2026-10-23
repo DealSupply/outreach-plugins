@@ -57,7 +57,11 @@ ihm mit `art` und `grund`, was zu tun ist.
   - Sperrliste: Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten.
   - Positiver Schluss: fehlt hinter einem neutralen Faktum oder einer Bewertungszahl, ist leer oder eine Floskel bzw. ein Superlativ („finde ich stark“,
     „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“, „das spricht für
-    sich“; Seltenheit und Superlativ sind nur ohne das Detail ein Befund), ist ein Mechanik-Nutzen, also ein Schluss, der
+    sich“; Seltenheit und Superlativ sind nur ohne das Detail ein Befund), wiederholt nur das Detail in
+    anderen Worten oder urteilt wie ein Gutachten („seit 2004 in der Branche, das spricht für viel
+    Branchenerfahrung“, „macht das Angebot schön konkret“, „ein bemerkenswert breiter Zuschnitt“),
+    vergleicht ohne Beleg mit anderen Betrieben („hebt dich von jeder anderen Agentur ab“, „bietet sonst
+    kaum ein Studio an“), stellt Würdigung und Reaktion hintereinander, ist ein Mechanik-Nutzen, also ein Schluss, der
     erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“,
     „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“), ist ein leeres
     Prüfer-Urteil über die Qualität der Arbeit, das aus dem Detail nicht folgt („das wirkt vertrauenswürdig“, „so
@@ -86,7 +90,8 @@ ihm mit `art` und `grund`, was zu tun ist.
     ungerundete Zahl, Schnitt ohne Komma, der größere von zwei widersprüchlichen Werten, oder nur Zahlen, obwohl die Recherche ein Lob aus
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
-- **Copy:** Intro höchstens zwei Sätze, etwa 30 Wörter, beginnt klein, nur positiv, keine
+- **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter, EIN Detail (gestapelte Lobpunkte,
+  Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine
   internen Scores. Der feste Folgesatz schließt flüssig an. Kein heikler Aufhänger (Preis, „günstig“,
   persönliche Merkmale oder Familie von Rezensierenden, Gesundheitsdetails), auch nicht als Teil eines

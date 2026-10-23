@@ -94,6 +94,7 @@ LEAD: {lead.company} (ID: {lead.id})
    - Bewertungen (bei Deep zuerst, bei Smart nur in der einen erlaubten Suche): WebSearch liefert nur Links, die Treffer von Bewertungsportalen und Verzeichnissen per WebFetch öffnen (Google Maps und Google-Seiten sind so nicht lesbar). Anzahl und Schnitt aus den Lead-Attributen des Imports gelten als Quelle.
    - Die Sperrliste der Kampagne (Research-Vorgaben) beachten: gesperrte Standardleistungen nicht als Aufhänger vormerken, außer als Lob aus Bewertungstexten.
    - Qualifizierungs-Kontext (lead.qualification) als Ausgangspunkt nutzen.
+   - Bericht in Alltagssprache. Er erscheint für Kunden in der Lead-Ansicht. Arbeitsbegriffe aus `anchorRules` und `campaignFrame` (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, PFLICHT-WEBSUCHE, KAMPAGNEN-RAHMEN) und Feldnamen wie reviews_count stehen nie darin. Superlative und Vergleiche mit anderen Betrieben („einzigartig“, „kaum ein anderes Institut“, „fast keine Agentur“) nur mit Beleg aus der Quelle, sonst nur das Detail nennen.
 4. Extrahiere gemäß den Research-Zielen, typischerweise:
    - Konkrete, verifizierbare Aufhänger, die den Betrieb von anderen seiner Branche abheben (Lob aus Bewertungen, eigenes Konzept, eigenes Verfahren, seltene Spezialisierung, Auszeichnung); was auf zehn andere Betriebe derselben Branche in der Stadt passt, ist kein Aufhänger.
    - Entscheider (Name/Rolle, meist im Impressum/Über-uns) und die Adresse, über die die Entscheidungsperson am wahrscheinlichsten erreicht wird (Regel in Schritt 5).

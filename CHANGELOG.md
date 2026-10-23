@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.34
+
+**outreach** (gleichauf mit dem ListM8-Server, Blindvergleich vom 23.10.2026)
+- `outreach-research`, `lead-agent` → Recherche-Bericht in Alltagssprache: keine Arbeitsbegriffe aus den Anker-Regeln (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, PFLICHT-WEBSUCHE) und keine Feldnamen, denn der Bericht erscheint für Kunden in der Lead-Ansicht. Superlative und Vergleiche mit anderen Betrieben nur mit Beleg aus der Quelle.
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-generate` → Intro zusammen höchstens 30 Wörter, EIN Detail statt gestapelter Lobpunkte; die Würdigung sagt etwas Neues statt das Detail umzuformulieren, Seltenheit nur als eigene Erfahrung am Detail, nie als Vergleich mit anderen Betrieben; im Zweifel Reaktion oder kein Schluss, nie zwei Schlussformen hintereinander.
+- `verify-agent` → umformuliertes Detail, Gutachten-Urteil, Vergleich ohne Beleg, zwei Schlussformen und gestapelte Lobpunkte sind Verstöße.
+
 ## 2026-10-23 – outreach 0.3.33
 
 **outreach** (gleichauf mit dem ListM8-Server: Abschluss-Stufen statt Nutzen zuerst)

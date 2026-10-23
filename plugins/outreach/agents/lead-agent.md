@@ -94,6 +94,7 @@ gelten immer.
 - Sperrliste der Kampagne (in den Research-Vorgaben oder im `intro`-Prompt) beachten: gesperrte
   Standardleistungen nie als Aufhänger vormerken, außer als Lob aus Bewertungstexten. Ebenso nichts,
   was auf zehn andere Betriebe derselben Branche in der Stadt passt (Austauschtest).
+- Bericht in Alltagssprache. Er erscheint für Kunden in der Lead-Ansicht. Arbeitsbegriffe aus `anchorRules` und `campaignFrame` (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, PFLICHT-WEBSUCHE, KAMPAGNEN-RAHMEN) und Feldnamen wie reviews_count stehen nie darin. Superlative und Vergleiche mit anderen Betrieben („einzigartig“, „kaum ein anderes Institut“, „fast keine Agentur“) nur mit Beleg aus der Quelle, sonst nur das Detail nennen.
 - Ermitteln: konkrete, belegte Aufhänger; Entscheider (Name, Rolle); die Versandadresse, über die die
   Entscheidungsperson am wahrscheinlichsten erreicht wird (belegte persönliche Adresse vor
   Funktionsadresse vor info@/kontakt@, auch Freemail; nur mit Fundstelle, nie geraten, nie als Bounce bekannt).
@@ -142,7 +143,12 @@ gelten immer.
     gleich Stufe 2. 2) Sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
     Vergangenheit, nie allein, lieber schlicht („das ist mir direkt aufgefallen“) als gesteigert; sie
     muss das Detail nicht wiederholen. 3) Ein Superlativ („wirklich beeindruckend“) nur, wenn der Anker
-    wirklich beeindruckt und 1 und 2 nicht gut klingen, immer am Detail. Nie ein Mechanik-Nutzen, der
+    wirklich beeindruckt und 1 und 2 nicht gut klingen, immer am Detail. Die Würdigung sagt etwas Neues
+    über den Betrieb, statt das Detail umzuformulieren („seit 2004 in der Branche, das spricht für viel
+    Branchenerfahrung“ und „macht das Angebot schön konkret“ sagen nichts); Seltenheit nur als eigene
+    Erfahrung am Detail, nie als Vergleich mit anderen Betrieben („hebt dich von jeder anderen Agentur
+    ab“, „bietet sonst kaum ein Studio an“). Im Zweifel die Reaktion, klingt auch sie nicht, kein
+    Schluss; nie Würdigung und Reaktion hintereinander. Nie ein Mechanik-Nutzen, der
     erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“,
     „so kann man unverbindlich nachfragen“). Eine passende Reaktion schlägt der Block
     `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie
@@ -158,7 +164,9 @@ gelten immer.
     Bewertungsanker nennt immer die Quelle im Einstieg („ich hab mir deine Bewertungen angeschaut,
     und …“).
   - Erfolgsaussagen der Praxis über sich selbst („konnte die Kariesrate senken“) nicht als Ergebnis
-    wiedergeben, nur das Tun benennen. Höchstens 2 Sätze, etwa 30 Wörter, Komma statt Strich.
+    wiedergeben, nur das Tun benennen. Höchstens 2 Sätze, zusammen höchstens 30 Wörter (nachzählen),
+    EIN Detail statt gestapelter Lobpunkte, Projekte oder Titel; wird es zu lang, das schwächere Detail
+    streichen. Komma statt Strich.
 - Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Variablen
   aus emailGeneration.expectedOutput>")`. Meldet das Tool `validation_failed: Unclosed quotation mark`,
   ist der genannte Wert an einem geraden " abgeschnitten: Zitat mit “ schließen und den vollständigen

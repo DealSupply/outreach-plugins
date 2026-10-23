@@ -242,6 +242,13 @@ MUSS:
   „hat mir gut gefallen“) nicht wörtlich übernehmen;
   3) ein Superlativ („wirklich beeindruckend“) nur, wenn der Anker wirklich beeindruckt und weder
   Stufe 1 noch Stufe 2 gut klingt, immer direkt am Detail.
+  Die Würdigung sagt etwas Neues über den Betrieb (was das Detail über seine Haltung zeigt oder was
+  es Kunden bringt), statt das Detail umzuformulieren: „seit 2004 in der Branche, das spricht für
+  viel Branchenerfahrung“ sagt dasselbe zweimal, „macht das Angebot schön konkret“ urteilt wie ein
+  Gutachten. Seltenheit steht als eigene Erfahrung am Detail, nie als Vergleich mit anderen
+  Betrieben („hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein Studio an“): Solche
+  Vergleiche belegt keine Quelle. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das Faktum
+  ohne Schluss. Genau eine Schlussform, nie Würdigung und Reaktion hintereinander.
   Verboten: der Mechanik-Nutzen, also ein Schluss, der erklärt, was man dank des Details tun kann
   („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“,
   „so bekommen Kunden schneller einen Termin“); Lob ohne Detail („finde ich stark“, „Hammer“);
@@ -293,7 +300,10 @@ MUSS:
   Filialzahlen, Auszeichnungen oder Konzepte eines Franchisegebers, einer Kette oder einer
   Muttergesellschaft gehören nicht dem angeschriebenen Standort; was der Standort selbst anbietet
   (Verfahren, Geräte, Behandlungen) und was Kunden über ihn schreiben, bleibt ein Anker.
-- Maximal 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich).
+- Maximal 2 Sätze, zusammen höchstens 30 Wörter (nachzählen), ohne Gedankenstrich (Komma statt
+  Strich). EIN Detail: nie zwei oder drei Lobpunkte, Projekte, Titel oder Jahreszahlen
+  aneinandergereiht; wird es zu lang, das schwächere Detail streichen, statt zu verdichten. Ein
+  zweiter Satz trägt nur den Schluss.
 - Beginnt mit Kleinbuchstaben (folgt direkt auf „Hallo …,“). Nur der erste Buchstabe ist klein,
   jeder weitere Satz beginnt groß. Substantive und Namen bleiben auch am Anfang groß („Kunden
   loben …“, nie „kunden loben …“).
