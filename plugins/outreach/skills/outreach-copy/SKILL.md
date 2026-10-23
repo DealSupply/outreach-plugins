@@ -230,10 +230,11 @@ MUSS:
   Bewertungszahl bekommen einen kurzen Halbsatz, in diesen Stufen (hinter einer Bewertungszahl gleich
   Stufe 2):
   1) Würdigung am Detail: was genau dieses Detail über den Betrieb zeigt, als Folgerung („das zeigt,
-  dass euch eure Kundinnen auch nach dem Termin wichtig sind“), Anerkennung („das spricht für eure
-  Arbeit“), Seltenheit, die das Detail selbst nennt („so eine Nachsorge erlebt man nicht oft“),
-  Kundensicht („da weiß man als Kunde, dass man richtig ist“) oder lobender Nutzen, der sagt, was das
-  Detail wert ist („das spart Zeit bei der Behandlung“);
+  dass euch eure Kundinnen auch nach dem Termin wichtig sind“), Anerkennung mit Inhalt, die sagt, wofür
+  („da steckt richtig viel Handarbeit drin“), Seltenheit als eigene Erfahrung, die das Detail selbst
+  nennt („so eine Nachsorge ist mir noch nicht begegnet“),
+  Kundensicht („da weiß man als Kunde, dass man richtig ist“) oder lobender Nutzen, der kurz würdigt,
+  was das Detail über den Betrieb sagt („das spart Zeit bei der Behandlung“);
   2) sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der Vergangenheit
   erzählt wie unter Kollegen; sie sagt nur, dass es aufgefallen ist oder gefallen hat („…, das ist mir
   direkt aufgefallen“, lieber schlicht als „richtig gut gefallen“), muss das Detail nicht wiederholen und steht nie ohne das Detail; eine passende Reaktion schlägt der Block `SCHLUSS DES OPENERS`
@@ -245,13 +246,15 @@ MUSS:
   Die Würdigung sagt etwas Neues über den Betrieb (was das Detail über seine Haltung zeigt oder was
   es Kunden bringt), statt das Detail umzuformulieren: „seit 2004 in der Branche, das spricht für
   viel Branchenerfahrung“ sagt dasselbe zweimal, „macht das Angebot schön konkret“ urteilt wie ein
-  Gutachten. Seltenheit steht als eigene Erfahrung am Detail, nie als Vergleich mit anderen
-  Betrieben („hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein Studio an“): Solche
+  Gutachten. Seltenheit steht als eigene Erfahrung am Detail, nie im allgemeinen „man“
+  („erlebt man nicht oft“) und nie als Vergleich mit anderen Betrieben („hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein Studio an“): Solche
   Vergleiche belegt keine Quelle. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das Faktum
   ohne Schluss. Genau eine Schlussform, nie Würdigung und Reaktion hintereinander.
   Verboten: der Mechanik-Nutzen, also ein Schluss, der erklärt, was man dank des Details tun kann
   („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“,
-  „so bekommen Kunden schneller einen Termin“); Lob ohne Detail („finde ich stark“, „Hammer“);
+  „so bekommen Kunden schneller einen Termin“), in jeder Satzform: ein Schluss, der ausmalt, was
+  Kunden dank des Details tun können oder sich sparen (wer, wann, wofür), auch „das spart
+  Berufstätigen den Urlaubstag für den Reifenwechsel“; Lob ohne Detail („finde ich stark“, „Hammer“);
   doppeltes Lob; das leere Prüfer-Urteil über die Qualität ihrer Arbeit, das aus dem Detail nicht
   folgt und auf jeden Betrieb passt („das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur,
   wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes
@@ -265,7 +268,7 @@ MUSS:
   man nicht immer“, „hat man nicht alle Tage“, „finde ich stark“, „finde ich spannend“, „finde ich
   bemerkenswert“, „Hammer“, „beeindruckend“. Abgrenzung: „finde ich stark“ ist eine Formel, ein
   gegenwärtiges Urteil ohne Inhalt; eine Würdigung oder Reaktion am benannten Detail ist erlaubt,
-  Seltenheit und Superlativ nur mit dem Detail („so eine Nachsorge erlebt man nicht oft“), nie allein
+  Seltenheit und Superlativ nur mit dem Detail („so eine Nachsorge ist mir noch nicht begegnet“), nie allein
   („das sieht man selten“, „beeindruckend“) (siehe Positiver Schluss). Die Formeln machen alle Opener gleich (ListM8-Regel, gilt
   zusätzlich zu den Akquise-Regeln). Auch in Beispielen und Prompts nie als Muster stehen lassen:
   Modelle kopieren Beispiele.
@@ -302,8 +305,9 @@ MUSS:
   (Verfahren, Geräte, Behandlungen) und was Kunden über ihn schreiben, bleibt ein Anker.
 - Maximal 2 Sätze, zusammen höchstens 30 Wörter (nachzählen), ohne Gedankenstrich (Komma statt
   Strich). EIN Detail: nie zwei oder drei Lobpunkte, Projekte, Titel oder Jahreszahlen
-  aneinandergereiht; wird es zu lang, das schwächere Detail streichen, statt zu verdichten. Ein
-  zweiter Satz trägt nur den Schluss.
+  aneinandergereiht; wird es zu lang, das schwächere Detail streichen, statt zu verdichten. Meist
+  ist es ein Satz, und der Schluss hängt mit einem Komma am Detail; einen zweiten Satz gibt es nur,
+  wenn der Schluss als eigener kurzer Satz besser klingt, und er trägt dann nur den Schluss.
 - Beginnt mit Kleinbuchstaben (folgt direkt auf „Hallo …,“). Nur der erste Buchstabe ist klein,
   jeder weitere Satz beginnt groß. Substantive und Namen bleiben auch am Anfang groß („Kunden
   loben …“, nie „kunden loben …“).

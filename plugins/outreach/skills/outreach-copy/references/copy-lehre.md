@@ -91,7 +91,7 @@ Gegensatzpaare (die Spalte „besteht“ zeigt den Fund, nicht den fertigen Satz
 
 Das Intro besteht aus Einstieg, Anker und Abschluss. Der Abschluss ist keine Pflicht: Ist das Detail schon selbst ein Lob (was Kunden in Bewertungen schreiben), trägt es das Intro allein; ein Schluss ist frei, und einer, der das Lob nur wiederholt, fällt weg. Lobt schon der erste Satz des festen Mailtexts selbst, entfällt der Schluss: nie zweimal loben. Ein neutrales Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt, Auszeichnung) und eine Bewertungszahl bekommen einen kurzen positiven Halbsatz, damit der feste Folgesatz („Deshalb …“) einen Grund hat, in diesen Stufen (hinter einer Bewertungszahl gleich Stufe 2):
 
-1. **Würdigung am Detail**: was genau dieses Detail über den Betrieb zeigt, als Folgerung („das zeigt, dass euch eure Kundinnen auch nach dem Termin wichtig sind“), Anerkennung („das spricht für eure Arbeit“), Seltenheit, die das Detail selbst nennt („so eine Nachsorge erlebt man nicht oft“), Kundensicht („da weiß man als Kunde, dass man richtig ist“) oder lobender Nutzen, der sagt, was das Detail wert ist („das spart Zeit bei der Behandlung“).
+1. **Würdigung am Detail**: was genau dieses Detail über den Betrieb zeigt, als Folgerung („das zeigt, dass euch eure Kundinnen auch nach dem Termin wichtig sind“), Anerkennung mit Inhalt, die sagt, wofür („da steckt richtig viel Handarbeit drin“), Seltenheit als eigene Erfahrung, die das Detail selbst nennt („so eine Nachsorge ist mir noch nicht begegnet“), Kundensicht („da weiß man als Kunde, dass man richtig ist“) oder lobender Nutzen, der kurz würdigt, was das Detail über den Betrieb sagt („das spart Zeit bei der Behandlung“).
 2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, in der Vergangenheit erzählt wie unter Kollegen: „…, das ist mir direkt aufgefallen.“ (lieber schlicht als „richtig gut gefallen“). Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein, und wird je Lead aus dem Detail gebildet, nie als feste Wendung.
 3. **Ein Superlativ** („wirklich beeindruckend“) nur, wenn der Anker wirklich beeindruckt und weder Stufe 1 noch Stufe 2 gut klingt, und immer direkt am Detail.
 
@@ -99,17 +99,17 @@ Die Würdigung sagt etwas Neues über den Betrieb (was das Detail über seine Ha
 
 Verboten:
 
-- **Mechanik-Nutzen**: ein Schluss, der erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“). Er beschreibt eine Funktion, statt den Betrieb zu würdigen (Prüfung 23.10.2026: in etwa einem Drittel der Intros).
+- **Mechanik-Nutzen**: ein Schluss, der erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“). Er beschreibt eine Funktion, statt den Betrieb zu würdigen (Prüfung 23.10.2026: in etwa einem Drittel der Intros). Das gilt in jeder Satzform: Ein Schluss, der ausmalt, was Kunden dank des Details tun können oder sich sparen (wer, wann, wofür), ist Mechanik-Nutzen, auch als „das spart Berufstätigen den Urlaubstag für den Reifenwechsel“.
 - **Lob ohne Detail** („finde ich stark“, „Hammer“) und **doppeltes Lob**.
 - **Detail umformuliert oder Gutachten-Urteil**: „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“, „eigenes CMS, das spricht für viel eigene Entwicklung“, „macht das Angebot schön konkret“, „ein bemerkenswert breiter Zuschnitt“.
-- **Vergleich ohne Beleg**: „hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein Studio an“, „weist nicht jede Agentur der Region vor“. Seltenheit steht nur als eigene Erfahrung am Detail („so eine Nachsorge erlebt man nicht oft“).
+- **Vergleich ohne Beleg**: „hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein Studio an“, „weist nicht jede Agentur der Region vor“. Seltenheit steht nur als eigene Erfahrung am Detail („so eine Nachsorge ist mir noch nicht begegnet“), nie im allgemeinen „man“ („erlebt man nicht oft“, „findet man selten“).
 - **Leeres Prüfer-Urteil** über die Qualität ihrer Arbeit, das aus dem Detail nicht folgt und auf jeden Betrieb passt; es klingt wie die Begutachtung durch einen Fremden: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“ (Messrunde 08.10.2026: ein Drittel der damaligen Schlüsse). Eine Würdigung ist dagegen erlaubt, weil sie am konkreten Detail hängt und nichts darüber hinaus behauptet.
 
 Leitplanken:
 
 - nichts erfinden, nur was direkt aus dem Detail folgt (nie „deine Patienten lieben das“, nie „alle positiv“);
 - keine inhaltsleere Formel, keine Seltenheit und kein Superlativ ohne das Detail („finde ich stark/spannend/bemerkenswert“, „Hammer“, „beeindruckend“, „das sieht man selten“, „das sieht man nicht immer“, „hat man nicht alle Tage“, „das spricht für sich“);
-- Abgrenzung: „das fand ich eine schöne Idee“ ist eine Reaktion auf ein benanntes Detail und erlaubt, „so eine Nachsorge erlebt man nicht oft“ eine Würdigung mit dem Detail; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
+- Abgrenzung: „das fand ich eine schöne Idee“ ist eine Reaktion auf ein benanntes Detail und erlaubt, „so eine Nachsorge ist mir noch nicht begegnet“ eine Würdigung mit dem Detail; „finde ich stark“ ist eine Formel, ein gegenwärtiges Urteil ohne Inhalt, und verboten;
 - keine feste Wendung: jeden Schluss aus dem konkreten Detail bilden, nie aus Beispielen übernehmen; die Reaktion schlägt der Server je Lead aus einer festen Liste vor, Wiederholungen über eine Kampagne sind deshalb erwartet; gleich lautende Würdigungen über mehrere Leads und jeder Mechanik-Nutzen (etwa „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen) sind ein systematischer Befund;
 - eine Bewertungszahl bekommt immer einen Schluss, und zwar eine Reaktion; insgesamt weiter höchstens 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich);
 - der Fallback-Satz der Kampagne bleibt wörtlich, ohne angehängten Schluss.
@@ -118,9 +118,9 @@ Leitplanken:
 
 | Anker | Opener |
 |:------|:-------|
-| Eigenes Verfahren (Handwerk), Würdigung: Seltenheit | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang, so eine Vorschau bekommt man beim Badumbau nicht oft.“ |
+| Eigenes Verfahren (Handwerk), Würdigung: Seltenheit | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang, so eine Vorschau ist mir beim Badumbau noch nicht begegnet.“ |
 | Ungewöhnliche Zeit (Dental), Würdigung: Folgerung | „mir ist aufgefallen, dass deine Praxis donnerstags bis 20 Uhr Termine hat, das zeigt, dass du an Patienten mit vollem Arbeitstag denkst.“ |
-| Eigenes Konzept (Dental), Würdigung: lobender Nutzen | „beim Stöbern auf deiner Website hab ich ‚Krone To Go‘ entdeckt, die Krone am selben Termin. Das spart deinen Patienten den zweiten Termin mit Provisorium.“ |
+| Eigenes Konzept (Dental), Würdigung: Anerkennung mit Inhalt | „beim Stöbern auf deiner Website hab ich ‚Krone To Go‘ entdeckt, die Krone am selben Termin. Respekt, dass du das an einem Tag hinbekommst.“ |
 | Seltene Spezialisierung (Handwerk), Würdigung: Kundensicht | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, da weiß man als Eigentümer eines Baudenkmals gleich, dass man richtig ist.“ |
 | Lob aus Bewertungen (Dental), ohne Schluss | „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ |
 | Eigenname (Café), Reaktion | „mir ist aufgefallen, dass jede Torte bei dir nach einem Stammgast benannt ist, über die Torte ‚Herr Albers‘ hab ich mich beim Lesen gefreut.“ |
@@ -307,18 +307,20 @@ POSITIVER SCHLUSS: Ein Lob aus Bewertungstexten trägt das Intro allein
 (kein Schluss, der es nur wiederholt). Nach einem neutralen Faktum oder
 einer Bewertungszahl folgt ein kurzer Halbsatz. Zuerst
 eine Würdigung am Detail: was genau dieses Detail über den Betrieb zeigt
-(Folgerung, Anerkennung, Seltenheit mit dem Detail, Kundensicht oder
-lobender Nutzen, der sagt, was das Detail wert ist); hinter einer
+(Folgerung, Anerkennung mit Inhalt, Seltenheit als eigene Erfahrung mit
+dem Detail, Kundensicht oder lobender Nutzen, der kurz würdigt, was das
+Detail über den Betrieb sagt); hinter einer
 Bewertungszahl gleich die Reaktion. Sonst eine kurze persönliche Reaktion
 direkt hinter dem benannten Detail (muss es nicht wiederholen), in der
 Vergangenheit erzählt (Muster: "das fand ich eine schöne Idee", "hat mir
 gut gefallen"; nie allein und nie als feste Wendung). Ein Superlativ nur,
 wenn der Anker wirklich beeindruckt, und immer am Detail. Die Würdigung
 sagt etwas Neues über den Betrieb, statt das Detail umzuformulieren;
-Seltenheit nie als Vergleich mit anderen Betrieben ("bietet sonst kaum
-ein Studio an"); im Zweifel die Reaktion oder gar kein Schluss, nie zwei
+Seltenheit nie im allgemeinen "man" und nie als Vergleich mit anderen
+Betrieben ("bietet sonst kaum ein Studio an"); im Zweifel die Reaktion oder gar kein Schluss, nie zwei
 Schlussformen hintereinander. Nie ein
-Mechanik-Nutzen, der erklärt, was man dank des Details tun kann ("so
+Mechanik-Nutzen, der erklärt, was man dank des Details tun oder sich
+sparen kann, in jeder Satzform ("so
 können sich Interessierte vorab ein Bild machen", "so kann man
 unverbindlich nachfragen"). Nie ein leeres Prüfer-Urteil über die
 Qualität der Arbeit, das aus dem Detail nicht folgt ("das wirkt

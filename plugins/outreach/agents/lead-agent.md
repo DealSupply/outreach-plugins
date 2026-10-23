@@ -94,7 +94,7 @@ gelten immer.
 - Sperrliste der Kampagne (in den Research-Vorgaben oder im `intro`-Prompt) beachten: gesperrte
   Standardleistungen nie als Aufhänger vormerken, außer als Lob aus Bewertungstexten. Ebenso nichts,
   was auf zehn andere Betriebe derselben Branche in der Stadt passt (Austauschtest).
-- Bericht in Alltagssprache. Er erscheint für Kunden in der Lead-Ansicht. Arbeitsbegriffe aus `anchorRules` und `campaignFrame` (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, PFLICHT-WEBSUCHE, KAMPAGNEN-RAHMEN) und Feldnamen wie reviews_count stehen nie darin. Superlative und Vergleiche mit anderen Betrieben („einzigartig“, „kaum ein anderes Institut“, „fast keine Agentur“) nur mit Beleg aus der Quelle, sonst nur das Detail nennen.
+- Bericht in Alltagssprache. Er erscheint für Kunden in der Lead-Ansicht. Arbeitsbegriffe aus `anchorRules` und `campaignFrame` (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, PFLICHT-WEBSUCHE, KAMPAGNEN-RAHMEN) und Feldnamen wie reviews_count stehen nie darin. Superlative und Vergleiche mit anderen Betrieben („einzigartig“, „kaum ein anderes Institut“, „fast keine Agentur“) nur mit Beleg aus der Quelle, sonst nur das Detail nennen; was einen Anker abhebt, steht am Detail selbst („Sprechstunde bis 21 Uhr“), nicht als „ungewöhnlich“ oder Urteil über die Branche.
 - Ermitteln: konkrete, belegte Aufhänger; Entscheider (Name, Rolle); die Versandadresse, über die die
   Entscheidungsperson am wahrscheinlichsten erreicht wird (belegte persönliche Adresse vor
   Funktionsadresse vor info@/kontakt@, auch Freemail; nur mit Fundstelle, nie geraten, nie als Bounce bekannt).
@@ -137,9 +137,10 @@ gelten immer.
     das Intro allein; einen Schluss, der das Lob nur wiederholt, lässt du weg. Ein neutrales Faktum und eine
     Bewertungszahl bekommen einen kurzen Halbsatz aus diesem Detail, in diesen Stufen: 1) Würdigung am
     Detail, also was genau dieses Detail über den Betrieb zeigt (Folgerung „das zeigt, dass euch eure
-    Kundinnen auch nach dem Termin wichtig sind“, Anerkennung „das spricht für eure Arbeit“, Seltenheit
-    mit dem Detail „so eine Nachsorge erlebt man nicht oft“, Kundensicht „da weiß man als Kunde, dass
-    man richtig ist“, lobender Nutzen „das spart Zeit bei der Behandlung“); hinter einer Bewertungszahl
+    Kundinnen auch nach dem Termin wichtig sind“, Anerkennung mit Inhalt „da steckt richtig viel Handarbeit
+    drin“, Seltenheit als eigene Erfahrung mit dem Detail „so eine Nachsorge ist mir noch nicht begegnet“, Kundensicht „da weiß man als Kunde, dass
+    man richtig ist“, lobender Nutzen, der kurz würdigt, was das Detail über den Betrieb sagt, „das spart Zeit bei der
+    Behandlung“); hinter einer Bewertungszahl
     gleich Stufe 2. 2) Sonst eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
     Vergangenheit, nie allein, lieber schlicht („das ist mir direkt aufgefallen“) als gesteigert; sie
     muss das Detail nicht wiederholen. 3) Ein Superlativ („wirklich beeindruckend“) nur, wenn der Anker
@@ -150,7 +151,8 @@ gelten immer.
     ab“, „bietet sonst kaum ein Studio an“). Im Zweifel die Reaktion, klingt auch sie nicht, kein
     Schluss; nie Würdigung und Reaktion hintereinander. Nie ein Mechanik-Nutzen, der
     erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“,
-    „so kann man unverbindlich nachfragen“). Eine passende Reaktion schlägt der Block
+    „so kann man unverbindlich nachfragen“). Das gilt in jeder Satzform: Ein Schluss, der ausmalt, was Kunden dank des Details tun können oder sich sparen (wer, wann, wofür), ist Mechanik-Nutzen, auch als „das spart Berufstätigen den Urlaubstag für den Reifenwechsel“. Seltenheit nie im allgemeinen „man“
+    („erlebt man nicht oft“). Eine passende Reaktion schlägt der Block
     `SCHLUSS DES OPENERS` des System-Prompts vor; fehlt er (älterer Server), variiere sie
     selbst und übernimm die zwei bekannten Muster („das fand ich eine schöne Idee“, „hat mir gut
     gefallen“) nicht wörtlich. Nie ein leeres Prüfer-Urteil

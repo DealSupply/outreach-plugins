@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.35
+
+**outreach** (gleichauf mit dem ListM8-Server, Beispiele folgen den eigenen Schluss-Regeln)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent` → Seltenheit als eigene Erfahrung („so eine Nachsorge ist mir noch nicht begegnet“), nie im allgemeinen „man“; Anerkennung nur mit Inhalt („da steckt richtig viel Handarbeit drin“) statt „das spricht für eure Arbeit“; ein Schluss, der ausmalt, was Kunden dank des Details tun können oder sich sparen, ist in jeder Satzform Mechanik-Nutzen. Beispiele entsprechend ersetzt (Badumbau, Krone To Go).
+- `outreach-copy` → Der Schluss hängt mit Komma am Detail, ein zweiter Satz nur, wenn er als eigener Satz besser klingt.
+- `outreach-research`, `lead-agent` → Was einen Anker abhebt, steht im Bericht am Detail, nicht als „ungewöhnlich“ oder Branchenurteil.
+
 ## 2026-10-23 – outreach 0.3.34
 
 **outreach** (gleichauf mit dem ListM8-Server, Blindvergleich vom 23.10.2026)

@@ -63,15 +63,18 @@ ihm mit `art` und `grund`, was zu tun ist.
     vergleicht ohne Beleg mit anderen Betrieben („hebt dich von jeder anderen Agentur ab“, „bietet sonst
     kaum ein Studio an“), stellt Würdigung und Reaktion hintereinander, ist ein Mechanik-Nutzen, also ein Schluss, der
     erklärt, was man dank des Details tun kann („so können sich Interessierte vorab ein Bild machen“,
-    „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“), ist ein leeres
+    „so kann man unverbindlich nachfragen“, „so bekommen Kunden schneller einen Termin“, in jeder
+    Satzform, auch „das spart Berufstätigen den Urlaubstag“), steht Seltenheit im allgemeinen „man“
+    („erlebt man nicht oft“), ist ein leeres
     Prüfer-Urteil über die Qualität der Arbeit, das aus dem Detail nicht folgt („das wirkt vertrauenswürdig“, „so
     einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft
     man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“), ist eine Reaktion, vor der
     im selben Satz kein Detail steht, oder er behauptet etwas, das nicht direkt aus dem Detail folgt („deine
     Patienten lieben das“). Erlaubt sind in dieser Reihenfolge: eine Würdigung am Detail (Folgerung „das
-    zeigt, dass euch eure Kundinnen auch nach dem Termin wichtig sind“, Anerkennung „das spricht für eure
-    Arbeit“, Seltenheit mit dem Detail „so eine Nachsorge erlebt man nicht oft“, Kundensicht „da weiß man
-    als Kunde, dass man richtig ist“, lobender Nutzen „das spart Zeit bei der Behandlung“), sonst eine kurze
+    zeigt, dass euch eure Kundinnen auch nach dem Termin wichtig sind“, Anerkennung mit Inhalt „da steckt
+    richtig viel Handarbeit drin“, Seltenheit als eigene Erfahrung mit dem Detail „so eine Nachsorge ist mir noch nicht begegnet“, Kundensicht „da weiß man
+    als Kunde, dass man richtig ist“, lobender Nutzen, der kurz würdigt, was das Detail über den Betrieb sagt, „das spart Zeit bei der
+    Behandlung“), sonst eine kurze
     Reaktion in der Vergangenheit direkt hinter dem benannten Detail („das fand ich eine schöne Idee“,
     „das ist mir direkt aufgefallen“), die nur sagt, dass es aufgefallen ist, und das Detail nicht
     wiederholen muss, zuletzt ein Superlativ am Detail („wirklich beeindruckend“), wenn der Anker
