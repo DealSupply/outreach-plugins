@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-23 – outreach 0.3.37
+
+**outreach** (gleichauf mit dem ListM8-Server: Kern-Passung vor dem offenen Vorfilter)
+- `lead-agent` → Ein Kerngeschäft außerhalb des Zielkunden ist `not_qualified`, auch ohne Disqualifier der Liste; eine einzelne Zusatzleistung oder thematische Nähe ist keine Überschneidung.
+- `outreach-campaign` (Referenz Qualifizierung) → Der „Passt, wenn …"-Satz nennt ein Merkmal der Zielbranche, nie eines, das jede Nachbarbranche erfüllt; „Ablehnung nur mit konkret benanntem Disqualifier" schützt nur Grenzfälle der Zielbranche. Grund: Im Blindtest vom 23.10. gingen 18 von 77 Mails an unpassende Leads (Massagepraxen, Hotels, Tantra-Massage, proktologische Praxis).
+
 ## 2026-10-23 – outreach 0.3.36
 
 **outreach** (gleichauf mit dem ListM8-Server: Recherche-Bericht in Kundensprache)

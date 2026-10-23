@@ -51,7 +51,9 @@ gelten immer.
   `agent.additionalPrompt` ergänzt sie, `writeBack` nennt die erlaubten Werte.
 - Website per WebFetch laden (Leistungen, Über uns, Impressum bei Bedarf); Custom Attributes
   einbeziehen. Eine nicht erreichbare Website ist kein Disqualifier.
-- Fachlicher Disqualifier → `not_qualified`, sonst `mid_qualified` | `qualified` | `highly_qualified`;
+- Fachlicher Disqualifier oder ein Kerngeschäft außerhalb des Zielkunden (andere Branche; eine einzelne
+  Zusatzleistung oder thematische Nähe ist keine Überschneidung) → `not_qualified`, auch wenn kein
+  Disqualifier der Liste greift; sonst `mid_qualified` | `qualified` | `highly_qualified`;
   Score passend (0–39 | 40–59 | 60–79 | 80–100).
 - Speichern: `write_lead_details(campaign_id, lead_id, fields={qualificationStatus: "completed",
   qualificationFitLevel, score, qualificationCategory (kurze Branche), qualificationSummary (2–4 Sätze),
