@@ -1,6 +1,6 @@
 # ListM8-MCP: Import- und Bestands-Tools
 
-Vertragsstand: 2026-10-14 (ListM8 MCP 3.0.0, Credits zum festen Preis). Die Referenz deckt die
+Vertragsstand: 2026-10-14 (ListM8 MCP 3.0.0, Credits je Lead). Die Referenz deckt die
 Tools ab, die in der Datenbeschaffung gebraucht werden. Die vollständige Werkzeugliste liefert die
 Tool-Discovery des MCP-Servers; jede Werkzeugbeschreibung dort ist der aktuelle Vertrag und geht
 dieser Referenz im Zweifel vor.
@@ -231,5 +231,5 @@ Nach dem Import: Liste prüfen (`get_list`), auf Wunsch einer bestätigten Kampa
 (`add_leads_to_campaign`) und über den Outreach-Workflow `start_lead_run` für `qualification`,
 `research`, `email` verarbeiten. `start_lead_run` nimmt keine `list_id`; die Auswahl der Leads
 erfolgt über die Kampagne. Vorher aktive Lead-Läufe prüfen (`list_lead_runs`). Der KI-Lauf kostet
-Credits zum festen Preis je Lead, vorher zeigt `quote_lead_run` den Preis; im Abo-Lauf kostet er
+Credits je Lead, vorher zeigt `quote_lead_run` den Preis; im Abo-Lauf kostet er
 keine Credits. Beides ist getrennt vom Scrape beim Anbieter abzustimmen.

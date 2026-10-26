@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-26 – outreach 0.4.1, datenbeschaffung 0.3.2
+
+Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Server kennen `charging` nicht; dann gilt der feste Preis wie bisher.
+
+**outreach** (Richtpreise)
+- `outreach-pipeline` → das Angebot nennt in `charging` die Abrechnungsart: `fixed` bucht den Preis genau, `guide` ist ein Richtpreis (jede Stufe bucht ihren Aufwand, mindestens den Richtpreis, höchstens das Doppelte). Bei `guide` alle Preise als ca.-Angabe nennen; `max_credits` ist die Summe zu diesen Preisen, keine Obergrenze mehr. `effort_not_priced` gibt es nur noch bei Festpreisen. Abbruch und Statusbericht: bei Richtpreisen kann `spent_credits` über Preis mal Leads liegen, höchstens beim Doppelten.
+- `outreach-research`, `outreach-qualify`, `outreach-generate`, `outreach-launch` → „Credits je Lead“ statt „Credits zum festen Preis je Lead“.
+
+**datenbeschaffung**
+- `listm8-mcp.md` → „Credits je Lead“ statt „Credits zum festen Preis“.
+
 ## 2026-10-14 – outreach 0.4.0, datenbeschaffung 0.3.1
 
 Setzt ListM8 MCP 3.0.0 voraus (Credits zum festen Preis je Lead). Meldet `ping` eine ältere Version, kennt der Server noch keine Credits; dafür steht in `outreach-pipeline` genau ein Satz.
