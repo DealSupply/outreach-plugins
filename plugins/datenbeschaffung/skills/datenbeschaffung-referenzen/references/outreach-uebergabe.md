@@ -114,8 +114,8 @@ add_leads_to_campaign(campaign_id=<id>, list_id=<id>)
 
 `do_not_contact`-Leads werden vom Tool selbst übersprungen und gemeldet. Mit `list_id` nimmt das
 Tool höchstens 1000 Leads je Aufruf (sonst `limit_reached`); größere Listen in `lead_ids`-Chunks
-verlinken (siehe `outreach-lists`) oder in der Oberfläche über „Zur Kampagne hinzufügen“ an der
-Liste ganz zuordnen. Danach startet
+verlinken (siehe `outreach-lists`). Die Oberfläche kennt Listen noch nicht, eine Liste lässt sich
+dort nicht ganz einer Kampagne zuordnen. Danach startet
 `start_lead_run` die Qualifizierung nach einem Preis-Angebot (`quote_lead_run`), oder die Leads laufen
 als Abo-Lauf ohne Credits. NICHT automatisch, der Nutzer entscheidet.
 

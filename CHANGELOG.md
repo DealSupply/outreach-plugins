@@ -1,6 +1,6 @@
 # Changelog
 
-## 2026-10-26 – outreach 0.4.1, datenbeschaffung 0.3.2
+## 2026-10-26 – outreach 0.4.1, datenbeschaffung 0.4.1
 
 Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Server kennen `charging` nicht; dann gilt der feste Preis wie bisher.
 
@@ -10,6 +10,75 @@ Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Serv
 
 **datenbeschaffung**
 - `listm8-mcp.md` → „Credits je Lead“ statt „Credits zum festen Preis“.
+
+## 2026-10-23 – outreach 0.3.41
+
+**outreach** (gleichauf mit dem ListM8-Server)
+- `outreach-research`, `lead-agent` → Quelle im Bericht ist die Seite oder Plattform (URL, Impressum, Google-Profil, Import), nie ein Arbeitsschritt wie „Vorqualifizierung“ oder „Recherche“. Grund: Im Gegencheck vom 23.10. nannte ein Modell in 10 von 15 Berichten „Vorqualifizierung“ als Quelle.
+
+## 2026-10-23 – outreach 0.3.40
+
+**outreach** (gleichauf mit dem ListM8-Server: Reaktion als Richtung, Mittelweg)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent` → Die fünf erprobten Reaktionen sind Richtung und Tonlage, keine Pflicht. Der Server schlägt je Lead eine vor; passt eine eigene kurze Reaktion besser zum Detail, wird sie im selben Ton formuliert (etwa „da musste ich direkt schmunzeln“ bei einer historischen Kegelbahn), höchstens etwa sechs Wörter, keine Floskel. Passt der Vorschlag nicht, eine eigene statt einer festen Ausweichform. Nie derselbe Satz in allen Mails.
+- `verify-agent` → Eine eigene, passende Reaktion ist kein Befund; Gutachten-Ton, Übertreibung und Floskeln bleiben Befunde, eine deutlich zu lange freie Reaktion ist ein Hinweis.
+
+## 2026-10-23 – outreach 0.3.39
+
+**outreach** (gleichauf mit dem ListM8-Server: Reaktionsliste nach Antwortdaten)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent` → Die Reaktion im Intro-Schluss nutzt die fünf Formen mit den besten Antwortquoten im Prod-Dump vom 23.10.2026 (725 kontaktierte Intros): „das fand ich richtig schön“ (13,0 %), „das ist mir direkt hängen geblieben“ (9,6 %), „das hat mir gut gefallen“ (8,9 %), „das fand ich richtig sympathisch“ (8,2 %), „das hat mich angesprochen“ (6,1 %). „schöne Idee“ und „schöner Ansatz“ sind raus, ebenso die ungetesteten Formen. „richtig“ in einer Reaktion ist erlaubt, Übertreibung und Floskeln nicht.
+- `verify-agent` → Hinweis bei übertriebener Reaktion oder „sympathisch“/„schön“ hinter einer Bewertungszahl, nicht mehr bei „richtig“.
+
+## 2026-10-23 – outreach 0.3.38
+
+**outreach** (gleichauf mit dem ListM8-Server: Reaktion vor Würdigung)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-generate`, `outreach-verify` → Neue Rangfolge im Intro-Schluss: 1) kein Schluss, wenn das Detail selbst ein Lob ist (Kundenstimme, Auszeichnung, Bewertungslob) oder der feste Folgesatz lobt; 2) sonst eine kurze, schlichte Reaktion in der Vergangenheit am Detail („das ist mir direkt aufgefallen“, „das fand ich direkt spannend“), je Lead wechselnd; 3) eine Würdigung nur ausnahmsweise mit etwas Neuem und Konkretem, nie im Gutachten-Ton und nie als „das zeigt, wie …“. Grund: In den Blindtests vom 23.10. geriet die Würdigung in 18 von 77 Mails zum Gutachten oder wiederholte das Detail, Reaktionen wurden kaum bemängelt.
+- `verify-agent` → Ein fehlender Schluss ist kein Befund mehr; Folgerung im Gutachten-Ton ist einer, eine gesteigerte Reaktion ein Hinweis. Derselbe Reaktionssatz in fast allen Mails einer Kampagne ist ein systematischer Befund.
+- `copy-lehre` → Beispiele ohne Schluss oder mit Reaktion, Würdigung und Superlativ nur als Ausnahme, Gegenbeispiel mit dem Herrenstudio.
+
+## 2026-10-23 – outreach 0.3.37
+
+**outreach** (gleichauf mit dem ListM8-Server: Kern-Passung vor dem offenen Vorfilter)
+- `lead-agent` → Ein Kerngeschäft außerhalb des Zielkunden ist `not_qualified`, auch ohne Disqualifier der Liste; eine einzelne Zusatzleistung oder thematische Nähe ist keine Überschneidung.
+- `outreach-campaign` (Referenz Qualifizierung) → Der „Passt, wenn …"-Satz nennt ein Merkmal der Zielbranche, nie eines, das jede Nachbarbranche erfüllt; „Ablehnung nur mit konkret benanntem Disqualifier" schützt nur Grenzfälle der Zielbranche. Grund: Im Blindtest vom 23.10. gingen 18 von 77 Mails an unpassende Leads (Massagepraxen, Hotels, Tantra-Massage, proktologische Praxis).
+
+## 2026-10-23 – outreach 0.3.36
+
+**outreach** (gleichauf mit dem ListM8-Server: Recherche-Bericht in Kundensprache)
+- `outreach-research`, `lead-agent` → Der Bericht enthält nur Ergebnisse über die Firma in Alltagssprache. Regeln aus `anchorRules`, `campaignFrame` und `researchTier` stehen weder mit Namen noch mit Inhalt darin: keine Schwellen, keine Abwägung, ob ein Anker trägt, keine Abhakliste der Ausschlussgründe (stattdessen die Tatsache über den Betrieb), kein Seitenbudget, keine Recherche-Stufe, keine Herkunft „aus der Vorqualifizierung“, kein Prüfstatus von Adressen, keine Suchvorlagen. Grund: Im Blindtest mit fünf Modellen stand Arbeitssprache in 49 von 80 Berichten.
+
+## 2026-10-23 – outreach 0.3.35
+
+**outreach** (gleichauf mit dem ListM8-Server, Beispiele folgen den eigenen Schluss-Regeln)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent` → Seltenheit als eigene Erfahrung („so eine Nachsorge ist mir noch nicht begegnet“), nie im allgemeinen „man“; Anerkennung nur mit Inhalt („da steckt richtig viel Handarbeit drin“) statt „das spricht für eure Arbeit“; ein Schluss, der ausmalt, was Kunden dank des Details tun können oder sich sparen, ist in jeder Satzform Mechanik-Nutzen. Beispiele entsprechend ersetzt (Badumbau, Krone To Go).
+- `outreach-copy` → Der Schluss hängt mit Komma am Detail, ein zweiter Satz nur, wenn er als eigener Satz besser klingt.
+- `outreach-research`, `lead-agent` → Was einen Anker abhebt, steht im Bericht am Detail, nicht als „ungewöhnlich“ oder Branchenurteil.
+
+## 2026-10-23 – outreach 0.3.34
+
+**outreach** (gleichauf mit dem ListM8-Server, Blindvergleich vom 23.10.2026)
+- `outreach-research`, `lead-agent` → Recherche-Bericht in Alltagssprache: keine Arbeitsbegriffe aus den Anker-Regeln (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, PFLICHT-WEBSUCHE) und keine Feldnamen, denn der Bericht erscheint für Kunden in der Lead-Ansicht. Superlative und Vergleiche mit anderen Betrieben nur mit Beleg aus der Quelle.
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-generate` → Intro zusammen höchstens 30 Wörter, EIN Detail statt gestapelter Lobpunkte; die Würdigung sagt etwas Neues statt das Detail umzuformulieren, Seltenheit nur als eigene Erfahrung am Detail, nie als Vergleich mit anderen Betrieben; im Zweifel Reaktion oder kein Schluss, nie zwei Schlussformen hintereinander.
+- `verify-agent` → umformuliertes Detail, Gutachten-Urteil, Vergleich ohne Beleg, zwei Schlussformen und gestapelte Lobpunkte sind Verstöße.
+
+## 2026-10-23 – outreach 0.3.33
+
+**outreach** (gleichauf mit dem ListM8-Server: Abschluss-Stufen statt Nutzen zuerst)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-verify`, `outreach-generate` → Intro = Einstieg + Anker + Abschluss, der Abschluss bleibt keine Pflicht. Stufen: 1) Würdigung am Detail (Folgerung, Anerkennung, Seltenheit mit dem Detail, Kundensicht, lobender Nutzen), 2) Reaktion in der Vergangenheit am Detail, lieber schlicht als gesteigert, 3) Superlativ nur bei wirklich beeindruckendem Anker und am Detail. Hinter einer Bewertungszahl bleibt die Reaktion.
+- Verboten: Mechanik-Nutzen (ein Schluss, der erklärt, was man dank des Details tun kann, etwa „so können sich Interessierte vorab ein Bild machen“), Lob ohne Detail, doppeltes Lob. Das Prüfer-Verbot gilt nur noch für leere Urteile, die aus dem Detail nicht folgen. Grund: In etwa einem Drittel der Intros stand ein Mechanik-Nutzen.
+- `copy-lehre` → Beispieltabelle nach Stufen, Kundenlob ohne Schluss, Gegenbeispiel Mechanik-Nutzen. `verify-agent` → Mechanik-Nutzen ist ein Befund, eine Reaktion statt möglicher Würdigung nicht.
+
+## 2026-10-17 – outreach 0.3.32
+
+**outreach** (gleichauf mit dem ListM8-Server: der Schluss im Intro ist keine Pflicht mehr)
+- `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-verify`, `outreach-generate` → Ein Lob aus Bewertungstexten trägt das Intro allein; ein Schluss, der das Lob nur wiederholt, fällt weg, und neben einem lobenden festen Folgesatz wird nie zweimal gelobt. Ein neutrales Faktum und eine Bewertungszahl bekommen weiter einen kurzen Schluss. Grund: Bei der einzigen Kampagne mit Antwortdaten kamen alle Interessenten aus Intros ohne Schluss.
+- Die Reaktion aus dem Block `SCHLUSS DES OPENERS` ist ein Vorschlag, keine Vorgabe. `verify-agent`: fehlender Schluss hinter Kundenlob ist kein Befund, doppeltes Lob ein Hinweis.
+- `copy-lehre` → Beispiel zur Bewertungszahl schließt mit einer Reaktion statt mit einem Nutzen (Widerspruch zur Server-Regel behoben).
+
+## 2026-10-15 – outreach 0.3.32 (parallel auf main, update_ai_variable)
+
+**outreach** (Kundenfall 15.10.2026: Claude lehnte eine Prompt-Änderung über den MCP ab)
+- `outreach-campaign` → Einen Variablen-Prompt ändert `update_ai_variable` (ListM8-MCP 2.4.0) ohne Export und Voll-Blueprint. Die Warnung, `edit_campaign` lösche alle erzeugten Werte, ist ersetzt: Der Server gleicht Variablen seit August 2026 per Name ab, Werte bleiben. Rückfrage bleibt Pflicht, bevor schon erzeugte Leads neu generiert werden.
+- `outreach-launch`, `outreach-generate`, `outreach-verify`, `outreach-copy` (Copy-Lehre) → nennen `update_ai_variable` für Prompt-Änderungen und korrigieren dieselbe Löschwarnung.
 
 ## 2026-10-14 – outreach 0.4.0, datenbeschaffung 0.3.1
 
@@ -32,6 +101,23 @@ Setzt ListM8 MCP 3.0.0 voraus (Credits zum festen Preis je Lead). Meldet `ping` 
 - `listm8-mcp.md` → Vertragsstand MCP 3.0.0: Import und Listen kosten keine Credits; neue Zeile `get_credit_balance`; Lead-Limit beim Import (`limit_reached`, `allow_partial`, neue Antwort- und Job-Felder); Löschen gibt Plätze sofort frei, gebuchte Credits werden nicht erstattet; der KI-Lauf kostet Credits zum festen Preis je Lead.
 - `outreach-uebergabe.md` → Platzprüfung beim Import, `start_lead_run` nach Preis-Angebot oder Abo-Lauf, Löschen gibt Plätze sofort frei.
 - `datenumfang.md` → die Recherche-Tiefe steuert nur das Seitenbudget; den Credit-Preis bestimmt die Recherche-Stufe.
+
+## 2026-10-14 – datenbeschaffung 0.4.0
+
+**datenbeschaffung** (neuer Weg F: SaaS- und Software-Firmen in DACH, Testreihe vom 14.10.2026)
+- `weg-f-saas` → neuer Weg für „alle SaaS in DACH“: OMR Reviews und Startbase kostenlos, dazu die LinkedIn-Firmensuche segmentiert nach Region und Größe, Einordnung SaaS gegen Agentur durch Claude, Details nur für SaaS, die noch keine Quelle kennt, Zusammenführen auf die Domain und Sitzprüfung im Impressum. Kernbefund aus der Vollerhebung Hamburg: LinkedIn 387, OMR 246, nur 62 in beiden; keine Quelle allein findet mehr als etwa ein Viertel (Startbase dazu: 135, mit LinkedIn nur 27 gemeinsam; geschätzt 1.500 bis 2.000 SaaS in Hamburg).
+- `datenbeschaffung` → Routing: Software- und SaaS-Firmen gehen an `weg-f-saas`, nicht mehr an `weg-a-b2b-google`.
+- Neue Skripte: `omr_products.py` (OMR-Schnittstelle, 14.023 Produkte in einer Minute), `startbase_saas.py` (Geschäftsmodell SaaS, Zielgruppe B2B), `linkedin_saas.py` (Segmente zusammenlegen, Sitzfilter, Tabelle zum Einordnen, Details-Input), `website_suche.py` (Website über Rechtsträger und Ort, 52 bis 58 % Treffer), `quellen_zusammenfuehren.py` (Domain-Abgleich, Herkunft in `quellen`), `sitz_check.py` (Sitz, PLZ, Impressum-Adresse und Produkt-Signale, kostenlos). 8 Tests.
+- `apify-actors.md` → LinkedIn-Firmendetails (`harvestapi/linkedin-company`), Trefferzahl je Segment über `totalResultCount`; Capterra-Actors ausgeschlossen bzw. nicht empfohlen; Impressum-Actor an JavaScript-Lücken schwach und langsam.
+- `kosten.md`, `erfahrungswerte.md`, `datenumfang.md` → belegte Kosten und Trefferquoten der SaaS-Quellen, Spalten für OMR- und LinkedIn-Daten.
+
+## 2026-10-13 – outreach 0.3.31
+
+**outreach** (gleichauf mit dem ListM8-Server, A/B-Vergleich App gegen MCP vom 13.10.2026)
+- `outreach-copy`, `verify-agent`, `lead-agent`, `outreach-verify` → Positiver Schluss: Eine kurze Reaktion direkt hinter dem benannten Detail („…, das ist mir gleich ins Auge gefallen“) muss das Detail nicht wiederholen und ist kein Befund. Wiederholte Reaktionen über eine Kampagne sind erwartet (der Server gibt sie je Lead aus einer festen Liste vor); gleich lautende Nutzen-Schlüsse wie „Interessierte können sich vorab orientieren“ hinter Bewertungszahlen bleiben ein systematischer Befund.
+- `outreach-copy` → Bewertungszahlen erst, wenn weder Bewertungslob noch ein abhebendes Website-Detail besteht, Schluss dann mit der Reaktion; Wachstum oder Auszeichnungen eines Franchisegebers gehören nicht dem angeschriebenen Standort. Was der Standort selbst anbietet, bleibt ein Anker.
+- `verify-agent` → Eine Reaktion, die nicht zum Anker passt („Idee“ hinter einer Bewertungszahl) oder den Einstieg doppelt, ist ein Hinweis.
+
 
 ## 2026-10-12 – fulfillment 0.1.0, outreach 0.3.30
 

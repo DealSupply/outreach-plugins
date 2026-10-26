@@ -51,7 +51,9 @@ gelten immer.
   `agent.additionalPrompt` ergänzt sie, `writeBack` nennt die erlaubten Werte.
 - Website per WebFetch laden (Leistungen, Über uns, Impressum bei Bedarf); Custom Attributes
   einbeziehen. Eine nicht erreichbare Website ist kein Disqualifier.
-- Fachlicher Disqualifier → `not_qualified`, sonst `mid_qualified` | `qualified` | `highly_qualified`;
+- Fachlicher Disqualifier oder ein Kerngeschäft außerhalb des Zielkunden (andere Branche; eine einzelne
+  Zusatzleistung oder thematische Nähe ist keine Überschneidung) → `not_qualified`, auch wenn kein
+  Disqualifier der Liste greift; sonst `mid_qualified` | `qualified` | `highly_qualified`;
   Score passend (0–39 | 40–59 | 60–79 | 80–100).
 - Speichern: `write_lead_details(campaign_id, lead_id, fields={qualificationStatus: "completed",
   qualificationFitLevel, score, qualificationCategory (kurze Branche), qualificationSummary (2–4 Sätze),
@@ -94,6 +96,7 @@ gelten immer.
 - Sperrliste der Kampagne (in den Research-Vorgaben oder im `intro`-Prompt) beachten: gesperrte
   Standardleistungen nie als Aufhänger vormerken, außer als Lob aus Bewertungstexten. Ebenso nichts,
   was auf zehn andere Betriebe derselben Branche in der Stadt passt (Austauschtest).
+- Bericht nur mit Ergebnissen über die Firma, in Alltagssprache und mit Quelle; er erscheint für Kunden in der Lead-Ansicht. `anchorRules`, `campaignFrame` und `researchTier` sind Arbeitsanweisungen: weder ihre Namen (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, Prüfaufträge) noch ihre Inhalte stehen im Bericht, also keine Schwellen („ab 30 Bewertungen“), keine Abwägung, ob ein Anker trägt, keine Abhakliste der Ausschlussgründe („kein Franchise, keine Klinik“; stattdessen die Tatsache: „Einzelpraxis mit drei Behandlerinnen“), kein Seitenbudget, keine Recherche-Stufe, keine Herkunft „aus der Vorqualifizierung“: Quelle ist die Seite oder Plattform (URL, Impressum, Google-Profil, Import), nie ein Arbeitsschritt wie Vorqualifizierung oder Recherche, kein Prüfstatus von Adressen, keine Suchvorlage mit Platzhaltern (nur die tatsächlichen Suchwörter). Probe für jeden Satz: Liest der Inhaber ihn als Aussage über seine Firma? Superlative und Vergleiche mit anderen Betrieben („einzigartig“, „kaum ein anderes Institut“, „fast keine Agentur“) nur mit Beleg aus der Quelle, sonst nur das Detail nennen; was einen Anker abhebt, steht am Detail selbst („Sprechstunde bis 21 Uhr“), nicht als „ungewöhnlich“ oder Urteil über die Branche.
 - Ermitteln: konkrete, belegte Aufhänger; Entscheider (Name, Rolle); die Versandadresse, über die die
   Entscheidungsperson am wahrscheinlichsten erreicht wird (belegte persönliche Adresse vor
   Funktionsadresse vor info@/kontakt@, auch Freemail; nur mit Fundstelle, nie geraten, nie als Bounce bekannt).
@@ -132,23 +135,38 @@ gelten immer.
   - Sterne: Anzahl und Schnitt nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, Zahl
     gerundet („über 200“), Schnitt mit Komma („4,8“), bei widersprüchlichen Quellen der kleinere Wert.
     Unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen: nächster Anker bzw. Fallback.
-  - Positiver Schluss: Nach der Beobachtung ein kurzer Halbsatz aus diesem Detail. Zuerst Nutzen oder
-    Wirkung (wem nützt es, was bewirkt es), wenn sie sich anbietet; sonst eine kurze persönliche
-    Reaktion, die das Detail benennt, in der Vergangenheit, nie allein. Die Reaktion nimmst du wörtlich
-    aus dem Block `SCHLUSS DES OPENERS` des System-Prompts; fehlt er (älterer Server), variiere sie
-    selbst und übernimm die zwei bekannten Muster („das fand ich eine schöne Idee“, „hat mir gut
-    gefallen“) nicht wörtlich. Nie ein Prüfer-Urteil
-    über die Qualität der Arbeit: „das wirkt vertrauenswürdig“, „so einen Schnitt hält man nur, wenn
-    die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes Arbeiten“,
-    „zeigt, dass die Behandlung ankommt“. Nichts erfinden, keine Formel („finde ich stark“, „hat man
-    nicht alle Tage“), kein Superlativ, keine Wendung aus Beispielen. Gilt auch bei Bewertungsankern;
-    der Fallback-Satz bleibt wörtlich und ohne Schluss.
+  - Positiver Schluss: Das Intro besteht aus Einstieg, Anker und Abschluss; der Abschluss ist keine
+    Pflicht. Rangfolge: 1) Kein Schluss, wenn das Detail schon selbst ein Lob ist (was Kunden in
+    Bewertungen schreiben, eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst
+    lobt. 2) Sonst, bei einem neutralen Faktum oder einer Bewertungszahl, eine kurze persönliche Reaktion
+    direkt hinter dem benannten Detail, in der Vergangenheit, im Ton der erprobten Formen „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“
+    („richtig“ ist erlaubt, Übertreibung nicht); sie muss das Detail
+    nicht wiederholen und wechselt von Lead zu Lead. Eine Form schlägt der Block `SCHLUSS DES OPENERS`
+    des System-Prompts vor, als Richtung, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel;
+    passt der Vorschlag nicht (etwa „schön“ hinter einer Bewertungszahl), eine eigene bilden. Fehlt der
+    Block (älterer Server), variiere sie selbst; nie derselbe Satz in allen Mails. Hinter einer Bewertungszahl steht immer die Reaktion.
+    3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt, das
+    nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,
+    Seltenheit als eigene Erfahrung „so eine Nachsorge ist mir noch nicht begegnet“). Nie Gutachten-Ton,
+    nie „das zeigt, wie …“, „das zeigt, dass …“ oder „das spricht für …“ über Ausrichtung, Erfahrung oder
+    Qualität („ein Herren-Kosmetikstudio mit separatem Eingang, das zeigt, wie klar der Betrieb auf seine
+    Kundschaft ausgerichtet ist“, „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“).
+    Im Zweifel die Reaktion, klingt auch sie nicht, kein Schluss; nie Würdigung und Reaktion
+    hintereinander. Verboten: Mechanik-Nutzen in jeder Satzform (ein Schluss, der erklärt oder ausmalt,
+    was Kunden dank des Details tun können oder sich sparen: „so können sich Interessierte vorab ein Bild
+    machen“, „das spart Berufstätigen den Urlaubstag für den Reifenwechsel“); Seltenheit im allgemeinen
+    „man“ und Vergleiche mit anderen Betrieben ohne Beleg („bietet sonst kaum ein Studio an“); das leere
+    Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles
+    richtig“); Lob ohne Detail („finde ich stark“, „hat man nicht alle Tage“); doppeltes Lob. Nichts
+    erfinden, keine Wendung aus Beispielen. Der Fallback-Satz bleibt wörtlich und ohne Schluss.
   - Einstieg: wie im Block `EINSTIEG DES OPENERS` des System-Prompts; fehlt er, nach der letzten Ziffer deiner Lead-ID: 0-2 „mir ist aufgefallen, dass …“, 3-5 „ich hab
     mir … angeschaut“, 6-7 „beim Stöbern auf deiner Website …“, 8-9 direkt mit dem Detail. Ein
     Bewertungsanker nennt immer die Quelle im Einstieg („ich hab mir deine Bewertungen angeschaut,
     und …“).
   - Erfolgsaussagen der Praxis über sich selbst („konnte die Kariesrate senken“) nicht als Ergebnis
-    wiedergeben, nur das Tun benennen. Höchstens 2 Sätze, etwa 30 Wörter, Komma statt Strich.
+    wiedergeben, nur das Tun benennen. Höchstens 2 Sätze, zusammen höchstens 30 Wörter (nachzählen),
+    EIN Detail statt gestapelter Lobpunkte, Projekte oder Titel; wird es zu lang, das schwächere Detail
+    streichen. Komma statt Strich.
 - Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Variablen
   aus emailGeneration.expectedOutput>")`. Meldet das Tool `validation_failed: Unclosed quotation mark`,
   ist der genannte Wert an einem geraden " abgeschnitten: Zitat mit “ schließen und den vollständigen

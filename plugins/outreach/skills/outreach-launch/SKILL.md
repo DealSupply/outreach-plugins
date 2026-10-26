@@ -100,10 +100,11 @@ Beschwerden und Bounces → Open Rate → Reply Rate → Termine. Einzelne Tage 
 | Antworten, aber keine Termine | nachtelefonieren, nicht die Mail ändern | `references/launch-und-optimierung.md` |
 
 Getestet wird immer nur eine Variable, mindestens 100 (besser 200) Mails je Variante und 7 Tage, in
-der Reihenfolge Offer → Betreff → Opener-Angle → CTA → FUP-Timing. Änderungen an Sequenz oder
-Variablen in ListM8 laufen über `export_campaign_blueprint` → `edit_campaign` (Vollersatz); das
-Ersetzen der AI-Variablen löscht alle erzeugten Werte der Kampagne und kostet eine Neugenerierung,
-deshalb vorher ausdrücklich bestätigen lassen. Eine neue Sequenz-Übertragung ersetzt die Sequenz in
+der Reihenfolge Offer → Betreff → Opener-Angle → CTA → FUP-Timing. Einen einzelnen Variablen-Prompt
+(etwa `intro`) ändert `update_ai_variable`; Änderungen an der Sequenz laufen über
+`export_campaign_blueprint` → `edit_campaign` (Vollersatz der Schritte). Erzeugte Werte bleiben
+dabei stehen; sie stammen aber aus dem alten Prompt, und sie neu zu generieren kostet erneut,
+deshalb das vorher ausdrücklich bestätigen lassen. Eine neue Sequenz-Übertragung ersetzt die Sequenz in
 Instantly samt dort angelegter Varianten.
 
 ## Phase 6: Rückmeldung nach ListM8

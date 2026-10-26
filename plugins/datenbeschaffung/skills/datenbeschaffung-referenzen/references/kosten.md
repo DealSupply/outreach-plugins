@@ -34,6 +34,8 @@
 | 1.000 versandfertige Leads Weg C (Scrape + Impressum-Lücke + Verify) | **5–8 $** |
 | SERP-Discovery für eine Nische DACH-weit (Wege A/B) | **unter 1 $** |
 | 500 LinkedIn-Profile Full | **~1,60 $** |
+| SaaS einer Großstadt, alle Größen (Weg F) | **2,50 bis 4 $** |
+| SaaS DACH, 11 bis 200 Mitarbeiter (Weg F) | **etwa 20 $** |
 
 ## Was Kosten unnötig treibt (vermeiden)
 
@@ -74,6 +76,11 @@ Place-Preis enthalten; Rezensions-Stichworte nur mit den Ortsdetails (fallen mit
 | LinkedIn-Firmensuche Full, 40 Firmen | 0,12 $ | Maschinenbau BW |
 | LinkedIn-Personensuche Short, 50 Profile | 0,10 $ (2 Suchseiten) | Coaches BW |
 | B2B-Datenbank `peakydev`, 100 Leads (Minimum) | 0,22 $ | Maschinenbau BW |
+| LinkedIn-Firmensuche Short, Hamburg Branche Software komplett (1.427 Firmen, 4 Größenklassen) | 1,36 $ | SaaS Hamburg, 14.10.2026 |
+| LinkedIn-Firmendetails, 387 bzw. 514 Firmen | 1,16 $ bzw. 1,54 $ | SaaS Hamburg, Berlin/München |
+| LinkedIn-Zählung eines Segments (`maxItems: 1`) | 0,0015 $ | 14.10.2026 |
+| Website-Suche über SERP, 116 Firmen | 0,057 $ | Startbase-Stichprobe |
+| OMR Reviews (alle 14.023 Produkte), Startbase, `sitz_check.py` | 0 $ | lokal, ohne Apify |
 | Impressum haketa, 40 Domains | 0,068 $ | LinkedIn-Firmen |
 | Instagram Hashtag-Beiträge 50 / Profile 27 | 0,075 $ / 0,043 $ | Coaches |
 | E-Mail-Verifizierung 200 Adressen | 0,12 $ | GOLD; **im kostenlosen Plan 20 $** |

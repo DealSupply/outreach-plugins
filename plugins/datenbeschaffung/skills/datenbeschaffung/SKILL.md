@@ -69,7 +69,8 @@ einem Satz Begründung vorlegen, nicht den ganzen Baum erklären.
 | Zielgruppe | Weg-Skill |
 |---|---|
 | Lokale Betriebe, Handwerk, Praxen, Gastro, auch Agenturen und Kanzleien mit Google-Maps-Eintrag | `weg-c-local-maps` (bringt Bewertung und Rezensionen mit, deshalb erste Wahl, wo ein Maps-Eintrag üblich ist) |
-| B2B-Firmen ohne typischen Maps-Eintrag (Beratungen, IT, SaaS, Web-präsent) | `weg-a-b2b-google` |
+| B2B-Firmen ohne typischen Maps-Eintrag (Beratungen, IT-Dienstleister, Web-präsent) | `weg-a-b2b-google` |
+| Software- und SaaS-Firmen, auch „alle SaaS in DACH“ | `weg-f-saas` (OMR Reviews und Startbase kostenlos, dazu LinkedIn-Firmen; keine Quelle allein findet mehr als etwa ein Viertel) |
 | Industrie, Hersteller, Maschinenbau | zuerst `weg-c-local-maps` mit deutschem Branchenwort und Bundesland (Test: 85 % passend, 95 % mit Adresse); trägt Maps nicht, LinkedIn-Firmensuche plus `impressum-enrichment` oder `weg-a-apollo` (Datenbank) |
 | E-Commerce, Onlineshops | `weg-b-ecom-google`; Beratung ohne Scrape: `weg-b-storeleads` |
 | Coaches und Personal Brands | `weg-d-coaches-google`, `weg-d-coaches-linkedin`, `weg-d-instagram-google`, `weg-d-instagram-hashtag` |

@@ -55,24 +55,46 @@ ihm mit `art` und `grund`, was zu tun ist.
   - Austauschtest: Der Anker passt auf zehn andere Betriebe derselben Branche in der Stadt
     (Standardleistung, auch mit angehängtem Nutzen, oder Leistungsaufzählung).
   - Sperrliste: Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten.
-  - Positiver Schluss: fehlt, ist leer oder eine Floskel bzw. ein Superlativ („finde ich stark“,
-    „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“, „das spricht für
-    sich“), ist ein Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „so
-    einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft
-    man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“), ist eine Reaktion ohne
-    benanntes Detail, oder er behauptet etwas, das nicht direkt aus dem Detail folgt („deine
-    Patienten lieben das“). Erlaubt sind Nutzen oder Wirkung und, wo sich keiner anbietet, eine kurze
-    Reaktion in der Vergangenheit am benannten Detail („das fand ich eine schöne Idee“); „finde ich
-    stark“ ist dagegen eine Formel. Der Fallback-Satz der Kampagne steht wörtlich und ohne Schluss.
+  - Positiver Schluss (Rangfolge: kein Schluss, wenn das Detail selbst ein Lob ist oder der feste
+    Folgesatz lobt; sonst eine kurze Reaktion am Detail; eine Würdigung nur ausnahmsweise mit
+    etwas Neuem und Konkretem). Verstoß ist ein Schluss, der eine Floskel oder ein Superlativ ohne Detail
+    ist („finde ich stark“, „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“,
+    „das spricht für sich“), eine Würdigung im Gutachten-Ton oder als Folgerung über Ausrichtung,
+    Erfahrung oder Qualität („das zeigt, wie klar der Betrieb auf seine Kundschaft ausgerichtet ist“,
+    „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“, „macht das Angebot schön
+    konkret“, „ein bemerkenswert breiter Zuschnitt“), die das Detail nur noch einmal sagt, ein Vergleich
+    mit anderen Betrieben ohne Beleg („hebt dich von jeder anderen Agentur ab“, „bietet sonst kaum ein
+    Studio an“), Seltenheit im allgemeinen „man“ („erlebt man nicht oft“), Würdigung und Reaktion
+    hintereinander, ein Mechanik-Nutzen in jeder Satzform (ein Schluss, der erklärt oder ausmalt, was
+    Kunden dank des Details tun können oder sich sparen: „so können sich Interessierte vorab ein Bild
+    machen“, „so bekommen Kunden schneller einen Termin“, „das spart Berufstätigen den Urlaubstag“), ein
+    leeres Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „so einen Schnitt
+    hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „zeigt, dass die Behandlung
+    ankommt“), eine Reaktion, vor der im selben Satz kein Detail steht, oder eine Behauptung, die nicht
+    direkt aus dem Detail folgt („deine Patienten lieben das“). Kein Befund: ein fehlender Schluss; eine
+    kurze Reaktion in der Vergangenheit am Detail („das fand ich richtig schön“, „das ist mir direkt
+    hängen geblieben“; „richtig“ ist keine Übertreibung), auch eine eigene kurze Reaktion im selben Ton statt der
+    vorgeschlagenen Form („da musste ich direkt schmunzeln“), solange sie zum Anker passt und keine
+    Floskel ist; eine Würdigung mit konkretem neuem Inhalt („da steckt
+    richtig viel Handarbeit drin“). Ein Schluss hinter einem Lob aus Bewertungstexten, einer
+    Auszeichnung oder neben einem lobenden festen Folgesatz lobt doppelt: Hinweis (`text`). Eine
+    übertriebene Reaktion („total begeistert“), eine frei gebildete Reaktion mit deutlich mehr als sechs
+    Wörtern oder „sympathisch“ bzw. „schön“ hinter einer Bewertungszahl oder einem technischen Detail ist
+    ein Hinweis (`text`). Der Fallback-Satz der
+    Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
-    in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Taucht
-    dieselbe Reaktion bei mehreren Leads einer Kampagne auf, meldet der Bericht das als
+    in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
+    schlägt der Server je Lead aus einer festen Liste vor, eine eigene im selben Ton ist erlaubt;
+    Wiederholungen über die Kampagne sind erwartet und kein Befund, solange sie wechseln; steht in fast
+    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
+    „so können sich Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als
     systematischen Befund.
   - Sterne: Anzahl oder Schnitt bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5,
     ungerundete Zahl, Schnitt ohne Komma, der größere von zwei widersprüchlichen Werten, oder nur Zahlen, obwohl die Recherche ein Lob aus
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
-- **Copy:** Intro höchstens zwei Sätze, etwa 30 Wörter, beginnt klein, nur positiv, keine
+- **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter, EIN Detail (gestapelte Lobpunkte,
+  Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine
   internen Scores. Der feste Folgesatz schließt flüssig an. Kein heikler Aufhänger (Preis, „günstig“,
   persönliche Merkmale oder Familie von Rezensierenden, Gesundheitsdetails), auch nicht als Teil eines
@@ -104,7 +126,7 @@ Zu `ablehnen` und `hinweis` gehört immer die Art des Befunds. Sie bestimmt, wer
   falsch (Lob einer anderen Person zugeschrieben, zugespitzt, Wirkaussage, die nicht direkt aus dem
   Detail folgt, Selbstangabe als Anker,
   obwohl ein besserer belegt ist, Standardleistung oder Sperrlisten-Thema statt Abhebung, positiver
-  Schluss fehlt oder ist erfunden, Fallback passt nicht zur angeschriebenen Person).
+  Schluss erfunden oder im Gutachten-Ton, Fallback passt nicht zur angeschriebenen Person).
 - `recherche`: Für einen richtigen Text fehlt ein Beleg (Entscheider unklar, Quelle des Ankers
   ungeprüft, Rolle der angeschriebenen Person offen). `grund` nennt die offene Frage.
 - `adresse`: Die Versandadresse gehört keiner belegten Person, und die Recherche belegt eine bessere

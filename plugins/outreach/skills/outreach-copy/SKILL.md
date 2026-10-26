@@ -223,24 +223,52 @@ MUSS:
   „jedes Bad vorab als begehbarer 3D-Rundgang“ besteht.
 - Sperrliste der Kampagne: Was in den Research-Vorgaben oder im `intro`-Prompt als branchenübliche
   Leistung gesperrt ist, trägt kein Intro, außer als Lob aus Bewertungstexten.
-- Positiver Schluss: Nach der Beobachtung folgt ein kurzer Halbsatz, in dieser Rangfolge:
-  1) Nutzen oder Wirkung, wenn sie sich aus dem Detail anbietet (wem nützt es, was bewirkt es);
-  2) sonst eine kurze persönliche Reaktion, die am Detail hängt und es benennt, in der Vergangenheit
-  erzählt wie unter Kollegen, nie allein; welche Reaktion gilt, gibt der Block `SCHLUSS DES OPENERS`
-  im System-Prompt (`emailGeneration.systemPrompt`) wörtlich vor; fehlt er (älterer Server), die
-  Reaktion je Lead selbst variieren und die zwei bekannten Muster („das fand ich eine schöne Idee“,
-  „hat mir gut gefallen“) nicht wörtlich übernehmen; 3) nie ein Prüfer-Urteil über die
-  Qualität ihrer Arbeit, verboten sind etwa „das wirkt vertrauenswürdig“, „so einen Schnitt hält man
-  nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das schafft man nicht ohne sauberes
-  Arbeiten“, „zeigt, dass die Behandlung ankommt“. Nichts erfinden, nur was direkt aus dem Detail
-  folgt. Keine feste Wendung aus Beispielen: den Nutzen aus dem konkreten Detail bilden, die
-  Reaktion aus dem Block. Gilt auch bei Bewertungsankern; der Fallback-Satz bleibt ohne Schluss.
+- Positiver Schluss: Das Intro besteht aus Einstieg, Anker und Abschluss; der Abschluss ist keine
+  Pflicht. Rangfolge (Entscheidung 23.10.2026 nach Blindtests: Würdigungen gerieten in 18 von 77
+  Mails zum Gutachten oder wiederholten das Detail, Reaktionen kaum; bei Kampagne 301 kamen alle
+  Interessenten aus Intros ohne Schluss):
+  1) Kein Schluss, wenn das Detail schon selbst ein Lob ist (was Kunden in Bewertungen schreiben,
+  eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst lobt: nie zweimal
+  loben.
+  2) Sonst, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer
+  Bewertungszahl, eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
+  Vergangenheit erzählt wie unter Kollegen, im Ton der fünf Formen mit den besten Antwortquoten
+  (Prod-Dump 23.10.2026): „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“; „richtig“ ist erlaubt, Übertreibung („total begeistert“)
+  und Floskeln nicht; am Detail und nie ohne es. Sie wechselt von Lead zu Lead, nie steht in allen Mails
+  derselbe Satz: Der Block `SCHLUSS DES OPENERS` im System-Prompt (`emailGeneration.systemPrompt`)
+  schlägt je Lead eine Form vor, als Richtung und Tonlage, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel; passt der
+  Vorschlag nicht („schön“ oder „sympathisch“ hinter einer Bewertungszahl oder einem technischen
+  Detail), eine eigene bilden. Fehlt der Block (älterer Server), die Reaktion je Lead selbst variieren. Hinter einer Bewertungszahl steht immer die Reaktion.
+  3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt,
+  das nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,
+  Seltenheit als eigene Erfahrung „so eine Nachsorge ist mir noch nicht begegnet“; ebenso ein
+  Superlativ am Detail nur bei wirklich beeindruckendem Anker). Nie Gutachten-Ton und nie eine
+  Folgerung mit „das zeigt, wie …“, „das zeigt, dass …“ oder „das spricht für …“ über Ausrichtung,
+  Erfahrung oder Qualität: „du betreibst ein Herren-Kosmetikstudio mit separatem Eingang, das zeigt,
+  wie klar der Betrieb auf seine Kundschaft ausgerichtet ist“ und „seit 2004 in der Branche, das
+  spricht für viel Branchenerfahrung“ sagen das Detail noch einmal, „macht das Angebot schön
+  konkret“ urteilt wie ein Gutachten. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das
+  Faktum ohne Schluss.
+  Verboten: der Mechanik-Nutzen, also ein Schluss, der erklärt, was man dank des Details tun kann
+  („so können sich Interessierte vorab ein Bild machen“, „so kann man unverbindlich nachfragen“,
+  „so bekommen Kunden schneller einen Termin“), in jeder Satzform: ein Schluss, der ausmalt, was
+  Kunden dank des Details tun können oder sich sparen (wer, wann, wofür), auch „das spart
+  Berufstätigen den Urlaubstag für den Reifenwechsel“; Seltenheit im allgemeinen „man“ („erlebt man
+  nicht oft“) und Vergleiche mit anderen Betrieben ohne Beleg („hebt dich von jeder anderen Agentur
+  ab“, „bietet sonst kaum ein Studio an“); Lob ohne Detail („finde ich stark“, „Hammer“); doppeltes
+  Lob; Würdigung und Reaktion hintereinander; das leere Prüfer-Urteil über die Qualität ihrer
+  Arbeit, das aus dem Detail nicht folgt und auf jeden Betrieb passt („das wirkt vertrauenswürdig“,
+  „so einen Schnitt hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „das
+  schafft man nicht ohne sauberes Arbeiten“, „zeigt, dass die Behandlung ankommt“). Nichts
+  erfinden, nur was direkt aus dem Detail folgt. Keine feste Wendung aus Beispielen. Der
+  Fallback-Satz bleibt ohne Schluss.
 - Ausschließlich positiv, getragen vom konkreten Detail selbst. Verboten sind austauschbare
   Bewertungsfloskeln und Superlative wie „das spricht für sich“, „das sieht man selten“, „das sieht
   man nicht immer“, „hat man nicht alle Tage“, „finde ich stark“, „finde ich spannend“, „finde ich
   bemerkenswert“, „Hammer“, „beeindruckend“. Abgrenzung: „finde ich stark“ ist eine Formel, ein
-  gegenwärtiges Urteil ohne Inhalt; eine Reaktion in der Vergangenheit am benannten Detail ist
-  erlaubt (siehe Positiver Schluss). Die Formeln machen alle Opener gleich (ListM8-Regel, gilt
+  gegenwärtiges Urteil ohne Inhalt; eine Würdigung oder Reaktion am benannten Detail ist erlaubt,
+  Seltenheit und Superlativ nur mit dem Detail („so eine Nachsorge ist mir noch nicht begegnet“), nie allein
+  („das sieht man selten“, „beeindruckend“) (siehe Positiver Schluss). Die Formeln machen alle Opener gleich (ListM8-Regel, gilt
   zusätzlich zu den Akquise-Regeln). Auch in Beispielen und Prompts nie als Muster stehen lassen:
   Modelle kopieren Beispiele.
 - Anker-Rangfolge: 1) Lob aus Bewertungstexten (Paraphrase; Plural oder „immer wieder“ nur, wenn
@@ -248,8 +276,10 @@ MUSS:
   Stellenanzeige als Erkenntnis 3) Anzahl und Schnitt der Bewertungen als eigener Anker, nur bei
   mindestens 30 Bewertungen und einem Schnitt ab 4,5; Zahl gerundet („über 200“), Schnitt mit Komma
   („4,8“); Werte aus dem Import (Google-Profil) gelten als Quelle, bei widersprüchlichen Quellen
-  der kleinere Wert; unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen 4) Fallback der
-  Kampagne. Die Reihenfolge
+  der kleinere Wert; unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen; die Zahl kommt erst,
+  wenn weder Bewertungslob noch ein abhebendes Website-Detail besteht (eine hohe Zahl überholt keine
+  eigene Akademie und kein eigenes Verfahren), und schließt mit der Reaktion, nie mit „so können sich
+  Interessierte vorab orientieren“ 4) Fallback der Kampagne. Die Reihenfolge
   der Kampagne hat Vorrang, wo sie etwas anderes festlegt.
 - Einstiege abwechseln, keiner ist Standard: nach der letzten Ziffer der Lead-ID 0-2 „mir ist
   aufgefallen, dass …“, 3-5 „ich hab mir … angeschaut“, 6-7 „beim Stöbern auf deiner Website …“,
@@ -268,8 +298,15 @@ MUSS:
   gehört (der Podcast der Inhaberin bei einer Mail an eine Mitarbeiterin). Die Person beim
   Namen nennen oder einen Anker wählen, der zur angeschriebenen Person gehört. Meint eine
   Bewertung jemanden ohne Namen („die Zahnärztin“) und hat der Betrieb mehrere davon, das Lob
-  dem Betrieb zuschreiben („in deiner Praxis nimmt man sich Zeit“), nie „bei dir“.
-- Maximal 2 Sätze, etwa 30 Wörter, ohne Gedankenstrich (Komma statt Strich).
+  dem Betrieb zuschreiben („in deiner Praxis nimmt man sich Zeit“), nie „bei dir“. Wachstum,
+  Filialzahlen, Auszeichnungen oder Konzepte eines Franchisegebers, einer Kette oder einer
+  Muttergesellschaft gehören nicht dem angeschriebenen Standort; was der Standort selbst anbietet
+  (Verfahren, Geräte, Behandlungen) und was Kunden über ihn schreiben, bleibt ein Anker.
+- Maximal 2 Sätze, zusammen höchstens 30 Wörter (nachzählen), ohne Gedankenstrich (Komma statt
+  Strich). EIN Detail: nie zwei oder drei Lobpunkte, Projekte, Titel oder Jahreszahlen
+  aneinandergereiht; wird es zu lang, das schwächere Detail streichen, statt zu verdichten. Meist
+  ist es ein Satz, und der Schluss hängt mit einem Komma am Detail; einen zweiten Satz gibt es nur,
+  wenn der Schluss als eigener kurzer Satz besser klingt, und er trägt dann nur den Schluss.
 - Beginnt mit Kleinbuchstaben (folgt direkt auf „Hallo …,“). Nur der erste Buchstabe ist klein,
   jeder weitere Satz beginnt groß. Substantive und Namen bleiben auch am Anfang groß („Kunden
   loben …“, nie „kunden loben …“).
@@ -343,9 +380,11 @@ Der `intro`-Prompt MUSS enthalten:
   als Erkenntnis statt „du suchst“ > Anzahl und Schnitt > Fallback) samt Sterne-Regel: Zahlen
   nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, gerundet, mit Komma, Import-Werte
   als Quelle, bei Widerspruch der kleinere Wert;
-- den positiven Schluss mit Rangfolge (Nutzen oder Wirkung, sonst kurze Reaktion am benannten
-  Detail, nie ein Prüfer-Urteil über die Qualität der Arbeit) und Leitplanken (nichts erfinden,
-  keine Floskel, kein Superlativ, keine feste Wendung), ohne ausformulierte Beispiel-Schlüsse;
+- den positiven Schluss mit der Rangfolge (kein Schluss, wenn das Detail selbst ein Lob ist,
+  Kundenstimme oder Auszeichnung; sonst eine kurze Reaktion am Detail, je Lead wechselnd;
+  eine Würdigung nur ausnahmsweise mit etwas Neuem und Konkretem, nie „das zeigt, wie …“; nie ein
+  Mechanik-Nutzen, nie ein leeres Prüfer-Urteil) und Leitplanken (nichts erfinden, keine Floskel,
+  keine feste Wendung), ohne ausformulierte Beispiel-Schlüsse;
 - den Einstiegswechsel nach der letzten Ziffer der Lead-ID, mit Quelle im Einstieg bei
   Bewertungsankern;
 - die Verbotsliste aus den Intro-Regeln, einschließlich der Floskeln „finde ich spannend/stark“;

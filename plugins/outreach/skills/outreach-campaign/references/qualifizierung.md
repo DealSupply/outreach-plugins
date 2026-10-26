@@ -8,7 +8,11 @@
 
 - **target_customer_profile / fit_criteria: INKLUSIV.** „Passt, wenn …" statt „raus, wenn nicht …".
   Positive Merkmale beschreiben (Branche des KUNDEN, Größenkorridor, Region, erkennbarer Bedarf) —
-  nicht eine Checkliste, die jeder Lead vollständig erfüllen muss.
+  nicht eine Checkliste, die jeder Lead vollständig erfüllen muss. Der „Passt, wenn …"-Satz nennt ein
+  Merkmal der Zielbranche („Passt, wenn Behandlungen an Haut oder Gesicht angeboten werden"), nie eines,
+  das jede Nachbarbranche auch erfüllt („eigenständiger Betrieb mit eigenem Behandlungsangebot"): Das
+  lesen Modelle als Eintrittskarte, im Blindtest 23.10. kamen so Massagepraxen, Hotels und eine
+  proktologische Praxis in eine Ästhetik-Kampagne.
 - **disqualifiers: NUR harte No-Gos, die ein Agent öffentlich prüfen kann.** Falsche Branche,
   Wettbewerber, Konzern, Größenschwelle, kein Geschäftsbetrieb erkennbar, explizite Ausschlüsse
   des Kunden. Jeder Disqualifier muss so konkret sein, dass die Ablehnung einen benennbaren
@@ -60,6 +64,10 @@ Bei Maps-Listen gehören die typischen Nachbartreffer (Innungen, Verbände, Zeit
 Verzeichnisse) in die Disqualifier: Google Maps liefert zu einem Gewerk regelmäßig 30-40 % davon.
 Nachbarbetriebe der Branche (Labor, Handel, Zulieferer, Schulen) ausdrücklich nennen, etwa
 „Dentallabore, Zahntechnik, Dentalhandel“ bei Zahnarztpraxen: Maps mischt sie unter die Praxen.
+
+„Ablehnung nur mit konkret benanntem Disqualifier" schützt Grenzfälle der Zielbranche; ein Betrieb
+aus einer anderen Branche ist kein Grenzfall, der Server lehnt ihn auch ohne Listeneintrag ab. Die
+typischen Nachbartreffer trotzdem in die Disqualifier schreiben, das macht das Urteil stabil.
 
 `additional_prompt` ist die Zusatzanweisung der Kampagne („Zusätzliche Hinweise") und wird auch
 von der Recherche als Maßstab gelesen. Er gehört deshalb nur Formulierungen, die für beide Stufen gelten
