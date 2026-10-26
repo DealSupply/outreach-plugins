@@ -11,7 +11,7 @@ Setup ist 60 % der Arbeit. Copy ist 30 %. Send-Strategie ist 10 %. Wer die Reihe
 
 90 % der Cold Mailer machen den gleichen Fehler: Sie senden, ohne Setup. Ergebnis: Mails landen im Spam, niemand antwortet, die Kampagne wird als „funktioniert nicht" abgeschrieben. Dabei hat sie nie stattgefunden - die Mails wurden nie gelesen.
 
-Das Setup ist der Teil, den niemand sieht und der über alles entscheidet. Es kostet im empfohlenen Zuschnitt rund 100 EUR im Monat und zwei bis drei Stunden Arbeit - und ohne es ist jede Stunde Copy-Arbeit verschwendet.
+Das Setup ist der Teil, den niemand sieht und der über alles entscheidet. Es kostet im empfohlenen Zuschnitt rund 125 EUR im Monat und zwei bis drei Stunden Arbeit - und ohne es ist jede Stunde Copy-Arbeit verschwendet.
 
 **Zeitrahmen:** 2-3 Stunden Setup, dann mindestens 14 Tage Warmup. Alles andere (Listen, Kampagne und Personalisierung in ListM8) läuft parallel.
 
@@ -36,7 +36,7 @@ Das Setup ist der Teil, den niemand sieht und der über alles entscheidet. Es ko
 - [ ] Nameserver von Zapmail beim Domain-Anbieter eintragen
 - [ ] Zapmails Domain-Check abwarten: er prüft jede Domain auf Blacklist-Einträge und bereits verknüpfte Workspaces
 
-**Warum Zapmail und nicht von Hand:** Zapmail setzt SPF, DKIM und DMARC selbst, sobald die Domain verbunden ist. Der Teil, der früher pro Domain drei DNS-Einträge und einen Check bedeutete, fällt damit weg. Dazu der Preis: 10 Postfächer kosten im Starter-Plan rund 3,90 USD im Monat, einzeln gebucht wären es 6 bis 10 EUR pro Postfach. Bis 30 Postfächer skaliert der Growth-Plan.
+**Warum Zapmail und nicht von Hand:** Zapmail setzt SPF, DKIM und DMARC selbst, sobald die Domain verbunden ist. Der Teil, der früher pro Domain drei DNS-Einträge und einen Check bedeutete, fällt damit weg. Dazu der Preis: Der Starter-Plan kostet 39 USD im Monat und enthält 10 Postfächer, also rund 3,90 USD pro Postfach; jedes weitere kostet 3,50 USD (Stand 26.10.2026, zapmail.ai). Einzeln gebucht wären es 6 bis 10 EUR pro Postfach. Bis 30 Postfächer skaliert der Growth-Plan (99 USD im Monat).
 
 Was Zapmail dabei setzt - und was man kennen sollte, wenn ein Kunde fragt, warum eine Mail trotzdem im Spam landet:
 
@@ -118,14 +118,14 @@ Was ListM8 bis zur Übergabe leistet (Qualifizierung, Research, Variablen, Revie
 
 ## Kosten-Übersicht
 
-Richtwerte aus der Vorlage ohne Prüfdatum. Vor dem Kauf den aktuellen Preis beim Anbieter prüfen.
+Zapmail geprüft am 26.10.2026, die übrigen Werte sind Richtwerte aus der Vorlage ohne Prüfdatum. Vor dem Kauf den aktuellen Preis beim Anbieter prüfen.
 
 | Posten | Kosten |
 |:-------|:-------|
 | 5 Domains | ca. 50-80 EUR/Jahr |
-| Zapmail (Starter, 10 Postfächer) | ca. 3,90 USD/Monat |
+| Zapmail (Starter, 10 Postfächer) | 39 USD/Monat, jedes weitere Postfach 3,50 USD (Stand 26.10.2026) |
 | Instantly (Hypergrowth, empfohlen: 25.000 Kontakte, 100.000+ Mails/Monat) | ca. 97 USD/Monat, jährlich ca. 78 USD/Monat |
-| **Gesamt** | **ca. 100 EUR/Monat im empfohlenen Hypergrowth-Zuschnitt** — mit dem kleineren Growth-Plan (47 USD, 1.000 Kontakte) als Einstieg gut 50 EUR |
+| **Gesamt** | **ca. 125 EUR/Monat im empfohlenen Hypergrowth-Zuschnitt**; mit dem kleineren Growth-Plan (47 USD, 1.000 Kontakte) als Einstieg rund 80 EUR |
 
 Dazu kommen je nach Vorgehen die Kosten für Leads (beim Datenanbieter) und für die Verarbeitung in ListM8. Wer das Setup sparen will, spart am einzigen Teil, der nicht verhandelbar ist.
 

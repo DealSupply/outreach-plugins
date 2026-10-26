@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-26 – outreach 0.3.42
+
+**outreach**
+- `outreach-launch` (`technisches-setup`) → Zapmail-Preis korrigiert: Der Starter-Plan kostet 39 USD im Monat für 10 Postfächer (rund 3,90 USD je Postfach, jedes weitere 3,50 USD), nicht 3,90 USD für alle zehn. Geprüft auf zapmail.ai am 26.10.2026. Die Gesamtkosten des Setups steigen dadurch auf rund 125 EUR im Monat (Hypergrowth) bzw. rund 80 EUR (Growth).
+
 ## 2026-10-23 – outreach 0.3.41
 
 **outreach** (gleichauf mit dem ListM8-Server)
