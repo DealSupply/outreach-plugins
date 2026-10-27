@@ -13,13 +13,13 @@ Nenne dem Nutzer den Befehl für seine Umgebung und führe ihn aus, wo du das ka
 | Claude App / claude.ai / Cowork | Customize → Plugins → Marketplace `outreach-plugins` → „Check for updates“ bzw. „Sync automatically“ |
 | Codex | `codex plugin marketplace upgrade outreach-plugins`, danach neue Session |
 | ChatGPT Desktop | App neu starten |
-| Cursor & andere (Skills ohne Plugin) | `npx skills add RankM8/outreach-plugins` |
+| Cursor & andere (Skills ohne Plugin) | `npx skills add DealSupply/outreach-plugins` |
 
 Dauerhaft in Claude Code: `/plugin` → Marketplaces → `outreach-plugins` → Auto-Update einschalten.
 
 ## Was sich geändert hat
 
-Die Änderungen stehen in `CHANGELOG.md` im Repo `RankM8/outreach-plugins`. Nenne dem Nutzer
+Die Änderungen stehen in `CHANGELOG.md` im Repo `DealSupply/outreach-plugins`. Nenne dem Nutzer
 die Punkte seit seiner installierten Version, wenn er danach fragt.
 
 ## Wenn danach noch alte Skills auftauchen
