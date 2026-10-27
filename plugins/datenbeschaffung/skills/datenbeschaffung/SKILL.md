@@ -106,6 +106,13 @@ Query-Ausschlüsse geben: `export_leads(format="index")` bzw. `check_leads_exist
 gar nicht erst Geld kosten. `list_lists` zeigt außerdem, was bereits gescrapt und importiert wurde
 (Herkunft steht in `source` der Liste).
 
+Mit MCP auch `get_credit_balance` lesen (nur lesend): Die geplante Zahl **neuer** Leads muss in
+`account.free_slots` passen (`null` = unbegrenzt; bekannte Adressen belegen keinen Platz), sonst
+lehnt der Import ab. Das vor dem bezahlten Scrape klären: kleinere Menge, nicht benötigte Leads
+löschen (gibt Plätze sofort frei) oder Plan wechseln. Steht `account.subscription_required` auf
+`true`, gibt es kein aktives Abo und es lässt sich nichts importieren: erst einen Plan wählen, dann
+scrapen. Import und Listen kosten in ListM8 keine Credits.
+
 ## Phase 4: Kosten nennen, Freigabe einholen, Weg-Skill ausführen
 
 1. Erwartete Kosten aus `../datenbeschaffung-referenzen/references/kosten.md` kalkulieren und mit
@@ -131,13 +138,15 @@ Danach auf ausdrücklichen Verarbeitungsauftrag die Liste einer bestätigten Kam
 `research` und `email` verwenden. Vor dem Zuordnen ist der Agenten-Check aus `outreach-campaign`,
 Phase 4, Pflicht: Wunschkunde, Angebot, Passt-Kriterien, Ausschlusskriterien und Hinweise sowie die
 Recherche- und E-Mail-Anweisung müssen für diese Zielgruppe gesetzt sein. Ist die Kampagne neu,
-gehört das schon in ihr Setup, bevor gescrapt wird. Das ist ein separater Lauf mit eigenem Budget.
+gehört das schon in ihr Setup, bevor gescrapt wird. Das ist ein separater Lauf mit eigenem Preis in
+Credits (vorher `quote_lead_run`) oder ein Abo-Lauf ohne Credits.
 Keine erfundene `list_id` an `start_lead_run` übergeben und nicht automatisch alle Kampagnenleads
 auswählen. Beschaffung und Import allein starten keine Qualifizierung und versenden keine E-Mails.
 
 Bei der Übergabe eine Recherche-Tiefe für die Kampagne empfehlen (Tabelle in `datenumfang.md`):
-lokale Betriebe mit Website und Rezensionstexten kommen meist mit `quick` aus, das senkt die
-Recherchekosten deutlich. Die Einstellung ändert der Nutzer in der Kampagne (`outreach-campaign`).
+lokale Betriebe mit Website und Rezensionstexten kommen meist mit `quick` aus. Die Einstellung ändert
+der Nutzer in der Kampagne (`outreach-campaign`). Den Credit-Preis je Lead im Server-Lauf bestimmt
+die Recherche-Stufe (`basis`, `smart`, `deep`), nicht die Tiefe; verbindlich ist `quote_lead_run`.
 
 ## Berichtsform
 

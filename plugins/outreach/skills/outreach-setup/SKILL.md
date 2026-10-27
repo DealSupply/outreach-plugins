@@ -37,6 +37,18 @@ Rufe `list_campaigns` auf (nur lesend).
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
   Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
 
+Steht die Verbindung, zwei weitere lesende Aufrufe:
+
+- `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
+  Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
+  OpenRouter-Konto ab.
+- `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
+  (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
+  zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App
+  hinterlegt sein muss. In beiden Modi aus `account` die Leads im Account (`leads_in_account` von
+  `lead_limit`, `-1` = unbegrenzt) nennen. Steht `subscription_required` auf `true`, gibt es kein
+  aktives Abo: Der Nutzer wählt zuerst in der App einen Plan, sonst lässt sich nichts anlegen.
+
 ## 3. Alte Skill-Kopien aufräumen (nur Claude Code, Codex, Cursor)
 
 Frühere Installationen per `npx skills add` liegen als Kopien z. B. in `~/.claude/skills/`,
@@ -73,5 +85,6 @@ In Claude Code sind Updates fremder Marketplaces standardmäßig aus. Empfehlen:
 
 ## Abschluss
 
-Kurz berichten: Umgebung, Verbindung (ja/nein, Anzahl Kampagnen), aufgeräumte Kopien,
+Kurz berichten: Umgebung, Verbindung (ja/nein, Anzahl Kampagnen, Server-Version), Abrechnungsmodus
+(Credits mit verfügbarem Guthaben oder eigener OpenRouter-Key), Leads im Account, aufgeräumte Kopien,
 Datenbeschaffung installiert ja/nein, Auto-Update ja/nein.

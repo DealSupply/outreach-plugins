@@ -1,6 +1,6 @@
 ---
 name: outreach
-description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter.
+description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“, „wie viele Credits habe ich“, „Guthaben“, „freie Plätze“, „Credits nachkaufen“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter.
 ---
 
 # Outreach – Einstieg
@@ -31,7 +31,32 @@ und lade dann genau den passenden Skill.
 | Versand vorbereiten: Domains, Postfächer, Warm-up, Instantly, Auswertung | `outreach-launch` |
 | neue Leads beschaffen (Apify, Outscraper) | `datenbeschaffung` – gehört zum Plugin **datenbeschaffung**; ist es nicht installiert, auf `outreach-setup` verweisen |
 | prüfen, welches Offer sich mit KI liefern lässt, oder für einen Lead, der geantwortet hat, die versprochene Demo bauen (Webseiten-Entwurf, SEO, Anzeigen, Leadliste, Muster-Kampagne) | `fulfillment` – gehört zum Plugin **fulfillment**; ist es nicht installiert: `/plugin install fulfillment@outreach-plugins` (Claude Code) bzw. im Marketplace installieren |
+| Guthaben, Credits, Preise, Limits, freie Plätze im Account, Nachkauf | kein eigener Skill: direkt `get_credit_balance` (nur lesend) aufrufen und erklären, siehe unten |
 | Plugin aktualisieren | `outreach-update` |
+
+## Guthaben und Limits erklären
+
+`get_credit_balance` liefert alles in einem Aufruf:
+
+- `billing_mode`: `credits` (Plattform-Credits) oder `byok` (das Konto zahlt die KI mit dem eigenen
+  OpenRouter-Key; dann gibt es keine Credits, keine Preise und keinen Nachkauf, alle Credit-Felder sind `null`).
+- Bei `credits`: `available` (verfügbar), `reserved` (gebunden in laufenden Server-Läufen), `by_origin`
+  (Credits aus dem Abo verfallen, `next_expiry` nennt die nächsten; nachgekaufte Credits verfallen nie;
+  `debt` ist eine offene Schuld). Beträge sind Credits mit bis zu drei Nachkommastellen, keine Währung.
+- `account` (beide Modi): `leads_in_account` von `lead_limit` (`-1` = unbegrenzt), `free_slots` (so
+  viele neue Leads passen noch; `null` = unbegrenzt), `over_limit` (mehr Leads als der Plan erlaubt:
+  keine neuen, Läufe auf bestehenden Leads gehen weiter), `campaigns` von `campaign_limit`,
+  `subscription_required` (kein aktives Abo: Es lässt sich nichts anlegen, zuerst einen Plan wählen).
+  Nur neue E-Mail-Adressen belegen einen Platz. Gelöschte Leads geben ihren Platz sofort frei, schon
+  gebuchte Credits werden dafür nicht erstattet.
+- `purchase` (beide Modi): `allowed` sagt, ob der Nutzer jetzt Credits kaufen kann, `app_url` führt zur
+  Credits-Seite der App. Einen Nachkauf nur bei `allowed: true` vorschlagen; kaufen kann nur der Nutzer
+  selbst in der App. Sonst bleiben ein Planwechsel, ein günstigeres KI-Modell oder eine günstigere
+  Recherche-Stufe, oder der Abo-Lauf, der keine Credits kostet.
+
+Preise je Lead nie aus dem Gedächtnis nennen: Den verbindlichen Preis zeigt `quote_lead_run` vor einem
+Server-Lauf (`outreach-pipeline`). Wer ein Jahresabo hat, wechselt erst nach Ende der Laufzeit auf ein
+Monatsabo; mehr nicht zusagen.
 
 ## Regeln
 

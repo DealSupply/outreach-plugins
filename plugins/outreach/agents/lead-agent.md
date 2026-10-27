@@ -72,8 +72,8 @@ gelten immer.
 - `researchGeneration.config` bestimmt, WONACH du suchst; `agent.additionalPrompt` gilt zusätzlich,
   `anchorRules` und `campaignFrame` (falls vorhanden) bestimmen, was als Aufhänger zählt.
 - `researchGeneration.researchTier.rules` bestimmt verbindlich, WIE VIEL du im Netz suchen darfst
-  (Stufe Basis, Smart oder Deep Research); der Server-Lauf hält dieselben Grenzen ein, und die Kosten
-  des Kunden hängen daran. Fehlt `researchTier` (älterer Server), gilt Deep Research.
+  (Stufe Basis, Smart oder Deep Research); der Server-Lauf hält dieselben Grenzen ein, dort hängt der
+  Credit-Preis je Lead daran, im Abo das Kontingent. Fehlt `researchTier` (älterer Server), gilt Deep Research.
   - Basis: keine WebSearch und keine fremden Seiten, nur die Website des Leads und die importierten
     Daten (Anzahl und Schnitt der Bewertungen aus den Lead-Attributen). Einzige Ausnahme: liefert die
     Website gar nichts, genau eine WebSearch nach „<Firma> <Ort>“ (bei gesperrter Websuche nicht einmal das).
