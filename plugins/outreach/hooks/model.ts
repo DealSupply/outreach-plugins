@@ -53,6 +53,8 @@ export const TERMINAL_RUN = new Set([
   'completed_with_failures',
   'cancelled',
   'budget_exhausted',
+  // The only end a run comes back from: resume_lead_run picks the same run up again after a top-up.
+  'credits_exhausted',
   'limit_exhausted',
   'provider_exhausted',
   'failed',
@@ -64,7 +66,8 @@ export const RUN_STATUS_LABEL: Record<string, string> = {
   completed: 'fertig',
   completed_with_failures: 'fertig, mit Fehlern',
   cancelled: 'abgebrochen',
-  budget_exhausted: 'Budget aufgebraucht',
+  budget_exhausted: 'Lauf-Budget erreicht',
+  credits_exhausted: 'Credits aufgebraucht',
   limit_exhausted: 'Planlimit erreicht',
   provider_exhausted: 'KI-Anbieter nicht verfügbar',
   failed: 'fehlgeschlagen',
@@ -85,7 +88,32 @@ export const FIT_LABEL: Record<string, { text: string; color: string }> = {
   not_qualified: { text: 'passt nicht', color: BRAND.error },
 }
 
-/** A run from get_lead_run_status / list_lead_runs (camelCase) or start_lead_run (snake_case). */
+/**
+ * A credit amount as the server names it: the snake_case field (start_lead_run and the extras of
+ * get_lead_run_status / list_lead_runs) before the camelCase one of the run resource. An explicit
+ * null stays null (a byok run has no credits); a missing field keeps what was known before.
+ */
+const creditField = (p: Obj, snake: string, camel: string, fallback: number | null): number | null => {
+  const v = snake in p ? p[snake] : camel in p ? p[camel] : undefined
+  if (v === null) return null
+  return typeof v === 'number' && Number.isFinite(v) ? v : fallback
+}
+
+/** Credits in German notation: up to three decimals, no trailing zeros, e.g. "12,25" or "1.250". */
+export function formatCredits(n: number): string {
+  const [int = '0', frac] = (Math.round(n * 1000) / 1000).toFixed(3).replace(/\.?0+$/, '').split('.')
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  return frac ? `${grouped},${frac}` : grouped
+}
+
+/** "12,25 Credits", "1 Credit". */
+export const creditsLabel = (n: number): string => `${formatCredits(n)} ${n === 1 ? 'Credit' : 'Credits'}`
+
+/**
+ * A run from get_lead_run_status / list_lead_runs (camelCase resource plus snake_case extras),
+ * start_lead_run (snake_case) or resume_lead_run (id, run_status and lead_total only: the rest
+ * comes from the view before, the run is back from credits_exhausted).
+ */
 export function runFrom(p: Obj, previous?: RunView): RunView | null {
   const id = str(p.id) || str(p.lead_run_id)
   if (id === '') return null
@@ -105,6 +133,8 @@ export function runFrom(p: Obj, previous?: RunView): RunView | null {
     }
   })
   const isTerminal = p.is_terminal === true || TERMINAL_RUN.has(status)
+  const billingMode = p.billing_mode === 'credits' || p.billing_mode === 'byok' ? p.billing_mode : (previous?.billingMode ?? null)
+  const byok = billingMode === 'byok'
 
   return {
     id,
@@ -112,11 +142,13 @@ export function runFrom(p: Obj, previous?: RunView): RunView | null {
     status,
     stages,
     leadTotal: num(p.leadTotal ?? p.lead_total, previous?.leadTotal ?? 0),
-    spentUsd: num(p.spentUsd, previous?.spentUsd ?? 0),
-    budgetUsd: typeof (p.budgetUsd ?? p.budget_usd) === 'number' ? num(p.budgetUsd ?? p.budget_usd) : (previous?.budgetUsd ?? null),
+    spentCredits: byok ? null : creditField(p, 'spent_credits', 'spentCredits', previous?.spentCredits ?? null),
+    budgetCredits: byok ? null : creditField(p, 'budget_credits', 'budgetCredits', previous?.budgetCredits ?? null),
+    billingMode,
     isTerminal,
     isDemo: previous?.isDemo ?? false,
-    finishedAt: previous?.finishedAt ?? null,
+    // A resumed run is going again: it has not finished, whatever the view before said.
+    finishedAt: isTerminal ? (previous?.finishedAt ?? null) : null,
     server: previous?.server ?? '',
     createdAt: previous?.createdAt ?? (Date.parse(str(p.createdAt)) || Date.now()),
     appUrl: urlOf(p.appUrl) ?? previous?.appUrl ?? null,

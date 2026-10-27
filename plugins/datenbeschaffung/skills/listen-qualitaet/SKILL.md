@@ -91,7 +91,9 @@ Dem Nutzer die Stichprobe zeigen (Firma, Website, passt/passt-nicht mit einem Ha
 
 `../datenbeschaffung-referenzen/references/outreach-uebergabe.md` folgen:
 
-- MIT MCP: `check_leads_exist` (Autoritäts-Check) → `create_list` (mit Herkunft + realen Kosten) →
+- MIT MCP: `check_leads_exist` (Autoritäts-Check) → Platzprüfung wie in `datenbeschaffung`, Phase 3,
+  wiederholen, wenn die bereinigte Liste mehr neue Adressen hat als geplant (`get_credit_balance`,
+  `account.free_slots`; passt sie nicht, den Nutzer fragen, nie ungefragt `allow_partial=true`) → `create_list` (mit Herkunft + realen Kosten) →
   `import_leads(leads, list_id, attribute_mappings)` (Attributnamen genau wie in `outreach-uebergabe.md`, Schritt 3; die Google-Spalten erkennt der Import selbst) → `get_job_status` bis `completed` → Report-Zahlen
   berichten: `imported`, `linked_to_list` sowie die Anzahl der Einträge in den Listen `duplicates`
   und `do_not_contact_hits`.

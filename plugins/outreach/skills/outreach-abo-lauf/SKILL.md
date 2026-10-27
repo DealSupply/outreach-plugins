@@ -1,6 +1,6 @@
 ---
 name: outreach-abo-lauf
-description: "Führt einen Abo-Lauf aus – Leads einer Kampagne mit Agents im eigenen Claude- bzw. ChatGPT-Abo verarbeiten statt auf dem Server (keine OpenRouter-Kosten). Wird von outreach-pipeline (Laufart Abo) und outreach-verify (Prüfen im Abo) geladen; direkt verwenden bei „abo-lauf als workflow“, „workflow für leads“, „leads im workflow verarbeiten“, „abo-lauf fortsetzen“. In Claude Code als ein Workflow: Haiku baut, Sonnet prüft eine Stichprobe, Haiku bessert nach, Sonnet prüft gegen."
+description: "Führt einen Abo-Lauf aus – Leads einer Kampagne mit Agents im eigenen Claude- bzw. ChatGPT-Abo verarbeiten statt auf dem Server (keine Credits und kein OpenRouter-Guthaben, nur Abo-Kontingent). Wird von outreach-pipeline (Laufart Abo) und outreach-verify (Prüfen im Abo) geladen; direkt verwenden bei „abo-lauf als workflow“, „workflow für leads“, „leads im workflow verarbeiten“, „abo-lauf fortsetzen“. In Claude Code als ein Workflow: Haiku baut, Sonnet prüft eine Stichprobe, Haiku bessert nach, Sonnet prüft gegen."
 ---
 
 # Abo-Lauf – Leads mit Agents im eigenen Abo verarbeiten
@@ -8,7 +8,7 @@ description: "Führt einen Abo-Lauf aus – Leads einer Kampagne mit Agents im e
 Der Abo-Lauf ist die zweite, gleichwertige Laufart neben dem Server-Lauf (`start_lead_run`). Gleich sind
 Kampagne, Stufen, Lead-Auswahl, Bericht und der nächste Schritt (Stichprobe prüfen). Anders ist nur, wer
 arbeitet: Statt der Kampagnen-Agents auf dem Server bearbeitet je Lead EIN Agent in deinem KI-Tool alle
-Stufen. Das kostet kein OpenRouter-Guthaben, sondern Kontingent deines Abos, und dauert etwas länger
+Stufen. Das kostet keine Credits und kein OpenRouter-Guthaben, nur Kontingent deines Abos, und dauert etwas länger
 (30 Leads ≈ 5 Minuten). Die Sitzung muss dabei offen bleiben.
 
 Kommst du nicht über `outreach-pipeline`, zuerst dessen gemeinsame Schritte 0–2 erledigen (Umgebung und

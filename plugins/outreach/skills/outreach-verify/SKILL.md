@@ -51,7 +51,7 @@ Die Art sagt, wer einen Befund behebt: `text`, `recherche` und `adresse` werden 
    Nutzer die Urteile gesehen hat, „entscheiden“; dann setzt der Agent `approved` bzw. `rejected`.
 4. **Nachbessern (Standard, ohne Rückfrage):** Kleine Fehler werden behoben, nicht dem Nutzer vorgelegt.
    - Für jedes Urteil `ablehnen` oder `hinweis` mit `art=text|recherche|adresse` je Lead ein
-     `outreach:lead-agent` (Haiku, Abo, keine Server-Kosten) mit dem Auftrag
+     `outreach:lead-agent` (Haiku, Abo, keine Credits) mit dem Auftrag
      „Kampagne <id>, Lead <id> (<Firma>). Server: <name>. Nachbessern: art=<art>, Befund: <grund>“.
      Er schreibt eine neue Version (`save_lead_variables`), recherchiert bei `recherche` gezielt nach und
      stellt bei `adresse` die Versandadresse auf die belegte um. Höchstens 10 gleichzeitig. Gibt es

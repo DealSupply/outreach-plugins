@@ -97,7 +97,12 @@ vorhandene Attribut mappen: `{"action":"map_existing","fieldKey":"<bestehender_k
 Der Job-Report (`result` aus `get_job_status`) liefert die Zahlen `imported`, `consolidated` und
 `total`, dazu `linked_to_list` und die **Listen** `duplicates` (nur verlinkt, nie doppelt),
 `internalDuplicates`, `do_not_contact_hits` und `errors` – davon die Anzahl der Einträge berichten.
-Importieren startet keine KI-Verarbeitung.
+Importieren startet keine KI-Verarbeitung und kostet keine Credits. Jeder neue Lead belegt aber einen
+Platz im Lead-Limit des Plans: vor dem Import `get_credit_balance.account.free_slots` gegen die Zahl
+neuer Adressen halten (bekannte belegen keinen Platz). Passt es nicht, lehnt der Server den ganzen
+Aufruf mit `limit_reached` ab; dann den Nutzer fragen (kleinerer Ausschnitt, Teilimport mit
+`allow_partial=true`, Leads löschen, Plan wechseln). Mit `allow_partial` meldet der Job-Report die
+übersprungenen Leads in `skipped_over_limit`.
 
 ### 4. Optional: direkt in eine Kampagne
 
@@ -111,7 +116,8 @@ add_leads_to_campaign(campaign_id=<id>, list_id=<id>)
 Tool höchstens 1000 Leads je Aufruf (sonst `limit_reached`); größere Listen in `lead_ids`-Chunks
 verlinken (siehe `outreach-lists`). Die Oberfläche kennt Listen noch nicht, eine Liste lässt sich
 dort nicht ganz einer Kampagne zuordnen. Danach startet
-`start_lead_run` die Qualifizierung — NICHT automatisch, der Nutzer entscheidet.
+`start_lead_run` die Qualifizierung nach einem Preis-Angebot (`quote_lead_run`), oder die Leads laufen
+als Abo-Lauf ohne Credits. NICHT automatisch, der Nutzer entscheidet.
 
 ### 5. Aufräumen nach Test-Läufen
 
@@ -122,7 +128,8 @@ delete_list(list_id=<id>, delete_leads=true, confirm_delete=true)
 ```
 
 Gelöscht werden nur nie kontaktierte Leads ohne Kampagne und ohne andere Liste — alles andere wird
-entkoppelt und gemeldet. Das gibt auch das `max_leads`-Limit wieder frei.
+entkoppelt und gemeldet. Das gibt auch die Plätze im Lead-Limit sofort wieder frei; schon gebuchte
+Credits für gelöschte Leads werden nicht erstattet.
 
 ## CSV-Fallback (kein MCP verbunden)
 

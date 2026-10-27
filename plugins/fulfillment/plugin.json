@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "description": "Das Marketing-Offer einer Kampagne liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, veröffentlichen und den Link zurück an den Lead schreiben.",
   "author": {
-    "name": "RankM8"
+    "name": "DealSupply"
   },
-  "repository": "https://github.com/RankM8/outreach-plugins",
+  "repository": "https://github.com/DealSupply/outreach-plugins",
   "keywords": [
     "fulfillment",
     "demo",
@@ -19,7 +19,7 @@
       "interface": {
         "displayName": "Fulfillment",
         "shortDescription": "Demos für Leads bauen, veröffentlichen und zurückmelden",
-        "developerName": "RankM8",
+        "developerName": "DealSupply",
         "category": "Productivity",
         "capabilities": [
           "Read",

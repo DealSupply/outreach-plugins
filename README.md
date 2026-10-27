@@ -18,25 +18,25 @@ Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim K
 **Claude Code**
 
 ```
-/plugin marketplace add RankM8/outreach-plugins
+/plugin marketplace add DealSupply/outreach-plugins
 /plugin install outreach@outreach-plugins
 /plugin install datenbeschaffung@outreach-plugins     (optional)
 /plugin install fulfillment@outreach-plugins          (optional)
 ```
 
 **Claude App / claude.ai / Cowork:** Customize → Plugins → Add marketplace →
-`RankM8/outreach-plugins` → `outreach` (und optional `datenbeschaffung`, `fulfillment`) installieren →
+`DealSupply/outreach-plugins` → `outreach` (und optional `datenbeschaffung`, `fulfillment`) installieren →
 im Plugin unter „Connectors“ die Verbindung `akquise` verbinden.
 
 **ChatGPT Desktop / Codex**
 
 ```
-codex plugin marketplace add RankM8/outreach-plugins
+codex plugin marketplace add DealSupply/outreach-plugins
 ```
 
 danach unter `/plugins` installieren und neue Session starten.
 
-**Cursor & andere Agenten (nur Skills):** `npx skills add RankM8/outreach-plugins`, die
+**Cursor & andere Agenten (nur Skills):** `npx skills add DealSupply/outreach-plugins`, die
 MCP-Verbindung separat über die App-Seite „MCP & Skills“.
 
 Nach der Installation: Skill **`outreach-setup`** aufrufen (bzw. **`datenbeschaffung-setup`** für das
@@ -48,6 +48,9 @@ Skills und Live-Ansicht erkennen ihn an seinen Tools.
 
 **Updates:** Skill `outreach-update`. In Claude Code am besten Auto-Update einschalten
 (`/plugin` → Marketplaces → `outreach-plugins`).
+
+Das Repo lag bis Oktober 2026 unter `RankM8/outreach-plugins`. GitHub leitet die alte Adresse
+weiter; bestehende Installationen aktualisieren sich ohne Neuinstallation.
 
 ## Aufbau
 

@@ -90,4 +90,7 @@ Outreach-Workflow `outreach-campaign`). Bei der Übergabe eine Empfehlung ausspr
 | Kleine Firmen ohne Rezensionen | `standard` |
 | Größere Firmen, die Informationen von Drittquellen brauchen | `deep` |
 
-Die Empfehlung ändert nichts von selbst; der Nutzer entscheidet in der Kampagne.
+Die Empfehlung ändert nichts von selbst; der Nutzer entscheidet in der Kampagne. Die Tiefe steuert
+nur das Seitenbudget der Recherche. Den Credit-Preis je Lead im Server-Lauf bestimmt die
+Recherche-Stufe (`researchAgentConfig.researchTier`: `basis`, `smart`, `deep`; im Standardmodell
+etwa 0,75, 1 bzw. 2 Credits, verbindlich ist das Angebot von `quote_lead_run`).

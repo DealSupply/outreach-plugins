@@ -9,6 +9,8 @@ import {
   STAGE_LABEL,
   appLink,
   bar,
+  creditsLabel,
+  formatCredits,
   importFrom,
   importOutcome,
   leadsThrough,
@@ -54,7 +56,7 @@ let base = 'https://outreach.akquise.de'
  */
 const SIGNATURE = ['list_leads', 'start_lead_run', 'get_lead_run_status'] as const
 const OUR_TOOLS = new Set([
-  'list_leads', 'search_leads', 'get_lead_data', 'start_lead_run', 'get_lead_run_status', 'cancel_lead_run',
+  'list_leads', 'search_leads', 'get_lead_data', 'start_lead_run', 'resume_lead_run', 'get_lead_run_status', 'cancel_lead_run',
   'list_lead_runs', 'import_leads', 'get_job_status', 'write_lead_details', 'save_lead_variables',
   'approve_lead_variables', 'reject_lead_variables',
 ])
@@ -141,16 +143,25 @@ const leadPreview = (el: El, list: LeadList) => {
   )
 }
 
-/** In the chat a started run is one line; its progress lives in the band. */
-const startLine = (el: El, run: RunView) => {
+/** What a run has charged, for the band: credits, with the run budget when there is one; null for byok. */
+const runCost = (run: RunView): string | null => {
+  if (run.spentCredits === null) return null
+  return run.budgetCredits === null
+    ? creditsLabel(run.spentCredits)
+    : `${formatCredits(run.spentCredits)}/${creditsLabel(run.budgetCredits)}`
+}
+
+/** In the chat a started (or resumed) run is one line; its progress lives in the band. */
+const startLine = (el: El, run: RunView, resumed = false) => {
   const { Box, Text, Link } = el
   const stages = run.stages.map(s => STAGE_LABEL[s.stage] ?? s.stage).join(' + ')
-  const budget = run.budgetUsd === null ? '' : ` · Budget ${run.budgetUsd.toFixed(2)} $`
+  const budget = run.budgetCredits === null ? '' : ` · Budget ${creditsLabel(run.budgetCredits)}`
+  const what = resumed ? 'Lead-Run fortgesetzt' : 'Lead-Run gestartet'
 
   return (
     <Box gap={1}>
       <Text color={BRAND.accent}>▶</Text>
-      <Text>{`Lead-Run gestartet · ${run.leadTotal} Leads · ${stages}${budget}`}</Text>
+      <Text>{[`${what} · ${run.leadTotal} Leads`, stages].filter(Boolean).join(' · ') + budget}</Text>
       <Text dimColor>· Fortschritt über dem Prompt</Text>
       {(run.appUrl !== null || run.campaignId > 0) && <Link href={runHref(run)} label="Öffnen ↗" />}
     </Box>
@@ -212,7 +223,7 @@ const bandRow = (el: El, run: RunView, step: number) => {
           {failed > 0 && <Text color={BRAND.error} wrap="truncate-end">{`· ${failed} Fehler`}</Text>}
         </Box>
         <Box flexShrink={0} gap={2} marginLeft={1}>
-          <Text dimColor>{`${run.spentUsd.toFixed(2)} $`}</Text>
+          {runCost(run) !== null && <Text dimColor>{runCost(run)}</Text>}
           {(run.appUrl !== null || run.campaignId > 0) && <Link href={runHref(run)} label="Öffnen ↗" />}
         </Box>
       </Box>
@@ -229,7 +240,7 @@ const bandRow = (el: El, run: RunView, step: number) => {
 const funnelRun = (el: El, run: RunView, step: number) => {
   const { Box, Text, Link } = el
   const color = RUN_COLOR(run)
-  const budget = run.budgetUsd === null ? '' : `/${run.budgetUsd.toFixed(2)}`
+  const cost = runCost(run)
   const head = run.isTerminal ? (RUN_STATUS_LABEL[run.status] ?? run.status) : `${run.leadTotal} Leads`
 
   return (
@@ -240,7 +251,7 @@ const funnelRun = (el: El, run: RunView, step: number) => {
           <Text color={color}>{`· ${head}`}</Text>
         </Box>
         <Box gap={2}>
-          <Text dimColor>{`${run.spentUsd.toFixed(2)}${budget} $`}</Text>
+          {cost !== null && <Text dimColor>{cost}</Text>}
           {(run.appUrl !== null || run.campaignId > 0) && <Link href={runHref(run)} label="Öffnen ↗" />}
         </Box>
       </Box>
@@ -884,9 +895,9 @@ const cardFor = (el: El, name: string | null, output: unknown, key: string) => {
   if (name === 'list_leads' || name === 'search_leads' || name === 'get_lead_data') {
     const list = leadsFrom(payload)
     card = list && list.leads.length > 0 ? leadPreview(el, list) : null
-  } else if (name === 'start_lead_run') {
+  } else if (name === 'start_lead_run' || name === 'resume_lead_run') {
     const run = runFrom(payload)
-    card = run ? startLine(el, run) : null
+    card = run ? startLine(el, run, name === 'resume_lead_run') : null
   } else if (name === 'import_leads' || name === 'get_job_status') {
     const job = importFrom(payload)
     card = job ? importLine(el, [job]) : null
@@ -1052,7 +1063,8 @@ export const register: Register = (on, options) => {
       if (listed !== null) await putActiveRuns($, listed, server)
       return ran
     }
-    const isRun = name === 'start_lead_run' || name === 'get_lead_run_status' || name === 'cancel_lead_run'
+    // resume_lead_run brings a credits_exhausted run back: putRun keeps the view before, the band asks again.
+    const isRun = name === 'start_lead_run' || name === 'resume_lead_run' || name === 'get_lead_run_status' || name === 'cancel_lead_run'
     if (!isRun) return ran
     const payload = payloadOf(ran.result)
     if (payload !== null) {

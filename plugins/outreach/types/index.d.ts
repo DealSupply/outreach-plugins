@@ -15,8 +15,12 @@ export type RunView = {
   status: string
   stages: StageView[]
   leadTotal: number
-  spentUsd: number
-  budgetUsd: number | null
+  /** Credits the run has charged so far (decimal, up to three places); null for a byok run, which pays OpenRouter itself. */
+  spentCredits: number | null
+  /** The run budget in credits from budget_percent; null without one and for a byok run. */
+  budgetCredits: number | null
+  /** How the run is paid: platform credits or the customer's own OpenRouter key (byok); null while unknown. */
+  billingMode: 'credits' | 'byok' | null
   isTerminal: boolean
   isDemo: boolean
   finishedAt: number | null

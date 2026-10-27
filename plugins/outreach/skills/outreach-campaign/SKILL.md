@@ -156,7 +156,7 @@ Fehler sind MCP-Tool-Results mit `isError: true`; der Text beginnt mit `<code>:`
 | Code | Aktion |
 |------|--------|
 | `validation_failed` | Fehlerliste lesen (Pflichtfelder, Längen, Namens-Regex, Prompt-Länge, unbekannter `agentKey`, `salutation`), Blueprint korrigieren, erneut senden |
-| `limit_reached` | Nutzer informieren (Kampagnen-Limit bzw. Variablen-/Step-Limit des Plans) |
+| `limit_reached` | Nutzer informieren: Kampagnen sind mit Abo unbegrenzt; das Kampagnen-Limit greift nur ohne aktives Abo bzw. hinter der Paywall (`get_credit_balance.account`: `campaigns`, `campaign_limit`, `subscription_required`), dann zuerst einen Plan wählen. Sonst Variablen- oder Step-Grenze je Kampagne |
 | `confirm_overwrite_required` | Nutzer fragen, ob überschreiben, dann `confirm_overwrite=true` — nur bei genau diesem Code |
 | `campaign_not_found` | `campaign_id` prüfen (`list_campaigns`) |
 | `insufficient_scope` / `access_denied` | Token ohne Berechtigung: Scope `campaigns:write` (Lesen: `campaigns:read`) nötig |

@@ -66,6 +66,10 @@ setzen, wenn der User es für diese Kampagne will, z. B. `deep` für größere B
 Bewertungen“ im Fokus wirkt bei Basis und Smart über die Import-Werte und die eine Smart-Suche, nicht
 über zusätzliche Suchen.
 
+Die Stufe bestimmt auch den Credit-Preis je Lead im Server-Lauf (im Standardmodell etwa Basis 0,75,
+Smart 1, Deep 2 Credits; verbindlich ist das Angebot von `quote_lead_run`). `deep` deshalb nur mit
+Zustimmung des Nutzers setzen. Im Abo-Lauf kostet keine Stufe Credits, Deep braucht dort mehr Kontingent.
+
 ## Anti-Muster
 
 - „Alles über die Firma herausfinden" — der Agent verbrennt Budget auf Irrelevantem.
