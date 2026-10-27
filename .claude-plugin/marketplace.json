@@ -1,6 +1,6 @@
 {
   "name": "outreach-plugins",
-  "owner": { "name": "RankM8" },
+  "owner": { "name": "DealSupply" },
   "metadata": { "description": "Plugins für Outreach: Kampagnen bauen, Leads verarbeiten, Leads beschaffen, Marketing-Offers liefern." },
   "plugins": [
     {

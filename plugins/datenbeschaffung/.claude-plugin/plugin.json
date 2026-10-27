@@ -3,9 +3,9 @@
   "version": "0.4.0",
   "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und als CSV importieren.",
   "author": {
-    "name": "RankM8"
+    "name": "DealSupply"
   },
-  "repository": "https://github.com/RankM8/outreach-plugins",
+  "repository": "https://github.com/DealSupply/outreach-plugins",
   "license": "UNLICENSED",
   "keywords": [
     "leads",

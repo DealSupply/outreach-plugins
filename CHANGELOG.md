@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-27 – Umzug nach DealSupply (ohne neue Plugin-Version)
+
+**outreach**, **datenbeschaffung**, **fulfillment**
+- Das Repo zieht von `RankM8/outreach-plugins` nach `DealSupply/outreach-plugins`. README, Manifeste (`repository`, `author`, `developerName`), Marketplace-Owner und die Update-Skills nennen die neue Adresse. Der Marketplace heißt weiter `outreach-plugins`, die Befehle zum Aktualisieren bleiben gleich; GitHub leitet die alte Adresse weiter. Das SEO-Werkzeug RankM8 in `fulfillment` bleibt unverändert.
+
 ## 2026-10-26 – outreach 0.3.42
 
 **outreach**
