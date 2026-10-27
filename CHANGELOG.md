@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-27 – Umzug nach DealSupply (ohne neue Plugin-Version)
+
+**outreach**, **datenbeschaffung**, **fulfillment**
+- Das Repo zieht von `RankM8/outreach-plugins` nach `DealSupply/outreach-plugins`. README, Manifeste (`repository`, `author`, `developerName`), Marketplace-Owner und die Update-Skills nennen die neue Adresse. Der Marketplace heißt weiter `outreach-plugins`, die Befehle zum Aktualisieren bleiben gleich; GitHub leitet die alte Adresse weiter. Das SEO-Werkzeug RankM8 in `fulfillment` bleibt unverändert.
+
 ## 2026-10-26 – outreach 0.4.1, datenbeschaffung 0.4.1
 
 Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Server kennen `charging` nicht; dann gilt der feste Preis wie bisher.
@@ -10,6 +15,11 @@ Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Serv
 
 **datenbeschaffung**
 - `listm8-mcp.md` → „Credits je Lead“ statt „Credits zum festen Preis“.
+
+## 2026-10-26 – outreach 0.3.42
+
+**outreach**
+- `outreach-launch` (`technisches-setup`) → Zapmail-Preis korrigiert: Der Starter-Plan kostet 39 USD im Monat für 10 Postfächer (rund 3,90 USD je Postfach, jedes weitere 3,50 USD), nicht 3,90 USD für alle zehn. Geprüft auf zapmail.ai am 26.10.2026. Die Gesamtkosten des Setups steigen dadurch auf rund 125 EUR im Monat (Hypergrowth) bzw. rund 80 EUR (Growth).
 
 ## 2026-10-23 – outreach 0.3.41
 
