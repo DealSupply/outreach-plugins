@@ -72,6 +72,7 @@ plugins/
       outreach-copy       Cold-Mail-Copy-Regeln (verbindlich für campaign, generate, verify)
       outreach-import     Leads importieren
       outreach-lists      Listen verwalten
+      outreach-export     Leads einer Kampagne als Excel oder CSV
       outreach-qualify    Leads qualifizieren
       outreach-research   Leads recherchieren
       outreach-generate   Mail-Variablen erzeugen

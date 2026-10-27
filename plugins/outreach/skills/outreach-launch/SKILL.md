@@ -27,7 +27,7 @@ Referenzen und dieser SKILL.md gilt diese SKILL.md.
 | Kampagne mit Sequenz, Variablen-Prompts, Qualifizierung und Research anlegen | ListM8 | `outreach-campaign`, `outreach-copy` |
 | Qualifizieren, recherchieren, Variablen erzeugen | ListM8 | `outreach-pipeline` (`start_lead_run`) |
 | Review und Freigabe | ListM8 | `outreach-verify` (`approve_lead_variables`, `reject_lead_variables`) |
-| Übergabe an Instantly: CSV-Export oder Push (Verknüpfung, Variablen-Zuordnung, Sequenz-Übertragung, Lead-Push) | ListM8-Oberfläche, Reiter „Instantly" der Kampagne | kein MCP-Tool |
+| Übergabe an Instantly: Push (Verknüpfung, Variablen-Zuordnung, Sequenz-Übertragung, Lead-Push) oder CSV-Export | Push: ListM8-Oberfläche, Reiter „Instantly" der Kampagne; CSV: Oberfläche oder MCP | Push: kein MCP-Tool; CSV: `outreach-export` (Zweck `sending`) |
 | Domains, Postfächer, DNS, Warm-up | beim Kunden (Domain-Anbieter, Zapmail, Instantly) | `references/technisches-setup.md` |
 | Versand, Zeitplan, Limits, A/B-Varianten | Instantly | `references/launch-und-optimierung.md` |
 | Antworten, Nachtelefonieren, Termine | Postfach, Telefon, CRM | `references/launch-und-optimierung.md` |
@@ -70,7 +70,8 @@ abhaken.
    Pflicht-Platzhalter blockieren den Push), die Vorschau mit einem freigegebenen Lead ansehen,
    dann die Leads pushen. Auto-Push überträgt Freigaben aus der Oberfläche sofort; nach Freigaben
    über den MCP das offene Delta (Pipeline-Streifen „Ausstehend") per Push-Button übertragen.
-   Ohne Integration: CSV-Export der Kampagne in Instantly hochladen und die Variablen dort zuordnen.
+   Ohne Integration: CSV-Export der Kampagne (`outreach-export`, Zweck `sending`, `scope="approved_new"`,
+   `mark_exported=true`) in Instantly hochladen und die Variablen dort zuordnen.
 4. Übertragene Leads tragen danach den Kontaktstatus `exported_to_instantly` (prüfbar mit
    `search_leads(contact_status="exported_to_instantly")`).
 

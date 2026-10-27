@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-27 – outreach 0.5.0
+
+Passt zu ListM8 MCP 4.4.0 (Kampagnen-Export als Datei). Ältere Server kennen `export_campaign_leads` nicht; dann verweist der Skill auf den Export in der App.
+
+**outreach**
+- Neu `outreach-export` → Leads einer Kampagne als Excel oder CSV, wie der Export-Dialog der App: Zweck (`sending`, `overview`, `crm`), Umfang, erst `dry_run` mit Zahlen und Ausschlussgründen, dann Datei im Hintergrund, `get_lead_export` bis `ready`, Download per `curl` oder Link (24 Stunden, ohne Anmeldung). Markieren als exportiert nur auf Wunsch, beim ersten Download.
+- `outreach` → leitet „als Excel/CSV exportieren“ an `outreach-export`.
+- `outreach-lists` → Kampagnen-Export verweist auf `outreach-export`; `export_leads` bleibt für Bestand, Listen und Abgleichsindex.
+- `outreach-launch` → Übergabe ohne Instantly-Integration per `outreach-export` (Zweck `sending`, noch nicht exportierte Freigaben, markieren).
+
 ## 2026-10-27 – Umzug nach DealSupply (ohne neue Plugin-Version)
 
 **outreach**, **datenbeschaffung**, **fulfillment**
