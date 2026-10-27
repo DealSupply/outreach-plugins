@@ -5,7 +5,7 @@
 Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Server kennen `charging` nicht; dann gilt der feste Preis wie bisher.
 
 **outreach** (Richtpreise)
-- `outreach-pipeline` → das Angebot nennt in `charging` die Abrechnungsart: `fixed` bucht den Preis genau, `guide` ist ein Richtpreis (jede Stufe bucht ihren Aufwand, mindestens den Richtpreis, höchstens das Doppelte). Bei `guide` alle Preise als ca.-Angabe nennen; `max_credits` ist die Summe zu diesen Preisen, keine Obergrenze mehr. `effort_not_priced` gibt es nur noch bei Festpreisen. Abbruch und Statusbericht: bei Richtpreisen kann `spent_credits` über Preis mal Leads liegen, höchstens beim Doppelten.
+- `outreach-pipeline` → das Angebot nennt in `charging` die Abrechnungsart: `fixed` bucht den Preis genau, `guide` ist ein Richtpreis (jede Stufe bucht ihren Aufwand, mindestens den Richtpreis, höchstens das Doppelte). Bei `guide` alle Preise als ca.-Angabe nennen; `estimated_credits` ist die Summe zu diesen Preisen (Untergrenze), `max_credits` die echte Obergrenze (das Doppelte). Den Teil über dem Richtpreis bucht der Server nur bis zum freien Guthaben und zum Lauf-Budget. `effort_not_priced` gibt es nur noch bei Festpreisen. Abbruch und Statusbericht: bei Richtpreisen kann `spent_credits` über Preis mal Leads liegen, höchstens beim Doppelten und nie über `budget_credits`.
 - `outreach-research`, `outreach-qualify`, `outreach-generate`, `outreach-launch` → „Credits je Lead“ statt „Credits zum festen Preis je Lead“.
 
 **datenbeschaffung**
