@@ -345,6 +345,75 @@ einer Bewertungsfloskel abzuschließen). Gründungsjahr mit seinem Ereignis und 
 Tatsachen und erlaubt. Sie
 verschärfen die Regeln oben und gelten mit.
 
+## Chance-Winkel (nur KI-Variablen mit Winkel `chance`)
+
+Gilt NUR für KI-Variablen, die `get_lead_data` mit `angle` = `chance` nennt (etwa `intro_chance`).
+So läuft ein A/B-Test der Intros: Mail 1 hat in Instantly mehrere Varianten, Variante A nutzt
+`{{ai.intro}}`, Variante B die Chance-Variable; Instantly verteilt die Varianten beim Versand.
+Jeder Lead bekommt alle Variablen. Alle anderen Variablen, auch das normale `intro`, folgen allein
+den Intro-Regeln oben. Maßgeblich ist der Server: Hat die Kampagne eine Chance-Variable, enthält
+`emailGeneration.systemPrompt` den Block „CHANCE-WINKEL (nur für KI-Variablen mit Winkel chance)“;
+dieser Abschnitt ist die Gedächtnisstütze dazu. Die Chance-Variable steht in ihrer Variante
+anstelle des normalen Intros direkt vor dem festen Folgesatz: für sich allein schreiben, ohne
+Bezug auf `intro`.
+
+Chance heißt: Lob für eine belegte Stärke plus genau EINE eigene, belegte Beobachtung zur
+Website. Die Stärke ist dort kaum oder nicht zu sehen, oder Buchen (außerhalb der Hotellerie:
+Termine) geht dort nur per Anfrage, Telefon oder Mail. Die Beobachtung ist der Grund für den
+festen Folgesatz („Deswegen war ich so frei …“), kein Urteil.
+
+Beide Seiten brauchen einen Beleg aus der Recherche:
+
+- Stärke: ein Anker nach den Intro-Regeln oben, der den Austauschtest besteht (Lob aus
+  Bewertungstexten mit Inhalt, Anzahl und Schnitt ab 30 Bewertungen und 4,5, Auszeichnung,
+  belegtes abhebendes Detail). Quelle meist der Abschnitt `BEWERTUNGEN EXTERN` des Berichts.
+- Beobachtung: steht so im Abschnitt `WEBSITE-BEFUND` des Berichts, als
+  „Bewertungen oder Gästestimmen auf der Website: nein“ (nur zusammen mit einer Stärke aus
+  Bewertungen; eine Auszeichnung nur, wenn der Befund ausdrücklich sagt, dass die Website sie nicht
+  nennt) oder als „Online-Buchung: nur Anfrageformular“ bzw. „nur Telefon oder Mail“ (passt zu
+  jeder belegten Stärke). Sie muss zum Angebot der Kampagne passen; sind beide belegt, genau eine.
+
+**Rückfall auf Lob (Pflicht):** Fehlt einer der beiden Belege, entsteht ein Lob-Intro genau nach
+den Intro-Regeln oben. Das gilt bei fehlendem `WEBSITE-BEFUND`, bei „unklar“, wenn die Website die
+Stärke schon zeigt („ja“), wenn kein Anker trägt (dann der Fallback-Satz) und wenn die Beobachtung
+nicht zum Angebot passt. Aus dem Schweigen eines Berichts wird nie ein „nein“. Der Wert bleibt in
+der Chance-Variable und geht in Variante B hinaus; Instantly wertet nach Variante aus, ListM8 zeigt
+den Anteil der Rückfälle.
+
+Was bei einer Chance-Variable von den Intro-Regeln oben abweicht (nur für ein belegtes Chance-Intro):
+
+- Kein Schluss, keine Reaktion, keine Würdigung: Das Intro endet mit der Beobachtung.
+- Genau eine beobachtende Aussage zur Website ist erlaubt, als eigene Wahrnehmung oder schlichte
+  Tatsache („auf eurer Website hab ich davon kaum etwas gefunden“, „bei dir geht Buchen bisher nur
+  per Anfrage“). Nur darin dürfen „kaum“, „nichts“, „nicht“, „nur“, „bisher“, „noch nicht“ stehen.
+- Höchstens 2 Sätze, zusammen höchstens 35 Wörter.
+
+Was weiter gilt, auch in der Beobachtung: nie „Problem“, „Lücke“, „Hürde“, „leider“, „schade“,
+„fehlt“, „verschenkt“, „Potenzial“; kein Rat, kein Konjunktiv-Wunsch („wäre schön“, „ihr
+könntet“); kein „obwohl“, „trotzdem“, „dabei“ als Vorwurf; keine Folge („dadurch gehen Buchungen an
+Booking“) und keine Vermutung über Gründe, Interna, Umsatz oder Provisionen; nie unwahre Nähe („ich
+verfolge euch schon länger“, „ich kenne euch schon lange“). Einstieg nach `EINSTIEG DES OPENERS`,
+Bewertungsanker mit Quelle im Einstieg, erster Buchstabe klein, Komma statt Strich, Pronomen nach
+der Anrede (Person du, Betrieb mit Team ihr/euer, Sie-Kampagnen „auf Ihrer Website“, „bei Ihnen“).
+Die Beobachtung gilt der Website, nie der begrüßten Person („du zeigst sie nicht“ ist falsch);
+betreut laut Recherche eine Agentur die Website, wird sie nicht erwähnt.
+
+Beispiele (erfunden, nur Struktur, nie wörtlich übernehmen):
+
+- du, Hotel mit Team: „ich hab mir eure Bewertungen bei Google angeschaut, über 300 mit einem
+  Schnitt von 4,8, auf eurer Website bin ich darauf nicht gestoßen.“
+- du, Hotel mit Team: „ich hab mir eure Bewertungen bei HolidayCheck angeschaut, und jemand lobt den
+  Blick vom Balkon auf den See, buchen kann man bei euch bisher nur per Anfrage.“
+- Sie, Hotel: „ich habe mir Ihre Bewertungen bei Booking angeschaut, und jemand lobt das Brot aus
+  der eigenen Backstube, gebucht wird bei Ihnen bisher nur per Anfrage.“
+- falsch: „die Gäste lieben das Haus, leider fehlt auf der Website eine Online-Buchung, da wird viel
+  Potenzial verschenkt.“ (Lob ohne Inhalt, Defizit-Wörter, Urteil)
+
+**Speichern:** `save_lead_variables` nimmt für jede Chance-Variable den geschriebenen Winkel in
+`angles` an (Pflicht), z. B. `angles: {"intro_chance": "chance"}`: `"chance"` nur für ein Intro
+mit Stärke und Beobachtung, jeden Rückfall als `"lob"`. Der Winkel ist keine Variable und steht
+nie im JSON der Variablen.
+
 ## Prompts der AI-Variablen `hallo` und `intro`
 
 Pflicht sind genau diese zwei Variablen (`sortOrder` 1 und 2). Weitere sind optional (z. B.
