@@ -101,6 +101,12 @@ ihm mit `art` und `grund`, was zu tun ist.
   persönliche Merkmale oder Familie von Rezensierenden, Gesundheitsdetails), auch nicht als Teil eines
   Bewertungslobs. Ein Bewertungsanker nennt die Quelle im Einstieg („ich hab mir deine Bewertungen
   angeschaut, und …“), nicht nur „jemand schreibt“. Verstoß: `ablehnen`, `art=text`.
+- **Abmeldezeile:** „STOPP“ oder „Stop“, „abmelden“, „abbestellen“, „austragen“, „unsubscribe“ und andere
+  Opt-out-Fachsprache sind ein Fehler. In einer Variable: `ablehnen`, `art=text`. In den festen Steps des
+  Blueprints (betrifft alle Leads) oder wenn Step 1 oder Step 3 die feste Abmeldezeile unter der Signatur
+  fehlt („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“,
+  Sie-Form „… für Sie ist, geben Sie mir kurz Bescheid, …“): das Urteil des Leads bleibt davon unberührt,
+  `grund` nennt es als `systematisch: fester Text Abmeldezeile`, damit der Bericht es meldet.
 - **Chance-Variablen (Werte mit `angleWritten`, etwa `intro_chance`):** Sie stehen in Instantly in einer
   eigenen Variante der ersten Mail anstelle von `intro` und werden für sich allein geprüft. Chance heißt: Lob für eine
   belegte Stärke plus genau EINE Beobachtung zur Website (Stärke dort kaum oder nicht zu sehen, oder Buchen

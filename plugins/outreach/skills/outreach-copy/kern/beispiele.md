@@ -41,6 +41,8 @@ Viele Grüße
 Jonas Weber
 Inhaber - Weber Webdesign
 
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+
 ## Step 1: Entry Mail, Variante B
 
 Betreff: kurze Frage
@@ -58,6 +60,8 @@ Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
 Viele Grüße
 Jonas Weber
 Inhaber - Weber Webdesign
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
 
 Variante B ändert nur einen Hebel: die Offer-Formulierung aus Sicht der Patienten statt als
 Funktionsliste.
@@ -89,6 +93,8 @@ Falls das für deine Praxis auch ein Thema ist, melde dich gerne.
 Viele Grüße
 Jonas Weber
 Inhaber - Weber Webdesign
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
 
 ## Step 4: Abschied mit Routing-Hinweis
 
@@ -136,6 +142,8 @@ Viele Grüße
 Tobias Kern
 Co-Founder - Kern Media
 
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+
 ## Step 1: Entry Mail, Karte C
 
 Betreff: kurze Frage
@@ -154,6 +162,8 @@ Viele Grüße
 Lena Brandt
 Geschäftsführerin - Brandt Online Marketing GmbH
 
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+
 ## Step 1: Entry Mail, Karte E
 
 Betreff: Partnerschaft {{Firma}}?
@@ -169,3 +179,5 @@ Wäre das grundsätzlich interessant?
 Viele Grüße
 Felix Hartmann
 Geschäftsführer - Hartmann Architekten
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.

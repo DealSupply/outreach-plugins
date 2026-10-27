@@ -104,6 +104,7 @@ Feinheiten-Satz               4. eigener Absatz; Pflicht bei A und C, optional b
                                  entfällt bei D und E
 EIN Frage-CTA                 5. niedrige Hürde
 Signatur im Klartext          6. Grußformel, Name, „Rolle - Firma“
+Abmeldezeile                  7. nach einer Leerzeile unter der Signatur, in Step 1 und Step 3
 ```
 
 Jeder Baustein steht als eigener kurzer Absatz. **Die Mail soll klingen wie eine WhatsApp von
@@ -242,6 +243,23 @@ Folge uns auf LinkedIn | Instagram
 
 Eine aufgeblähte Signatur macht denselben Fehler wie ein Pitch-Block im Body: Sie schreit „Ich
 will dir was verkaufen“.
+
+## Abmeldezeile
+
+In den Mails, die einen Thread öffnen (Step 1 und Step 3), steht nach einer Leerzeile unter der
+Signatur genau diese Zeile, ohne „PS:“ und nie vor dem CTA:
+
+```
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+```
+
+Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid, dann melde ich mich nicht mehr.“
+
+Sie klingt wie ein Mensch, der Rücksicht nimmt, und gibt trotzdem einen klaren Weg hinaus. Nie
+Opt-out-Fachsprache in der Copy: kein „STOPP“ oder „Stop“, kein „abmelden“, „abbestellen“,
+„austragen“, „unsubscribe“ oder „Opt-out“. Das klingt nach Massenversand und Newsletter. Den
+technischen Abmeldelink (List-Unsubscribe) setzt das Versandtool zusätzlich. Die Zeile zählt nicht
+zum Wortlimit.
 
 ## Zwei Varianten für den A/B-Test
 
@@ -720,7 +738,7 @@ vages Angebot wird von dem Wort verdächtig, ein konkretes nicht.
 | kein Link in der Entry Mail | der CTA ist die Antwort; ein Link im Erstkontakt ist ein Automations-Signal |
 | keine Anhänge, keine Bilder, keine Logos | sofort verdächtig; Material erst nach der Antwort |
 | keine Großschreibung ganzer Wörter | klassisches Spam-Merkmal, besonders im Betreff |
-| Abmeldehinweis am Ende | eine schlichte Zeile, die das Versandtool anhängt oder unter der Signatur steht. Wer keinen Abmeldeweg findet, klickt auf Spam |
+| Abmeldezeile unter der Signatur | der feste, menschliche Satz aus „Abmeldezeile“ (Teil 1), keine Opt-out-Fachsprache; den technischen Abmeldelink setzt das Versandtool zusätzlich. Wer keinen Abmeldeweg findet, klickt auf Spam |
 
 Die Spam-Beschwerdequote muss unter **0,3 %** bleiben, das ist der Schwellenwert der großen
 Postfach-Anbieter. Was sie treibt, ist fast immer Copy: irreführende Betreffs, ein Offer, das die
@@ -750,7 +768,8 @@ Korrekturen erzeugen neue Fehler, besonders beim Kürzen.
    Anführungszeichen, Zeichen für Zeichen.
 7. **Spam-Scan.** Betreff und Body gegen die Liste, „kostenlos“ höchstens einmal im Body.
 8. **Struktur-Scan.** Offer nur in Step 1, Intro nur in Step 1, Social Proof nur in Step 3,
-   Feinheiten-Satz bei A und C vorhanden, Betreff nur in Step 1 und 3, kein Doppelpunkt-Opener.
+   Feinheiten-Satz bei A und C vorhanden, Betreff nur in Step 1 und 3, kein Doppelpunkt-Opener,
+   Abmeldezeile unter der Signatur von Step 1 und 3, kein „STOPP“ und keine Opt-out-Fachsprache.
 9. **Anrede-Scan.** Gruß und Pronomen passen zum Modus, kein du/ihr-Wechsel im Satz, Fallback
    „Hallo,“ für Leads ohne Vornamen geklärt.
 10. **Platzhalter-Scan.** Keine [Klammer-Felder], jeder `{{…}}`-Platzhalter ist für jeden Lead
@@ -790,6 +809,8 @@ begründet werden muss.
 | Intro nur in Step 1 | `{{Intro}}` in keinem Step ab 2 | hart |
 | Doppelpunkt-Opener | Follow-up beginnt nach dem Gruß nicht mit „…:“ | hart |
 | Umlaute | keine Transliteration (fuer, ueber, gruess, koennen, moechte, persoenlich, waere …) | hart |
+| Keine Opt-out-Fachsprache | kein „STOPP“, „Stop“, „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“, auch nicht unter der Signatur | hart |
+| Abmeldezeile | Step 1 und 3 mit der festen Abmeldezeile unter der Signatur | weich |
 
 ## Das Wichtigste
 

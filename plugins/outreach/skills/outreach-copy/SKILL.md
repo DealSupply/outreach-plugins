@@ -159,6 +159,7 @@ Feinheiten-Satz                  4. eigener Absatz; Pflicht bei A und C, optiona
                                     entfällt bei D und E
 EIN Frage-CTA                    5. niedrige Hürde
 Signatur im Klartext             6. Grußformel, Name, „Rolle - Firma“
+Abmeldezeile                     7. nach einer Leerzeile unter der Signatur (Step 1 und 3)
 ```
 
 **Feinheiten-Satz (Value Stacking), wörtlich:** „Ich bin gerade noch an den letzten Feinheiten
@@ -201,11 +202,19 @@ Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
 `{{sender.firstName}}`, `{{sender.company}}` o. Ä. (gibt es nicht). Ohne bekannten Absendernamen
 nur „Viele Grüße“. Schlank: keine Auszeichnungen, Links, Telefonnummern oder Social-Leisten.
 
+**Abmeldezeile:** In Step 1 und Step 3 (den Mails, die einen Thread öffnen) steht nach einer
+Leerzeile unter der Signatur genau diese Zeile, ohne „PS:“ und nie vor dem CTA: „Falls das gerade
+kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“ Sie-Form: „Falls
+das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid, dann melde ich mich nicht mehr.“
+Sie zählt nicht zum Wortlimit. Den technischen Abmeldelink (List-Unsubscribe) setzt das
+Versandtool zusätzlich.
+
 ## Intro-Regeln (`{{ai.intro}}`)
 
 Das Intro ist Lob oder eine anerkennende Beobachtung: ein positiver Bezug auf den Lead, der
 beweist, dass jemand hingeschaut hat, getragen von einem konkreten Detail. Es ist KEINE Kritik
 und KEIN Verbesserungsvorschlag. Das Problem sind leere Lobadjektive ohne Inhalt, nicht das Lob.
+Einzige Ausnahme sind KI-Variablen mit Winkel `chance` (Abschnitt „Chance-Winkel“ unten).
 Gründe, Gegensatzpaare und Beispiele: `references/copy-lehre.md`, Abschnitt „Abhebung und
 Austauschtest“.
 
@@ -565,6 +574,9 @@ Im Body jeder Mail:
   Update:“, „zur Erinnerung:“).
 - Keine sichtbaren Platzhalter ([Branche], [Name], `{{firstName}}`).
 - Social Proof und Case Studies NUR in Step 3, nie in Step 1.
+- Keine Opt-out-Fachsprache, auch nicht unter der Signatur: kein „STOPP“ oder „Stop“, kein
+  „abmelden“, „abbestellen“, „austragen“, „unsubscribe“ oder „Opt-out“. Stattdessen die feste
+  Abmeldezeile (siehe Anatomie).
 
 **Spam-Wörter** — im Betreff komplett verboten, im Body vermeiden: „gratis“, „100 %“,
 „garantiert“, „Garantie“, „jetzt zugreifen“, „jetzt handeln“, „begrenztes Angebot“, „nur heute“,
@@ -612,6 +624,8 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
     eingehalten?
 14. Umlaut-Scan über ALLES (Sequenz, Prompts, Konfiguration): steht irgendwo „ae“, „oe“, „ue“
     oder „ss“ als Ersatz für ä, ö, ü, ß („fuer“, „Gruesse“, „groesser“, „heisst“)? Ersetzen.
+15. Steht unter der Signatur von Step 1 und Step 3 die feste Abmeldezeile in der Anrede der
+    Kampagne, ohne „PS:“, und nirgends „STOPP“ oder andere Opt-out-Fachsprache?
 
 ## Prüfliste nach Code-Regeln
 
@@ -642,6 +656,8 @@ Hinweis, der begründet werden muss.
 | Intro nur in Step 1 | `{{ai.intro}}` in keinem Step ab 2 | hart |
 | Anrede überall | jeder Step enthält `{{ai.hallo}}` | weich |
 | Umlaute | keine Transliteration (fuer, ueber, gruess, koennen, moechte, groess, persoenlich, moeglich, waere, haette …) in Sequenz, Prompts und Konfiguration | hart |
+| Keine Opt-out-Fachsprache | kein „STOPP“, „Stop“, „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“ in Betreff, Body und unter der Signatur | hart |
+| Abmeldezeile | Step 1 und 3 enden nach der Signatur mit der festen Abmeldezeile („… dann melde ich mich nicht mehr.“) | weich |
 
 ## Verwandt
 

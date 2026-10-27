@@ -36,7 +36,7 @@ Auch nach dem Warmup ist ein Postfach nicht auf 30 Mails am Tag eingestellt. Der
 - [ ] Betreff nach `outreach-copy`: Step 1 mit 2-5 Wörtern, kein Spam-Wort, Firmenname nur als `{{ai.firma}}` (nie `{{lead.company}}`, nie `{{firstName}}`), Step 3 mit eigenem kurzem Betreff (neuer Thread), Step 2 und 4 ohne Betreff (Thread)
 - [ ] Variablen korrekt gemappt (Variablen-Zuordnung im Reiter „Instantly" vollständig, sonst blockiert der Push; Vorschau mit einem freigegebenen Lead angesehen)
 - [ ] Sperrliste geladen: Kontaktstatus in ListM8 aktuell (`do_not_contact`, bereits Kontaktierte) und Blockliste in Instantly gepflegt
-- [ ] Abmeldehinweis vorhanden, List-Unsubscribe-Header aktiv
+- [ ] Feste Abmeldezeile unter der Signatur von Step 1 und 3 (Wortlaut in `outreach-copy`, Abschnitt „Anatomie der Entry-Mail“), kein „STOPP“ und keine Opt-out-Fachsprache, List-Unsubscribe-Header aktiv
 
 Der wichtigste Punkt ist die Stichprobe der AI-Opener. Wenn dort mehr als 8 von 40 durchfallen, wird nicht gestartet, sondern der Prompt nachgeschärft: Ablehnungen mit Begründung (`reject_lead_variables`, dazu `set_lead_email_feedback`), Prompt-Änderung über `outreach-campaign` (`update_ai_variable`; erzeugte Werte bleiben stehen, die betroffenen Leads neu zu generieren kostet erneut und nur mit ausdrücklicher Zustimmung).
 
