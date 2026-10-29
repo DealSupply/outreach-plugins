@@ -377,10 +377,10 @@ Beide Seiten brauchen einen Beleg aus der Recherche:
   Bewertungstexten mit Inhalt, Anzahl und Schnitt ab 30 Bewertungen und 4,5, Auszeichnung,
   belegtes abhebendes Detail). Quelle meist der Abschnitt `BEWERTUNGEN EXTERN` des Berichts.
 - Beobachtung: steht so im Abschnitt `WEBSITE-BEFUND` des Berichts, als
-  „Bewertungen oder Gästestimmen auf der Website: nein“ (nur zusammen mit einer Stärke aus
+  „Bewertungen oder Kundenstimmen auf der Website: nein“ (nur zusammen mit einer Stärke aus
   Bewertungen; eine Auszeichnung nur, wenn der Befund ausdrücklich sagt, dass die Website sie nicht
-  nennt) oder als „Online-Buchung: nur Anfrageformular“ bzw. „nur Telefon oder Mail“ (passt zu
-  jeder belegten Stärke). Sie muss zum Angebot der Kampagne passen; sind beide belegt, genau eine.
+  nennt) oder als „Online-Buchung oder Terminbuchung: nur Anfrageformular“ bzw. „nur Telefon oder
+  Mail“ (passt zu jeder belegten Stärke). Sie muss zum Angebot der Kampagne passen; sind beide belegt, genau eine.
 
 **Rückfall auf Lob (Pflicht):** Fehlt einer der beiden Belege, entsteht ein Lob-Intro genau nach
 den Intro-Regeln oben. Das gilt bei fehlendem `WEBSITE-BEFUND`, bei „unklar“, wenn die Website die

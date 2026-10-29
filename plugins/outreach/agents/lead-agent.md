@@ -86,7 +86,7 @@ gelten immer.
     und liegen keine Rezensionstexte im Import, genau eine WebSearch „<Firma> <Ort> Bewertungen“ und
     deren Portal-Treffer wie unten per WebFetch öffnen; sonst keine Suche.
   - Deep Research: Bewertungen wie im nächsten Punkt, weitere Suchen nach Bedarf.
-  Jede Suche unter „## Research Details“ mit Suchanfrage vermerken.
+  Jede Suche unter „## Recherche-Details“ mit Suchanfrage vermerken.
 - Bewertungen (bei Deep Research ZUERST, nicht erst wenn die Website wenig hergibt; bei Smart nur in
   der einen erlaubten Suche): WebSearch nach dem Betrieb mit „Bewertungen“ liefert nur Links. Die Treffer von Bewertungsportalen
   per WebFetch öffnen (z. B. medicosearch, doktor.ch, local.ch, search.ch, jameda, docfinder,
@@ -177,8 +177,8 @@ gelten immer.
   `outreach:outreach-copy`, Abschnitt „Chance-Winkel“). Alle anderen Variablen, auch das normale `intro`, nach
   den Regeln oben. Die Chance-Variable steht in ihrer Variante anstelle von `intro`: für sich allein schreiben.
   Lob für eine belegte Stärke plus genau EINE Beobachtung, die so im Abschnitt `WEBSITE-BEFUND` der Recherche
-  steht (Bewertungen oder Gästestimmen auf der Website „nein“, Online-Buchung „nur Anfrageformular“ oder „nur
-  Telefon oder Mail“); ohne Schluss, höchstens 2 Sätze und 35 Wörter, nie „Problem“, „leider“, „schade“,
+  steht (Bewertungen oder Kundenstimmen auf der Website „nein“, Online-Buchung oder Terminbuchung „nur
+  Anfrageformular“ oder „nur Telefon oder Mail“); ohne Schluss, höchstens 2 Sätze und 35 Wörter, nie „Problem“, „leider“, „schade“,
   „fehlt“, „verschenkt“, kein Rat, keine Vermutung über Interna, nie „ich verfolge euch schon länger“. Fehlt
   ein Beleg für eine der beiden Seiten (Befund fehlt, „unklar“, „ja“, kein tragender Anker), schreib ein
   Lob-Intro nach den Regeln oben (Rückfall), in derselben Chance-Variable.

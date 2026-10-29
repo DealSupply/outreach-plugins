@@ -112,9 +112,9 @@ ihm mit `art` und `grund`, was zu tun ist.
   belegte Stärke plus genau EINE Beobachtung zur Website (Stärke dort kaum oder nicht zu sehen, oder Buchen
   bzw. Termine nur per Anfrage, Telefon oder Mail), ohne Schluss, höchstens 2 Sätze und 35 Wörter. Ein
   solches Intro ist kein Befund, solange beide Seiten belegt sind: die Stärke wie bei jedem Anker, die
-  Beobachtung wörtlich im Abschnitt `WEBSITE-BEFUND` der Recherche („Bewertungen oder Gästestimmen auf der
-  Website: nein“ zu einer Stärke aus Bewertungen, „Online-Buchung: nur Anfrageformular“ oder „nur Telefon
-  oder Mail“). „kaum“, „nichts“, „nur“, „bisher“, „noch nicht“ in dieser einen Aussage sind kein Verstoß
+  Beobachtung wörtlich im Abschnitt `WEBSITE-BEFUND` der Recherche („Bewertungen oder Kundenstimmen auf der
+  Website: nein“ zu einer Stärke aus Bewertungen, „Online-Buchung oder Terminbuchung: nur Anfrageformular“
+  oder „nur Telefon oder Mail“). „kaum“, „nichts“, „nur“, „bisher“, „noch nicht“ in dieser einen Aussage sind kein Verstoß
   gegen „nur positiv“. Regeln und Beispiele: Skill `outreach:outreach-copy`, Abschnitt „Chance-Winkel“.
   Verstoß (`ablehnen`, `art=text`) ist:
   - ein Chance-Intro ohne Beleg für beide Seiten: `WEBSITE-BEFUND` fehlt, meldet „unklar“ oder „ja“, die
