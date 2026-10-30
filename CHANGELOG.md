@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-01 – outreach 0.6.0
+
+Passt zu ListM8 MCP 4.8.0 (Close-Spiegel). Ältere Server kennen `get_close_status` und `set_close_sync` nicht.
+
+**outreach** (Close)
+- `outreach` → neuer Abschnitt „Close erklären“: Fragen zum Stand in Close beantwortet `get_close_status` (Verbindung, Leads je Status im Workspace, zuletzt fehlgeschlagene, optional der Schalter einer Kampagne); `set_close_sync` schaltet eine Kampagne an oder aus (`enabled`, optional `transfer_backlog=false`), nur auf Wunsch des Nutzers. Verbinden, Einrichten, Einstiegsstufe und Lead-Status je Stufe gibt es nur in der App, für alle Kampagnen. Leads mit `do_not_contact` kommen nie neu nach Close.
+- `outreach-launch` → Zeile „ins CRM Close spiegeln“ in „Wer macht was“.
+- `outreach-setup` → Close-Werkzeuge ab MCP 4.8.0.
+
 ## 2026-11-01 – outreach 0.5.0, datenbeschaffung 0.4.2, fulfillment 0.1.1
 
 Passt zu ListM8 v4.18.0 (MCP 4.7.0). Fasst die bisher getrennten Stände Workspaces (#11), Export (#14) und Kampagnensprache (#15) in einer Version zusammen.

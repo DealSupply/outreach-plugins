@@ -33,6 +33,7 @@ Referenzen und dieser SKILL.md gilt diese SKILL.md.
 | Domains, Postfächer, DNS, Warm-up | beim Kunden (Domain-Anbieter, Zapmail, Instantly) | `references/technisches-setup.md` |
 | Versand, Zeitplan, Limits, A/B-Varianten | Instantly | `references/launch-und-optimierung.md` |
 | Antworten, Nachtelefonieren, Termine | Postfach, Telefon, CRM | `references/launch-und-optimierung.md` |
+| Angeschriebene Leads ins CRM Close spiegeln (Stufe, Antwort, Briefing; Smart Views für die Caller) | ListM8 → Close-Org des Kunden; einrichten in der App unter Integrationen → Close | Stand per `get_close_status`, je Kampagne an/aus per `set_close_sync` (ab MCP 4.8.0) |
 | Kontaktstatus zurück nach ListM8 (kontaktiert, geantwortet, gesperrt) | ListM8 | Kontaktstatus-Sync der Instantly-Integration, sonst `mark_leads_contacted` |
 
 Der Agent kann weder Instantly noch Zapmail noch einen Domain-Anbieter bedienen. Er erklärt die
