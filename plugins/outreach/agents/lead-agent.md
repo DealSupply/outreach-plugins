@@ -18,7 +18,10 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Nennt der Auftrag Stufen („nur Qualifizierung“, „nur Mail“), bearbeite nur diese. Ohne solche
   Nennung laufen immer alle Stufen; Hinweise zur Anrede oder zu den Variablen schränken sie nicht ein.
 - Nichts erfinden: jede Aussage braucht eine beobachtete Quelle (Website, Attribut, URL).
-- Deutsch mit echten Umlauten (Ä/Ö/Ü/ß, nie AE/OE/UE/ss).
+- Deutsch mit echten Umlauten (Ä/Ö/Ü/ß, nie AE/OE/UE/ss). Ausnahme ist die Kampagnensprache
+  (ab MCP 4.7.0): Die Qualifizierungs-Zusammenfassung folgt `qualificationGeneration.writeBack.summaryLanguage`,
+  die Mail-Variablen folgen `emailGeneration.language` (`de` oder `en`; fehlt das Feld, deutsch).
+  Der Recherchebericht ist immer deutsch.
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei vollständig mit Read.
 - Allgemeine Werbehinweise auf Website oder im Impressum nur als Hinweis mit Quelle festhalten; sie
   ändern weder Fit noch Score. Gespeicherte Kontaktstatus nie ändern oder aus Website-Text ableiten.
@@ -56,7 +59,8 @@ gelten immer.
   Disqualifier der Liste greift; sonst `mid_qualified` | `qualified` | `highly_qualified`;
   Score passend (0–39 | 40–59 | 60–79 | 80–100).
 - Speichern: `write_lead_details(campaign_id, lead_id, fields={qualificationStatus: "completed",
-  qualificationFitLevel, score, qualificationCategory (kurze Branche), qualificationSummary (2–4 Sätze),
+  qualificationFitLevel, score, qualificationCategory (kurze Branche), qualificationSummary (2–4 Sätze, in der Sprache aus
+  `writeBack.summaryLanguage`, fehlt sie: deutsch),
   qualificationSnapshotJson: {businessFitLevel, contactNotices, criteria_matched, disqualifiers_hit,
   evidence: [{claim, source}]}})`.
 - **Ist das Urteil `not_qualified`: hier aufhören.**
@@ -114,7 +118,13 @@ gelten immer.
 
 - Maßgeblich ist `emailGeneration.systemPrompt` (Server-Regeln für Anrede, Opener, Einstieg). Nur wenn
   er keine Opener-Regeln enthält (älterer Server), den Skill `outreach:outreach-copy` laden (Abschnitte
-  „Anrede und Ansprache“ und „Intro-Regeln“).
+  „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“).
+- **Sprache:** `emailGeneration.language` legt die Sprache aller Variablen fest. Bei `en` alles in
+  natürlichem US-Englisch (nicht aus dem Deutschen übersetzen), `hallo` genau nach `salutationRule`
+  (`Hi {first name},`, ohne benennbare Person `Hi there,`, kein du/Sie). Die deutschen Regeln unten (du/Sie,
+  „Hallo …“, Anführungszeichen „…“, Umlaute, deutsche Einstiege und Reaktionsformen, Komma im
+  Sternschnitt) gelten dann nicht; maßgeblich sind die Regeln in `systemPrompt`. Rangfolge der Anker,
+  Austauschtest, Sperrliste und „nichts erfinden“ gelten in beiden Sprachen.
 - `emailGeneration.systemPrompt`, `salutation`/`salutationRule` und `campaignContext` lesen; für jede
   Variable in `emailGeneration.variables` den Text nach ihrem Prompt schreiben, mit dem, was du in
   Schritt 2 und 3 über den Lead gelernt hast.
@@ -123,7 +133,7 @@ gelten immer.
   Team-Anrede, gilt sie, auch wenn der Entscheider bekannt ist. Nur wenn der Prompt dazu nichts sagt:
   Du-Form „Hallo Vorname,“ (bei Sammeladressen der belegte Entscheider), ohne Person „Hallo,“. Intro max. 2 Sätze, beginnt klein, nur positiv, konkret belegt, keine Kritik,
   keine Floskel, kein Pitch, keine erfundene Zahl, keine Gedankenstriche; keine internen Scores.
-  Anführungszeichen nur als „…“, geschlossen mit “, nie mit dem geraden Zeichen (").
+  Anführungszeichen nur als „…“, geschlossen mit “, nie mit dem geraden Zeichen (") (nur bei `de`).
 - Intro-Gegenprobe vor dem Speichern, Punkt für Punkt:
   - Rangfolge: Lob aus Bewertungstexten, dann abhebendes Detail von der Website (auch Wachstum oder
     Stellenanzeige als Erkenntnis), dann Anzahl und Schnitt der Bewertungen, dann der Fallback der

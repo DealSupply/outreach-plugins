@@ -29,7 +29,8 @@ bulk_set_lead_attributes(
 ## Antwort an den Lead
 
 Der Lead hat auf die Cold-Mail geantwortet („ja, gern“). Die Antwort ist kurz, hält das Versprechen
-und stellt genau eine Frage. Anrede wie in der Kampagne (`salutation`). Keine Gedankenstriche,
+und stellt genau eine Frage. Sprache und Anrede wie in der Kampagne (`campaign.language`,
+`salutation`; in einer englischen Kampagne `Hi Vorname,` und `Best,`). Keine Gedankenstriche,
 kein Werbeton, Signatur wie in der Kampagne.
 
 **Webseiten-Entwurf (du):**

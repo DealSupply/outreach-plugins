@@ -39,7 +39,7 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
      eine Welle je Nachrichtenblock. Danach die Stichprobe wie in `outreach-verify`.
    - **Ohne `outreach:lead-agent`:** `general-purpose` mit `model: "sonnet"` (andere Clients: das günstigste Modell mit Web-Zugriff) und den
      Sub-Agent-Vorlagen aus `outreach-qualify`, `outreach-research` und `outreach-generate` nacheinander,
-     mit den Abschnitten „Anrede und Ansprache“ und „Intro-Regeln“ aus `outreach-copy` und dem Hinweis, bei
+     mit den Abschnitten „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ aus `outreach-copy` und dem Hinweis, bei
      `not_qualified` aufzuhören.
    - **Ohne Subagents:** die Leads nacheinander in der Sitzung mit denselben Schritten.
 3. **Bericht** wie in `outreach-pipeline` (gleiches Format für beide Laufarten). Dazu die

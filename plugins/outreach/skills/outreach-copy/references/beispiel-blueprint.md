@@ -6,7 +6,7 @@
 > Kapazitätsangabe vom Nutzer.
 
 Schema v1, wie `create_campaign(blueprint=…)` es erwartet (geprüft gegen den
-Blueprint-Validator von ListM8: `schemaVersion` 1, `campaign.name` 3-255 Zeichen, Config-Blöcke
+Blueprint-Validator von ListM8: `schemaVersion` 1, `campaign.name` 3-255 Zeichen, `campaign.language` `de` oder `en` (optional, ab MCP 4.7.0, Standard `de`), Config-Blöcke
 als Objekte, `salutation` ∈ `du`/`sie` (der Server nimmt noch `team` an, der Skill setzt es nie), Variablennamen `^[a-zA-Z][a-zA-Z0-9_]*$` und
 eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 leer erlaubt (Thread), `delayDays` ganze Zahl ≥ 0,
 `delayUnit` `days` oder `hours`, max. 25 Variablen und 25 Steps).
@@ -18,6 +18,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
 | Offer-Karte | C: Konkretes Deliverable (Reziprozität) | kleine Zielgruppe, hohe Reply Rate nötig |
 | Marketing-Offer | fertiger Entwurf der neuen Startseite inklusive Online-Terminbuchungs-Flow | Deliverable, kein Gespräch; vom Nutzer lieferbar |
 | Feinheiten-Satz | „Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken, und werde morgen mit dem Entwurf fertig.“ | Pflicht bei Karte C, eigener Absatz, genau ein On-Top-Detail |
+| Sprache | `language: "de"` | deutschsprachige Praxen; eine englische Kampagne hat eigene Regeln (`outreach-copy`, Abschnitt „Kampagnensprache“) |
 | Ansprache | `salutation: "du"`: „Hallo Vorname,“ (Person der Versandadresse, bei info@ o. Ä. der Inhaber aus der Recherche), Fallback „Hallo,“, durchgehend du/dir/dein | Du-Form, eine Person (Inhaberin/Inhaber) |
 | Betreffs | Step 1 „kurze Frage“, Step 3 „kurzes Update“, Step 2 und 4 leer | Entwurfs-Angebot (Karte C): Frage statt Ankündigung; Step 2 antwortet im Thread von Mail 1, Step 3 öffnet einen neuen Thread, Step 4 antwortet darin |
 | Sequenz | 4 Steps, `delayDays` 0/3/5/7 | Standard; Step 3 ist der neue Winkel mit Social Proof, Step 4 der Abschied mit Routing-Hinweis; ohne echten Zeit- oder Kapazitätsgrund des Nutzers keine Dringlichkeits-Mail |
@@ -31,6 +32,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
   "schemaVersion": 1,
   "campaign": {
     "name": "Praxis-Relaunch: Startseiten-Entwurf für ästhetische Praxen",
+    "language": "de",
     "intelligence": {
       "version": 1,
       "campaign_brief": {
