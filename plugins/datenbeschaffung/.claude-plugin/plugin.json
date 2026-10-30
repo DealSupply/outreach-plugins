@@ -1,7 +1,7 @@
 {
   "name": "datenbeschaffung",
-  "version": "0.5.0",
-  "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und als CSV importieren.",
+  "version": "0.6.0",
+  "description": "Leads finden: lokale Betriebe über Google Maps direkt in ListM8 (Credits), alles andere mit Apify oder Outscraper im eigenen Konto, Liste prüfen und importieren.",
   "author": {
     "name": "RankM8"
   },
@@ -9,6 +9,7 @@
   "license": "UNLICENSED",
   "keywords": [
     "leads",
+    "google-maps",
     "apify",
     "outscraper",
     "datenbeschaffung"

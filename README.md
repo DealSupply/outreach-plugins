@@ -6,11 +6,11 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 | Plugin | Inhalt | Für wen |
 |---|---|---|
 | **outreach** | Kampagnen anlegen und ändern, Cold-Mail-Copy nach SOP, Leads importieren, qualifizieren, recherchieren, Mails generieren und prüfen, Launch vorbereiten. Bringt die MCP-Verbindung `akquise` (`outreach.akquise.de`) und in Claude Code die Live-Ansicht (Lead-Vorschau, Fortschritt der Läufe) mit. | alle |
-| **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
+| **datenbeschaffung** | Neue Leads finden: lokale Betriebe in DACH über Google Maps direkt in der App (Credits), alles andere mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer neue Leads braucht |
 | **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Akquise-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
 Die Skills passen zum Outreach-MCP mit **32 Tools** und **7 Prompts**. Der MCP verarbeitet
-Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
+Leads, verwaltet Kampagnen und Listen und findet ab Version 4.7.0 lokale Betriebe über Google Maps; andere Quellen scrapt er nicht. Versand läuft beim Kunden
 (Instantly o. Ä.), nicht in der Plattform.
 
 ## Installation

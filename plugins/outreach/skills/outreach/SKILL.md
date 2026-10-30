@@ -29,7 +29,7 @@ und lade dann genau den passenden Skill.
 | alles in einem Lauf (qualifizieren → recherchieren → generieren), auf dem Server oder im eigenen Abo | `outreach-pipeline` (fragt nach der Laufart) |
 | einen Abo-Lauf direkt ausführen oder fortsetzen („Abo-Lauf“, „im Abo“, „ohne Server“, „als Workflow“) | `outreach-abo-lauf` |
 | Versand vorbereiten: Domains, Postfächer, Warm-up, Instantly, Auswertung | `outreach-launch` |
-| neue Leads beschaffen (Apify, Outscraper) | `datenbeschaffung` – gehört zum Plugin **datenbeschaffung**; ist es nicht installiert, auf `outreach-setup` verweisen |
+| neue Leads finden oder beschaffen (lokale Betriebe über Google Maps direkt in ListM8, sonst Apify, Outscraper) | `datenbeschaffung` – gehört zum Plugin **datenbeschaffung**; ist es nicht installiert, auf `outreach-setup` verweisen. `search_leads` sucht nur im vorhandenen Bestand |
 | prüfen, welches Offer sich mit KI liefern lässt, oder für einen Lead, der geantwortet hat, die versprochene Demo bauen (Webseiten-Entwurf, SEO, Anzeigen, Leadliste, Muster-Kampagne) | `fulfillment` – gehört zum Plugin **fulfillment**; ist es nicht installiert: `/plugin install fulfillment@outreach-plugins` (Claude Code) bzw. im Marketplace installieren |
 | Plugin aktualisieren | `outreach-update` |
 

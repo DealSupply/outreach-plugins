@@ -23,6 +23,7 @@ Referenzen und dieser SKILL.md gilt diese SKILL.md.
 
 | Schritt | Wo | Skill / Werkzeug |
 |---|---|---|
+| Lokale Betriebe in DACH über Google Maps finden (Credits) | ListM8 | `datenbeschaffung` (`weg-c-local-maps`) |
 | Leads beschaffen (eigenes Apify-/Outscraper-Konto), bereinigen, verifizieren, importieren | beim Kunden, Import in ListM8 | `datenbeschaffung`, `listen-qualitaet`, `import_leads` |
 | Kampagne mit Sequenz, Variablen-Prompts, Qualifizierung und Research anlegen | ListM8 | `outreach-campaign`, `outreach-copy` |
 | Qualifizieren, recherchieren, Variablen erzeugen | ListM8 | `outreach-pipeline` (`start_lead_run`) |

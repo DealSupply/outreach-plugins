@@ -1,14 +1,18 @@
 ---
 name: datenbeschaffung
-description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Datenbeschaffungs-Pakets. Führt über ICP, Bestandsabgleich, Kostenfreigabe und den manuellen Weg (Apify oder Outscraper mit eigenem Konto, Bereinigung, CSV) zum Import in ListM8. weg-* nicht direkt starten.
+description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „neue Leads finden“, „Leads finden über Google Maps“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Datenbeschaffungs-Pakets. Führt über ICP und Kostenfreigabe zu neuen Leads in ListM8: lokale Betriebe in DACH über „Leads finden“ in ListM8 (Credits, ab ListM8-MCP 4.7.0), alles andere über den manuellen Weg (Apify oder Outscraper mit eigenem Konto, Bereinigung, CSV, Import). weg-* nicht direkt starten.
 ---
 
 # Datenbeschaffung mit ListM8
 
-Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in ListM8 führen. ListM8 selbst scrapt
-nicht: Der Kunde nutzt Apify (bzw. Outscraper) mit **eigenem Konto und eigenem Token außerhalb von
-ListM8**, scrapt dort, bereinigt die Ergebnisse, exportiert CSV oder JSON und lädt sie in ListM8
-hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an, nicht in ListM8.
+Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in ListM8 führen. Zwei Arten:
+
+- **Leads finden in ListM8** (ab ListM8-MCP 4.7.0): lokale Betriebe in Deutschland, Österreich und
+  der Schweiz über Google Maps, gesucht nach Kategorie und Gebiet. Die Leads landen direkt in einer
+  Liste, abgerechnet wird in Credits; ein eigenes Scraping-Konto ist nicht nötig.
+- **Manueller Weg:** Der Kunde nutzt Apify (bzw. Outscraper) mit **eigenem Konto und eigenem Token
+  außerhalb von ListM8**, scrapt dort, bereinigt die Ergebnisse, exportiert CSV oder JSON und lädt
+  sie in ListM8 hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an.
 
 ## Leitsätze
 
@@ -21,9 +25,10 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
    reicht nicht) und das, was nur auf der Quelle steht: Google-Bewertung und Rezensionen,
    Follower, Plattform-Bewertung, Shop-Technologie. Details je Quelle:
    `../datenbeschaffung-referenzen/references/datenumfang.md`.
-3. **Kosten vorab bestätigen lassen.** Vor jedem kostenpflichtigen Lauf beim Anbieter die erwarteten
-   Kosten nennen, einen harten Deckel setzen und die ausdrückliche Freigabe des Nutzers einholen.
-   Gilt auch für Piloten und Wiederholungen.
+3. **Kosten vorab bestätigen lassen.** Vor jedem kostenpflichtigen Lauf die erwarteten Kosten
+   nennen, einen harten Deckel setzen (beim Anbieter in $, in ListM8 das Budget in Credits) und
+   die ausdrückliche Freigabe des Nutzers einholen. Gilt auch für Piloten, Wiederholungen und
+   das Weitersuchen.
 4. **Pilot vor Skalierung.** Mit einer Stadt und etwa 50 Treffern beginnen. Ab rund 70 bis 80 %
    ICP-Fit hochskalieren; darunter Query oder Filter schärfen.
 5. **Kontaktstatus respektieren.** `do_not_contact` niemals überschreiben oder umgehen. Auch andere
@@ -38,19 +43,21 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
 Erstes Mal oder Zweifel am Zugang? Zuerst `datenbeschaffung-setup` ausführen (prüft
 Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst kurz:
 
-- **ListM8-MCP verbunden?** `ping` aufrufen. Mit MCP sind Bestandsabgleich und direkter Import
-  möglich; ohne MCP am Ende CSV-Übergabe über die Oberfläche und den fehlenden Bestandsabgleich
+- **ListM8-MCP verbunden?** `ping` aufrufen. Mit MCP sind Leads finden, Bestandsabgleich und
+  direkter Import möglich; ohne MCP am Ende CSV-Übergabe über die Oberfläche und den fehlenden Bestandsabgleich
   ausdrücklich melden. Fehlen die Tools, zuerst Verbindung und Berechtigungen klären.
-- **Server-Version merken:** `ping.version` ab `4.0.0` heißt Übergabemodus `kontakt` (E-Mail oder
-  eigene Website je Lead), darunter oder ohne Version `email` (jede Zeile braucht eine Adresse).
-  Den Modus an `listen-qualitaet` weitergeben (`build_csv.py --uebergabe …`).
+- **Server-Version merken:** `ping.version` ab `4.7.0` heißt, Leads finden über Google Maps steht
+  bereit (Tools `*_prospect_*`). Ab `4.0.0` gilt Übergabemodus `kontakt` (E-Mail oder eigene
+  Website je Lead), darunter oder ohne Version `email` (jede Zeile braucht eine Adresse). Den
+  Modus an `listen-qualitaet` weitergeben (`build_csv.py --uebergabe …`).
 - **Scraping-Zugang:** erst nach der Wahl des Wegs (Phase 2) prüfen und nur, wenn der Weg ihn
-  braucht. Fast alle Wege laufen über ein eigenes Apify-Konto samt Token (Details:
+  braucht. Leads finden in ListM8 braucht keinen. Die manuellen Wege laufen fast alle über ein
+  eigenes Apify-Konto samt Token (Details:
   `../datenbeschaffung-referenzen/references/setup.md`); Apollo mit eigenem Zugang und StoreLeads
   brauchen ihn nicht. Fehlt er, Setup durchgehen, nicht improvisieren.
 - Scopes: Lesen (`check_leads_exist`, `export_leads`, `list_lists`, `get_list`, `search_leads`,
-  `get_job_status`) braucht `leads:read`; Importieren, Listen anlegen/löschen und Zuordnen braucht
-  `leads:write`.
+  `get_job_status`) und Angebote für Leads finden brauchen `leads:read`; Importieren, Listen
+  anlegen/löschen, Zuordnen und das Starten einer Suche brauchen `leads:write`.
 
 Signaturen und Felder der ListM8-Tools stehen in
 `../datenbeschaffung-referenzen/references/listm8-mcp.md`.
@@ -73,10 +80,10 @@ einem Satz Begründung vorlegen, nicht den ganzen Baum erklären.
 
 | Zielgruppe | Weg-Skill |
 |---|---|
-| Lokale Betriebe, Handwerk, Praxen, Gastro, auch Agenturen und Kanzleien mit Google-Maps-Eintrag | `weg-c-local-maps` (bringt Bewertung und Rezensionen mit, deshalb erste Wahl, wo ein Maps-Eintrag üblich ist) |
+| Lokale Betriebe, Handwerk, Praxen, Gastro, auch Agenturen und Kanzleien mit Google-Maps-Eintrag | `weg-c-local-maps` (bringt Bewertung und Rezensionen mit, deshalb erste Wahl, wo ein Maps-Eintrag üblich ist). In DACH zuerst Teil A, Leads finden in ListM8 (ab 4.7.0); älterer Server oder Suche nicht verfügbar: Teil B, manuell |
 | B2B-Firmen ohne typischen Maps-Eintrag (Beratungen, IT-Dienstleister, Web-präsent) | `weg-a-b2b-google` |
 | Software- und SaaS-Firmen, auch „alle SaaS in DACH“ | `weg-f-saas` (OMR Reviews und Startbase kostenlos, dazu LinkedIn-Firmen; keine Quelle allein findet mehr als etwa ein Viertel) |
-| Industrie, Hersteller, Maschinenbau | zuerst `weg-c-local-maps` mit deutschem Branchenwort und Bundesland (Test: 85 % passend, 95 % mit Adresse); trägt Maps nicht, LinkedIn-Firmensuche plus `impressum-enrichment` oder `weg-a-apollo` (Datenbank) |
+| Industrie, Hersteller, Maschinenbau | zuerst `weg-c-local-maps`: Leads finden mit Bundesland als Gebiet, manuell mit deutschem Branchenwort und Bundesland (Test: 85 % passend, 95 % mit Adresse); trägt Maps nicht, LinkedIn-Firmensuche plus `impressum-enrichment` oder `weg-a-apollo` (Datenbank) |
 | E-Commerce, Onlineshops | `weg-b-ecom-google`; Beratung ohne Scrape: `weg-b-storeleads` |
 | Coaches und Personal Brands | `weg-d-coaches-google`, `weg-d-coaches-linkedin`, `weg-d-instagram-google`, `weg-d-instagram-hashtag` |
 | Plattform-Verkäufer (Amazon, Etsy, eBay) | `weg-e-plattform` |
@@ -102,7 +109,11 @@ Adresse sucht danach die Recherche der Plattform.“
   nach ausdrücklichem Ja einen Anreicherungs-Lauf planen.
 - Der Weg-Skill schreibt die Spalten über `build_csv.py`; nur Rohfelder mit Einstieg zusätzlich
   per `--keep`.
-- **Kontaktlücke** (Leads mit eigener Website, aber ohne Adresse): ab ListM8 4.0.0 entscheidet der
+- **Leads finden in ListM8** bringt Firma, Website, Telefon, Adresse, Kategorie, Bewertung und
+  Anzahl Bewertungen, auf Wunsch die neuesten Rezensionen (kosten extra). E-Mail-Adressen nennt
+  Google Maps nicht: Die Recherche der Kampagne sucht Adresse und Ansprechpartner auf der Website.
+  Eine Kontaktlücke zum Vorab-Anreichern gibt es auf diesem Weg nicht.
+- **Kontaktlücke** (manueller Weg, Leads mit eigener Website, aber ohne Adresse): ab ListM8 4.0.0 entscheidet der
   Nutzer, ob vorab angereichert wird oder die Recherche sucht. Entscheidungstabelle in
   `datenumfang.md`, Abschnitt „Die Kontaktlücke“. Dem Nutzer sinngemäß sagen: „N Leads haben eine
   eigene Website, aber keine Adresse. Ich kann sie so importieren, dann sucht die Recherche in
@@ -112,7 +123,11 @@ Adresse sucht danach die Recherche der Plattform.“
   Domain, lohnt ab etwa 50 Domains und liefert geprüfte Adressen vor dem Import. Vorab anreichern
   oder direkt importieren?“
 
-## Phase 3: Vorab-Abgleich (nur mit MCP)
+## Phase 3: Vorab-Abgleich (nur mit MCP, nur manueller Weg)
+
+Leads finden in ListM8 braucht ihn nicht: Der Server gleicht selbst ab (bekannte Betriebe werden
+verknüpft, gesperrte bleiben draußen) und merkt sich 90 Tage, welche Gebiete schon durchsucht sind
+(`weg-c-local-maps`, A2).
 
 VOR dem ersten kostenpflichtigen Lauf den Bestand ziehen und bekannte Domains in die
 Query-Ausschlüsse geben: `export_leads(format="index")` bzw. `check_leads_exist`, Ablauf in
@@ -121,6 +136,12 @@ gar nicht erst Geld kosten. `list_lists` zeigt außerdem, was bereits gescrapt u
 (Herkunft steht in `source` der Liste).
 
 ## Phase 4: Kosten nennen, Freigabe einholen, Weg-Skill ausführen
+
+Leads finden in ListM8: Das Angebot (`quote_prospect_search`) liefert die Zahlen; Budget, Freigabe
+(die Zahlen wie in der App, als Schätzung) und Start beschreibt `weg-c-local-maps`, Teil A. Ohne
+ausdrückliches Ja kein Start. Der Weg endet mit der Übergabe in eine Kampagne, nicht mit einer CSV.
+
+Manueller Weg:
 
 1. Erwartete Kosten aus `../datenbeschaffung-referenzen/references/kosten.md` kalkulieren und mit
    Actor-Preis (aktuell im Apify-Store prüfen) nennen: „Das kostet etwa X $ beim Anbieter, harter
@@ -139,11 +160,13 @@ gar nicht erst Geld kosten. `list_lists` zeigt außerdem, was bereits gescrapt u
 
 ## Phase 5: Pflicht-Endstation
 
-`listen-qualitaet` laden und vollständig durchlaufen: Format prüfen, gegen den Bestand abgleichen,
-E-Mails verifizieren, 20er-Stichprobe, Import in ListM8. Kein Lauf endet mit einer Roh-CSV.
+Manueller Weg: `listen-qualitaet` laden und vollständig durchlaufen: Format prüfen, gegen den
+Bestand abgleichen, E-Mails verifizieren, 20er-Stichprobe, Import in ListM8. Kein Lauf endet mit
+einer Roh-CSV. Leads finden in ListM8 endet mit `hand_over_prospect_search` (`weg-c-local-maps`,
+A9); `listen-qualitaet` entfällt dort.
 
 Danach auf ausdrücklichen Verarbeitungsauftrag die Liste einer bestätigten Kampagne zuordnen
-(`add_leads_to_campaign`) und über den Outreach-Workflow `start_lead_run` für `qualification`,
+(`add_leads_to_campaign`, bei Leads finden `hand_over_prospect_search`) und über den Outreach-Workflow `start_lead_run` für `qualification`,
 `research` und `email` verwenden. Vor dem Zuordnen ist der Agenten-Check aus `outreach-campaign`,
 Phase 4, Pflicht: Wunschkunde, Angebot, Passt-Kriterien, Ausschlusskriterien und Hinweise sowie die
 Recherche- und E-Mail-Anweisung müssen für diese Zielgruppe gesetzt sein. Ist die Kampagne neu,
@@ -154,12 +177,12 @@ auswählen. Beschaffung und Import allein starten keine Qualifizierung und verse
 Bei der Übergabe eine Recherche-Stufe für die Kampagne empfehlen (Tabelle in `datenumfang.md`):
 lokale Betriebe mit Website und Rezensionstexten kommen meist mit `basis` aus, das senkt die
 Recherchekosten deutlich; mit vielen Leads ohne Adresse `smart` (eine gezielte Impressum-Suche,
-wenn die Website keine Adresse zeigt). Die Einstellung ändert der Nutzer in der Kampagne
-(`outreach-campaign`).
+wenn die Website keine Adresse zeigt). Leads aus Leads finden kommen ohne E-Mail-Adresse, dafür
+immer `smart`. Die Einstellung ändert der Nutzer in der Kampagne (`outreach-campaign`).
 
 ## Berichtsform
 
-Nach jedem Lauf ein kompakter Block: Weg, Query und Filter, Pilot-Trefferquote, Anteil mit Bewertung,
+Nach jedem Lauf ein kompakter Block (Leads finden: Bericht aus `weg-c-local-maps`, A10): Weg, Query und Filter, Pilot-Trefferquote, Anteil mit Bewertung,
 Rezensionstext bzw. Plattform-Einstieg (aus dem Bericht von `build_csv.py`), Stückzahlen je Stufe
 (roh, nach Dedup, nach Verifizierung, übergeben, davon ohne E-Mail mit Website, verworfen je Grund),
 reale Kosten beim Anbieter und was beim nächsten

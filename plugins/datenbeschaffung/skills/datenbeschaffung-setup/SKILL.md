@@ -1,6 +1,6 @@
 ---
 name: datenbeschaffung-setup
-description: Richtet das Plugin datenbeschaffung ein und prüft die Voraussetzungen. Verwenden bei „Datenbeschaffung einrichten“, „Apify verbinden“, „Apify-Token“, „Outscraper einrichten“, „funktioniert mein Scraping-Zugang“ oder direkt nach der Installation des Plugins. Prüft Outreach-Verbindung, Apify-Zugang (kostenloser Selbsttest), optional Outscraper, räumt alte Skill-Kopien auf – ohne kostenpflichtige Läufe.
+description: Richtet das Plugin datenbeschaffung ein und prüft die Voraussetzungen. Verwenden bei „Datenbeschaffung einrichten“, „Apify verbinden“, „Apify-Token“, „Outscraper einrichten“, „funktioniert mein Scraping-Zugang“ oder direkt nach der Installation des Plugins. Prüft Outreach-Verbindung und ob Leads finden in ListM8 bereitsteht, Apify-Zugang für den manuellen Weg (kostenloser Selbsttest), optional Outscraper, räumt alte Skill-Kopien auf – ohne kostenpflichtige Läufe.
 ---
 
 # Datenbeschaffung einrichten
@@ -31,8 +31,15 @@ Für Bestandsabgleich und Import braucht die Datenbeschaffung die Verbindung zur
     (bringt die Verbindung mit) und dort `outreach-setup` ausführen. Ohne Verbindung geht
     Datenbeschaffung trotzdem, aber ohne Bestandsabgleich; das Ergebnis kommt dann als CSV über die
     Oberfläche der App.
+- `ping` aufrufen und `version` nennen. Ab `4.7.0` steht **Leads finden** bereit: lokale Betriebe
+  in Deutschland, Österreich und der Schweiz findet ListM8 selbst über Google Maps, abgerechnet in
+  Credits, ohne eigenes Scraping-Konto. Ob das Konto sie nutzen darf, zeigt erst das erste
+  (kostenlose) Angebot: `feature_disabled` oder `byok_account` heißt manueller Weg.
 
-## 3. Apify-Zugang prüfen (Pflicht)
+## 3. Apify-Zugang prüfen (für den manuellen Weg)
+
+Pflicht für alle Wege außer Leads finden in ListM8. Will der Nutzer nur lokale Betriebe in DACH
+über Leads finden suchen, darf er den Schritt überspringen und Apify später einrichten.
 
 Den ersten verfügbaren Weg nehmen (Reihenfolge und Aufrufe: `zugriff.md`):
 
@@ -76,6 +83,7 @@ Marketplaces → `outreach-plugins` → Auto-Update einschalten. Sonst `datenbes
 
 ## Abschluss
 
-Kurz berichten: Umgebung, Outreach-Verbindung ja/nein (Anzahl Listen), Apify-Zugang ja/nein und
+Kurz berichten: Umgebung, Outreach-Verbindung ja/nein (Anzahl Listen), Server-Version und ob Leads
+finden bereitsteht, Apify-Zugang ja/nein/übersprungen und
 über welchen Weg, Outscraper ja/nein/nicht nötig, aufgeräumte Kopien, Auto-Update ja/nein. Danach
 weiter mit dem Einstieg `datenbeschaffung`.

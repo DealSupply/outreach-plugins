@@ -54,10 +54,11 @@ In der Claude App bzw. claude.ai gibt es keine Kopien; dort entfällt der Schrit
 
 ## 4. Datenbeschaffung
 
-Frage: „Willst du neue Leads selbst beschaffen (Apify oder Outscraper im eigenen Konto)?“
+Frage: „Willst du neue Leads finden? Lokale Betriebe sucht die App selbst über Google Maps, für
+alles andere nutzt du Apify oder Outscraper im eigenen Konto.“
 
 - **Ja:** Plugin `datenbeschaffung` aus demselben Marketplace installieren und danach
-  `datenbeschaffung-setup` ausführen (Apify-Zugang prüfen)
+  `datenbeschaffung-setup` ausführen (prüft, ob Leads finden bereitsteht, und den Apify-Zugang)
   (Claude Code: `/plugin install datenbeschaffung@outreach-plugins`; Claude App: Customize →
   Plugins → `datenbeschaffung`; Codex: `/plugins`).
 - **Nein:** überspringen. Leads lassen sich jederzeit per CSV importieren (`outreach-import`).

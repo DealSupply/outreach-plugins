@@ -7,7 +7,7 @@ description: Use when user says "outreach:lists", "Listen anzeigen", "Liste anle
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
-Verwaltet Lead-Listen: die benannten Gruppierungen zwischen Datenbeschaffung (extern, z. B. Apify/Outscraper) und Kampagne.
+Verwaltet Lead-Listen: die benannten Gruppierungen zwischen Datenbeschaffung (extern, z. B. Apify/Outscraper, oder Leads finden in ListM8) und Kampagne.
 Leads bleiben dabei immer normale Leads im globalen Bestand — eine Liste ist eine Klammer mit
 Herkunft, kein zweiter Datentopf.
 
@@ -23,6 +23,7 @@ Scope: `leads:read` fürs Lesen/Exportieren, `leads:write` für Anlegen/Löschen
 | Leads hineinbekommen | `import_leads(leads, list_id, attribute_mappings)` | Dedupliziert selbst: Bestands-Leads werden nur verlinkt; läuft async (`job_id`, per `get_job_status` abwarten), das Job-Result nennt `linked_to_list` + `do_not_contact_hits` |
 | Bestand prüfen (Bulk) | `check_leads_exist(emails, domains)` | Bis 1.000 kombiniert je Call; E-Mail-Match inkl. Zweitadressen; Domain-Treffer nach ganzen Labels mit `match_kind`: `website_identity` = für eine Zeile ohne E-Mail derselbe Lead, `company_known` = „Firma bekannt" (Warnung, kein Ausschluss); ohne `match_kind` (älterer Server) derselbe Lead nur bei gleichem Host der `website`; Zeilen ohne E-Mail nur über `domains` prüfbar; Treffer je Eingabe auf 10 gekappt (`summary.truncated`) |
 | Bestand exportieren | `export_leads(format, list_id, contact_status, limit, offset)` | `json`/`csv` für Menschen und Tools (Seiten bis 10.000 Zeilen, `limit`/`offset`; `email` kann null sein); **`index`** ist der kompakte Abgleichsindex ({e, d, s} je Lead, `e` leer bei Leads ohne E-Mail, dann nur über `d` bekannt) für den Vorab-Dedup vor externen Scrape-Läufen |
+| Liste aus Leads finden → Kampagne | `hand_over_prospect_search(search_id, campaign_id \| new_campaign_name)` (MCP ab 4.7.0) | Für Listen, die eine Suche über Google Maps gefüllt hat; die `search_id` liefert `list_prospect_searches` (Feld `list_id`). Ablauf: Plugin `datenbeschaffung`, `weg-c-local-maps` |
 | Liste → Kampagne | `add_leads_to_campaign(campaign_id, list_id \| lead_ids)` | Überspringt `do_not_contact` IMMER und meldet es; verlinkte Leads starten als „processing" — KI-Läufe startet erst `start_lead_run`. HARTES LIMIT 1000: Bei Listen > 1000 Leads wirft `list_id` `limit_reached` — dann IDs via `get_list` (limit max. 200, offset) paginiert holen oder per `export_leads(list_id=…, limit/offset)` und in Chunks bis 1000 über `lead_ids` verlinken |
 | Batch taggen | `bulk_set_lead_attributes(lead_ids, attributes, create_missing)` | Gleiche Attributwerte auf bis zu 1.000 Leads in EINEM Call; für je-Lead-verschiedene Werte `write_lead_details` |
 | Global suchen/filtern | `search_leads(query, attribute_key/attribute_value, in_campaign)` | Strukturfilter erlauben leere Text-Query; `in_campaign="none"` = noch unverplantes Rohmaterial |
