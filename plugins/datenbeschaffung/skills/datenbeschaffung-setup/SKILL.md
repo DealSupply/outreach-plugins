@@ -31,7 +31,7 @@ Für Bestandsabgleich und Import braucht die Datenbeschaffung die Verbindung zur
     (bringt die Verbindung mit) und dort `outreach-setup` ausführen. Ohne Verbindung geht
     Datenbeschaffung trotzdem, aber ohne Bestandsabgleich; das Ergebnis kommt dann als CSV über die
     Oberfläche der App.
-- `ping` aufrufen und `version` nennen. Ab `4.7.0` steht **Leads finden** bereit: lokale Betriebe
+- `ping` aufrufen und `version` nennen. Ab `4.8.0` steht **Leads finden** bereit: lokale Betriebe
   in Deutschland, Österreich und der Schweiz findet ListM8 selbst über Google Maps, abgerechnet in
   Credits, ohne eigenes Scraping-Konto. Ob das Konto sie nutzen darf, zeigt erst das erste
   (kostenlose) Angebot: `feature_disabled` oder `byok_account` heißt manueller Weg.

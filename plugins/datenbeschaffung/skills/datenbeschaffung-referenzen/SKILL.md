@@ -1,13 +1,13 @@
 ---
 name: datenbeschaffung-referenzen
-description: Dieses Referenzpaket wird von Datenbeschaffungs-Master und Weg-Skills gelesen. Enthält die ListM8-MCP-Referenz für Leads finden über Google Maps (Tools *_prospect_*, ab 4.7.0), Import und Bestand (import_leads, check_leads_exist, export_leads, Listen), den manuellen Ablauf mit eigenem Apify- oder Outscraper-Konto (Actors, Zugriff, Kosten), CSV-Format, ICP und Hilfsskripte. Kein direkter Einstieg.
+description: Dieses Referenzpaket wird von Datenbeschaffungs-Master und Weg-Skills gelesen. Enthält die ListM8-MCP-Referenz für Leads finden über Google Maps (Tools *_prospect_*, ab 4.8.0), Import und Bestand (import_leads, check_leads_exist, export_leads, Listen), den manuellen Ablauf mit eigenem Apify- oder Outscraper-Konto (Actors, Zugriff, Kosten), CSV-Format, ICP und Hilfsskripte. Kein direkter Einstieg.
 ---
 
 # Datenbeschaffung: Referenz-Paket
 
 Kein eigenständiger Skill, sondern die geteilte Wissensbasis der Datenbeschaffungs-Familie.
 Wird zusammen mit den anderen Skills installiert; Master, Weg-Skills und `listen-qualitaet`
-lesen von hier (`references/`). Lokale Betriebe in DACH findet ListM8 ab MCP 4.7.0 selbst über
+lesen von hier (`references/`). Lokale Betriebe in DACH findet ListM8 ab MCP 4.8.0 selbst über
 Google Maps (Leads finden, Credits). Alles andere scrapt der Kunde mit eigenem Apify- oder
 Outscraper-Konto außerhalb von ListM8, bereinigt die Ergebnisse und importiert sie als CSV über die
 Oberfläche oder per MCP `import_leads`. Für die ListM8-Seite zuerst `references/listm8-mcp.md` lesen.
@@ -17,7 +17,7 @@ Preis beim Anbieter prüfen und freigeben lassen.
 
 | Datei | Inhalt |
 |---|---|
-| `references/listm8-mcp.md` | ListM8-MCP: Leads finden über Google Maps (zwölf Tools, ab 4.7.0), Import- und Bestands-Tools mit Parametern, Rückgaben und Fehlern |
+| `references/listm8-mcp.md` | ListM8-MCP: Leads finden über Google Maps (zwölf Tools, ab 4.8.0), Import- und Bestands-Tools mit Parametern, Rückgaben und Fehlern |
 | `references/setup.md` | Apify-Zugang des Kunden verbinden, Token-URL, Selbsttest |
 | `references/zugriff.md` | Zugriffsschicht: Actor via MCP / REST / CLI, Kosten-Deckel-Regeln |
 | `references/apify-actors.md` | Gepinnte Actors je Kategorie mit Beleg + Prüfdatum |

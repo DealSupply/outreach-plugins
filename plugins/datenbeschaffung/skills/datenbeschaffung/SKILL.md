@@ -1,13 +1,13 @@
 ---
 name: datenbeschaffung
-description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „neue Leads finden“, „Leads finden über Google Maps“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Datenbeschaffungs-Pakets. Führt über ICP und Kostenfreigabe zu neuen Leads in ListM8: lokale Betriebe in DACH über „Leads finden“ in ListM8 (Credits, ab ListM8-MCP 4.7.0), alles andere über den manuellen Weg (Apify oder Outscraper mit eigenem Konto, Bereinigung, CSV, Import). weg-* nicht direkt starten.
+description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „neue Leads finden“, „Leads finden über Google Maps“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Datenbeschaffungs-Pakets. Führt über ICP und Kostenfreigabe zu neuen Leads in ListM8: lokale Betriebe in DACH über „Leads finden“ in ListM8 (Credits, ab ListM8-MCP 4.8.0), alles andere über den manuellen Weg (Apify oder Outscraper mit eigenem Konto, Bereinigung, CSV, Import). weg-* nicht direkt starten.
 ---
 
 # Datenbeschaffung mit ListM8
 
 Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in ListM8 führen. Zwei Arten:
 
-- **Leads finden in ListM8** (ab ListM8-MCP 4.7.0): lokale Betriebe in Deutschland, Österreich und
+- **Leads finden in ListM8** (ab ListM8-MCP 4.8.0): lokale Betriebe in Deutschland, Österreich und
   der Schweiz über Google Maps, gesucht nach Kategorie und Gebiet. Die Leads landen direkt in einer
   Liste, abgerechnet wird in Credits; ein eigenes Scraping-Konto ist nicht nötig.
 - **Manueller Weg:** Der Kunde nutzt Apify (bzw. Outscraper) mit **eigenem Konto und eigenem Token
@@ -46,7 +46,7 @@ Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst k
 - **ListM8-MCP verbunden?** `ping` aufrufen. Mit MCP sind Leads finden, Bestandsabgleich und
   direkter Import möglich; ohne MCP am Ende CSV-Übergabe über die Oberfläche und den fehlenden Bestandsabgleich
   ausdrücklich melden. Fehlen die Tools, zuerst Verbindung und Berechtigungen klären.
-- **Server-Version merken:** `ping.version` ab `4.7.0` heißt, Leads finden über Google Maps steht
+- **Server-Version merken:** `ping.version` ab `4.8.0` heißt, Leads finden über Google Maps steht
   bereit (Tools `*_prospect_*`). Ab `4.0.0` gilt Übergabemodus `kontakt` (E-Mail oder eigene
   Website je Lead), darunter oder ohne Version `email` (jede Zeile braucht eine Adresse). Den
   Modus an `listen-qualitaet` weitergeben (`build_csv.py --uebergabe …`).
@@ -81,7 +81,7 @@ einem Satz Begründung vorlegen, nicht den ganzen Baum erklären.
 
 | Zielgruppe | Weg-Skill |
 |---|---|
-| Lokale Betriebe, Handwerk, Praxen, Gastro, auch Agenturen und Kanzleien mit Google-Maps-Eintrag | `weg-c-local-maps` (bringt Bewertung und Rezensionen mit, deshalb erste Wahl, wo ein Maps-Eintrag üblich ist). In DACH zuerst Teil A, Leads finden in ListM8 (ab 4.7.0); älterer Server oder Suche nicht verfügbar: Teil B, manuell |
+| Lokale Betriebe, Handwerk, Praxen, Gastro, auch Agenturen und Kanzleien mit Google-Maps-Eintrag | `weg-c-local-maps` (bringt Bewertung und Rezensionen mit, deshalb erste Wahl, wo ein Maps-Eintrag üblich ist). In DACH zuerst Teil A, Leads finden in ListM8 (ab 4.8.0); älterer Server oder Suche nicht verfügbar: Teil B, manuell |
 | B2B-Firmen ohne typischen Maps-Eintrag (Beratungen, IT-Dienstleister, Web-präsent) | `weg-a-b2b-google` |
 | Software- und SaaS-Firmen, auch „alle SaaS in DACH“ | `weg-f-saas` (OMR Reviews und Startbase kostenlos, dazu LinkedIn-Firmen; keine Quelle allein findet mehr als etwa ein Viertel) |
 | Industrie, Hersteller, Maschinenbau | zuerst `weg-c-local-maps`: Leads finden mit Bundesland als Gebiet, manuell mit deutschem Branchenwort und Bundesland (Test: 85 % passend, 95 % mit Adresse); trägt Maps nicht, LinkedIn-Firmensuche plus `impressum-enrichment` oder `weg-a-apollo` (Datenbank) |

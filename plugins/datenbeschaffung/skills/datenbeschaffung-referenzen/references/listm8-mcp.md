@@ -1,6 +1,6 @@
 # ListM8-MCP: Leads finden, Import- und Bestands-Tools
 
-Vertragsstand: ListM8 MCP 4.0.0 (16.10.2026: Leads ohne E-Mail) für Import und Bestand, 4.7.0
+Vertragsstand: ListM8 MCP 4.0.0 (16.10.2026: Leads ohne E-Mail) für Import und Bestand, 4.8.0
 (30.10.2026) für Leads finden über Google Maps. Die Referenz deckt die Tools ab,
 die in der Datenbeschaffung gebraucht werden. Die vollständige Werkzeugliste liefert die
 Tool-Discovery des MCP-Servers; jede Werkzeugbeschreibung dort ist der aktuelle Vertrag und geht
@@ -15,7 +15,7 @@ sobald eine Zeile ohne gültige E-Mail dabei ist. Welcher Kontrakt gilt, entsche
 
 ## Was ListM8 heute (nicht) kann
 
-- **Leads finden über Google Maps** (ab 4.7.0): lokale Betriebe in DE, AT und CH nach Kategorie und
+- **Leads finden über Google Maps** (ab 4.8.0): lokale Betriebe in DE, AT und CH nach Kategorie und
   Gebiet, abgerechnet in Credits, Leads direkt in einer Liste. Vertrag im letzten Abschnitt. Eine
   andere Quelle hat ListM8 nicht; serverseitiges Impressum oder Verifizieren vor dem Import gibt
   es nicht.
@@ -289,11 +289,11 @@ erfolgt über die Kampagne. Vorher aktive Lead-Läufe prüfen (`list_lead_runs`)
 sind getrennt vom Scrape beim Anbieter bzw. von der Suche abzustimmen. Leads aus Leads finden kommen
 mit `hand_over_prospect_search` in die Kampagne, nicht mit `add_leads_to_campaign`.
 
-## Leads finden über Google Maps (ab 4.7.0)
+## Leads finden über Google Maps (ab 4.8.0)
 
 Ablauf und Gesprächsführung: `weg-c-local-maps`, Teil A. Hier stehen nur Vertrag und Fehler.
 
-- **Voraussetzung:** `ping.version` ab `4.7.0`, Konto mit Credits. Scope `leads:read` für Kataloge,
+- **Voraussetzung:** `ping.version` ab `4.8.0`, Konto mit Credits. Scope `leads:read` für Kataloge,
   Angebote, Status und Einträge; `leads:write` für Start, Abbruch, Weitersuchen mit `quote_hash`,
   Übernahme und Übergabe. Betrachter eines Workspaces nutzen nur die Lese-Tools; dazu zählen das
   Angebot und Schritt 1 von `resume_prospect_search`.

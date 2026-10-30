@@ -10,7 +10,7 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 | **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Akquise-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
 Die Skills passen zum Outreach-MCP mit **32 Tools** und **7 Prompts**. Der MCP verarbeitet
-Leads, verwaltet Kampagnen und Listen und findet ab Version 4.7.0 lokale Betriebe über Google Maps; andere Quellen scrapt er nicht. Versand läuft beim Kunden
+Leads, verwaltet Kampagnen und Listen und findet ab Version 4.8.0 lokale Betriebe über Google Maps; andere Quellen scrapt er nicht. Versand läuft beim Kunden
 (Instantly o. Ä.), nicht in der Plattform.
 
 ## Installation

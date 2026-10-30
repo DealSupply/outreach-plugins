@@ -1,6 +1,6 @@
 ---
 name: weg-c-local-maps
-description: Weg C des Datenbeschaffungs-Pakets für lokale Betriebe (Handwerk, Praxen, Gastro, Dienstleister mit Google-Maps-Eintrag). Standard ist „Leads finden“ in ListM8 (ListM8-MCP ab 4.7.0): Kategorie und Gebiet wählen, Angebot in Credits freigeben lassen, Suche verfolgen, Leads in eine Kampagne übergeben, ohne eigenes Scraping-Konto. Ausweichweg ist der manuelle Scrape im eigenen Apify-Konto mit CSV-Import. Wird vom Datenbeschaffungs-Master geladen, nie direkt vom Nutzer ausgelöst.
+description: Weg C des Datenbeschaffungs-Pakets für lokale Betriebe (Handwerk, Praxen, Gastro, Dienstleister mit Google-Maps-Eintrag). Standard ist „Leads finden“ in ListM8 (ListM8-MCP ab 4.8.0): Kategorie und Gebiet wählen, Angebot in Credits freigeben lassen, Suche verfolgen, Leads in eine Kampagne übergeben, ohne eigenes Scraping-Konto. Ausweichweg ist der manuelle Scrape im eigenen Apify-Konto mit CSV-Import. Wird vom Datenbeschaffungs-Master geladen, nie direkt vom Nutzer ausgelöst.
 ---
 
 # Weg C: lokale Betriebe über Google Maps
@@ -14,11 +14,11 @@ Voraussetzung vom Master: bestätigter ICP-Satz und die gemerkte Server-Version 
 
 | | **A: Leads finden in ListM8 (Standard)** | **B: manueller Scrape (Ausweichweg)** |
 |---|---|---|
-| Voraussetzung | ListM8-MCP ab 4.7.0, Konto mit Credits | eigenes Apify-Konto (Zugriff: `zugriff.md`) |
+| Voraussetzung | ListM8-MCP ab 4.8.0, Konto mit Credits | eigenes Apify-Konto (Zugriff: `zugriff.md`) |
 | Kosten | Credits in ListM8: Preis je Lead laut Angebot (derzeit 0,1 Credits), jede Rezension extra | beim Anbieter in $, im Konto des Kunden |
 | Ergebnis | Leads direkt in einer Liste, per Übergabe in eine Kampagne | Roh-CSV, dann `listen-qualitaet` und Import |
 
-**Weg B nur, wenn** der Server älter als 4.7.0 ist, Weg A mit `feature_disabled`, `byok_account`
+**Weg B nur, wenn** der Server älter als 4.8.0 ist, Weg A mit `feature_disabled`, `byok_account`
 oder `source_unavailable` antwortet, das Gebiet außerhalb von Deutschland, Österreich und der
 Schweiz liegt, der ICP gerade Betriebe ohne eigene Website sucht (Weg A übernimmt nur Betriebe mit eigener
 Website; ein Portal- oder Social-Profil zählt nicht), oder der Nutzer ausdrücklich sein eigenes Konto nutzen will. Den Grund in einem Satz nennen.
