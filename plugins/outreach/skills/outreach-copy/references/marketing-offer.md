@@ -1,6 +1,8 @@
 # Marketing Offer — der Türöffner, der 80 % der Reply Rate macht
 
 > Offer-Lehre zu `outreach-copy`. Bei einem Widerspruch gilt die `SKILL.md` des Skills.
+> Die Formulierungen sind deutsch. In englischen Kampagnen (`campaign.language` `en`) nicht übersetzen;
+> dort gelten die Regeln aus `outreach-copy`, Abschnitt „Kampagnensprache“.
 > Betreffzeilen und CTAs sind auf die Platzhalter von ListM8 umgestellt; die Texte stehen in der
 > Du-Form (Standard), bei `emailAgentConfig.salutation` `sie` umschreiben. Einen Firmennamen im
 > Betreff gibt es nur über `{{ai.firma}}`; ohne die Variable steht „kurze Frage“. Nur Step 1 und

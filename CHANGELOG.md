@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-10-30 – outreach 0.4.2, fulfillment 0.1.1
+
+Passt zu ListM8 MCP 4.7.0 (Kampagnensprache). Ältere Server kennen `campaign.language` nicht; dann ist jede Kampagne deutsch und alles bleibt wie bisher.
+
+**outreach** (Kampagnensprache `de`/`en`)
+- `outreach-campaign` → Sprache im Briefing erfragen (Vorschlag Deutsch) und als `campaign.language` setzen (`de` Standard, `en`). Fehlt das Feld, nimmt `create_campaign` Deutsch (außer `emailLanguage` nennt eindeutig Englisch), `edit_campaign` behält die bisherige Sprache. Setup-Check und Bestätigung nennen die Sprache.
+- `outreach-copy` → neuer Abschnitt „Kampagnensprache“: Die Copy-Regeln gelten für deutsche Kampagnen. Englische haben eigene Regeln (Anrede `Hi {first name},`, ohne Person `Hi there,`, kein du/Sie, Gruß `Best,`, Betreff klein mit 2–5 Wörtern wie `quick question`/`quick update`, Opener beginnt groß, Reaktion als eigener Satz oder „which“-Nebensatz, kein „free“, keine Floskel-Einstiege, Mail 1 höchstens 100 Wörter, P.S.-Abmeldezeile in Mail 1 und 3, Anführungszeichen “…”, natürliches US-Englisch, nicht übersetzen); maßgeblich sind die Server-Regeln aus `get_lead_data`. Die Regeln sind geprüft; eine ausführliche englische Copy-Lehre (Beispiele, Offer-Karten A–E) kann später folgen. `beispiel-blueprint` trägt `language: "de"`, `copy-lehre` und `marketing-offer` verweisen auf den Abschnitt.
+- `outreach-generate`, `lead-agent` → Mail-Variablen in der Sprache aus `emailGeneration.language`; bei `en` gelten `salutationRule` und `systemPrompt`, die deutschen Prüfpunkte (Umlaute, „…“, du/Sie, deutsche Einstiege und Reaktionen) entfallen. `save_lead_variables` prüft das offene „ nur in deutschen Kampagnen.
+- `outreach-qualify`, `lead-agent` → `qualificationSummary` in der Sprache aus `qualificationGeneration.writeBack.summaryLanguage`.
+- `outreach-research` → Der Recherchebericht bleibt deutsch, auch in englischen Kampagnen.
+- `outreach-verify`, `verify-agent` → Sprache der Kampagne prüfen; bei `en` sind `systemPrompt` und `salutationRule` die Grundlage, die deutschen Prüfpunkte entfallen.
+- `outreach-setup` → englische Kampagnen ab MCP 4.7.0.
+
+**fulfillment**
+- `lead-kontext`, `demo-link` → Die Antwort an den Lead in der Sprache der Kampagne (`campaign.language`), in englischen Kampagnen mit `Hi Vorname,` und `Best,`.
+
 ## 2026-10-27 – Umzug nach DealSupply (ohne neue Plugin-Version)
 
 **outreach**, **datenbeschaffung**, **fulfillment**

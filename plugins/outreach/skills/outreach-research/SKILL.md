@@ -134,7 +134,7 @@ LEAD: {lead.company} (ID: {lead.id})
 - NICHTS ERFINDEN: Jede Aussage im Report braucht eine Quelle (URL). Aus dem Namen abgeleitete Adressen (Muster) explizit als Vermutung kennzeichnen oder weglassen, nie als `bestEmail` schreiben.
 - Keine internen Metriken/Scores in den Report-Text.
 - Allgemeine Website-/Impressums-Werbehinweise ausschließlich als Information mit Quelle dokumentieren. Dadurch allein keinen Score/Fit abwerten, Research unterdrücken oder einen Kontaktstatus setzen. Echte gespeicherte Sperren erhalten; Opt-in und Versandentscheidung bleiben beim Kunden.
-- Deutsch, korrekte Umlaute (Ä/Ö/Ü/ß — niemals AE/OE/UE/ss).
+- Deutsch, korrekte Umlaute (Ä/Ö/Ü/ß — niemals AE/OE/UE/ss). Das gilt auch in englischen Kampagnen: Der Bericht bleibt deutsch, nur Mails und Qualifizierungs-Zusammenfassung folgen der Kampagnensprache.
 - Antworte am Ende NUR mit: "OK lead={lead.id} aufhänger=<kurz>" oder "FEHLER lead={lead.id}: <Grund>".
 ```
 

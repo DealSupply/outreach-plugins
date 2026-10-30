@@ -27,8 +27,15 @@ ihm mit `art` und `grund`, was zu tun ist.
 1. `get_lead_variables(campaign_id, lead_id)`: Variablen, Recherche, Qualifizierung. Die Versandadresse ist
    `lead.sendingEmail` (kann eine persönliche Adresse aus der Recherche sein); `lead.email` ist nur die
    Importadresse. Fehlt `sendingEmail`, gilt `lead.email`.
-2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede) und
-   die festen Steps. Die Regeln der Kampagne gehen allgemeinen Regeln vor. Die Person wird nie mit
+2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
+   `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
+   Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
+   `get_lead_data(campaign_id, lead_id, stage="email")` lesen: `emailGeneration.systemPrompt` und
+   `salutationRule` sind dann die Prüfgrundlage. Alle Variablen müssen englisch sein (sonst `ablehnen`,
+   `art=text`), `hallo` ist `Hi {first name},` bzw. `Hi there,`; die deutschen Prüfpunkte unten (du/Sie,
+   ihr/euch, „Hallo …“, Umlaute, „…“, deutsche Einstiege und Reaktionsformen, Komma im Sternschnitt)
+   entfallen, Fakten, Person, Anker-Rangfolge, Austauschtest, Sperrliste und Länge gelten weiter.
+   Der Recherchebericht bleibt deutsch und ist kein Befund. Die Person wird nie mit
    ihr/euch angesprochen; Tatsachen über einen Betrieb mit mehreren Personen mit ihr/euer („dass ihr … habt“)
    sind kein Fehler. Fehler sind ein du/ihr-Wechsel im selben Satz und Firmenleistungen als „du hast …“ an
    eine Person, die sie nicht selbst erbracht hat (außer Ein-Personen-Betrieb, Personenmarke, kleiner

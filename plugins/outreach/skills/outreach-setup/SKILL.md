@@ -41,7 +41,8 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab.
+  OpenRouter-Konto ab. Englische Kampagnen (Kampagnensprache `campaign.language`) gibt es ab
+  MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App

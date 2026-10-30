@@ -88,7 +88,7 @@ LEAD: {lead.company} (ID: {lead.id})
 2. Lies lead.qualificationGeneration:
    - "settings" = die Kampagnen-Kriterien (Zielkunde, Fit-Kriterien, Disqualifier). Sie sind MASSGEBLICH.
    - "agent.additionalPrompt" = zusätzliche Anweisung des Qualifizierungs-Agents; sie ergänzt die Kriterien, ersetzt sie nicht.
-   - "writeBack" = erlaubte Werte für fitLevel/status und der Score-Bereich.
+   - "writeBack" = erlaubte Werte für fitLevel/status, der Score-Bereich und "summaryLanguage" (Sprache der Kampagne, de oder en; ab MCP 4.7.0, fehlt es: de).
 3. Analysiere den Lead:
    - Website (lead.website) per WebFetch laden; wichtige Unterseiten (Leistungen, Über uns, Impressum) bei Bedarf zusätzlich.
    - Custom Attributes (Google-Rating, Kategorie etc.) einbeziehen.
@@ -103,7 +103,7 @@ LEAD: {lead.company} (ID: {lead.id})
      "qualificationFitLevel": "<fitLevel>",
      "score": <int>,
      "qualificationCategory": "<kurze Branchenkategorie, kein Fit-Wert wie not_qualified>",
-     "qualificationSummary": "<2-4 Sätze: warum dieses fitLevel, welche Kriterien erfüllt/verletzt>",
+     "qualificationSummary": "<2-4 Sätze in der Sprache aus writeBack.summaryLanguage: warum dieses fitLevel, welche Kriterien erfüllt/verletzt>",
      "qualificationSnapshotJson": { "businessFitLevel": "<fitLevel>", "contactNotices": [...], "criteria_matched": [...], "disqualifiers_hit": [...], "evidence": [{"claim": "...", "source": "<URL>"}] }
    })
 
@@ -111,7 +111,7 @@ LEAD: {lead.company} (ID: {lead.id})
 
 - NICHTS ERFINDEN: Jede Behauptung in summary/snapshot braucht eine beobachtete Quelle (Website-Inhalt, Attribut). Unbelegtes weglassen.
 - Die Kampagnen-Kriterien schlagen jede eigene Heuristik.
-- Deutsch, korrekte Umlaute (Ä/Ö/Ü/ß — niemals AE/OE/UE/ss).
+- Deutsch, korrekte Umlaute (Ä/Ö/Ü/ß — niemals AE/OE/UE/ss). Ausnahme: qualificationSummary steht in der Sprache aus writeBack.summaryLanguage (bei "en" auf Englisch); fitLevel, status und Schlüssel bleiben die festen Werte.
 - Antworte am Ende NUR mit: "OK lead={lead.id} fitLevel=<...> score=<...>" oder "FEHLER lead={lead.id}: <Grund>".
 ```
 

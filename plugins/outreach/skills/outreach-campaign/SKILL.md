@@ -32,6 +32,7 @@ Mindestens klären (fehlendes nachfragen, AskUserQuestion):
 5. **Research-Fokus**: Wonach soll die Recherche suchen (Aufhänger-Prioritäten — steuert die Recherche-Agenten der Kampagne)? Dazu die Sperrliste: welche Leistungen bietet in dieser Branche fast jeder an (Vorschlag aus Branche und Zielgruppe machen, Nutzer ergänzt)?
 6. **Sequenz**: Standard sind 4 Steps mit `delayDays` 0/3/5/7 (Entry, Erinnerung, neuer Winkel in neuem Thread, Abschied mit Routing-Hinweis; Rollen und Wortlimits: Skill `outreach-copy`). Eine Dringlichkeits-Mail gibt es nur als zusätzlichen Step, wenn der Nutzer einen echten Grund nennt.
 7. **Absender und Belege**: Name, Rolle und Firma für die Signatur; ein echter Beleg für Step 3 (Case, Zahl, Ergebnis); nur wenn der Nutzer eine Dringlichkeits-Mail will, zusätzlich ein echter Kapazitäts- oder Zeitgrund. Nichts davon erfinden.
+8. **Sprache der Kampagne**: Deutsch (Standard) oder Englisch? Mit Deutsch als Vorschlag fragen, außer das Briefing legt die Sprache schon fest. Sie steht in `campaign.language` (siehe Phase 2).
 
 ## Phase 1b: Qualität nach SOP (Pflicht, bevor eine Zeile Blueprint entsteht)
 
@@ -64,6 +65,7 @@ Struktur (Schema v1 — die vollständige Referenz liefert der MCP-Prompt `campa
   "schemaVersion": 1,
   "campaign": {
     "name": "<3-255 Zeichen, sprechend>",
+    "language": "de",
     "intelligence": {
       "version": 1,
       "campaign_brief": {
@@ -96,6 +98,11 @@ Struktur (Schema v1 — die vollständige Referenz liefert der MCP-Prompt `campa
 }
 ```
 
+**Kampagnensprache (ab ListM8-MCP 4.7.0):** `campaign.language` ist `"de"` (Standard) oder `"en"` und bestimmt die Sprache der Mails und aller KI-Texte der Kampagne (Opener, Qualifizierungs-Zusammenfassung, Sequenz-Vorschläge); der Recherchebericht bleibt deutsch. Immer ausdrücklich setzen. Fehlt das Feld oder ist der Wert unbekannt, gilt bei `create_campaign` `de` (nur ein `emailAgentConfig.emailLanguage`, das eindeutig Englisch nennt, macht die neue Kampagne englisch), bei `edit_campaign` bleibt die bisherige Sprache; schon erzeugte Texte behalten ihre Sprache. `list_campaigns` und `export_campaign_blueprint` zeigen die Sprache. Ältere Server kennen das Feld nicht: Dort ist jede Kampagne deutsch.
+
+- **Deutsch (`de`):** alle Regeln unten und im Skill `outreach-copy` gelten unverändert.
+- **Englisch (`en`):** Sequenz, Variablen-Prompts und Betreffs in natürlichem US-Englisch schreiben, nicht aus einer deutschen Vorlage übersetzen. Anrede `Hi {first name},` (nur Vorname, ohne du/Sie; ohne benennbare Person `Hi there,`), Grußformel `Best,` über der Signatur; Betreffs, Länge, P.S.-Abmeldezeile und Verbote nach `outreach-copy`, Abschnitt „Kampagnensprache“. Die deutschen Sprachregeln (du/Sie, Anführungszeichen „…“, Umlaute, deutsche Beispielformulierungen) gelten nicht; `salutation` wirkt nicht auf die Anrede und darf auf dem Standard bleiben. `emailLanguage` passend setzen (etwa „English (US)“). Diese Regeln sind geprüft; Aufbau und Offer-Regeln aus `outreach-copy` sinngemäß übernehmen. Eine ausführliche englische Copy-Lehre (Beispiele, Offer-Karten A–E) kann später folgen.
+
 **Pflicht-Regeln (Cold-Mailing-SOP):**
 - AI-Variablen `hallo` (Anrede) und `intro` (personalisierter Opener) IMMER anlegen (der Server verlangt sie im Blueprint-Guide). `firma` (Kurzname) ist optional: anlegen, sobald ein Betreff oder Text den Firmennamen tragen soll (Importnamen sind oft Google-Titel, Domains oder tragen Rechtsformen). Ohne `firma` steht im Betreff kein Firmenname (`kurze Frage`), im Body notfalls `{{lead.company}}`. Reihenfolge `hallo`, (`firma`), `intro`; Namen-Regex `^[a-zA-Z][a-zA-Z0-9_]*$`, Prompt min. 10 Zeichen, Namen eindeutig.
   - `firma` (optional): Firmenname, wie ein Kollege ihn sagt, ohne Rechtsform, „Meisterbetrieb", „Inh. …" oder Leistungsaufzählung; mit zwei, drei Vorher-nachher-Beispielen im Prompt. Wenn angelegt, nutzt der Betreff NUR `{{ai.firma}}`, nie `{{lead.company}}`; der Text nutzt `{{ai.firma}}` statt `{{lead.company}}`. Der Prompt enthält diese Regeln:
@@ -106,7 +113,7 @@ Struktur (Schema v1 — die vollständige Referenz liefert der MCP-Prompt `campa
     - Wörter in Versalien normal schreiben („DREI ARCHITEKTEN“ → „Drei Architekten“); Abkürzungen bis 4 Buchstaben bleiben („ALN“, „HOFF“).
   - `intro`: Der Prompt sagt ausdrücklich, dass nur der ERSTE Buchstabe klein ist und jeder weitere Satz groß beginnt. Ohne den Satz schrieb das Modell „… selten sieht. das finde ich stark."
 - **Sperrliste je Kampagne (Pflicht):** Aus Branche und Zielgruppe die branchenüblichen Leistungen ableiten, die keinen Opener tragen (meist 6 bis 10 Begriffe: was steht bei fast jedem Betrieb dieser Branche auf der Leistungsseite?), und gleichlautend in `researchAgentConfig.additionalPrompt` UND in den `intro`-Prompt eintragen. Beispiel Dental: Angstpatienten, Lachgas, Sedierung/Narkose, Kinderbehandlung, Notdienst, Prophylaxe/Dentalhygiene, digitaler Scan/Abdruck, Implantate allgemein. Regel und Hintergrund: `outreach-copy` → `references/copy-lehre.md`, Abschnitt „Abhebung und Austauschtest“. Die Liste dem Nutzer mit dem Blueprint zeigen.
-- Ansprache in `emailAgentConfig.salutation` festlegen: Standard `"du"` (Singular), `"sie"` nur, wenn der Nutzer die Kampagne siezen will (sehr große Unternehmen), nie `"team"` (keine Ihr- und Team-Form, ohne Ansprechpartner „Hallo,“ und „dein Team“). Sie gilt für alle generierten Variablen einer Mail. Fehlt der Wert, leitet der Server sie aus Ton und Sprache ab; `salutation` setzen ist sicherer. Zusätzlich `emailLanguage` (z. B. „Deutsch (DACH)") und `emailTone` angeben.
+- Ansprache in `emailAgentConfig.salutation` festlegen: Standard `"du"` (Singular), `"sie"` nur, wenn der Nutzer die Kampagne siezen will (sehr große Unternehmen), nie `"team"` (keine Ihr- und Team-Form, ohne Ansprechpartner „Hallo,“ und „dein Team“). Sie gilt für alle generierten Variablen einer Mail. Fehlt der Wert, leitet der Server sie aus Ton und Sprache ab; `salutation` setzen ist sicherer. Zusätzlich `emailLanguage` (z. B. „Deutsch (DACH)"; passend zu `campaign.language`) und `emailTone` angeben. Bei englischen Kampagnen gibt es kein du/Sie (siehe Kampagnensprache).
 - Platzhalter in Betreff und Body: nur `{{ai.<variable>}}`, `{{lead.<feld>}}` (`email`, `company`, `website`, `phoneNumber`, `city`) und `{{custom.<schlüssel>}}`. Alles andere (`{{firstName}}`, `{{companyName}}`, If-Blöcke, Default-Syntax) wird nicht aufgelöst und bleibt als Text in der Mail stehen. Sequenz-Bodies nutzen `{{ai.hallo}}`, `{{ai.intro}}` und `{{ai.firma}}`; Step 1 hat `delayDays: 0`.
 - `subject` ist ein String: Step 1 und Step 3 mit eigenem kurzen Betreff (jeweils ein neuer Thread, Step 3 z. B. „kurzes Update“), Step 2 und Step 4 leer (sie antworten im Thread der vorigen Betreff-Mail, siehe `outreach-copy`). Der Betreff nennt einen Firmennamen nur über `{{ai.firma}}`. `delayUnit` ist `days` oder `hours`, `delayDays` eine ganze Zahl >= 0.
 - `agentKey` in den Configs WEGLASSEN, außer der Nutzer nennt ausdrücklich einen bestehenden Agenten. Unbekannte oder deaktivierte Keys werden mit `validation_failed` abgelehnt; ohne Key greifen die Standard-Agenten.
@@ -116,7 +123,7 @@ Struktur (Schema v1 — die vollständige Referenz liefert der MCP-Prompt `campa
 - `qualificationSettings` IMMER mit den kanonischen snake_case-Schlüsseln füllen: `target_customer_profile`, `offer_summary`, `fit_criteria`, `disqualifiers`, `additional_prompt` (optional `taxonomy_instructions`). Die camelCase-Aliasse (`idealCustomer`, `offerSummary`, `fitCriteria`, `additionalInstructions`, `taxonomyInstructions`) wertet die Laufzeit zwar aus, die Oberfläche zeigt die Felder dann aber als „Noch nicht ausgefüllt". Auch wenn der `campaign_blueprint_guide` die Aliasse nennt: kanonisch schreiben.
 - Recherche-Auftrag als `researchAgentConfig.additionalPrompt` setzen, nicht nur als `researchGoals`/`researchPriorities`: sonst zeigt die Oberfläche „Standard-Prompt aktiv". E-Mail-Ton, Sprache und Ansprache gehören in `emailAgentConfig` (`emailTone`, `emailLanguage`, `salutation`, ggf. `additionalPrompt`).
 
-Blueprint dem User zur Bestätigung zeigen (kompakt: Name, Variablen, Step-Betreffs, Kriterien, Sperrliste), DANN erstellen.
+Blueprint dem User zur Bestätigung zeigen (kompakt: Name, Sprache, Variablen, Step-Betreffs, Kriterien, Sperrliste), DANN erstellen.
 
 ## Phase 3: Erstellen / Bearbeiten
 
@@ -143,7 +150,8 @@ Keine Leads in die Kampagne (`add_leads_to_campaign`, `import_leads` mit Kampagn
 1. `export_campaign_blueprint(campaign_id)` lesen und prüfen:
    - `qualificationSettings` enthält die fünf Pflichtfelder unter den kanonischen Schlüsseln, jeweils nicht leer und auf diese Zielgruppe und dieses Angebot geschrieben. Stehen dort camelCase-Aliasse, per `edit_campaign` (Vollersatz, Ablauf aus Phase 3) auf die kanonischen Schlüssel umziehen.
    - `researchAgentConfig.additionalPrompt` ist kampagneneigen (nicht leer, nicht nur `researchGoals`/`researchPriorities`) und enthält die Sperrliste; dieselbe Sperrliste steht im `intro`-Prompt.
-   - `emailAgentConfig` legt Sprache, Ansprache (`salutation`) und Ton fest.
+   - `campaign.language` ist gesetzt und passt zur Zielgruppe; Sequenz und Variablen-Prompts sind in dieser Sprache geschrieben.
+   - `emailAgentConfig` legt Sprache, Ansprache (`salutation`, nur bei `de` wirksam) und Ton fest.
    - Variablen `hallo` und `intro` sind vorhanden (`firma` optional); Schritte nutzen nur erlaubte Platzhalter.
 2. Dem Nutzer das Ergebnis als kurze Tabelle nennen (Feld, gesetzt ja/nein, erste Worte). Fehlt etwas: ergänzen oder nachfragen, NICHT mit Leads weitermachen.
 
@@ -155,7 +163,7 @@ Fehler sind MCP-Tool-Results mit `isError: true`; der Text beginnt mit `<code>:`
 
 | Code | Aktion |
 |------|--------|
-| `validation_failed` | Fehlerliste lesen (Pflichtfelder, Längen, Namens-Regex, Prompt-Länge, unbekannter `agentKey`, `salutation`), Blueprint korrigieren, erneut senden |
+| `validation_failed` | Fehlerliste lesen (Pflichtfelder, Längen, Namens-Regex, Prompt-Länge, unbekannter `agentKey`, `salutation`), Blueprint korrigieren, erneut senden. Ein unbekannter `campaign.language`-Wert ist kein Fehler, er gilt als nicht gesetzt: nach dem Erstellen mit `list_campaigns` die Sprache prüfen |
 | `limit_reached` | Nutzer informieren: Kampagnen sind mit Abo unbegrenzt; das Kampagnen-Limit greift nur ohne aktives Abo bzw. hinter der Paywall (`get_credit_balance.account`: `campaigns`, `campaign_limit`, `subscription_required`), dann zuerst einen Plan wählen. Sonst Variablen- oder Step-Grenze je Kampagne |
 | `confirm_overwrite_required` | Nutzer fragen, ob überschreiben, dann `confirm_overwrite=true` — nur bei genau diesem Code |
 | `campaign_not_found` | `campaign_id` prüfen (`list_campaigns`) |
@@ -164,7 +172,7 @@ Fehler sind MCP-Tool-Results mit `isError: true`; der Text beginnt mit `<code>:`
 
 ## Abschluss
 
-Report: `campaign_id`, Name, importierte Steps/Variablen/Configs, `warnings` und das Ergebnis des Setup-Checks aus Phase 4. Erst wenn er bestanden ist: „Nächster Schritt: /outreach-import — Leads in die Kampagne laden."
+Report: `campaign_id`, Name, Sprache, importierte Steps/Variablen/Configs, `warnings` und das Ergebnis des Setup-Checks aus Phase 4. Erst wenn er bestanden ist: „Nächster Schritt: /outreach-import — Leads in die Kampagne laden."
 
 ## Verwandt
 

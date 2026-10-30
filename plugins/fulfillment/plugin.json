@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "fulfillment",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Das Marketing-Offer einer Kampagne liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, veröffentlichen und den Link zurück an den Lead schreiben.",
   "author": {
     "name": "DealSupply"

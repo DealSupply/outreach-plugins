@@ -14,7 +14,8 @@ Die Antwort steckt unter `blueprint`.
 | `blueprint.campaign.intelligence.campaign_brief.business.value` | Was der Nutzer verkauft; die Demo führt dorthin |
 | `blueprint.campaign.intelligence.campaign_brief.usp.value` | Belege und Stärken des Nutzers (nie erfinden) |
 | `blueprint.campaign.intelligence.campaign_brief.target_audience.value` | Zielgruppe; hilft bei Branche und Tonalität |
-| `blueprint.campaign.emailAgentConfig.salutation` | `du` oder `sie`: dieselbe Anrede in der Antwort an den Lead |
+| `blueprint.campaign.language` | `de` oder `en` (ab MCP 4.7.0, fehlt es: `de`): die Antwort an den Lead in dieser Sprache |
+| `blueprint.campaign.emailAgentConfig.salutation` | `du` oder `sie`: dieselbe Anrede in der Antwort an den Lead (nur bei `de`; englisch `Hi Vorname,`) |
 
 Fehlt `offer_contract`, das Offer **beim Nutzer erfragen**. `qualificationSettings.offer_summary`
 beschreibt oft die bezahlte Leistung, nicht den Türöffner, und taugt deshalb nicht als Ersatz.
