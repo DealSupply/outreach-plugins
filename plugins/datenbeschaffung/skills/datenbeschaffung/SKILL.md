@@ -57,7 +57,8 @@ Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst k
   brauchen ihn nicht. Fehlt er, Setup durchgehen, nicht improvisieren.
 - Scopes: Lesen (`check_leads_exist`, `export_leads`, `list_lists`, `get_list`, `search_leads`,
   `get_job_status`) und Angebote für Leads finden brauchen `leads:read`; Importieren, Listen
-  anlegen/löschen, Zuordnen und das Starten einer Suche brauchen `leads:write`.
+  anlegen/löschen, Zuordnen und das Starten einer Suche brauchen `leads:write`. Ein Betrachter
+  eines Workspaces darf Angebote holen; starten kann nur ein Mitglied mit Schreibrecht.
 
 Signaturen und Felder der ListM8-Tools stehen in
 `../datenbeschaffung-referenzen/references/listm8-mcp.md`.

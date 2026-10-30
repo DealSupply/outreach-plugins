@@ -15,7 +15,7 @@ Voraussetzung vom Master: bestätigter ICP-Satz und die gemerkte Server-Version 
 | | **A: Leads finden in ListM8 (Standard)** | **B: manueller Scrape (Ausweichweg)** |
 |---|---|---|
 | Voraussetzung | ListM8-MCP ab 4.7.0, Konto mit Credits | eigenes Apify-Konto (Zugriff: `zugriff.md`) |
-| Kosten | Credits in ListM8: Preis je Lead laut Angebot (derzeit 0,1 Credits), Rezensionen extra | beim Anbieter in $, im Konto des Kunden |
+| Kosten | Credits in ListM8: Preis je Lead laut Angebot (derzeit 0,1 Credits), jede Rezension extra | beim Anbieter in $, im Konto des Kunden |
 | Ergebnis | Leads direkt in einer Liste, per Übergabe in eine Kampagne | Roh-CSV, dann `listen-qualitaet` und Import |
 
 **Weg B nur, wenn** der Server älter als 4.7.0 ist, Weg A mit `feature_disabled`, `byok_account`
@@ -67,7 +67,11 @@ CH mit `area_key`. Bis zu 50 Gebiete je Suche, sie laufen in der angegebenen Rei
 ## A3: Angebot holen und Budget vorschlagen
 
 Vorher `list_prospect_searches` ansehen: Je Workspace läuft nur eine Suche gleichzeitig. Hat die
-Person mehrere Workspaces, den richtigen klären und `workspace` mitgeben.
+Person mehrere Workspaces, den richtigen klären und `workspace` mitgeben. Eine Suche gehört zum
+Workspace, in dem sie gestartet wurde, nicht zur Person: Alle Mitglieder sehen sie, und die Tools
+mit `search_id` arbeiten immer in diesem Workspace. Ein Betrachter darf Angebote holen, aber nicht
+starten: Ist der Nutzer im Workspace nur Betrachter, das sagen; starten muss ein Mitglied mit
+Schreibrecht.
 
 1. `quote_prospect_search(category_keys, areas, reviews_per_place, …)` ohne Budget aufrufen. Es
    kostet nichts und startet nichts.
@@ -75,8 +79,11 @@ Person mehrere Workspaces, den richtigen klären und `workspace` mitgeben.
    der ganzen Gebiete (`credits.whole_areas`), ohne Budget suchen: das ganze Gebiet, bezahlt wird
    nur, was gefunden wird. Sonst ein Budget vorschlagen (höchstens das Guthaben) und mit diesem
    `budget_credits` das Angebot neu holen; dessen Zahlen gelten für die Freigabe. Will der Nutzer
-   weniger ausgeben, ein kleineres Budget setzen. Reicht das Guthaben kaum für einen Lauf, Credits
-   kaufen lassen (nur wenn `get_credit_balance.purchase.allowed`).
+   weniger ausgeben, ein kleineres Budget setzen. Das Budget in Credits mit höchstens drei
+   Nachkommastellen angeben und nie unter `credits.per_entry` (Preis eines Leads samt
+   Rezensionen): Ein solches Budget bezahlt keinen einzigen Lead, das Angebot meldet dann
+   `budget_below_entry_price` und der Start wird abgelehnt. Reicht das Guthaben kaum für einen
+   Lauf, Credits kaufen lassen (nur wenn `get_credit_balance.purchase.allowed`).
 3. **Prüfen:** `lead_limit.fits` false heißt, der Start würde abgelehnt (Plan erweitern, weniger
    Gebiete oder kleineres Budget). `credits.sufficient` false heißt, das Guthaben reicht nicht.
    `areas` zeigt je Gebiet, welche Kategorien das Gedächtnis überspringt. Hinweise:
@@ -85,38 +92,55 @@ Person mehrere Workspaces, den richtigen klären und `workspace` mitgeben.
    durchsucht und wird übersprungen, der Rest gesucht), `nothing_to_search` (alles schon
    durchsucht, `credits.max` ist 0: nicht starten, andere Gebiete oder Kategorien vorschlagen),
    `rescan_pays_again` (mit `rescan_covered` werden bekannte Betriebe noch einmal bezahlt: das dem
-   Nutzer vor der Freigabe sagen), `filters_reduce_leads`, `estimate_from_start_values` (für diese
-   Branche gibt es noch wenig Erfahrung, die Schätzung kann deutlich danebenliegen; das sagen).
+   Nutzer vor der Freigabe sagen), `budget_below_entry_price` (das Budget bezahlt keinen Lead:
+   Budget erhöhen oder weniger Rezensionen, neues Angebot), `filters_reduce_leads`,
+   `estimate_from_start_values` (für diese Branche gibt es noch wenig Erfahrung, die Schätzung
+   kann deutlich danebenliegen; das sagen).
 
 Optionen, jeweils kurz mit dem Nutzer klären:
 
 - **Rezensionen** (`reviews_per_place`, 0 bis 100 neueste je Betrieb, Standard 0): Jede gelieferte
   Rezension kostet `credits.per_review` (derzeit 0,02 Credits), 5 Rezensionen also bis zu 0,1 Credits mehr
-  je Lead. Lohnen sich, wenn die Mail mit Bewertungen einsteigen soll; sonst 0.
+  je Lead. Lohnen sich, wenn die Mail mit Bewertungen einsteigen soll; sonst 0. Alle gekauften
+  Rezensionen landen am Lead (Feld „Rezensionstexte“); die Recherche im Server-Lauf liest davon
+  die 5 neuesten, die Mail sieht sie nur über die Recherche. Mehr als 5 bis 10 lohnen sich deshalb
+  selten (manche Rezension hat keinen Text).
 - **Filter** `min_rating`, `min_reviews`, `exclude_chains`: verringern die Leads, nicht den Preis.
   Aussortierte Betriebe bleiben bezahlt und lassen sich später kostenlos übernehmen (A7).
 - **`rescan_covered`** nur auf ausdrücklichen Wunsch: Es bezahlt Betriebe, die dieser Workspace in
   den letzten 90 Tagen schon gefunden hat, noch einmal.
 
 Betriebe, die schon Leads sind, werden mitgezählt und mit dem vorhandenen Lead verknüpft, nicht
-doppelt angelegt. Ein Abgleich vorab spart deshalb nichts.
+doppelt angelegt. Ein Abgleich vorab spart deshalb nichts. Finden zwei Gebiete derselben Suche
+denselben Betrieb, kostet er einmal.
 
 ## A4: Freigabe
 
 Dem Nutzer das Angebot so nennen, wie die App es zeigt. `offer` ist der fertige Satz (englisch,
 in der Sprache des Nutzers wiedergeben); die Zahlen dahinter: `estimate.about`,
-`credits.expected`, `limits.max_entries`, `credits.max`, `estimate.postal_codes`,
-`estimate.per_postal_code`. Es ist immer eine Schätzung, das muss ankommen.
+`estimate.area_about`, `credits.expected`, `limits.max_entries`, `credits.max`,
+`estimate.postal_codes`, `estimate.per_postal_code`. Es ist immer eine Schätzung, das muss
+ankommen.
 
-- **Die Gebiete begrenzen** (ohne Budget, oder das Budget reicht fürs ganze Gebiet):
+- **Ohne Budget** (die Gebiete begrenzen):
   > „Geschätzt sind es ca. X Leads für ca. Y Credits (N Postleitzahlen mit je ca. D passenden
-  > Betrieben, P Credits je Lead). Reserviert werden höchstens Z Credits, damit die Suche nicht
-  > mitten im Gebiet anhält; bezahlt wird nur, was sie findet. Soll ich starten?“
+  > Betrieben). Reserviert werden höchstens Z Credits, damit die Suche nicht mitten im Gebiet
+  > anhält; der Rest geht am Ende zurück. Bezahlt wird nur, was die Suche findet. Soll ich
+  > starten?“
+- **Das Budget reicht für die ganzen Gebiete:** erster Satz wie oben, dann „Dein Budget von Z
+  Credits reicht für die ganzen Gebiete. Bezahlt wird nur, was die Suche findet. Soll ich
+  starten?“
 - **Das Budget begrenzt:**
-  > „Dein Budget reicht für bis zu N Leads, höchstens Z Credits (P Credits je Lead). Wie viele es
-  > werden, hängt davon ab, was die Suche im Gebiet findet (geschätzt ca. X). Soll ich starten?“
+  > „Bis zu N Leads, höchstens Z Credits: so weit reicht dein Budget. Wie viele es werden, hängt
+  > davon ab, wie viele passende Betriebe die Suche im Gebiet findet (geschätzt ca. X); bezahlt
+  > wird nur, was sie findet. Soll ich starten?“
 
-Mit Rezensionen kommt „dazu bis zu R Rezensionen je Lead zu je `credits.per_review` Credits“ dazu.
+Steht `estimate.rough`, kommt „Für diese Branche gibt es noch wenig Erfahrung, die Schätzung kann
+deutlich danebenliegen“ dazu. Die Zahlen enthalten die Rezensionen schon (`credits.per_entry` ist
+der Preis eines Leads samt aller angefragten Rezensionen); mit Rezensionen sagen, dass bis zu R
+Rezensionen je Lead zu je `credits.per_review` Credits mitgekauft werden. Stehen in `hints`
+`budget_below_entry_price` oder `nothing_to_search`, nicht um Freigabe bitten, sondern Budget,
+Rezensionen, Gebiete oder Kategorien ändern (A3).
 
 Ohne ausdrückliches Ja kein Start. Ändert sich danach etwas (Gebiet, Kategorie, Budget, Option),
 neues Angebot und neue Freigabe.
@@ -126,7 +150,8 @@ neues Angebot und neue Freigabe.
 `start_prospect_search` mit den `start_arguments` des freigegebenen Angebots, unverändert, plus
 `request_id` (eine neue UUID je beabsichtigter Suche). Bei einer Wiederholung nach Zeitüberschreitung
 dieselbe `request_id` nehmen, dann kommt dieselbe Suche zurück statt einer zweiten. Optional
-`list_id` (bestehende Liste) oder `list_name`; ohne beides entsteht eine neue Liste.
+`list_id` (bestehende Liste) oder `list_name`; ohne beides entsteht eine neue Liste. Beides gilt
+nur für eine neue Suche, nie zusammen mit `search_id` (A8).
 
 Antwortet der Start mit `price_changed` oder `quote_changed`, enthält die Meldung die neuen Zahlen:
 sie nennen, erneut freigeben lassen, dann mit dem neuen `quote_hash` starten.
@@ -138,7 +163,9 @@ mehrere Minuten dauern. Zwischendurch knapp melden wie die Laufseite: „N gefun
 (`progress.places_so_far`, `progress.new_leads_so_far`, `progress.credits_so_far`), mit Budget
 (`progress.budget` true) „von Z Credits Budget“ (`credits_max`), dazu `areas_done` von
 `areas_total`. Ohne Budget ist `credits_max` nur die Reservierung: nicht nennen. `progress` zählt nur den
-laufenden Lauf (sonst den letzten), nicht frühere Läufe derselben Suche. Kann die Umgebung nicht warten (Chat ohne
+laufenden Lauf (sonst den letzten), nicht frühere Läufe derselben Suche. `credits_so_far` rechnet
+die Betriebe des laufenden Gebiets schon mit dem vollen Preis je Lead samt Rezensionen und steigt
+nie über `credits_max`; was am Ende wirklich abgerechnet ist, steht in `credits.spent`. Kann die Umgebung nicht warten (Chat ohne
 Hintergrund), den Link `app_url` geben und später mit `list_prospect_searches(unseen_only=true)`
 nachsehen. Abbrechen nur auf Wunsch: `cancel_prospect_search` (das laufende Gebiet wird noch
 eingesammelt und abgerechnet, der Rest des Budgets geht zurück).
@@ -163,11 +190,15 @@ outcome?, reason?)`.
 
 - **Aussortiert** wegen `rating` oder `chain_excluded`: fragen, ob der Nutzer sie doch will. Dann
   `import_prospect_entries(search_id, reasons | place_ids)`, kostenlos. `place_ids` nur von
-  Einträgen mit `importable` aus `list_prospect_entries` nehmen. Antwortet das Tool mit
-  `entries_not_importable`, wurde nichts übernommen: die genannten `place_ids` streichen und
-  erneut aufrufen.
+  Einträgen mit `importable` aus `list_prospect_entries` nehmen (höchstens 5.000 je Aufruf).
+  Antwortet das Tool mit `entries_not_importable`, wurde nichts übernommen: die genannten
+  `place_ids` streichen und erneut aufrufen. Aussortierte gehen nur in freie Plätze des
+  Lead-Limits; was nicht mehr passt, wartet auf einen größeren Plan. Ist das Limit voll und
+  wartet kein offener Eintrag, antwortet das Tool `limit_reached` und übernimmt nichts.
 - **Offen** (`pending`, etwa weil kein Abo aktiv war): nach dem Abschluss des Plans mit
-  `import_prospect_entries(search_id)` übernehmen.
+  `import_prospect_entries(search_id)` übernehmen. Sie sind schon bezahlt und werden auch über
+  das Lead-Limit hinaus Leads. Ohne aktives Abo antwortet das Tool `limit_reached`: erst den Plan
+  abschließen lassen.
 
 ## A8: Weitersuchen und mehr Gebiete
 
@@ -175,16 +206,24 @@ outcome?, reason?)`.
   späterer Lauf ganz durchsucht hat, kommt nicht noch einmal): `resume_prospect_search` in zwei
   Schritten. Erst ohne `quote_hash` (Angebot; Budget wie in A3 vorschlagen und in beiden Schritten
   gleich übergeben), Freigabe wie in A4 (`offer`), dann mit `quote_hash` und neuer `request_id`.
+  Das Angebot (erster Schritt) darf auch ein Betrachter holen.
 - **Weitere Gebiete** derselben Suche: mit denselben Rezensionen und Filtern und den neuen Gebieten
-  ein Angebot holen, freigeben lassen, dann `start_prospect_search` mit `search_id`. Die Leads
-  landen in der Liste der Suche.
+  ein Angebot holen (die Kategorien dürfen andere sein), freigeben lassen, dann
+  `start_prospect_search` mit `search_id`, ohne `list_id` und `list_name` (sonst
+  `validation_failed`). Die Leads landen in der Liste der Suche.
+- In beiden Fällen gilt wie in A5: Nach einer Zeitüberschreitung mit derselben `request_id`
+  wiederholen, dann kommt der schon gestartete Lauf zurück statt eines zweiten.
 
 ## A9: In eine Kampagne übergeben
 
 `hand_over_prospect_search(search_id, campaign_id | new_campaign_name)`, genau eines von beiden. Der
-Nutzer wählt eine bestehende Kampagne (`list_campaigns`) oder einen Namen für eine neue. Kostet
-nichts; Leads mit Kontaktsperre bleiben draußen. Leads späterer Läufe derselben Suche kommen erst
-mit dem nächsten Aufruf dazu.
+Nutzer wählt eine bestehende Kampagne (`list_campaigns`) aus dem Workspace der Suche oder einen
+Namen für eine neue. Kostet nichts; Leads mit Kontaktsperre bleiben draußen. Leads späterer Läufe
+derselben Suche kommen erst mit dem nächsten Aufruf dazu; wie viele noch fehlen, zeigt
+`campaign_pending` im Status. Antwortet das Tool `workspace_mismatch`, liegt die Kampagne in einem
+anderen Workspace der Person als die Suche: eine Kampagne aus dem Workspace der Suche wählen oder
+eine neue anlegen. `campaign_not_found` heißt, die Kampagne gibt es nicht oder die Person darf sie
+nicht öffnen.
 
 Danach weiter mit dem Plugin `outreach`: eine neue Kampagne hat eine leere Sequenz und wird mit
 `outreach-campaign` aufgesetzt (ICP, Angebot, Copy), dann `outreach-pipeline`. **Recherche-Stufe

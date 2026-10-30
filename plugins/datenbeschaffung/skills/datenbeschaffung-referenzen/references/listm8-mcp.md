@@ -295,15 +295,24 @@ Ablauf und Gesprächsführung: `weg-c-local-maps`, Teil A. Hier stehen nur Vertr
 
 - **Voraussetzung:** `ping.version` ab `4.7.0`, Konto mit Credits. Scope `leads:read` für Kataloge,
   Angebote, Status und Einträge; `leads:write` für Start, Abbruch, Weitersuchen mit `quote_hash`,
-  Übernahme und Übergabe. Betrachter eines Workspaces nutzen nur die Lese-Tools.
+  Übernahme und Übergabe. Betrachter eines Workspaces nutzen nur die Lese-Tools; dazu zählen das
+  Angebot und Schritt 1 von `resume_prospect_search`.
 - **Workspace:** `list_prospect_area_postal_codes`, `quote_prospect_search`, `start_prospect_search`
   und `list_prospect_searches` nehmen `workspace` (uuid aus `list_workspaces`); die Tools mit
-  `search_id` arbeiten im Workspace der Suche. Je Workspace läuft eine Suche gleichzeitig.
+  `search_id` arbeiten im Workspace der Suche. Je Workspace läuft eine Suche gleichzeitig. Eine
+  Suche gehört zum Workspace, in dem sie gestartet wurde, nicht zur Person, die sie gestartet hat:
+  Alle Mitglieder sehen sie, und die Tools mit `search_id` arbeiten in diesem Workspace, auch wenn
+  der eigene Standard-Workspace ein anderer ist.
 - **Preis:** je gefundenem Betrieb `credits.per_place` (derzeit 0,1 Credits), je gelieferter
-  Rezension `credits.per_review` (0,02). Verbindlich ist nur `credits.max`; abgerechnet wird, was
+  Rezension `credits.per_review` (0,02); zusammen `credits.per_entry`, der Preis eines Leads samt
+  aller angefragten Rezensionen. Verbindlich ist nur `credits.max`; abgerechnet wird, was
   gefunden wird, der Rest der Reservierung geht am Ende zurück. Bezahlt und Lead werden nur
-  Betriebe der gesuchten Kategorien; Nachbarn anderer Branchen fallen kostenlos heraus. Betriebe,
-  die schon Leads sind, kosten mit und werden verknüpft.
+  Betriebe mit eigener Website und einer der gesuchten Kategorien; Nachbarn anderer Branchen
+  fallen kostenlos heraus. Betriebe, die schon Leads sind, kosten mit und werden verknüpft; einen
+  Betrieb, den zwei Gebiete einer Suche finden, bezahlt die Suche einmal.
+- **Rezensionen:** Alle gekauften Rezensionen kommen beim Lead an (Feld „Rezensionstexte“, lesbar
+  über `get_lead_data`); die Recherche eines Server-Laufs liest die 5 neuesten, die
+  Mail-Generierung sieht sie nur über die Recherche.
 - **Nie ohne Freigabe:** `start_prospect_search` und `resume_prospect_search` mit `quote_hash` erst
   nach ausdrücklichem Ja zum Angebot (`offer`, Wortlaut wie in der App, `weg-c-local-maps` A4).
   Die Zahl der Leads ist immer eine Schätzung.
@@ -352,8 +361,9 @@ hand_over_prospect_search(search_id: uuid, campaign_id?: integer, new_campaign_n
 
 Grenzen: `limit` 1 bis 50 (Kataloge), 1 bis 100 (Suchen), 1 bis 200 (Einträge); 1 bis 10
 Kategorien und 1 bis 50 Gebiete je Suche; `radius_km` 2 bis 50, nur bei Städten und PLZ;
-`reviews_per_place` 0 bis 100; `min_rating` 1 bis 5; `budget_credits` 1 bis 1.000.000;
-`new_campaign_name` 3 bis 255 Zeichen.
+`reviews_per_place` 0 bis 100; `min_rating` 1 bis 5; `budget_credits` 1 bis 1.000.000 mit
+höchstens drei Nachkommastellen und mindestens `credits.per_entry`; `place_ids` höchstens 5.000,
+`reasons` höchstens 2; `new_campaign_name` 3 bis 255 Zeichen.
 
 ### Kataloge
 
@@ -384,12 +394,12 @@ Kategorien und 1 bis 50 Gebiete je Suche; `radius_km` 2 bis 50, nur bei Städten
 | `credits.expected` | was die Schätzung kostet („ca. Y Credits“) |
 | `credits.max` | bindende Obergrenze, die der Start reserviert; 0 mit Hinweis `nothing_to_search`, wenn kein Gebiet zu suchen bleibt |
 | `credits.whole_areas` | was die ganzen Gebiete reservieren (Schätzung); ein Budget wird nicht darauf gekappt, Ungenutztes geht am Ende zurück |
-| `credits.per_place`, `credits.per_review`, `credits.per_entry` | Preis je Betrieb, je Rezension, je Eintrag im schlimmsten Fall mit allen Rezensionen |
+| `credits.per_place`, `credits.per_review`, `credits.per_entry` | Preis je Betrieb, je Rezension, je Lead samt aller angefragten Rezensionen (damit rechnen `credits.expected`, `credits.max` und `limits.max_entries`) |
 | `credits.available`, `credits.sufficient` | Guthaben und ob es für `credits.max` reicht |
 | `limits.whole_areas` | `true`: kein Budget gesetzt, die ganzen Gebiete werden gesucht |
 | `lead_limit.fits` | `false`: der Start wird mit `limit_reached` abgelehnt (`usage`, `limit`, `free`) |
 | `areas[]` | je Gebiet `area_key`, `radius_km`, `name`, `category_keys`, `covered_category_keys`, `skipped`, `skip_reason`, `estimated_entries`, `covered_at`, `covered_postal_code_count`, `radius_postal_codes` |
-| `hints[]` | `areas_covered`, `postal_codes_covered` (ein Teil eines Gebiets ist schon durchsucht und wird übersprungen), `rescan_pays_again` (mit `rescan_covered` werden bekannte Betriebe erneut bezahlt: dem Nutzer vorher sagen), `nothing_to_search`, `cap_limits_result` (Budget reicht nicht für alles), `filters_reduce_leads`, `estimate_from_start_values` (Schätzung noch grob) |
+| `hints[]` | `areas_covered`, `postal_codes_covered` (ein Teil eines Gebiets ist schon durchsucht und wird übersprungen), `rescan_pays_again` (mit `rescan_covered` werden bekannte Betriebe erneut bezahlt: dem Nutzer vorher sagen), `nothing_to_search`, `cap_limits_result` (Budget reicht nicht für alles), `budget_below_entry_price` (das Budget bezahlt keinen einzigen Lead, ein Start wird abgelehnt; `offer` sagt das), `filters_reduce_leads`, `estimate_from_start_values` (Schätzung noch grob) |
 | `start_arguments` | alle Argumente für `start_prospect_search` samt `quote_hash`, unverändert übergeben |
 
 Ohne `budget_credits` werden die ganzen Gebiete gesucht; reserviert wird ein Puffer über der
@@ -402,26 +412,34 @@ hat: nur auf ausdrücklichen Wunsch.
 - `start_prospect_search`: `request_id` ist eine neue UUID je beabsichtigter Suche; dieselbe
   `request_id` noch einmal liefert dieselbe Suche (sicher bei Zeitüberschreitung). Ohne `list_id`
   entsteht eine neue Liste (`list_name` optional). Mit `search_id` ein weiterer Lauf derselben
-  Suche über neue Gebiete: gleiche `reviews_per_place` und Filter, Leads in die Liste der Suche
-  (`list_id`/`list_name` nicht erlaubt). Antwort: die Suche mit `search_id`, `list_id`, `app_url`.
+  Suche über neue Gebiete: gleiche `reviews_per_place` und Filter, Kategorien beliebig, Leads in
+  die Liste der Suche (`list_id` oder `list_name` dazu ergibt `validation_failed`). Auch hier
+  liefert eine wiederholte `request_id` den schon gestarteten Lauf. Antwort: die Suche mit
+  `search_id`, `list_id`, `app_url`.
 - `get_prospect_search_status` alle 30 bis 60 Sekunden bis `is_terminal`:
   - `status` `queued`, `running`, `stopping`, `finished`.
   - `progress` für den laufenden Lauf (sonst den letzten) mit `percent`, `places_so_far`
     (gefundene Betriebe; `leads_so_far` ist der ältere Name), `new_leads_so_far`,
-    `credits_so_far`, `credits_max`, `budget` (`false`: ohne Budget, `credits_max` ist nur die
-    Reservierung), `areas_done`, `areas_total`.
+    `credits_so_far` (gebucht plus die Betriebe des laufenden Gebiets zum Preis je Lead samt
+    Rezensionen, höchstens `credits_max`), `credits_max`, `budget` (`false`: ohne Budget,
+    `credits_max` ist nur die Reservierung), `areas_done`, `areas_total`.
   - `stop_reason` `cap_reached`, `areas_exhausted`, `lead_limit_reached`, `cancelled` oder
     `failed`, dazu `failure` (`price_changed`, `start_failed`, `provider_failed`, `stalled`).
   - `areas[]` aller Läufe (`run_id`) mit `status` (`pending` bis `done`, `skipped`, `failed`), `skip_reason` (`covered`,
     `not_found`, `not_reached`) und `entries`.
   - `leads_created`, `report` (`entries`, `new_leads`, `known_leads`, bezahlte Einträge je
     Ergebnis: `created`, `linked`, `merged` = weiterer Standort derselben Firma, `blocked`,
-    `filtered`, `pending`, aussortierte je Grund), `credits` (`max`, `spent`, `reserved`),
-    `resumable`, `campaign`, `runs[]` mit `whole_areas` (ohne Budget gestartet).
+    `filtered`, `pending`, aussortierte je Grund), `credits` (`max`, `spent`, `reserved`,
+    `per_place`, `per_entry`), `resumable`, `campaign`, `campaign_pending` (Leads der Suche, die
+    seit der letzten Übergabe noch nicht in der Kampagne sind), `runs[]` mit `whole_areas` (ohne
+    Budget gestartet).
 - `list_prospect_searches`: je Suche `id`, `status`, `stop_reason`, `categories`, `areas`,
-  `leads_created`, `entries`, `credits`, `list_id`, `campaign`, `run_count`, `seen`, `app_url`.
+  `leads_created`, `entries`, `credits` (`max`, `spent`, `reserved`, `per_place`, `per_entry`),
+  `list_id`, `campaign`, `run_count`, `seen`, `app_url`. Gelistet werden alle Suchen des
+  Workspaces, gleich wer sie gestartet hat.
   `search` filtert: jedes Wort muss eine Branche, ein Gebiet oder den Listennamen treffen
-  („Friseur Freiburg“). `unseen_only=true` zeigt beendete eigene Suchen mit neuem Ergebnis.
+  („Friseur Freiburg“). `unseen_only=true` zeigt beendete Suchen, die die Person selbst gestartet
+  hat, mit neuem Ergebnis.
 
 ### Einträge, Übernahme, Abbruch, Weitersuchen, Übergabe
 
@@ -437,39 +455,49 @@ hat: nur auf ausdrücklichen Wunsch.
   `place_ids`) und immer aus allen `pending`-Einträgen Leads, ohne Mehrkosten, im Hintergrund in
   die Liste der Suche. `place_ids` nur von Einträgen mit `importable`; ist eine davon kein
   übernehmbarer Eintrag der Suche, kommt `entries_not_importable` und nichts wird übernommen.
+  Abo und Lead-Limit prüft das Tool vor dem Start: Offene (bezahlte) Einträge werden auch über das
+  Lead-Limit hinaus Leads, aussortierte nur in freie Plätze. `limit_reached` kommt ohne aktives
+  Abo oder wenn das Limit voll ist und kein offener Eintrag wartet; dann wird nichts übernommen.
   Ergebnis danach in `report` bzw. `list_prospect_entries`.
 - `cancel_prospect_search`: idempotent. Das laufende Gebiet wird eingesammelt und abgerechnet, nicht
   erreichte Gebiete werden übersprungen, der Rest der Reservierung geht zurück.
 - `resume_prospect_search`: über die offenen Gebiete aller Läufe der Suche (nicht erreicht,
   fehlgeschlagen, an Budget oder Abbruch abgeschnitten); ein Gebiet, das ein späterer Lauf ganz
   durchsucht hat, kommt nicht noch einmal. Schritt 1 ohne `quote_hash`:
-  Angebot (`offer`, `estimate`, `credits`, `areas`, `quote_hash`). Schritt
-  2 nach Freigabe mit `quote_hash`, neuer `request_id` und demselben `budget_credits`.
+  Angebot (`offer`, `estimate`, `credits`, `areas`, `quote_hash`), auch für Betrachter. Schritt
+  2 nach Freigabe mit `quote_hash`, neuer `request_id` und demselben `budget_credits`; eine
+  Wiederholung von Schritt 2 mit derselben `request_id` liefert den schon gestarteten Lauf.
 - `hand_over_prospect_search`: genau eines von `campaign_id` (`list_campaigns`) oder
   `new_campaign_name` (neue Kampagne mit leerer Sequenz; derselbe Name noch einmal nimmt dieselbe
-  Kampagne). Antwort: `campaign` (`id`, `name`), `assigned`, `already_assigned`,
-  `skipped_do_not_contact`, `app_url`. Leads späterer Läufe kommen erst mit dem nächsten Aufruf.
+  Kampagne, auch bei zwei Aufrufen gleichzeitig). Die Kampagne muss im Workspace der Suche liegen.
+  Antwort: `campaign` (`id`, `name`), `assigned`, `already_assigned`, `skipped_do_not_contact`,
+  `app_url`. Leads späterer Läufe kommen erst mit dem nächsten Aufruf (`campaign_pending` im
+  Status zeigt, wie viele warten).
 
 ### Fehler und was zu tun ist
 
 | Code | Wo | Agent tut |
 |---|---|---|
-| `feature_disabled` | Angebot, Start | Leads finden ist für das Konto nicht freigeschaltet. Sagen und den manuellen Weg anbieten (`weg-c-local-maps`, Teil B). |
-| `byok_account` | Angebot, Start | Das Konto arbeitet mit eigenem KI-Schlüssel, Leads finden gibt es nur mit Credits. Manuellen Weg anbieten. |
-| `source_unavailable` | Angebot, Start | Gerade nicht verfügbar. Später erneut versuchen oder manuellen Weg anbieten. |
+| `feature_disabled` | Angebot, Start, Weitersuchen, Liste, PLZ | Leads finden ist für das Konto nicht freigeschaltet. Sagen und den manuellen Weg anbieten (`weg-c-local-maps`, Teil B). |
+| `byok_account` | Angebot, Start, Weitersuchen, Liste, PLZ | Das Konto arbeitet mit eigenem KI-Schlüssel, Leads finden gibt es nur mit Credits. Manuellen Weg anbieten. |
+| `source_unavailable` | Angebot, Start, Weitersuchen | Gerade nicht verfügbar. Später erneut versuchen oder manuellen Weg anbieten. |
 | `category_not_found`, `area_not_found` | Angebot, Start, PLZ | Schlüssel neu mit `search_prospect_categories` bzw. `search_prospect_areas` holen, nie raten. |
-| `validation_failed` | alle | Feldfehler aus der Meldung lesen und Argumente korrigieren; beim Start `start_arguments` unverändert nehmen. |
+| `validation_failed` | alle | Feldfehler aus der Meldung lesen und Argumente korrigieren; beim Start `start_arguments` unverändert nehmen. Auch: `list_id` oder `list_name` zusammen mit `search_id`, `budget_credits` mit mehr als drei Nachkommastellen, Schritt 2 von `resume_prospect_search` ohne `request_id`, mehr als 5.000 `place_ids`. |
 | `price_changed`, `quote_changed` | Start, Weitersuchen | Die Meldung nennt die neuen Zahlen und den neuen `quote_hash`. Nennen, erneut freigeben lassen, dann damit starten. |
+| `budget_below_entry_price` | Start, Weitersuchen (im Angebot als Hinweis) | Das Budget bezahlt keinen einzigen Lead (Preis je Lead samt Rezensionen, `credits.per_entry`). Budget erhöhen oder weniger Rezensionen, neues Angebot und neue Freigabe. |
 | `insufficient_credits` | Start, Weitersuchen | Guthaben reicht nicht. Budget senken oder Credits kaufen (nur wenn `get_credit_balance.purchase.allowed`), neues Angebot. |
-| `credit_wallet_blocked` | Start | Guthaben gesperrt. Nicht wiederholen, an den Support verweisen. |
-| `limit_reached` | Start, Weitersuchen, Übergabe | Lead-Limit des Plans, kein aktives Abo oder keine weitere Kampagne. Plan erweitern lassen, weniger Gebiete oder kleineres Budget; bei der Übergabe eine bestehende `campaign_id`. |
+| `credit_wallet_blocked` | Start, Weitersuchen | Guthaben gesperrt. Nicht wiederholen, an den Support verweisen. |
+| `limit_reached` | Start, Weitersuchen, Übernahme, Übergabe | Die Meldung sagt, welche Grenze: Lead-Limit (mit Bestand, Limit, frei), keine weitere Kampagne im Plan oder kein aktives Abo. Plan erweitern lassen, weniger Gebiete oder kleineres Budget; bei der Übergabe eine bestehende `campaign_id`; bei der Übernahme erst den Plan abschließen bzw. erweitern. |
 | `nothing_to_search` | Start (im Angebot als Hinweis mit `credits.max` 0) | Alle Gebiete in den letzten 90 Tagen schon durchsucht. Andere Gebiete oder Kategorien vorschlagen; `rescan_covered` nur auf ausdrücklichen Wunsch. |
 | `search_already_running` | Start, Weitersuchen | Die Meldung nennt die laufende `search_id`. Diese verfolgen oder auf Wunsch abbrechen, nicht parallel starten. |
-| `request_id_conflict` | Start | Die `request_id` gehört zu einer anderen Suche (Meldung nennt sie). Diese verfolgen; nur für eine wirklich neue Suche eine neue UUID. |
+| `request_id_conflict` | Start, Weitersuchen | Die `request_id` gehört zu einer anderen Suche (Meldung nennt sie). Diese verfolgen; nur für eine wirklich neue Suche oder einen neuen Lauf eine neue UUID. |
 | `search_settings_differ` | Start mit `search_id` | Rezensionen und Filter müssen der Suche entsprechen. Angebot mit ihren Einstellungen neu holen. |
 | `resume_not_allowed` | Weitersuchen | Suche läuft noch oder nichts ist offen. Status prüfen; für weitere Gebiete Start mit `search_id`. |
 | `search_not_finished` | Übernahme, Übergabe | Bis `is_terminal` warten, dann erneut. |
 | `entries_not_importable` | Übernahme | Die Meldung nennt die `place_ids`, die kein übernehmbarer Eintrag sind; nichts wurde übernommen. Mit `list_prospect_entries` `importable` prüfen und nur diese übergeben. |
 | `prospect_search_not_found` | Tools mit `search_id` | `search_id` mit `list_prospect_searches` holen. |
-| `campaign_not_found`, `list_not_found` | Übergabe, Start | `list_campaigns` bzw. `list_lists`. |
+| `campaign_not_found` | Übergabe | Kampagne unbekannt oder in einem Workspace, den die Person nicht öffnen darf. Mit `list_campaigns` eine Kampagne aus dem Workspace der Suche wählen. |
+| `workspace_mismatch` | Übergabe | Die Kampagne liegt in einem anderen Workspace der Person als die Suche. Eine Kampagne aus dem Workspace der Suche wählen oder `new_campaign_name`. |
+| `lead_mutation_busy` | Übergabe | Gerade läuft eine andere Massenänderung an den Leads. Kurz warten, dann erneut. |
+| `list_not_found` | Start | `list_id` unbekannt oder nicht im Workspace: `list_lists`. |
 | `workspace_read_only`, `insufficient_scope` | Schreib-Tools | Rolle bzw. Berechtigung der Verbindung klären, nicht wiederholen. |
