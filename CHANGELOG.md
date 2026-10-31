@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-01 – outreach 0.4.5
+
+**outreach**
+- `outreach-import` → auf den Stand des Import-Werkzeugs gebracht: Leads brauchen eine Mail **oder** eine eigene Website, Leads ohne Mail werden normal recherchiert; ungültige Zeilen meldet der Server einzeln in `rejected_rows`, statt den ganzen Aufruf abzuweisen; Person der Zeile über `firstName`, `lastName`, `academicTitle`, `salutation` oder `fullName`; Platzprüfung und Report zählen neue Leads statt neuer Mail-Adressen.
+
 ## 2026-11-01 – outreach 0.4.4
 
 **outreach**
