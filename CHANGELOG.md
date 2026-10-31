@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-01 – outreach 0.4.4
+
+**outreach**
+- `outreach-import` → Google-Maps-Listen: die Place ID immer als `place_id` mitgeben. Der Skill erkennt sie an Spaltennamen, am Wertformat (`ChIJ…`) und in Maps-Links, trennt sie von `cid` und `google_id` und fragt nach, wenn sie in einer Maps-Liste fehlt. Dazu die Liste der Google-Maps-Schlüssel, die der Import ohne `attribute_mappings` behält.
+
 ## 2026-10-27 – outreach 0.4.2
 
 Fasst die Arbeitsstände 0.3.43 bis 0.3.45 auf der Linie 0.4.x zusammen.
