@@ -20,6 +20,7 @@ passenden Skill. Dazu hält er die Workspace-Regel, auf die alle Outreach-Skills
 | Der Nutzer will … | Skill |
 |---|---|
 | eine Kampagne anlegen oder ändern | `outreach-campaign` |
+| mit dem Start-Satz aus der App eine Kampagne einrichten („Richte mit outreach die Kampagne #123 ein.“) | `outreach-campaign`, Ablauf „Genannte leere Kampagne füllen“: genau diese Kampagne füllen, nie eine neue anlegen |
 | Cold-Mail-Copy schreiben oder prüfen, ein Marketing-Offer formulieren | `outreach-copy` |
 | Leads importieren (CSV, Liste) | `outreach-import` |
 | Listen ansehen, anlegen, in eine Kampagne übernehmen | `outreach-lists` |

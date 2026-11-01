@@ -1,5 +1,15 @@
 # Changelog
 
+## Unveröffentlicht – outreach (Version erhält das Release)
+
+Passt zu ListM8 mit dem Weg „Mit deiner KI“ (LISTM8-86, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.
+
+**outreach**
+- `outreach-campaign` → neuer Ablauf „Genannte leere Kampagne füllen“: Der Start-Satz aus der App („Richte mit outreach die Kampagne #123 ein.“, auch mit Workspace oder englisch) füllt genau diese Kampagne per `edit_campaign`, nie per `create_campaign`. Prüft vorher mit `export_campaign_blueprint` und `list_campaigns`, ob sie leer ist und im genannten Workspace liegt; nicht leer oder im Assistenten angefangen heißt nachfragen. Mails und Team in einem Aufruf, danach Prüfen und Freigeben in der App; Lead-Läufe warten bis zur Freigabe.
+- Signatur aus dem Konto auf diesem Weg: keine Frage nach Name, Rolle und Firma, jede Mail endet mit der Grußformel und `{{accountSignature}}` (`outreach-campaign`, `outreach-copy`, `copy-lehre.md`).
+- `outreach`, `outreach-setup` → leiten den Start-Satz an diesen Ablauf weiter.
+- `outreach-launch` → Checkliste: Bei `{{accountSignature}}` braucht jedes Versandpostfach in Instantly eine schlanke Signatur.
+
 ## 2026-11-01 – outreach 0.5.0, datenbeschaffung 0.4.2, fulfillment 0.1.1
 
 Passt zu ListM8 v4.18.0 (MCP 4.7.0). Fasst die bisher getrennten Stände Workspaces (#11), Export (#14) und Kampagnensprache (#15) in einer Version zusammen.

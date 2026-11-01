@@ -232,6 +232,13 @@ Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
 `{{sender.firstName}}`, `{{sender.company}}` o. Ä. (gibt es nicht). Ohne bekannten Absendernamen
 nur „Viele Grüße“. Schlank: keine Auszeichnungen, Links, Telefonnummern oder Social-Leisten.
 
+**Signatur aus dem Konto:** Füllt `outreach-campaign` eine Kampagne, die die App angelegt hat
+(Start-Satz „Richte mit outreach die Kampagne #… ein“, Ablauf „Genannte leere Kampagne füllen“),
+steht statt der Klartext-Signatur direkt unter der Grußformel `{{accountSignature}}`:
+„Viele Grüße\n{{accountSignature}}“ (englisch „Best,\n{{accountSignature}}“). Instantly setzt dort
+die Signatur des Versandpostfachs ein. Dann nicht nach Name, Rolle und Firma fragen und keine
+Unterschrift in den Mailtext schreiben; was unter der Signatur steht, folgt unter `{{accountSignature}}`.
+
 ## Intro-Regeln (`{{ai.intro}}`)
 
 Das Intro ist Lob oder eine anerkennende Beobachtung: ein positiver Bezug auf den Lead, der
@@ -436,6 +443,7 @@ Aufgelöst werden nur diese Platzhalter (abschließende Liste für Betreff und B
 - `{{lead.company}}`, `{{lead.website}}`, `{{lead.city}}` (der Server löst zusätzlich
   `lead.email` und `lead.phoneNumber` auf; in Copy nicht verwenden)
 - `{{custom.<schlüssel>}}` (Custom-Attribute aus dem Import; leer, wenn der Lead keinen Wert hat)
+- `{{accountSignature}}` nur im Body und nur bei der Signatur aus dem Konto (siehe Signatur)
 
 Alles andere (`{{firstName}}`, `{{companyName}}`, `{{sender.*}}`, If-Blöcke, Default-Syntax)
 landet als Rohtext beim Empfänger. Ein nicht erzeugter AI-Wert erscheint als „[NOT GENERATED]“.
@@ -559,7 +567,7 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
 7. Zeichen-Scan: M-Striche, Emojis, Bold, Bulletpoints, Links in Step 1?
 8. Spam-Scan: Betreff und Body gegen die Wortliste. „kostenlos“ höchstens einmal im Body?
 9. Platzhalter-Scan: kein [Klammer-Feld]? Jede `{{…}}`-Variable gegen die abschließende Liste
-   prüfen. Signatur als Klartext, keine `{{sender.*}}`-Variablen?
+   prüfen. Signatur als Klartext (bei Signatur aus dem Konto `{{accountSignature}}` unter der Grußformel), keine `{{sender.*}}`-Variablen?
 10. Betreff von Step 1 und Step 3: 2-5 Wörter, kein Spam-Wort, keine Großschreibung, keine
     Ankündigung, Firmenname nur über `{{ai.firma}}`, Step 3 nicht gleich Step 1? Step 2 und Step 4
     ohne Betreff?

@@ -1,6 +1,6 @@
 ---
 name: outreach-campaign
-description: 'Use when user says "outreach:campaign", "mcp:campaign", "erstelle kampagne via mcp", "kampagne per mcp anlegen", "campaign blueprint erstellen", "bearbeite kampagne via mcp", "Kampagne mit guter Copy bauen", "Qualifizierungskriterien formulieren", or triggers /mcp:campaign. Guided campaign builder (create_campaign, export_campaign_blueprint, edit_campaign, update_ai_variable) that enforces the cold-mailing SOP: copy via the outreach-copy skill (loaded before any sequence or variable prompt is written), open qualification and research anchors via the bundled references.'
+description: 'Use when user says "outreach:campaign", "mcp:campaign", "erstelle kampagne via mcp", "kampagne per mcp anlegen", "campaign blueprint erstellen", "bearbeite kampagne via mcp", "Kampagne mit guter Copy bauen", "Qualifizierungskriterien formulieren", or triggers /mcp:campaign, and for the start sentence from the app „Richte mit outreach die Kampagne #… ein“ / "Set up campaign #… with outreach" (fills that named empty campaign, never creates a new one). Guided campaign builder (create_campaign, export_campaign_blueprint, edit_campaign, update_ai_variable) that enforces the cold-mailing SOP: copy via the outreach-copy skill (loaded before any sequence or variable prompt is written), open qualification and research anchors via the bundled references.'
 ---
 
 # MCP Campaign — Kampagnen erstellen & bearbeiten via Blueprint
@@ -9,7 +9,7 @@ description: 'Use when user says "outreach:campaign", "mcp:campaign", "erstelle 
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
 
-Dieser Skill erstellt vollständige Kampagnen über `create_campaign` und ändert vorhandene über den Dreischritt `export_campaign_blueprint` → Blueprint anpassen → `edit_campaign` (Scope `campaigns:write`, Lesen: `campaigns:read`). Ändert sich nur der Prompt einer KI-Variable, reicht `update_ai_variable` (ab ListM8-MCP 2.4.0). Grundlage ist das CampaignBlueprint-Schema v1; die vollständige Referenz liefert der MCP-Prompt `campaign_blueprint_guide`.
+Dieser Skill erstellt vollständige Kampagnen über `create_campaign`, füllt eine leere Kampagne, die die App für den Nutzer angelegt hat (Start-Satz, siehe „Genannte leere Kampagne füllen“), und ändert vorhandene über den Dreischritt `export_campaign_blueprint` → Blueprint anpassen → `edit_campaign` (Scope `campaigns:write`, Lesen: `campaigns:read`). Ändert sich nur der Prompt einer KI-Variable, reicht `update_ai_variable` (ab ListM8-MCP 2.4.0). Grundlage ist das CampaignBlueprint-Schema v1; die vollständige Referenz liefert der MCP-Prompt `campaign_blueprint_guide`.
 
 ## Aufruf
 
@@ -18,10 +18,13 @@ Dieser Skill erstellt vollständige Kampagnen über `create_campaign` und änder
 | `/outreach-campaign` | Briefing interaktiv abfragen, dann erstellen |
 | `/outreach-campaign <briefing-text oder datei>` | Blueprint aus Briefing bauen, dann erstellen |
 | `bearbeite kampagne 80 via mcp: <änderungswunsch>` | Blueprint exportieren, ändern, als Vollersatz zurückschreiben (mit Bestätigung) |
+| `Richte mit outreach die Kampagne #123 ein.` (Start-Satz aus der App, auch mit „im Workspace „…““ oder englisch) | Genau diese leere Kampagne füllen, nie eine neue anlegen (Ablauf „Genannte leere Kampagne füllen“) |
 
 ## Phase 0: Bestand prüfen
 
 Vor dem Schreiben `list_campaigns` aufrufen: Gibt es die Kampagne schon (Name, `lifecycle`, Lead-Zahlen, Variablen, Schritte)? Für eine bestehende Kampagne den Ist-Stand mit `export_campaign_blueprint(campaign_id)` holen — das ist die einzige Quelle für Konfiguration, Variablen und Sequenz. Die Kampagnen-ID nie aus dem Gedächtnis übernehmen.
+
+Nennt der Nutzer eine Kampagnennummer zum Einrichten (Start-Satz aus der App wie „Richte mit outreach die Kampagne #123 ein.“), gilt der Ablauf „Genannte leere Kampagne füllen“ weiter unten: Die ID kommt aus dem Satz, `create_campaign` entfällt.
 
 ## Phase 1: Briefing sammeln
 
@@ -33,7 +36,7 @@ Mindestens klären (fehlendes nachfragen, AskUserQuestion):
 4. **Qualifizierung**: Wer ist ideal, was disqualifiziert?
 5. **Research-Fokus**: Wonach soll die Recherche suchen (Aufhänger-Prioritäten — steuert die Recherche-Agenten der Kampagne)? Dazu die Sperrliste: welche Leistungen bietet in dieser Branche fast jeder an (Vorschlag aus Branche und Zielgruppe machen, Nutzer ergänzt)?
 6. **Sequenz**: Standard sind 4 Steps mit `delayDays` 0/3/5/7 (Entry, Erinnerung, neuer Winkel in neuem Thread, Abschied mit Routing-Hinweis; Rollen und Wortlimits: Skill `outreach-copy`). Eine Dringlichkeits-Mail gibt es nur als zusätzlichen Step, wenn der Nutzer einen echten Grund nennt.
-7. **Absender und Belege**: Name, Rolle und Firma für die Signatur; ein echter Beleg für Step 3 (Case, Zahl, Ergebnis); nur wenn der Nutzer eine Dringlichkeits-Mail will, zusätzlich ein echter Kapazitäts- oder Zeitgrund. Nichts davon erfinden.
+7. **Absender und Belege**: Name, Rolle und Firma für die Signatur (entfällt beim Füllen einer genannten leeren Kampagne, dort kommt die Signatur aus dem Konto); ein echter Beleg für Step 3 (Case, Zahl, Ergebnis); nur wenn der Nutzer eine Dringlichkeits-Mail will, zusätzlich ein echter Kapazitäts- oder Zeitgrund. Nichts davon erfinden.
 8. **Sprache der Kampagne**: Deutsch (Standard) oder Englisch? Mit Deutsch als Vorschlag fragen, außer das Briefing legt die Sprache schon fest. Sie steht in `campaign.language` (siehe Phase 2).
 
 ## Phase 1b: Qualität nach SOP (Pflicht, bevor eine Zeile Blueprint entsteht)
@@ -116,7 +119,7 @@ Struktur (Schema v1 — die vollständige Referenz liefert der MCP-Prompt `campa
   - `intro`: Der Prompt sagt ausdrücklich, dass nur der ERSTE Buchstabe klein ist und jeder weitere Satz groß beginnt. Ohne den Satz schrieb das Modell „… selten sieht. das finde ich stark."
 - **Sperrliste je Kampagne (Pflicht):** Aus Branche und Zielgruppe die branchenüblichen Leistungen ableiten, die keinen Opener tragen (meist 6 bis 10 Begriffe: was steht bei fast jedem Betrieb dieser Branche auf der Leistungsseite?), und gleichlautend in `researchAgentConfig.additionalPrompt` UND in den `intro`-Prompt eintragen. Beispiel Dental: Angstpatienten, Lachgas, Sedierung/Narkose, Kinderbehandlung, Notdienst, Prophylaxe/Dentalhygiene, digitaler Scan/Abdruck, Implantate allgemein. Regel und Hintergrund: `outreach-copy` → `references/copy-lehre.md`, Abschnitt „Abhebung und Austauschtest“. Die Liste dem Nutzer mit dem Blueprint zeigen.
 - Ansprache in `emailAgentConfig.salutation` festlegen: Standard `"du"` (Singular), `"sie"` nur, wenn der Nutzer die Kampagne siezen will (sehr große Unternehmen), nie `"team"` (keine Ihr- und Team-Form, ohne Ansprechpartner „Hallo,“ und „dein Team“). Sie gilt für alle generierten Variablen einer Mail. Fehlt der Wert, leitet der Server sie aus Ton und Sprache ab; `salutation` setzen ist sicherer. Zusätzlich `emailLanguage` (z. B. „Deutsch (DACH)"; passend zu `campaign.language`) und `emailTone` angeben. Bei englischen Kampagnen gibt es kein du/Sie (siehe Kampagnensprache).
-- Platzhalter in Betreff und Body: nur `{{ai.<variable>}}`, `{{lead.<feld>}}` (`email`, `company`, `website`, `phoneNumber`, `city`) und `{{custom.<schlüssel>}}`. Alles andere (`{{firstName}}`, `{{companyName}}`, If-Blöcke, Default-Syntax) wird nicht aufgelöst und bleibt als Text in der Mail stehen. Sequenz-Bodies nutzen `{{ai.hallo}}`, `{{ai.intro}}` und `{{ai.firma}}`; Step 1 hat `delayDays: 0`.
+- Platzhalter in Betreff und Body: nur `{{ai.<variable>}}`, `{{lead.<feld>}}` (`email`, `company`, `website`, `phoneNumber`, `city`) und `{{custom.<schlüssel>}}`, im Body dazu `{{accountSignature}}` für die Signatur des Kontos (nur wo dieser Skill sie vorsieht, siehe „Genannte leere Kampagne füllen“). Alles andere (`{{firstName}}`, `{{companyName}}`, If-Blöcke, Default-Syntax) wird nicht aufgelöst und bleibt als Text in der Mail stehen. Sequenz-Bodies nutzen `{{ai.hallo}}`, `{{ai.intro}}` und `{{ai.firma}}`; Step 1 hat `delayDays: 0`.
 - `subject` ist ein String: Step 1 und Step 3 mit eigenem kurzen Betreff (jeweils ein neuer Thread, Step 3 z. B. „kurzes Update“), Step 2 und Step 4 leer (sie antworten im Thread der vorigen Betreff-Mail, siehe `outreach-copy`). Der Betreff nennt einen Firmennamen nur über `{{ai.firma}}`. `delayUnit` ist `days` oder `hours`, `delayDays` eine ganze Zahl >= 0.
 - `agentKey` in den Configs WEGLASSEN, außer der Nutzer nennt ausdrücklich einen bestehenden Agenten. Unbekannte oder deaktivierte Keys werden mit `validation_failed` abgelehnt; ohne Key greifen die Standard-Agenten.
 - Max. 25 Variablen und 25 Steps je Kampagne.
@@ -145,6 +148,28 @@ Blueprint dem User zur Bestätigung zeigen (kompakt: Name, Sprache, Variablen, S
 
 Was der Nutzer trotzdem wissen muss: Schon erzeugte Werte stammen aus dem alten Prompt. Sollen sie zum neuen passen, müssen die betroffenen Leads neu generiert werden, und das kostet erneut. Vorher prüfen, ob schon Werte da sind (`list_leads` mit `campaign_status="pending_review"` bzw. `"approved"`), und die Neugenerierung nur nach Rückfrage starten. `confirm_overwrite=true` allein ist keine informierte Zustimmung. Nicht während eines aktiven Lead-Laufs mit E-Mail-Stufe ändern (`list_lead_runs(active_only=true)` vorher prüfen): Die noch offenen Leads würden mit der neuen Konfiguration erzeugt.
 
+## Genannte leere Kampagne füllen (Start-Satz aus der App)
+
+Beim Weg „Mit deiner KI“ legt die App eine leere Kampagne an und gibt dem Nutzer einen Start-Satz für genau diese Kampagne, etwa „Richte mit outreach die Kampagne #123 im Workspace „Agentur Nord“ ein.“ oder ohne Workspace „Richte mit outreach die Kampagne #123 ein.“ (englisch: „Set up campaign #123 in the workspace “Agentur Nord” with outreach.“). Die App wartet auf diese Kampagne und zeigt live, was ankommt. Legt die KI stattdessen eine neue an, meldet die App das als Fehlgriff.
+
+**Regeln für diesen Ablauf:**
+- Nie `create_campaign`. Die genannte Kampagne wird mit `edit_campaign` gefüllt. Auch wenn etwas nicht klappt, keine neue Kampagne als Ausweg anlegen, sondern den Fehler nennen.
+- Die ID steht im Satz. Ohne Nummer im Satz gilt der normale Weg mit `create_campaign` (Phase 3, „Neu“).
+- Nicht nach Name, Rolle oder Firma für die Unterschrift fragen. Die Signatur kommt aus dem Konto: Jede Mail endet mit der Grußformel in einer eigenen Zeile und direkt darunter `{{accountSignature}}` (deutsch `Viele Grüße\n{{accountSignature}}`, englisch `Best,\n{{accountSignature}}`). Beim Versand setzt Instantly dort die Signatur des Versandpostfachs ein. Keine Unterschrift mit Name, Rolle oder Firma im Mailtext, auch nicht, wenn der Nutzer sie nennt. Was `outreach-copy` unter die Signatur stellt, steht unter `{{accountSignature}}`.
+
+**Ablauf:**
+
+1. **Kampagne finden und prüfen (nur lesend).** Nennt der Satz einen Workspace, ihn nach der Workspace-Regel über `list_workspaces` beim Namen wählen; ohne Workspace im Satz entscheidet der Workspace der Kampagne. `export_campaign_blueprint(campaign_id=<ID>)` holen (ohne `workspace`; die Antwort nennt den Workspace der Kampagne mit `uuid`, `name` und `role`) und `list_campaigns` im selben Workspace lesen (`workspace=<uuid>` aus dieser Antwort, wenn es nicht der Standard ist) für `setup_state`, `setup_path`, `emailSequence` und `aiVariables` dieser Kampagne.
+   - `campaign_not_found`: Die Verbindung sieht die Kampagne nicht, meist ein anderes Konto. Dem Nutzer sagen, dass die KI mit dem Konto verbunden sein muss, in dem er die Kampagne in der App sieht. Nichts anlegen.
+   - Der Workspace der Antwort ist nicht der aus dem Satz: in einem Satz nennen und nachfragen, bevor geschrieben wird. Rolle `viewer`: nach der Workspace-Regel nur lesen und abbrechen.
+   - **Leer** heißt: keine Schritte (`emailSequence` fehlt oder `stepCount` ist 0) und keine KI-Variablen. Dann weiter mit Schritt 2. `setup_state` `open` mit `setup_path` `ai` bestätigt den Weg; fehlen die Felder (älterer Server), reicht „leer“. Steht `setup_path` auf `assistant` oder `template`, richtet der Nutzer die Kampagne gerade in der App ein: nachfragen, bevor geschrieben wird.
+   - **Nicht leer** (die KI hat schon einmal gespeichert, oder der Nutzer hat im Assistenten angefangen): nicht still überschreiben. Dem Nutzer kurz zeigen, was drin ist (Name, Schritte, Variablen, ob `qualificationSettings.target_customer_profile` gefüllt ist), und fragen, ob die KI darauf aufbaut oder alles ersetzt. Dann wie „Bearbeiten“ in Phase 3, mit dem Export als Grundlage.
+2. **Briefing** wie Phase 1, ohne Name, Rolle und Firma aus Punkt 7. Die App kündigt dem Nutzer diese Fragen an, mit ihnen beginnen: seine Website, wen er anschreibt, womit er die Tür öffnet (das Offer), seine Abschluss-Frage (der CTA), du oder Sie. Kann die KI die Website lesen, daraus Angebot, USPs und Ton vorschlagen und bestätigen lassen; sonst nachfragen. Den Rest aus Phase 1 (Qualifizierung, Recherche-Fokus mit Sperrliste, Beleg für Step 3, Sprache) danach klären oder vorschlagen; nichts erfinden.
+3. **Blueprint bauen** nach Phase 1b und Phase 2, vollständig in einem Stück: sprechender `campaign.name` (die App zeigt die Kampagne unter diesem Namen), `campaign.language`, `intelligence`, alle drei Team-Blöcke (`qualificationSettings` mit `target_customer_profile`, `researchAgentConfig`, `emailAgentConfig`), `aiVariables` und `sequence`. Kein `agentKey`. Damit die App die Kampagne freigeben kann: Step 1 hat einen Betreff, im Mailtext steht keine Angabe in eckigen Klammern (`[Name]`, `[Branche]`) und kein unbekannter Platzhalter.
+4. **Bestätigen und speichern.** Blueprint kompakt zeigen (wie am Ende von Phase 2) und sagen, wohin gespeichert wird („Ich speichere in Kampagne #123 im Workspace Agentur Nord.“). Dann ein einziges `edit_campaign(campaign_id=<ID>, blueprint=<komplett>)` ohne `confirm_overwrite`: Mails und Team kommen zusammen an, die App springt auf „Team eingerichtet, bereit zum Prüfen“. Antwortet das Tool mit `confirm_overwrite_required` (die Kampagne trägt schon Einstellungen, etwa aus dem Assistenten), den Export zeigen, sagen, was ersetzt würde, und nur nach dem Ja des Nutzers mit `confirm_overwrite=true` wiederholen. Ein gesetztes `onboarding_completed_at` in der Antwort heißt nicht, dass die Kampagne fertig ist: Die Einrichtung in der App bleibt offen, bis der Nutzer freigibt.
+5. **Setup prüfen** nach Phase 4. Dazu: Jede Mail endet mit Grußformel und `{{accountSignature}}`.
+6. **Zurück in die App.** Dem Nutzer sagen: In der App steht jetzt „Team eingerichtet, bereit zum Prüfen“. Dort prüft und gibt er die Kampagne frei, danach geht es mit den Leads weiter. Solange sie nicht freigegeben ist (`setup_state` `open`), lehnt `start_lead_run` mit `run_not_startable` ab; keinen Lauf versuchen. Hinweis für den Versand: `{{accountSignature}}` füllt Instantly aus der Signatur jedes Versandpostfachs; dort müssen Name, Rolle und Firma schlank eingetragen sein (siehe `outreach-launch`).
+
 ## Phase 4: Setup prüfen (Pflicht vor Leads)
 
 Keine Leads in die Kampagne (`add_leads_to_campaign`, `import_leads` mit Kampagne) und kein `start_lead_run`, bevor dieser Check bestanden ist. Er gilt nach `create_campaign`, nach jedem `edit_campaign` und für jede bestehende Kampagne, die Leads bekommen soll.
@@ -168,13 +193,13 @@ Fehler sind MCP-Tool-Results mit `isError: true`; der Text beginnt mit `<code>:`
 | `validation_failed` | Fehlerliste lesen (Pflichtfelder, Längen, Namens-Regex, Prompt-Länge, unbekannter `agentKey`, `salutation`), Blueprint korrigieren, erneut senden. Ein unbekannter `campaign.language`-Wert ist kein Fehler, er gilt als nicht gesetzt: nach dem Erstellen mit `list_campaigns` die Sprache prüfen |
 | `limit_reached` | Nutzer informieren: Kampagnen sind mit Abo unbegrenzt; das Kampagnen-Limit greift nur ohne aktives Abo bzw. hinter der Paywall (`get_credit_balance.account`: `campaigns`, `campaign_limit`, `subscription_required`), dann zuerst einen Plan wählen. Sonst Variablen- oder Step-Grenze je Kampagne |
 | `confirm_overwrite_required` | Nutzer fragen, ob überschreiben, dann `confirm_overwrite=true` — nur bei genau diesem Code |
-| `campaign_not_found` | `campaign_id` prüfen (`list_campaigns`) |
+| `campaign_not_found` | `campaign_id` prüfen (`list_campaigns`). Kam die ID aus dem Start-Satz der App: keine neue Kampagne anlegen, sondern das verbundene Konto prüfen lassen (siehe „Genannte leere Kampagne füllen“) |
 | `insufficient_scope` / `access_denied` | Token ohne Berechtigung: Scope `campaigns:write` (Lesen: `campaigns:read`) nötig |
 | `create_failed` / `edit_failed` / `internal_error` | Meldung berichten, nicht blind wiederholen; mit `list_campaigns` bzw. Export den Zustand prüfen |
 
 ## Abschluss
 
-Report: `campaign_id`, Name, Sprache, importierte Steps/Variablen/Configs, `warnings` und das Ergebnis des Setup-Checks aus Phase 4. Erst wenn er bestanden ist: „Nächster Schritt: /outreach-import — Leads in die Kampagne laden."
+Report: `campaign_id`, Name, Sprache, importierte Steps/Variablen/Configs, `warnings` und das Ergebnis des Setup-Checks aus Phase 4. Erst wenn er bestanden ist: „Nächster Schritt: /outreach-import — Leads in die Kampagne laden." Nach dem Start-Satz aus der App stattdessen: „Nächster Schritt: in der App prüfen und freigeben, danach die Leads.“
 
 ## Verwandt
 

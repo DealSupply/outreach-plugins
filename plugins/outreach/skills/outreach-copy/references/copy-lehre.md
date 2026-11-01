@@ -566,7 +566,7 @@ Der Standard für Step 1 bleibt „kurze Frage“. Als Testmöglichkeit legt man
 
 ## Signatur-Regeln
 
-Die Signatur darf NICHT wie eine Vertriebler-Signatur aussehen. Minimalistisch - Name, Titel, Firma. Fertig. Sie steht als Klartext aus den Angaben des Nutzers im festen Text, nie als `{{sender.*}}`-Variable. Ohne bekannten Absendernamen nur die Grußformel.
+Die Signatur darf NICHT wie eine Vertriebler-Signatur aussehen. Minimalistisch - Name, Titel, Firma. Fertig. Sie steht als Klartext aus den Angaben des Nutzers im festen Text, nie als `{{sender.*}}`-Variable. Ohne bekannten Absendernamen nur die Grußformel. Ausnahme ist die Signatur aus dem Konto (Kampagne aus dem Start-Satz der App): Dann steht unter der Grußformel `{{accountSignature}}`, und Instantly setzt die Signatur des Versandpostfachs ein, für die dieselben Regeln gelten.
 
 **So:**
 

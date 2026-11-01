@@ -99,6 +99,9 @@ In Claude Code sind Updates fremder Marketplaces standardmäßig aus. Empfehlen:
 - **Claude Code:** Die Live-Ansicht zeigt Lead-Vorschauen und laufende Lead-Runs über dem Prompt;
   `/outreach-status` holt alle laufenden Läufe ins Band (`zu`/`auf` klappt es ein und aus).
 - Weiter mit dem Einstieg `outreach` oder direkt mit `outreach-campaign`.
+- Kam der Nutzer mit einem Start-Satz aus der App („Richte mit outreach die Kampagne #123 ein.“),
+  nach der Einrichtung direkt damit weiter: `outreach-campaign`, Ablauf „Genannte leere Kampagne
+  füllen“, mit der Nummer aus dem Satz.
 
 ## Abschluss
 
