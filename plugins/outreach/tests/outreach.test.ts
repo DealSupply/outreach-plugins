@@ -52,12 +52,12 @@ const SURFACES = ['terminal', 'desktop', 'vscode', 'mobile'] as const
 describe('lead preview', () => {
   test('list_leads draws the leads with links into the campaign, on every surface', async $ => {
     for (const surface of SURFACES) {
-      const ui = await $.ui.mount({ ...toolRow('mcp__akquise__list_leads', LIST_LEADS), surface })
+      const ui = await $.ui.mount({ ...toolRow('mcp__dealsupply__list_leads', LIST_LEADS), surface })
       expect(await ui.find({ text: /Dr\. Huber Zahnmedizin/ })).toBeDefined()
       expect(await ui.find({ text: /3 Leads/ })).toBeDefined()
       const hrefs = (await ui.findAll({ type: 'Link' })).map(l => l.props.href)
-      expect(hrefs).toContain('https://outreach.akquise.de/campaigns/12/leads/7')
-      expect(hrefs).toContain('https://outreach.akquise.de/campaigns/12/leads')
+      expect(hrefs).toContain('https://app.dealsupply.ai/campaigns/12/leads/7')
+      expect(hrefs).toContain('https://app.dealsupply.ai/campaigns/12/leads')
       await ui.unmount()
     }
   })
@@ -71,7 +71,7 @@ describe('lead preview', () => {
       lead_ids_truncated: false,
       applied_filters: { run_stages: ['qualification', 'research', 'email'], sort_by: 'email', sort_direction: 'asc', take: 3 },
     }
-    const ui = await $.ui.mount({ ...toolRow('mcp__akquise__list_leads', listMode), surface: 'terminal' })
+    const ui = await $.ui.mount({ ...toolRow('mcp__dealsupply__list_leads', listMode), surface: 'terminal' })
     expect(await ui.find({ text: /Dr\. Huber Zahnmedizin/ })).toBeDefined()
     expect(await ui.find({ text: /3 Leads/ })).toBeDefined()
     await ui.unmount()
@@ -81,7 +81,7 @@ describe('lead preview', () => {
     const leads = ['highly_qualified', 'mid_qualified', 'not_qualified', null].map((fitLevel, i) => ({
       id: i + 1, company: `Firma ${i + 1}`, city: 'Freiburg', score: null, contactStatus: 'not_contacted', qualification: { fitLevel },
     }))
-    const ui = await $.ui.mount({ ...toolRow('mcp__akquise__list_leads', { ...LIST_LEADS, total: 4, leads }), surface: 'terminal' })
+    const ui = await $.ui.mount({ ...toolRow('mcp__dealsupply__list_leads', { ...LIST_LEADS, total: 4, leads }), surface: 'terminal' })
     for (const label of ['sehr passend', 'bedingt', 'passt nicht', 'nicht bewertet']) {
       expect(await ui.find({ text: label })).toBeDefined()
     }
@@ -115,11 +115,11 @@ describe('which MCP server is ours', () => {
     engineDraws(on)
     on('tool.list', () => ({
       value: [
-        ...offers('Outreach_Akquise', ['list_leads', 'start_lead_run', 'get_lead_run_status', 'get_lead_data']),
+        ...offers('Outreach_Kunde', ['list_leads', 'start_lead_run', 'get_lead_run_status', 'get_lead_data']),
         ...offers('crm', ['list_leads']),
       ],
     }))
-    const ours = await $.ui.mount({ ...toolRow('mcp__Outreach_Akquise__list_leads', LIST_LEADS), surface: 'terminal' })
+    const ours = await $.ui.mount({ ...toolRow('mcp__Outreach_Kunde__list_leads', LIST_LEADS), surface: 'terminal' })
     expect(await ours.find({ text: /Dr\. Huber Zahnmedizin/ })).toBeDefined()
     await ours.unmount()
 
@@ -134,11 +134,11 @@ describe('which MCP server is ours', () => {
       campaign: { ...LIST_LEADS.campaign, appUrl: 'https://kunde.example/campaigns/12/leads' },
       leads: [{ ...LIST_LEADS.leads[0], appUrl: 'https://kunde.example/campaigns/12/leads/7' }],
     }
-    const ui = await $.ui.mount({ ...toolRow('mcp__akquise__list_leads', withLinks), surface: 'terminal' })
+    const ui = await $.ui.mount({ ...toolRow('mcp__dealsupply__list_leads', withLinks), surface: 'terminal' })
     const hrefs = (await ui.findAll({ type: 'Link' })).map(l => l.props.href)
     expect(hrefs).toContain('https://kunde.example/campaigns/12/leads/7')
     expect(hrefs).toContain('https://kunde.example/campaigns/12/leads')
-    expect(hrefs.some(h => String(h).includes('outreach.akquise.de'))).toBe(false)
+    expect(hrefs.some(h => String(h).includes('app.dealsupply.ai'))).toBe(false)
     await ui.unmount()
   })
 
@@ -146,23 +146,23 @@ describe('which MCP server is ours', () => {
     engineDraws(on)
     const clock = mock.clock(on)
     const asked: string[] = []
-    on('tool.list', () => ({ value: offers('akquise', ['list_leads', 'start_lead_run', 'get_lead_run_status']) }))
+    on('tool.list', () => ({ value: offers('dealsupply', ['list_leads', 'start_lead_run', 'get_lead_run_status']) }))
     on('tool.call', () => ({ result: RUN_STATUS }))
     on('mcp.call', ($, e) => {
       asked.push(String((e as { server: string }).server))
       const body = (e as { tool: string }).tool === 'list_lead_runs' ? { runs: [RUN_STATUS], count: 1 } : RUN_STATUS
       return { value: { content: [{ type: 'text', text: JSON.stringify(body) }], isError: false } }
     })
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
     await clock.advance(20_000)
-    expect(asked).toEqual(['akquise'])
+    expect(asked).toEqual(['dealsupply'])
   })
 })
 
 describe('run status', () => {
   test('a started run is one line in the chat', async $ => {
     const started = { status: 'success', lead_run_id: 'run-1', campaign_id: 12, run_status: 'preparing', stages: ['qualification'], lead_total: 10, billing_mode: 'credits', budget_credits: 12.5, spent_credits: 0, queued: true }
-    const ui = await $.ui.mount({ ...toolRow('mcp__akquise__start_lead_run', started), surface: 'terminal' })
+    const ui = await $.ui.mount({ ...toolRow('mcp__dealsupply__start_lead_run', started), surface: 'terminal' })
     expect(await ui.find({ text: /Lead-Run gestartet · 10 Leads · Qualifizierung · Budget 12,5 Credits/ })).toBeDefined()
     await ui.unmount()
   })
@@ -172,7 +172,7 @@ describe('run status', () => {
     mock.clock(on)
     const started = { status: 'success', lead_run_id: 'run-new', campaign_id: 12, run_status: 'preparing', stages: ['qualification', 'research', 'email'], lead_total: 10, billing_mode: 'credits', budget_credits: 2, spent_credits: 0, queued: true }
     on('tool.call', () => ({ result: started }))
-    await toolCall($, 'mcp__akquise__start_lead_run', { campaign_id: 12, stages: ['qualification'] })
+    await toolCall($, 'mcp__dealsupply__start_lead_run', { campaign_id: 12, stages: ['qualification'] })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '0/10' })).toBeDefined()
     expect(await band.find({ text: '10/10' })).toBeUndefined()
@@ -185,12 +185,12 @@ describe('run status', () => {
     const started = { status: 'success', lead_run_id: 'run-byok', campaign_id: 12, run_status: 'preparing', stages: ['qualification'], lead_total: 10, billing_mode: 'byok', budget_credits: null, spent_credits: null, queued: true }
     const byok = { ...RUN_STATUS, id: 'run-byok', billing_mode: 'byok', budgetCredits: null, spentCredits: null, budget_credits: null, spent_credits: null }
     on('tool.call', () => ({ result: byok }))
-    const card = await $.ui.mount({ ...toolRow('mcp__akquise__start_lead_run', started), surface: 'terminal' })
+    const card = await $.ui.mount({ ...toolRow('mcp__dealsupply__start_lead_run', started), surface: 'terminal' })
     expect(await card.find({ text: /Lead-Run gestartet · 10 Leads · Qualifizierung$/ })).toBeDefined()
     expect(await card.find({ text: /Budget|Credits|\$/ })).toBeUndefined()
     await card.unmount()
 
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-byok' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-byok' })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '40/46' })).toBeDefined()
     expect(await band.find({ text: /Credits|\$/ })).toBeUndefined()
@@ -201,7 +201,7 @@ describe('run status', () => {
     engineDraws(on)
     mock.clock(on)
     on('tool.call', () => ({ result: RUN_STATUS }))
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '12,25/50 Credits' })).toBeDefined()
     await band.unmount()
@@ -220,14 +220,14 @@ describe('run status', () => {
       const body = (e as { tool: string }).tool === 'list_lead_runs' ? { runs: [RUN_STATUS], count: 1 } : RUN_STATUS
       return { value: { content: [{ type: 'text', text: JSON.stringify(body) }], isError: false } }
     })
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
     let band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '· Credits aufgebraucht' })).toBeDefined()
     await band.unmount()
     await clock.advance(20_000)
     expect(asked).toBe(0)
 
-    await toolCall($, 'mcp__akquise__resume_lead_run', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__resume_lead_run', { lead_run_id: 'run-1' })
     band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '· Credits aufgebraucht' })).toBeUndefined()
     expect(await band.find({ text: '· 150 Leads' })).toBeDefined()
@@ -235,7 +235,7 @@ describe('run status', () => {
     await clock.advance(20_000)
     expect(asked).toBeGreaterThan(0)
 
-    const card = await $.ui.mount({ ...toolRow('mcp__akquise__resume_lead_run', resumed), surface: 'terminal' })
+    const card = await $.ui.mount({ ...toolRow('mcp__dealsupply__resume_lead_run', resumed), surface: 'terminal' })
     expect(await card.find({ text: /Lead-Run fortgesetzt · 150 Leads/ })).toBeDefined()
     await card.unmount()
   })
@@ -244,7 +244,7 @@ describe('run status', () => {
     engineDraws(on)
     mock.clock(on)
     on('tool.call', () => ({ result: RUN_STATUS }))
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
 
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: 'Outreach · Lead-Run' })).toBeDefined()
@@ -254,7 +254,7 @@ describe('run status', () => {
     expect(await band.find({ text: '· 1 Fehler' })).toBeDefined()
     await band.unmount()
 
-    const row = await $.ui.mount({ ...toolRow('mcp__akquise__get_lead_run_status', RUN_STATUS), surface: 'terminal' })
+    const row = await $.ui.mount({ ...toolRow('mcp__dealsupply__get_lead_run_status', RUN_STATUS), surface: 'terminal' })
     expect(await row.find({ text: 'engine' })).toBeDefined()
     await row.unmount()
   })
@@ -270,7 +270,7 @@ describe('run status', () => {
       const body = (e as { tool: string }).tool === 'list_lead_runs' ? { runs: [stopped], count: 1 } : stopped
       return { value: { content: [{ type: 'text', text: JSON.stringify(body) }], isError: false } }
     })
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
 
     await clock.advance(20_000)
     expect(asked).toBe(1)
@@ -292,7 +292,7 @@ describe('run status', () => {
       asked += 1
       return { value: { content: [{ type: 'text', text: 'Task started in the background.' }], isError: false } }
     })
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
     for (let i = 0; i < 3; i++) await clock.advance(20_000)
     const after = asked
     await clock.advance(60_000)
@@ -317,7 +317,7 @@ describe('run status', () => {
       ],
     }
     on('tool.call', () => ({ result: sideBySide }))
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '3/3' })).toBeDefined()
     expect(await band.find({ text: '2 passen · 1 raus' })).toBeDefined()
@@ -335,8 +335,8 @@ describe('run status', () => {
       n += 1
       return { result: { ...RUN_STATUS, id: `run-${n}`, leadTotal: n === 1 ? 3 : 13 } }
     })
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-2' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-2' })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: 'Outreach · 2 Läufe' })).toBeDefined()
     expect(await band.find({ text: '2 laufen' })).toBeDefined()
@@ -364,8 +364,8 @@ describe('run status', () => {
     }
     let n = 0
     on('tool.call', () => ({ result: (n += 1) === 1 ? researchOnly : full }))
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-vg' })
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-ten' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-vg' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-ten' })
 
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '· Rech. 0/1' })).toBeDefined()
@@ -415,7 +415,7 @@ describe('run status', () => {
     engineDraws(on)
     mock.clock(on)
     on('tool.call', () => ({ result: { runs: [RUN_STATUS], count: 1 } }))
-    await toolCall($, 'mcp__akquise__list_lead_runs', { active_only: true })
+    await toolCall($, 'mcp__dealsupply__list_lead_runs', { active_only: true })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '40/46' })).toBeDefined()
     await band.unmount()
@@ -427,7 +427,7 @@ describe('run status', () => {
     const ended = { ...RUN_STATUS, status: 'completed', is_terminal: true }
     on('tool.call', () => ({ result: RUN_STATUS }))
     on('mcp.call', () => ({ value: { content: [{ type: 'text', text: JSON.stringify(ended) }], isError: false } }))
-    await toolCall($, 'mcp__akquise__get_lead_run_status', { lead_run_id: 'run-1' })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
 
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '⠋' })).toBeDefined()
@@ -452,7 +452,7 @@ describe('run status', () => {
       stageProgress: [{ stage: 'qualification', pending: 10, running: 0, completed: 0, failed: 0, total: 10 }],
     }))
     on('tool.call', () => ({ result: { runs: listed, count: 6 } }))
-    await toolCall($, 'mcp__akquise__list_lead_runs', { active_only: true })
+    await toolCall($, 'mcp__dealsupply__list_lead_runs', { active_only: true })
 
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: 'Outreach · 6 Läufe' })).toBeDefined()
@@ -483,7 +483,7 @@ describe('local workflow phases', () => {
     await progress($, { action: 'start', campaign_id: 2162, phase: 'research', total: 2 })
 
     const write = (leadId: number, fields: Record<string, unknown>) =>
-      toolCall($, 'mcp__akquise__write_lead_details', { campaign_id: 2162, lead_id: leadId, fields })
+      toolCall($, 'mcp__dealsupply__write_lead_details', { campaign_id: 2162, lead_id: leadId, fields })
     await write(1, { researchText: 'Bericht' })
     await write(1, { researchText: 'Bericht, nachgebessert' })
     await write(3, { qualificationFitLevel: 'qualified' })
@@ -506,7 +506,7 @@ describe('local workflow phases', () => {
     on('tool.call', () => ({ result: { status: 'success' } }))
     for (const phase of ['qualification', 'research', 'email']) await progress($, { action: 'start', campaign_id: 2274, phase, total: 2 })
     const write = (tool: string, leadId: number, fields: Record<string, unknown>) =>
-      toolCall($, `mcp__akquise__${tool}`, { campaign_id: 2274, lead_id: leadId, fields, variables: '{}' })
+      toolCall($, `mcp__dealsupply__${tool}`, { campaign_id: 2274, lead_id: leadId, fields, variables: '{}' })
 
     await write('write_lead_details', 1, { qualificationStatus: 'completed', qualificationFitLevel: 'qualified' })
     await write('write_lead_details', 2, { qualificationStatus: 'completed', qualificationFitLevel: 'not_qualified' })
@@ -527,12 +527,12 @@ describe('local workflow phases', () => {
     const listed = { ...LIST_LEADS, campaign: { id: 2274, name: 'T', appUrl: 'https://listm8.test/campaigns/2274/leads' } }
     on('tool.call', (_$, e) => ({ result: String(e.tool).endsWith('list_leads') ? listed : { status: 'success' } }))
     await progress($, { action: 'start', campaign_id: 2274, phase: 'research', total: 3 })
-    await toolCall($, 'mcp__akquise__write_lead_details', { campaign_id: 2274, lead_id: 1, fields: { research: 'x' } })
+    await toolCall($, 'mcp__dealsupply__write_lead_details', { campaign_id: 2274, lead_id: 1, fields: { research: 'x' } })
     let band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect((await band.findAll({ type: 'Link' })).length).toBe(0)
     await band.unmount()
 
-    await toolCall($, 'mcp__akquise__list_leads', { campaign_id: 2274 })
+    await toolCall($, 'mcp__dealsupply__list_leads', { campaign_id: 2274 })
     band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     const hrefs = (await band.findAll({ type: 'Link' })).map(l => l.props.href)
     expect(hrefs).toContain('https://listm8.test/campaigns/2274/leads')
@@ -544,8 +544,8 @@ describe('local workflow phases', () => {
     mock.clock(on)
     on('tool.call', () => ({ result: { status: 'success' } }))
     for (const phase of ['qualification', 'research', 'email']) await progress($, { action: 'start', campaign_id: 2261, phase, total: 1 })
-    await toolCall($, 'mcp__akquise__write_lead_details', { campaign_id: 2261, lead_id: 5, fields: { qualificationStatus: 'completed', qualificationFitLevel: 'qualified' } })
-    await toolCall($, 'mcp__akquise__save_lead_variables', { campaign_id: 2261, lead_id: 5, variables: '{}' })
+    await toolCall($, 'mcp__dealsupply__write_lead_details', { campaign_id: 2261, lead_id: 5, fields: { qualificationStatus: 'completed', qualificationFitLevel: 'qualified' } })
+    await toolCall($, 'mcp__dealsupply__save_lead_variables', { campaign_id: 2261, lead_id: 5, variables: '{}' })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '· Qual 1/1 · Rech 1/1 · Mail 1/1 · im Abo' })).toBeDefined()
     expect(await band.find({ text: 'alle beendet' })).toBeDefined()
@@ -557,8 +557,8 @@ describe('local workflow phases', () => {
     mock.clock(on)
     on('tool.call', () => ({ result: { status: 'success' } }))
     await progress($, { action: 'start', campaign_id: 7, phase: 'email', total: 3 })
-    await toolCall($, 'mcp__akquise__save_lead_variables', { campaign_id: 7, lead_id: 1, variables: '{}' })
-    await toolCall($, 'mcp__akquise__write_lead_details', { campaign_id: 7, lead_id: 2, fields: { researchText: 'x' }, dry_run: true })
+    await toolCall($, 'mcp__dealsupply__save_lead_variables', { campaign_id: 7, lead_id: 1, variables: '{}' })
+    await toolCall($, 'mcp__dealsupply__write_lead_details', { campaign_id: 7, lead_id: 2, fields: { researchText: 'x' }, dry_run: true })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: '1 fertig' })).toBeDefined()
     expect(await band.find({ text: '· Mail 1/3 · im Abo' })).toBeDefined()
@@ -600,7 +600,7 @@ describe('local workflow phases', () => {
 describe('imports', () => {
   const jobStatus = (status: string, result: unknown = null) => ({
     job_id: 'job-1',
-    appUrl: 'https://outreach.akquise.de/jobs',
+    appUrl: 'https://app.dealsupply.ai/jobs',
     type: 'lead_bulk_import',
     status,
     result,
@@ -618,12 +618,12 @@ describe('imports', () => {
   }
 
   test('a queued import is one line in the chat, without a bar, with the way into the app', async $ => {
-    const ui = await $.ui.mount({ ...toolRow('mcp__akquise__import_leads', IMPORT_QUEUED), surface: 'terminal' })
+    const ui = await $.ui.mount({ ...toolRow('mcp__dealsupply__import_leads', IMPORT_QUEUED), surface: 'terminal' })
     expect(await ui.find({ text: 'Import gestartet · 500 Leads' })).toBeDefined()
     expect(await ui.find({ text: /░/ })).toBeUndefined()
     expect(await ui.find({ text: /%/ })).toBeUndefined()
     const hrefs = (await ui.findAll({ type: 'Link' })).map(l => l.props.href)
-    expect(hrefs).toContain('https://outreach.akquise.de/campaigns/12/leads')
+    expect(hrefs).toContain('https://app.dealsupply.ai/campaigns/12/leads')
     await ui.unmount()
   })
 
@@ -640,7 +640,7 @@ describe('imports', () => {
       jobStatus('completed', { status: 'success', imported: 480, total: 500, duplicates: Array.from({ length: 20 }, (_, i) => ({ row: i })) }),
     ])
     on('tool.call', () => ({ result: IMPORT_QUEUED }))
-    await toolCall($, 'mcp__akquise__import_leads', { campaign_id: 12, leads: [] })
+    await toolCall($, 'mcp__dealsupply__import_leads', { campaign_id: 12, leads: [] })
 
     const queued = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await queued.find({ text: 'Outreach · Import' })).toBeDefined()
@@ -659,7 +659,7 @@ describe('imports', () => {
     expect(await done.find({ text: '480 importiert · 20 Duplikate' })).toBeDefined()
     expect(await done.find({ text: 'alle beendet' })).toBeDefined()
     const hrefs = (await done.findAll({ type: 'Link' })).map(l => l.props.href)
-    expect(hrefs).toContain('https://outreach.akquise.de/campaigns/12/leads')
+    expect(hrefs).toContain('https://app.dealsupply.ai/campaigns/12/leads')
     await done.unmount()
     expect(toasts.some(t => /Import 480 importiert/.test(t))).toBe(true)
 
@@ -672,14 +672,14 @@ describe('imports', () => {
     const clock = mock.clock(on)
     mcpAnswers(on, [jobStatus('failed')])
     on('tool.call', () => ({ result: IMPORT_QUEUED }))
-    await toolCall($, 'mcp__akquise__import_leads', { campaign_id: 12, leads: [] })
+    await toolCall($, 'mcp__dealsupply__import_leads', { campaign_id: 12, leads: [] })
     await clock.advance(20_000)
 
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: 'fehlgeschlagen · CSV-Zeile 3 ist kaputt' })).toBeDefined()
     await band.unmount()
 
-    const row = await $.ui.mount({ ...toolRow('mcp__akquise__get_job_status', jobStatus('failed')), surface: 'terminal' })
+    const row = await $.ui.mount({ ...toolRow('mcp__dealsupply__get_job_status', jobStatus('failed')), surface: 'terminal' })
     expect(await row.find({ text: 'Import · fehlgeschlagen · CSV-Zeile 3 ist kaputt' })).toBeDefined()
     await row.unmount()
   })
@@ -688,11 +688,11 @@ describe('imports', () => {
     engineDraws(on)
     const research = { ...jobStatus('processing'), type: 'lead_research' }
     on('tool.call', () => ({ result: research }))
-    await toolCall($, 'mcp__akquise__get_job_status', { job_id: 'job-1' })
+    await toolCall($, 'mcp__dealsupply__get_job_status', { job_id: 'job-1' })
     const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await band.find({ text: 'engine' })).toBeDefined()
     await band.unmount()
-    const row = await $.ui.mount({ ...toolRow('mcp__akquise__get_job_status', research), surface: 'terminal' })
+    const row = await $.ui.mount({ ...toolRow('mcp__dealsupply__get_job_status', research), surface: 'terminal' })
     expect(await row.find({ text: 'engine' })).toBeDefined()
     await row.unmount()
   })
@@ -701,7 +701,7 @@ describe('imports', () => {
     engineDraws(on)
     const calls: ToolGroupCall[] = [10, 20, 30].map((received, i) => ({
       tool_use_id: `toolu_import_${i}`,
-      tool: 'mcp__akquise__import_leads',
+      tool: 'mcp__dealsupply__import_leads',
       input: {},
       isRunning: false,
       isErrored: false,
@@ -742,7 +742,7 @@ describe('folded lookups', () => {
   test('a group holding list_leads keeps its line and adds the preview beneath', async ($, on) => {
     engineDraws(on)
     for (const surface of SURFACES) {
-      const ui = await $.ui.mount({ ...group([call('Read', {}), call('mcp__akquise__list_leads', LIST_LEADS)]), surface })
+      const ui = await $.ui.mount({ ...group([call('Read', {}), call('mcp__dealsupply__list_leads', LIST_LEADS)]), surface })
       expect(await ui.find({ text: 'engine' })).toBeDefined()
       expect(await ui.find({ text: /Dr\. Huber Zahnmedizin/ })).toBeDefined()
       await ui.unmount()
@@ -751,7 +751,7 @@ describe('folded lookups', () => {
 
   test('a group still running, or without ListM8 calls, is the engine’s alone', async ($, on) => {
     engineDraws(on)
-    const running = await $.ui.mount({ ...group([call('mcp__akquise__list_leads', LIST_LEADS, true)]), surface: 'terminal' })
+    const running = await $.ui.mount({ ...group([call('mcp__dealsupply__list_leads', LIST_LEADS, true)]), surface: 'terminal' })
     expect(await running.find({ text: /Dr\. Huber/ })).toBeUndefined()
     await running.unmount()
     const other = await $.ui.mount({ ...group([call('Read', {})]), surface: 'terminal' })
