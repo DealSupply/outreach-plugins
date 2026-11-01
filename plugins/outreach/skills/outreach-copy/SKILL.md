@@ -20,6 +20,35 @@ Ausführliche Lehre mit allen Beispielen: `references/copy-lehre.md`. Offer-Lehr
 `references/beispiel-blueprint.md`. Bei einem Widerspruch zwischen diesen Dateien gilt diese
 SKILL.md.
 
+## Kampagnensprache
+
+Jede Kampagne hat eine Sprache (`campaign.language`, ab ListM8-MCP 4.7.0): `de` (Standard) oder
+`en`. Bei der Generierung steht sie in `get_lead_data` → `emailGeneration.language`. Fehlt das
+Feld (älterer Server), ist die Kampagne deutsch.
+
+- **`de`:** Dieser Skill gilt vollständig, mit allen deutschen Sprachregeln.
+- **`en`:** Englische Kampagnen haben eigene Regeln, natürliches US-Englisch, nie aus dem
+  Deutschen übersetzen. Die deutschen Sprachregeln dieses Skills (du/Sie, Anführungszeichen „…“,
+  Umlaute, deutsche Beispielsätze und Reaktionsformen) gelten dort nicht. Stattdessen:
+  - Anrede `Hi {first name},` (nur Vorname, ohne du/Sie); ohne benennbare Person `Hi there,`.
+  - Grußformel `Best,` über der Signatur.
+  - Betreff klein, 2–5 Wörter: Mail 1 `quick question`, Mail 3 `quick update`.
+  - Der Opener beginnt groß.
+  - Die Reaktion im Opener ist ein eigener kurzer Satz oder ein „which“-Nebensatz, nie Komma plus
+    „that“.
+  - Kein „free“ im Text, stattdessen „no strings attached“ oder „at no cost“.
+  - Nie „Hope this email finds you well“ oder „I wanted to reach out“.
+  - Mail 1 höchstens 100 Wörter, Ziel 50–90.
+  - In Mail 1 und Mail 3 die Abmeldezeile
+    `P.S. Just reply “not interested” and I won't reach out again.`
+  - Anführungszeichen “…”.
+
+  Maßgeblich sind die Regeln, die der Server mitgibt (`emailGeneration.systemPrompt`,
+  `salutationRule`). Die Regeln oben sind geprüft; eine ausführliche englische Copy-Lehre
+  (Beispiele, Offer-Karten A–E) kann später folgen.
+
+Der Recherchebericht bleibt in beiden Fällen deutsch.
+
 ## Ziel und Grundsatz
 
 Aus den Angaben des Nutzers entsteht eine Cold-Mail-Kampagne für die erste Aussendung: eine
@@ -34,7 +63,8 @@ Ziel ist eine Antwort, kein Klick und kein Termin in Mail 1.
 
 ## Tonalität und Formatierung
 
-- Du-Form als Standard: direkt, konkret, kein Beratersprech, keine Floskeln. Deutsch.
+- Du-Form als Standard: direkt, konkret, kein Beratersprech, keine Floskeln. Deutsch
+  (englische Kampagnen: siehe Kampagnensprache).
   Sie-Form nur, wenn der Nutzer sie für die Kampagne wählt (siehe Anrede).
 - Knapp und menschlich: kurze Sätze, ein klarer CTA pro Mail. Die Mail klingt wie eine kurze
   Nachricht an einen Bekannten, nicht wie eine Agentur-Website.
@@ -53,7 +83,8 @@ Ziel ist eine Antwort, kein Klick und kein Termin in Mail 1.
 ## Anrede und Ansprache
 
 Die Ansprache steht in `campaign.emailAgentConfig.salutation` und gilt für jede generierte
-Variable einer Mail. Immer explizit setzen. Der feste Sequenztext (Überleitung, CTA, Follow-ups)
+Variable einer Mail (nur in deutschen Kampagnen; englische kennen kein du/Sie, siehe
+Kampagnensprache). Immer explizit setzen. Der feste Sequenztext (Überleitung, CTA, Follow-ups)
 muss dieselben Pronomen tragen wie der gewählte Modus.
 
 | `salutation` | Pronomen im ganzen Text | `hallo` | Fallback ohne benennbare Person |

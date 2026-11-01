@@ -7,6 +7,8 @@ description: Use when user says "outreach:generate", "mcp:generate", "generiere 
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Dieser Skill orchestriert die vollautomatische AI-Variablen-Generierung für Leads via MCP Business Tools. Claude generiert AI-Variablen basierend auf Research, Qualification und Custom Attributes, und speichert sie via `save_lead_variables`. Email-Body und Subject werden NICHT durch diesen Skill erzeugt — sie sind in der Email-Sequenz hardcoded und werden beim CSV-Export live mit den Variablen gerendert. Dieser Skill ist der **Manuell-Modus** und kostet keine Credits; Standard ist der Server-Lauf via `/outreach-pipeline` (Tool `start_lead_run`, Stufe `email`, Credits je Lead). Vor dem Start `list_lead_runs(campaign_id, active_only=true)` prüfen: bei aktivem Lauf mit E-Mail-Stufe blockt `save_lead_variables` mit `lead_run_active`.
 
 > **Abo-Lauf (Subagents im Claude- bzw. ChatGPT-Abo):**
@@ -18,11 +20,11 @@ Dieser Skill orchestriert die vollautomatische AI-Variablen-Generierung für Lea
 
 ## Phase 0: Umgebung und Konfiguration prüfen
 
-Vor jeder Generierung `ping` und `list_campaigns` mit dem Auftrag abgleichen (richtige Kampagne, Variablen und E-Mail-Sequenz vorhanden); bei Unklarheit stoppen. Die vollständige Konfiguration (E-Mail-Schritte, AI-Variablen, Kampagnenkontext) liefert `export_campaign_blueprint(campaign_id)`. Einen einzelnen Variablen-Prompt ändert `update_ai_variable`; Änderungen an Schritten oder mehreren Variablen laufen über `edit_campaign` mit dem vollständigen Blueprint (Replace-all, kein Teil-Patch). Bereits generierte Werte bleiben dabei erhalten (Abgleich per Name), stammen aber aus dem alten Prompt; eine Neugenerierung nur mit ausdrücklicher Zustimmung des Users und nie während eines aktiven Laufs.
+Vor jeder Generierung `ping` und `list_campaigns` mit dem Auftrag abgleichen (richtiger Workspace, richtige Kampagne, Variablen und E-Mail-Sequenz vorhanden); bei Unklarheit stoppen. Die vollständige Konfiguration (E-Mail-Schritte, AI-Variablen, Kampagnenkontext) liefert `export_campaign_blueprint(campaign_id)`. Einen einzelnen Variablen-Prompt ändert `update_ai_variable`; Änderungen an Schritten oder mehreren Variablen laufen über `edit_campaign` mit dem vollständigen Blueprint (Replace-all, kein Teil-Patch). Bereits generierte Werte bleiben dabei erhalten (Abgleich per Name), stammen aber aus dem alten Prompt; eine Neugenerierung nur mit ausdrücklicher Zustimmung des Users und nie während eines aktiven Laufs.
 
-Ansprache und Kampagnenkontext kommen pro Lead aus `get_lead_data` (`emailGeneration.salutation`, `salutationRule`, `campaignContext`); die Ansprache gilt durchgängig für alle Variablen eines Leads. Den fertigen Text einzelner Leads prüfst du nicht über ein Vorschau-Tool, sondern über `get_lead_variables` nach dem Speichern.
+Sprache, Ansprache und Kampagnenkontext kommen pro Lead aus `get_lead_data` (`emailGeneration.language`, `salutation`, `salutationRule`, `campaignContext`); die Ansprache gilt durchgängig für alle Variablen eines Leads. `emailGeneration.language` (ab MCP 4.7.0, `de` oder `en`; fehlt es, deutsch) legt die Sprache aller Variablen fest: Bei `en` alle Werte auf Englisch, Anrede nach `salutationRule` (`Hi {first name},`, ohne Person `Hi there,`, kein du/Sie), natürliches US-Englisch statt Übersetzung; die deutschen Prüfpunkte unten (Umlaute, „…“, du/Sie, deutsche Einstiege und Reaktionen) gelten dann nicht, maßgeblich sind die Regeln in `systemPrompt`. `save_lead_variables` prüft deutsche Regeln (etwa ein offenes „) nur in deutschen Kampagnen. Den fertigen Text einzelner Leads prüfst du nicht über ein Vorschau-Tool, sondern über `get_lead_variables` nach dem Speichern.
 
-**Copy-Regeln (Pflicht):** Bevor `hallo` oder `intro` für einen Lead geschrieben wird, den Skill `outreach-copy` laden und dessen Abschnitte „Anrede und Ansprache“ und „Intro-Regeln“ einhalten. Der Orchestrator lädt den Skill EINMAL und hängt beide Abschnitte wörtlich an jeden Agenten-Prompt an; die Subagents laden ihn nicht selbst (spart Kontext je Lead). Der Variablen-Prompt der Kampagne geht vor, solange er diesen Regeln nicht widerspricht; widerspricht er ihnen (z. B. Kritik-Opener, „Hallo Herr …“ bei Du-Form), vor dem Start den Nutzer darauf hinweisen und die Prompts über `/outreach-campaign` korrigieren lassen, statt gegen die Regeln zu generieren.
+**Copy-Regeln (Pflicht):** Bevor `hallo` oder `intro` für einen Lead geschrieben wird, den Skill `outreach-copy` laden und dessen Abschnitte „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ einhalten. Der Orchestrator lädt den Skill EINMAL und hängt die drei Abschnitte wörtlich an jeden Agenten-Prompt an; die Subagents laden ihn nicht selbst (spart Kontext je Lead). Der Variablen-Prompt der Kampagne geht vor, solange er diesen Regeln nicht widerspricht; widerspricht er ihnen (z. B. Kritik-Opener, „Hallo Herr …“ bei Du-Form), vor dem Start den Nutzer darauf hinweisen und die Prompts über `/outreach-campaign` korrigieren lassen, statt gegen die Regeln zu generieren.
 
 ## Workflow-Übersicht
 
@@ -121,7 +123,7 @@ LEAD: {lead.company} (ID: {lead.id})
 ## Schritte
 
 1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}) auf
-2. Lies den emailGeneration.systemPrompt sorgfältig — er definiert Ton, Stil und Kontext; dazu emailGeneration.salutation/salutationRule (Ansprache) und campaignContext. Halte die Copy-Regeln „Anrede und Ansprache“ und „Intro-Regeln“ ein, die unten an diesen Auftrag angehängt sind
+2. Lies den emailGeneration.systemPrompt sorgfältig — er definiert Ton, Stil und Kontext; dazu emailGeneration.language (Sprache aller Variablen: de oder en, fehlt es: de), emailGeneration.salutation/salutationRule (Ansprache) und campaignContext. Halte die Copy-Regeln „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ ein, die unten an diesen Auftrag angehängt sind. Bei language=en: alles auf Englisch, Anrede genau nach salutationRule („Hi Vorname,“ bzw. „Hi there,“), die deutschen Prüfpunkte in Schritt 6 (Umlaute, du/Sie, „Hallo …“, deutsche Einstiege, „vor allem“) entfallen, es gelten die Regeln aus systemPrompt
 3. Analysiere Research, Qualification und Custom Attributes
 4. Optional: Besuche die Lead-Website (lead.website), falls dein Client Websites laden kann — get_lead_data liefert KEINE Screenshots
 5. Generiere für JEDE Variable in emailGeneration.variables[] den Text gemäß ihrem Prompt
@@ -145,7 +147,7 @@ WICHTIG: variables ist ein JSON-STRING. ALLE Variablen aus emailGeneration.expec
 
 # Copy-Regeln (aus dem Skill outreach-copy)
 
-{Abschnitte „Anrede und Ansprache“ und „Intro-Regeln“ wörtlich einfügen}
+{Abschnitte „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ wörtlich einfügen}
 ```
 
 ### Phase 4: Visueller Kontext (optional)
@@ -193,11 +195,12 @@ Nächster Schritt: Stichprobe mit /outreach-verify (10 Leads) bei neuer Kampagne
 
 ### list_campaigns
 
-**Keine Parameter.** Gibt alle Kampagnen des Users zurück.
+**Optional `workspace`** (uuid aus `list_workspaces`, siehe Workspace-Regel). Gibt die Kampagnen des Workspaces zurück, ohne Angabe die des Standard-Workspaces.
 
 Response-Felder:
 - `campaigns[].id` — Kampagnen-ID
 - `campaigns[].name` — Name
+- `campaigns[].language` — Sprache der Mails und KI-Texte (`de` | `en`, ab MCP 4.7.0)
 - `campaigns[].lifecycle` — Lebenszyklus der Kampagne
 - `campaigns[].emailSequence` — E-Mail-Sequenz (id, stepCount) oder null
 - `campaigns[].leadCounts.needs_email_generation` — Anzahl Leads in der Generierungs-Queue (qualifiziert IN DIESER Kampagne, recherchiert, `processing`; Urteile gelten pro Kampagne)
@@ -237,6 +240,7 @@ Gibt vollen Generierungs-Context zurück. Bei bereits kontaktierten Leads (Konta
 - `research` (text, bestEmail, decisionMaker, contactRecommendation)
 - `customAttributes` (key-value Paare)
 - `emailGeneration.systemPrompt` — Der aufgelöste System-Prompt
+- `emailGeneration.language` — Sprache der Variablen (`de` | `en`, ab MCP 4.7.0); bei `en` ist `salutationRule` die englische Anrede-Regel
 - `emailGeneration.salutation` / `salutationRule` / `campaignContext` — Ansprache und Kampagnenkontext
 - `emailGeneration.variables[]` — Variablen mit aufgelösten Prompts
 - `emailGeneration.expectedOutput` — JSON-Schema der erwarteten Ausgabe (Variablen-Namen)
@@ -273,6 +277,8 @@ validation_failed: Variable(s) missing from submission: 'intro'
 
 Die fehlenden Namen stehen im Fehlertext — alle Variablen aus `emailGeneration.expectedOutput` nachliefern und erneut senden.
 
+Die Prüfung auf ein offenes deutsches Anführungszeichen („ ohne “, Code `validation_failed: Unclosed quotation mark`) läuft nur in deutschen Kampagnen.
+
 Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturierte Fehler-Response. Mögliche Codes: `validation_failed` (ungültiges JSON oder fehlende Variablen), `contact_gate` (Kontaktstatus des Leads blockiert — Lead überspringen), `variables_not_configured` (Kampagne hat keine AI-Variablen), `campaign_not_found`, `lead_not_found`, `lead_not_in_campaign`, `lead_run_active`, `insufficient_scope` und `internal_error`. Ist ein Wert kein String, speichert das Tool die Variable mit Status `error`.
 
 ### Verification-Tools (siehe `/outreach-verify`)
@@ -281,7 +287,7 @@ Die folgenden Tools werden im Verification-Workflow verwendet, NICHT in der Gene
 
 - **get_lead_variables** — lädt aktuelle Variablen-Werte (Name, Wert, Status, generatedAt) zur Prüfung
 - **approve_lead_variables** — gibt Variablen frei (`LeadCampaignStatus = approved`, ready für CSV-Export)
-- **reject_lead_variables** — lehnt Variablen ab mit `reason` (`LeadCampaignStatus = rejected`; NICHT final: der Lead zählt wieder als generierungsbedürftig und wird beim nächsten Generate/Run neu erzeugt. Dauerhaft raus = aus Kampagne entfernen oder `mark_leads_contacted(emails, status="do_not_contact")`)
+- **reject_lead_variables** — lehnt Variablen ab mit `reason` (`LeadCampaignStatus = rejected`; NICHT final: der Lead zählt wieder als generierungsbedürftig und wird beim nächsten Generate/Run neu erzeugt. Dauerhaft raus = aus Kampagne entfernen oder `mark_leads_contacted(lead_ids=[<lead_id>], status="do_not_contact")`)
 
 Details: siehe `/outreach-verify` Skill.
 

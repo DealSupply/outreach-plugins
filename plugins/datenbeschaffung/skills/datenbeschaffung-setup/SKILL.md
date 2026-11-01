@@ -27,6 +27,11 @@ Für Bestandsabgleich und Import braucht die Datenbeschaffung die Verbindung zur
 
 - `list_lists` aufrufen (nur lesend).
   - **Antwort kommt:** Verbindung steht, Anzahl der Listen nennen.
+  - **Workspace:** Gibt es `list_workspaces`, aufrufen und den Workspace in einem Satz nennen. Bei
+    mehreren fragen, in welchen importiert werden soll; ist es nicht der Standard, die Listen mit
+    `list_lists(workspace=<uuid>)` neu zählen. Mit der Rolle `viewer` geht dort nur der Abgleich,
+    kein Import. Fehlt das Tool (älterer Server), überspringen. Regel:
+    `../datenbeschaffung-referenzen/references/listm8-mcp.md`, Abschnitt „Workspace“.
   - **Kein Outreach-Tool vorhanden:** Das Plugin `outreach` aus demselben Marketplace installieren
     (bringt die Verbindung mit) und dort `outreach-setup` ausführen. Ohne Verbindung geht
     Datenbeschaffung trotzdem, aber ohne Bestandsabgleich; das Ergebnis kommt dann als CSV über die
@@ -76,6 +81,6 @@ Marketplaces → `outreach-plugins` → Auto-Update einschalten. Sonst `datenbes
 
 ## Abschluss
 
-Kurz berichten: Umgebung, Outreach-Verbindung ja/nein (Anzahl Listen), Apify-Zugang ja/nein und
+Kurz berichten: Umgebung, Outreach-Verbindung ja/nein (Workspace, Anzahl Listen), Apify-Zugang ja/nein und
 über welchen Weg, Outscraper ja/nein/nicht nötig, aufgeräumte Kopien, Auto-Update ja/nein. Danach
 weiter mit dem Einstieg `datenbeschaffung`.

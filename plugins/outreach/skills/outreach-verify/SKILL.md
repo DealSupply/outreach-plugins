@@ -7,11 +7,13 @@ description: Use when user says "outreach:verify", "mcp:verify", "verify emails"
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen via MCP Business Tools. Claude reviewt jede Variable, gibt qualifizierte Variablen frei (`approve_lead_variables`) oder lehnt unbrauchbare ab (`reject_lead_variables`). Behebbare Fehler werden dabei direkt nachgebessert und gegengeprüft, statt sie dem Nutzer vorzulegen.
 
 > **Hinweis zur Parallelisierung:** Wenn dein Client parallele Subagents unterstützt (z.B. Claude Code), spawne pro Lead einen Subagent wie beschrieben. Andernfalls arbeite die Leads **sequentiell** mit exakt denselben Schritten ab — das Ergebnis ist identisch, nur langsamer.
 
-> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt nur den Status `approved` (bereit für den CSV-Export, `export_leads`) und überträgt nichts nach Instantly; Push und Export sind eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
+> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto, Workspace und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt nur den Status `approved` (bereit für den CSV-Export, `export_leads`) und überträgt nichts nach Instantly; Push und Export sind eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
 
 ## Standard: Stichprobe statt Vollprüfung
 
@@ -111,7 +113,7 @@ Wenn KEINE campaign_id als Argument übergeben wurde:
 
 Wenn campaign_id als Argument übergeben wurde: Direkt zur Copy-Prüfung.
 
-**Copy-Prüfung der Kampagne (Pflicht, einmal pro Kampagne):** Den Skill `outreach-copy` laden und die Sequenz aus `export_campaign_blueprint(campaign_id)` gegen dessen Selbstprüfung (14 Punkte) und Prüfliste halten: Wortlimits je Step (Anrede und ein Bezug von bis zu 2 Sätzen eingerechnet), EIN CTA, kein Pitch, Offer und `{{ai.intro}}` nur in Step 1, Feinheiten-Satz bei Karte A/C, kein Link in Step 1, Spam-Wörter, nur erlaubte Platzhalter, Betreffzeilen, Umlaute, `salutation` passend zu Text und `hallo`-Prompt. Funde dem User vor dem Review nennen: Fehler im festen Text oder in den Prompts behebt kein Approve, sie gehören über `/outreach-campaign` korrigiert. Ob trotzdem reviewt wird, entscheidet der User.
+**Copy-Prüfung der Kampagne (Pflicht, einmal pro Kampagne):** Den Skill `outreach-copy` laden und die Sequenz aus `export_campaign_blueprint(campaign_id)` gegen dessen Selbstprüfung (14 Punkte) und Prüfliste halten: Wortlimits je Step (Anrede und ein Bezug von bis zu 2 Sätzen eingerechnet), EIN CTA, kein Pitch, Offer und `{{ai.intro}}` nur in Step 1, Feinheiten-Satz bei Karte A/C, kein Link in Step 1, Spam-Wörter, nur erlaubte Platzhalter, Betreffzeilen, Umlaute, `salutation` passend zu Text und `hallo`-Prompt. Ist `campaign.language` `en` (ab MCP 4.7.0), müssen Sequenz und Prompts englisch sein, Anrede `Hi {first name},` bzw. `Hi there,` und Gruß `Best,`; die deutschen Punkte (Umlaute, du/Sie, „…“) entfallen dann (siehe `outreach-copy`, Abschnitt „Kampagnensprache“). Funde dem User vor dem Review nennen: Fehler im festen Text oder in den Prompts behebt kein Approve, sie gehören über `/outreach-campaign` korrigiert. Ob trotzdem reviewt wird, entscheidet der User.
 
 **Batch-Größe abfragen:**
 
@@ -181,13 +183,14 @@ LEAD WEBSITE: {lead.website}
 
 ## Verification-Checkliste (pro Variable)
 
-Grundlage sind die Abschnitte „Anrede und Ansprache“ und „Intro-Regeln“ des Skills outreach-copy (laden). Prüfe JEDE Variable gegen ALLE folgenden Kriterien:
+Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ des Skills outreach-copy (laden). Prüfe JEDE Variable gegen ALLE folgenden Kriterien:
 
 ### Personalisierung
 - [ ] Bezug zu Research/Website erkennbar? (nicht generisch)
 - [ ] Informationen stimmen mit Lead-Daten überein? (Company, Website, Branche, Stadt)
 
 ### Sprache & Stil
+- [ ] In der Sprache der Kampagne? (`get_lead_data` → `emailGeneration.language`, ab MCP 4.7.0; fehlt es: Deutsch). Bei `en`: alles auf Englisch, `hallo` genau nach `salutationRule` („Hi Vorname,“ bzw. „Hi there,“), natürliches US-Englisch; die deutschen Punkte dieser Liste (Umlaute, „vorallem“, du/Sie, „Hallo …“, deutsche Einstiege und Reaktionen) entfallen, es gelten die Regeln aus `emailGeneration.systemPrompt`. Ein Wert in der falschen Sprache ist ein Ablehnungsgrund.
 - [ ] Umlaute korrekt? (echte Ä/Ö/Ü/ä/ö/ü/ß, nicht AE/OE/UE/ae/oe/ue/ss)
 - [ ] Kein "vorallem"? (korrekt: "vor allem")
 - [ ] Anrede konsistent zwischen allen Variablen und passend zur Kampagnen-Ansprache (`get_lead_data` → `emailGeneration.salutationRule`)? Nie gemischt.
@@ -272,13 +275,13 @@ Status: Freigegebene Leads auf "approved" gesetzt (ready für CSV-Export)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**WICHTIG — "rejected" ist NICHT final:** Ein rejected-Lead zählt als generierungsbedürftig — der nächste E-Mail-Run bzw. Re-Generate erzeugt neue Variablen und setzt ihn zurück auf pending_review. Der `reason` landet nur im Audit-Log; die Neu-Generierung des Servers sieht ihn nicht. Soll die Begründung künftige Mails beeinflussen, zusätzlich `set_lead_email_feedback(campaign_id, lead_id, liked=false, comment="<Grund>")` setzen: Die jeweils drei jüngsten Urteile je Richtung fließen als Beispiele in den E-Mail-Prompt der Kampagne (Übersicht mit `list_lead_email_feedback`, Rücknahme mit `delete_lead_email_feedback`). Das Urteil ist unabhängig von approve/reject und verlangt erzeugte Variablenwerte sowie einen E-Mail-Schritt. Soll ein Lead DAUERHAFT raus: aus der Kampagne entfernen oder `mark_leads_contacted(emails=[...], status="do_not_contact")` setzen — dann wird er global von allen AI-Jobs und Exporten ausgeschlossen.
+**WICHTIG — "rejected" ist NICHT final:** Ein rejected-Lead zählt als generierungsbedürftig — der nächste E-Mail-Run bzw. Re-Generate erzeugt neue Variablen und setzt ihn zurück auf pending_review. Der `reason` landet nur im Audit-Log; die Neu-Generierung des Servers sieht ihn nicht. Soll die Begründung künftige Mails beeinflussen, zusätzlich `set_lead_email_feedback(campaign_id, lead_id, liked=false, comment="<Grund>")` setzen: Die jeweils drei jüngsten Urteile je Richtung fließen als Beispiele in den E-Mail-Prompt der Kampagne (Übersicht mit `list_lead_email_feedback`, Rücknahme mit `delete_lead_email_feedback`). Das Urteil ist unabhängig von approve/reject und verlangt erzeugte Variablenwerte sowie einen E-Mail-Schritt. Soll ein Lead DAUERHAFT raus: aus der Kampagne entfernen oder `mark_leads_contacted(lead_ids=[<lead_id>], status="do_not_contact")` setzen — dann wird er in allen Kampagnen seines Workspaces von AI-Jobs und Exporten ausgeschlossen.
 
 ## MCP Tool Reference
 
 ### list_campaigns
 
-**Keine Parameter.** Gibt alle Kampagnen des Users zurück.
+**Optional `workspace`** (uuid aus `list_workspaces`, siehe Workspace-Regel). Gibt die Kampagnen des Workspaces zurück, ohne Angabe die des Standard-Workspaces.
 
 Response-Felder:
 - `campaigns[].id` — Kampagnen-ID

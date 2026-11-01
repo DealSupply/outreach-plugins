@@ -1,6 +1,6 @@
 ---
 name: outreach-setup
-description: Richtet das Outreach-Plugin ein und prüft die Einrichtung. Verwenden bei „outreach einrichten“, „setup“, „Plugin einrichten“, „MCP verbinden“, „funktioniert die Verbindung“, „alte Skills aufräumen“ oder direkt nach der Installation. Führt durch Verbindung, Prüfung, Aufräumen alter Skill-Kopien und erste Schritte – ohne kostenpflichtige Aktionen.
+description: Richtet das Outreach-Plugin ein und prüft die Einrichtung. Verwenden bei „outreach einrichten“, „setup“, „Plugin einrichten“, „MCP verbinden“, „funktioniert die Verbindung“, „welche Workspaces habe ich“, „Workspace wechseln“, „alte Skills aufräumen“ oder direkt nach der Installation. Führt durch Verbindung, Workspace-Wahl, Prüfung, Aufräumen alter Skill-Kopien und erste Schritte – ohne kostenpflichtige Aktionen.
 ---
 
 # Outreach einrichten
@@ -41,13 +41,30 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab.
+  OpenRouter-Konto ab. Englische Kampagnen (Kampagnensprache `campaign.language`) gibt es ab
+  MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App
   hinterlegt sein muss. In beiden Modi aus `account` die Leads im Account (`leads_in_account` von
   `lead_limit`, `-1` = unbegrenzt) nennen. Steht `subscription_required` auf `true`, gibt es kein
   aktives Abo: Der Nutzer wählt zuerst in der App einen Plan, sonst lässt sich nichts anlegen.
+
+## 2b. Workspace wählen
+
+Rufe `list_workspaces` auf (nur lesend). Eine Verbindung gilt für alle Workspaces des Nutzers.
+
+- **Ein Workspace:** in einem Satz nennen („Du arbeitest im Workspace Muster GmbH.“) und weiter.
+- **Mehrere:** kurz zeigen (Name, Rolle, Plan; den Standard mit `default: true` markieren) und
+  fragen, in welchem gearbeitet wird. Die Wahl gilt für das ganze Gespräch. Ist es nicht der
+  Standard, die Kampagnen mit `list_campaigns(workspace=<uuid>)` neu zählen und Guthaben und Plätze
+  mit `get_credit_balance(workspace=<uuid>)` neu lesen (Credits gehören zum Workspace). Wie die Skills den
+  Workspace mitgeben: Workspace-Regel im Skill `outreach`.
+- **Rolle `viewer`:** sagen, dass dort nur Lesen geht (ansehen und exportieren, kein Import, kein
+  Lauf, keine Freigabe).
+- **Offene Einladungen** in der Antwort nur nennen; annehmen geht in der App.
+- **Kein `list_workspaces`** (älterer Server): Schritt still überspringen, alles läuft im
+  Standard-Workspace.
 
 ## 3. Alte Skill-Kopien aufräumen (nur Claude Code, Codex, Cursor)
 
@@ -85,6 +102,7 @@ In Claude Code sind Updates fremder Marketplaces standardmäßig aus. Empfehlen:
 
 ## Abschluss
 
-Kurz berichten: Umgebung, Verbindung (ja/nein, Anzahl Kampagnen, Server-Version), Abrechnungsmodus
-(Credits mit verfügbarem Guthaben oder eigener OpenRouter-Key), Leads im Account, aufgeräumte Kopien,
-Datenbeschaffung installiert ja/nein, Auto-Update ja/nein.
+Kurz berichten: Umgebung, Verbindung (ja/nein, Anzahl Kampagnen, Server-Version), Workspace (Name
+und Rolle, bei mehreren der gewählte), Abrechnungsmodus (Credits mit verfügbarem Guthaben oder eigener
+OpenRouter-Key), Leads im Account, aufgeräumte Kopien, Datenbeschaffung installiert ja/nein,
+Auto-Update ja/nein.

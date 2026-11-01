@@ -1,5 +1,54 @@
 # Changelog
 
+## 2026-11-01 – outreach 0.5.0, datenbeschaffung 0.4.2, fulfillment 0.1.1
+
+Passt zu ListM8 v4.18.0 (MCP 4.7.0). Fasst die bisher getrennten Stände Workspaces (#11), Export (#14) und Kampagnensprache (#15) in einer Version zusammen.
+
+### Workspaces (MCP über alle Workspaces einer Person)
+
+**outreach** (ListM8 #95, neues Tool `list_workspaces`)
+- `outreach` → neuer Abschnitt „Workspace-Regel“, auf den alle Outreach-Skills verweisen: Workspace kennen (`list_workspaces`, bei mehreren fragen), `workspace=<uuid>` nur bei Aufrufen ohne Objekt-ID (`list_campaigns`, `search_leads`, `list_lists`, `list_lead_runs`, `export_leads`, `check_leads_exist`, `import_leads`, `create_campaign`, `create_list`, `get_credit_balance`, `mark_leads_contacted` mit E-Mails), nie bei `campaign_id`, `lead_id(s)`, `list_id`, `lead_run_id`, `job_id`; vor jedem Schreiben oder Lauf den Workspace nennen; `workspace` in den Antworten lesen; Betrachter (`viewer`) nur lesend; Fehlercodes `workspace_not_found`, `workspace_mismatch`, `workspace_read_only`.
+- `outreach-setup` → neuer Schritt 2b: `list_workspaces` nach der Verbindungsprüfung. Ein Workspace wird nur genannt, bei mehreren fragt der Skill, in welchem gearbeitet wird; Betrachter erfahren, dass dort nur Lesen geht; offene Einladungen werden nur genannt.
+- `outreach-campaign`, `outreach-generate`, `outreach-import`, `outreach-launch`, `outreach-lists`, `outreach-pipeline`, `outreach-qualify`, `outreach-research`, `outreach-verify` → Verweis auf die Workspace-Regel. Dazu: `create_campaign` im gewählten Workspace, Import und Dubletten-Abgleich im selben Workspace, Liste und Kampagne nur aus einem Workspace, `list_campaigns` nimmt optional `workspace`, Sperren per `mark_leads_contacted(lead_ids=…)` statt E-Mail-Liste, Sperren gelten im ganzen Workspace.
+- `outreach-abo-lauf`, `lead-agent`, `verify-agent` → Aufrufe mit `campaign_id`/`lead_id` laufen im Workspace der Kampagne, nie `workspace` mitgeben; `workspace_read_only` beendet die Arbeit am Lead.
+- Live-Ansicht → Das Band fragt `list_lead_runs` im Workspace, den die Antworten eines Laufs nennen; Läufe ohne Workspace-Angabe wie bisher. Zwei Tests.
+- Ältere Server ohne `list_workspaces`: Die Skills fallen still auf den Standard-Workspace zurück und geben `workspace` nie mit.
+- `outreach-setup` → nach dem Wechsel in einen anderen Workspace Guthaben und Plätze mit `get_credit_balance(workspace=<uuid>)` neu lesen; Credits gehören zum Workspace.
+
+**datenbeschaffung**
+- `listm8-mcp.md` → Abschnitt „Workspace“: Abgleich, Liste und Import immer im selben, gewählten Workspace; ein Bestandsindex aus einem anderen Workspace zählt nicht. Signaturen mit `workspace` und `list_workspaces`.
+- `outreach-uebergabe.md`, `setup.md`, `listen-qualitaet`, `datenbeschaffung` → Index, Prüfung, Liste und Import im selben Workspace; Kampagne und Liste aus demselben Workspace.
+- `datenbeschaffung-setup` → nennt den Workspace bei der Prüfung der Outreach-Verbindung, fragt bei mehreren, in welchen importiert wird.
+
+**fulfillment**
+- `fulfillment`, `fulfillment-setup`, `lead-kontext.md`, `demo-link.md` → bei mehreren Workspaces nach dem Workspace der Kampagne fragen, `list_campaigns` und `search_leads` dort aufrufen; der Demo-Link (`bulk_set_lead_attributes` mit `lead_ids`) braucht keine Angabe und scheitert für Betrachter mit `workspace_read_only`.
+
+### Export (MCP 4.4.0)
+
+Passt zu ListM8 MCP 4.4.0 (Kampagnen-Export als Datei). Ältere Server kennen `export_campaign_leads` nicht; dann verweist der Skill auf den Export in der App.
+
+**outreach**
+- Neu `outreach-export` → Leads einer Kampagne als Excel oder CSV, wie der Export-Dialog der App: Zweck (`sending`, `overview`, `crm`), Umfang, erst `dry_run` mit Zahlen und Ausschlussgründen, dann Datei im Hintergrund, `get_lead_export` bis `ready`, Download per `curl` oder Link (24 Stunden, ohne Anmeldung). Markieren als exportiert nur auf Wunsch, beim ersten Download.
+- `outreach` → leitet „als Excel/CSV exportieren“ an `outreach-export`.
+- `outreach-lists` → Kampagnen-Export verweist auf `outreach-export`; `export_leads` bleibt für Bestand, Listen und Abgleichsindex.
+- `outreach-launch` → Übergabe ohne Instantly-Integration per `outreach-export` (Zweck `sending`, noch nicht exportierte Freigaben, markieren).
+
+### Kampagnensprache (MCP 4.7.0)
+
+Passt zu ListM8 MCP 4.7.0 (Kampagnensprache). Ältere Server kennen `campaign.language` nicht; dann ist jede Kampagne deutsch und alles bleibt wie bisher.
+
+**outreach** (Kampagnensprache `de`/`en`)
+- `outreach-campaign` → Sprache im Briefing erfragen (Vorschlag Deutsch) und als `campaign.language` setzen (`de` Standard, `en`). Fehlt das Feld, nimmt `create_campaign` Deutsch (außer `emailLanguage` nennt eindeutig Englisch), `edit_campaign` behält die bisherige Sprache. Setup-Check und Bestätigung nennen die Sprache.
+- `outreach-copy` → neuer Abschnitt „Kampagnensprache“: Die Copy-Regeln gelten für deutsche Kampagnen. Englische haben eigene Regeln (Anrede `Hi {first name},`, ohne Person `Hi there,`, kein du/Sie, Gruß `Best,`, Betreff klein mit 2–5 Wörtern wie `quick question`/`quick update`, Opener beginnt groß, Reaktion als eigener Satz oder „which“-Nebensatz, kein „free“, keine Floskel-Einstiege, Mail 1 höchstens 100 Wörter, P.S.-Abmeldezeile in Mail 1 und 3, Anführungszeichen “…”, natürliches US-Englisch, nicht übersetzen); maßgeblich sind die Server-Regeln aus `get_lead_data`. Die Regeln sind geprüft; eine ausführliche englische Copy-Lehre (Beispiele, Offer-Karten A–E) kann später folgen. `beispiel-blueprint` trägt `language: "de"`, `copy-lehre` und `marketing-offer` verweisen auf den Abschnitt.
+- `outreach-generate`, `lead-agent` → Mail-Variablen in der Sprache aus `emailGeneration.language`; bei `en` gelten `salutationRule` und `systemPrompt`, die deutschen Prüfpunkte (Umlaute, „…“, du/Sie, deutsche Einstiege und Reaktionen) entfallen. `save_lead_variables` prüft das offene „ nur in deutschen Kampagnen.
+- `outreach-qualify`, `lead-agent` → `qualificationSummary` in der Sprache aus `qualificationGeneration.writeBack.summaryLanguage`.
+- `outreach-research` → Der Recherchebericht bleibt deutsch, auch in englischen Kampagnen.
+- `outreach-verify`, `verify-agent` → Sprache der Kampagne prüfen; bei `en` sind `systemPrompt` und `salutationRule` die Grundlage, die deutschen Prüfpunkte entfallen.
+- `outreach-setup` → englische Kampagnen ab MCP 4.7.0.
+
+**fulfillment**
+- `lead-kontext`, `demo-link` → Die Antwort an den Lead in der Sprache der Kampagne (`campaign.language`), in englischen Kampagnen mit `Hi Vorname,` und `Best,`.
+
 ## 2026-10-27 – Umzug nach DealSupply (ohne neue Plugin-Version)
 
 **outreach**, **datenbeschaffung**, **fulfillment**

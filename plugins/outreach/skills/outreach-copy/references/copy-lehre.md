@@ -1,6 +1,8 @@
 # Cold-Mail-Copy — Opener, Entry Mail, Follow-Ups, Qualitätsprüfung
 
 > Ausführliche Lehre zu `outreach-copy`. Bei einem Widerspruch gilt die `SKILL.md` des Skills.
+> Gilt für deutsche Kampagnen (`campaign.language` `de`, Standard). Englische Kampagnen haben eigene
+> Regeln: `outreach-copy`, Abschnitt „Kampagnensprache“.
 >
 > **Lesehilfe für die Beispiele:** Die Beispiel-Mails sind aufgelöst dargestellt, wie sie beim
 > Empfänger ankommen. In der Sequenz steht die Anrede-Zeile als `{{ai.hallo}}` und der

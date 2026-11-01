@@ -1,15 +1,18 @@
 ---
 name: outreach-lists
-description: Use when user says "outreach:lists", "Listen anzeigen", "Liste anlegen", "Liste löschen", "was habe ich schon gescrapt", "Bestand prüfen", "Leads exportieren", "Bestandsindex", "Liste in Kampagne", "bulk taggen", or wants to manage lead lists in the Outreach app via MCP.
+description: Use when user says "outreach:lists", "Listen anzeigen", "Liste anlegen", "Liste löschen", "was habe ich schon gescrapt", "Bestand prüfen", "Bestand exportieren", "Bestandsindex", "Liste in Kampagne", "bulk taggen", or wants to manage lead lists in the Outreach app via MCP.
 ---
 
 # Outreach Lists — Listen verwalten über den MCP
 
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+
 Verwaltet Lead-Listen: die benannten Gruppierungen zwischen Datenbeschaffung (extern, z. B. Apify/Outscraper) und Kampagne.
-Leads bleiben dabei immer normale Leads im globalen Bestand — eine Liste ist eine Klammer mit
-Herkunft, kein zweiter Datentopf.
+Leads bleiben dabei immer normale Leads im Bestand ihres Workspaces — eine Liste ist eine Klammer mit
+Herkunft, kein zweiter Datentopf. Bestand, Listen und Abgleich gelten je Workspace: Ein Index oder eine
+Prüfung aus einem anderen Workspace zählt nicht, und Liste und Kampagne müssen im selben liegen.
 
 Scope: `leads:read` fürs Lesen/Exportieren, `leads:write` für Anlegen/Löschen/Verlinken.
 
@@ -22,7 +25,7 @@ Scope: `leads:read` fürs Lesen/Exportieren, `leads:write` für Anlegen/Löschen
 | Liste anlegen | `create_list(name, description, source)` | `source` IMMER füllen (frei, z. B. {tool, actor, query, runAt, costUsd}) — sie ersetzt jedes manuelle Scrape-Log |
 | Leads hineinbekommen | `import_leads(leads, list_id, attribute_mappings)` | Dedupliziert selbst: Bestands-Leads werden nur verlinkt; läuft async (`job_id`, per `get_job_status` abwarten), das Job-Result nennt `linked_to_list` + `do_not_contact_hits` |
 | Bestand prüfen (Bulk) | `check_leads_exist(emails, domains)` | Bis 1.000 kombiniert je Call; E-Mail-Match inkl. Zweitadressen; Domain-Treffer = „Firma bekannt" (Warnung, kein Ausschluss); Treffer je Eingabe auf 10 gekappt (`summary.truncated`) |
-| Bestand exportieren | `export_leads(format, list_id, contact_status, limit, offset)` | `json`/`csv` für Menschen und Tools (Seiten bis 10.000 Zeilen, `limit`/`offset`); **`index`** ist der kompakte Abgleichsindex ({e, d, s} je Lead) für den Vorab-Dedup vor externen Scrape-Läufen |
+| Bestand exportieren (Leads einer Kampagne als Datei: `outreach-export`) | `export_leads(format, list_id, contact_status, limit, offset)` | `json`/`csv` für Menschen und Tools (Seiten bis 10.000 Zeilen, `limit`/`offset`); **`index`** ist der kompakte Abgleichsindex ({e, d, s} je Lead) für den Vorab-Dedup vor externen Scrape-Läufen |
 | Liste → Kampagne | `add_leads_to_campaign(campaign_id, list_id \| lead_ids)` | Überspringt `do_not_contact` IMMER und meldet es; verlinkte Leads starten als „processing" — KI-Läufe startet erst `start_lead_run`. HARTES LIMIT 1000: Bei Listen > 1000 Leads wirft `list_id` `limit_reached` — dann IDs via `get_list` (limit max. 200, offset) paginiert holen oder per `export_leads(list_id=…, limit/offset)` und in Chunks bis 1000 über `lead_ids` verlinken |
 | Batch taggen | `bulk_set_lead_attributes(lead_ids, attributes, create_missing)` | Gleiche Attributwerte auf bis zu 1.000 Leads in EINEM Call; für je-Lead-verschiedene Werte `write_lead_details` |
 | Global suchen/filtern | `search_leads(query, attribute_key/attribute_value, in_campaign)` | Strukturfilter erlauben leere Text-Query; `in_campaign="none"` = noch unverplantes Rohmaterial |
