@@ -1,8 +1,8 @@
 # Changelog
 
-## Unveröffentlicht – outreach (Version erhält das Release)
+## 2026-11-01 – outreach 0.5.1
 
-Passt zu ListM8 mit dem Weg „Mit deiner KI“ (LISTM8-86, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.
+Passt zu ListM8 v4.18 mit dem Weg „Mit deiner KI“ (LISTM8-86, MCP 4.7.0, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.
 
 **outreach**
 - `outreach-campaign` → neuer Ablauf „Genannte leere Kampagne füllen“: Der Start-Satz aus der App („Richte mit outreach die Kampagne #123 ein.“, auch mit Workspace oder englisch) füllt genau diese Kampagne per `edit_campaign`, nie per `create_campaign`. Prüft vorher mit `export_campaign_blueprint` und `list_campaigns`, ob sie leer ist und im genannten Workspace liegt; nicht leer oder im Assistenten angefangen heißt nachfragen. Mails und Team in einem Aufruf, danach Prüfen und Freigeben in der App; Lead-Läufe warten bis zur Freigabe.
