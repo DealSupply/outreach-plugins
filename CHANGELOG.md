@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-01 – outreach 0.4.7
+
+**outreach**
+- `outreach-launch` → Versand-Setup auf DealSupplys Stand: Domains beim Domain-Anbieter kaufen (Endungen wie .de, .at, .com, .info, .org; Zapmail selbst verkauft kein .de) und in Zapmail über „Connect Existing Domains“ verbinden, bei Cloudflare über die Verbindung des Cloudflare-Kontos statt Nameservern; Namen nah an der Hauptdomain. Postfächer bei Google oder Microsoft (beides in Zapmail), eine echte Person in Schreibweisen, Profilbild. Warm-up mit Instantlys Voreinstellungen, Start erst bei Health Score über 90 %, am besten 98 bis 100 %. Daily campaign limit 30 und „Campaign slow ramp“ am Postfach statt Wochenplan 100, 200, 300; die Kampagne bekommt gleich Postfächer mal 30. Sendefenster Mo bis Fr 09:00 bis 17:00 wie in der App. Open- und Link-Tracking standardmäßig aus, nur für sofortiges Anrufen nach dem Öffnen an.
+- `outreach-copy` → Tracking-Absatz auf dieselbe Regel gebracht.
+
 ## 2026-11-01 – fulfillment 0.1.2
 
 **fulfillment**

@@ -893,7 +893,7 @@ Diese Punkte haben nichts mit Geschmack zu tun - sie entscheiden, ob die Mail im
 | **Keine Großschreibung ganzer Wörter** | Klassisches Spam-Merkmal, besonders im Betreff |
 | **Abmeldezeile unter der Signatur** | In Step 1 und Step 3 nach einer Leerzeile unter der Signatur, ohne „PS:“ und nie vor dem CTA, genau: „Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“ (Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid, dann melde ich mich nicht mehr.“). Nie Opt-out-Fachsprache: kein „STOPP“ oder „Stop“, kein „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“, das klingt nach Massenversand. Den technischen Abmeldelink (List-Unsubscribe) setzt das Versandtool zusätzlich. Wer keinen Abmeldeweg findet, klickt stattdessen auf Spam, und die Beschwerdequote ist der Wert, an dem die Zustellung hängt |
 
-Open- und Link-Tracking sind Standard und ausdrücklich erlaubt - die KPI-Steuerung und das Nachtelefonieren nach Öffnern hängen daran. Eingerichtet wird beides im Versandtool, nicht in der Kampagne.
+Open- und Link-Tracking sind standardmäßig aus. Einschalten nur, wer Öffnungen als Signal nutzt, um sofort (in den ersten Minuten) anzurufen, also selbst Cold Calling macht oder ein Team dafür hat. Eingerichtet wird beides im Versandtool, nicht in der Kampagne (Details in `outreach-launch`, `references/technisches-setup.md`).
 
 ## Spam-Trigger im Deutschen
 

@@ -17,20 +17,28 @@ Und beide werden regelmäßig übersprungen. Deshalb hat die Hälfte der „Cold
 3. [ ] Sequenz einrichten (Entry Mail + 3 FUPs — die vier Steps aus der Kampagne; Step 3 öffnet einen neuen Thread mit eigenem Betreff): per Sequenz-Übertragung aus ListM8 oder von Hand
 4. [ ] 2 Entry-Mail-Varianten als A/B-Test anlegen (in Instantly; eine erneute Sequenz-Übertragung aus ListM8 ersetzt die Sequenz dort nach Bestätigung, angelegte Varianten also mit)
 5. [ ] Alle 10 Sender-Accounts der Kampagne zuweisen
-6. [ ] Schedule: Mo-Fr, 08:00-16:00, Europe/Berlin (der Standard-Zeitplan einer aus ListM8 angelegten Kampagne ist 09:00-17:00, anpassen)
-7. [ ] Max. 30 Mails pro Inbox pro Tag
+6. [ ] Schedule: Mo-Fr, 09:00-17:00 mitteleuropäische Zeit (so legt ListM8 die Kampagne an, bleibt so)
+7. [ ] Daily limit der Kampagne: Postfächer mal 30 (300 bei 10 Inboxen); am Postfach Daily campaign limit 30 und Campaign slow ramp an
+8. [ ] Open Tracking und Link Tracking aus, keine Links in den Mails (Ausnahme: wer Öffner in den ersten Minuten anruft)
 
 ## Langsam hochfahren
 
-- **Woche 1:** 100-150 Mails/Tag (um Spam-Filter nicht zu triggern)
-- **Woche 2:** 200-250 Mails/Tag
-- **Woche 3+:** 300 Mails/Tag (Zielgeschwindigkeit)
+Hochgefahren wird über **Campaign slow ramp** am Postfach, nicht über das Tageslimit der Kampagne
+(Email Accounts → Postfach → **Settings** → **Campaign Settings**, für alle über **Edit Accounts**):
+jedes Postfach startet mit 2 Kampagnenmails am Tag und legt jeden Tag 2 drauf, bis es an Tag 15 bei
+seinem Daily campaign limit von 30 ist. Bei 10 Postfächern:
 
-Auch nach dem Warmup ist ein Postfach nicht auf 30 Mails am Tag eingestellt. Der Sprung von 0 auf Volllast ist genau das Muster, das Provider als Massenversand erkennen.
+- **Tag 1:** 20 Mails
+- **Tag 5:** 100 Mails
+- **Tag 10:** 200 Mails
+- **Tag 15:** 300 Mails (Zielgeschwindigkeit)
+
+Die Kampagne bekommt deshalb gleich 300 als Tageslimit; die Treppe macht Instantly. Auch nach dem Warmup ist ein Postfach nicht auf 30 Mails am Tag eingestellt. Der Sprung von 0 auf Volllast ist genau das Muster, das Provider als Massenversand erkennen. Ob die Treppe ab dem Einschalten oder ab der ersten Kampagnenmail zählt, sagt Instantly nicht ausdrücklich; im Zweifel in der Spalte „Daily Sent“ der ersten Tage nachsehen.
 
 ## Launch-Check
 
-- [ ] Warmup läuft seit mind. 14 Tagen, Score in Ordnung
+- [ ] Warmup läuft seit mind. 14 Tagen, Health Score über 90 %, am besten 98 bis 100 %
+- [ ] Campaign slow ramp an allen Postfächern an, Daily campaign limit 30, Tracking aus
 - [ ] E-Mails verifiziert (Bounce Rate Prognose unter 3 %)
 - [ ] AI-Opener der ersten 40 Mails manuell geprüft (rund 20 Minuten Lesezeit; in ListM8 im Review bzw. mit `outreach-verify`)
 - [ ] Betreff nach `outreach-copy`: Step 1 mit 2-5 Wörtern, kein Spam-Wort, Firmenname nur als `{{ai.firma}}` (nie `{{lead.company}}`, nie `{{firstName}}`), Step 3 mit eigenem kurzem Betreff (neuer Thread), Step 2 und 4 ohne Betreff (Thread)
@@ -50,7 +58,7 @@ Aufwand: 1-2 Stunden pro Tag.
 
 - Die Leute haben euren Namen schon gesehen
 - Sie kennen eure Firma
-- Sie haben eure Mail geöffnet (Instantly zeigt euch das)
+- Sie haben eure Mail vielleicht schon gelesen (Öffnungen zeigt Instantly nur mit eingeschaltetem Tracking, siehe unten)
 - Der Anruf ist kein Kaltanruf mehr - es ist ein warmer Anruf
 - „Hey, ich hatte Ihnen letzte Woche eine Mail geschickt zum Thema XY - haben Sie die gesehen?" ist der einfachste Gesprächseinstieg der Welt
 
@@ -60,8 +68,9 @@ Aufwand: 1-2 Stunden pro Tag.
 |:----------|:----|:------|
 | **1 (sofort)** | Positive Replies („Ja, gerne", „Klingt spannend") | Heißer Lead, sofort drauf |
 | **2 (gleicher Tag)** | Negative aber höfliche Replies („Kein Interesse gerade") | Tür offen halten, kurzer Anruf |
-| **3 (nach 2-3 Tagen)** | Opener, keine Reply | Haben die Mail geöffnet, Interesse ist da |
-| **4 (nach FUP2)** | Nie geöffnet | Kalt, aber trotzdem anrufen - vielleicht anderer Ansprechpartner |
+| **3 (nach 2-3 Tagen)** | Alle ohne Reply | Die Mail ist angekommen, der Anruf ist warm |
+
+**Öffner sofort anrufen (nur mit Tracking):** Öffnungs-Tracking ist standardmäßig aus. Wer selbst Cold Calling macht oder ein Team dafür hat, darf es einschalten und ruft Öffner in den ersten Minuten nach dem Öffnen an. Ohne dieses sofortige Anrufen bleibt es aus.
 
 ### Script für den Anruf
 
@@ -75,7 +84,7 @@ Die Anrede im Telefonat folgt der Ansprache der Kampagne (du, in Ausnahmefällen
 
 | Metrik | Schlecht | OK | Gut | Sehr gut |
 |:-------|:---------|:---|:----|:---------|
-| **Open Rate** | unter 40 % | 40-55 % | 55-70 % | 70 %+ |
+| **Open Rate** (nur mit Tracking) | unter 40 % | 40-55 % | 55-70 % | 70 %+ |
 | **Reply Rate** | unter 2 % | 2-4 % | 4-6 % | 6 %+ |
 | **Bounce Rate** | über 3 % | 2-3 % | 1-2 % | unter 1 % |
 | **Opportunity Rate** (positive Antworten) | unter 0,5 % | 0,5-1 % | 1-2 % | 2 %+ |
@@ -101,7 +110,7 @@ Diese Fälle werden nicht optimiert, sondern angehalten:
 | Beschwerdequote über 0,3 % | Versand sofort stoppen. Betreffzeilen und Zielgruppe prüfen, bevor es weitergeht |
 | Bounce Rate über 5 % | Versand stoppen, Liste bereinigen und neu verifizieren, erst dann weiter |
 | Reply Rate unter 0,5 % nach 200+ Mails pro Variante | Kampagne pausieren, Offer überdenken - nicht die Betreffzeile |
-| Warmup-Score eines Postfachs fällt ab | Volumen dieses Postfachs reduzieren, nicht durch andere kompensieren |
+| Health Score eines Postfachs fällt ab | Volumen dieses Postfachs reduzieren, nicht durch andere kompensieren |
 
 Der Zielwert für Bounces liegt unter 3 %, die Notbremse bei 5 % - dazwischen wird nachgearbeitet, nicht gestoppt. Weiterlaufen lassen und hoffen ist bei Bounces und Beschwerden die teuerste Option: Jeder weitere Tag beschädigt die Domain-Reputation, und die kommt nicht zurück.
 
@@ -118,7 +127,7 @@ Der Zielwert für Bounces liegt unter 3 %, die Notbremse bei 5 % - dazwischen wi
 | Hohe Bounce Rate (5 %+) | E-Mails nicht verifiziert | Verifizierung einbauen, schlechte Leads entfernen |
 | Beschwerdequote steigt | Betreff verspricht mehr als die Mail hält | Betreffzeilen entschärfen, Zielgruppe prüfen |
 
-Die Diagnose folgt immer der Kette: Beschwerden und Bounces zuerst, dann Open Rate, dann Reply Rate, dann Termine. Wer bei den Terminen anfängt zu optimieren, während die Bounce Rate bei 6 % liegt, behandelt das Symptom.
+Die Diagnose folgt immer der Kette: Beschwerden und Bounces zuerst, dann Open Rate (nur mit Tracking, sonst Health Score der Postfächer), dann Reply Rate, dann Termine. Wer bei den Terminen anfängt zu optimieren, während die Bounce Rate bei 6 % liegt, behandelt das Symptom.
 
 Ein Hinweis zur Open Rate: Sie wird über ein Pixel gemessen, und manche Mail-Programme laden dieses Pixel automatisch vor. Die Zahl ist deshalb tendenziell zu hoch und taugt als Trend, nicht als exakter Wert. Reply Rate und Beschwerdequote sind die härteren Signale.
 
@@ -163,7 +172,7 @@ Cold Mailing ist ein Volumenkanal mit Vorlaufzeit. Realistischer Ablauf:
 | Zeitraum | Was passiert |
 |:---------|:-------------|
 | Woche 1-2 | Setup und Warmup. Kein Versand, keine Ergebnisse |
-| Woche 3 | Erste Mails, langsames Hochfahren. Erste Antworten |
+| Woche 3 | Erste Mails, Campaign slow ramp fährt hoch. Erste Antworten |
 | Woche 4-5 | Zielgeschwindigkeit, erste Termine, erste belastbare Zahlen |
 | Ab Woche 6 | Optimierung auf Basis echter Daten |
 
