@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-01 – fulfillment 0.1.2
+
+**fulfillment**
+- `fulfillment` (Modus B) und `lead-kontext.md` → Antworter in zwei Abrufen: erst `contact_status="opportunity"` (interessierte Antwort, auch aus dem Instantly-Abgleich), dann `"replied"`. Bisher fand der Skill nur `replied` und bot interessierte Leads nie an. Der Filter nimmt genau einen Wert, deshalb zwei Aufrufe.
+
 ## 2026-11-01 – outreach 0.4.6, fulfillment 0.1.1
 
 **outreach**
