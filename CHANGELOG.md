@@ -1,11 +1,15 @@
 # Changelog
 
-## 2026-11-01 – outreach 0.4.6
+## 2026-11-01 – outreach 0.4.6, fulfillment 0.1.1
 
 **outreach**
 - Die mitgelieferte MCP-Verbindung heißt jetzt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1` (vorher `akquise`, `outreach.akquise.de`). Wer das Plugin bisher über die Verbindung `akquise` genutzt hat, meldet sich einmal neu an; eine von Hand angelegte DealSupply-Verbindung kann danach weg.
 - Live-Ansicht in Claude Code: Standard-Server `dealsupply`, Links ohne eigene Adresse vom Server führen auf `app.dealsupply.ai`.
+- `outreach-copy` → keine Verweise mehr auf fremde Regelwerke anderer Marken; die Regeln selbst bleiben gleich.
 - `outreach-setup` → Anmeldeweg für DealSupply-Kunden mit den heutigen Menünamen der Claude App („Connectors“ → „Connect“); ChatGPT im Browser als eigene Umgebung (nur Verbindung, keine Skills).
+
+**fulfillment**
+- `demo-akquise-kampagne` heißt jetzt `demo-kampagne` (Aufruf `/demo-kampagne`, in Claude Code `/fulfillment:demo-kampagne`); Inhalt unverändert. `fulfillment`, `fulfillment-setup` und die Referenzen nennen den neuen Namen.
 
 ## 2026-11-01 – outreach 0.4.5
 

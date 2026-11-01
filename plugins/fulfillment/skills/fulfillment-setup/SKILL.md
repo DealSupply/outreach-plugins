@@ -29,7 +29,7 @@ Desktop / Codex oder ein anderes KI-Werkzeug. In einem Satz nennen; was je Umgeb
 
 | Plugin | Gebraucht von | Fehlt es |
 |---|---|---|
-| `outreach` | `demo-akquise-kampagne` (Regeln aus `outreach-copy`), Offer-Formulierung | installieren: `outreach@outreach-plugins` |
+| `outreach` | `demo-kampagne` (Regeln aus `outreach-copy`), Offer-Formulierung | installieren: `outreach@outreach-plugins` |
 | `datenbeschaffung` | `demo-leadliste` | nur nötig, wenn Leadlisten als Offer geplant sind |
 
 ## 4. Netlify (für das Veröffentlichen)

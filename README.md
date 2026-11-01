@@ -7,7 +7,7 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 |---|---|---|
 | **outreach** | Kampagnen anlegen und ändern, Cold-Mail-Copy nach SOP, Leads importieren, qualifizieren, recherchieren, Mails generieren und prüfen, Launch vorbereiten. Bringt die MCP-Verbindung `dealsupply` (`app.dealsupply.ai`) und in Claude Code die Live-Ansicht (Lead-Vorschau, Fortschritt der Läufe) mit. | alle |
 | **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
-| **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Akquise-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
+| **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
 Die Skills passen zum Outreach-MCP mit **42 Tools** und **7 Prompts**. Der MCP verarbeitet
 Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
@@ -105,7 +105,7 @@ plugins/
       demo-seo             SEO-Ergebnis: Suchbegriffe auf Seite 2, lokale Suche, Titel, KI-Suchmaschinen
       demo-anzeigen        Meta-/Google-Anzeigen, Stellenanzeige, Content-Plan
       demo-leadliste       Lead-System mit 30–50 passenden Wunschkunden (datenbeschaffung im Geschenk-Modus)
-      demo-akquise-kampagne  Muster-Kampagne mit Sequenz und 3 Beispiel-Mails (nach outreach-copy)
+      demo-kampagne        Muster-Kampagne mit Sequenz und 3 Beispiel-Mails (nach outreach-copy)
       demo-ausliefern      Netlify (Connector, CLI oder Drop), noindex, demo-url am Lead, Antwort-Text
       fulfillment-referenzen   Demo-Katalog, Lead-Kontext, Umgebungen, Netlify, Qualität, Recht, Webseiten-Bauplan
 ```

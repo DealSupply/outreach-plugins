@@ -277,8 +277,8 @@ MUSS:
   bemerkenswert“, „Hammer“, „beeindruckend“. Abgrenzung: „finde ich stark“ ist eine Formel, ein
   gegenwärtiges Urteil ohne Inhalt; eine Würdigung oder Reaktion am benannten Detail ist erlaubt,
   Seltenheit und Superlativ nur mit dem Detail („so eine Nachsorge ist mir noch nicht begegnet“), nie allein
-  („das sieht man selten“, „beeindruckend“) (siehe Positiver Schluss). Die Formeln machen alle Opener gleich (ListM8-Regel, gilt
-  zusätzlich zu den Akquise-Regeln). Auch in Beispielen und Prompts nie als Muster stehen lassen:
+  („das sieht man selten“, „beeindruckend“) (siehe Positiver Schluss). Die Formeln machen alle Opener gleich (gilt zusätzlich
+  zu den übrigen Opener-Regeln). Auch in Beispielen und Prompts nie als Muster stehen lassen:
   Modelle kopieren Beispiele.
 - Anker-Rangfolge: 1) Lob aus Bewertungstexten (Paraphrase; Plural oder „immer wieder“ nur, wenn
   mindestens 2 Bewertungen es tragen) 2) abhebendes Detail von der Website, auch Wachstum oder
@@ -582,7 +582,7 @@ Im Body jeder Mail:
 „garantiert“, „Garantie“, „jetzt zugreifen“, „jetzt handeln“, „begrenztes Angebot“, „nur heute“,
 „exklusives Angebot“, „hier klicken“, „Rabatt“, „Sonderpreis“, „Gewinner“, „Sie haben gewonnen“,
 „dringend“, „risikofrei“, „ohne Risiko“, „Geld verdienen“.
-„unverbindlich“ ist kein Spam-Wort (abweichend von akquise-ai); der Standard-CTA endet mit
+„unverbindlich“ ist kein Spam-Wort; der Standard-CTA endet mit
 „Völlig unverbindlich natürlich.“
 
 **Verbotene Offer-Begriffe:** „kostenlose Analyse“, „kostenlose Beratung“, „kostenloses

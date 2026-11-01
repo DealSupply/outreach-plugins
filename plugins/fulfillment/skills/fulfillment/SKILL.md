@@ -71,7 +71,7 @@ Eine Frage, wenn es nicht aus dem Auftrag hervorgeht:
 | Google-Sichtbarkeit, Suchbegriffe, Title-Tags, lokale Suche, KI-Suchmaschinen | `demo-seo` |
 | Werbeanzeigen (Meta, Google), Anzeigen-Konzepte, Stellenanzeigen, Recruiting-Anzeige | `demo-anzeigen` |
 | fertige Liste mit passenden Kunden, Leads, Kontakten | `demo-leadliste` |
-| Kaltakquise-/Outreach-System, Akquise-Kampagne, Sequenz für den Lead | `demo-akquise-kampagne` |
+| Kaltakquise-/Outreach-System, Akquise-Kampagne, Sequenz für den Lead | `demo-kampagne` |
 
 4. Nach dem Bau immer `demo-ausliefern`: veröffentlichen, Link am Lead speichern, Antwort-Text.
 
