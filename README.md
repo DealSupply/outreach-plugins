@@ -13,6 +13,10 @@ Die Skills passen zum Outreach-MCP mit **32 Tools** und **7 Prompts**. Der MCP v
 Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
 (Instantly o. Ä.), nicht in der Plattform.
 
+Eine Verbindung gilt für alle Workspaces des Nutzers. Gibt es mehrere, fragt `outreach-setup`, in
+welchem gearbeitet wird; die Skills geben ihn bei Aufrufen ohne Objekt-ID mit (Workspace-Regel im
+Skill `outreach`). Ältere Server ohne `list_workspaces` arbeiten wie bisher im Standard-Workspace.
+
 ## Installation
 
 **Claude Code**
@@ -65,13 +69,14 @@ plugins/
     hooks/                          Live-Ansicht für Claude Code (register.tsx, model.ts)
     types/  tests/                  Typen und Tests der Live-Ansicht
     skills/
-      outreach            Einstieg, leitet weiter
+      outreach            Einstieg, leitet weiter, Workspace-Regel für alle Skills
       outreach-setup      Einrichtung und Prüfung
       outreach-update     Aktualisieren
       outreach-campaign   Kampagne bauen und ändern nach der Cold-Mailing-SOP
       outreach-copy       Cold-Mail-Copy-Regeln (verbindlich für campaign, generate, verify)
       outreach-import     Leads importieren
       outreach-lists      Listen verwalten
+      outreach-export     Leads einer Kampagne als Excel oder CSV
       outreach-qualify    Leads qualifizieren
       outreach-research   Leads recherchieren
       outreach-generate   Mail-Variablen erzeugen

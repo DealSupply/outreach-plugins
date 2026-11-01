@@ -14,7 +14,8 @@ Die Antwort steckt unter `blueprint`.
 | `blueprint.campaign.intelligence.campaign_brief.business.value` | Was der Nutzer verkauft; die Demo führt dorthin |
 | `blueprint.campaign.intelligence.campaign_brief.usp.value` | Belege und Stärken des Nutzers (nie erfinden) |
 | `blueprint.campaign.intelligence.campaign_brief.target_audience.value` | Zielgruppe; hilft bei Branche und Tonalität |
-| `blueprint.campaign.emailAgentConfig.salutation` | `du` oder `sie`: dieselbe Anrede in der Antwort an den Lead |
+| `blueprint.campaign.language` | `de` oder `en` (ab MCP 4.7.0, fehlt es: `de`): die Antwort an den Lead in dieser Sprache |
+| `blueprint.campaign.emailAgentConfig.salutation` | `du` oder `sie`: dieselbe Anrede in der Antwort an den Lead (nur bei `de`; englisch `Hi Vorname,`) |
 
 Fehlt `offer_contract`, das Offer **beim Nutzer erfragen**. `qualificationSettings.offer_summary`
 beschreibt oft die bezahlte Leistung, nicht den Türöffner, und taugt deshalb nicht als Ersatz.
@@ -28,7 +29,8 @@ list_leads(campaign_id, contact_status="replied", fit_level="", research_status=
 - Die drei leeren Filter sind Pflicht: Ohne sie zeigt `list_leads` nur Leads, die noch bearbeitet
   werden, und ein angeschriebener Lead taucht nicht auf.
 - `replied` steht nur am Lead, wenn die App den Status aus Instantly abgeglichen hat. Fehlt der
-  Abgleich, nennt der Nutzer den Lead (Firma oder E-Mail); dann `search_leads(query="<Firma oder Domain>")`.
+  Abgleich, nennt der Nutzer den Lead (Firma oder E-Mail); dann `search_leads(query="<Firma oder Domain>")`,
+  außerhalb des Standard-Workspaces mit `workspace=<uuid>` aus der Antwort zur Kampagne (`workspace.uuid`).
 - Weitere Werte: `opportunity` (vom Nutzer als Chance markiert), `contacted`, `all`.
 - Den Lead immer mit dem Nutzer bestätigen; eine Antwort kann auch eine Absage sein.
 

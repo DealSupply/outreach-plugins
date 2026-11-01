@@ -23,13 +23,15 @@ bulk_set_lead_attributes(
   als `demo-url` bzw. `demo-datum`, gab es schon ein gleichnamiges Feld: dem Nutzer melden und
   künftig den Schlüssel aus der Antwort verwenden.
 - Datum als `JJJJ-MM-TT`, damit es sich sortieren lässt.
-- Braucht die Berechtigung `leads:write`. Fehlt sie, den Link dem Nutzer nennen; er trägt ihn in der
-  App am Lead ein.
+- Braucht die Berechtigung `leads:write`. Fehlt sie oder lehnt der Server mit `workspace_read_only` ab
+  (im Workspace des Leads nur Betrachter), den Link dem Nutzer nennen; er trägt ihn in der App am Lead
+  ein. Kein `workspace` mitgeben: `lead_ids` bestimmen den Workspace.
 
 ## Antwort an den Lead
 
 Der Lead hat auf die Cold-Mail geantwortet („ja, gern“). Die Antwort ist kurz, hält das Versprechen
-und stellt genau eine Frage. Anrede wie in der Kampagne (`salutation`). Keine Gedankenstriche,
+und stellt genau eine Frage. Sprache und Anrede wie in der Kampagne (`campaign.language`,
+`salutation`; in einer englischen Kampagne `Hi Vorname,` und `Best,`). Keine Gedankenstriche,
 kein Werbeton, Signatur wie in der Kampagne.
 
 **Webseiten-Entwurf (du):**

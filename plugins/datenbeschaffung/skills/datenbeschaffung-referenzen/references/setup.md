@@ -14,6 +14,9 @@
 | API-Token | **https://console.apify.com/settings/integrations** (genau diese URL — kein anderer Pfad) | — |
 | ListM8-MCP verbunden | Seite „MCP & Skills“ der App (`/mcp`) | — (optional, aber empfohlen: Vorab-Abgleich + direkter Import per `import_leads`) |
 
+Arbeitet der Nutzer in mehreren Workspaces der App, laufen Abgleich und Import im gewählten
+Workspace (`listm8-mcp.md`, Abschnitt „Workspace“). Vor dem ersten Abgleich klären, welcher es ist.
+
 ## Die drei Zugriffswege auf Apify
 
 In dieser Reihenfolge prüfen — der erste verfügbare gewinnt. Details und Aufruf-Muster: `zugriff.md`.

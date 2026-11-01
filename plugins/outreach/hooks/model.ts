@@ -109,6 +109,16 @@ export function formatCredits(n: number): string {
 /** "12,25 Credits", "1 Credit". */
 export const creditsLabel = (n: number): string => `${formatCredits(n)} ${n === 1 ? 'Credit' : 'Credits'}`
 
+/** The workspace an answer names (`workspace: {uuid, name, role}`); null from servers without workspaces. */
+export function workspaceOf(p: Obj): string | null {
+  return isObj(p.workspace) ? str(p.workspace.uuid) || null : null
+}
+
+/** A row of a list answer; the answer names the workspace once, for all its rows. */
+export function inWorkspaceOf(row: Obj, answer: Obj): Obj {
+  return isObj(row.workspace) || !isObj(answer.workspace) ? row : { ...row, workspace: answer.workspace }
+}
+
 /**
  * A run from get_lead_run_status / list_lead_runs (camelCase resource plus snake_case extras),
  * start_lead_run (snake_case) or resume_lead_run (id, run_status and lead_total only: the rest
@@ -150,6 +160,7 @@ export function runFrom(p: Obj, previous?: RunView): RunView | null {
     // A resumed run is going again: it has not finished, whatever the view before said.
     finishedAt: isTerminal ? (previous?.finishedAt ?? null) : null,
     server: previous?.server ?? '',
+    workspace: workspaceOf(p) ?? previous?.workspace ?? null,
     createdAt: previous?.createdAt ?? (Date.parse(str(p.createdAt)) || Date.now()),
     appUrl: urlOf(p.appUrl) ?? previous?.appUrl ?? null,
     reason: isTerminal && status !== 'completed' ? str(p.statusReason) || str(p.status_description) || null : null,

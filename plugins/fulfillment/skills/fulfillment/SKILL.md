@@ -31,6 +31,11 @@ genau einen Bau-Skill. Wissen, das alle Skills teilen, steht in
 `list_campaigns` aufrufen (nur lesend).
 
 - **Antwort kommt:** weiter mit Schritt 2.
+- **Mehrere Workspaces** (`list_workspaces` vorhanden und mehr als ein Eintrag): fragen, in welchem die
+  Kampagne liegt, und `list_campaigns` bzw. `search_leads` dort mit `workspace=<uuid>` aufrufen.
+  Aufrufe mit `campaign_id` oder `lead_ids` (`export_campaign_blueprint`, `list_leads`,
+  `bulk_set_lead_attributes`) laufen von selbst im Workspace der Kampagne bzw. des Leads; dort kein
+  `workspace` mitgeben. Mit der Rolle `viewer` lässt sich dort kein Demo-Link speichern.
 - **Kein Outreach-Tool vorhanden:** Fulfillment geht trotzdem. Dann das Offer und die Website des
   Leads beim Nutzer erfragen und mit Schritt 2 weitermachen. Für die Verbindung auf
   `fulfillment-setup` verweisen.

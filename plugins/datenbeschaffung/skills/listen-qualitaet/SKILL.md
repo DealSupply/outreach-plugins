@@ -43,6 +43,8 @@ export_leads(format="index")  →  bestand-index.json
 python3 ../datenbeschaffung-referenzen/scripts/dedup.py --index bestand-index.json --in roh.csv --out neu.csv
 ```
 
+Index, Prüfung und Import im selben Workspace (`listm8-mcp.md`, Abschnitt „Workspace“).
+
 Der Report nennt: behalten / schon im Bestand / **do_not_contact entfernt** (namentlich, die werden
 NIE angeschrieben) / Domain-Warnungen / ohne E-Mail behalten. OHNE MCP entfällt dieser Schritt.
 Duplikate innerhalb der Datei hat `build_csv.py` bereits entfernt; im Bericht ausdrücklich sagen,
