@@ -14,7 +14,7 @@ Und beide werden regelmäßig übersprungen. Deshalb hat die Hälfte der „Cold
 
 1. [ ] Neue Kampagne erstellen, oder aus ListM8 heraus anlegen und verknüpfen (Reiter „Instantly" der ListM8-Kampagne)
 2. [ ] Leads übernehmen: Push der freigegebenen Leads aus ListM8 (manuell oder per Auto-Push) oder CSV-Export aus ListM8 hochladen
-3. [ ] Sequenz einrichten (Entry Mail + 3 FUPs — die vier Steps aus der Kampagne; Step 3 öffnet einen neuen Thread mit eigenem Betreff): per Sequenz-Übertragung aus ListM8 oder von Hand
+3. [ ] Sequenz einrichten (Entry Mail + 3 FUPs — die vier Steps aus der Kampagne; alle im Thread von Step 1, nur Step 1 mit Betreff): per Sequenz-Übertragung aus ListM8 oder von Hand
 4. [ ] 2 Entry-Mail-Varianten als A/B-Test anlegen (in Instantly; eine erneute Sequenz-Übertragung aus ListM8 ersetzt die Sequenz dort nach Bestätigung, angelegte Varianten also mit)
 5. [ ] Alle 10 Sender-Accounts der Kampagne zuweisen
 6. [ ] Schedule: Mo-Fr, 09:00-17:00 mitteleuropäische Zeit (so legt ListM8 die Kampagne an, bleibt so)
@@ -41,7 +41,7 @@ Die Kampagne bekommt deshalb gleich 300 als Tageslimit; die Treppe macht Instant
 - [ ] Campaign slow ramp an allen Postfächern an, Daily campaign limit 30, Tracking aus
 - [ ] E-Mails verifiziert (Bounce Rate Prognose unter 3 %)
 - [ ] AI-Opener der ersten 40 Mails manuell geprüft (rund 20 Minuten Lesezeit; in ListM8 im Review bzw. mit `outreach-verify`)
-- [ ] Betreff nach `outreach-copy`: Step 1 mit 2-5 Wörtern, kein Spam-Wort, Firmenname nur als `{{ai.firma}}` (nie `{{lead.company}}`, nie `{{firstName}}`), Step 3 mit eigenem kurzem Betreff (neuer Thread), Step 2 und 4 ohne Betreff (Thread)
+- [ ] Betreff nach `outreach-copy`: Step 1 mit 2-5 Wörtern, kein Spam-Wort, Firmenname nur als `{{ai.firma}}` (nie `{{lead.company}}`, nie `{{firstName}}`), Step 2, 3 und 4 ohne Betreff (Thread von Step 1)
 - [ ] Variablen korrekt gemappt (Variablen-Zuordnung im Reiter „Instantly" vollständig, sonst blockiert der Push; Vorschau mit einem freigegebenen Lead angesehen)
 - [ ] Sperrliste geladen: Kontaktstatus in ListM8 aktuell (`do_not_contact`, bereits Kontaktierte) und Blockliste in Instantly gepflegt
 - [ ] Feste Abmeldezeile unter der Signatur von Step 1 und 3 (Wortlaut in `outreach-copy`, Abschnitt „Anatomie der Entry-Mail“), kein „STOPP“ und keine Opt-out-Fachsprache, List-Unsubscribe-Header aktiv

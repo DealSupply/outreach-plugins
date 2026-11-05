@@ -75,8 +75,9 @@ abhaken.
 3. Übergabe in der Oberfläche: Im Reiter „Instantly" der Kampagne die Instantly-Kampagne verknüpfen
    oder anlegen, die Sequenz übertragen, die Variablen-Zuordnung vervollständigen (ungemappte
    Pflicht-Platzhalter blockieren den Push), die Vorschau mit einem freigegebenen Lead ansehen,
-   dann die Leads pushen. Auto-Push überträgt Freigaben aus der Oberfläche sofort; nach Freigaben
-   über den MCP das offene Delta (Pipeline-Streifen „Ausstehend") per Push-Button übertragen.
+   dann die Leads pushen. Auto-Push überträgt Freigaben sofort, aus der Oberfläche wie über den MCP
+   (`approve_lead_variables`); ohne Auto-Push das offene Delta (Pipeline-Streifen „Ausstehend") per
+   Push-Button übertragen.
    Ohne Integration: CSV-Export der Kampagne (`outreach-export`, Zweck `sending`, `scope="approved_new"`,
    `mark_exported=true`) in Instantly hochladen und die Variablen dort zuordnen.
 4. Übertragene Leads tragen danach den Kontaktstatus `exported_to_instantly` (prüfbar mit

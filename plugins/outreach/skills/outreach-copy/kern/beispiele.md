@@ -85,7 +85,7 @@ Inhaber - Weber Webdesign
 
 ## Step 3: Neuer Winkel mit Social Proof
 
-Betreff: kurzes Update
+Betreff: (leer, läuft im Thread von Step 1)
 
 Hallo {{Vorname}},
 
@@ -102,7 +102,7 @@ Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 ## Step 4: Abschied mit Routing-Hinweis
 
-Betreff: (leer, läuft im Thread von Step 3)
+Betreff: (leer, läuft im Thread von Step 1)
 
 Hallo {{Vorname}},
 

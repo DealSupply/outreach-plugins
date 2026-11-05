@@ -214,7 +214,7 @@ Detailregeln:
 
 ## Follow-Ups rund um das Offer
 
-Ohne Follow-up verpufft auch ein gutes Offer — viele Leads sehen erst den Nachfass. Der Kampagnen-Standard ist die Entry Mail plus 3 Follow-Ups (4 Steps, `delayDays` 0/3/5/7). Das Offer steht nur in Mail 1; die Follow-Ups wiederholen es nicht. Step 2 antwortet im Thread von Mail 1, damit der Lead den ursprünglichen Pitch im Verlauf sieht (Betreff leer). Step 3 öffnet einen neuen Thread mit eigenem kurzem Betreff und einem neuen Winkel, Step 4 verabschiedet sich im Thread von Step 3 (Betreff leer). „Dringlichkeit“ kommt nur als zusätzlicher Step dazu, wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt.
+Ohne Follow-up verpufft auch ein gutes Offer — viele Leads sehen erst den Nachfass. Der Kampagnen-Standard ist die Entry Mail plus 3 Follow-Ups (4 Steps, `delayDays` 0/3/5/7). Das Offer steht nur in Mail 1; die Follow-Ups wiederholen es nicht. Step 2 antwortet im Thread von Mail 1, damit der Lead den ursprünglichen Pitch im Verlauf sieht (Betreff leer). Step 3 bringt im selben Thread einen neuen Winkel, Step 4 verabschiedet sich ebenfalls dort (Betreff jeweils leer). „Dringlichkeit“ kommt nur als zusätzlicher Step dazu, wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt.
 
 ## Das Offer schnell liefern
 

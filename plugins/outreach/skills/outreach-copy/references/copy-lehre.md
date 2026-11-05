@@ -26,12 +26,12 @@ Und eine Mail reicht nicht. Der größte Teil der Antworten kommt nicht auf die 
 
 | Mail | Step | Typ | Wörter | `delayDays` | Tag | Betreff / Thread |
 |:-----|:-----|:----|:-------|:------------|:----|:-----------------|
-| **Entry Mail** | 1 | Komplette Botschaft | max. 120, Ziel 50-90 | 0 | 0 | eigener Betreff, neuer Thread |
+| **Entry Mail** | 1 | Komplette Botschaft | max. 120, Ziel 50-90 | 0 | 0 | eigener Betreff, öffnet den Thread |
 | **FUP1** | 2 | Erinnerung | max. 50 | 3 | 3 | leer, Thread von Mail 1 |
-| **FUP2** | 3 | Neuer Winkel (Case Study) | max. 80 | 5 | 8 | eigener kurzer Betreff („kurzes Update“), NEUER Thread |
-| **FUP3** | 4 | Abschied mit Routing-Hinweis | max. 60 | 7 | 15 | leer, Thread von Mail 3 |
+| **FUP2** | 3 | Neuer Winkel (Case Study) | max. 80 | 5 | 8 | leer, Thread von Mail 1 |
+| **FUP3** | 4 | Abschied mit Routing-Hinweis | max. 60 | 7 | 15 | leer, Thread von Mail 1 |
 
-Der Standard sind drei Follow-Ups, zusammen mit der Entry Mail vier Steps. Praxis-Belege: Eric Nowoslawski arbeitet mit zwei bis drei Mails und nie alle im selben Thread, Jay mit vier Steps und Routing, ohne künstliche Knappheit. Deshalb startet Step 3 einen neuen Thread mit eigenem kurzen Betreff, und Step 4 verabschiedet sich mit dem Routing-Hinweis. „Dringlichkeit“ ist kein Standard-Step: Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step vor dem Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7).
+Der Standard sind drei Follow-Ups, zusammen mit der Entry Mail vier Steps. Praxis-Belege: Eric Nowoslawski arbeitet mit zwei bis drei Mails und nie alle im selben Thread, Jay mit vier Steps und Routing, ohne künstliche Knappheit, und testet Step 3 im selben oder einem neuen Thread. Seit 05.11.2026 laufen alle vier Mails in einem Thread (Entscheidung Giuliano): Step 3 hat keinen eigenen Betreff mehr, Step 4 verabschiedet sich mit dem Routing-Hinweis. „Dringlichkeit“ ist kein Standard-Step: Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step vor dem Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7).
 
 **Alle Zahlen sind Obergrenzen, keine Zielvorgaben.** Die abgenommenen Kampagnen liegen bei der Entry Mail zwischen 55 und 86 Wörtern, die Follow-Up-Bausteine teils deutlich darunter - die kürzeste empfohlene Reminder-Variante hat 14 Wörter. Wer dieselbe Botschaft in weniger Wörtern unterbringt, hat es besser gemacht, nicht schlechter.
 
@@ -580,9 +580,7 @@ Zusätzlich: keine Großschreibung ganzer Wörter, keine Ausrufezeichen, keine Z
 
 ### Betreffzeilen für Follow-Ups
 
-Step 2 und Step 4 haben keinen Betreff: das Feld bleibt leer, die Mails laufen im Thread der vorigen Betreff-Mail (Step 2 in Step 1, Step 4 in Step 3). Kein „Re:“.
-
-Step 3 startet einen neuen Thread und bekommt deshalb einen eigenen kurzen Betreff, z. B. „kurzes Update“. Er wiederholt den Betreff von Step 1 nicht, kündigt kein Ergebnis an und folgt denselben Regeln wie der Betreff von Step 1 (2-5 Wörter, kein Spam-Wort, Firmenname nur über `{{ai.firma}}`).
+Step 2, Step 3 und Step 4 haben keinen Betreff: das Feld bleibt leer, die Mails laufen im Thread von Step 1, der Empfänger sieht „Re: <Betreff von Step 1>“. Kein „Re:“ von Hand. Ein eigener Betreff in Step 3 („kurzes Update“) bricht den Thread; so lief es bis 05.11.2026.
 
 ### Test von Hand: Betreff-Variante B
 
@@ -747,7 +745,7 @@ Das ist alles. FUP1 ist die kürzeste Mail der Sequenz und darf sich anfühlen w
 
 **Aufgabe:** EIN neuer Aspekt. **HIER gehört der Social Proof hin - nicht in die Entry Mail.**
 
-**Neuer Thread:** Diese Mail bekommt einen eigenen kurzen Betreff (z. B. „kurzes Update“) und steht ohne den Verlauf von Mail 1. Sie muss für sich verständlich sein: höchstens ein Halbsatz Bezug auf das Angebot, kein neues Offer, kein Pitch. Wer Mail 1 nie geöffnet hat, sieht so eine frische Nachricht statt einer dritten Erinnerung im selben Faden.
+**Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein: höchstens ein Halbsatz Bezug auf das Angebot, kein neues Offer, kein Pitch.
 
 Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie ein Pitch. Hier, nach zwei Kontakten ohne Verkaufsdruck, wirkt er wie ein Beleg.
 
@@ -763,7 +761,7 @@ Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie
 
 ## FUP3: Abschied mit Routing-Hinweis (Step 4, 40-60 Wörter, `delayDays` 7)
 
-**Aufgabe:** Tür offen lassen, ohne Druck, und mit einem Satz klären, ob jemand anderes der bessere Ansprechpartner ist. Betreff leer, die Mail läuft im Thread von Mail 3.
+**Aufgabe:** Tür offen lassen, ohne Druck, und mit einem Satz klären, ob jemand anderes der bessere Ansprechpartner ist. Betreff leer, die Mail läuft im Thread von Mail 1.
 
 | Variante | Text |
 |:---------|:-----|
@@ -774,7 +772,7 @@ Kein Vorwurf, keine letzte Chance, keine Schuldzuweisung, keine künstliche Knap
 
 ## Optional: Dringlichkeit als zusätzlicher Step
 
-„Dringlichkeit“ gehört nicht zum Standard. Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step zwischen Step 3 und den Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7, max. 60 Wörter, Betreff leer, Thread von Mail 3).
+„Dringlichkeit“ gehört nicht zum Standard. Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step zwischen Step 3 und den Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7, max. 60 Wörter, Betreff leer, Thread von Mail 1).
 
 | Variante | Text |
 |:---------|:-----|
@@ -814,7 +812,7 @@ Weitere Regeln:
 
 - Kein personalisierter Opener in den Follow-Ups. Der individuelle Bezug ist in Mail 1 passiert und wirkt in Mail 3 wie ein Skript.
 - Jeder FUP hat max. EINEN neuen Aspekt. Nicht zwei, nicht drei.
-- Step 2 läuft im Thread der Entry Mail und Step 4 im Thread von Step 3, damit der Kontext sichtbar bleibt; ihr Betreff bleibt leer. Step 3 öffnet einen neuen Thread mit eigenem kurzem Betreff.
+- Step 2, 3 und 4 laufen im Thread der Entry Mail, damit der Kontext sichtbar bleibt; ihr Betreff bleibt leer.
 
 ## Wenn Antworten kommen, aber keine Termine
 
@@ -1002,7 +1000,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 - [ ] Besteht der individuelle Bezug den Austauschtest (passt nicht auf zehn andere Betriebe der Branche, nichts von der Sperrliste außer als Bewertungslob), mit kurzem positivem Schluss aus dem Detail, wo es nicht schon selbst ein Kundenlob ist (meist eine kurze Reaktion am Detail, eine Würdigung nur mit etwas Neuem, nie „das zeigt, wie …“, kein Mechanik-Nutzen, kein leeres Prüfer-Urteil) und ohne Lobadjektiv ohne Inhalt? Bewertungszahlen nur ab 30 Bewertungen und einem Schnitt von 4,5?
 - [ ] Stimmt die Anrede (Du-Form: Vorname der Person, der die Adresse gehört, bei generischen Adressen der Entscheider; sonst „Hallo,“)?
 - [ ] Ist das Offer konkret genug? (Würde ICH antworten?)
-- [ ] Kommt Social Proof erst im FUP2 (Step 3, neuer Thread), NICHT in der Entry Mail?
+- [ ] Kommt Social Proof erst im FUP2 (Step 3), NICHT in der Entry Mail?
 - [ ] Klingt die Signatur schlank und nicht wie ein Pitch?
 
 **Follow-Ups:**
@@ -1014,7 +1012,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 **Formatierung:**
 
 - [ ] Keine M-Striche und keine Gedankenstriche als Trenner?
-- [ ] Betreff von Step 1: 2-5 Wörter, ohne Spam-Wort, ohne Ankündigung, ohne `{{firstName}}`/`{{companyName}}`, Firmenname nur als `{{ai.firma}}`? Step 3 mit eigenem kurzem Betreff (nicht gleich Step 1), Step 2 und 4 ohne Betreff?
+- [ ] Betreff von Step 1: 2-5 Wörter, ohne Spam-Wort, ohne Ankündigung, ohne `{{firstName}}`/`{{companyName}}`, Firmenname nur als `{{ai.firma}}`? Step 2, 3 und 4 ohne Betreff?
 - [ ] Anrede über `{{ai.hallo}}`, Pronomen passend zur `salutation`?
 - [ ] Klingt die Mail wie von einem Menschen, nicht wie ChatGPT?
 

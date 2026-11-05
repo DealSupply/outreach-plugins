@@ -32,7 +32,7 @@ Feld (älterer Server), ist die Kampagne deutsch.
   Umlaute, deutsche Beispielsätze und Reaktionsformen) gelten dort nicht. Stattdessen:
   - Anrede `Hi {first name},` (nur Vorname, ohne du/Sie); ohne benennbare Person `Hi there,`.
   - Grußformel `Best,` über der Signatur.
-  - Betreff klein, 2–5 Wörter: Mail 1 `quick question`, Mail 3 `quick update`.
+  - Betreff klein, 2–5 Wörter: Mail 1 `quick question`; Mail 2 bis 4 ohne Betreff im Thread von Mail 1.
   - Der Opener beginnt groß.
   - Die Reaktion im Opener ist ein eigener kurzer Satz oder ein „which“-Nebensatz, nie Komma plus
     „that“.
@@ -306,7 +306,7 @@ Unterschrift in den Mailtext schreiben; was unter der Signatur steht, folgt unte
 zwei Leerzeilen, eine mehr als zwischen den Absätzen; die Signatur folgt direkt unter der
 Grußformel (Giuliano, 05.11.2026).
 
-**Abmeldezeile:** In Step 1 und Step 3 (den Mails, die einen Thread öffnen) steht nach einer
+**Abmeldezeile:** In Step 1 und Step 3 steht nach einer
 Leerzeile unter der Signatur genau diese Zeile, ohne „PS:“ und nie vor dem CTA: „Falls das gerade
 kein Thema für dich ist, gib mir kurz Bescheid.“ Sie-Form: „Falls das gerade kein Thema für Sie
 ist, geben Sie mir kurz Bescheid.“ (gekürzt am 05.11.2026; die frühere Zeile „…, dann melde ich
@@ -615,19 +615,19 @@ Betreffzeilen.
 
 ## Sequenz
 
-Standard sind 4 Steps mit festen Rollen (Praxis-Belege: Eric Nowoslawski mit 2 bis 3 Mails, nie
-alle im selben Thread; Jay mit 4 Steps und Routing, ohne künstliche Knappheit). `delayDays` ist die
+Standard sind 4 Steps mit festen Rollen (Praxis-Belege: Eric Nowoslawski mit 2 bis 3 Mails; Jay mit
+4 Steps und Routing, ohne künstliche Knappheit, Step 3 im selben oder einem neuen Thread als Test). `delayDays` ist die
 Wartezeit VOR dem Step (kumuliert Tag 0, 3, 8, 15), eine ganze Zahl; `delayUnit` immer `"days"`.
-Threads: Step 1 öffnet einen Thread, Step 2 antwortet darin, Step 3 öffnet einen NEUEN Thread, Step 4
-antwortet im Thread von Step 3. Der Betreff steht deshalb nur in Step 1 und Step 3, in Step 2 und 4
-bleibt er leer.
+Threads: Alle vier Mails laufen in EINEM Thread (Giuliano, 05.11.2026). Step 1 öffnet ihn, Step 2, 3
+und 4 antworten darin, der Empfänger sieht sie als „Re: <Betreff von Step 1>“. Der Betreff steht
+deshalb nur in Step 1, in Step 2, 3 und 4 bleibt er leer.
 
 | Step | Rolle | `delayDays` | Wörter max. | Betreff | Inhalt |
 |---|---|---|---|---|---|
-| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, neuer Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (C Feinheiten-Satz, A/B `{{ai.angebot_ausfuehrung}}`, D/E keiner) + EIN CTA + Signatur |
+| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, öffnet den Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (C Feinheiten-Satz, A/B `{{ai.angebot_ausfuehrung}}`, D/E keiner) + EIN CTA + Signatur |
 | 2 | Erinnerung | 3 | 50 | leer, Thread von Mail 1 | `{{ai.hallo}}` + nur nachhaken, weich wie eine schnell getippte Nachricht („du hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail angekommen ist“). Kein Doppelpunkt-Opener, kein Offer, kein neuer Aspekt, kein `{{ai.intro}}` |
-| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | eigener kurzer Betreff, NEUER Thread (z. B. „kurzes Update“) | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}` |
-| 4 | Abschied mit Routing-Hinweis | 7 | 60 | leer, Thread von Mail 3 | `{{ai.hallo}}` + Tür offen lassen, ohne Druck und ohne Vorwurf + Routing-Hinweis („sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte“). Kein Offer |
+| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}` |
+| 4 | Abschied mit Routing-Hinweis | 7 | 60 | leer, Thread von Mail 1 | `{{ai.hallo}}` + Tür offen lassen, ohne Druck und ohne Vorwurf + Routing-Hinweis („sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte“). Kein Offer |
 
 - Gezählt wird der Body ohne Betreff und ohne Signatur, den Bezug aus `{{ai.intro}}` (bis zu
   2 Sätzen) eingerechnet. Die Limits sind Obergrenzen: kürzer ist erlaubt und meist besser.
@@ -639,7 +639,7 @@ bleibt er leer.
   es auf „Hallo …,“ folgt: „du hast sicher …“, nicht „Du hast sicher …“; Substantive bleiben groß.
 - **Dringlichkeit** ist kein Standard-Step. Nur wenn der Nutzer einen echten Zeit- oder
   Kapazitätsgrund nennt, kommt sie als zusätzlicher Step zwischen Step 3 und den Abschied
-  (dann 5 Steps, `delayDays` 0/3/5/7/7; Wortlimit 60; leerer Betreff, Thread von Mail 3). Ohne
+  (dann 5 Steps, `delayDays` 0/3/5/7/7; Wortlimit 60; leerer Betreff, Thread von Mail 1). Ohne
   echten Grund entfällt sie, nichts Erfundenes und keine künstliche Knappheit.
 - Fehlt dem Nutzer ein echter Beleg für Step 3: nachfragen, nicht erfinden.
 - Der Routing-Hinweis in Step 4 steht als fester Satz im Body. Hat die Kampagne ein
@@ -649,7 +649,7 @@ bleibt er leer.
 
 ## Betreffzeilen
 
-Nur Step 1 und Step 3 tragen einen Betreff (jeweils ein neuer Thread): 2-5 Wörter, keine Werbung, kein Spam-Wort, keine Großschreibung
+Nur Step 1 trägt einen Betreff (er öffnet den Thread): 2-5 Wörter, keine Werbung, kein Spam-Wort, keine Großschreibung
 ganzer Wörter, kein Ausrufezeichen, kein Prozentzeichen. Er klingt wie eine harmlose Frage eines
 Menschen. Keine Ankündigung und keine Ergebnisansage („Website für …“, „Entwurf für …“, „Idee
 für …“, „Website ist fertig“).
@@ -668,12 +668,9 @@ Bewährte Muster (an den Offer-Typ anpassen):
 - „Deine Förderung“ (nur bei Karte D)
 - „Partnerschaft {{ai.firma}}?“ (nur bei Karte E, nur mit `firma`)
 
-Step 2 und Step 4 (und eine optionale Dringlichkeits-Mail): Betreff LEER, die Mails laufen im Thread
-der vorigen Betreff-Mail (Step 2 in Step 1, Step 4 in Step 3). Kein neuer Betreff-Text, kein „Re:“.
-
-Step 3 startet einen neuen Thread mit eigenem kurzem Betreff, z. B. „kurzes Update“. Er wiederholt
-den Betreff von Step 1 nicht, kündigt kein Ergebnis an und hält dieselben Regeln (2-5 Wörter, kein
-Spam-Wort, Firmenname nur über `{{ai.firma}}`).
+Step 2, Step 3 und Step 4 (und eine optionale Dringlichkeits-Mail): Betreff LEER, die Mails laufen im
+Thread von Step 1. Kein neuer Betreff-Text, kein „Re:“. Ein eigener Betreff in Step 3 („kurzes
+Update“) bricht den Thread; so lief es bis 05.11.2026, bestehende Kampagnen behalten das.
 
 **Test von Hand (Hinweis, keine Pflicht):** Der Standard für Step 1 bleibt „kurze Frage“. Wer
 Betreffs testen will, legt beim echten Versand in Instantly von Hand eine Variante B „Frage zu
@@ -734,9 +731,8 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
 8. Spam-Scan: Betreff und Body gegen die Wortliste. „kostenlos“ höchstens einmal im Body?
 9. Platzhalter-Scan: kein [Klammer-Feld]? Jede `{{…}}`-Variable gegen die abschließende Liste
    prüfen. Signatur als Klartext (bei Signatur aus dem Konto `{{accountSignature}}` unter der Grußformel), keine `{{sender.*}}`-Variablen?
-10. Betreff von Step 1 und Step 3: 2-5 Wörter, kein Spam-Wort, keine Großschreibung, keine
-    Ankündigung, Firmenname nur über `{{ai.firma}}`, Step 3 nicht gleich Step 1? Step 2 und Step 4
-    ohne Betreff?
+10. Betreff von Step 1: 2-5 Wörter, kein Spam-Wort, keine Großschreibung, keine Ankündigung,
+    Firmenname nur über `{{ai.firma}}`? Step 2, Step 3 und Step 4 ohne Betreff?
 11. Enthält der `intro`-Prompt Austauschtest, Sperrliste der Kampagne, Anker-Rangfolge mit
     Sterne-Regel, positiven Schluss, Einstiegswechsel, die Verbote UND einen Fallback-Satz, der
     keine unbelegte Tatsache behauptet? Steht dieselbe Sperrliste in den Research-Vorgaben?

@@ -6,7 +6,7 @@ Aufruf:
 
 Erwartetes Format (siehe beispiele.md): jede Mail unter einer Überschrift
 "## Step <n>: …" (oder "## Zusatz-Step: Dringlichkeit"), darin eine Zeile
-"Betreff: …" ("Betreff: (leer …)" für Mails im Thread), danach der Body bis
+"Betreff: …" (nur Step 1; "Betreff: (leer …)" für Step 2 bis 4 im Thread), danach der Body bis
 zur Grußformel ("Viele Grüße" o. Ä., nach zwei Leerzeilen), dann die Signatur und
 nach einer Leerzeile die Abmeldezeile (Step 1 und 3).
 
@@ -100,17 +100,22 @@ def parse(text):
 
 
 def role(mail):
+    """Rolle, Wortlimit, ob die Mail einen Betreff trägt, ob die Abmeldezeile darunter steht.
+
+    Seit 05.11.2026 laufen alle Mails im Thread von Step 1: nur Step 1 hat einen Betreff,
+    die Abmeldezeile steht weiter in Step 1 und Step 3.
+    """
     title = mail["title"].lower()
     if mail["kind"] == "zusatz-step" or "dringlichkeit" in title:
-        return "dringlichkeit", 60, False
+        return "dringlichkeit", 60, False, False
     n = mail["num"] or 0
     if n == 1:
-        return "entry", 120, True
+        return "entry", 120, True, True
     if n == 2:
-        return "erinnerung", 50, False
+        return "erinnerung", 50, False, False
     if n == 3:
-        return "neuer winkel", 80, True
-    return "abschied", 60, False
+        return "neuer winkel", 80, False, True
+    return "abschied", 60, False, False
 
 
 def count_words(body_lines):
@@ -127,7 +132,7 @@ def count_words(body_lines):
 
 def check(mail):
     hard, soft = [], []
-    kind, limit, needs_subject = role(mail)
+    kind, limit, needs_subject, needs_opt_out = role(mail)
     subject = mail["subject"] or ""
     body = "\n".join(mail["body"])
     low = body.lower()
@@ -192,7 +197,7 @@ def check(mail):
     hit = re.search(OPT_OUT, "\n".join([subject, body] + mail["sig"] + mail["tail"]).lower())
     if hit:
         hard.append(f"Opt-out-Fachsprache: „{hit.group(0)}“, stattdessen die feste Abmeldezeile")
-    if needs_subject and not any(marker in line.lower() for line in mail["tail"] for marker in OPT_OUT_LINES):
+    if needs_opt_out and not any(marker in line.lower() for line in mail["tail"] for marker in OPT_OUT_LINES):
         soft.append("Abmeldezeile unter der Signatur fehlt (Step 1 und 3)")
     if mail["gap"] is not None and mail["gap"] != SIGN_OFF_GAP:
         soft.append(f"vor der Grußformel {mail['gap']} Leerzeile(n), erwartet {SIGN_OFF_GAP} (eine mehr als zwischen den Absätzen)")
@@ -202,9 +207,9 @@ def check(mail):
 
     # Betreff
     if needs_subject and not subject:
-        hard.append("Betreff fehlt (Step 1 und 3 öffnen einen neuen Thread)")
+        hard.append("Betreff fehlt (Step 1 öffnet den Thread)")
     if not needs_subject and subject:
-        hard.append(f"Betreff „{subject}“ muss leer sein (Mail läuft im Thread)")
+        hard.append(f"Betreff „{subject}“ muss leer sein (Mail läuft im Thread von Step 1)")
     if subject:
         sl = subject.lower()
         for word in SPAM + SUBJECT_EXTRA:

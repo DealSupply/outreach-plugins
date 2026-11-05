@@ -278,7 +278,7 @@ will dir was verkaufen“.
 
 ## Abmeldezeile
 
-In den Mails, die einen Thread öffnen (Step 1 und Step 3), steht nach einer Leerzeile unter der
+In Step 1 und Step 3 steht nach einer Leerzeile unter der
 Signatur genau diese Zeile, ohne „PS:“ und nie vor dem CTA:
 
 ```
@@ -575,14 +575,15 @@ oder Recherche nachschärfen, dann neu schreiben.
 
 | Step | Rolle | Tag (Abstand) | Wörter max. | Betreff / Thread |
 |:-----|:------|:--------------|:------------|:-----------------|
-| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener Betreff, neuer Thread |
+| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener Betreff, öffnet den Thread |
 | 2 | Erinnerung | 3 (+3) | 50 | leer, antwortet im Thread von Step 1 |
-| 3 | Neuer Winkel mit Social Proof | 8 (+5) | 80 | eigener kurzer Betreff, NEUER Thread |
-| 4 | Abschied mit Routing-Hinweis | 15 (+7) | 60 | leer, antwortet im Thread von Step 3 |
+| 3 | Neuer Winkel mit Social Proof | 8 (+5) | 80 | leer, antwortet im Thread von Step 1 |
+| 4 | Abschied mit Routing-Hinweis | 15 (+7) | 60 | leer, antwortet im Thread von Step 1 |
 
-Standard sind vier Steps. Praxis-Belege: Eric Nowoslawski arbeitet mit zwei bis drei Mails und
-nie alle im selben Thread, Jay mit vier Steps und Routing, ohne künstliche Knappheit. Deshalb
-öffnet Step 3 einen neuen Thread, und Step 4 verabschiedet sich mit dem Routing-Hinweis.
+Standard sind vier Steps. Praxis-Belege: Eric Nowoslawski arbeitet mit zwei bis drei Mails, Jay
+mit vier Steps und Routing, ohne künstliche Knappheit; Step 3 im selben oder einem neuen Thread
+ist bei Jay ein Test. Seit 05.11.2026 laufen alle vier Mails in einem Thread (Giuliano): Step 3
+hat keinen eigenen Betreff mehr, Step 4 verabschiedet sich mit dem Routing-Hinweis.
 
 **Wortzahlen sind Obergrenzen, keine Ziele.** Gezählt wird der Body ohne Betreff und Signatur,
 Anrede und Intro eingerechnet (das Intro mit bis zu 30 Wörtern). Bewährte Entry Mails liegen bei 55
@@ -627,9 +628,8 @@ paar Tagen“.
 EIN neuer Aspekt, und **hier steht der Social Proof**, nie früher. In der Entry Mail wirkt Proof
 wie ein Pitch, hier wie ein Beleg.
 
-Neuer Thread mit eigenem kurzem Betreff (z. B. „kurzes Update“). Die Mail muss ohne den Verlauf
-von Mail 1 verständlich sein. Wer Mail 1 nie geöffnet hat, sieht eine frische Nachricht statt einer
-dritten Erinnerung.
+Betreff leer, die Mail läuft im Thread von Step 1 (seit 05.11.2026, vorher eigener Betreff „kurzes
+Update“ und neuer Thread). Sie bleibt trotzdem ohne Mail 1 verständlich.
 
 Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo {{Vorname}},“ klein weiter wie in Mail 1:
 „ein Bauunternehmen aus …“), höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie in
@@ -653,7 +653,7 @@ Mail 1 statt „melde dich gerne“.
 ## Step 4: Abschied mit Routing-Hinweis
 
 Tür offen lassen, ohne Druck und ohne Vorwurf, und mit einem Satz klären, ob jemand anderes der
-bessere Ansprechpartner ist. Läuft im Thread von Step 3, Betreff leer.
+bessere Ansprechpartner ist. Läuft im Thread von Step 1, Betreff leer.
 
 „Hallo {{Vorname}}, da ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht
 passt. Das ist absolut in Ordnung. Sag mir gern kurz Bescheid, falls ich mich damit besser bei
@@ -671,7 +671,7 @@ erlaubt („schreib Anna“).
 
 Kein Standard. Nur wenn der Absender einen echten Zeit- oder Kapazitätsgrund nennt, kommt ein Step
 zwischen Step 3 und den Abschied: dann fünf Steps (Tag 0, 3, 8, 15, 22), höchstens 60 Wörter,
-Betreff leer, im Thread von Step 3.
+Betreff leer, im Thread von Step 1.
 
 | Variante | Text |
 |:---------|:-----|
@@ -690,9 +690,8 @@ Schritt, den Kunden am häufigsten überspringen und der die Terminquote am stä
 
 # TEIL 4: Betreffzeilen
 
-Nur Step 1 und Step 3 tragen einen Betreff, weil nur sie einen neuen Thread öffnen. Step 2 und
-Step 4 (und ein Dringlichkeits-Step) lassen ihn leer und laufen im Thread der vorigen
-Betreff-Mail. Kein eigener Text, kein „Re:“.
+Nur Step 1 trägt einen Betreff, weil nur er den Thread öffnet. Step 2, Step 3 und Step 4 (und ein
+Dringlichkeits-Step) lassen ihn leer und laufen im Thread von Step 1. Kein eigener Text, kein „Re:“.
 
 Regeln für jeden Betreff:
 
@@ -703,7 +702,6 @@ Regeln für jeden Betreff:
 - keine Großschreibung ganzer Wörter, kein Ausrufezeichen, kein Prozentzeichen
 - kein Vorname im Betreff. Ein Firmenname nur über `{{Firma}}` (bereinigter Kurzname); fehlt das
   Feld, steht kein Name im Betreff
-- Step 3 wiederholt den Betreff von Step 1 nicht
 
 | Betreff | Wann |
 |:--------|:-----|
@@ -714,7 +712,6 @@ Regeln für jeden Betreff:
 | „Zugang freigeschaltet“ | nur, wenn es den Zugang wirklich gibt (etwa den Platz im Pilotprojekt). Enttäuschte Neugier ist der kürzeste Weg zur Spam-Beschwerde |
 | „deine Förderung“ | nur Karte D |
 | „Partnerschaft {{Firma}}?“ | nur Karte E, nur mit `{{Firma}}` |
-| „kurzes Update“ | Step 3 |
 
 Nicht: „Kostenlose Beratung für …“ (zu lang, Spam), „Exklusives Angebot, jetzt zugreifen!“
 (Spam-Trigger), „Re: Ihre Anfrage“ (Fake-Reply, zerstört Vertrauen).
