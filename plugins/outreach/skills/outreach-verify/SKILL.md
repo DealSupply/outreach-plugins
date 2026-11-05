@@ -174,7 +174,7 @@ LEAD WEBSITE: {lead.website}
 ## Schritte
 
 1. Rufe get_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}) auf
-2. Lies JEDE Variable in variables[] sorgfältig (name + value); eine Zeile mit notStored: true ist eine Intro-Variante im Rückfall auf intro, kein fehlender Wert
+2. Lies JEDE Variable in variables[] sorgfältig (name + value); eine Zeile mit fallback: true ist eine Intro-Variante im Rückfall: Sie zeigt den aktuellen Text von Variante A, ist kein fehlender Wert und kein Befund, weil sie gleich lautet
 3. Prüfe Research-Daten und Lead-Stammdaten für Kontext
 4. REVIEW — Prüfe JEDE Variable gegen die Verification-Checkliste (siehe unten)
 5. ENTSCHEIDUNG (binär):
@@ -317,7 +317,8 @@ Gibt zurück:
   - `errorMessage` — bei status=error
   - `generatedAt` — ISO-Timestamp
   - `anchorWritten`, `closingWritten` — Tags einer Intro-Variable (ab MCP 4.10.0; Anker wie `kundenstimme`, `besonderheit`, `ersatzsatz`, `rueckfall`; Schluss `reaktion`, `kein_abschluss`, `wuerdigung`), sonst `null`
-  - `notStored: true` — weitere Intro-Variante (`intro_b` …) ohne eigene Zeile: Sie fällt beim Versand auf `intro` zurück. Kein fehlender Wert, kein Ablehnungsgrund
+  - `fallback: true` — weitere Intro-Variante (`intro_b` …) ohne eigenen Text (keine Zeile, leer, fehlgeschlagen oder wörtlich wie Variante A): `value` ist der aktuelle Text von Variante A, `anchorWritten` ist `rueckfall`. Kein fehlender Wert, kein Ablehnungsgrund
+  - `notStored: true` — zusätzlich bei einem Rückfall ohne eigene Zeile
 - `totalVariables` — Anzahl Variablen (zählt `notStored`-Zeilen mit)
 
 ### approve_lead_variables

@@ -180,12 +180,14 @@ gelten immer.
     EIN Detail statt gestapelter Lobpunkte, Projekte oder Titel; wird es zu lang, das schwächere Detail
     streichen. Komma statt Strich.
 - Intro-Varianten (ab MCP 4.10.0): `emailGeneration.introVariables` nennt die Intro-Variablen in
-  Rangfolge (`intro` = Variante A mit dem besten Anker, `intro_b` mit dem zweitbesten …; ältere
-  Kampagnen haben `intro_chance`). Jede Variante nach dem Block INTRO-VARIANTEN UND TAGS im
-  `systemPrompt`, mit eigenem Anker und der Gegenprobe oben. Hat eine weitere Variante (nie `intro`
-  selbst) keinen guten eigenen Anker, ist sie ein Rückfall: leerer Wert und
-  `"<name>__anker": "rueckfall"`. Zwei selbst geschriebene Varianten enden nie gleich (letzter Teil nach
-  dem letzten Komma oder Satzende).
+  Rangfolge. Das erste Element ist Variante A mit dem besten Anker (meist `intro`, maßgeblich ist die
+  Position, nicht der Name), dann `intro_b` mit dem zweitbesten …; ältere Kampagnen haben
+  `intro_chance`. Jede Variante nach dem Block INTRO-VARIANTEN UND TAGS im `systemPrompt`, mit eigenem
+  Anker und der Gegenprobe oben. Variante A nie leer lassen. Hat eine weitere Variante keinen guten
+  eigenen Anker, ist sie ein Rückfall: leerer Wert und `"<name>__anker": "rueckfall"`; der Server
+  speichert sie ohne eigenen Text, gesendet wird der aktuelle Text von Variante A (eine wörtliche Kopie
+  von A wertet er ebenso als Rückfall). Zwei selbst geschriebene Varianten enden nie gleich (letzter
+  Teil nach dem letzten Komma oder Satzende).
 - Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Schlüsseln
   aus emailGeneration.expectedOutput>")`, also auch je Intro-Variable `<name>__anker` und
   `<name>__schluss` mit einem der dort genannten Werte (z. B. `"intro__anker": "kundenstimme",
@@ -222,8 +224,9 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
      der Kampagne.
 3. `save_lead_variables` mit ALLEN Variablen (unveränderte mit ihrem bisherigen Wert und ihren Tags aus
    `anchorWritten`/`closingWritten` als `<name>__anker`/`<name>__schluss`; neu geschriebene mit neuen
-   Tags). Eine Zeile mit `notStored: true` ist ein Rückfall: wieder leer mit
-   `"<name>__anker": "rueckfall"` schicken, nie den Text von `intro` kopieren. Nie freigeben,
+   Tags). Eine Zeile mit `fallback: true` (auch mit `notStored: true`) ist ein Rückfall: Sie zeigt nur
+   den Text von Variante A; wieder leer mit `"<name>__anker": "rueckfall"` schicken. Schreibst du
+   Variante A neu, folgt ein Rückfall ihr von selbst. Nie freigeben,
    nie ablehnen: Die Gegenprüfung macht ein anderer Agent.
 
 ## Antwort
