@@ -126,7 +126,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
       {
         "stepNumber": 3,
         "subject": "",
-        "body": "{{ai.hallo}}\n\nzu dem Entwurf für deine neue Startseite ein Beispiel, was so etwas bringen kann. Bei der Praxis Dr. Sommer in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen. Beim Beauty-Studio Glow in München stieg die Buchungsquote der Behandlungsseiten um 60 Prozent.\n\nWenn du magst, schicke ich dir die Case Study als PDF.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\nzu dem Entwurf für deine neue Startseite ein Beispiel, was so etwas bringen kann. Bei der Praxis Dr. Sommer in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen. Beim Beauty-Studio Glow in München stieg die Buchungsquote der Behandlungsseiten um 60 Prozent.\n\nWäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 5,
         "delayUnit": "days"
       },

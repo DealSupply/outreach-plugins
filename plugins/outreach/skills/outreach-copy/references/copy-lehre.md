@@ -747,13 +747,15 @@ Das ist alles. FUP1 ist die kürzeste Mail der Sequenz und darf sich anfühlen w
 
 **Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein: höchstens ein Halbsatz Bezug auf das Angebot, kein neues Offer, kein Pitch.
 
+Mail 3 endet mit genau einer Frage, nie mit einer Aussage oder Bitte: der Frage aus der Entry Mail, mit der Sache statt „es“, wo die Karte eine hat; jede Variante unten endet so.
+
 Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie ein Pitch. Hier, nach zwei Kontakten ohne Verkaufsdruck, wirkt er wie ein Beleg.
 
 | Variante | Text |
 |:---------|:-----|
-| **Case Study** | „Hallo Max, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Alles weg. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Falls das Thema für dich relevant ist, melde dich gerne." |
-| **Konkretes Ergebnis** | „Hallo Max, wir haben gerade ein Pilotprojekt im [Branche]-Bereich abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die komplette Auftragsabwicklung automatisiert läuft. Vorher war das ein Vollzeitjob, jetzt klickt der Inhaber morgens einmal drauf und der Rest läuft. Falls das auch für dich spannend klingt, melde dich gerne." |
-| **Relevanter Fakt** | „Hallo Max, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten plus Lohnkostenzuschuss. Das heißt konkret: Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Falls das auch für dich relevant ist, melde dich gerne. Ich kann dir in zwei Minuten sagen, was für dich drin wäre." |
+| **Case Study** | „Hallo Max, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Alles weg. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Wäre es in Ordnung, wenn ich dir morgen den Shop-Entwurf zusende? Völlig unverbindlich natürlich." |
+| **Konkretes Ergebnis** | „Hallo Max, wir haben gerade ein Pilotprojekt im [Branche]-Bereich abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die komplette Auftragsabwicklung automatisiert läuft. Vorher war das ein Vollzeitjob, jetzt klickt der Inhaber morgens einmal drauf und der Rest läuft. Wärst du grundsätzlich offen dafür?" |
+| **Relevanter Fakt** | „Hallo Max, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten plus Lohnkostenzuschuss. Das heißt konkret: Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." |
 
 **Regel für die Case Study:** eine Geschichte, eine Zahl, ein Ergebnis. Keine Aufzählung von Kunden, keine Logo-Parade. Nur Belege, die der Nutzer angegeben hat.
 
@@ -787,7 +789,7 @@ Wenn die Dringlichkeit erfunden ist, merkt der Empfänger das - und dann ist auc
 |:-----|:--------------|:---------|
 | Entry | Erlaubnis erbitten | „Darf ich es dir zusenden?" |
 | FUP1 | Nur anstoßen | „Ist meine Mail angekommen?" |
-| FUP2 | Offen anbieten | „Falls das für dich relevant ist, melde dich gerne." |
+| FUP2 | Frage aus der Entry Mail, mit der Sache | „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." |
 | FUP3 | Tür offen lassen, Routing | „Sag mir gern kurz Bescheid, falls ich mich besser bei jemand anderem melden sollte." |
 
 Je später die Mail, desto niedriger die Hürde. Wer im Abschied plötzlich einen Termin verlangt, dreht die Logik um.

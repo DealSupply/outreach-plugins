@@ -599,14 +599,14 @@ Regeln für alle Follow-ups:
 - Jedes beginnt mit „Hallo {{Vorname}},“ und dann einem ganzen, weichen Satz, klein
   weitergeschrieben („du hast sicher …“). Kein Doppelpunkt-Opener („kurz nachgehakt:“, „kurzes
   Update:“, „zur Erinnerung:“).
-- Der CTA wird von Step zu Step weicher: Erlaubnis erbitten → nur anstoßen → offen anbieten → Tür
-  offen lassen.
+- Der CTA wird von Step zu Step weicher: Erlaubnis erbitten → nur anstoßen → dieselbe Frage wie
+  Step 1 mit der Sache → Tür offen lassen.
 
 | Step | CTA-Charakter | Beispiel |
 |:-----|:--------------|:---------|
 | 1 | Erlaubnis erbitten | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ |
 | 2 | nur anstoßen | „Gib mir gerne kurz Bescheid.“ |
-| 3 | offen anbieten | „Falls das für dich relevant ist, melde dich gerne.“ |
+| 3 | Frage aus Step 1, mit der Sache | „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ |
 | 4 | Tür offen lassen | „Sag mir gern kurz Bescheid, falls ich mich besser bei jemand anderem melden sollte.“ |
 
 ## Step 2: Erinnerung
@@ -638,14 +638,14 @@ Entwurf zusende? Völlig unverbindlich natürlich.“). Karten ohne Wort für di
 eigene Frage) nehmen die Frage aus Mail 1 wörtlich: Mail 3 endet immer mit einer Frage, eine bloße
 Aufforderung wie „sag einfach kurz Bescheid“ reicht nicht (05.11.2026). Das Wort für die Sache steht nur in dieser Frage;
 kein eigener Satz um das Angebot („Falls du den Entwurf sehen möchtest, antworte kurz“), kein neues
-Offer, kein Pitch. Die Varianten unten zeigen den Beleg-Teil; an ihrem Schluss steht die Frage aus
-Mail 1 statt „melde dich gerne“.
+Offer, kein Pitch. Mail 3 endet mit genau einer Frage, nie mit einer Aussage („schick ich dir gern“)
+oder Bitte; jede Variante unten endet mit der Frage aus Mail 1 ihrer Karte.
 
 | Variante | Text |
 |:---------|:-----|
-| Case Study | „Hallo {{Vorname}}, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Falls das Thema für dich relevant ist, melde dich gerne.“ |
-| Konkretes Ergebnis | „Hallo {{Vorname}}, wir haben gerade ein Pilotprojekt mit einem Handwerksbetrieb abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die Auftragsabwicklung automatisiert läuft. Falls das auch für dich spannend klingt, melde dich gerne.“ |
-| Relevanter Fakt | „Hallo {{Vorname}}, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten. Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Falls das für dich relevant ist, melde dich gerne.“ |
+| Case Study | „Hallo {{Vorname}}, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Wäre es in Ordnung, wenn ich dir morgen den Shop-Entwurf zusende? Völlig unverbindlich natürlich.“ |
+| Konkretes Ergebnis | „Hallo {{Vorname}}, wir haben gerade ein Pilotprojekt mit einem Handwerksbetrieb abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die Auftragsabwicklung automatisiert läuft. Wärst du grundsätzlich offen dafür?“ |
+| Relevanter Fakt | „Hallo {{Vorname}}, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten. Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ |
 
 - Eine Geschichte, eine Zahl, ein Ergebnis. Keine Kundenliste, keine Logo-Parade.
 - Nur Belege, die der Absender angegeben hat. Fehlt ein Beleg: nachfragen, nicht erfinden.
