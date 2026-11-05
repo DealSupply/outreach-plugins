@@ -232,19 +232,23 @@ passend zu Recherche und Website des Leads:
   „Prompts der AI-Variablen“ unten, ausformulierte Prompts für A und B stehen in
   `references/beispiel-blueprint.md`.
 
-**Schlusssatz (CTA):** Genau einer, nie zwei Optionen. Standard bei Karte A und C (Stand
-05.11.2026): „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich
-natürlich.“ Sie-Form: „Wäre es in Ordnung, wenn ich es Ihnen morgen zusende? Völlig unverbindlich
-natürlich.“ Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das
-Setup“, „die Anzeigen“), steht das Wort an der Stelle von „es“, mit anderer Wortstellung: „Wäre es
-in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ Kein „Link“
-im Schlusssatz (nicht „… wenn ich dir morgen den Link dazu schicke?“), die Sache wird zugesendet.
-„morgen“ nur, wenn der Nutzer das Deliverable nach der Antwort wirklich bis zum nächsten Tag
-liefern kann, sonst „… wenn ich es dir zusende?“. Der Zusatz „Völlig unverbindlich natürlich.“
-senkt die Hürde und ist kein zweiter CTA. Karten mit eigenem CTA behalten ihn (B, D, E, siehe
-`references/marketing-offer.md`); weitere Beispiele: „Darf ich es dir zusenden?“, „Antworte mir
-einfach kurz.“, „Wäre das grundsätzlich interessant?“. Kein Terminvorschlag und kein Link in
-Mail 1.
+**Schlusssatz (CTA):** Genau einer, nie zwei Optionen, immer eine Frage (keine Bitte wie „Antworte
+mir einfach kurz.“). Je Karte gilt die Schlussfrage der App (Stand 05.11.2026), Sie-Form in Klammern:
+A „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.“ („… das
+auch für Sie erstelle? …“), B „Wärst du grundsätzlich offen dafür?“ („Wären Sie grundsätzlich offen
+dafür?“), C „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“
+(„… es Ihnen morgen zusende? …“), D „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches
+Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ („… wenn ich Ihnen kurz aufschreibe,
+welches Programm für Sie infrage kommt? …“), E „Wäre das grundsätzlich interessant?“ (gleich für Sie).
+Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das Setup“, „die
+Anzeigen“), steht es bei C an der Stelle von „es“, mit anderer Wortstellung: „Wäre es in Ordnung,
+wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“, bei A an der Stelle von
+„das“. Kein „Link“ im Schlusssatz (nicht „… wenn ich dir morgen den Link dazu schicke?“), die Sache
+wird zugesendet. „morgen“ und „zusenden“ nur bei C, und nur, wenn der Nutzer das Deliverable nach der
+Antwort wirklich bis zum nächsten Tag liefern kann, sonst „… wenn ich es dir zusende?“. Der Zusatz
+„Völlig unverbindlich natürlich.“ senkt die Hürde und ist kein zweiter CTA. Eine Schlussfrage, die
+der Nutzer selbst bestätigt hat, gilt wörtlich. Der Betreff von Step 1 ist bei jeder Karte „kurze
+Frage“. Kein Terminvorschlag und kein Link in Mail 1.
 
 Die Master-Formel (Kurs Outbound 3.0, Lektion 2.4) in fünf Bausteinen: Lob → „Deswegen …“ →
 konkretes Offer → Fertigstellung → CTA mit wenig Verpflichtung. Im Kurs trägt der Halbsatz „… und
@@ -276,7 +280,7 @@ für eine neue Startseite mit Online-Terminbuchung an.
 
 {{ai.angebot_ausfuehrung}}
 
-Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.
 ```
 
 Karte B:
@@ -287,7 +291,7 @@ Erstmails mit [Anzahl] Agenturen in [Region].
 
 {{ai.angebot_ausfuehrung}}
 
-Falls du dazugehören willst, antworte mir einfach kurz.
+Wärst du grundsätzlich offen dafür?
 ```
 
 **Signatur:** Name, Rolle und Firma des ABSENDERS als Klartext aus den Angaben des Nutzers, z. B.
@@ -658,15 +662,13 @@ Firmenname im Betreff nur über `{{ai.firma}}` (bereinigter Kurzname, siehe `out
 nie über das rohe `{{lead.company}}`: Importnamen sind oft Google-Titel oder Domains. Führt die
 Kampagne keine Variable `firma`, steht im Betreff kein Firmenname, dann „kurze Frage“.
 
-Bewährte Muster (an den Offer-Typ anpassen):
+Bewährte Muster:
 
-- „kurze Frage“ (Standard: Neugier, niedrige Hürde; Karte C und jedes Entwurfs-Angebot wie
-  Website, Anzeigen, Stellenanzeigen, Testzugang)
+- „kurze Frage“ (Standard für jede Karte seit 05.11.2026, wie die App: Neugier, niedrige Hürde)
 - „Frage zur Terminbuchung“ (wenn das Buchungssystem den Kern des Offers bildet)
-- „Meeting {{ai.firma}} & <Absender-Vorname>“ (Karte A; persönlich, wirkt wie ein Termin; nur mit `firma`)
-- „Anfrage für {{ai.firma}}“ (Karte A/B; direkt, business-like; nur mit `firma`)
-- „Deine Förderung“ (nur bei Karte D)
-- „Partnerschaft {{ai.firma}}?“ (nur bei Karte E, nur mit `firma`)
+
+Die früheren Karten-Betreffs („Meeting …“, „Anfrage für …“, „Deine Förderung“, „Partnerschaft …?“)
+entfallen; weitere Varianten nur nach Copy-Beratung.
 
 Step 2, Step 3 und Step 4 (und eine optionale Dringlichkeits-Mail): Betreff LEER, die Mails laufen im
 Thread von Step 1. Kein neuer Betreff-Text, kein „Re:“. Ein eigener Betreff in Step 3 („kurzes

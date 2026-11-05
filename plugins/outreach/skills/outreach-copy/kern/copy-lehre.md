@@ -221,9 +221,10 @@ zusende?“.
 | Gut | Warum |
 |:----|:------|
 | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ | Reziprozität plus Ja/Nein |
-| „Darf ich es dir zusenden?“ | Ja/Nein-Frage, eine Sekunde Aufwand |
-| „Antworte mir einfach kurz.“ | Niedrigste Hürde |
-| „Wäre das grundsätzlich interessant?“ | Verpflichtet zu nichts |
+| „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.“ | Karte A, Ja/Nein ohne Verpflichtung |
+| „Wärst du grundsätzlich offen dafür?“ | Karte B, Pilot |
+| „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ | Karte D, Förderung |
+| „Wäre das grundsätzlich interessant?“ | Karte E, verpflichtet zu nichts |
 
 Kein Terminvorschlag und kein Link in Mail 1. Der CTA ist die Antwort, nicht der Klick.
 
@@ -707,13 +708,9 @@ Regeln für jeden Betreff:
 
 | Betreff | Wann |
 |:--------|:-----|
-| „kurze Frage“ | Standard: Karte C und jedes Entwurfs-Angebot (Website, Anzeigen, Stellenanzeigen, Testzugang) |
+| „kurze Frage“ | Standard für jede Karte (seit 05.11.2026, wie die App) |
 | „Frage zur Terminbuchung“ | wenn das Buchungssystem den Kern des Offers bildet |
-| „Meeting {{Firma}} & [Absender-Vorname]“ | Karte A, nur mit `{{Firma}}` |
-| „Anfrage für {{Firma}}“ | Karte A/B, nur mit `{{Firma}}` |
 | „Zugang freigeschaltet“ | nur, wenn es den Zugang wirklich gibt (etwa den Platz im Pilotprojekt). Enttäuschte Neugier ist der kürzeste Weg zur Spam-Beschwerde |
-| „deine Förderung“ | nur Karte D |
-| „Partnerschaft {{Firma}}?“ | nur Karte E, nur mit `{{Firma}}` |
 
 Nicht: „Kostenlose Beratung für …“ (zu lang, Spam), „Exklusives Angebot, jetzt zugreifen!“
 (Spam-Trigger), „Re: Ihre Anfrage“ (Fake-Reply, zerstört Vertrauen).
@@ -766,11 +763,11 @@ vages Angebot wird von dem Wort verdächtig, ein konkretes nicht.
 | „In der heutigen schnelllebigen Geschäftswelt …“ | weglassen |
 | Gedankenstriche | Satz teilen oder Komma |
 | „Ich hoffe, diese Nachricht erreicht dich gut“ | weglassen, direkt zum Bezug |
-| „Lass mich wissen, wenn du Interesse hast“ | „Antworte mir einfach kurz.“ |
+| „Lass mich wissen, wenn du Interesse hast“ | die Schlussfrage der Karte („Wäre das grundsätzlich interessant?“) |
 | „Gerne möchte ich dir aufzeigen …“ | „Ich zeig dir kurz …“ |
 | „Darüber hinaus“, „Nicht zuletzt“, „Zusammenfassend“ | in einer 100-Wort-Mail hat nichts davon Platz |
 | „Synergien“, „ganzheitlich“, „nachhaltig skalieren“ | konkret sagen, was passiert |
-| „Ich freue mich auf deine Rückmeldung“ | „Antworte mir einfach kurz.“ |
+| „Ich freue mich auf deine Rückmeldung“ | weglassen, die Schlussfrage reicht |
 | drei Adjektive in einer Reihe | eines reicht, meistens keines |
 
 ## Zustellung
@@ -813,7 +810,7 @@ Korrekturen erzeugen neue Fehler, besonders beim Kürzen.
 8. **Struktur-Scan.** Offer nur in Step 1, Intro nur in Step 1, Social Proof nur in Step 3, Step 3
    endet mit der Schlussfrage aus Step 1 (Wort für die Sache statt „es“),
    zweiter Satz zum Angebot passend zur Karte (C Feinheiten-Satz, A und B Satz je Lead, D und E
-   keiner), kein „Link“ im Schlusssatz, Betreff nur in Step 1 und 3, kein Doppelpunkt-Opener,
+   keiner), kein „Link“ im Schlusssatz, Betreff nur in Step 1 (Step 2 bis 4 im Thread), kein Doppelpunkt-Opener,
    Abmeldezeile unter der Signatur von Step 1 und 3, kein „STOPP“ und keine Opt-out-Fachsprache.
 9. **Anrede-Scan.** Gruß und Pronomen passen zum Modus, kein du/ihr-Wechsel im Satz, Fallback
    „Hallo,“ für Leads ohne Vornamen geklärt.
@@ -844,7 +841,7 @@ begründet werden muss.
 | Betreff ohne Spam | kein Spam-Wort, kein „kostenlos“, „kostenfrei“, „unverbindlich“ | hart |
 | Betreff-Länge | max. 5 Wörter | weich |
 | Betreff-Platzhalter | kein Vorname im Betreff | hart |
-| Betreff-Pflicht | Step 1 und 3 mit Betreff, Step 2, 4 und Dringlichkeit ohne | hart |
+| Betreff-Pflicht | Step 1 mit Betreff, Step 2 bis 4 und Dringlichkeit ohne (Thread von Step 1) | hart |
 | Betreff ohne Schreien | kein Wort in Großbuchstaben (ab 4), kein „!“ | weich |
 | Ankündigung im Betreff | „… für …“, „Entwurf“, „Idee“, „ist fertig“ | weich |
 | Ein CTA | kein „oder … buchen/klicken/vereinbaren/anrufen/Termin“ neben der Antwort-Bitte | hart |

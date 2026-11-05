@@ -131,7 +131,7 @@ Aufgelöst dargestellt, wie sie beim Empfänger ankommen (Intro ausgeschrieben).
 
 ## Step 1: Entry Mail, Karte A
 
-Betreff: Meeting {{Firma}} & Tobias
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -141,7 +141,7 @@ Genau deshalb bieten wir aktuell für zwei Unternehmen in der Region München ei
 
 Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige Anzeigentexte und die Ausrichtung auf dein Einzugsgebiet rund um München.
 
-Wenn das für dich spannend klingt, antworte mir einfach kurz.
+Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.
 
 
 Viele Grüße
@@ -155,7 +155,7 @@ Website des Leads, im Konjunktiv und nie als erledigte Arbeit.
 
 ## Step 1: Entry Mail, Karte B
 
-Betreff: Anfrage für {{Firma}}
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -165,7 +165,7 @@ Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für pers
 
 Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst.
 
-Falls du dazugehören willst, antworte mir einfach kurz.
+Wärst du grundsätzlich offen dafür?
 
 
 Viele Grüße
@@ -200,7 +200,7 @@ Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 ## Step 1: Entry Mail, Karte E
 
-Betreff: Partnerschaft {{Firma}}?
+Betreff: kurze Frage
 
 Hallo Max,
 

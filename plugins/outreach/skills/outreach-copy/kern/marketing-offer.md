@@ -100,10 +100,10 @@ sich zu verpflichten.
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| Betreff | „Meeting {{Firma}} & [Absender-Vorname]“ (ohne `{{Firma}}`: „kurze Frage“) |
+| Betreff | „kurze Frage“ |
 | Überleitung + Offer | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an.“ |
 | Zweiter Satz | Pflicht, eigener Absatz: Inhaltssatz je Lead, was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit, kein Feinheiten-Satz („Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“) |
-| CTA | „Wenn das für dich spannend klingt, antworte mir einfach kurz.“ |
+| CTA | „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.“ (Sie: „… das auch für Sie erstelle? …“) |
 
 Typischer Fehler: „Kostenlose Beratung“ statt „Kostenloses Google Ads Setup“. Beratung ist ein
 Sales Call in Verkleidung.
@@ -115,10 +115,10 @@ Dringlichkeit, aber nur, wenn die Plätze wirklich begrenzt sind.
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| Betreff | „Anfrage für {{Firma}}“ oder „kurze Frage“ |
+| Betreff | „kurze Frage“ |
 | Überleitung + Offer | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
 | Zweiter Satz | Pflicht, eigener Absatz: Rahmensatz je Lead, was der Empfänger im Pilot bekommt und was er dafür gibt, nur aus der Lieferzusage („Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst.“) |
-| CTA | „Falls du dazugehören willst, antworte mir einfach kurz.“ |
+| CTA | „Wärst du grundsätzlich offen dafür?“ (Sie: „Wären Sie grundsätzlich offen dafür?“) |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
 
@@ -130,7 +130,7 @@ Feinheiten macht man nach der Antwort.
 | Betreff | „kurze Frage“ (nie „Website für …“; ist das Buchungssystem der Kern: „Frage zur Terminbuchung“) |
 | Überleitung + Offer | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
 | Feinheiten-Satz | Pflicht, eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […].“ |
-| CTA | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …“; nie „Link“) |
+| CTA | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (Sie: „… es Ihnen morgen zusende? …“; mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …“; nie „Link“) |
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
@@ -148,10 +148,10 @@ Extrem stark, weil „der Staat zahlt“ ein unschlagbares Argument ist.
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| Betreff | „deine Förderung“ |
+| Betreff | „kurze Frage“ |
 | Überleitung + Offer | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt? Ich hab mal gecheckt, was für dich drin wäre.“ |
 | Zweiter Satz | entfällt |
-| CTA | „Darf ich dir die Einschätzung zusenden?“ |
+| CTA | „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ (Sie: „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …“) |
 
 Nicht kompliziert erklären: Der Empfänger muss nicht verstehen, WIE die Förderung funktioniert,
 nur DASS er Geld bekommt. Quoten immer als Spanne („bis zu 100 %“), nie als Zusage.
@@ -162,10 +162,10 @@ Kein Verkauf, sondern Kooperation auf Augenhöhe: „Wir haben Kunden, die zu di
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| Betreff | „Partnerschaft {{Firma}}?“ (ohne `{{Firma}}`: „kurze Frage“) |
+| Betreff | „kurze Frage“ |
 | Überleitung + Offer | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ |
 | Zweiter Satz | entfällt |
-| CTA | „Wäre das grundsätzlich interessant?“ |
+| CTA | „Wäre das grundsätzlich interessant?“ (gleich für Sie) |
 
 ## Offer-Bibliothek: bewährte Formulierungen je Leistung
 

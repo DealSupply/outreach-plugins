@@ -540,12 +540,15 @@ Genau EIN CTA pro Mail. Nie zwei Optionen.
 
 | Gut | Warum |
 |:----|:------|
-| „Antworte mir einfach kurz." | Niedrigste Hürde, die es gibt |
-| „Darf ich es dir zusenden?" | Ja/Nein-Frage, eine Sekunde Aufwand |
-| „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." | Reziprozität plus Ja/Nein, Standard bei Karte C (Stand 05.11.2026) |
-| „Wäre das grundsätzlich interessant?" | Verpflichtet zu nichts |
+| „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich." | Karte A, Ja/Nein ohne Verpflichtung |
+| „Wärst du grundsätzlich offen dafür?" | Karte B, Pilot |
+| „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." | Karte C, Reziprozität plus Ja/Nein |
+| „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." | Karte D, Förderung |
+| „Wäre das grundsätzlich interessant?" | Karte E, verpflichtet zu nichts |
 
-Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …". Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
+Der Schlusssatz ist immer eine Frage, keine Bitte („Antworte mir einfach kurz.") und keine Aussage (Stand 05.11.2026, wie die App).
+
+Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …", bei A „… das auch für Sie erstelle? …", bei B „Wären Sie grundsätzlich offen dafür?", bei D „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …", E bleibt gleich. Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
 
 Kein „Lass uns mal sprechen" ohne vorbereiteten Mehrwert. Kein Terminvorschlag in Mail 1. Kein Link in Mail 1 - der CTA ist die Antwort, nicht der Klick.
 
@@ -557,14 +560,10 @@ Die Betreffzeile entscheidet, ob die Mail geöffnet wird. Nur Step 1 trägt eine
 
 | Stil | Beispiele | Warum |
 |:-----|:---------|:------|
-| **Neugier** | „kurze Frage" | Niedrige Hürde, macht neugierig; Standard für Karte C und jedes Entwurfs-Angebot |
+| **Neugier** | „kurze Frage" | Niedrige Hürde, macht neugierig; Standard für jede Karte (seit 05.11.2026) |
 | **Neugier** | „Frage zur Terminbuchung" | Wenn das Buchungssystem den Kern des Offers bildet |
 | **Neugier** | „Zugang freigeschaltet" | Was für ein Zugang? Muss ich aufmachen (nur mit echtem Zugang, siehe unten) |
-| **Persönlich** | „Meeting {{ai.firma}} & Julia" | Klingt nach echtem Termin (Karte A, nur mit `firma`) |
 | **Persönlich** | „Gespräch {{ai.firma}} & Arne" | Impliziert bestehende Beziehung (nur mit `firma`) |
-| **Direkt** | „Anfrage für {{ai.firma}}" | Business-like, ernst (Karte A/B, nur mit `firma`) |
-| **Förderung** | „Deine Förderung" | Geld = Aufmerksamkeit (nur Karte D) |
-| **Partner** | „Partnerschaft {{ai.firma}}?" | Augenhöhe (nur Karte E, nur mit `firma`) |
 
 ### Was nicht funktioniert
 
@@ -626,7 +625,7 @@ Folge uns auf LinkedIn | Twitter | Instagram
 **Karte A, kostenlose Teildienstleistung (73 Wörter):**
 
 ```
-Betreff: Meeting {{ai.firma}} & Julia
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -640,7 +639,7 @@ München ein kostenloses Google Ads Setup an.
 Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige
 Anzeigentexte und die Ausrichtung auf dein Einzugsgebiet rund um München.
 
-Wenn das für dich spannend klingt, antworte mir einfach kurz.
+Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Julia Weinmann
@@ -650,7 +649,7 @@ Co-Founder - Weinmann Media
 **Karte B, Pilotprojekt (69 Wörter):**
 
 ```
-Betreff: Anfrage für {{ai.firma}}
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -663,7 +662,7 @@ für persönliche Erstmails mit drei Agenturen in Köln.
 Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail,
 du sagst mir dafür ehrlich, was du davon hältst.
 
-Falls du dazugehören willst, antworte mir einfach kurz.
+Wärst du grundsätzlich offen dafür?
 
 Viele Grüße
 Paul Lehmann
@@ -697,7 +696,7 @@ Geschäftsführerin - njoy online marketing GmbH
 **Karte E, Partner gesucht (64 Wörter):**
 
 ```
-Betreff: Partnerschaft {{ai.firma}}?
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -708,7 +707,8 @@ Gesicht, auch wenn die Fenster neu sind.
 Genau solche Handwerksbetriebe suchen wir als Partner. Wir haben
 regelmäßig Anfragen von Bauherren in der Region, die genau solche
 Projekte umsetzen wollen und einen zuverlässigen Betrieb suchen.
-Wäre das grundsätzlich interessant? Antworte mir einfach kurz.
+
+Wäre das grundsätzlich interessant?
 
 Viele Grüße
 Max Huber
@@ -903,7 +903,7 @@ SCHLECHT:
 "Antworte mir kurz oder buche dir hier einen Termin: [Link]"
 
 GUT:
-"Antworte mir einfach kurz."
+"Wäre das grundsätzlich interessant?"
 ```
 
 ### Anti-Pattern 6: KI-Sprache
@@ -912,7 +912,7 @@ GUT:
 |:----------|:-------|
 | „In der heutigen schnelllebigen Geschäftswelt..." | Weglassen |
 | M-Striche überall | Satz teilen oder Komma; Bindestriche nur innerhalb von Wörtern |
-| „Lass mich wissen, wenn du Interesse hast" | „Antworte mir kurz" |
+| „Lass mich wissen, wenn du Interesse hast" | Die Schlussfrage der Karte („Wäre das grundsätzlich interessant?") |
 | Perfekte Grammatik in lockerem Kontext | Schreib wie du sprichst |
 | „Gerne möchte ich Ihnen aufzeigen..." | „Ich zeig dir kurz..." |
 
@@ -925,7 +925,7 @@ Weitere Formulierungen, die eine Mail sofort nach Maschine klingen lassen:
 | „Darüber hinaus", „Nicht zuletzt", „Zusammenfassend" | In einer 100-Wort-Mail hat nichts davon Platz |
 | „Es ist wichtig zu verstehen, dass..." | Den Punkt einfach sagen |
 | „Wir sind bestrebt", „Synergien", „ganzheitlich", „nachhaltig skalieren" | Konkret sagen, was passiert |
-| „Ich freue mich auf Ihre Rückmeldung" | „Antworte mir einfach kurz" |
+| „Ich freue mich auf Ihre Rückmeldung" | Weglassen, die Schlussfrage reicht |
 | Drei Adjektive in einer Reihe | Eines reicht, meistens keines |
 
 ## Formale Anforderungen
