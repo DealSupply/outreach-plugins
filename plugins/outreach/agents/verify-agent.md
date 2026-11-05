@@ -29,7 +29,8 @@ ihm mit `art` und `grund`, was zu tun ist.
 
 1. `get_lead_variables(campaign_id, lead_id)`: Variablen, Recherche, Qualifizierung. Die Versandadresse ist
    `lead.sendingEmail` (kann eine persönliche Adresse aus der Recherche sein); `lead.email` ist nur die
-   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`.
+   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`. Am Wert einer KI-Variable mit Winkel steht
+   `angleWritten` (`chance` oder `lob`); bei Variablen ohne Winkel fehlt es.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
    Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
@@ -103,13 +104,43 @@ ihm mit `art` und `grund`, was zu tun ist.
     ungerundete Zahl, Schnitt ohne Komma, der größere von zwei widersprüchlichen Werten, oder nur Zahlen, obwohl die Recherche ein Lob aus
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
-- **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter, EIN Detail (gestapelte Lobpunkte,
+- **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter (Chance-Variable mit Beobachtung: 35), EIN Detail (gestapelte Lobpunkte,
   Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine
   internen Scores. Der feste Folgesatz schließt flüssig an. Kein heikler Aufhänger (Preis, „günstig“,
   persönliche Merkmale oder Familie von Rezensierenden, Gesundheitsdetails), auch nicht als Teil eines
   Bewertungslobs. Ein Bewertungsanker nennt die Quelle im Einstieg („ich hab mir deine Bewertungen
   angeschaut, und …“), nicht nur „jemand schreibt“. Verstoß: `ablehnen`, `art=text`.
+- **Abmeldezeile:** „STOPP“ oder „Stop“, „abmelden“, „abbestellen“, „austragen“, „unsubscribe“ und andere
+  Opt-out-Fachsprache sind ein Fehler. In einer Variable: `ablehnen`, `art=text`. In den festen Steps des
+  Blueprints (betrifft alle Leads) oder wenn Step 1 oder Step 3 die feste Abmeldezeile unter der Signatur
+  fehlt („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“,
+  Sie-Form „… für Sie ist, geben Sie mir kurz Bescheid, …“): das Urteil des Leads bleibt davon unberührt,
+  `grund` nennt es als `systematisch: fester Text Abmeldezeile`, damit der Bericht es meldet.
+- **Chance-Variablen (Werte mit `angleWritten`, etwa `intro_chance`):** Sie stehen in Instantly in einer
+  eigenen Variante der ersten Mail anstelle von `intro` und werden für sich allein geprüft. Chance heißt: Lob für eine
+  belegte Stärke plus genau EINE Beobachtung zur Website (Stärke dort kaum oder nicht zu sehen, oder Buchen
+  bzw. Termine nur per Anfrage, Telefon oder Mail), ohne Schluss, höchstens 2 Sätze und 35 Wörter. Ein
+  solches Intro ist kein Befund, solange beide Seiten belegt sind: die Stärke wie bei jedem Anker, die
+  Beobachtung wörtlich im Abschnitt `WEBSITE-BEFUND` der Recherche („Bewertungen oder Kundenstimmen auf der
+  Website: nein“ zu einer Stärke aus Bewertungen, „Online-Buchung oder Terminbuchung: nur Anfrageformular“
+  oder „nur Telefon oder Mail“). „kaum“, „nichts“, „nur“, „bisher“, „noch nicht“ in dieser einen Aussage sind kein Verstoß
+  gegen „nur positiv“. Regeln und Beispiele: Skill `outreach:outreach-copy`, Abschnitt „Chance-Winkel“.
+  Verstoß (`ablehnen`, `art=text`) ist:
+  - ein Chance-Intro ohne Beleg für beide Seiten: `WEBSITE-BEFUND` fehlt, meldet „unklar“ oder „ja“, die
+    Beobachtung ist nur daraus geschlossen, dass der Bericht nichts erwähnt, oder die Stärke trägt nicht;
+    Nachbessern schreibt dann ein Lob-Intro (Rückfall). Ist nur die Website-Frage offen und lässt sie sich
+    nachlesen, stattdessen `art=recherche` mit genau dieser Frage;
+  - eine Beobachtung mit „Problem“, „Lücke“, „leider“, „schade“, „fehlt“, „verschenkt“, „Potenzial“, mit Rat
+    oder Konjunktiv-Wunsch, als Vorwurf („obwohl“, „du zeigst sie nicht“), mit Folge oder Vermutung über
+    Interna („dadurch gehen Buchungen an Booking“), mit unwahrer Nähe („ich verfolge euch schon länger“),
+    mit Erwähnung einer Agentur, mit Schluss oder Reaktion dahinter, oder mehr als eine Beobachtung;
+  - `angleWritten` passt nicht zum Text (`chance` bei einem reinen Lob-Intro oder `lob` bei einem Intro mit
+    Beobachtung) oder fehlt an einer Chance-Variable.
+  Ein Rückfall auf Lob mit `angleWritten` = `lob` ist kein Befund; er wird wie jedes Intro nach den Regeln
+  oben geprüft. In allen anderen Variablen, auch im normalen `intro`, ist jede Beobachtung zur Website wie
+  bisher ein Verstoß gegen „nur positiv“. Nenne in `grund` für jede Chance-Variable den geschriebenen Winkel
+  (`winkel=intro_chance:chance` oder `winkel=intro_chance:lob`).
 - **Technik:** Jede Variable hat Status `success` und ist nicht leer.
 - **Versand:** Ist die Versandadresse oder die gespeicherte `bestEmail` laut Recherche ungültig oder
   einem Dritten zugeordnet, untersagt das Impressum Werbung oder gibt es einen Kontaktsperre-Hinweis:

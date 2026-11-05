@@ -435,14 +435,14 @@ ANSPRACHE  →  INDIVIDUELLER BEZUG  →  ÜBERLEITUNG + OFFER  →  CTA
 {{ai.hallo}}   {{ai.intro}}          fester Text             fester Text
 ```
 
-Bei Karte A und C kommt zwischen Offer und CTA der Feinheiten-Satz als eigener Absatz (siehe unten).
+Zwischen Offer und CTA kommt bei Karte A, B und C ein zweiter Satz zum Angebot als eigener Absatz (siehe unten), bei D und E keiner.
 
 | Baustein | Was er macht | Beispiel |
 |:---------|:-------------|:---------|
 | **Ansprache** | Tür aufmachen | „Hallo Max," |
 | **Individueller Bezug** | Zeigen: ich hab mich mit dir beschäftigt | „ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen." |
 | **Überleitung + Offer** | Nahtloser Brücken-Satz zum Angebot. KEIN Pitch. | „Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln für dich aufgenommen." |
-| **CTA** | EINE Handlung. Nicht zwei | „Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich." |
+| **CTA** | EINE Handlung. Nicht zwei | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." |
 
 **Die Mail soll klingen wie eine WhatsApp von einem Freund, nicht wie eine Agentur-Website.**
 
@@ -486,24 +486,33 @@ Der wichtigste Baustein. Die Überleitung ist der statische Satz NACH dem indivi
 | **D: Förder-Hook** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" |
 | **E: Partner gesucht** | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen] die zu dir passen würden." |
 
-Bei Karte A und C steht das Deliverable als bereits erledigte bzw. laufende Arbeit da, nie als Absicht („würde gerne erstellen").
+Bei Karte C steht das Deliverable als bereits erledigte Arbeit da, nie als Absicht („würde gerne erstellen"). Bei Karte A ist es ein Angebot („bieten … an"), nie erledigte Arbeit.
 
 ### Warum das funktioniert
 
 „Genau deshalb...", „Deswegen war ich so frei...", „Genau solche Unternehmen..." - diese Formulierungen schließen sich an JEDEN individuellen Bezug an, egal ob der über Bewertungen, die Website oder die Branche spricht. Sie leiten direkt zum Offer über, ohne einen Pitch-Block dazwischen.
 
-## Value Stacking: der Feinheiten-Satz
+## Der zweite Satz zum Angebot
 
-Bei den Offer-Typen Teildienstleistung (A) und Reziprozität (C) folgt nach dem Marketing-Offer ein zweiter Satz, der den Wert stapelt, ohne ein zweites Offer zu werden: Die Arbeit ist schon (fast) erledigt, und es kommt noch etwas on top. Bei B ist er optional, bei D und E entfällt er.
+Stand 05.11.2026: Nach dem Angebotssatz folgt in Mail 1 immer ein zweiter Satz zum Angebot, als eigener Absatz zwischen Offer und CTA, passend zur Karte. Er stapelt den Wert, ohne ein zweites Offer zu werden.
 
-Wortlaut: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […], und werde morgen mit […] fertig." Er steht als eigener Absatz zwischen Offer und CTA.
+| Karte | Zweiter Satz | Wer schreibt ihn |
+|:------|:-------------|:-----------------|
+| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […]." | fester Text |
+| **A: Kostenlose Teildienstleistung** | Inhalt: was für diesen Lead konkret drin wäre, im Konjunktiv | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| **B: Tester/Pilotprojekt** | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| **D: Förder-Hook, E: Partner gesucht** | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
+
+### Karte C: der Feinheiten-Satz (Value Stacking)
+
+Die Arbeit ist schon (fast) erledigt, und es kommt noch etwas on top. Wortlaut: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […]." Das „morgen" der Fertigstellung steht im Schlusssatz, nicht mehr als Halbsatz „und werde morgen mit … fertig" hier.
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive Buchungssystem erstellt.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google und KI-Suchmaschinen, und werde morgen mit dem Entwurf fertig.
+Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google und KI-Suchmaschinen.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```
 
 Die Regeln:
@@ -511,6 +520,19 @@ Die Regeln:
 - **Erledigte Arbeit statt Absicht:** „war so frei und habe ... erstellt", nicht „würde gerne erstellen". Reziprozität wirkt erst, wenn das Geschenk schon existiert.
 - **Genau EIN On-Top-Detail** („vor allem ..."), aus den Angaben des Nutzers, und es muss wirklich lieferbar sein. Nichts erfinden.
 - **Kein zweiter CTA, kein zweites Offer.** Der Satz beschreibt dasselbe Deliverable, nur eine Schicht tiefer.
+
+### Karte A und B: der Satz je Lead (`{{ai.angebot_ausfuehrung}}`)
+
+Bei A und B gibt es keinen Feinheiten-Satz: Er behauptet Arbeit, die es vor der Antwort nicht gibt. Die KI schreibt den Satz je Lead neu, passend zu Recherche und Website des Leads.
+
+- **A, Inhaltssatz:** „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast."
+- **B, Rahmensatz:** „Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst."
+
+Die Regeln:
+
+- **Nie als erledigte Arbeit:** kein „erstellt", „vorbereitet", „liegt bereit", kein Feinheiten-Wortlaut. A steht im Konjunktiv.
+- **Nur, was die Lieferzusage deckt:** keine Zahl, die weder Lieferzusage noch Recherche belegt, keine Frist, kein Gespräch, Termin oder Call.
+- **Kurz:** ein Satz, höchstens etwa 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
 
 ## Der CTA
 
@@ -520,8 +542,10 @@ Genau EIN CTA pro Mail. Nie zwei Optionen.
 |:----|:------|
 | „Antworte mir einfach kurz." | Niedrigste Hürde, die es gibt |
 | „Darf ich es dir zusenden?" | Ja/Nein-Frage, eine Sekunde Aufwand |
-| „Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich." (nach „werde morgen … fertig“) | Reziprozität plus Ja/Nein |
+| „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." | Reziprozität plus Ja/Nein, Standard bei Karte C (Stand 05.11.2026) |
 | „Wäre das grundsätzlich interessant?" | Verpflichtet zu nichts |
+
+Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …". Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
 
 Kein „Lass uns mal sprechen" ohne vorbereiteten Mehrwert. Kein Terminvorschlag in Mail 1. Kein Link in Mail 1 - der CTA ist die Antwort, nicht der Klick.
 
@@ -601,7 +625,7 @@ Folge uns auf LinkedIn | Twitter | Instagram
 
 ## Vollständige Beispiele
 
-**Karte A, kostenlose Teildienstleistung (79 Wörter):**
+**Karte A, kostenlose Teildienstleistung (73 Wörter):**
 
 ```
 Betreff: Meeting {{ai.firma}} & Julia
@@ -612,11 +636,11 @@ mir ist aufgefallen, dass jedes Objekt bei dir ein festes
 Reinigungsteam hat, das man vorab mit Foto sieht. So weiß jeder
 Hausmeister, wer morgens kommt.
 
-Genau deshalb bereiten wir aktuell für zwei Unternehmen in der Region
-München ein kostenloses Google Ads Setup vor.
+Genau deshalb bieten wir aktuell für zwei Unternehmen in der Region
+München ein kostenloses Google Ads Setup an.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den
-Suchbegriffen für dein Gewerk, und werde morgen mit dem Setup fertig.
+Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige
+Anzeigentexte und die Ausrichtung auf dein Einzugsgebiet rund um München.
 
 Wenn das für dich spannend klingt, antworte mir einfach kurz.
 
@@ -625,7 +649,30 @@ Julia Weinmann
 Co-Founder - Weinmann Media
 ```
 
-**Karte C, Reziprozität (86 Wörter):**
+**Karte B, Pilotprojekt (69 Wörter):**
+
+```
+Betreff: Anfrage für {{ai.firma}}
+
+Hallo Max,
+
+mir ist aufgefallen, dass du auf deiner Website jeden Kunden mit
+einer eigenen kleinen Fallstudie vorstellst, das hat mir gut gefallen.
+
+Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt
+für persönliche Erstmails mit drei Agenturen in Köln.
+
+Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail,
+du sagst mir dafür ehrlich, was du davon hältst.
+
+Falls du dazugehören willst, antworte mir einfach kurz.
+
+Viele Grüße
+Paul Lehmann
+Gründer - Lehmann Outreach
+```
+
+**Karte C, Reziprozität (80 Wörter):**
 
 ```
 Betreff: kurze Frage
@@ -640,9 +687,9 @@ Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten
 Hebeln für deinen Shop aufgenommen.
 
 Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den
-Beispielen aus deinem Sortiment, und werde morgen mit dem Video fertig.
+Beispielen aus deinem Sortiment.
 
-Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Angela Selbert
@@ -822,7 +869,7 @@ WARUM SCHLECHT:
 
 **So geht's besser:**
 
-„ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen. Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln zu deinem Online-Auftritt aufgenommen. / Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen für deine Startseite, und werde morgen mit dem Video fertig. / Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich." (/ = neuer Absatz)
+„ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen. Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln zu deinem Online-Auftritt aufgenommen. / Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen für deine Startseite. / Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (/ = neuer Absatz)
 
 Kein Pitch. Vom Bezug direkt zum Offer. Fertig.
 
@@ -893,9 +940,9 @@ Diese Punkte haben nichts mit Geschmack zu tun - sie entscheiden, ob die Mail im
 | **Keine Anhänge** | Sofort verdächtig. Erst nach Reply senden |
 | **Keine Bilder, keine Logos im Body** | Gleicher Effekt wie HTML-Layout |
 | **Keine Großschreibung ganzer Wörter** | Klassisches Spam-Merkmal, besonders im Betreff |
-| **Abmeldehinweis am Ende** | Eine schlichte Zeile, kein bunter Button. Wer keinen Abmeldeweg findet, klickt stattdessen auf Spam - und die Beschwerdequote ist der Wert, an dem die Zustellung hängt |
+| **Abmeldezeile unter der Signatur** | In Step 1 und Step 3 nach einer Leerzeile unter der Signatur, ohne „PS:“ und nie vor dem CTA, genau: „Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“ (Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid, dann melde ich mich nicht mehr.“). Nie Opt-out-Fachsprache: kein „STOPP“ oder „Stop“, kein „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“, das klingt nach Massenversand. Den technischen Abmeldelink (List-Unsubscribe) setzt das Versandtool zusätzlich. Wer keinen Abmeldeweg findet, klickt stattdessen auf Spam, und die Beschwerdequote ist der Wert, an dem die Zustellung hängt |
 
-Open- und Link-Tracking sind Standard und ausdrücklich erlaubt - die KPI-Steuerung und das Nachtelefonieren nach Öffnern hängen daran. Eingerichtet wird beides im Versandtool, nicht in der Kampagne.
+Open- und Link-Tracking sind standardmäßig aus. Einschalten nur, wer Öffnungen als Signal nutzt, um sofort (in den ersten Minuten) anzurufen, also selbst Cold Calling macht oder ein Team dafür hat. Eingerichtet wird beides im Versandtool, nicht in der Kampagne (Details in `outreach-launch`, `references/technisches-setup.md`).
 
 ## Spam-Trigger im Deutschen
 
@@ -943,7 +990,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 
 **Struktur:**
 
-- [ ] Folgt der Goldenen Formel (Bezug - Überleitung + Offer - [Feinheiten-Satz bei A/C] - CTA)?
+- [ ] Folgt der Goldenen Formel (Bezug - Überleitung + Offer - [zweiter Satz zum Angebot: C Feinheiten-Satz, A/B `{{ai.angebot_ausfuehrung}}`] - CTA)?
 - [ ] Wortlimit eingehalten?
 - [ ] Nur EIN CTA?
 - [ ] KEIN Pitch-Block? (keine Firmenvorstellung, kein „Wir sind seit X Jahren...")
@@ -977,7 +1024,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 - [ ] Kein Spam-Wort im Betreff?
 - [ ] „kostenlos" höchstens einmal im Body, nie im Betreff?
 - [ ] Keine sichtbaren Platzhalter oder nicht aufgelösten Variablen?
-- [ ] Abmeldehinweis vorhanden?
+- [ ] Feste Abmeldezeile unter der Signatur von Step 1 und Step 3, kein „STOPP“ und keine Opt-out-Fachsprache?
 
 ## Der Prüfdurchlauf in acht Schritten
 

@@ -43,8 +43,8 @@ Mindestens klären (fehlendes nachfragen, AskUserQuestion):
 
 **Den Skill `outreach-copy` VERBINDLICH laden, bevor eine Zeile Sequenz oder Variablen-Prompt
 entsteht.** Er ist die einzige Copy-Doktrin: Offer-Karte A-E, Anatomie der Entry-Mail mit
-Feinheiten-Satz, 4er-Sequenz, Wortlimits, Betreffzeilen, Anrede je `salutation`, Pflichtinhalt
-der Prompts von `hallo` und `intro`, Verbote, Selbstprüfung und Prüfliste. Ist er nicht
+zweitem Satz zum Angebot je Karte, 4er-Sequenz, Wortlimits, Betreffzeilen, Anrede je `salutation`,
+Pflichtinhalt der Prompts von `hallo`, `intro` und `angebot_ausfuehrung`, Verbote, Selbstprüfung und Prüfliste. Ist er nicht
 installiert, nicht aus dem Gedächtnis schreiben, sondern den Nutzer bitten, die Skills zu
 aktualisieren (Skill `outreach-update`).
 
@@ -109,7 +109,7 @@ Struktur (Schema v1 — die vollständige Referenz liefert der MCP-Prompt `campa
 - **Englisch (`en`):** Sequenz, Variablen-Prompts und Betreffs in natürlichem US-Englisch schreiben, nicht aus einer deutschen Vorlage übersetzen. Anrede `Hi {first name},` (nur Vorname, ohne du/Sie; ohne benennbare Person `Hi there,`), Grußformel `Best,` über der Signatur; Betreffs, Länge, P.S.-Abmeldezeile und Verbote nach `outreach-copy`, Abschnitt „Kampagnensprache“. Die deutschen Sprachregeln (du/Sie, Anführungszeichen „…“, Umlaute, deutsche Beispielformulierungen) gelten nicht; `salutation` wirkt nicht auf die Anrede und darf auf dem Standard bleiben. `emailLanguage` passend setzen (etwa „English (US)“). Diese Regeln sind geprüft; Aufbau und Offer-Regeln aus `outreach-copy` sinngemäß übernehmen. Eine ausführliche englische Copy-Lehre (Beispiele, Offer-Karten A–E) kann später folgen.
 
 **Pflicht-Regeln (Cold-Mailing-SOP):**
-- AI-Variablen `hallo` (Anrede) und `intro` (personalisierter Opener) IMMER anlegen (der Server verlangt sie im Blueprint-Guide). `firma` (Kurzname) ist optional: anlegen, sobald ein Betreff oder Text den Firmennamen tragen soll (Importnamen sind oft Google-Titel, Domains oder tragen Rechtsformen). Ohne `firma` steht im Betreff kein Firmenname (`kurze Frage`), im Body notfalls `{{lead.company}}`. Reihenfolge `hallo`, (`firma`), `intro`; Namen-Regex `^[a-zA-Z][a-zA-Z0-9_]*$`, Prompt min. 10 Zeichen, Namen eindeutig.
+- AI-Variablen `hallo` (Anrede) und `intro` (personalisierter Opener) IMMER anlegen (der Server verlangt sie im Blueprint-Guide). `firma` (Kurzname) ist optional: anlegen, sobald ein Betreff oder Text den Firmennamen tragen soll (Importnamen sind oft Google-Titel, Domains oder tragen Rechtsformen). Ohne `firma` steht im Betreff kein Firmenname (`kurze Frage`), im Body notfalls `{{lead.company}}`. Bei Offer-Karte A und B zusätzlich `angebot_ausfuehrung` anlegen (der zweite Satz zum Angebot, je Lead geschrieben, als eigener Absatz direkt nach dem Angebotssatz in Step 1; Prompt-Pflichtinhalt in `outreach-copy`). Reihenfolge `hallo`, (`firma`), `intro`, (`angebot_ausfuehrung`); Namen-Regex `^[a-zA-Z][a-zA-Z0-9_]*$`, Prompt min. 10 Zeichen, Namen eindeutig.
   - `firma` (optional): Firmenname, wie ein Kollege ihn sagt, ohne Rechtsform, „Meisterbetrieb", „Inh. …" oder Leistungsaufzählung; mit zwei, drei Vorher-nachher-Beispielen im Prompt. Wenn angelegt, nutzt der Betreff NUR `{{ai.firma}}`, nie `{{lead.company}}`; der Text nutzt `{{ai.firma}}` statt `{{lead.company}}`. Der Prompt enthält diese Regeln:
     - Rechtsform ohne Wortrest kürzen: „Kiefer Immobilien- und Beteiligungs GmbH“ → „Kiefer Immobilien“ (nie „Kiefer Immobilien- und Beteiligungs“).
     - Steht nur eine Domain oder ein Domainname, daraus die Marke machen: „zollikerdent.ch“ → „Zollikerdent“.
@@ -179,7 +179,7 @@ Keine Leads in die Kampagne (`add_leads_to_campaign`, `import_leads` mit Kampagn
    - `researchAgentConfig.additionalPrompt` ist kampagneneigen (nicht leer, nicht nur `researchGoals`/`researchPriorities`) und enthält die Sperrliste; dieselbe Sperrliste steht im `intro`-Prompt.
    - `campaign.language` ist gesetzt und passt zur Zielgruppe; Sequenz und Variablen-Prompts sind in dieser Sprache geschrieben.
    - `emailAgentConfig` legt Sprache, Ansprache (`salutation`, nur bei `de` wirksam) und Ton fest.
-   - Variablen `hallo` und `intro` sind vorhanden (`firma` optional); Schritte nutzen nur erlaubte Platzhalter.
+   - Variablen `hallo` und `intro` sind vorhanden (`firma` optional, `angebot_ausfuehrung` Pflicht bei Karte A und B); Schritte nutzen nur erlaubte Platzhalter.
 2. Dem Nutzer das Ergebnis als kurze Tabelle nennen (Feld, gesetzt ja/nein, erste Worte). Fehlt etwas: ergänzen oder nachfragen, NICHT mit Leads weitermachen.
 
 Gemessen am 02.10.2026: Eine nach der alten Vorlage angelegte Kampagne zeigte in der Oberfläche Wunschkunde, Hinweise und Recherche als leer bzw. Standard, und Angebot und Passt-Kriterien fehlten wirklich.

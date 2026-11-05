@@ -62,9 +62,10 @@ Eine Frage, wenn es nicht aus dem Auftrag hervorgeht:
    `blueprint.campaign.intelligence.offer_contract.title.value`; fehlt es, beim Nutzer erfragen.
    Das On-Top-Detail aus dem Feinheiten-Satz steht in Mail 1 (`blueprint.sequence.steps[0].body`);
    es MUSS in der Demo sichtbar umgesetzt sein, denn es wurde versprochen.
-2. **Lead:** Wer hat geantwortet?
-   `list_leads(campaign_id, contact_status="replied", fit_level="", research_status="", campaign_status="")`.
-   Den Lead mit dem Nutzer bestätigen. Die Zeile liefert Firma, Website, Ort und Telefon.
+2. **Lead:** Wer hat geantwortet? Zwei Abrufe, weil `contact_status` genau einen Wert nimmt:
+   erst `list_leads(campaign_id, contact_status="opportunity", fit_level="", research_status="", campaign_status="")`
+   (interessiert, braucht den Türöffner zuerst), dann dasselbe mit `contact_status="replied"`.
+   Beide Listen in dieser Reihenfolge anbieten. Den Lead mit dem Nutzer bestätigen. Die Zeile liefert Firma, Website, Ort und Telefon.
    **`get_lead_data` lehnt angeschriebene Leads ab** (`contact_gate`); Recherche-Bericht und
    Bewertungen kommen deshalb von der Website, dem Google-Profil oder per Kopie aus der App.
    Details: `../fulfillment-referenzen/references/lead-kontext.md`.
@@ -76,7 +77,7 @@ Eine Frage, wenn es nicht aus dem Auftrag hervorgeht:
 | Google-Sichtbarkeit, Suchbegriffe, Title-Tags, lokale Suche, KI-Suchmaschinen | `demo-seo` |
 | Werbeanzeigen (Meta, Google), Anzeigen-Konzepte, Stellenanzeigen, Recruiting-Anzeige | `demo-anzeigen` |
 | fertige Liste mit passenden Kunden, Leads, Kontakten | `demo-leadliste` |
-| Kaltakquise-/Outreach-System, Akquise-Kampagne, Sequenz für den Lead | `demo-akquise-kampagne` |
+| Kaltakquise-/Outreach-System, Akquise-Kampagne, Sequenz für den Lead | `demo-kampagne` |
 
 4. Nach dem Bau immer `demo-ausliefern`: veröffentlichen, Link am Lead speichern, Antwort-Text.
 

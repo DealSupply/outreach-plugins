@@ -39,7 +39,12 @@ eine als Datei abgelegte Antwort von einem anderen Agenten überschrieben sein. 
 `get_lead_data` erneut aufrufen; stimmt sie dann immer noch nicht, nichts schreiben und
 `FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. Darin stehen `qualificationGeneration`
 (Kriterien), `researchGeneration` (Recherche-Vorgaben), `emailGeneration` (System-Prompt, Ansprache,
-Variablen) sowie die vorhandene Qualifizierung und Recherche.
+Variablen mit ihrem Winkel) sowie die vorhandene Qualifizierung und Recherche.
+
+**Winkel je KI-Variable:** Jede Variable in `emailGeneration.variables` kann ein `angle` tragen (null wie bisher,
+`chance` für das Intro einer eigenen Variante der ersten Mail, etwa `intro_chance`). Jeder Lead bekommt alle
+Variablen; welche Variante er bekommt, entscheidet Instantly beim Versand. Hat die Kampagne eine Chance-Variable,
+enthält `emailGeneration.systemPrompt` den Chance-Block schon; er gilt nur für diese Variable(n).
 
 **Quelle der Regeln:** Der Server ist maßgeblich. Liefert `get_lead_data` die Felder
 `researchGeneration.anchorRules` (Anker-Regeln der Recherche), `researchGeneration.campaignFrame`
@@ -87,7 +92,7 @@ gelten immer.
     und liegen keine Rezensionstexte im Import, genau eine WebSearch „<Firma> <Ort> Bewertungen“ und
     deren Portal-Treffer wie unten per WebFetch öffnen; sonst keine Suche.
   - Deep Research: Bewertungen wie im nächsten Punkt, weitere Suchen nach Bedarf.
-  Jede Suche unter „## Research Details“ mit Suchanfrage vermerken.
+  Jede Suche unter „## Recherche-Details“ mit Suchanfrage vermerken.
 - Bewertungen (bei Deep Research ZUERST, nicht erst wenn die Website wenig hergibt; bei Smart nur in
   der einen erlaubten Suche): WebSearch nach dem Betrieb mit „Bewertungen“ liefert nur Links. Die Treffer von Bewertungsportalen
   per WebFetch öffnen (z. B. medicosearch, doktor.ch, local.ch, search.ch, jameda, docfinder,
@@ -179,8 +184,20 @@ gelten immer.
     wiedergeben, nur das Tun benennen. Höchstens 2 Sätze, zusammen höchstens 30 Wörter (nachzählen),
     EIN Detail statt gestapelter Lobpunkte, Projekte oder Titel; wird es zu lang, das schwächere Detail
     streichen. Komma statt Strich.
+- Variablen mit `angle` = `chance`: Sie folgen dem Block „CHANCE-WINKEL (nur für KI-Variablen mit Winkel
+  chance)“ im System-Prompt, der der Gegenprobe oben vorgeht, wo er abweicht (Gedächtnisstütze: Skill
+  `outreach:outreach-copy`, Abschnitt „Chance-Winkel“). Alle anderen Variablen, auch das normale `intro`, nach
+  den Regeln oben. Die Chance-Variable steht in ihrer Variante anstelle von `intro`: für sich allein schreiben.
+  Lob für eine belegte Stärke plus genau EINE Beobachtung, die so im Abschnitt `WEBSITE-BEFUND` der Recherche
+  steht (Bewertungen oder Kundenstimmen auf der Website „nein“, Online-Buchung oder Terminbuchung „nur
+  Anfrageformular“ oder „nur Telefon oder Mail“); ohne Schluss, höchstens 2 Sätze und 35 Wörter, nie „Problem“, „leider“, „schade“,
+  „fehlt“, „verschenkt“, kein Rat, keine Vermutung über Interna, nie „ich verfolge euch schon länger“. Fehlt
+  ein Beleg für eine der beiden Seiten (Befund fehlt, „unklar“, „ja“, kein tragender Anker), schreib ein
+  Lob-Intro nach den Regeln oben (Rückfall), in derselben Chance-Variable.
 - Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Variablen
-  aus emailGeneration.expectedOutput>")`. Meldet das Tool `validation_failed: Unclosed quotation mark`,
+  aus emailGeneration.expectedOutput>")`, bei Chance-Variablen zusätzlich (Pflicht je Chance-Variable)
+  `angles={"<name>": "chance"}` für ein Intro mit Stärke und Beobachtung, `"lob"` für einen Rückfall. Der Winkel
+  steht nie im JSON der Variablen. Meldet das Tool `validation_failed: Unclosed quotation mark`,
   ist der genannte Wert an einem geraden " abgeschnitten: Zitat mit “ schließen und den vollständigen
   Text neu speichern.
 
@@ -210,13 +227,15 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
      einzelne aus den letzten 18 Monaten, möglichst über die angeschriebene Person. Trägt dort kein Lob,
      gilt ein abhebendes Website-Detail, dann Anzahl und Schnitt (nur ab 30 Bewertungen und 4,5), erst danach der Fallback
      der Kampagne.
-3. `save_lead_variables` mit ALLEN Variablen (unveränderte mit ihrem bisherigen Wert). Nie freigeben,
+3. `save_lead_variables` mit ALLEN Variablen (unveränderte mit ihrem bisherigen Wert), mit
+   `angles` für jede Chance-Variable, wie sie danach dasteht (Rückfall nach einem Chance-Befund: `lob`). Nie freigeben,
    nie ablehnen: Die Gegenprüfung macht ein anderer Agent.
 
 ## Antwort
 
 Am Ende NUR eine Zeile:
 `OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
+(bei Chance-Variablen angehängt: ` winkel=<name>:<chance|lob>`)
 bzw. nach „Nachbessern“
 `NACHGEBESSERT lead=<id> art=<…> geändert=<z. B. intro, hallo, adresse, recherche> neu=<kurz: neuer Anker bzw. Adresse>`
 oder `UNVERÄNDERT lead=<id> art=<…>: <warum nicht behebbar>`

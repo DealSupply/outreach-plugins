@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-11-05 – outreach 0.5.2, fulfillment 0.1.3
+
+Führt zwei getrennt gewachsene Stände zusammen: die Linie 0.5.x auf GitHub (Workspaces, Export, Kampagnensprache, Start-Satz aus der App mit `{{accountSignature}}`) und die lokale Linie 0.4.2 bis 0.4.8 (Copy-Kern, Chance-Winkel, Abmeldezeile, Import, Verbindung `dealsupply`, Versand-Setup, zweiter Satz zum Angebot, Schlussfrage ohne „Link“). Beide Einträge unten bleiben gültig; die Versionsnummern 0.4.x und fulfillment 0.1.1/0.1.2 der lokalen Linie wurden nie veröffentlicht.
+
+**outreach**
+- `outreach-copy` → Signatur aus dem Konto (`{{accountSignature}}`) und feste Abmeldezeile stehen nebeneinander; die Abmeldezeile folgt unter `{{accountSignature}}`.
+- `outreach-campaign` → Setup-Check prüft `campaign.language`, `salutation` nur bei `de` und `angebot_ausfuehrung` bei Karte A und B.
+- `outreach-verify` → Copy-Prüfung mit zweitem Satz je Karte, Schlusssatz ohne „Link“ und den Regeln für englische Kampagnen.
+- `verify-agent` → liest `angleWritten` und die Kampagnensprache.
+- `beispiel-blueprint.md` → zweiter Satz, Schlusssatz und Sprache in der Übersicht.
+- `outreach-launch` → Sperren gelten im ganzen Workspace (Regel 5 nach der neuen Tracking-Regel).
+
+**fulfillment**
+- `lead-kontext.md` → Antworter mit `opportunity` und `replied`, Suche außerhalb des Standard-Workspaces mit `workspace`.
+
+## 2026-11-05 – outreach 0.4.8
+
+**outreach**
+- `outreach-copy` → Mail 1 bekommt nach dem Angebotssatz immer einen zweiten Satz zum Angebot, passend zur Karte: bei C der Feinheiten-Satz (Fortschritt, „Ich bin gerade noch an den letzten Feinheiten dran, vor allem …“), bei A ein Inhaltssatz (was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit), bei B ein Rahmensatz (was der Empfänger im Pilot bekommt und was er dafür gibt), bei D und E keiner. Ersetzt „Feinheiten-Satz Pflicht bei A und C, optional bei B“. Bei A und B schreibt die KI den Satz je Lead über die neue Variable `{{ai.angebot_ausfuehrung}}` (eigener Absatz direkt nach dem Angebotssatz); Pflichtinhalt des Prompts, Selbstprüfung und Prüfliste nachgezogen, Beispiele für A und B neu.
+- `outreach-copy` → Schlusssatz ohne „Link“: Standard „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (Sie-Form „… wenn ich es Ihnen morgen zusende? …“), mit Wort für die Sache „… wenn ich dir morgen den Entwurf zusende? …“. Das „morgen“ steht damit im Schlusssatz, der Halbsatz „und werde morgen mit … fertig“ im Feinheiten-Satz entfällt.
+- `beispiel-blueprint.md` → Variante für Karte A und B mit Step-1-Body und ausformuliertem `angebot_ausfuehrung`-Prompt je Karte.
+- `outreach-campaign` → `angebot_ausfuehrung` bei Karte A und B anlegen; `outreach-verify` prüft den zweiten Satz je Karte und den Schlusssatz ohne „Link“.
+- Copy-Kern (`skills/outreach-copy/kern/`) → dieselben Regeln, Beispiele für Karte A und B.
+
 ## 2026-11-01 – outreach 0.5.1
 
 Passt zu ListM8 v4.18 mit dem Weg „Mit deiner KI“ (LISTM8-86, MCP 4.7.0, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.
@@ -58,6 +82,47 @@ Passt zu ListM8 MCP 4.7.0 (Kampagnensprache). Ältere Server kennen `campaign.la
 
 **fulfillment**
 - `lead-kontext`, `demo-link` → Die Antwort an den Lead in der Sprache der Kampagne (`campaign.language`), in englischen Kampagnen mit `Hi Vorname,` und `Best,`.
+
+## 2026-11-01 – outreach 0.4.7
+
+**outreach**
+- `outreach-launch` → Versand-Setup auf DealSupplys Stand: Domains beim Domain-Anbieter kaufen (Endungen wie .de, .at, .com, .info, .org; Zapmail selbst verkauft kein .de) und in Zapmail über „Connect Existing Domains“ verbinden, bei Cloudflare über die Verbindung des Cloudflare-Kontos statt Nameservern; Namen nah an der Hauptdomain. Postfächer bei Google oder Microsoft (beides in Zapmail), eine echte Person in Schreibweisen, Profilbild. Warm-up mit Instantlys Voreinstellungen, Start erst bei Health Score über 90 %, am besten 98 bis 100 %. Daily campaign limit 30 und „Campaign slow ramp“ am Postfach statt Wochenplan 100, 200, 300; die Kampagne bekommt gleich Postfächer mal 30. Sendefenster Mo bis Fr 09:00 bis 17:00 wie in der App. Open- und Link-Tracking standardmäßig aus, nur für sofortiges Anrufen nach dem Öffnen an.
+- `outreach-copy` → Tracking-Absatz auf dieselbe Regel gebracht.
+
+## 2026-11-01 – fulfillment 0.1.2
+
+**fulfillment**
+- `fulfillment` (Modus B) und `lead-kontext.md` → Antworter in zwei Abrufen: erst `contact_status="opportunity"` (interessierte Antwort, auch aus dem Instantly-Abgleich), dann `"replied"`. Bisher fand der Skill nur `replied` und bot interessierte Leads nie an. Der Filter nimmt genau einen Wert, deshalb zwei Aufrufe.
+
+## 2026-11-01 – outreach 0.4.6, fulfillment 0.1.1
+
+**outreach**
+- Die mitgelieferte MCP-Verbindung heißt jetzt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1` (vorher `akquise`, `outreach.akquise.de`). Wer das Plugin bisher über die Verbindung `akquise` genutzt hat, meldet sich einmal neu an; eine von Hand angelegte DealSupply-Verbindung kann danach weg.
+- Live-Ansicht in Claude Code: Standard-Server `dealsupply`, Links ohne eigene Adresse vom Server führen auf `app.dealsupply.ai`.
+- `outreach-copy` → keine Verweise mehr auf fremde Regelwerke anderer Marken; die Regeln selbst bleiben gleich.
+- `outreach-setup` → Anmeldeweg für DealSupply-Kunden mit den heutigen Menünamen der Claude App („Connectors“ → „Connect“); ChatGPT im Browser als eigene Umgebung (nur Verbindung, keine Skills).
+
+**fulfillment**
+- `demo-akquise-kampagne` heißt jetzt `demo-kampagne` (Aufruf `/demo-kampagne`, in Claude Code `/fulfillment:demo-kampagne`); Inhalt unverändert. `fulfillment`, `fulfillment-setup` und die Referenzen nennen den neuen Namen.
+
+## 2026-11-01 – outreach 0.4.5
+
+**outreach**
+- `outreach-import` → auf den Stand des Import-Werkzeugs gebracht: Leads brauchen eine Mail **oder** eine eigene Website, Leads ohne Mail werden normal recherchiert; ungültige Zeilen meldet der Server einzeln in `rejected_rows`, statt den ganzen Aufruf abzuweisen; Person der Zeile über `firstName`, `lastName`, `academicTitle`, `salutation` oder `fullName`; Platzprüfung und Report zählen neue Leads statt neuer Mail-Adressen.
+
+## 2026-11-01 – outreach 0.4.4
+
+**outreach**
+- `outreach-import` → Google-Maps-Listen: die Place ID immer als `place_id` mitgeben. Der Skill erkennt sie an Spaltennamen, am Wertformat (`ChIJ…`) und in Maps-Links, trennt sie von `cid` und `google_id` und fragt nach, wenn sie in einer Maps-Liste fehlt. Dazu die Liste der Google-Maps-Schlüssel, die der Import ohne `attribute_mappings` behält.
+
+## 2026-10-27 – outreach 0.4.2
+
+Fasst die Arbeitsstände 0.3.43 bis 0.3.45 auf der Linie 0.4.x zusammen.
+
+**outreach**
+- `outreach-copy` → software-freier Copy-Kern unter `skills/outreach-copy/kern/` (Copy-Lehre, Offer-Lehre, Beispiele, Prüfskript). Er ist die Quelle für den Heartbeat-Skill `cold-mail-copy`; `scripts/export-copy-kern.sh` überträgt ihn, `--check` meldet Abweichungen.
+- `outreach-copy`, `lead-agent`, `verify-agent` → Chance-Winkel für KI-Variablen in Instantly-Varianten (A/B-Test der Intros: Lob gegen Chance, ohne Beleg Rückfall auf Lob).
+- `outreach-copy`, `verify-agent`, Copy-Kern → feste, menschliche Abmeldezeile unter der Signatur („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“). „STOPP“, „Abmelden“, „unsubscribe“ und ähnliche Opt-out-Fachsprache sind verboten; der technische Abmeldeweg im Versandtool bleibt.
 
 ## 2026-10-27 – Umzug nach DealSupply (ohne neue Plugin-Version)
 

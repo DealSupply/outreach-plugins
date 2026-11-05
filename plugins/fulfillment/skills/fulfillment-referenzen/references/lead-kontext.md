@@ -23,15 +23,21 @@ beschreibt oft die bezahlte Leistung, nicht den Türöffner, und taugt deshalb n
 ## Wer hat geantwortet: `list_leads`
 
 ```
+list_leads(campaign_id, contact_status="opportunity", fit_level="", research_status="", campaign_status="")
 list_leads(campaign_id, contact_status="replied", fit_level="", research_status="", campaign_status="")
 ```
 
+- Zwei Abrufe, weil `contact_status` genau einen Wert vergleicht (eine Liste mehrerer Werte gibt es
+  nicht). Ein Lead mit interessierter Antwort steht auf `opportunity`, nicht auf `replied`; nur mit
+  `replied` fehlen genau die Leads, die den Türöffner am dringendsten brauchen.
+- Reihenfolge: `opportunity` zuerst anbieten, danach `replied`.
 - Die drei leeren Filter sind Pflicht: Ohne sie zeigt `list_leads` nur Leads, die noch bearbeitet
   werden, und ein angeschriebener Lead taucht nicht auf.
-- `replied` steht nur am Lead, wenn die App den Status aus Instantly abgeglichen hat. Fehlt der
+- `replied` und `opportunity` stehen am Lead, wenn die App den Status aus Instantly abgeglichen hat
+  (Interesse in Instantly wird `opportunity`) oder der Nutzer ihn in der App gesetzt hat. Fehlt der
   Abgleich, nennt der Nutzer den Lead (Firma oder E-Mail); dann `search_leads(query="<Firma oder Domain>")`,
   außerhalb des Standard-Workspaces mit `workspace=<uuid>` aus der Antwort zur Kampagne (`workspace.uuid`).
-- Weitere Werte: `opportunity` (vom Nutzer als Chance markiert), `contacted`, `all`.
+- Weitere Werte: `contacted`, `all`.
 - Den Lead immer mit dem Nutzer bestätigen; eine Antwort kann auch eine Absage sein.
 
 Jede Zeile liefert `id`, `company`, `website`, `city`, `phoneNumber`, `email`, `contactStatus`
