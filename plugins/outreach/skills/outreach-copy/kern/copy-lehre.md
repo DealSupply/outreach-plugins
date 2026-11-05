@@ -634,7 +634,9 @@ Update“ und neuer Thread). Sie bleibt trotzdem ohne Mail 1 verständlich.
 Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo {{Vorname}},“ klein weiter wie in Mail 1:
 „ein Bauunternehmen aus …“), höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie in
 Mail 1, mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den
-Entwurf zusende? Völlig unverbindlich natürlich.“). Das Wort für die Sache steht nur in dieser Frage;
+Entwurf zusende? Völlig unverbindlich natürlich.“). Karten ohne Wort für die Sache (B, D, E oder eine
+eigene Frage) nehmen die Frage aus Mail 1 wörtlich: Mail 3 endet immer mit einer Frage, eine bloße
+Aufforderung wie „sag einfach kurz Bescheid“ reicht nicht (05.11.2026). Das Wort für die Sache steht nur in dieser Frage;
 kein eigener Satz um das Angebot („Falls du den Entwurf sehen möchtest, antworte kurz“), kein neues
 Offer, kein Pitch. Die Varianten unten zeigen den Beleg-Teil; an ihrem Schluss steht die Frage aus
 Mail 1 statt „melde dich gerne“.
