@@ -203,7 +203,7 @@ von der Karte ab:
 |---|---|---|
 | C: Konkretes Deliverable | Fortschritt: der Feinheiten-Satz | fester Text, für alle Leads gleich |
 | A: Kostenlose Teildienstleistung | Inhalt: was für diesen Lead konkret drin wäre | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
-| B: Tester/Pilotprojekt | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| B: Tester/Pilotprojekt | Rahmen, an diesem Lead festgemacht: was er im Pilot bekäme und was er dafür gibt | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
 | D: Förder-Hook, E: Partner gesucht | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
 
 **Feinheiten-Satz (nur Karte C), wörtlich:** „Ich bin gerade noch an den letzten Feinheiten dran,
@@ -219,14 +219,21 @@ passend zu Recherche und Website des Leads:
 - **A, Inhaltssatz:** was für diesen Lead konkret im Deliverable drin wäre, im Konjunktiv.
   Beispiel: „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und
   Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“
-- **B, Rahmensatz:** was der Empfänger im Pilot bekommt und was er dafür gibt. Beispiel: „Dabei
-  schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich,
-  was du davon hältst.“
+- **B, Rahmensatz (Wortlaut der Regel vom 05.11.2026):** Ein Satz, der den Rahmen des Pilots an
+  diesem Lead festmacht: was er im Pilot konkret bekäme, bezogen auf etwas aus seiner Recherche
+  (seine Leistung, seine Zielkunden, seine Region), und was er dafür gibt (ehrliches Feedback).
+  Nicht bei jedem Lead derselbe Satz. Beispiel: „Im Pilot schreibe ich dir die erste Mail an
+  einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon
+  hältst.“
+- **Mit Schwerpunkten:** Grundlage des Satzes ist das Detail des Schwerpunkts, den die KI für den
+  Lead wählt, zugeschnitten auf die Recherche. Bei Pilot und Partner steht der Schwerpunkt selbst
+  nicht im Angebotssatz.
 - **Grenzen für beide:** nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt
   bereit“, kein Feinheiten-Wortlaut); nur Inhalte, die die Lieferzusage des Nutzers deckt; keine
   Zahl, die weder Lieferzusage noch Recherche belegt; keine Frist; kein Gespräch, Termin oder
-  Call; keine Frage, der CTA folgt fest; ein Satz mit höchstens etwa 25 Wörtern; Pronomen gemäß
-  `salutation`.
+  Call; keine Frage, der CTA folgt fest; ein Satz mit höchstens 25 Wörtern (nachzählen, ein
+  längerer Satz wird gekürzt); Pronomen gemäß `salutation`. Kein zweiter Prüf- oder
+  Korrekturlauf: Der Prompt muss den Satz beim ersten Schreiben richtig machen.
 - Im Body steht die Variable als eigener Absatz direkt nach dem Angebotssatz. Sie wird je Lead
   einmal erzeugt und steht deshalb, wie `{{ai.intro}}`, nur in Step 1. Ihren Prompt regelt
   „Prompts der AI-Variablen“ unten, ausformulierte Prompts für A und B stehen in
@@ -583,15 +590,18 @@ Der `angebot_ausfuehrung`-Prompt (nur Karte A und B) MUSS enthalten:
 - Kontext: Absender, Karte, den festen Angebotssatz davor, den festen Schlusssatz danach und die
   Lieferzusage des Nutzers (was er nach einer Antwort wirklich liefert);
 - die Aufgabe je Karte: bei A ein Inhaltssatz, was für diesen Lead konkret im Deliverable drin
-  wäre, im Konjunktiv; bei B ein Rahmensatz, was der Empfänger im Pilot bekommt und was er dafür
-  gibt;
-- die Quelle: Recherche und Website des Leads, für jeden Lead neu geschrieben; dazu einen
-  ausformulierten Fallback-Satz aus der Lieferzusage für Leads ohne passenden Fund;
+  wäre, im Konjunktiv; bei B ein Rahmensatz, der den Pilot an diesem Lead festmacht (was er
+  konkret bekäme, bezogen auf seine Leistung, Zielkunden oder Region, und was er dafür gibt),
+  nicht bei jedem Lead derselbe Satz;
+- die Quelle: Recherche und Website des Leads, für jeden Lead neu geschrieben; mit Schwerpunkten
+  das Detail des gewählten Schwerpunkts als Grundlage; dazu einen ausformulierten Fallback-Satz
+  aus der Lieferzusage für Leads ohne passenden Fund;
 - die Grenzen: nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt bereit“, kein
   „Ich bin gerade noch an den letzten Feinheiten dran“), nur Inhalte der Lieferzusage, keine Zahl,
   die weder Lieferzusage noch Recherche belegt, keine Frist, kein Gespräch oder Termin, kein
   zweites Angebot, keine Frage;
-- Form: genau ein Satz, höchstens etwa 25 Wörter, beginnt groß (eigener Absatz), Pronomen gemäß
+- Form: genau ein Satz, höchstens 25 Wörter (als eigene Zeile, mit der Anweisung nachzuzählen),
+  beginnt groß (eigener Absatz), Pronomen gemäß
   `salutation`, keine Platzhalter, keine Gedankenstriche, echte Umlaute.
 
 Ein vollständig ausformuliertes Paar `hallo`/`intro` steht in `references/beispiel-blueprint.md`,

@@ -526,13 +526,13 @@ Die Regeln:
 Bei A und B gibt es keinen Feinheiten-Satz: Er behauptet Arbeit, die es vor der Antwort nicht gibt. Die KI schreibt den Satz je Lead neu, passend zu Recherche und Website des Leads.
 
 - **A, Inhaltssatz:** „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast."
-- **B, Rahmensatz:** „Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst."
+- **B, Rahmensatz:** macht den Pilot an diesem Lead fest, was er konkret bekäme, bezogen auf etwas aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches Feedback), nicht bei jedem Lead derselbe Satz: „Im Pilot schreibe ich dir die erste Mail an einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon hältst."
 
 Die Regeln:
 
 - **Nie als erledigte Arbeit:** kein „erstellt", „vorbereitet", „liegt bereit", kein Feinheiten-Wortlaut. A steht im Konjunktiv.
 - **Nur, was die Lieferzusage deckt:** keine Zahl, die weder Lieferzusage noch Recherche belegt, keine Frist, kein Gespräch, Termin oder Call.
-- **Kurz:** ein Satz, höchstens etwa 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
+- **Kurz:** ein Satz, höchstens 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
 
 ## Der CTA
 

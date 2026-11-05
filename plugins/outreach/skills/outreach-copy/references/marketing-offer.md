@@ -123,7 +123,7 @@ Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absa
 |:---------|:--------|
 | **Betreffzeile** | „Anfrage für {{ai.firma}}" / „kurze Frage" |
 | **Überleitung + Offer** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region]." |
-| **Zweiter Satz (Pflicht, eigener Absatz)** | Rahmensatz je Lead, `{{ai.angebot_ausfuehrung}}`: was der Empfänger im Pilot bekommt und was er dafür gibt, nur aus der Lieferzusage. Beispiel: „Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst." |
+| **Zweiter Satz (Pflicht, eigener Absatz)** | Rahmensatz je Lead, `{{ai.angebot_ausfuehrung}}`: macht den Pilot an diesem Lead fest, was er konkret bekäme, bezogen auf etwas aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches Feedback); höchstens 25 Wörter, nur aus der Lieferzusage, nicht bei jedem Lead derselbe Satz. Beispiel: „Im Pilot schreibe ich dir die erste Mail an einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon hältst." |
 | **CTA** | „Falls du dazugehören willst, antworte mir einfach kurz." |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)

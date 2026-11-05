@@ -190,13 +190,16 @@ gibt. Der Satz wird je Lead neu geschrieben, passend zu Recherche und Website de
 
 - **A, Inhaltssatz:** „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und
   Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“
-- **B, Rahmensatz:** „Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du
-  sagst mir dafür ehrlich, was du davon hältst.“
+- **B, Rahmensatz:** macht den Pilot an diesem Lead fest: was er konkret bekäme, bezogen auf etwas
+  aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches
+  Feedback), nicht bei jedem Lead derselbe Satz. „Im Pilot schreibe ich dir die erste Mail an
+  einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon
+  hältst.“
 - Nie als erledigte Arbeit: kein „erstellt“, „vorbereitet“, „liegt bereit“, kein
   Feinheiten-Wortlaut. A steht im Konjunktiv.
 - Nur Inhalte, die die Lieferzusage des Absenders deckt: keine Zahl, die weder Lieferzusage noch
   Recherche belegt, keine Frist, kein Gespräch, Termin oder Call.
-- Ein Satz, höchstens etwa 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
+- Ein Satz, höchstens 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
 
 ## Der CTA
 

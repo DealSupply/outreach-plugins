@@ -163,7 +163,7 @@ mir ist aufgefallen, dass du auf deiner Website jeden Kunden mit einer eigenen k
 
 Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für persönliche Erstmails mit drei Agenturen in Köln.
 
-Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst.
+Im Pilot schreibe ich dir die erste Mail an eine Kölner Kanzlei als Wunschkunde, du sagst mir dafür ehrlich, was du davon hältst.
 
 Falls du dazugehören willst, antworte mir einfach kurz.
 
@@ -174,8 +174,10 @@ Gründer - Lehmann Outreach
 
 Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
-Der Rahmensatz („Dabei schreibe ich dir …“) wird bei Karte B je Lead geschrieben: was der
-Empfänger im Pilot bekommt und was er dafür gibt, nur aus der Lieferzusage.
+Der Rahmensatz („Im Pilot schreibe ich dir …“) wird bei Karte B je Lead geschrieben: Er macht
+den Pilot an diesem Lead fest (was er konkret bekäme, bezogen auf seine Leistung, Zielkunden oder
+Region, und was er dafür gibt), höchstens 25 Wörter, nur aus der Lieferzusage, nicht bei jedem
+Lead derselbe Satz.
 
 ## Step 1: Entry Mail, Karte C
 

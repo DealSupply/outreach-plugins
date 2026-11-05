@@ -117,7 +117,7 @@ Dringlichkeit, aber nur, wenn die Plätze wirklich begrenzt sind.
 |:---------|:--------|
 | Betreff | „Anfrage für {{Firma}}“ oder „kurze Frage“ |
 | Überleitung + Offer | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
-| Zweiter Satz | Pflicht, eigener Absatz: Rahmensatz je Lead, was der Empfänger im Pilot bekommt und was er dafür gibt, nur aus der Lieferzusage („Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst.“) |
+| Zweiter Satz | Pflicht, eigener Absatz: Rahmensatz je Lead, der den Pilot an diesem Lead festmacht: was er konkret bekäme, bezogen auf etwas aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches Feedback); höchstens 25 Wörter, nur aus der Lieferzusage, nicht bei jedem Lead derselbe Satz („Im Pilot schreibe ich dir die erste Mail an einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon hältst.“) |
 | CTA | „Falls du dazugehören willst, antworte mir einfach kurz.“ |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
