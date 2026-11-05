@@ -241,7 +241,8 @@ Premium Partner …“ hat in der Entry Mail keinen Platz. Es schreckt ab und wi
 ## Signatur
 
 Name, Rolle und Firma des Absenders als Klartext. Mehr nicht. Ohne bekannten Absendernamen nur die
-Grußformel.
+Grußformel. Vor der Grußformel stehen zwei Leerzeilen, eine mehr als zwischen den Absätzen; die
+Signatur folgt direkt darunter (05.11.2026).
 
 **So:**
 
@@ -281,10 +282,12 @@ In den Mails, die einen Thread öffnen (Step 1 und Step 3), steht nach einer Lee
 Signatur genau diese Zeile, ohne „PS:“ und nie vor dem CTA:
 
 ```
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 ```
 
-Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid, dann melde ich mich nicht mehr.“
+Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid.“ Gekürzt am
+05.11.2026; die frühere Zeile „…, dann melde ich mich nicht mehr.“ steht nur noch in bestehenden
+Kampagnen und zählt bei der Prüfung weiter als Abmeldezeile.
 
 Sie klingt wie ein Mensch, der Rücksicht nimmt, und gibt trotzdem einen klaren Weg hinaus. Nie
 Opt-out-Fachsprache in der Copy: kein „STOPP“ oder „Stop“, kein „abmelden“, „abbestellen“,

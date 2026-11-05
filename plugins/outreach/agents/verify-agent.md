@@ -114,8 +114,8 @@ ihm mit `art` und `grund`, was zu tun ist.
 - **Abmeldezeile:** „STOPP“ oder „Stop“, „abmelden“, „abbestellen“, „austragen“, „unsubscribe“ und andere
   Opt-out-Fachsprache sind ein Fehler. In einer Variable: `ablehnen`, `art=text`. In den festen Steps des
   Blueprints (betrifft alle Leads) oder wenn Step 1 oder Step 3 die feste Abmeldezeile unter der Signatur
-  fehlt („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“,
-  Sie-Form „… für Sie ist, geben Sie mir kurz Bescheid, …“): das Urteil des Leads bleibt davon unberührt,
+  fehlt („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.“, Sie-Form „… für Sie ist,
+  geben Sie mir kurz Bescheid.“; die frühere Fassung „…, dann melde ich mich nicht mehr.“ zählt auch): das Urteil des Leads bleibt davon unberührt,
   `grund` nennt es als `systematisch: fester Text Abmeldezeile`, damit der Bericht es meldet.
 - **Chance-Variablen (Werte mit `angleWritten`, etwa `intro_chance`):** Sie stehen in Instantly in einer
   eigenen Variante der ersten Mail anstelle von `intro` und werden für sich allein geprüft. Chance heißt: Lob für eine

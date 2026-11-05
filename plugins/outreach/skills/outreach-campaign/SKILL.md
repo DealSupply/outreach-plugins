@@ -155,7 +155,7 @@ Beim Weg „Mit deiner KI“ legt die App eine leere Kampagne an und gibt dem Nu
 **Regeln für diesen Ablauf:**
 - Nie `create_campaign`. Die genannte Kampagne wird mit `edit_campaign` gefüllt. Auch wenn etwas nicht klappt, keine neue Kampagne als Ausweg anlegen, sondern den Fehler nennen.
 - Die ID steht im Satz. Ohne Nummer im Satz gilt der normale Weg mit `create_campaign` (Phase 3, „Neu“).
-- Nicht nach Name, Rolle oder Firma für die Unterschrift fragen. Die Signatur kommt aus dem Konto: Jede Mail endet mit der Grußformel in einer eigenen Zeile und direkt darunter `{{accountSignature}}` (deutsch `Viele Grüße\n{{accountSignature}}`, englisch `Best,\n{{accountSignature}}`). Beim Versand setzt Instantly dort die Signatur des Versandpostfachs ein. Keine Unterschrift mit Name, Rolle oder Firma im Mailtext, auch nicht, wenn der Nutzer sie nennt. Was `outreach-copy` unter die Signatur stellt, steht unter `{{accountSignature}}`.
+- Nicht nach Name, Rolle oder Firma für die Unterschrift fragen. Die Signatur kommt aus dem Konto: Jede Mail endet nach zwei Leerzeilen mit der Grußformel in einer eigenen Zeile und direkt darunter `{{accountSignature}}` (deutsch `…?\n\n\nViele Grüße\n{{accountSignature}}`, englisch `…?\n\n\nBest,\n{{accountSignature}}`). Beim Versand setzt Instantly dort die Signatur des Versandpostfachs ein. Keine Unterschrift mit Name, Rolle oder Firma im Mailtext, auch nicht, wenn der Nutzer sie nennt. Was `outreach-copy` unter die Signatur stellt, steht unter `{{accountSignature}}`.
 
 **Ablauf:**
 

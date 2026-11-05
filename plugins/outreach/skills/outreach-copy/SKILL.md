@@ -39,8 +39,8 @@ Feld (älterer Server), ist die Kampagne deutsch.
   - Kein „free“ im Text, stattdessen „no strings attached“ oder „at no cost“.
   - Nie „Hope this email finds you well“ oder „I wanted to reach out“.
   - Mail 1 höchstens 100 Wörter, Ziel 50–90.
-  - In Mail 1 und Mail 3 die Abmeldezeile
-    `P.S. Just reply “not interested” and I won't reach out again.`
+  - In Mail 1 und Mail 3 die Abmeldezeile, ohne „P.S.“:
+    `If this isn't a priority right now, just let me know.`
   - Anführungszeichen “…”.
 
   Maßgeblich sind die Regeln, die der Server mitgibt (`emailGeneration.systemPrompt`,
@@ -298,15 +298,19 @@ nur „Viele Grüße“. Schlank: keine Auszeichnungen, Links, Telefonnummern od
 **Signatur aus dem Konto:** Füllt `outreach-campaign` eine Kampagne, die die App angelegt hat
 (Start-Satz „Richte mit outreach die Kampagne #… ein“, Ablauf „Genannte leere Kampagne füllen“),
 steht statt der Klartext-Signatur direkt unter der Grußformel `{{accountSignature}}`:
-„Viele Grüße\n{{accountSignature}}“ (englisch „Best,\n{{accountSignature}}“). Instantly setzt dort
+„…?\n\n\nViele Grüße\n{{accountSignature}}“ (englisch „…?\n\n\nBest,\n{{accountSignature}}“). Instantly setzt dort
 die Signatur des Versandpostfachs ein. Dann nicht nach Name, Rolle und Firma fragen und keine
 Unterschrift in den Mailtext schreiben; was unter der Signatur steht, folgt unter `{{accountSignature}}`.
 
+**Abstand vor dem Gruß:** Zwischen dem letzten Satz (der Schlussfrage) und der Grußformel stehen
+zwei Leerzeilen, eine mehr als zwischen den Absätzen; die Signatur folgt direkt unter der
+Grußformel (Giuliano, 05.11.2026).
+
 **Abmeldezeile:** In Step 1 und Step 3 (den Mails, die einen Thread öffnen) steht nach einer
 Leerzeile unter der Signatur genau diese Zeile, ohne „PS:“ und nie vor dem CTA: „Falls das gerade
-kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“ Sie-Form: „Falls
-das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid, dann melde ich mich nicht mehr.“
-Sie zählt nicht zum Wortlimit. Den technischen Abmeldelink (List-Unsubscribe) setzt das
+kein Thema für dich ist, gib mir kurz Bescheid.“ Sie-Form: „Falls das gerade kein Thema für Sie
+ist, geben Sie mir kurz Bescheid.“ (gekürzt am 05.11.2026; die frühere Zeile „…, dann melde ich
+mich nicht mehr.“ steht nur noch in bestehenden Kampagnen). Sie zählt nicht zum Wortlimit. Den technischen Abmeldelink (List-Unsubscribe) setzt das
 Versandtool zusätzlich.
 
 ## Intro-Regeln (`{{ai.intro}}`)
@@ -782,7 +786,8 @@ Hinweis, der begründet werden muss.
 | Anrede überall | jeder Step enthält `{{ai.hallo}}` | weich |
 | Umlaute | keine Transliteration (fuer, ueber, gruess, koennen, moechte, groess, persoenlich, moeglich, waere, haette …) in Sequenz, Prompts und Konfiguration | hart |
 | Keine Opt-out-Fachsprache | kein „STOPP“, „Stop“, „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“ in Betreff, Body und unter der Signatur | hart |
-| Abmeldezeile | Step 1 und 3 enden nach der Signatur mit der festen Abmeldezeile („… dann melde ich mich nicht mehr.“) | weich |
+| Abmeldezeile | Step 1 und 3 enden nach der Signatur mit der festen Abmeldezeile („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.“; erkannt an „kein Thema für“, die frühere Fassung zählt auch) | weich |
+| Abstand vor dem Gruß | zwei Leerzeilen zwischen dem letzten Satz und der Grußformel | weich |
 
 ## Verwandt
 

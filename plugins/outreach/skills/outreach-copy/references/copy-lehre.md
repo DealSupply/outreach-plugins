@@ -590,7 +590,7 @@ Der Standard für Step 1 bleibt „kurze Frage“. Als Testmöglichkeit legt man
 
 ## Signatur-Regeln
 
-Die Signatur darf NICHT wie eine Vertriebler-Signatur aussehen. Minimalistisch - Name, Titel, Firma. Fertig. Sie steht als Klartext aus den Angaben des Nutzers im festen Text, nie als `{{sender.*}}`-Variable. Ohne bekannten Absendernamen nur die Grußformel. Ausnahme ist die Signatur aus dem Konto (Kampagne aus dem Start-Satz der App): Dann steht unter der Grußformel `{{accountSignature}}`, und Instantly setzt die Signatur des Versandpostfachs ein, für die dieselben Regeln gelten.
+Die Signatur darf NICHT wie eine Vertriebler-Signatur aussehen. Minimalistisch - Name, Titel, Firma. Fertig. Sie steht als Klartext aus den Angaben des Nutzers im festen Text, nie als `{{sender.*}}`-Variable. Ohne bekannten Absendernamen nur die Grußformel. Vor der Grußformel stehen zwei Leerzeilen, eine mehr als zwischen den Absätzen (05.11.2026). Ausnahme ist die Signatur aus dem Konto (Kampagne aus dem Start-Satz der App): Dann steht unter der Grußformel `{{accountSignature}}`, und Instantly setzt die Signatur des Versandpostfachs ein, für die dieselben Regeln gelten.
 
 **So:**
 
@@ -940,7 +940,7 @@ Diese Punkte haben nichts mit Geschmack zu tun - sie entscheiden, ob die Mail im
 | **Keine Anhänge** | Sofort verdächtig. Erst nach Reply senden |
 | **Keine Bilder, keine Logos im Body** | Gleicher Effekt wie HTML-Layout |
 | **Keine Großschreibung ganzer Wörter** | Klassisches Spam-Merkmal, besonders im Betreff |
-| **Abmeldezeile unter der Signatur** | In Step 1 und Step 3 nach einer Leerzeile unter der Signatur, ohne „PS:“ und nie vor dem CTA, genau: „Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“ (Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid, dann melde ich mich nicht mehr.“). Nie Opt-out-Fachsprache: kein „STOPP“ oder „Stop“, kein „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“, das klingt nach Massenversand. Den technischen Abmeldelink (List-Unsubscribe) setzt das Versandtool zusätzlich. Wer keinen Abmeldeweg findet, klickt stattdessen auf Spam, und die Beschwerdequote ist der Wert, an dem die Zustellung hängt |
+| **Abmeldezeile unter der Signatur** | In Step 1 und Step 3 nach einer Leerzeile unter der Signatur, ohne „PS:“ und nie vor dem CTA, genau: „Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.“ (Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid.“; gekürzt am 05.11.2026). Nie Opt-out-Fachsprache: kein „STOPP“ oder „Stop“, kein „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“, das klingt nach Massenversand. Den technischen Abmeldelink (List-Unsubscribe) setzt das Versandtool zusätzlich. Wer keinen Abmeldeweg findet, klickt stattdessen auf Spam, und die Beschwerdequote ist der Wert, an dem die Zustellung hängt |
 
 Open- und Link-Tracking sind standardmäßig aus. Einschalten nur, wer Öffnungen als Signal nutzt, um sofort (in den ersten Minuten) anzurufen, also selbst Cold Calling macht oder ein Team dafür hat. Eingerichtet wird beides im Versandtool, nicht in der Kampagne (Details in `outreach-launch`, `references/technisches-setup.md`).
 

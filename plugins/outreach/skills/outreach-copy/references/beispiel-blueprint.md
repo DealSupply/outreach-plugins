@@ -112,28 +112,28 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
       {
         "stepNumber": 1,
         "subject": "kurze Frage",
-        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 0,
         "delayUnit": "days"
       },
       {
         "stepNumber": 2,
         "subject": "",
-        "body": "{{ai.hallo}}\n\ndu hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail bei dir angekommen ist.\n\nEin kurzes Ja reicht mir.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\ndu hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail bei dir angekommen ist.\n\nEin kurzes Ja reicht mir.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 3,
         "delayUnit": "days"
       },
       {
         "stepNumber": 3,
         "subject": "kurzes Update",
-        "body": "{{ai.hallo}}\n\nzu dem Entwurf für deine neue Startseite ein Beispiel, was so etwas bringen kann. Bei der Praxis Dr. Sommer in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen. Beim Beauty-Studio Glow in München stieg die Buchungsquote der Behandlungsseiten um 60 Prozent.\n\nWenn du magst, schicke ich dir die Case Study als PDF.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\nzu dem Entwurf für deine neue Startseite ein Beispiel, was so etwas bringen kann. Bei der Praxis Dr. Sommer in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen. Beim Beauty-Studio Glow in München stieg die Buchungsquote der Behandlungsseiten um 60 Prozent.\n\nWenn du magst, schicke ich dir die Case Study als PDF.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 5,
         "delayUnit": "days"
       },
       {
         "stepNumber": 4,
         "subject": "",
-        "body": "{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung. Sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte. Der Entwurf bleibt bei mir liegen, falls das Thema irgendwann wieder aktuell wird.\n\nAlles Gute für die Praxis.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung. Sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte. Der Entwurf bleibt bei mir liegen, falls das Thema irgendwann wieder aktuell wird.\n\nAlles Gute für die Praxis.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 7,
         "delayUnit": "days"
       }
@@ -165,7 +165,7 @@ aus seinen Angaben, nie aus der Vorlage.
 Step 1 `body`:
 
 ```json
-"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau deshalb biete ich aktuell für fünf Praxen im DACH-Raum einen kostenlosen Entwurf für eine neue Startseite mit Online-Terminbuchung an.\n\n{{ai.angebot_ausfuehrung}}\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign"
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau deshalb biete ich aktuell für fünf Praxen im DACH-Raum einen kostenlosen Entwurf für eine neue Startseite mit Online-Terminbuchung an.\n\n{{ai.angebot_ausfuehrung}}\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign"
 ```
 
 Variable:
@@ -187,7 +187,7 @@ online hast.“
 Step 1 `body`:
 
 ```json
-"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suche ich gerade. Ich starte ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\n\n{{ai.angebot_ausfuehrung}}\n\nFalls du dazugehören willst, antworte mir einfach kurz.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign"
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suche ich gerade. Ich starte ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\n\n{{ai.angebot_ausfuehrung}}\n\nFalls du dazugehören willst, antworte mir einfach kurz.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign"
 ```
 
 Variable:

@@ -7,8 +7,8 @@ Aufruf:
 Erwartetes Format (siehe beispiele.md): jede Mail unter einer Überschrift
 "## Step <n>: …" (oder "## Zusatz-Step: Dringlichkeit"), darin eine Zeile
 "Betreff: …" ("Betreff: (leer …)" für Mails im Thread), danach der Body bis
-zur Grußformel ("Viele Grüße" o. Ä.), dann die Signatur und nach einer Leerzeile
-die Abmeldezeile (Step 1 und 3).
+zur Grußformel ("Viele Grüße" o. Ä., nach zwei Leerzeilen), dann die Signatur und
+nach einer Leerzeile die Abmeldezeile (Step 1 und 3).
 
 Exit-Code 0: keine harten Fehler. Exit-Code 1: mindestens ein harter Fehler.
 Hinweise (weich) sind kein Fehler, müssen aber begründet werden können.
@@ -47,7 +47,10 @@ GREETING = re.compile(r"^(viele|beste|liebe|herzliche|schöne)\s+grüße\b|^grü
                       re.IGNORECASE)
 HEADING = re.compile(r"^##\s+(Zusatz-Step|Step)\b\s*(\d*)(.*)$", re.IGNORECASE)
 OPT_OUT = r"\b(stopp?|abmeld\w*|abbestell\w*|austragen|unsubscribe|opt-?out)\b"
-OPT_OUT_LINE = "melde ich mich nicht mehr"
+# Abmeldezeile seit 05.11.2026 „Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.“;
+# die frühere Fassung „…, dann melde ich mich nicht mehr.“ trägt dasselbe Merkmal.
+OPT_OUT_LINES = ("kein thema für", "a priority right now")
+SIGN_OFF_GAP = 2  # Leerzeilen zwischen letztem Satz und Grußformel
 ANNOUNCE = r"\b(website|webseite|entwurf|idee|ideen|konzept|angebot|setup|anzeigen)\b.*\bfür\b|ist fertig"
 
 
@@ -58,7 +61,8 @@ def parse(text):
         if m:
             current = {"title": line.strip("# ").strip(), "kind": m.group(1).lower(),
                        "num": int(m.group(2)) if m.group(2) else None, "rest": m.group(3),
-                       "subject": None, "body": [], "sig": [], "tail": [], "in_sig": False}
+                       "subject": None, "body": [], "sig": [], "tail": [], "in_sig": False,
+                       "blank": 0, "gap": None}
             mails.append(current)
             continue
         if current is None:
@@ -85,9 +89,13 @@ def parse(text):
         if GREETING.match(stripped):
             current["in_sig"] = True
             current["sig"].append(stripped)
+            current["gap"] = current["blank"] if current["body"] else None
             continue
         if stripped:
             current["body"].append(stripped)
+            current["blank"] = 0
+        else:
+            current["blank"] += 1
     return mails
 
 
@@ -184,8 +192,10 @@ def check(mail):
     hit = re.search(OPT_OUT, "\n".join([subject, body] + mail["sig"] + mail["tail"]).lower())
     if hit:
         hard.append(f"Opt-out-Fachsprache: „{hit.group(0)}“, stattdessen die feste Abmeldezeile")
-    if needs_subject and not any(OPT_OUT_LINE in line.lower() for line in mail["tail"]):
+    if needs_subject and not any(marker in line.lower() for line in mail["tail"] for marker in OPT_OUT_LINES):
         soft.append("Abmeldezeile unter der Signatur fehlt (Step 1 und 3)")
+    if mail["gap"] is not None and mail["gap"] != SIGN_OFF_GAP:
+        soft.append(f"vor der Grußformel {mail['gap']} Leerzeile(n), erwartet {SIGN_OFF_GAP} (eine mehr als zwischen den Absätzen)")
     hit = re.search(TRANSLIT, full.lower())
     if hit:
         hard.append(f"Umlaut-Ersatz: „{hit.group(0)}“")

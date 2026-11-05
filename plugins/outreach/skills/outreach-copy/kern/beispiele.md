@@ -37,11 +37,12 @@ Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandl
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
+
 Viele Grüße
 Jonas Weber
 Inhaber - Weber Webdesign
 
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 ## Step 1: Entry Mail, Variante B
 
@@ -57,11 +58,12 @@ Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandl
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
+
 Viele Grüße
 Jonas Weber
 Inhaber - Weber Webdesign
 
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 Variante B ändert nur einen Hebel: die Offer-Formulierung aus Sicht der Patienten statt als
 Funktionsliste.
@@ -75,6 +77,7 @@ Hallo {{Vorname}},
 du hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail bei dir angekommen ist.
 
 Ein kurzes Ja reicht mir.
+
 
 Viele Grüße
 Jonas Weber
@@ -90,11 +93,12 @@ bei einer Zahnarztpraxis in Stuttgart haben sich die Online-Terminanfragen nach 
 
 Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.
 
+
 Viele Grüße
 Jonas Weber
 Inhaber - Weber Webdesign
 
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 ## Step 4: Abschied mit Routing-Hinweis
 
@@ -105,6 +109,7 @@ Hallo {{Vorname}},
 da ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung. Sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte.
 
 Alles Gute für die Praxis.
+
 
 Viele Grüße
 Jonas Weber
@@ -138,11 +143,12 @@ Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige Anzeigente
 
 Wenn das für dich spannend klingt, antworte mir einfach kurz.
 
+
 Viele Grüße
 Tobias Kern
 Co-Founder - Kern Media
 
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 Der Satz nach dem Angebot („Darin wären …“) wird bei Karte A je Lead geschrieben, aus Recherche und
 Website des Leads, im Konjunktiv und nie als erledigte Arbeit.
@@ -161,11 +167,12 @@ Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sags
 
 Falls du dazugehören willst, antworte mir einfach kurz.
 
+
 Viele Grüße
 Paul Lehmann
 Gründer - Lehmann Outreach
 
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 Der Rahmensatz („Dabei schreibe ich dir …“) wird bei Karte B je Lead geschrieben: was der
 Empfänger im Pilot bekommt und was er dafür gibt, nur aus der Lieferzusage.
@@ -184,11 +191,12 @@ Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen 
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
+
 Viele Grüße
 Lena Brandt
 Geschäftsführerin - Brandt Online Marketing GmbH
 
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 ## Step 1: Entry Mail, Karte E
 
@@ -202,8 +210,9 @@ Genau solche Handwerksbetriebe suchen wir als Partner. Wir haben regelmäßig An
 
 Wäre das grundsätzlich interessant?
 
+
 Viele Grüße
 Felix Hartmann
 Geschäftsführer - Hartmann Architekten
 
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
