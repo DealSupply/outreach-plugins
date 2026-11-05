@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-05 – outreach 0.5.3
+
+Stand der Copy-Nacharbeit (Paket 1): Mail 3 und die Schlussfragen je Karte folgen der App.
+
+**outreach**
+- `outreach-copy` → Mail 3 endet mit genau einer Frage, der Schlussfrage aus Mail 1 (mit dem Wort für die Sache, wo die Karte eins hat); die Beispiele für Step 3 enden nicht mehr mit „melde dich gerne“.
+- `outreach-copy` → Schlussfragen je Karte wie in der App, mit Sie-Form: A „Wäre es in Ordnung, wenn ich das auch für dich erstelle? …“, B „Wärst du grundsätzlich offen dafür?“, C unverändert, D „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? …“, E „Wäre das grundsätzlich interessant?“.
+- `outreach-copy` → Betreff von Step 1 bei jeder Karte „kurze Frage“; die Karten-Betreffs („Meeting …“, „Anfrage für …“, „Deine Förderung“, „Partnerschaft …?“) entfallen. Nur Step 1 trägt einen Betreff.
+- `beispiel-blueprint.md` → Step 3 mit einem Beleg direkt nach der Anrede und der Schlussfrage aus Mail 1; Varianten A und B mit ihren Schlussfragen.
+
 ## 2026-11-05 – outreach 0.5.2, fulfillment 0.1.3
 
 Führt zwei getrennt gewachsene Stände zusammen: die Linie 0.5.x auf GitHub (Workspaces, Export, Kampagnensprache, Start-Satz aus der App mit `{{accountSignature}}`) und die lokale Linie 0.4.2 bis 0.4.8 (Copy-Kern, Chance-Winkel, Abmeldezeile, Import, Verbindung `dealsupply`, Versand-Setup, zweiter Satz zum Angebot, Schlussfrage ohne „Link“). Beide Einträge unten bleiben gültig; die Versionsnummern 0.4.x und fulfillment 0.1.1/0.1.2 der lokalen Linie wurden nie veröffentlicht.
