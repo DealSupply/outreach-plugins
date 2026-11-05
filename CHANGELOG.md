@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-11-05 – outreach 0.6.0
+
+Passt zu ListM8 MCP 4.10.0 (Sammelstand des Redesigns, DS-103). Die Verbindung zieht von `outreach.akquise.de` nach `app.dealsupply.ai`.
+
+**outreach** (Verbindung `dealsupply`)
+- `.mcp.json`, `mcp.json` → Die mitgelieferte MCP-Verbindung heißt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1`; die Verbindung `akquise` (`outreach.akquise.de`) entfällt. Nach dem Update `dealsupply` einmal anmelden (Claude Code `/mcp`, Claude App unter Connectors, Codex `codex mcp login dealsupply`); eine von Hand angelegte Verbindung `akquise` entfernen.
+- `outreach-setup`, README → Einrichtung mit `dealsupply`, Hinweis zum Umstieg von `akquise`, Kunden anderer Outreach-Apps lassen `dealsupply` unverbunden.
+- Live-Ansicht → Standard-Server `dealsupply`, Links in die App auf `app.dealsupply.ai`; Server mit anderem Namen (auch ein altes `akquise`) erkennt sie weiter an ihren Tools. Tests umgestellt.
+
+**outreach** (Intro-Varianten mit Tags, MCP 4.10.0)
+- `outreach-generate`, `lead-agent` → Intro-Variablen aus `emailGeneration.introVariables` in Rangfolge (`intro` = Variante A, `intro_b` …), jede mit eigenem Anker nach dem Block INTRO-VARIANTEN UND TAGS im `systemPrompt`. `expectedOutput` wörtlich übernehmen, also je Intro-Variable `<name>__anker` und `<name>__schluss` mitschicken. Eine weitere Variante ohne guten eigenen Anker ist ein Rückfall (`"<name>__anker": "rueckfall"`, leerer Wert; gespeichert wird das `intro`). Zwei selbst geschriebene Varianten enden nie gleich, sonst `validation_failed`. `save_lead_variables`-Referenz mit `tags_written` und `fallbacks`.
+- `lead-agent` (Nachbessern) → unveränderte Variablen mit ihren Tags aus `anchorWritten`/`closingWritten` zurückschreiben; `notStored`-Zeilen wieder als Rückfall schicken, nie den Text von `intro` kopieren.
+- `outreach-verify`, `verify-agent` → `get_lead_variables` mit `anchorWritten`, `closingWritten` und `notStored`: Eine `notStored`-Zeile ist eine Variante im Rückfall auf `intro`, kein fehlender Wert und kein Ablehnungsgrund.
+- Ältere Server ohne Tags in `expectedOutput`: Tags werden nicht mitgeschickt, alles bleibt wie bisher.
+
 ## 2026-11-01 – outreach 0.5.1
 
 Passt zu ListM8 v4.18 mit dem Weg „Mit deiner KI“ (LISTM8-86, MCP 4.7.0, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.

@@ -41,17 +41,17 @@ const locals = atom({ plugin: 'outreach', key: 'locals' } as const, {})
 const origins = atom({ plugin: 'outreach', key: 'origins' } as const, {})
 const frame = atom({ plugin: 'outreach', key: 'frame' } as const, 0)
 const folded = atom({ plugin: 'outreach', key: 'folded' } as const, false)
-let configuredServer = 'akquise'
+let configuredServer = 'dealsupply'
 let poller: { cancel: () => void } | null = null
 const missedRounds = new Map<string, number>()
 let spinner: { cancel: () => void } | null = null
 
-let base = 'https://outreach.akquise.de'
+let base = 'https://app.dealsupply.ai'
 
 /**
  * Which MCP servers speak the outreach tools. A server is recognised by
  * what it offers, not by its name: every customer names it as they like when
- * setting it up ("akquise", "listm8", "Outreach" ...), and one session may hold
+ * setting it up ("dealsupply", "akquise", "listm8", "Outreach" ...), and one session may hold
  * several (a paid account and a local one). Cached per session; a server first
  * seen later (still connecting at start) is looked up when its first call comes.
  */
@@ -99,7 +99,7 @@ const recognize = async ($: EngineInterface, tool: string): Promise<Recognized |
 }
 
 /** Every server recognised now, the configured one included. */
-const akquiseServers = async ($: EngineInterface): Promise<string[]> => {
+const outreachServers = async ($: EngineInterface): Promise<string[]> => {
   await refreshServers($)
   const found = [...knownServers].filter(([, ok]) => ok).map(([srv]) => srv)
   return found.includes(configuredServer) ? found : [...found, configuredServer]
@@ -949,7 +949,7 @@ const statusCommand = async ($: EngineInterface, e: { args?: string }) => {
   await update($, folded, () => false)
   let active = 0
   let reached = 0
-  for (const server of await akquiseServers($)) {
+  for (const server of await outreachServers($)) {
     try {
       const listed = await call($, server, 'list_lead_runs', { active_only: true })
       reached += 1
@@ -963,12 +963,12 @@ const statusCommand = async ($: EngineInterface, e: { args?: string }) => {
 }
 
 export const register: Register = (on, options) => {
-  configuredServer = String(options.mcpServer ?? 'akquise').replace(/[^A-Za-z0-9_-]/g, '_')
+  configuredServer = String(options.mcpServer ?? 'dealsupply').replace(/[^A-Za-z0-9_-]/g, '_')
   knownServers = new Map()
   poller = null
   spinner = null
   missedRounds.clear()
-  base = String(options.appUrl ?? 'https://outreach.akquise.de')
+  base = String(options.appUrl ?? 'https://app.dealsupply.ai')
 
   // A standalone tool row: our card in place of the engine's result block.
   on('ui.render', { component: 'ToolResult' }, async ($, e, next) => {
@@ -977,7 +977,7 @@ export const register: Register = (on, options) => {
     return card ?? next(e)
   })
 
-  // Lookups like list_leads are folded into one group line ("Called akquise …"):
+  // Lookups like list_leads are folded into one group line ("Called dealsupply …"):
   // the engine's line stays, our cards follow beneath it.
   on('ui.render', { component: 'ToolGroup' }, async ($, e, next) => {
     const el = $.ui.resolve(e)

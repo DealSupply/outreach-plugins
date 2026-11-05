@@ -29,7 +29,8 @@ ihm mit `art` und `grund`, was zu tun ist.
 
 1. `get_lead_variables(campaign_id, lead_id)`: Variablen, Recherche, Qualifizierung. Die Versandadresse ist
    `lead.sendingEmail` (kann eine persönliche Adresse aus der Recherche sein); `lead.email` ist nur die
-   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`.
+   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`. Eine Zeile mit `notStored: true` ist eine
+   weitere Intro-Variante im Rückfall auf `intro` (gleicher Text), kein fehlender Wert und kein Befund.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
    Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
