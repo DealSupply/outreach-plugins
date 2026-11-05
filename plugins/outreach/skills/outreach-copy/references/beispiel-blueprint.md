@@ -17,12 +17,13 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
 |---|---|---|
 | Offer-Karte | C: Konkretes Deliverable (Reziprozität) | kleine Zielgruppe, hohe Reply Rate nötig |
 | Marketing-Offer | fertiger Entwurf der neuen Startseite inklusive Online-Terminbuchungs-Flow | Deliverable, kein Gespräch; vom Nutzer lieferbar |
-| Feinheiten-Satz | „Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken, und werde morgen mit dem Entwurf fertig.“ | Pflicht bei Karte C, eigener Absatz, genau ein On-Top-Detail |
+| Zweiter Satz zum Angebot | Feinheiten-Satz: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.“ | bei Karte C der Fortschritt als fester Text, eigener Absatz, genau ein On-Top-Detail; das „morgen“ steht im Schlusssatz. Bei Karte A und B schreibt ihn die KI je Lead, siehe „Variante Karte A und B“ unten |
+| Schlusssatz | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ | Standard bei Karte C, ohne „Link“ |
 | Ansprache | `salutation: "du"`: „Hallo Vorname,“ (Person der Versandadresse, bei info@ o. Ä. der Inhaber aus der Recherche), Fallback „Hallo,“, durchgehend du/dir/dein | Du-Form, eine Person (Inhaberin/Inhaber) |
 | Betreffs | Step 1 „kurze Frage“, Step 3 „kurzes Update“, Step 2 und 4 leer | Entwurfs-Angebot (Karte C): Frage statt Ankündigung; Step 2 antwortet im Thread von Mail 1, Step 3 öffnet einen neuen Thread, Step 4 antwortet darin |
 | Sequenz | 4 Steps, `delayDays` 0/3/5/7 | Standard; Step 3 ist der neue Winkel mit Social Proof, Step 4 der Abschied mit Routing-Hinweis; ohne echten Zeit- oder Kapazitätsgrund des Nutzers keine Dringlichkeits-Mail |
 | Sperrliste | Angstpatienten, Lachgas, Sedierung/Narkose, Kinderbehandlung, Notdienst, Prophylaxe/Dentalhygiene, digitaler Scan/Abdruck, Implantate allgemein; für Beauty und Dermatologie Botox/Hyaluron, Microneedling, Laser-Haarentfernung | branchenübliche Leistungen tragen keinen Opener (Austauschtest); steht gleichlautend in `researchAgentConfig.additionalPrompt` und im `intro`-Prompt |
-| Wörter (fester Text ohne Signatur) | 57 / 23 / 72 / 55 | Step 1 mit Anrede und Bezug (bis 2 Sätze) etwa 85-95, unter 120 |
+| Wörter (fester Text ohne Signatur) | 51 / 23 / 72 / 55 | Step 1 mit Anrede und Bezug (bis 2 Sätze) etwa 80-90, unter 120 |
 
 ## Blueprint
 
@@ -68,7 +69,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
           "status": "confirmed"
         },
         "cta": {
-          "value": "Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.",
+          "value": "Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.",
           "source": "answer",
           "status": "confirmed"
         }
@@ -109,7 +110,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
       {
         "stepNumber": 1,
         "subject": "kurze Frage",
-        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken, und werde morgen mit dem Entwurf fertig.\n\nWäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 0,
         "delayUnit": "days"
       },
@@ -139,6 +140,68 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
 }
 ```
 
+## Variante Karte A und B: `angebot_ausfuehrung`
+
+Wählt der Nutzer Karte A (kostenlose Teildienstleistung) oder B (Pilotprojekt), gibt es keinen
+Feinheiten-Satz: Er behauptet Arbeit, die es vor der Antwort nicht gibt. Den zweiten Satz zum
+Angebot schreibt die KI je Lead als AI-Variable `angebot_ausfuehrung`, als eigener Absatz direkt
+nach dem Angebotssatz (Regeln in `SKILL.md`, „Anatomie der Entry-Mail“). Gegenüber dem Blueprint
+oben ändern sich vier Stellen gemeinsam:
+
+1. `aiVariables`: `angebot_ausfuehrung` kommt nach `intro` dazu (`sortOrder` 3, mit `firma` 4).
+2. Step 1 `body`: Angebotssatz der Karte, darunter `{{ai.angebot_ausfuehrung}}`, darunter der CTA der Karte.
+3. `intro`-Prompt: Der feste Folgesatz heißt „Genau deshalb …“ (A) bzw. „Genau solche Praxen …“ (B)
+   statt „Deswegen war ich so frei …“, und das Angebot ist kein fertig vorbereiteter Entwurf.
+4. `offer_contract`: Titel und CTA der Karte; Betreff von Step 1 bei A „Meeting {{ai.firma}} & Jonas“,
+   bei B „Anfrage für {{ai.firma}}“, ohne `firma` jeweils „kurze Frage“.
+
+Die Lieferzusage im Prompt ist das, was der Nutzer nach einer Antwort wirklich liefert; sie kommt
+aus seinen Angaben, nie aus der Vorlage.
+
+### Karte A: Inhaltssatz
+
+Step 1 `body`:
+
+```json
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau deshalb biete ich aktuell für fünf Praxen im DACH-Raum einen kostenlosen Entwurf für eine neue Startseite mit Online-Terminbuchung an.\n\n{{ai.angebot_ausfuehrung}}\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign"
+```
+
+Variable:
+
+```json
+{
+  "name": "angebot_ausfuehrung",
+  "prompt": "Du schreibst genau einen Satz für eine Cold-Mail. Absender ist Jonas Weber, selbstständiger Webdesigner, der Websites für inhabergeführte ästhetische Praxen baut (Zahnärzte mit Ästhetik-Fokus, Beauty-Studios, dermatologische Privatpraxen im DACH-Raum). Die Mail spricht die Person in Du-Form an.\n\nDein Satz steht als eigener Absatz direkt nach diesem festen Angebotssatz: \"Genau deshalb biete ich aktuell für fünf Praxen im DACH-Raum einen kostenlosen Entwurf für eine neue Startseite mit Online-Terminbuchung an.\" Danach folgt fest: \"Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\"\n\nAufgabe: Beschreibe, was für DIESE Praxis konkret im Entwurf drin wäre, passend zu Recherche und Website des Leads. Schreibe im Konjunktiv (\"Darin wären ...\", \"Darin stünden ...\"), weil der Entwurf erst nach einer Antwort entsteht.\n\nLieferzusage, nur daraus wählen: die Behandlungen, die die Praxis auf ihrer Website hervorhebt, mit Ablauf und mit Preis, wenn der Preis online steht; ein Profil der Behandlerin oder des Behandlers; echte Bewertungen; ein Buchungsknopf für die Online-Terminbuchung; gebaut aus den Texten und Fotos, die die Praxis schon online hat.\n\nNimm aus der Recherche ein oder zwei konkrete Inhalte dieser Praxis (zum Beispiel die Behandlungen, die die Website hervorhebt, oder das Behandlerteam) und verbinde sie mit dem, was im Entwurf stünde. Beispiel nur für Form und Ton, nicht wörtlich übernehmen: \"Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.\"\n\nStreng verboten:\n- Erledigte Arbeit behaupten: kein \"erstellt\", \"vorbereitet\", \"gebaut habe\", \"liegt bereit\", \"ist fertig\", kein \"Ich bin gerade noch an den letzten Feinheiten dran\".\n- Inhalte, die nicht in der Lieferzusage stehen (kein Logo, keine Unterseiten, keine Versprechen zu Google-Platzierungen oder mehr Terminen).\n- Zahlen und Ränge, die weder Lieferzusage noch Recherche belegt: \"meistgebucht\" oder \"drei\" nur mit Beleg, sonst \"die Behandlungen, die du auf deiner Website hervorhebst\".\n- Fristen, Gespräche, Calls, Termine.\n- Eine Frage oder Bitte: der Schlusssatz folgt fest.\n- Ein zweites Angebot, ein Pitch über den Absender, Kritik an der bestehenden Website.\n- Platzhalter in Klammern, Gedankenstriche, Emojis.\n\nForm: genau ein Satz, höchstens 25 Wörter, beginnt mit einem Großbuchstaben, Du-Form im Singular (du, dein, dir, nie ihr, euch, Sie).\n\nFallback: Liefert die Recherche keinen passenden Inhalt, schreibe genau diesen Satz: \"Darin wären deine wichtigsten Behandlungen mit Ablauf, echten Bewertungen und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.\"\n\nDeutsche Rechtschreibung mit echten Umlauten und ß.",
+  "sortOrder": 3
+}
+```
+
+Ein Wert für einen Lead könnte lauten: „Darin wären dein Bleaching und die Veneers mit Ablauf und
+Preis, deine Bewertungen und ein Buchungsknopf, gebaut aus den Texten und Fotos, die du schon
+online hast.“
+
+### Karte B: Rahmensatz
+
+Step 1 `body`:
+
+```json
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suche ich gerade. Ich starte ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\n\n{{ai.angebot_ausfuehrung}}\n\nFalls du dazugehören willst, antworte mir einfach kurz.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign"
+```
+
+Variable:
+
+```json
+{
+  "name": "angebot_ausfuehrung",
+  "prompt": "Du schreibst genau einen Satz für eine Cold-Mail. Absender ist Jonas Weber, selbstständiger Webdesigner, der Websites für inhabergeführte ästhetische Praxen baut (Zahnärzte mit Ästhetik-Fokus, Beauty-Studios, dermatologische Privatpraxen im DACH-Raum). Die Mail spricht die Person in Du-Form an.\n\nDein Satz steht als eigener Absatz direkt nach diesem festen Angebotstext: \"Genau solche Praxen suche ich gerade. Ich starte ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\" Danach folgt fest: \"Falls du dazugehören willst, antworte mir einfach kurz.\"\n\nAufgabe: Beschreibe den Rahmen des Pilots für DIESE Praxis: was sie im Pilot bekommt und was sie dafür gibt, passend zu Recherche und Website des Leads.\n\nLieferzusage, nur daraus wählen: Im Pilot baut Jonas der Praxis die neue Startseite mit Online-Terminbuchung kostenlos, aus den Texten und Fotos, die sie schon online hat. Die Praxis gibt dafür ehrliche Rückmeldung, wie die Seite bei ihren Patienten ankommt.\n\nNimm aus der Recherche höchstens einen konkreten Inhalt dieser Praxis (zum Beispiel eine Behandlung, die die Website hervorhebt), wenn er natürlich in den Satz passt. Beispiel nur für Form und Ton, nicht wörtlich übernehmen: \"Dabei baue ich dir die neue Startseite mit Online-Terminbuchung kostenlos, du sagst mir dafür ehrlich, wie sie bei deinen Patienten ankommt.\"\n\nStreng verboten:\n- Erledigte Arbeit behaupten: kein \"erstellt\", \"vorbereitet\", \"gebaut habe\", \"liegt bereit\", \"ist fertig\", kein \"Ich bin gerade noch an den letzten Feinheiten dran\".\n- Leistungen oder Gegenleistungen, die nicht in der Lieferzusage stehen (keine Bezahlung, keine Referenzpflicht, keine Versprechen zu mehr Terminen).\n- Zahlen, die weder Lieferzusage noch Recherche belegt.\n- Fristen, Gespräche, Calls, Termine.\n- Eine Frage oder Bitte: der Schlusssatz folgt fest.\n- Ein zweites Angebot, ein Pitch über den Absender, Kritik an der bestehenden Website, künstliche Knappheit.\n- Platzhalter in Klammern, Gedankenstriche, Emojis.\n\nForm: genau ein Satz, höchstens 25 Wörter, beginnt mit einem Großbuchstaben, Du-Form im Singular (du, dein, dir, nie ihr, euch, Sie).\n\nFallback: Liefert die Recherche keinen passenden Inhalt, schreibe genau diesen Satz: \"Dabei baue ich dir die neue Startseite mit Online-Terminbuchung kostenlos, du sagst mir dafür ehrlich, was du davon hältst.\"\n\nDeutsche Rechtschreibung mit echten Umlauten und ß.",
+  "sortOrder": 3
+}
+```
+
+Ein Wert für einen Lead könnte lauten: „Dabei baue ich dir die neue Startseite mit
+Online-Terminbuchung für dein Bleaching kostenlos, du sagst mir dafür ehrlich, wie sie bei deinen
+Patienten ankommt.“
+
 ## Variante der Ansprache: Sie
 
 Standard ist `du` im Singular. Ohne benennbaren Ansprechpartner lautet der Gruß „Hallo,“ und der
@@ -150,7 +213,7 @@ Pronomen im festen Sequenztext (inklusive `offer_contract.cta` und der Pronomen-
 
 | `salutation` | `hallo`-Regel im Prompt | fester Text, Beispiel Step 1 |
 |---|---|---|
-| `sie` | „Hallo Frau <Nachname>,“ / „Hallo Herr <Nachname>,“, Titel nur wenn belegt; Fallback „Guten Tag,“ | „Deswegen war ich so frei und habe Ihnen einen kompletten Entwurf … erstellt …“ / „Wäre es in Ordnung, wenn ich Ihnen das zusende? Völlig unverbindlich natürlich.“ |
+| `sie` | „Hallo Frau <Nachname>,“ / „Hallo Herr <Nachname>,“, Titel nur wenn belegt; Fallback „Guten Tag,“ | „Deswegen war ich so frei und habe Ihnen einen kompletten Entwurf … erstellt …“ / „Wäre es in Ordnung, wenn ich es Ihnen morgen zusende? Völlig unverbindlich natürlich.“ |
 
 Nie „Hallo Herr/Frau …“ zusammen mit Du-Text.
 

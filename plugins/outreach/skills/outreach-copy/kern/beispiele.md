@@ -33,9 +33,9 @@ Hallo {{Vorname}},
 
 Deswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebauter Online-Terminbuchung.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken, und werde morgen mit dem Entwurf fertig.
+Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Jonas Weber
@@ -53,9 +53,9 @@ Hallo {{Vorname}},
 
 Deswegen war ich so frei und habe dir einen Entwurf für deine neue Startseite gebaut, auf der Patienten ihren Termin direkt online buchen können.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken, und werde morgen mit dem Entwurf fertig.
+Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Jonas Weber
@@ -132,9 +132,9 @@ Hallo Max,
 
 mir ist aufgefallen, dass jedes Objekt bei dir ein festes Reinigungsteam hat, das man vorab mit Foto sieht, das fand ich richtig sympathisch.
 
-Genau deshalb bereiten wir aktuell für zwei Unternehmen in der Region München ein kostenloses Google Ads Setup vor.
+Genau deshalb bieten wir aktuell für zwei Unternehmen in der Region München ein kostenloses Google Ads Setup an.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Suchbegriffen für dein Gewerk, und werde morgen mit dem Setup fertig.
+Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige Anzeigentexte und die Ausrichtung auf dein Einzugsgebiet rund um München.
 
 Wenn das für dich spannend klingt, antworte mir einfach kurz.
 
@@ -143,6 +143,32 @@ Tobias Kern
 Co-Founder - Kern Media
 
 Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+
+Der Satz nach dem Angebot („Darin wären …“) wird bei Karte A je Lead geschrieben, aus Recherche und
+Website des Leads, im Konjunktiv und nie als erledigte Arbeit.
+
+## Step 1: Entry Mail, Karte B
+
+Betreff: Anfrage für {{Firma}}
+
+Hallo Max,
+
+mir ist aufgefallen, dass du auf deiner Website jeden Kunden mit einer eigenen kleinen Fallstudie vorstellst, das hat mir gut gefallen.
+
+Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für persönliche Erstmails mit drei Agenturen in Köln.
+
+Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst.
+
+Falls du dazugehören willst, antworte mir einfach kurz.
+
+Viele Grüße
+Paul Lehmann
+Gründer - Lehmann Outreach
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.
+
+Der Rahmensatz („Dabei schreibe ich dir …“) wird bei Karte B je Lead geschrieben: was der
+Empfänger im Pilot bekommt und was er dafür gibt, nur aus der Lieferzusage.
 
 ## Step 1: Entry Mail, Karte C
 
@@ -154,9 +180,9 @@ ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lie
 
 Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln für deinen Shop aufgenommen.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen aus deinem Sortiment, und werde morgen mit dem Video fertig.
+Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen aus deinem Sortiment.
 
-Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Lena Brandt

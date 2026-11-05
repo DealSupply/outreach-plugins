@@ -99,9 +99,9 @@ Text nie.
 Hallo {{Vorname}},            1. Anrede
 {{Intro}}                     2. individueller Bezug: Lob am konkreten Detail (Teil 2)
 Überleitung + Offer           3. fester Text, für alle Leads gleich, benennt KEIN lead-spezifisches
-                                 Problem; bei Karte A und C als erledigte Arbeit
-Feinheiten-Satz               4. eigener Absatz; Pflicht bei A und C, optional bei B,
-                                 entfällt bei D und E
+                                 Problem; bei Karte C als erledigte Arbeit, bei A als Angebot
+Zweiter Satz zum Angebot      4. eigener Absatz, je Karte: C Feinheiten-Satz (fest), A und B
+                                 je Lead geschrieben wie das Intro, D und E keiner
 EIN Frage-CTA                 5. niedrige Hürde
 Signatur im Klartext          6. Grußformel, Name, „Rolle - Firma“
 Abmeldezeile                  7. nach einer Leerzeile unter der Signatur, in Step 1 und Step 3
@@ -111,15 +111,17 @@ Jeder Baustein steht als eigener kurzer Absatz. **Die Mail soll klingen wie eine
 einem Bekannten, nicht wie eine Agentur-Website.**
 
 Die Master-Formel (Kurs Outbound 3.0, Lektion 2.4) in fünf Bausteinen: Lob → „Deswegen …“ →
-konkretes Offer → Fertigstellung („… und werde morgen mit dem Entwurf fertig.“) → CTA mit wenig
-Verpflichtung. „Werde morgen fertig“ wirkt stärker als „bin fertig“: Der Lead sieht, dass gerade
-noch für ihn gearbeitet wird.
+konkretes Offer → Fertigstellung → CTA mit wenig Verpflichtung. Im Kurs trägt der Halbsatz „… und
+werde morgen mit dem Entwurf fertig.“ die Fertigstellung, hier trägt sie das „morgen“ im
+Schlusssatz („… wenn ich es dir morgen zusende?“). „Morgen“ wirkt stärker als „schon fertig“: Der
+Lead sieht, dass gerade noch für ihn gearbeitet wird.
 
 ## Das Marketing Offer in Mail 1
 
 - GENAU EIN Marketing Offer mit GENAU EINEM CTA. Karte und Tests: `marketing-offer.md`.
-- Bei Karte A und C als bereits erledigte Arbeit formulieren („war so frei und habe … erstellt“),
-  nicht als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert.
+- Bei Karte C als bereits erledigte Arbeit formulieren („war so frei und habe … erstellt“),
+  nicht als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert. Bei Karte A ist
+  das Deliverable ein Angebot („bieten … an“), nie erledigte Arbeit.
 - Kein „Lass uns mal sprechen“ ohne vorbereiteten Mehrwert.
 - Das Offer steht NUR in Mail 1. Follow-ups wiederholen es nicht.
 
@@ -147,49 +149,78 @@ Die Klammern füllst du beim Schreiben aus den Angaben des Absenders; im fertige
 Klammer mehr. Beginnt der feste Text mit einem eigenen Lob („Das hat mich neugierig gemacht.“),
 darf das Intro diese Aussage nicht vorwegnehmen.
 
-## Der Feinheiten-Satz (Value Stacking)
+## Der zweite Satz zum Angebot
+
+Stand 05.11.2026: Nach dem Angebotssatz folgt in Mail 1 immer ein zweiter Satz zum Angebot, als
+eigener Absatz zwischen Offer und CTA, passend zur Karte. KEIN zweites Offer, KEIN zweiter CTA:
+Der Satz beschreibt dasselbe Deliverable, nur eine Schicht tiefer.
+
+| Karte | Zweiter Satz | Wer schreibt ihn |
+|:------|:-------------|:-----------------|
+| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz | fester Text |
+| **A: Kostenlose Teildienstleistung** | Inhalt: was für diesen Lead konkret drin wäre, im Konjunktiv | je Lead, wie das Intro |
+| **B: Tester/Pilotprojekt** | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | je Lead, wie das Intro |
+| **D: Förder-Hook, E: Partner gesucht** | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
+
+### Karte C: der Feinheiten-Satz (Value Stacking)
 
 Wortlaut, nicht umformulieren, nicht „Feinschliff“:
 
-„Ich bin gerade noch an den letzten Feinheiten dran, vor allem […], und werde morgen mit […] fertig.“
+„Ich bin gerade noch an den letzten Feinheiten dran, vor allem […].“
 
-- In die erste Klammer kommt genau EIN konkretes On-Top-Detail aus den Angaben des Absenders, das
-  wirklich lieferbar ist. In die zweite das Deliverable („dem Entwurf“, „dem Setup“, „den
-  Anzeigen“). Nichts erfinden.
-- Eigener Absatz zwischen Offer und CTA. KEIN zweites Offer, KEIN zweiter CTA: Der Satz beschreibt
-  dasselbe Deliverable, nur eine Schicht tiefer.
-- Den Halbsatz „und werde morgen … fertig“ nur, wenn der Absender das Deliverable nach der Antwort
-  wirklich bis zum nächsten Tag liefern kann. Sonst endet der Satz nach dem On-Top-Detail.
-- Pflicht bei A und C, optional bei B, entfällt bei D und E.
+- In die Klammer kommt genau EIN konkretes On-Top-Detail aus den Angaben des Absenders, das
+  wirklich lieferbar ist. Nichts erfinden.
+- Das „morgen“ der Fertigstellung steht im Schlusssatz, nicht mehr als Halbsatz „und werde morgen
+  mit … fertig“ im Feinheiten-Satz, sonst stünde es zweimal da.
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
 Buchungssystem erstellt.
 
 Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google
-und KI-Suchmaschinen, und werde morgen mit dem Entwurf fertig.
+und KI-Suchmaschinen.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```
+
+### Karte A und B: der Satz je Lead
+
+Bei A und B gibt es keinen Feinheiten-Satz: Er behauptet Arbeit, die es vor der Antwort nicht
+gibt. Der Satz wird je Lead neu geschrieben, passend zu Recherche und Website des Leads.
+
+- **A, Inhaltssatz:** „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und
+  Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“
+- **B, Rahmensatz:** „Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du
+  sagst mir dafür ehrlich, was du davon hältst.“
+- Nie als erledigte Arbeit: kein „erstellt“, „vorbereitet“, „liegt bereit“, kein
+  Feinheiten-Wortlaut. A steht im Konjunktiv.
+- Nur Inhalte, die die Lieferzusage des Absenders deckt: keine Zahl, die weder Lieferzusage noch
+  Recherche belegt, keine Frist, kein Gespräch, Termin oder Call.
+- Ein Satz, höchstens etwa 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
 
 ## Der CTA
 
 Genau EIN CTA pro Mail. Nie zwei Optionen.
 
-Standard bei Karte A und C ist der CTA der Master-Formel:
-„Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.“
+Standard bei Karte A und C (Stand 05.11.2026):
+„Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“
+Sie-Form: „Wäre es in Ordnung, wenn ich es Ihnen morgen zusende? Völlig unverbindlich natürlich.“
 
 Der Zusatz „Völlig unverbindlich natürlich.“ senkt die Hürde und ist kein zweiter CTA. Er ist an
 echten Kampagnen belegt: In der besten ausgewerteten Kampagne (20,5 % Antwortquote) reagierten
 84 % der positiven Antworten direkt auf diesen Erlaubnis-CTA. „unverbindlich“ gilt deshalb im Body
 nicht als Spam-Wort, im Betreff hat es nichts zu suchen.
 
-Bei einem Website-Entwurf passt auch: „Wäre es in Ordnung, wenn ich dir morgen den Link dazu
-schicke? Völlig unverbindlich natürlich.“
+Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das Setup“),
+steht das Wort an der Stelle von „es“, mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir
+morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ Kein „Link“ im Schlusssatz (nicht
+„… den Link dazu schicke?“), die Sache wird zugesendet. „morgen“ nur, wenn der Absender das
+Deliverable nach der Antwort wirklich bis zum nächsten Tag liefern kann, sonst „… wenn ich es dir
+zusende?“.
 
 | Gut | Warum |
 |:----|:------|
-| „Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.“ | Reziprozität plus Ja/Nein |
+| „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ | Reziprozität plus Ja/Nein |
 | „Darf ich es dir zusenden?“ | Ja/Nein-Frage, eine Sekunde Aufwand |
 | „Antworte mir einfach kurz.“ | Niedrigste Hürde |
 | „Wäre das grundsätzlich interessant?“ | Verpflichtet zu nichts |
@@ -267,7 +298,8 @@ Kann das Versandtool A/B-Tests (etwa Instantly), entstehen zwei Entry-Mail-Varia
 
 - gleiche Offer-Karte, gleiches Offer, nie zwei verschiedene Karten in einem Test
 - Variante B ändert genau EINEN Hebel: Blickwinkel der Offer-Formulierung, das On-Top-Detail im
-  Feinheiten-Satz oder die CTA-Form. So zeigt der Test, was gewirkt hat
+  Feinheiten-Satz (Karte C) bzw. die Vorgabe für den zweiten Satz (A, B) oder die CTA-Form. So
+  zeigt der Test, was gewirkt hat
 - beide Varianten halten alle Regeln dieser Lehre
 - die Follow-ups sind für beide Varianten gleich
 
@@ -567,7 +599,7 @@ Regeln für alle Follow-ups:
 
 | Step | CTA-Charakter | Beispiel |
 |:-----|:--------------|:---------|
-| 1 | Erlaubnis erbitten | „Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.“ |
+| 1 | Erlaubnis erbitten | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ |
 | 2 | nur anstoßen | „Gib mir gerne kurz Bescheid.“ |
 | 3 | offen anbieten | „Falls das für dich relevant ist, melde dich gerne.“ |
 | 4 | Tür offen lassen | „Sag mir gern kurz Bescheid, falls ich mich besser bei jemand anderem melden sollte.“ |
@@ -768,7 +800,8 @@ Korrekturen erzeugen neue Fehler, besonders beim Kürzen.
    Anführungszeichen, Zeichen für Zeichen.
 7. **Spam-Scan.** Betreff und Body gegen die Liste, „kostenlos“ höchstens einmal im Body.
 8. **Struktur-Scan.** Offer nur in Step 1, Intro nur in Step 1, Social Proof nur in Step 3,
-   Feinheiten-Satz bei A und C vorhanden, Betreff nur in Step 1 und 3, kein Doppelpunkt-Opener,
+   zweiter Satz zum Angebot passend zur Karte (C Feinheiten-Satz, A und B Satz je Lead, D und E
+   keiner), kein „Link“ im Schlusssatz, Betreff nur in Step 1 und 3, kein Doppelpunkt-Opener,
    Abmeldezeile unter der Signatur von Step 1 und 3, kein „STOPP“ und keine Opt-out-Fachsprache.
 9. **Anrede-Scan.** Gruß und Pronomen passen zum Modus, kein du/ihr-Wechsel im Satz, Fallback
    „Hallo,“ für Leads ohne Vornamen geklärt.

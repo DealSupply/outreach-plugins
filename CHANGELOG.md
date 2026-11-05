@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-05 – outreach 0.4.8
+
+**outreach**
+- `outreach-copy` → Mail 1 bekommt nach dem Angebotssatz immer einen zweiten Satz zum Angebot, passend zur Karte: bei C der Feinheiten-Satz (Fortschritt, „Ich bin gerade noch an den letzten Feinheiten dran, vor allem …“), bei A ein Inhaltssatz (was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit), bei B ein Rahmensatz (was der Empfänger im Pilot bekommt und was er dafür gibt), bei D und E keiner. Ersetzt „Feinheiten-Satz Pflicht bei A und C, optional bei B“. Bei A und B schreibt die KI den Satz je Lead über die neue Variable `{{ai.angebot_ausfuehrung}}` (eigener Absatz direkt nach dem Angebotssatz); Pflichtinhalt des Prompts, Selbstprüfung und Prüfliste nachgezogen, Beispiele für A und B neu.
+- `outreach-copy` → Schlusssatz ohne „Link“: Standard „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (Sie-Form „… wenn ich es Ihnen morgen zusende? …“), mit Wort für die Sache „… wenn ich dir morgen den Entwurf zusende? …“. Das „morgen“ steht damit im Schlusssatz, der Halbsatz „und werde morgen mit … fertig“ im Feinheiten-Satz entfällt.
+- `beispiel-blueprint.md` → Variante für Karte A und B mit Step-1-Body und ausformuliertem `angebot_ausfuehrung`-Prompt je Karte.
+- `outreach-campaign` → `angebot_ausfuehrung` bei Karte A und B anlegen; `outreach-verify` prüft den zweiten Satz je Karte und den Schlusssatz ohne „Link“.
+- Copy-Kern (`skills/outreach-copy/kern/`) → dieselben Regeln, Beispiele für Karte A und B.
+
 ## 2026-11-01 – outreach 0.4.7
 
 **outreach**

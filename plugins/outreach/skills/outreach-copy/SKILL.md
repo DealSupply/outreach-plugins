@@ -1,13 +1,13 @@
 ---
 name: outreach-copy
-description: 'Use when user says "Cold-Mail schreiben", "Cold-Mail prüfen", "Copy prüfen", "Kampagnen-Copy", "Sequenz schreiben", "Betreffzeile", "Opener", "Intro-Prompt", "hallo-Prompt", "Marketing-Offer formulieren", "Offer schärfen", "Feinheiten-Satz", "Follow-ups schreiben", or wants to write, review or fix the copy of an outreach campaign. Verbindliche Cold-Mail-Copy-Regeln (Anatomie der Entry-Mail, Offer-Karten A-E, Feinheiten-Satz, 4er-Sequenz, Wortlimits, Intro- und Anrede-Regeln, Verbote, Selbstprüfung). outreach-campaign, outreach-generate und outreach-verify laden diesen Skill verbindlich.'
+description: 'Use when user says "Cold-Mail schreiben", "Cold-Mail prüfen", "Copy prüfen", "Kampagnen-Copy", "Sequenz schreiben", "Betreffzeile", "Opener", "Intro-Prompt", "hallo-Prompt", "Marketing-Offer formulieren", "Offer schärfen", "Feinheiten-Satz", "zweiter Angebotssatz", "angebot_ausfuehrung", "Follow-ups schreiben", or wants to write, review or fix the copy of an outreach campaign. Verbindliche Cold-Mail-Copy-Regeln (Anatomie der Entry-Mail, Offer-Karten A-E, zweiter Satz zum Angebot je Karte, 4er-Sequenz, Wortlimits, Intro- und Anrede-Regeln, Verbote, Selbstprüfung). outreach-campaign, outreach-generate und outreach-verify laden diesen Skill verbindlich.'
 ---
 
 # Outreach Copy — die Cold-Mail-Regeln für Kampagnen
 
 Dieser Skill ist die eine Copy-Doktrin für alles, was über den Outreach-MCP an Text entsteht:
-Sequenz (Betreff und Body jedes Steps), die Prompts der AI-Variablen `hallo` und `intro` und
-die pro Lead erzeugten Werte. Er gilt verbindlich für:
+Sequenz (Betreff und Body jedes Steps), die Prompts der AI-Variablen `hallo` und `intro` (bei
+Karte A und B dazu `angebot_ausfuehrung`) und die pro Lead erzeugten Werte. Er gilt verbindlich für:
 
 | Skill | Wann diesen Skill laden |
 |---|---|
@@ -141,8 +141,9 @@ Werbekampagnen-Struktur“, „eine Lead-Liste inklusive Outreach-Sequenz“, �
 Regeln:
 
 - In Mail 1 steht GENAU EIN Marketing-Offer mit GENAU EINEM CTA, der die Antwort auslöst.
-- Bei Karte A und C als bereits erledigte Arbeit formulieren („war so frei und habe … erstellt“),
-  nicht als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert.
+- Bei Karte C als bereits erledigte Arbeit formulieren („war so frei und habe … erstellt“),
+  nicht als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert. Bei Karte A ist
+  das Deliverable ein Angebot („bieten … an“), nie erledigte Arbeit.
 - Kein „Lass uns mal sprechen“ ohne vorbereiteten Mehrwert.
 - Die Überleitung verbindet das Lob mit dem Offer („Genau deshalb …“, „Deswegen war ich so
   frei …“).
@@ -154,47 +155,108 @@ Regeln:
 {{ai.hallo}}                     1. Anrede
 {{ai.intro}}                     2. Lob / positiver Bezug (Intro-Regeln)
 Feste Überleitung + Offer        3. statisch, benennt KEIN lead-spezifisches Problem;
-                                    bei A und C als erledigte Arbeit
-Feinheiten-Satz                  4. eigener Absatz; Pflicht bei A und C, optional bei B,
-                                    entfällt bei D und E
+                                    bei C als erledigte Arbeit, bei A als Angebot
+Zweiter Satz zum Angebot         4. eigener Absatz, je Karte: C Feinheiten-Satz (fest),
+                                    A und B {{ai.angebot_ausfuehrung}} (je Lead), D und E keiner
 EIN Frage-CTA                    5. niedrige Hürde
 Signatur im Klartext             6. Grußformel, Name, „Rolle - Firma“
 Abmeldezeile                     7. nach einer Leerzeile unter der Signatur (Step 1 und 3)
 ```
 
-**Feinheiten-Satz (Value Stacking), wörtlich:** „Ich bin gerade noch an den letzten Feinheiten
-dran, vor allem […], und werde morgen mit […] fertig.“ In die erste Klammer kommt genau EIN konkretes
-On-Top-Detail aus den Angaben des Nutzers, das wirklich lieferbar ist, in die zweite das Deliverable
-(„dem Entwurf“, „dem Setup“, „den Anzeigen“). Nichts erfinden. Er steht als eigener Absatz zwischen
-Offer und CTA, ist KEIN zweites Offer und KEIN zweiter CTA. Nicht „Feinschliff“, nicht
-umformulieren. Den Halbsatz „und werde morgen … fertig“ nur, wenn der Nutzer das Deliverable nach der
-Antwort wirklich bis zum nächsten Tag liefern kann; sonst endet der Satz nach dem On-Top-Detail.
+**Zweiter Satz zum Angebot (Stand 05.11.2026):** Nach dem Angebotssatz folgt in Mail 1 immer ein
+zweiter Satz zum Angebot, als eigener Absatz zwischen Offer und CTA. Er ist KEIN zweites Offer und
+KEIN zweiter CTA, sondern beschreibt dasselbe Deliverable eine Schicht tiefer. Was er sagt, hängt
+von der Karte ab:
 
-**CTA:** Genau einer, nie zwei Optionen. Standard bei Karte A und C ist der CTA der Master-Formel
-(Kurs Outbound 3.0, Lektion 2.4): „Wäre es in Ordnung, wenn ich dir das zusende? Völlig
-unverbindlich natürlich.“ Der Zusatz „Völlig unverbindlich natürlich.“ senkt die Hürde und ist kein
-zweiter CTA. Weitere Beispiele: „Darf ich es dir zusenden?“, „Antworte mir einfach kurz.“, „Wäre das
-grundsätzlich interessant?“. Kein Terminvorschlag und kein Link in Mail 1.
+| Karte | Inhalt des Satzes | Wer schreibt ihn |
+|---|---|---|
+| C: Konkretes Deliverable | Fortschritt: der Feinheiten-Satz | fester Text, für alle Leads gleich |
+| A: Kostenlose Teildienstleistung | Inhalt: was für diesen Lead konkret drin wäre | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| B: Tester/Pilotprojekt | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| D: Förder-Hook, E: Partner gesucht | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
 
-Die Master-Formel in fünf Bausteinen: Lob → „Deswegen …“ → konkretes Offer → Fertigstellung
-(„… und werde morgen mit dem Entwurf fertig.“, hier im Feinheiten-Satz) → CTA mit wenig Verpflichtung.
-„Werde morgen fertig“ wirkt stärker als „bin fertig“: Der Lead sieht, dass gerade noch für ihn
+**Feinheiten-Satz (nur Karte C), wörtlich:** „Ich bin gerade noch an den letzten Feinheiten dran,
+vor allem […].“ In die Klammer kommt genau EIN konkretes On-Top-Detail aus den Angaben des
+Nutzers, das wirklich lieferbar ist. Nichts erfinden. Nicht „Feinschliff“, nicht umformulieren.
+Das „morgen“ der Fertigstellung steht im Schlusssatz („… wenn ich es dir morgen zusende?“), nicht
+mehr als Halbsatz „und werde morgen mit … fertig“ im Feinheiten-Satz, sonst stünde es zweimal da.
+
+**Satz bei Karte A und B (`{{ai.angebot_ausfuehrung}}`):** Den Feinheiten-Satz gibt es hier nicht,
+er behauptet Arbeit, die es vor der Antwort nicht gibt. Die KI schreibt den Satz je Lead neu,
+passend zu Recherche und Website des Leads:
+
+- **A, Inhaltssatz:** was für diesen Lead konkret im Deliverable drin wäre, im Konjunktiv.
+  Beispiel: „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und
+  Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“
+- **B, Rahmensatz:** was der Empfänger im Pilot bekommt und was er dafür gibt. Beispiel: „Dabei
+  schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich,
+  was du davon hältst.“
+- **Grenzen für beide:** nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt
+  bereit“, kein Feinheiten-Wortlaut); nur Inhalte, die die Lieferzusage des Nutzers deckt; keine
+  Zahl, die weder Lieferzusage noch Recherche belegt; keine Frist; kein Gespräch, Termin oder
+  Call; keine Frage, der CTA folgt fest; ein Satz mit höchstens etwa 25 Wörtern; Pronomen gemäß
+  `salutation`.
+- Im Body steht die Variable als eigener Absatz direkt nach dem Angebotssatz. Sie wird je Lead
+  einmal erzeugt und steht deshalb, wie `{{ai.intro}}`, nur in Step 1. Ihren Prompt regelt
+  „Prompts der AI-Variablen“ unten, ausformulierte Prompts für A und B stehen in
+  `references/beispiel-blueprint.md`.
+
+**Schlusssatz (CTA):** Genau einer, nie zwei Optionen. Standard bei Karte A und C (Stand
+05.11.2026): „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich
+natürlich.“ Sie-Form: „Wäre es in Ordnung, wenn ich es Ihnen morgen zusende? Völlig unverbindlich
+natürlich.“ Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das
+Setup“, „die Anzeigen“), steht das Wort an der Stelle von „es“, mit anderer Wortstellung: „Wäre es
+in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ Kein „Link“
+im Schlusssatz (nicht „… wenn ich dir morgen den Link dazu schicke?“), die Sache wird zugesendet.
+„morgen“ nur, wenn der Nutzer das Deliverable nach der Antwort wirklich bis zum nächsten Tag
+liefern kann, sonst „… wenn ich es dir zusende?“. Der Zusatz „Völlig unverbindlich natürlich.“
+senkt die Hürde und ist kein zweiter CTA. Karten mit eigenem CTA behalten ihn (B, D, E, siehe
+`references/marketing-offer.md`); weitere Beispiele: „Darf ich es dir zusenden?“, „Antworte mir
+einfach kurz.“, „Wäre das grundsätzlich interessant?“. Kein Terminvorschlag und kein Link in
+Mail 1.
+
+Die Master-Formel (Kurs Outbound 3.0, Lektion 2.4) in fünf Bausteinen: Lob → „Deswegen …“ →
+konkretes Offer → Fertigstellung → CTA mit wenig Verpflichtung. Im Kurs trägt der Halbsatz „… und
+werde morgen mit dem Entwurf fertig.“ die Fertigstellung, bei uns trägt sie das „morgen“ im
+Schlusssatz. „Morgen“ wirkt stärker als „schon fertig“: Der Lead sieht, dass gerade noch für ihn
 gearbeitet wird.
 
 **Kein Pitch, keine Selbstvorstellung im Body.** Authority und Proof gehören in die Signatur bzw.
 in Step 3. Über den Empfänger schreiben, nie über den Absender („Du bekommst …“, nicht „Wir
 bieten …“).
 
-Muster für Karte C, direkt nach dem Lob-Intro, jeder Baustein ein eigener Absatz:
+Muster je Karte, direkt nach dem Lob-Intro, jeder Baustein ein eigener Absatz. Karte C:
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
 Buchungssystem erstellt.
 
 Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google
-und KI-Suchmaschinen, und werde morgen mit dem Entwurf fertig.
+und KI-Suchmaschinen.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
+```
+
+Karte A (der Satz nach dem Angebot kommt je Lead aus `{{ai.angebot_ausfuehrung}}`):
+
+```
+Genau deshalb bieten wir aktuell für [Anzahl] Praxen in [Region] einen kostenlosen Entwurf
+für eine neue Startseite mit Online-Terminbuchung an.
+
+{{ai.angebot_ausfuehrung}}
+
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
+```
+
+Karte B:
+
+```
+Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für persönliche
+Erstmails mit [Anzahl] Agenturen in [Region].
+
+{{ai.angebot_ausfuehrung}}
+
+Falls du dazugehören willst, antworte mir einfach kurz.
 ```
 
 **Signatur:** Name, Rolle und Firma des ABSENDERS als Klartext aus den Angaben des Nutzers, z. B.
@@ -423,9 +485,10 @@ Beispiele (erfunden, nur Struktur, nie wörtlich übernehmen):
 mit Stärke und Beobachtung, jeden Rückfall als `"lob"`. Der Winkel ist keine Variable und steht
 nie im JSON der Variablen.
 
-## Prompts der AI-Variablen `hallo` und `intro`
+## Prompts der AI-Variablen `hallo`, `intro` und `angebot_ausfuehrung`
 
-Pflicht sind genau diese zwei Variablen (`sortOrder` 1 und 2). Weitere sind optional (z. B.
+Pflicht sind genau diese zwei Variablen (`sortOrder` 1 und 2), bei Karte A und B zusätzlich
+`angebot_ausfuehrung` direkt nach `intro`. Weitere sind optional (z. B.
 `proof`, `research_hook`, oder `firma` als Kurzname, wie `outreach-campaign` ihn vorsieht).
 Namen: nur `a-zA-Z0-9_`, mit Buchstaben beginnend, eindeutig. Jede Variable wird pro Lead EINMAL
 erzeugt: `{{ai.intro}}` steht deshalb NUR in Step 1; Follow-ups nutzen `{{ai.hallo}}` plus festen
@@ -473,7 +536,24 @@ Der `intro`-Prompt MUSS enthalten:
   behauptet nichts Unbelegtes über den Lead („so gut bewertet“, „seit Jahren“, „viele
   zufriedene Kunden“).
 
-Ein vollständig ausformuliertes Paar steht in `references/beispiel-blueprint.md`.
+Der `angebot_ausfuehrung`-Prompt (nur Karte A und B) MUSS enthalten:
+
+- Kontext: Absender, Karte, den festen Angebotssatz davor, den festen Schlusssatz danach und die
+  Lieferzusage des Nutzers (was er nach einer Antwort wirklich liefert);
+- die Aufgabe je Karte: bei A ein Inhaltssatz, was für diesen Lead konkret im Deliverable drin
+  wäre, im Konjunktiv; bei B ein Rahmensatz, was der Empfänger im Pilot bekommt und was er dafür
+  gibt;
+- die Quelle: Recherche und Website des Leads, für jeden Lead neu geschrieben; dazu einen
+  ausformulierten Fallback-Satz aus der Lieferzusage für Leads ohne passenden Fund;
+- die Grenzen: nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt bereit“, kein
+  „Ich bin gerade noch an den letzten Feinheiten dran“), nur Inhalte der Lieferzusage, keine Zahl,
+  die weder Lieferzusage noch Recherche belegt, keine Frist, kein Gespräch oder Termin, kein
+  zweites Angebot, keine Frage;
+- Form: genau ein Satz, höchstens etwa 25 Wörter, beginnt groß (eigener Absatz), Pronomen gemäß
+  `salutation`, keine Platzhalter, keine Gedankenstriche, echte Umlaute.
+
+Ein vollständig ausformuliertes Paar `hallo`/`intro` steht in `references/beispiel-blueprint.md`,
+dazu je ein `angebot_ausfuehrung`-Prompt für Karte A und B.
 
 ## Platzhalter in ListM8
 
@@ -501,7 +581,7 @@ bleibt er leer.
 
 | Step | Rolle | `delayDays` | Wörter max. | Betreff | Inhalt |
 |---|---|---|---|---|---|
-| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, neuer Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + Feinheiten-Satz als eigener Absatz (A/C) + EIN CTA + Signatur |
+| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, neuer Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (C Feinheiten-Satz, A/B `{{ai.angebot_ausfuehrung}}`, D/E keiner) + EIN CTA + Signatur |
 | 2 | Erinnerung | 3 | 50 | leer, Thread von Mail 1 | `{{ai.hallo}}` + nur nachhaken, weich wie eine schnell getippte Nachricht („du hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail angekommen ist“). Kein Doppelpunkt-Opener, kein Offer, kein neuer Aspekt, kein `{{ai.intro}}` |
 | 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | eigener kurzer Betreff, NEUER Thread (z. B. „kurzes Update“) | `{{ai.hallo}}` + EIN Beleg: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Die Mail muss ohne den Verlauf von Mail 1 verständlich sein: höchstens ein Halbsatz Bezug auf das Angebot, kein neues Offer, kein `{{ai.intro}}` |
 | 4 | Abschied mit Routing-Hinweis | 7 | 60 | leer, Thread von Mail 3 | `{{ai.hallo}}` + Tür offen lassen, ohne Druck und ohne Vorwurf + Routing-Hinweis („sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte“). Kein Offer |
@@ -626,6 +706,9 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
     oder „ss“ als Ersatz für ä, ö, ü, ß („fuer“, „Gruesse“, „groesser“, „heisst“)? Ersetzen.
 15. Steht unter der Signatur von Step 1 und Step 3 die feste Abmeldezeile in der Anrede der
     Kampagne, ohne „PS:“, und nirgends „STOPP“ oder andere Opt-out-Fachsprache?
+16. Zweiter Satz zum Angebot in Step 1 passend zur Karte: bei C der Feinheiten-Satz ohne
+    „werde morgen … fertig“, bei A und B `{{ai.angebot_ausfuehrung}}` als eigener Absatz mit
+    einem Prompt nach den Regeln oben, bei D und E keiner? Schlusssatz ohne „Link“?
 
 ## Prüfliste nach Code-Regeln
 
@@ -652,6 +735,8 @@ Hinweis, der begründet werden muss.
 | Betreff ohne Schreien | kein Wort mit 4+ Großbuchstaben, kein „!“ | weich |
 | Ein CTA | kein „oder/alternativ … buchen/klicken/vereinbaren/reservieren/anrufen/Termin sichern“ neben der Antwort-Bitte | hart |
 | Kein Link in Mail 1 | kein „http(s)://“, „www.“, „calendly.com“, „hier buchen“ in Step 1 | hart |
+| Zweiter Angebotssatz | Step 1 bei Karte A/B mit `{{ai.angebot_ausfuehrung}}`, bei C mit dem Feinheiten-Satz, bei D/E ohne; kein Feinheiten-Satz bei A/B | hart |
+| Schlusssatz ohne Link | kein „Link“ im CTA von Step 1 | hart |
 | Offer ist kein Gespräch | Step 1 enthält keinen verbotenen Offer-Begriff (außer verneint: „statt …“, „kein …“) | hart |
 | Intro nur in Step 1 | `{{ai.intro}}` in keinem Step ab 2 | hart |
 | Anrede überall | jeder Step enthält `{{ai.hallo}}` | weich |
@@ -663,11 +748,12 @@ Hinweis, der begründet werden muss.
 
 - `references/copy-lehre.md` — Abhebung und Austauschtest (zentrale Opener-Regel mit
   Gegensatzpaaren, Sperrliste, Einstiegswechsel), Goldene Formel, Angle-Hierarchie, Überleitungsbausteine,
-  Feinheiten-Satz, Beispiele A/C/E, Follow-ups mit Varianten, 12 Gebote, Anti-Patterns,
+  zweiter Satz zum Angebot je Karte, Beispiele A/B/C/E, Follow-ups mit Varianten, 12 Gebote, Anti-Patterns,
   Zustellregeln, Prüfdurchlauf.
 - `references/marketing-offer.md` — Karten A-E im Detail, Werttest, Offer-Killer,
   Reziprozität, was kein Offer ist.
 - `references/beispiel-blueprint.md` — vollständiger Blueprint (Karte C, Du-Form, 4 Steps,
-  `hallo`- und `intro`-Prompt) zum Anlegen mit `create_campaign`.
+  `hallo`- und `intro`-Prompt) zum Anlegen mit `create_campaign`, dazu die Variante für Karte A
+  und B mit `angebot_ausfuehrung`-Prompt.
 - Skill `outreach-launch` — Versand nach dem Export (Domains, Warm-up, Instantly, KPIs) und wann
   bei schwachen Zahlen Copy, Offer oder Liste geändert werden.

@@ -24,7 +24,8 @@ In dieser Reihenfolge:
 3. Sonst ein Vorschlag nach Karte A, den der Absender bestätigt.
 
 Ein Offer, das der Absender nicht liefern kann, wird nicht geschrieben. Auch das On-Top-Detail im
-Feinheiten-Satz kommt aus seinen Angaben. Gut geeignet sind Deliverables, die sich mit KI so
+Feinheiten-Satz (Karte C) und der Inhalt des zweiten Angebotssatzes bei A und B kommen aus seinen
+Angaben. Gut geeignet sind Deliverables, die sich mit KI so
 vorbereiten lassen, dass nach einer Antwort 5-10 Minuten eigene Arbeit bleiben.
 
 ## Die 5 bewährten Offer-Karten
@@ -76,9 +77,9 @@ Die rechte Spalte ist die Sprache für Offer und Mail. Die linke steht auf seine
 
 Statt „Darf ich dir etwas anbieten?“ heißt es „Ich habe schon etwas für dich gemacht, darf ich es
 dir zusenden?“. In der Mail steht das Deliverable als erledigte Arbeit („war so frei und habe …
-erstellt“), nie als Absicht. Dazu gehört der Feinheiten-Satz mit genau einem lieferbaren Detail.
-Er macht die Fertigstellung nach der Antwort ehrlich: Der eigentliche Aufwand fällt erst an, wenn
-jemand antwortet.
+erstellt“), nie als Absicht. Dazu gehören der Feinheiten-Satz mit genau einem lieferbaren Detail
+und das „morgen“ im Schlusssatz. Beides macht die Fertigstellung nach der Antwort ehrlich: Der
+eigentliche Aufwand fällt erst an, wenn jemand antwortet.
 
 Nicht bei Massenkampagnen mit großem Lieferaufwand je Antwort.
 
@@ -86,6 +87,11 @@ Nicht bei Massenkampagnen mit großem Lieferaufwand je Antwort.
 
 Die Überleitung ist statisch und für alle Leads gleich, sie folgt direkt auf das Intro. Klammern
 beim Schreiben füllen, im fertigen Text steht keine Klammer mehr.
+
+Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absatz und passend zur
+Karte (Stand 05.11.2026): bei C der Feinheiten-Satz, bei A ein Inhaltssatz, bei B ein Rahmensatz,
+beide je Lead geschrieben, bei D und E keiner. Regeln: `copy-lehre.md`, „Der zweite Satz zum
+Angebot“.
 
 ### Karte A: Kostenlose Teildienstleistung
 
@@ -96,7 +102,7 @@ sich zu verpflichten.
 |:---------|:--------|
 | Betreff | „Meeting {{Firma}} & [Absender-Vorname]“ (ohne `{{Firma}}`: „kurze Frage“) |
 | Überleitung + Offer | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an.“ |
-| Feinheiten-Satz | Pflicht, eigener Absatz |
+| Zweiter Satz | Pflicht, eigener Absatz: Inhaltssatz je Lead, was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit, kein Feinheiten-Satz („Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“) |
 | CTA | „Wenn das für dich spannend klingt, antworte mir einfach kurz.“ |
 
 Typischer Fehler: „Kostenlose Beratung“ statt „Kostenloses Google Ads Setup“. Beratung ist ein
@@ -111,7 +117,7 @@ Dringlichkeit, aber nur, wenn die Plätze wirklich begrenzt sind.
 |:---------|:--------|
 | Betreff | „Anfrage für {{Firma}}“ oder „kurze Frage“ |
 | Überleitung + Offer | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
-| Feinheiten-Satz | optional |
+| Zweiter Satz | Pflicht, eigener Absatz: Rahmensatz je Lead, was der Empfänger im Pilot bekommt und was er dafür gibt, nur aus der Lieferzusage („Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail, du sagst mir dafür ehrlich, was du davon hältst.“) |
 | CTA | „Falls du dazugehören willst, antworte mir einfach kurz.“ |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
@@ -123,17 +129,17 @@ Feinheiten macht man nach der Antwort.
 |:---------|:--------|
 | Betreff | „kurze Frage“ (nie „Website für …“; ist das Buchungssystem der Kern: „Frage zur Terminbuchung“) |
 | Überleitung + Offer | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
-| Feinheiten-Satz | Pflicht, eigener Absatz |
-| CTA | „Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.“ |
+| Feinheiten-Satz | Pflicht, eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […].“ |
+| CTA | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …“; nie „Link“) |
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
 Buchungssystem erstellt.
 
 Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google
-und KI-Suchmaschinen, und werde morgen mit dem Entwurf fertig.
+und KI-Suchmaschinen.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```
 
 ### Karte D: Förder-Hook
@@ -144,7 +150,7 @@ Extrem stark, weil „der Staat zahlt“ ein unschlagbares Argument ist.
 |:---------|:--------|
 | Betreff | „deine Förderung“ |
 | Überleitung + Offer | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt? Ich hab mal gecheckt, was für dich drin wäre.“ |
-| Feinheiten-Satz | entfällt |
+| Zweiter Satz | entfällt |
 | CTA | „Darf ich dir die Einschätzung zusenden?“ |
 
 Nicht kompliziert erklären: Der Empfänger muss nicht verstehen, WIE die Förderung funktioniert,
@@ -158,14 +164,15 @@ Kein Verkauf, sondern Kooperation auf Augenhöhe: „Wir haben Kunden, die zu di
 |:---------|:--------|
 | Betreff | „Partnerschaft {{Firma}}?“ (ohne `{{Firma}}`: „kurze Frage“) |
 | Überleitung + Offer | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ |
-| Feinheiten-Satz | entfällt |
+| Zweiter Satz | entfällt |
 | CTA | „Wäre das grundsätzlich interessant?“ |
 
 ## Offer-Bibliothek: bewährte Formulierungen je Leistung
 
 Quelle: Kurs Outbound 3.0, Lektion 2.5. Alle folgen der Master-Formel (Lob → „Deswegen …“ → Offer
-→ „… und werde morgen mit [dem Deliverable] fertig.“ → „Wäre es in Ordnung, wenn ich dir das
-zusende? Völlig unverbindlich natürlich.“). Nur das Offer wechselt.
+→ Feinheiten-Satz → „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich
+natürlich.“; der Kurs trägt das „morgen“ noch im Halbsatz „… und werde morgen mit [dem
+Deliverable] fertig.“). Nur das Offer wechselt.
 
 | Leistung | Offer-Formulierung |
 |:---------|:-------------------|
@@ -188,7 +195,7 @@ zusende? Völlig unverbindlich natürlich.“). Nur das Offer wechselt.
 - **Nichts erfinden:** Eine Formulierung steht nur, wenn der Absender genau diese Leistung liefern
   kann. Zahlen (neun Anzeigen, zehn Leads) nur, wenn sie zu seiner Lieferung passen.
 - **Vorleistung erst nach der Antwort:** Das Deliverable wird nach einem Ja fertiggestellt, deshalb
-  „werde morgen mit … fertig“. Wer es nicht bis morgen liefern kann, lässt den Halbsatz weg.
+  „… wenn ich es dir morgen zusende?“. Wer es nicht bis morgen liefern kann, lässt „morgen“ weg.
 
 ## Das Offer schnell liefern
 
