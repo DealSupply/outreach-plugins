@@ -13,7 +13,7 @@ Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen 
 
 > **Hinweis zur Parallelisierung:** Wenn dein Client parallele Subagents unterstützt (z.B. Claude Code), spawne pro Lead einen Subagent wie beschrieben. Andernfalls arbeite die Leads **sequentiell** mit exakt denselben Schritten ab — das Ergebnis ist identisch, nur langsamer.
 
-> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto, Workspace und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt nur den Status `approved` (bereit für den CSV-Export, `export_leads`) und überträgt nichts nach Instantly; Push und Export sind eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
+> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto, Workspace und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt den Status `approved` (bereit für den CSV-Export, `export_leads`). Ist die Kampagne mit Instantly verknüpft und Auto-Push an, plant die Freigabe die Übertragung nach Instantly ein, wie in der App; sonst sind Push und Export eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
 
 ## Standard: Stichprobe statt Vollprüfung
 
@@ -221,7 +221,7 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 
 ## Entscheidungslogik
 
-- **approve_lead_variables**: ALLE Variablen passen die Checkliste → freigegeben für CSV-Export
+- **approve_lead_variables**: ALLE Variablen passen die Checkliste → freigegeben für CSV-Export; bei verknüpfter Kampagne mit Auto-Push geht der Lead danach nach Instantly
 - **reject_lead_variables(reason=...)**: MINDESTENS EINE Variable bricht die Checkliste oder ist grundlegend unbrauchbar:
   - Komplett generischer Text (kein Personalisierungs-Bezug)
   - Falsche Lead-Informationen (falsches Unternehmen, falsche Branche)
@@ -270,7 +270,7 @@ MCP Verify abgeschlossen
 Kampagne: {campaign.name} (ID: {campaign.id})
 Gesamt verarbeitet: {total_processed} Leads
 Freigegeben: {total_approved} | Abgelehnt: {total_rejected} | Fehler: {total_errors}
-Status: Freigegebene Leads auf "approved" gesetzt (ready für CSV-Export)
+Status: Freigegebene Leads auf "approved" gesetzt (ready für CSV-Export; mit Auto-Push auf dem Weg nach Instantly)
         Abgelehnte Leads auf "rejected" gesetzt (nicht im Export; siehe Hinweis)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

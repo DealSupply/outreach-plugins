@@ -286,7 +286,7 @@ Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturie
 Die folgenden Tools werden im Verification-Workflow verwendet, NICHT in der Generierung:
 
 - **get_lead_variables** — lädt aktuelle Variablen-Werte (Name, Wert, Status, generatedAt) zur Prüfung
-- **approve_lead_variables** — gibt Variablen frei (`LeadCampaignStatus = approved`, ready für CSV-Export)
+- **approve_lead_variables** — gibt Variablen frei (`LeadCampaignStatus = approved`, ready für CSV-Export; bei verknüpfter Kampagne mit Auto-Push geht der Lead nach Instantly)
 - **reject_lead_variables** — lehnt Variablen ab mit `reason` (`LeadCampaignStatus = rejected`; NICHT final: der Lead zählt wieder als generierungsbedürftig und wird beim nächsten Generate/Run neu erzeugt. Dauerhaft raus = aus Kampagne entfernen oder `mark_leads_contacted(lead_ids=[<lead_id>], status="do_not_contact")`)
 
 Details: siehe `/outreach-verify` Skill.
