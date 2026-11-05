@@ -88,7 +88,7 @@ Hallo {{Vorname}},
 
 bei einer Zahnarztpraxis in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen.
 
-Falls das für deine Praxis auch ein Thema ist, melde dich gerne.
+Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Jonas Weber

@@ -174,6 +174,11 @@ def check(mail):
         lines = mail["body"][1:] if mail["body"] else []
         if lines and re.match(r"^[^.?!:]{1,30}:", lines[0]) and len(lines[0].split(":")[0].split()) <= 3:
             hard.append(f"Doppelpunkt-Opener: „{lines[0].split(':')[0]}:“")
+    if kind == "neuer winkel":
+        if "?" not in body:
+            soft.append("Step 3 ohne Schlussfrage: dieselbe Frage wie in Step 1, mit dem Wort für die Sache")
+        if len(mail["body"]) > 1 and re.match(r"^(Ein|Eine|Einen|Einem|Einer|Der|Die|Das|Den|Dem|Zwei|Drei|Vier|Fünf|Unser|Unsere|Mein|Meine|Viele)\b", mail["body"][1]):
+            soft.append("Step 3 nach der Anrede groß weiter: klein weiterschreiben wie in Step 1")
     if mail["body"] and not re.match(r"^(hallo|guten tag|servus|moin|grüß)", mail["body"][0], re.IGNORECASE):
         soft.append("keine Anrede am Anfang")
     hit = re.search(OPT_OUT, "\n".join([subject, body] + mail["sig"] + mail["tail"]).lower())

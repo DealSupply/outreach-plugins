@@ -589,7 +589,8 @@ umformulieren. Aufgefüllt wird nie.
 Regeln für alle Follow-ups:
 
 - Follow-ups sind keine Wiederholungen. Jedes hat eine Aufgabe und höchstens EINEN neuen Aspekt.
-- Das Offer steht nur in Step 1. In Step 3 höchstens ein Halbsatz Bezug darauf.
+- Das Offer steht nur in Step 1. Step 3 nennt es nur in der Schlussfrage: dieselbe Frage wie in
+  Step 1, mit dem Wort für die Sache statt „es“.
 - Kein Intro in den Follow-ups. Ein zweiter personalisierter Bezug wirkt wie ein Skript.
 - Jedes beginnt mit „Hallo {{Vorname}},“ und dann einem ganzen, weichen Satz, klein
   weitergeschrieben („du hast sicher …“). Kein Doppelpunkt-Opener („kurz nachgehakt:“, „kurzes
@@ -624,8 +625,16 @@ EIN neuer Aspekt, und **hier steht der Social Proof**, nie früher. In der Entry
 wie ein Pitch, hier wie ein Beleg.
 
 Neuer Thread mit eigenem kurzem Betreff (z. B. „kurzes Update“). Die Mail muss ohne den Verlauf
-von Mail 1 verständlich sein: höchstens ein Halbsatz Bezug auf das Angebot, kein neues Offer, kein
-Pitch. Wer Mail 1 nie geöffnet hat, sieht eine frische Nachricht statt einer dritten Erinnerung.
+von Mail 1 verständlich sein. Wer Mail 1 nie geöffnet hat, sieht eine frische Nachricht statt einer
+dritten Erinnerung.
+
+Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo {{Vorname}},“ klein weiter wie in Mail 1:
+„ein Bauunternehmen aus …“), höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie in
+Mail 1, mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den
+Entwurf zusende? Völlig unverbindlich natürlich.“). Das Wort für die Sache steht nur in dieser Frage;
+kein eigener Satz um das Angebot („Falls du den Entwurf sehen möchtest, antworte kurz“), kein neues
+Offer, kein Pitch. Die Varianten unten zeigen den Beleg-Teil; an ihrem Schluss steht die Frage aus
+Mail 1 statt „melde dich gerne“.
 
 | Variante | Text |
 |:---------|:-----|
@@ -799,7 +808,8 @@ Korrekturen erzeugen neue Fehler, besonders beim Kürzen.
 6. **Zeichen-Scan.** Gedankenstriche, Emojis, Fettdruck, Aufzählungen, Links in Step 1, gerade
    Anführungszeichen, Zeichen für Zeichen.
 7. **Spam-Scan.** Betreff und Body gegen die Liste, „kostenlos“ höchstens einmal im Body.
-8. **Struktur-Scan.** Offer nur in Step 1, Intro nur in Step 1, Social Proof nur in Step 3,
+8. **Struktur-Scan.** Offer nur in Step 1, Intro nur in Step 1, Social Proof nur in Step 3, Step 3
+   endet mit der Schlussfrage aus Step 1 (Wort für die Sache statt „es“),
    zweiter Satz zum Angebot passend zur Karte (C Feinheiten-Satz, A und B Satz je Lead, D und E
    keiner), kein „Link“ im Schlusssatz, Betreff nur in Step 1 und 3, kein Doppelpunkt-Opener,
    Abmeldezeile unter der Signatur von Step 1 und 3, kein „STOPP“ und keine Opt-out-Fachsprache.
