@@ -187,8 +187,8 @@ Regeln:
 {{ai.intro}}                     2. Lob / positiver Bezug (Intro-Regeln)
 Feste Überleitung + Offer        3. statisch, benennt KEIN lead-spezifisches Problem;
                                     bei C als erledigte Arbeit, bei A als Angebot
-Zweiter Satz zum Angebot         4. eigener Absatz, je Karte: C Feinheiten-Satz (fest),
-                                    A und B {{ai.angebot_ausfuehrung}} (je Lead), D und E keiner
+Zweiter Satz zum Angebot         4. eigener Absatz, je Karte: A, B und C
+                                    {{ai.angebot_ausfuehrung}} (je Lead), D und E keiner
 EIN Frage-CTA                    5. niedrige Hürde
 Signatur im Klartext             6. Grußformel, Name, „Rolle - Firma“
 Abmeldezeile                     7. nach einer Leerzeile unter der Signatur (Step 1 und 3)
@@ -201,20 +201,24 @@ von der Karte ab:
 
 | Karte | Inhalt des Satzes | Wer schreibt ihn |
 |---|---|---|
-| C: Konkretes Deliverable | Fortschritt: der Feinheiten-Satz | fester Text, für alle Leads gleich |
+| C: Konkretes Deliverable | Fortschritt: der Feinheiten-Satz, genau ein Detail je Lead | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
 | A: Kostenlose Teildienstleistung | Inhalt: was für diesen Lead konkret drin wäre | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
 | B: Tester/Pilotprojekt | Rahmen, an diesem Lead festgemacht: was er im Pilot bekäme und was er dafür gibt | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
 | D: Förder-Hook, E: Partner gesucht | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
 
-**Feinheiten-Satz (nur Karte C), wörtlich:** „Ich bin gerade noch an den letzten Feinheiten dran,
-vor allem […].“ In die Klammer kommt genau EIN konkretes On-Top-Detail aus den Angaben des
-Nutzers, das wirklich lieferbar ist. Nichts erfinden. Nicht „Feinschliff“, nicht umformulieren.
-Das „morgen“ der Fertigstellung steht im Schlusssatz („… wenn ich es dir morgen zusende?“), nicht
-mehr als Halbsatz „und werde morgen mit … fertig“ im Feinheiten-Satz, sonst stünde es zweimal da.
+**Ein Satz je Lead bei A, B und C (`{{ai.angebot_ausfuehrung}}`, Stand 05.11.2026):** Die KI
+schreibt den zweiten Satz je Lead neu, passend zu Recherche und Website des Leads. Auch bei C ist
+der Feinheiten-Satz kein fester Text mit Lücke mehr: Ein Detail für die ganze Liste las sich in
+jeder Mail gleich und oft grammatisch schief („vor allem die Platzierung der Anfrageoption“).
 
-**Satz bei Karte A und B (`{{ai.angebot_ausfuehrung}}`):** Den Feinheiten-Satz gibt es hier nicht,
-er behauptet Arbeit, die es vor der Antwort nicht gibt. Die KI schreibt den Satz je Lead neu,
-passend zu Recherche und Website des Leads:
+- **C, Feinheiten-Satz (Wortlaut der Regel vom 05.11.2026):** Ein Satz, der genau so beginnt:
+  „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und dann genau ein Detail des
+  schon erstellten Ergebnisses nennt, an dem noch gefeilt wird, passend zu diesem Lead (aus seiner
+  Recherche oder dem Detail des Schwerpunkts), grammatisch vollständig (z. B. „an der …“). Kein
+  „morgen“, kein „fertig werden“, keine neue Leistung. Englisch: „I'm just finishing up the last
+  few details, mainly …“. Das „morgen“ steht im Schlusssatz („… wenn ich es dir morgen
+  zusende?“). Beispiel: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den
+  Vorher-nachher-Bildern deiner Implantat-Fälle.“
 
 - **A, Inhaltssatz:** was für diesen Lead konkret im Deliverable drin wäre, im Konjunktiv.
   Beispiel: „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und
@@ -225,18 +229,20 @@ passend zu Recherche und Website des Leads:
   Nicht bei jedem Lead derselbe Satz. Beispiel: „Im Pilot schreibe ich dir die erste Mail an
   einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon
   hältst.“
+- **A und B nie mit dem Feinheiten-Wortlaut:** Er behauptet Arbeit, die es dort vor der Antwort
+  nicht gibt.
 - **Mit Schwerpunkten:** Grundlage des Satzes ist das Detail des Schwerpunkts, den die KI für den
   Lead wählt, zugeschnitten auf die Recherche. Bei Pilot und Partner steht der Schwerpunkt selbst
   nicht im Angebotssatz.
-- **Grenzen für beide:** nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt
-  bereit“, kein Feinheiten-Wortlaut); nur Inhalte, die die Lieferzusage des Nutzers deckt; keine
-  Zahl, die weder Lieferzusage noch Recherche belegt; keine Frist; kein Gespräch, Termin oder
+- **Grenzen für alle drei:** bei A und B nie als erledigte Arbeit (kein „erstellt“,
+  „vorbereitet“, „liegt bereit“, kein Feinheiten-Wortlaut), bei C nur das schon Erstellte; nur
+  Inhalte, die die Lieferzusage des Nutzers deckt; keine Zahl, die weder Lieferzusage noch Recherche belegt; keine Frist; kein Gespräch, Termin oder
   Call; keine Frage, der CTA folgt fest; ein Satz mit höchstens 25 Wörtern (nachzählen, ein
   längerer Satz wird gekürzt); Pronomen gemäß `salutation`. Kein zweiter Prüf- oder
   Korrekturlauf: Der Prompt muss den Satz beim ersten Schreiben richtig machen.
 - Im Body steht die Variable als eigener Absatz direkt nach dem Angebotssatz. Sie wird je Lead
   einmal erzeugt und steht deshalb, wie `{{ai.intro}}`, nur in Step 1. Ihren Prompt regelt
-  „Prompts der AI-Variablen“ unten, ausformulierte Prompts für A und B stehen in
+  „Prompts der AI-Variablen“ unten, ausformulierte Prompts für A, B und C stehen in
   `references/beispiel-blueprint.md`.
 
 **Schlusssatz (CTA):** Genau einer, nie zwei Optionen. Standard bei Karte A und C (Stand
@@ -263,7 +269,8 @@ gearbeitet wird.
 in Step 3. Über den Empfänger schreiben, nie über den Absender („Du bekommst …“, nicht „Wir
 bieten …“).
 
-Muster je Karte, direkt nach dem Lob-Intro, jeder Baustein ein eigener Absatz. Karte C:
+Muster je Karte, direkt nach dem Lob-Intro, jeder Baustein ein eigener Absatz. Karte C (der
+Feinheiten-Satz kommt je Lead aus `{{ai.angebot_ausfuehrung}}`, hier eine mögliche Fassung):
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
@@ -585,19 +592,22 @@ Der `intro`-Prompt MUSS enthalten:
   behauptet nichts Unbelegtes über den Lead („so gut bewertet“, „seit Jahren“, „viele
   zufriedene Kunden“).
 
-Der `angebot_ausfuehrung`-Prompt (nur Karte A und B) MUSS enthalten:
+Der `angebot_ausfuehrung`-Prompt (nur Karte A, B und C) MUSS enthalten:
 
 - Kontext: Absender, Karte, den festen Angebotssatz davor, den festen Schlusssatz danach und die
   Lieferzusage des Nutzers (was er nach einer Antwort wirklich liefert);
 - die Aufgabe je Karte: bei A ein Inhaltssatz, was für diesen Lead konkret im Deliverable drin
   wäre, im Konjunktiv; bei B ein Rahmensatz, der den Pilot an diesem Lead festmacht (was er
   konkret bekäme, bezogen auf seine Leistung, Zielkunden oder Region, und was er dafür gibt),
-  nicht bei jedem Lead derselbe Satz;
+  nicht bei jedem Lead derselbe Satz; bei C der Feinheiten-Satz, der wörtlich mit „Ich bin gerade
+  noch an den letzten Feinheiten dran, vor allem“ beginnt und genau ein Detail des schon
+  erstellten Ergebnisses nennt, grammatisch vollständig, ohne „morgen“ und ohne „fertig werden“;
 - die Quelle: Recherche und Website des Leads, für jeden Lead neu geschrieben; mit Schwerpunkten
   das Detail des gewählten Schwerpunkts als Grundlage; dazu einen ausformulierten Fallback-Satz
   aus der Lieferzusage für Leads ohne passenden Fund;
-- die Grenzen: nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt bereit“, kein
-  „Ich bin gerade noch an den letzten Feinheiten dran“), nur Inhalte der Lieferzusage, keine Zahl,
+- die Grenzen: bei A und B nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt
+  bereit“, kein „Ich bin gerade noch an den letzten Feinheiten dran“), bei C keine neue Leistung;
+  nur Inhalte der Lieferzusage, keine Zahl,
   die weder Lieferzusage noch Recherche belegt, keine Frist, kein Gespräch oder Termin, kein
   zweites Angebot, keine Frage;
 - Form: genau ein Satz, höchstens 25 Wörter (als eigene Zeile, mit der Anweisung nachzuzählen),
@@ -634,7 +644,7 @@ deshalb nur in Step 1, in Step 2, 3 und 4 bleibt er leer.
 
 | Step | Rolle | `delayDays` | Wörter max. | Betreff | Inhalt |
 |---|---|---|---|---|---|
-| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, öffnet den Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (C Feinheiten-Satz, A/B `{{ai.angebot_ausfuehrung}}`, D/E keiner) + EIN CTA + Signatur |
+| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, öffnet den Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (A/B/C `{{ai.angebot_ausfuehrung}}`, D/E keiner) + EIN CTA + Signatur |
 | 2 | Erinnerung | 3 | 50 | leer, Thread von Mail 1 | `{{ai.hallo}}` + nur nachhaken, weich wie eine schnell getippte Nachricht („du hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail angekommen ist“). Kein Doppelpunkt-Opener, kein Offer, kein neuer Aspekt, kein `{{ai.intro}}` |
 | 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Karten ohne Wort für die Sache (B, D, E, eigene Frage) nehmen die Frage aus Mail 1 wörtlich; Mail 3 endet immer mit einer Frage, nie mit einer bloßen Aufforderung („sag einfach kurz Bescheid“). Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}` |
 | 4 | Abschied mit Routing-Hinweis | 7 | 60 | leer, Thread von Mail 1 | `{{ai.hallo}}` + Tür offen lassen, ohne Druck und ohne Vorwurf + Routing-Hinweis („sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte“). Kein Offer |
@@ -756,9 +766,10 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
     oder „ss“ als Ersatz für ä, ö, ü, ß („fuer“, „Gruesse“, „groesser“, „heisst“)? Ersetzen.
 15. Steht unter der Signatur von Step 1 und Step 3 die feste Abmeldezeile in der Anrede der
     Kampagne, ohne „PS:“, und nirgends „STOPP“ oder andere Opt-out-Fachsprache?
-16. Zweiter Satz zum Angebot in Step 1 passend zur Karte: bei C der Feinheiten-Satz ohne
-    „werde morgen … fertig“, bei A und B `{{ai.angebot_ausfuehrung}}` als eigener Absatz mit
-    einem Prompt nach den Regeln oben, bei D und E keiner? Schlusssatz ohne „Link“?
+16. Zweiter Satz zum Angebot in Step 1 passend zur Karte: bei A, B und C
+    `{{ai.angebot_ausfuehrung}}` als eigener Absatz mit einem Prompt nach den Regeln oben (bei C
+    beginnt der Satz mit dem Feinheiten-Wortlaut, ohne „morgen“), bei D und E keiner? Schlusssatz
+    ohne „Link“?
 
 ## Prüfliste nach Code-Regeln
 
@@ -786,7 +797,7 @@ Hinweis, der begründet werden muss.
 | Betreff ohne Schreien | kein Wort mit 4+ Großbuchstaben, kein „!“ | weich |
 | Ein CTA | kein „oder/alternativ … buchen/klicken/vereinbaren/reservieren/anrufen/Termin sichern“ neben der Antwort-Bitte | hart |
 | Kein Link in Mail 1 | kein „http(s)://“, „www.“, „calendly.com“, „hier buchen“ in Step 1 | hart |
-| Zweiter Angebotssatz | Step 1 bei Karte A/B mit `{{ai.angebot_ausfuehrung}}`, bei C mit dem Feinheiten-Satz, bei D/E ohne; kein Feinheiten-Satz bei A/B | hart |
+| Zweiter Angebotssatz | Step 1 bei Karte A/B/C mit `{{ai.angebot_ausfuehrung}}`, bei D/E ohne; kein Feinheiten-Wortlaut im Prompt von A/B | hart |
 | Schlusssatz ohne Link | kein „Link“ im CTA von Step 1 | hart |
 | Offer ist kein Gespräch | Step 1 enthält keinen verbotenen Offer-Begriff (außer verneint: „statt …“, „kein …“) | hart |
 | Intro nur in Step 1 | `{{ai.intro}}` in keinem Step ab 2 | hart |

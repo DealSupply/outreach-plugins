@@ -60,8 +60,10 @@ Eine Frage, wenn es nicht aus dem Auftrag hervorgeht:
 
 1. **Kampagne:** `export_campaign_blueprint(campaign_id)` lesen. Das Offer steht in
    `blueprint.campaign.intelligence.offer_contract.title.value`; fehlt es, beim Nutzer erfragen.
-   Das On-Top-Detail aus dem Feinheiten-Satz steht in Mail 1 (`blueprint.sequence.steps[0].body`);
-   es MUSS in der Demo sichtbar umgesetzt sein, denn es wurde versprochen.
+   Das On-Top-Detail aus dem Feinheiten-Satz steht in Mail 1: seit 05.11.2026 je Lead in der
+   Variable `angebot_ausfuehrung` (`get_lead_variables(campaign_id, lead_id)`), bei älteren
+   Kampagnen fest im Body (`blueprint.sequence.steps[0].body`); es MUSS in der Demo sichtbar
+   umgesetzt sein, denn es wurde versprochen.
 2. **Lead:** Wer hat geantwortet? Zwei Abrufe, weil `contact_status` genau einen Wert nimmt:
    erst `list_leads(campaign_id, contact_status="opportunity", fit_level="", research_status="", campaign_status="")`
    (interessiert, braucht den Türöffner zuerst), dann dasselbe mit `contact_status="replied"`.

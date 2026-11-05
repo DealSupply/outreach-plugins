@@ -498,14 +498,14 @@ Stand 05.11.2026: Nach dem Angebotssatz folgt in Mail 1 immer ein zweiter Satz z
 
 | Karte | Zweiter Satz | Wer schreibt ihn |
 |:------|:-------------|:-----------------|
-| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […]." | fester Text |
+| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz, beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und nennt genau ein Detail je Lead | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
 | **A: Kostenlose Teildienstleistung** | Inhalt: was für diesen Lead konkret drin wäre, im Konjunktiv | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
 | **B: Tester/Pilotprojekt** | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
 | **D: Förder-Hook, E: Partner gesucht** | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
 
 ### Karte C: der Feinheiten-Satz (Value Stacking)
 
-Die Arbeit ist schon (fast) erledigt, und es kommt noch etwas on top. Wortlaut: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […]." Das „morgen" der Fertigstellung steht im Schlusssatz, nicht mehr als Halbsatz „und werde morgen mit … fertig" hier.
+Die Arbeit ist schon (fast) erledigt, und es kommt noch etwas on top. Die KI schreibt den Satz je Lead über `{{ai.angebot_ausfuehrung}}` (Stand 05.11.2026). Regel, wörtlich: Ein Satz, der genau so beginnt: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und dann genau ein Detail des schon erstellten Ergebnisses nennt, an dem noch gefeilt wird, passend zu diesem Lead (aus seiner Recherche oder dem Detail des Schwerpunkts), grammatisch vollständig (z. B. „an der …"). Kein „morgen", kein „fertig werden", keine neue Leistung. Das „morgen" der Fertigstellung steht im Schlusssatz.
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive Buchungssystem erstellt.
@@ -518,7 +518,7 @@ Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natü
 Die Regeln:
 
 - **Erledigte Arbeit statt Absicht:** „war so frei und habe ... erstellt", nicht „würde gerne erstellen". Reziprozität wirkt erst, wenn das Geschenk schon existiert.
-- **Genau EIN On-Top-Detail** („vor allem ..."), aus den Angaben des Nutzers, und es muss wirklich lieferbar sein. Nichts erfinden.
+- **Genau EIN Detail je Lead** („vor allem ..."), aus dem, was schon erstellt ist, zugeschnitten auf die Recherche des Leads. Nichts erfinden.
 - **Kein zweiter CTA, kein zweites Offer.** Der Satz beschreibt dasselbe Deliverable, nur eine Schicht tiefer.
 
 ### Karte A und B: der Satz je Lead (`{{ai.angebot_ausfuehrung}}`)

@@ -10,7 +10,7 @@ Die Antwort steckt unter `blueprint`.
 | Feld | Bedeutung für die Demo |
 |---|---|
 | `blueprint.campaign.intelligence.offer_contract.title.value` | **Das Offer.** Genau das wird geliefert. |
-| `blueprint.sequence.steps[0].body` | Mail 1 mit dem **Feinheiten-Satz** („vor allem …“): dieses On-Top-Detail wurde versprochen und muss in der Demo sichtbar sein |
+| `blueprint.sequence.steps[0].body` | Mail 1 mit dem **Feinheiten-Satz** („vor allem …“): dieses On-Top-Detail wurde versprochen und muss in der Demo sichtbar sein. Steht dort `{{ai.angebot_ausfuehrung}}` (Karte C seit 05.11.2026), schreibt die KI den Satz je Lead: dann aus `get_lead_variables(campaign_id, lead_id)` lesen |
 | `blueprint.campaign.intelligence.campaign_brief.business.value` | Was der Nutzer verkauft; die Demo führt dorthin |
 | `blueprint.campaign.intelligence.campaign_brief.usp.value` | Belege und Stärken des Nutzers (nie erfinden) |
 | `blueprint.campaign.intelligence.campaign_brief.target_audience.value` | Zielgruppe; hilft bei Branche und Tonalität |

@@ -96,7 +96,7 @@ Beispiele:
 
 Die Überleitung ist statisch und für alle Leads gleich; sie folgt direkt auf den individuellen Bezug (`{{ai.intro}}`). Die Klammern füllst du beim Schreiben aus den Angaben des Nutzers, im fertigen Text steht keine Klammer mehr.
 
-Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absatz und passend zur Karte (Stand 05.11.2026): bei C der Feinheiten-Satz (Fortschritt, fester Text), bei A ein Inhaltssatz und bei B ein Rahmensatz, beide je Lead von der KI über `{{ai.angebot_ausfuehrung}}` geschrieben, bei D und E keiner. Regeln und Prompt-Inhalt: `SKILL.md`, Abschnitt „Anatomie der Entry-Mail“.
+Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absatz und passend zur Karte (Stand 05.11.2026): bei C der Feinheiten-Satz (Fortschritt), bei A ein Inhaltssatz und bei B ein Rahmensatz, alle drei je Lead von der KI über `{{ai.angebot_ausfuehrung}}` geschrieben, bei D und E keiner. Regeln und Prompt-Inhalt: `SKILL.md`, Abschnitt „Anatomie der Entry-Mail“.
 
 ### Karte A: Kostenlose Teildienstleistung
 
@@ -136,7 +136,7 @@ Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absa
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" (nie eine Ankündigung wie „Website für …"; ist das Buchungssystem der Kern: „Frage zur Terminbuchung") |
 | **Überleitung + Offer** | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt." |
-| **Feinheiten-Satz (Pflicht, eigener Absatz)** | „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […]." |
+| **Feinheiten-Satz (Pflicht, eigener Absatz)** | je Lead über `{{ai.angebot_ausfuehrung}}`: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und nennt genau ein Detail des schon Erstellten, passend zu diesem Lead, grammatisch vollständig, ohne „morgen" |
 | **CTA** | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …"; nie „Link") |
 
 **Wichtig:** Der Feinheiten-Satz gehört bei Karte C zur Pflicht. Fertiggestellt wird nach der Antwort, 5-10 Min. Aufwand.

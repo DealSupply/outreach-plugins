@@ -25,7 +25,7 @@ In dieser Reihenfolge:
 
 Ein Offer, das der Absender nicht liefern kann, wird nicht geschrieben. Auch das On-Top-Detail im
 Feinheiten-Satz (Karte C) und der Inhalt des zweiten Angebotssatzes bei A und B kommen aus seinen
-Angaben. Gut geeignet sind Deliverables, die sich mit KI so
+Angaben und der Recherche des Leads. Gut geeignet sind Deliverables, die sich mit KI so
 vorbereiten lassen, dass nach einer Antwort 5-10 Minuten eigene Arbeit bleiben.
 
 ## Die 5 bewährten Offer-Karten
@@ -90,7 +90,7 @@ beim Schreiben füllen, im fertigen Text steht keine Klammer mehr.
 
 Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absatz und passend zur
 Karte (Stand 05.11.2026): bei C der Feinheiten-Satz, bei A ein Inhaltssatz, bei B ein Rahmensatz,
-beide je Lead geschrieben, bei D und E keiner. Regeln: `copy-lehre.md`, „Der zweite Satz zum
+alle drei je Lead geschrieben, bei D und E keiner. Regeln: `copy-lehre.md`, „Der zweite Satz zum
 Angebot“.
 
 ### Karte A: Kostenlose Teildienstleistung
@@ -129,7 +129,7 @@ Feinheiten macht man nach der Antwort.
 |:---------|:--------|
 | Betreff | „kurze Frage“ (nie „Website für …“; ist das Buchungssystem der Kern: „Frage zur Terminbuchung“) |
 | Überleitung + Offer | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
-| Feinheiten-Satz | Pflicht, eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […].“ |
+| Feinheiten-Satz | Pflicht, eigener Absatz, je Lead geschrieben: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und nennt genau ein Detail des schon Erstellten, passend zu diesem Lead, grammatisch vollständig (z. B. „an der …“), ohne „morgen“ |
 | CTA | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …“; nie „Link“) |
 
 ```

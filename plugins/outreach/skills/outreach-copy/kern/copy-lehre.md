@@ -100,8 +100,8 @@ Hallo {{Vorname}},            1. Anrede
 {{Intro}}                     2. individueller Bezug: Lob am konkreten Detail (Teil 2)
 Überleitung + Offer           3. fester Text, für alle Leads gleich, benennt KEIN lead-spezifisches
                                  Problem; bei Karte C als erledigte Arbeit, bei A als Angebot
-Zweiter Satz zum Angebot      4. eigener Absatz, je Karte: C Feinheiten-Satz (fest), A und B
-                                 je Lead geschrieben wie das Intro, D und E keiner
+Zweiter Satz zum Angebot      4. eigener Absatz, je Karte: A, B und C je Lead geschrieben wie
+                                 das Intro (C der Feinheiten-Satz), D und E keiner
 EIN Frage-CTA                 5. niedrige Hürde
 Signatur im Klartext          6. Grußformel, Name, „Rolle - Firma“
 Abmeldezeile                  7. nach einer Leerzeile unter der Signatur, in Step 1 und Step 3
@@ -157,21 +157,24 @@ Der Satz beschreibt dasselbe Deliverable, nur eine Schicht tiefer.
 
 | Karte | Zweiter Satz | Wer schreibt ihn |
 |:------|:-------------|:-----------------|
-| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz | fester Text |
+| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz, genau ein Detail je Lead | je Lead, wie das Intro |
 | **A: Kostenlose Teildienstleistung** | Inhalt: was für diesen Lead konkret drin wäre, im Konjunktiv | je Lead, wie das Intro |
 | **B: Tester/Pilotprojekt** | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | je Lead, wie das Intro |
 | **D: Förder-Hook, E: Partner gesucht** | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
 
 ### Karte C: der Feinheiten-Satz (Value Stacking)
 
-Wortlaut, nicht umformulieren, nicht „Feinschliff“:
+Der Satz wird je Lead geschrieben (Stand 05.11.2026), nicht mehr als fester Text mit einer Lücke
+für die ganze Liste. Regel, wörtlich: Ein Satz, der genau so beginnt: „Ich bin gerade noch an den
+letzten Feinheiten dran, vor allem“ und dann genau ein Detail des schon erstellten Ergebnisses
+nennt, an dem noch gefeilt wird, passend zu diesem Lead (aus seiner Recherche oder dem Detail des
+Schwerpunkts), grammatisch vollständig (z. B. „an der …“). Kein „morgen“, kein „fertig werden“,
+keine neue Leistung. Englisch: „I'm just finishing up the last few details, mainly …“.
 
-„Ich bin gerade noch an den letzten Feinheiten dran, vor allem […].“
-
-- In die Klammer kommt genau EIN konkretes On-Top-Detail aus den Angaben des Absenders, das
-  wirklich lieferbar ist. Nichts erfinden.
-- Das „morgen“ der Fertigstellung steht im Schlusssatz, nicht mehr als Halbsatz „und werde morgen
-  mit … fertig“ im Feinheiten-Satz, sonst stünde es zweimal da.
+- Der Anfang bleibt wörtlich, nicht umformulieren, nicht „Feinschliff“. Nichts erfinden: Das
+  Detail gehört zu dem, was schon erstellt ist.
+- Das „morgen“ der Fertigstellung steht im Schlusssatz, nicht im Feinheiten-Satz, sonst stünde es
+  zweimal da.
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
