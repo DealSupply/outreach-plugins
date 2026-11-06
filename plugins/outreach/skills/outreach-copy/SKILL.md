@@ -233,7 +233,11 @@ jeder Mail gleich und oft grammatisch schief („vor allem die Platzierung der A
   nicht gibt.
 - **Mit Schwerpunkten:** Grundlage des Satzes ist das Detail des Schwerpunkts, den die KI für den
   Lead wählt, zugeschnitten auf die Recherche. Bei Pilot und Partner steht der Schwerpunkt selbst
-  nicht im Angebotssatz.
+  nicht im Angebotssatz. Gewählt wird je Lead der Schwerpunkt, der nach Schwerpunkt-Prüfung und
+  Recherche am besten passt; das Haupt-Offer (Rang 1) nur, wenn keiner klar besser passt (seit
+  06.11.2026). Prüffragen fragen nur nach Sichtbarem auf der Website (Seite, Formular, Buchung,
+  Bilder, Karriereseite, Bewertungen, Vertriebsrollen), nie nach Absichten, internen Abläufen oder
+  Werkzeugen.
 - **Grenzen für alle drei:** bei A und B nie als erledigte Arbeit (kein „erstellt“,
   „vorbereitet“, „liegt bereit“, kein Feinheiten-Wortlaut), bei C nur das schon Erstellte; nur
   Inhalte, die die Lieferzusage des Nutzers deckt; keine Zahl, die weder Lieferzusage noch Recherche belegt; keine Frist; kein Gespräch, Termin oder
