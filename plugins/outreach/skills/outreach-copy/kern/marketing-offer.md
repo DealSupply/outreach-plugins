@@ -149,7 +149,7 @@ Extrem stark, weil „der Staat zahlt“ ein unschlagbares Argument ist.
 | Baustein | Vorlage |
 |:---------|:--------|
 | Betreff | „kurze Frage“ |
-| Überleitung + Offer | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt? Ich hab mal gecheckt, was für dich drin wäre.“ |
+| Überleitung + Offer | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?“ |
 | Zweiter Satz | entfällt |
 | CTA | „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ (Sie: „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …“) |
 
