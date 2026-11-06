@@ -237,12 +237,14 @@ jeder Mail gleich und oft grammatisch schief („vor allem die Platzierung der A
   Recherche am besten passt; das Haupt-Offer (Rang 1) nur, wenn keiner klar besser passt (seit
   06.11.2026). Prüffragen fragen nur nach Sichtbarem auf der Website (Seite, Formular, Buchung,
   Bilder, Karriereseite, Bewertungen, Vertriebsrollen), nie nach Absichten, internen Abläufen oder
-  Werkzeugen.
+  Werkzeugen; am besten nach einer Sache, die eine feste Zeile der Recherche beantwortet (Fragen
+  nach Preisen oder Gutscheinen bleiben meist „unbekannt“). Ist nicht Rang 1 gewählt, nennen der
+  zweite Satz und das Routing nichts vom Haupt-Offer (seit 06.11.2026).
 - **Grenzen für alle drei:** bei A und B nie als erledigte Arbeit (kein „erstellt“,
   „vorbereitet“, „liegt bereit“, kein Feinheiten-Wortlaut), bei C nur das schon Erstellte; nur
   Inhalte, die die Lieferzusage des Nutzers deckt; keine Zahl, die weder Lieferzusage noch Recherche belegt; keine Frist; kein Gespräch, Termin oder
-  Call; keine Frage, der CTA folgt fest; ein Satz mit höchstens 25 Wörtern (nachzählen, ein
-  längerer Satz wird gekürzt); Pronomen gemäß `salutation`. Kein zweiter Prüf- oder
+  Call; keine Frage, der CTA folgt fest; ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20
+  (nachzählen, ein Strichpunkt zählt mit, ein längerer Satz wird gekürzt); Pronomen gemäß `salutation`. Kein zweiter Prüf- oder
   Korrekturlauf: Der Prompt muss den Satz beim ersten Schreiben richtig machen.
 - Im Body steht die Variable als eigener Absatz direkt nach dem Angebotssatz. Sie wird je Lead
   einmal erzeugt und steht deshalb, wie `{{ai.intro}}`, nur in Step 1. Ihren Prompt regelt
@@ -654,7 +656,7 @@ deshalb nur in Step 1, in Step 2, 3 und 4 bleibt er leer.
 |---|---|---|---|---|---|
 | 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, öffnet den Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (A/B/C `{{ai.angebot_ausfuehrung}}`, D/E keiner) + EIN CTA + Signatur |
 | 2 | Erinnerung | 3 | 50 | leer, Thread von Mail 1 | `{{ai.hallo}}` + nur nachhaken, weich wie eine schnell getippte Nachricht („du hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail angekommen ist“). Kein Doppelpunkt-Opener, kein Offer, kein neuer Aspekt, kein `{{ai.intro}}` |
-| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Karten ohne Wort für die Sache (B, D, E, eigene Frage) nehmen die Frage aus Mail 1 wörtlich; Mail 3 endet immer mit einer Frage, nie mit einer bloßen Aufforderung („sag einfach kurz Bescheid“). Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}` |
+| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Karten ohne Wort für die Sache (B, D, E, eigene Frage) nehmen die Frage aus Mail 1 wörtlich; Mail 3 endet immer mit einer Frage, nie mit einer bloßen Aufforderung („sag einfach kurz Bescheid“). Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}`. Eine eigene Schlussfrage weicht in ListM8 der Frage aus Mail 1 (seit 06.11.2026). Mit Schwerpunkten nennen Mail 2 bis 4 nie einen Schwerpunkt beim Namen (sie gelten für alle Leads, der Schwerpunkt ist je Lead verschieden); ListM8 streicht einen Satz, der ein Schwerpunkt-Label enthält |
 | 4 | Abschied mit Routing-Hinweis | 7 | 60 | leer, Thread von Mail 1 | `{{ai.hallo}}` + Tür offen lassen, ohne Druck und ohne Vorwurf + Routing-Hinweis („sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte“). Kein Offer |
 
 - Gezählt wird der Body ohne Betreff und ohne Signatur, den Bezug aus `{{ai.intro}}` (bis zu
@@ -707,7 +709,9 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
 „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`,
 `emailGeneration.subjectVariables`); Regeln für den persönlichen Betreff (SOP vom 05.11.2026):
 
-- 3 bis 6 Wörter, Ziel 4 bis 5; der Firmenname zählt als ein Wort, kein ganzer Satz
+- 3 bis 6 Wörter, Ziel 4 bis 5; der Firmenname zählt als ein Wort, kein ganzer Satz; zwei Wörter
+  lesen sich wie ein Etikett („euer Ausstattungsatelier“), ListM8 ersetzt sie seit 06.11.2026 durch
+  den Rückfall
 - genau ein belegtes Detail, und zwar dasselbe, mit dem das Intro beginnt (der Betreff stellt die
   Frage, die erste Zeile löst sie ein)
 - klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine

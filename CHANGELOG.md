@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-06 – outreach 0.5.6
+
+Nacharbeit aus dem Gesamttest, Lauf 5 (DS-166): Schwerpunkte in den Folgemails, Schlussfrage von Mail 3, Betreff B.
+
+**outreach**
+- `outreach-copy` → Mail 2 bis 4 nennen mit Schwerpunkten nie einen Schwerpunkt beim Namen; ListM8 streicht einen Satz mit Schwerpunkt-Label. Mail 3 endet immer mit der Frage aus Mail 1, eine eigene Schlussfrage weicht ihr.
+- `outreach-copy` → Zweiter Satz und Routing folgen dem gewählten Schwerpunkt, nie dem Haupt-Offer, wenn ein anderer gewählt ist; Pilot-Satz am besten 15 bis 20 Wörter; Prüffragen am besten nach einer Sache mit fester Recherche-Zeile.
+- `outreach-copy`, `verify-agent`, `check_copy.py` → Betreff B unter 3 Wörtern ist ein Verstoß, ListM8 setzt den Rückfall.
+
 ## 2026-11-06 – outreach 0.5.5
 
 Nacharbeit aus Testlauf 4 (DS-165): Betreff B, Kleinschreibung nach der Anrede, Beleg wörtlich.

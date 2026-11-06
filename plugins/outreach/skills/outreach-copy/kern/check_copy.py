@@ -261,6 +261,8 @@ def check_subject_b(subject, kind, company_names=()):
     count = subject_words(subject, company_names)
     if count > 6:
         problems.append(f"Betreff B hat {count} Wörter, höchstens 6")
+    if count < 3:
+        problems.append(f"Betreff B hat {count} Wörter, mindestens 3")
     for word in SPAM + SUBJECT_EXTRA + ["angebot"]:
         if re.search(r"(?<!\w)" + re.escape(word), sl):
             problems.append(f"Spam-Wort im Betreff B: „{word}“")
