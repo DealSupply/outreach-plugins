@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-11-06 – outreach 0.5.4
+
+Stand der Copy-Nacharbeit (Paket 2 und 3) auf Paket 1: zweiter Angebotssatz je Lead für A, B und C, Betreff-Test in Variante B, weitere Intros mit freiem Anker, Schwerpunkt je Lead.
+
+**outreach**
+- `outreach-copy` → Karte B: Rahmensatz je Lead, der den Pilot an diesem Lead festmacht (was er konkret bekäme, bezogen auf seine Recherche, und was er dafür gibt), höchstens 25 Wörter; das Detail des gewählten Schwerpunkts ist Grundlage des zweiten Satzes.
+- `outreach-copy` → Karte C: Der Feinheiten-Satz kommt je Lead von der KI über `{{ai.angebot_ausfuehrung}}` wie bei A und B; er beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“. Ältere Kampagnen behalten den festen Satz im Body.
+- `outreach-copy` → Betreff-Test: Variante B von Mail 1 ist Variante A mit dem persönlichen Betreff `{{ai.betreff_b}}` je Lead (Regeln, Rückfall „Frage zu {{Firma}}“ bzw. „kurze Frage“); der Intro-Test läuft als Variante C. `check_copy.py` zeigt „Betreff B: …“.
+- `outreach-copy` → Schwerpunkte: je Lead der, der nach Prüfung und Recherche am besten passt, Rang 1 nur ohne klar besseren; Prüffragen nur nach Sichtbarem auf der Website.
+- `outreach-generate`, `verify-agent` → weitere Intro-Varianten nehmen den nächsten freien Eintrag aus „Stärkste Anker“; Marken `rueckfall_trotz_anker` und `gleicher_gegenstand` als weiche Befunde.
+- `outreach-campaign`, `outreach-verify`, `beispiel-blueprint.md` → zweiter Satz bei A, B und C, Schlussfragen und Wortzahlen nach dem zusammengeführten Stand.
+
+**fulfillment** (Version unverändert 0.1.3)
+- `fulfillment`, `lead-kontext.md` → Das On-Top-Detail der Karte C steht seit 05.11.2026 je Lead in `angebot_ausfuehrung` (`get_lead_variables`), bei älteren Kampagnen fest im Body.
+
 ## 2026-11-05 – outreach 0.5.3
 
 Stand der Copy-Nacharbeit (Paket 1): Mail 3 und die Schlussfragen je Karte folgen der App.
