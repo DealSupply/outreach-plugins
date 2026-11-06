@@ -219,7 +219,7 @@ nicht als Spam-Wort, im Betreff hat es nichts zu suchen.
 
 Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das Setup“),
 steht das Wort an der Stelle von „es“, mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir
-morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ Ohne Schwerpunkte hat jede Kampagne ein eigenes Wort für die Sache (in ListM8 auf der Angebots-Seite unter der Schlussfrage, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3, Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link“ im Schlusssatz (nicht
+morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ Jede Kampagne hat außerdem ein eigenes Wort für die Sache (in ListM8 auf der Angebots-Seite unter der Schlussfrage, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3 und gilt dort, solange Mail 3 nicht das Wort des Schwerpunkts trägt (Variable `{{ai.offer_noun}}`); Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link“ im Schlusssatz (nicht
 „… den Link dazu schicke?“), die Sache wird zugesendet. „morgen“ nur, wenn der Absender das
 Deliverable nach der Antwort wirklich bis zum nächsten Tag liefern kann, sonst „… wenn ich es dir
 zusende?“.

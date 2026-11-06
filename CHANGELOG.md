@@ -7,6 +7,7 @@ Entscheidungen vom 06.11.2026 (DS-167): Wort für die Sache für jede Kampagne, 
 **outreach**
 - `outreach-copy` → Wort für die Sache auch ohne Schwerpunkte: Jede Kampagne hat in ListM8 ein eigenes Wort (Angebots-Seite, vom Assistenten vorgeschlagen). Es steht nur in der Schlussfrage von Mail 3, Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich.
 - `outreach-copy` → Karte D: Nennt der Nutzer Träger oder Programm der Förderung, steht er statt „der Staat“ („Wusstest du, dass das Land Baden-Württemberg aktuell bis zu …“).
+- `outreach-copy` → Das Wort für die Sache der Kampagne gilt in Mail 3, solange dort nicht das Wort des Schwerpunkts steht (`{{ai.offer_noun}}`), auch bei aktiven Schwerpunkten; ListM8 speichert es ohne Satzzeichen und Anführungszeichen, mit kleinem Artikel. Der Träger der Förderung steht mit Artikel („das Land Baden-Württemberg“).
 - Person 2 bekommt in ListM8 ein eigenes Intro mit Detail zur Firma, kein Kollegen-Intro mehr; die Regeln kommen aus `get_lead_data` (ZWEITE PERSON), der Anker `kollege` wird abgelehnt.
 
 ## 2026-11-06 – outreach 0.5.6
