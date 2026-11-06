@@ -104,6 +104,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     ungerundete Zahl, Schnitt ohne Komma, der größere von zwei widersprüchlichen Werten, oder nur Zahlen, obwohl die Recherche ein Lob aus
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
+- **Betreff B** (`betreff_b`, Betreff-Test seit 05.11.2026): 3 bis 6 Wörter, dasselbe Detail, mit dem das Intro beginnt, kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund.
 - **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter (Chance-Variable mit Beobachtung: 35), EIN Detail (gestapelte Lobpunkte,
   Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine

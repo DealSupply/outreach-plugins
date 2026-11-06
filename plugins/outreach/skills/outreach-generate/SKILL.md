@@ -244,6 +244,7 @@ Gibt vollen Generierungs-Context zurück. Bei bereits kontaktierten Leads (Konta
 - `emailGeneration.salutation` / `salutationRule` / `campaignContext` — Ansprache und Kampagnenkontext
 - `emailGeneration.variables[]` — Variablen mit aufgelösten Prompts
 - `emailGeneration.expectedOutput` — JSON-Schema der erwarteten Ausgabe (Variablen-Namen)
+- `emailGeneration.subjectVariables` — Betreff-Variablen des Betreff-Tests (`betreff_b`, Betreff von Variante B in Mail 1, seit 05.11.2026): 3 bis 6 Wörter aus demselben Detail wie das Intro, Regeln im Prompt der Variable; Rückfall „Frage zu <Kurzname>“ oder „kurze Frage“ mit `betreff_b__rueckfall: "ja"`, sonst `"nein"`. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „kurze Frage“ und nennt ihn in `subject_fallbacks`
 
 ### save_lead_variables
 

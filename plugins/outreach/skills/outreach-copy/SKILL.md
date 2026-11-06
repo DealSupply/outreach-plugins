@@ -692,10 +692,31 @@ Step 2, Step 3 und Step 4 (und eine optionale Dringlichkeits-Mail): Betreff LEER
 Thread von Step 1. Kein neuer Betreff-Text, kein „Re:“. Ein eigener Betreff in Step 3 („kurzes
 Update“) bricht den Thread; so lief es bis 05.11.2026, bestehende Kampagnen behalten das.
 
-**Test von Hand (Hinweis, keine Pflicht):** Der Standard für Step 1 bleibt „kurze Frage“. Wer
-Betreffs testen will, legt beim echten Versand in Instantly von Hand eine Variante B „Frage zu
-{{firma}}“ an (braucht die Variable `firma` in der Kampagne, am besten in 1 bis 2 Kampagnen). ListM8
-kennt keine Betreff-Varianten.
+**Betreff-Test (seit 05.11.2026):** Der Assistent von ListM8 legt einen Betreff-Test an (ab Werk an): Variante B von
+Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`, den die KI je Lead schreibt.
+Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit
+„kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`,
+`emailGeneration.subjectVariables`); Regeln für den persönlichen Betreff (SOP vom 05.11.2026):
+
+- 3 bis 6 Wörter, Ziel 4 bis 5; der Firmenname zählt als ein Wort, kein ganzer Satz
+- genau ein belegtes Detail, und zwar dasselbe, mit dem das Intro beginnt (der Betreff stellt die
+  Frage, die erste Zeile löst sie ein)
+- klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine
+  Ankündigung, kein Lob
+- Firmenname nur als Kurzname ohne Rechtsform; erstes Wort klein, wenn es kein Substantiv ist
+- höchstens ein Fragezeichen am Ende; kein Ausrufezeichen, kein %, keine Anführungszeichen, keine
+  Gedankenstriche, kein Emoji, keine Großbuchstaben-Wörter
+- am besten ohne Pronomen, sonst nach der Anrede (dein/euer bzw. Ihr); zeitlos, weil Mail 2 bis 4
+  drei Wochen lang als „Re: …“ darunter laufen
+- verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates,
+  „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
+- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“, ohne Kurzname „kurze Frage“; gemeldet mit
+  `betreff_b__rueckfall: "ja"`. Nie leer, nie erfunden.
+
+Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau
+Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“.
+`save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „kurze Frage“ und
+markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“.
 
 NICHT: „Kostenlose Beratung für …“ (zu lang, Spam), „Exklusives Angebot - jetzt zugreifen!“
 (Spam-Trigger), „Re: Ihre Anfrage“ (Fake-Reply).

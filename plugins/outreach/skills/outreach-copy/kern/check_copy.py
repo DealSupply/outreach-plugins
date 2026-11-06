@@ -6,7 +6,8 @@ Aufruf:
 
 Erwartetes Format (siehe beispiele.md): jede Mail unter einer Überschrift
 "## Step <n>: …" (oder "## Zusatz-Step: Dringlichkeit"), darin eine Zeile
-"Betreff: …" (nur Step 1; "Betreff: (leer …)" für Step 2 bis 4 im Thread), danach der Body bis
+"Betreff: …" (nur Step 1; "Betreff: (leer …)" für Step 2 bis 4 im Thread), in Step 1 optional
+"Betreff B: …" (persönlicher Betreff des Betreff-Tests, 3 bis 6 Wörter), danach der Body bis
 zur Grußformel ("Viele Grüße" o. Ä., nach zwei Leerzeilen), dann die Signatur und
 nach einer Leerzeile die Abmeldezeile (Step 1 und 3).
 
@@ -61,7 +62,7 @@ def parse(text):
         if m:
             current = {"title": line.strip("# ").strip(), "kind": m.group(1).lower(),
                        "num": int(m.group(2)) if m.group(2) else None, "rest": m.group(3),
-                       "subject": None, "body": [], "sig": [], "tail": [], "in_sig": False,
+                       "subject": None, "subject_b": None, "body": [], "sig": [], "tail": [], "in_sig": False,
                        "blank": 0, "gap": None}
             mails.append(current)
             continue
@@ -74,6 +75,9 @@ def parse(text):
         if current.get("closed"):
             continue
         stripped = line.strip()
+        if current["subject_b"] is None and re.match(r"^betreff\s+b\s*:", stripped, re.IGNORECASE):
+            current["subject_b"] = stripped.split(":", 1)[1].strip()
+            continue
         if current["subject"] is None and stripped.lower().startswith("betreff:"):
             value = stripped.split(":", 1)[1].strip()
             current["subject"] = "" if (not value or value.lower().startswith("(leer")) else value
@@ -225,7 +229,37 @@ def check(mail):
             soft.append("Betreff mit Ausrufezeichen oder Großbuchstaben-Wort")
         if re.search(ANNOUNCE, sl):
             soft.append("Betreff klingt nach Ankündigung („… für …“, „ist fertig“)")
+    subject_b = mail.get("subject_b")
+    if subject_b is not None:
+        hard.extend(check_subject_b(subject_b, kind))
     return kind, words, limit, hard, soft
+
+
+def check_subject_b(subject, kind):
+    """Betreff von Variante B im Betreff-Test (SOP vom 05.11.2026): 3 bis 6 Wörter, gleiches Detail wie das Intro."""
+    problems = []
+    if kind != "entry":
+        return ["Betreff B gibt es nur in Step 1"]
+    if not subject:
+        return ["Betreff B ist leer (Rückfall: „Frage zu {{Firma}}“ oder „kurze Frage“)"]
+    sl = subject.lower()
+    count = len(re.sub(r"\{\{.*?\}\}", "x", subject).split())
+    if count > 6:
+        problems.append(f"Betreff B hat {count} Wörter, höchstens 6")
+    for word in SPAM + SUBJECT_EXTRA + ["angebot"]:
+        if re.search(r"(?<!\w)" + re.escape(word), sl):
+            problems.append(f"Spam-Wort im Betreff B: „{word}“")
+    if re.search(r"\{\{\s*(vorname|firstname|first_name|first name)\s*\}\}", sl):
+        problems.append("Vorname im Betreff B")
+    if re.match(r"^\s*(re|aw|wg|fwd?)\s*:", sl):
+        problems.append("Betreff B mit „Re:“ oder „Fwd:“")
+    if "!" in subject or "%" in subject or re.search(r"[\"„“”«»]|\s[-–—]\s|[–—]", subject):
+        problems.append("Betreff B mit Ausrufezeichen, %, Anführungszeichen oder Gedankenstrich")
+    if subject.count("?") > 1 or ("?" in subject and not subject.endswith("?")):
+        problems.append("Betreff B: höchstens ein Fragezeichen am Ende")
+    if re.search(ANNOUNCE, sl):
+        problems.append("Betreff B klingt nach Ankündigung („… für …“, „ist fertig“)")
+    return problems
 
 
 def main():
