@@ -732,7 +732,7 @@ Nicht: „Kostenlose Beratung für …“ (zu lang, Spam), „Exklusives Angebot
 ## Betreff-Test: persönlicher Betreff in Variante B
 
 Seit 05.11.2026 legt der Assistent von ListM8 einen Betreff-Test an (ab Werk an): Variante B von
-Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`, den die KI je Lead schreibt.
+Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`, den die KI je Lead schreibt. Welche Variable der Betreff von B ist, sagt `emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name.
 Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit
 „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`,
 `emailGeneration.subjectVariables`); Regeln für den persönlichen Betreff (SOP vom 05.11.2026):
@@ -758,14 +758,14 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
 - verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates,
   „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
 - Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“
-  nur ohne sicheren Kurznamen; gemeldet mit `betreff_b__rueckfall: "ja"`. Trägt das Intro ein Detail,
+  nur ohne sicheren Kurznamen; gemeldet mit `<name>__rueckfall: "ja"` (in Kampagnen des Assistenten `betreff_b__rueckfall`). Den Rückfall auf den Betreff von Variante A speichert ListM8 ohne eigenen Text und setzt beim Versand den aktuellen Betreff von A ein, auch für Person 2. Trägt das Intro ein Detail,
   ist es kein Rückfall. Nie leer, nie erfunden. Nur der Rückfall beginnt mit „Frage zu“.
 
 Gut: „3D-Rundgang bei Bad Becker“, „Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“,
 „Samstagskurse im Studio Mitte“. Schlecht: „Frage zur Dachsanierung am Hansmeyerhof“ (Form des
 Rückfalls), „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“.
 `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „Frage zu
-{{Firma}}“ mit dem Wert von `firma`, ohne nutzbaren Kurznamen durch den Betreff von Variante A
+{{Firma}}“ mit dem Wert von `firma`, ohne nutzbaren Kurznamen durch den Betreff von Variante A (ohne eigenen Text gespeichert, beim Versand der aktuelle Betreff von A)
 („kurze Frage“), und markiert ihn als Rückfall; ebenso einen nackten Standard-Betreff, wenn `firma`
 gesetzt ist (seit 06.11.2026). In `check_copy.py` steht er als Zeile
 „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder

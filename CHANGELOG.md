@@ -7,6 +7,7 @@ Befunde aus dem Nachtest des Endstands (DS-172).
 **outreach**
 - `outreach-generate` → Den Anker `geschichte` ehrlich melden: ListM8 setzt dahinter die feste Reaktion „das hab ich richtig gern gelesen“ selbst ein, wenn das Intro mit einer anderen bekannten Reaktion endet (nicht bei Kampagnen, deren Intro-Prompt den Schluss selbst regelt), und nennt den Tausch in `server_adjusted`. Ein Intro von Person 2 ist mit keinem Intro von Person 1 wortgleich, gleich welche Variante.
 - `verify-agent` → Die getauschte Geschichts-Reaktion und die vom Server gesetzte Sie-Begrüßung sind kein Befund.
+- `outreach-copy`, `outreach-generate`, `verify-agent` → Der Betreff von B wird über `emailGeneration.subjectVariables` (Rolle `subject_variant`) erkannt, nicht über den Namen `betreff_b`; der Rückfall-Schlüssel ist `<name>__rueckfall`. Der Rückfall auf den Betreff von A ist in ListM8 keine gespeicherte Kopie: Er bleibt ohne Text und wird beim Versand eingesetzt, auch für Person 2; `get_lead_variables` zeigt ihn mit `fallback: true` (Stand develop, Xeno bccd25e0c).
 - `outreach-copy`, `outreach-generate`, `outreach-verify` → Sie-Form: nie „Guten Tag Herr/Frau Nachname,“; mit belegter Anrede „Hallo Herr/Frau Nachname,“ ohne Titel und Vornamen, ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18). Beide Personen einer Firma grüßen in derselben Form.
 
 ## 2026-11-06 – outreach 0.5.8
