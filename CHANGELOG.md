@@ -8,6 +8,7 @@ Nacharbeit aus Testlauf 4 (DS-165): Betreff B, Kleinschreibung nach der Anrede, 
 - `outreach-copy` → Betreff B: auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“), nur der Gegenstand des Intros ohne Zusatz; Rückfall „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“ nur ohne sicheren Kurznamen. `save_lead_variables` ersetzt einen gebrochenen oder nackten Standard-Betreff entsprechend.
 - `outreach-copy` → Mail 2 bis 4: nach „Hallo …,“ klein weiter, auch in der Sie-Form („da ich bisher nichts gehört habe“); ListM8 setzt das erste Funktionswort selbst klein.
 - `outreach-copy` → Mail 3: Beleg wörtlich wie angegeben, kein „bis zu“, das nicht in der Angabe steht (Förderquoten der Karte D bleiben „bis zu“).
+- `verify-agent` → Die Marke `gleicher_gegenstand` gilt vorerst nicht als Befund (wie in der Review von ListM8 ausgeblendet, bis die Regel geschärft ist).
 
 ## 2026-11-06 – outreach 0.5.4, fulfillment 0.1.4
 
