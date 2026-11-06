@@ -4,9 +4,9 @@
 > Die Formulierungen sind deutsch. In englischen Kampagnen (`campaign.language` `en`) nicht übersetzen;
 > dort gelten die Regeln aus `outreach-copy`, Abschnitt „Kampagnensprache“.
 > Betreffzeilen und CTAs sind auf die Platzhalter von ListM8 umgestellt; die Texte stehen in der
-> Du-Form (Standard), bei `emailAgentConfig.salutation` `sie` umschreiben. Einen Firmennamen im
-> Betreff gibt es nur über `{{ai.firma}}`; ohne die Variable steht „kurze Frage“. Nur Step 1 und
-> Step 3 tragen einen Betreff, Step 2 und 4 haben keinen.
+> Du-Form (Standard), bei `emailAgentConfig.salutation` `sie` umschreiben. Der Betreff ist bei jeder
+> Karte „kurze Frage“ (seit 05.11.2026). Nur Step 1 trägt einen Betreff, Step 2 bis 4 laufen im
+> Thread von Step 1 mit leerem Betreff.
 
 ## Grundhaltung
 
@@ -106,10 +106,10 @@ Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absa
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Meeting {{ai.firma}} & [Absender-Vorname]" (ohne `firma`: „kurze Frage") |
+| **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an." |
 | **Zweiter Satz (Pflicht, eigener Absatz)** | Inhaltssatz je Lead, `{{ai.angebot_ausfuehrung}}`: was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit, kein Feinheiten-Satz. Beispiel: „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast." |
-| **CTA** | „Wenn das für dich spannend klingt, antworte mir einfach kurz." |
+| **CTA** | „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich." (Sie: „… das auch für Sie erstelle? …") |
 
 **Typischer Fehler:** „Kostenlose Beratung" statt „Kostenloses Google Ads Setup". Beratung = Sales Call in Verkleidung.
 
@@ -121,10 +121,10 @@ Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absa
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Anfrage für {{ai.firma}}" / „kurze Frage" |
+| **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region]." |
 | **Zweiter Satz (Pflicht, eigener Absatz)** | Rahmensatz je Lead, `{{ai.angebot_ausfuehrung}}`: macht den Pilot an diesem Lead fest, was er konkret bekäme, bezogen auf etwas aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches Feedback); höchstens 25 Wörter, nur aus der Lieferzusage, nicht bei jedem Lead derselbe Satz. Beispiel: „Im Pilot schreibe ich dir die erste Mail an einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon hältst." |
-| **CTA** | „Falls du dazugehören willst, antworte mir einfach kurz." |
+| **CTA** | „Wärst du grundsätzlich offen dafür?" (Sie: „Wären Sie grundsätzlich offen dafür?") |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
 
@@ -156,10 +156,10 @@ Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natü
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Deine Förderung" |
-| **Überleitung + Offer** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt? Ich hab mal gecheckt, was für dich drin wäre." |
+| **Betreffzeile** | „kurze Frage" |
+| **Überleitung + Offer** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" |
 | **Zweiter Satz** | entfällt |
-| **CTA** | „Darf ich dir die Einschätzung zusenden?" |
+| **CTA** | „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." (Sie: „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …") |
 
 **Typischer Fehler:** Zu kompliziert erklären. Der Empfänger muss nicht verstehen WIE die Förderung funktioniert - nur DASS er Geld bekommt. Details kommen im Call.
 
@@ -173,10 +173,10 @@ Quoten immer als Spanne nennen („bis zu 100 %"), nie als Zusage - die Förderh
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Partnerschaft {{ai.firma}}?" (ohne `firma`: „kurze Frage") |
+| **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden." |
 | **Zweiter Satz** | entfällt |
-| **CTA** | „Wäre das grundsätzlich interessant? Antworte mir einfach kurz." |
+| **CTA** | „Wäre das grundsätzlich interessant?" (gleich für Sie, eine einzige Frage) |
 
 ## Bewährte Formulierungen je Leistung (Offer-Bibliothek)
 

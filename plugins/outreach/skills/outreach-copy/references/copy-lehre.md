@@ -540,12 +540,15 @@ Genau EIN CTA pro Mail. Nie zwei Optionen.
 
 | Gut | Warum |
 |:----|:------|
-| „Antworte mir einfach kurz." | Niedrigste Hürde, die es gibt |
-| „Darf ich es dir zusenden?" | Ja/Nein-Frage, eine Sekunde Aufwand |
-| „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." | Reziprozität plus Ja/Nein, Standard bei Karte C (Stand 05.11.2026) |
-| „Wäre das grundsätzlich interessant?" | Verpflichtet zu nichts |
+| „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich." | Karte A, Ja/Nein ohne Verpflichtung |
+| „Wärst du grundsätzlich offen dafür?" | Karte B, Pilot |
+| „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." | Karte C, Reziprozität plus Ja/Nein |
+| „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." | Karte D, Förderung |
+| „Wäre das grundsätzlich interessant?" | Karte E, verpflichtet zu nichts |
 
-Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …". Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
+Der Schlusssatz ist immer eine Frage, keine Bitte („Antworte mir einfach kurz.") und keine Aussage (Stand 05.11.2026, wie die App).
+
+Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …", bei A „… das auch für Sie erstelle? …", bei B „Wären Sie grundsätzlich offen dafür?", bei D „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …", E bleibt gleich. Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
 
 Kein „Lass uns mal sprechen" ohne vorbereiteten Mehrwert. Kein Terminvorschlag in Mail 1. Kein Link in Mail 1 - der CTA ist die Antwort, nicht der Klick.
 
@@ -557,14 +560,10 @@ Die Betreffzeile entscheidet, ob die Mail geöffnet wird. Nur Step 1 trägt eine
 
 | Stil | Beispiele | Warum |
 |:-----|:---------|:------|
-| **Neugier** | „kurze Frage" | Niedrige Hürde, macht neugierig; Standard für Karte C und jedes Entwurfs-Angebot |
+| **Neugier** | „kurze Frage" | Niedrige Hürde, macht neugierig; Standard für jede Karte (seit 05.11.2026) |
 | **Neugier** | „Frage zur Terminbuchung" | Wenn das Buchungssystem den Kern des Offers bildet |
 | **Neugier** | „Zugang freigeschaltet" | Was für ein Zugang? Muss ich aufmachen (nur mit echtem Zugang, siehe unten) |
-| **Persönlich** | „Meeting {{ai.firma}} & Julia" | Klingt nach echtem Termin (Karte A, nur mit `firma`) |
 | **Persönlich** | „Gespräch {{ai.firma}} & Arne" | Impliziert bestehende Beziehung (nur mit `firma`) |
-| **Direkt** | „Anfrage für {{ai.firma}}" | Business-like, ernst (Karte A/B, nur mit `firma`) |
-| **Förderung** | „Deine Förderung" | Geld = Aufmerksamkeit (nur Karte D) |
-| **Partner** | „Partnerschaft {{ai.firma}}?" | Augenhöhe (nur Karte E, nur mit `firma`) |
 
 ### Was nicht funktioniert
 
@@ -626,7 +625,7 @@ Folge uns auf LinkedIn | Twitter | Instagram
 **Karte A, kostenlose Teildienstleistung (73 Wörter):**
 
 ```
-Betreff: Meeting {{ai.firma}} & Julia
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -640,7 +639,7 @@ München ein kostenloses Google Ads Setup an.
 Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige
 Anzeigentexte und die Ausrichtung auf dein Einzugsgebiet rund um München.
 
-Wenn das für dich spannend klingt, antworte mir einfach kurz.
+Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Julia Weinmann
@@ -650,7 +649,7 @@ Co-Founder - Weinmann Media
 **Karte B, Pilotprojekt (69 Wörter):**
 
 ```
-Betreff: Anfrage für {{ai.firma}}
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -663,7 +662,7 @@ für persönliche Erstmails mit drei Agenturen in Köln.
 Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail,
 du sagst mir dafür ehrlich, was du davon hältst.
 
-Falls du dazugehören willst, antworte mir einfach kurz.
+Wärst du grundsätzlich offen dafür?
 
 Viele Grüße
 Paul Lehmann
@@ -697,7 +696,7 @@ Geschäftsführerin - njoy online marketing GmbH
 **Karte E, Partner gesucht (64 Wörter):**
 
 ```
-Betreff: Partnerschaft {{ai.firma}}?
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -708,7 +707,8 @@ Gesicht, auch wenn die Fenster neu sind.
 Genau solche Handwerksbetriebe suchen wir als Partner. Wir haben
 regelmäßig Anfragen von Bauherren in der Region, die genau solche
 Projekte umsetzen wollen und einen zuverlässigen Betrieb suchen.
-Wäre das grundsätzlich interessant? Antworte mir einfach kurz.
+
+Wäre das grundsätzlich interessant?
 
 Viele Grüße
 Max Huber
@@ -745,15 +745,17 @@ Das ist alles. FUP1 ist die kürzeste Mail der Sequenz und darf sich anfühlen w
 
 **Aufgabe:** EIN neuer Aspekt. **HIER gehört der Social Proof hin - nicht in die Entry Mail.**
 
-**Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein: höchstens ein Halbsatz Bezug auf das Angebot, kein neues Offer, kein Pitch.
+**Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein. Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo Vorname,“ klein weiter wie in Mail 1), höchstens ein kurzer eigener Satz, dann als letzter Absatz die Schlussfrage aus Mail 1, mit dem Wort für die Sache statt „es“, wo die Karte eins hat. Kein eigener Satz zum Angebot, kein neues Offer, kein Pitch.
+
+Mail 3 endet mit genau einer Frage, nie mit einer Aussage oder Bitte: der Frage aus der Entry Mail, mit der Sache statt „es“, wo die Karte eine hat; jede Variante unten endet so.
 
 Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie ein Pitch. Hier, nach zwei Kontakten ohne Verkaufsdruck, wirkt er wie ein Beleg.
 
 | Variante | Text |
 |:---------|:-----|
-| **Case Study** | „Hallo Max, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Alles weg. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Falls das Thema für dich relevant ist, melde dich gerne." |
-| **Konkretes Ergebnis** | „Hallo Max, wir haben gerade ein Pilotprojekt im [Branche]-Bereich abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die komplette Auftragsabwicklung automatisiert läuft. Vorher war das ein Vollzeitjob, jetzt klickt der Inhaber morgens einmal drauf und der Rest läuft. Falls das auch für dich spannend klingt, melde dich gerne." |
-| **Relevanter Fakt** | „Hallo Max, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten plus Lohnkostenzuschuss. Das heißt konkret: Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Falls das auch für dich relevant ist, melde dich gerne. Ich kann dir in zwei Minuten sagen, was für dich drin wäre." |
+| **Case Study** | „Hallo Max, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Alles weg. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Wäre es in Ordnung, wenn ich dir morgen den Shop-Entwurf zusende? Völlig unverbindlich natürlich." |
+| **Konkretes Ergebnis** | „Hallo Max, wir haben gerade ein Pilotprojekt im [Branche]-Bereich abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die komplette Auftragsabwicklung automatisiert läuft. Vorher war das ein Vollzeitjob, jetzt klickt der Inhaber morgens einmal drauf und der Rest läuft. Wärst du grundsätzlich offen dafür?" |
+| **Relevanter Fakt** | „Hallo Max, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten plus Lohnkostenzuschuss. Das heißt konkret: Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." |
 
 **Regel für die Case Study:** eine Geschichte, eine Zahl, ein Ergebnis. Keine Aufzählung von Kunden, keine Logo-Parade. Nur Belege, die der Nutzer angegeben hat.
 
@@ -787,7 +789,7 @@ Wenn die Dringlichkeit erfunden ist, merkt der Empfänger das - und dann ist auc
 |:-----|:--------------|:---------|
 | Entry | Erlaubnis erbitten | „Darf ich es dir zusenden?" |
 | FUP1 | Nur anstoßen | „Ist meine Mail angekommen?" |
-| FUP2 | Offen anbieten | „Falls das für dich relevant ist, melde dich gerne." |
+| FUP2 | Frage aus der Entry Mail, mit der Sache | „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." |
 | FUP3 | Tür offen lassen, Routing | „Sag mir gern kurz Bescheid, falls ich mich besser bei jemand anderem melden sollte." |
 
 Je später die Mail, desto niedriger die Hürde. Wer im Abschied plötzlich einen Termin verlangt, dreht die Logik um.
@@ -901,7 +903,7 @@ SCHLECHT:
 "Antworte mir kurz oder buche dir hier einen Termin: [Link]"
 
 GUT:
-"Antworte mir einfach kurz."
+"Wäre das grundsätzlich interessant?"
 ```
 
 ### Anti-Pattern 6: KI-Sprache
@@ -910,7 +912,7 @@ GUT:
 |:----------|:-------|
 | „In der heutigen schnelllebigen Geschäftswelt..." | Weglassen |
 | M-Striche überall | Satz teilen oder Komma; Bindestriche nur innerhalb von Wörtern |
-| „Lass mich wissen, wenn du Interesse hast" | „Antworte mir kurz" |
+| „Lass mich wissen, wenn du Interesse hast" | Die Schlussfrage der Karte („Wäre das grundsätzlich interessant?") |
 | Perfekte Grammatik in lockerem Kontext | Schreib wie du sprichst |
 | „Gerne möchte ich Ihnen aufzeigen..." | „Ich zeig dir kurz..." |
 
@@ -923,7 +925,7 @@ Weitere Formulierungen, die eine Mail sofort nach Maschine klingen lassen:
 | „Darüber hinaus", „Nicht zuletzt", „Zusammenfassend" | In einer 100-Wort-Mail hat nichts davon Platz |
 | „Es ist wichtig zu verstehen, dass..." | Den Punkt einfach sagen |
 | „Wir sind bestrebt", „Synergien", „ganzheitlich", „nachhaltig skalieren" | Konkret sagen, was passiert |
-| „Ich freue mich auf Ihre Rückmeldung" | „Antworte mir einfach kurz" |
+| „Ich freue mich auf Ihre Rückmeldung" | Weglassen, die Schlussfrage reicht |
 | Drei Adjektive in einer Reihe | Eines reicht, meistens keines |
 
 ## Formale Anforderungen
