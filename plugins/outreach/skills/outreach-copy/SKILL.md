@@ -664,7 +664,10 @@ deshalb nur in Step 1, in Step 2, 3 und 4 bleibt er leer.
   Frage wie Step 1 mit dem Wort für die Sache → Tür offen lassen.
 - Jedes Follow-up hat max. EINEN neuen Aspekt und beginnt mit einem ganzen, weichen Satz in der
   gewählten Ansprache. Das erste Wort nach `{{ai.hallo}}` (in jedem Step) schreibt man klein, weil
-  es auf „Hallo …,“ folgt: „du hast sicher …“, nicht „Du hast sicher …“; Substantive bleiben groß.
+  es auf „Hallo …,“ folgt: „du hast sicher …“, nicht „Du hast sicher …“, auch in der Sie-Form („da ich
+  bisher nichts gehört habe“, „ich wollte kurz nachfragen“, „bei rund 80 Gründungen …“); „Sie“, Namen
+  und Substantive bleiben groß. ListM8 setzt ein solches Wort am Anfang des ersten Absatzes auch selbst
+  klein (seit 06.11.2026).
 - **Dringlichkeit** ist kein Standard-Step. Nur wenn der Nutzer einen echten Zeit- oder
   Kapazitätsgrund nennt, kommt sie als zusätzlicher Step zwischen Step 3 und den Abschied
   (dann 5 Steps, `delayDays` 0/3/5/7/7; Wortlimit 60; leerer Betreff, Thread von Mail 1). Ohne
@@ -708,7 +711,10 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
 - genau ein belegtes Detail, und zwar dasselbe, mit dem das Intro beginnt (der Betreff stellt die
   Frage, die erste Zeile löst sie ein)
 - klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine
-  Ankündigung, kein Lob
+  Ankündigung, kein Lob, auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“)
+- nur der Gegenstand, wie das Intro ihn nennt, ohne Zusatz: keine Wirkung, kein Kanal, keine Anfragen
+  oder Zahlen, die das Intro nicht nennt (nicht „Anfragen über Ads bei Flowers“, wenn das Intro nur
+  die Anzeigen nennt)
 - Firmenname nur als Kurzname ohne Rechtsform; erstes Wort klein, wenn es kein Substantiv ist
 - höchstens ein Fragezeichen am Ende; kein Ausrufezeichen, kein %, keine Anführungszeichen, keine
   Gedankenstriche, kein Emoji, keine Großbuchstaben-Wörter
@@ -716,13 +722,16 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
   drei Wochen lang als „Re: …“ darunter laufen
 - verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates,
   „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
-- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“, ohne Kurzname „kurze Frage“; gemeldet mit
-  `betreff_b__rueckfall: "ja"`. Nie leer, nie erfunden.
+- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“
+  nur ohne sicheren Kurznamen; gemeldet mit `betreff_b__rueckfall: "ja"`. Trägt das Intro ein Detail,
+  ist es kein Rückfall. Nie leer, nie erfunden.
 
 Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau
 Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“.
-`save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch den Betreff von
-Variante A („kurze Frage“) und markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile
+`save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „Frage zu
+{{Firma}}“ mit dem Wert von `firma`, ohne nutzbaren Kurznamen durch den Betreff von Variante A
+(„kurze Frage“), und markiert ihn als Rückfall; ebenso einen nackten Standard-Betreff, wenn `firma`
+gesetzt ist (seit 06.11.2026). In `check_copy.py` steht er als Zeile
 „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder
 eine Zeile „Kurzname: …“ an.
 

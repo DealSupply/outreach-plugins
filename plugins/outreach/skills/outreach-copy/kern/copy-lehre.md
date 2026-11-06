@@ -642,8 +642,8 @@ wie ein Pitch, hier wie ein Beleg.
 Betreff leer, die Mail läuft im Thread von Step 1 (seit 05.11.2026, vorher eigener Betreff „kurzes
 Update“ und neuer Thread). Sie bleibt trotzdem ohne Mail 1 verständlich.
 
-Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo {{Vorname}},“ klein weiter wie in Mail 1:
-„ein Bauunternehmen aus …“), höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie in
+Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo {{Vorname}},“ klein weiter wie in Mail 1,
+auch in der Sie-Form: „ein Bauunternehmen aus …“, „bei rund 80 Gründungen …“), höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie in
 Mail 1, mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den
 Entwurf zusende? Völlig unverbindlich natürlich.“). Karten ohne Wort für die Sache (B, D, E oder eine
 eigene Frage) nehmen die Frage aus Mail 1 wörtlich: Mail 3 endet immer mit einer Frage, eine bloße
@@ -660,7 +660,9 @@ oder Bitte; jede Variante unten endet mit der Frage aus Mail 1 ihrer Karte.
 
 - Eine Geschichte, eine Zahl, ein Ergebnis. Keine Kundenliste, keine Logo-Parade.
 - Nur Belege, die der Absender angegeben hat. Fehlt ein Beleg: nachfragen, nicht erfinden.
-- Zahlen als Spanne („bis zu“), nie als Zusage.
+- Den Beleg wörtlich übernehmen, wie der Absender ihn angegeben hat: Zahlen genau so, kein „bis zu“,
+  „über“ oder anderer Zusatz, der nicht in der Angabe steht (Lauf 4 am 06.11.2026: aus „neun“ wurde
+  „bis zu neun“). Ein Ergebnis bleibt ein berichtetes Ergebnis, nie eine Zusage.
 - Ab Step 3 höchstens ein Link (nur Kalender oder Website).
 
 ## Step 4: Abschied mit Routing-Hinweis
@@ -738,7 +740,10 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
 - genau ein belegtes Detail, und zwar dasselbe, mit dem das Intro beginnt (der Betreff stellt die
   Frage, die erste Zeile löst sie ein)
 - klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine
-  Ankündigung, kein Lob
+  Ankündigung, kein Lob, auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“)
+- nur der Gegenstand, wie das Intro ihn nennt, ohne Zusatz: keine Wirkung, kein Kanal, keine Anfragen
+  oder Zahlen, die das Intro nicht nennt (nicht „Anfragen über Ads bei Flowers“, wenn das Intro nur
+  die Anzeigen nennt)
 - Firmenname nur als Kurzname ohne Rechtsform; erstes Wort klein, wenn es kein Substantiv ist
 - höchstens ein Fragezeichen am Ende; kein Ausrufezeichen, kein %, keine Anführungszeichen, keine
   Gedankenstriche, kein Emoji, keine Großbuchstaben-Wörter
@@ -746,13 +751,16 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
   drei Wochen lang als „Re: …“ darunter laufen
 - verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates,
   „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
-- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“, ohne Kurzname „kurze Frage“; gemeldet mit
-  `betreff_b__rueckfall: "ja"`. Nie leer, nie erfunden.
+- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“
+  nur ohne sicheren Kurznamen; gemeldet mit `betreff_b__rueckfall: "ja"`. Trägt das Intro ein Detail,
+  ist es kein Rückfall. Nie leer, nie erfunden.
 
 Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau
 Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“.
-`save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch den Betreff von
-Variante A („kurze Frage“) und markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile
+`save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „Frage zu
+{{Firma}}“ mit dem Wert von `firma`, ohne nutzbaren Kurznamen durch den Betreff von Variante A
+(„kurze Frage“), und markiert ihn als Rückfall; ebenso einen nackten Standard-Betreff, wenn `firma`
+gesetzt ist (seit 06.11.2026). In `check_copy.py` steht er als Zeile
 „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder
 eine Zeile „Kurzname: …“ an.
 

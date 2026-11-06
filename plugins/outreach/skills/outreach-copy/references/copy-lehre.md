@@ -587,14 +587,15 @@ Seit 05.11.2026 legt der Assistent von ListM8 einen Betreff-Test an (ab Werk an)
 
 - 3 bis 6 Wörter, Ziel 4 bis 5; der Firmenname zählt als ein Wort, kein ganzer Satz
 - genau ein belegtes Detail, und zwar dasselbe, mit dem das Intro beginnt (der Betreff stellt die Frage, die erste Zeile löst sie ein)
-- klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine Ankündigung, kein Lob
+- klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine Ankündigung, kein Lob, auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“)
+- nur der Gegenstand, wie das Intro ihn nennt, ohne Zusatz: keine Wirkung, kein Kanal, keine Anfragen oder Zahlen, die das Intro nicht nennt (nicht „Anfragen über Ads bei Flowers“, wenn das Intro nur die Anzeigen nennt)
 - Firmenname nur als Kurzname ohne Rechtsform; erstes Wort klein, wenn es kein Substantiv ist
 - höchstens ein Fragezeichen am Ende; kein Ausrufezeichen, kein %, keine Anführungszeichen, keine Gedankenstriche, kein Emoji, keine Großbuchstaben-Wörter
 - am besten ohne Pronomen, sonst nach der Anrede (dein/euer bzw. Ihr); zeitlos, weil Mail 2 bis 4 drei Wochen lang als „Re: …“ darunter laufen
 - verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates, „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
-- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“, ohne Kurzname „kurze Frage“; gemeldet mit `betreff_b__rueckfall: "ja"`. Nie leer, nie erfunden.
+- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“ nur ohne sicheren Kurznamen; gemeldet mit `betreff_b__rueckfall: "ja"`. Trägt das Intro ein Detail, ist es kein Rückfall. Nie leer, nie erfunden.
 
-Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch den Betreff von Variante A („kurze Frage“) und markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder eine Zeile „Kurzname: …“ an.
+Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „Frage zu {{Firma}}“ mit dem Wert von `firma`, ohne nutzbaren Kurznamen durch den Betreff von Variante A („kurze Frage“), und markiert ihn als Rückfall; ebenso einen nackten Standard-Betreff, wenn `firma` gesetzt ist (seit 06.11.2026). In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder eine Zeile „Kurzname: …“ an.
 
 ## Signatur-Regeln
 
@@ -756,7 +757,7 @@ Das ist alles. FUP1 ist die kürzeste Mail der Sequenz und darf sich anfühlen w
 
 **Aufgabe:** EIN neuer Aspekt. **HIER gehört der Social Proof hin - nicht in die Entry Mail.**
 
-**Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein. Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo Vorname,“ klein weiter wie in Mail 1), höchstens ein kurzer eigener Satz, dann als letzter Absatz die Schlussfrage aus Mail 1, mit dem Wort für die Sache statt „es“, wo die Karte eins hat. Kein eigener Satz zum Angebot, kein neues Offer, kein Pitch.
+**Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein. Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo Vorname,“ klein weiter wie in Mail 1, auch in der Sie-Form), höchstens ein kurzer eigener Satz, dann als letzter Absatz die Schlussfrage aus Mail 1, mit dem Wort für die Sache statt „es“, wo die Karte eins hat. Kein eigener Satz zum Angebot, kein neues Offer, kein Pitch.
 
 Mail 3 endet mit genau einer Frage, nie mit einer Aussage oder Bitte: der Frage aus der Entry Mail, mit der Sache statt „es“, wo die Karte eine hat; jede Variante unten endet so.
 
@@ -770,7 +771,7 @@ Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie
 
 **Regel für die Case Study:** eine Geschichte, eine Zahl, ein Ergebnis. Keine Aufzählung von Kunden, keine Logo-Parade. Nur Belege, die der Nutzer angegeben hat.
 
-**Regel für Zahlen:** immer als Spanne („bis zu"), nie als Zusage. Förderquoten und Ergebnisse hängen von Größe, Branche und Programm ab - eine pauschale Behauptung stimmt für einen Teil der Empfänger nicht und macht die ganze Mail unglaubwürdig.
+**Regel für Zahlen:** den Beleg wörtlich übernehmen, wie der Nutzer ihn angegeben hat: Zahlen genau so, kein „bis zu", „über" oder anderer Zusatz, der nicht in der Angabe steht (Lauf 4 am 06.11.2026: aus „neun" wurde „bis zu neun"). Ein Ergebnis bleibt ein berichtetes Ergebnis, nie eine Zusage. Nennt der Nutzer eine Förderquote, steht sie wie in Mail 1 als „bis zu".
 
 ## FUP3: Abschied mit Routing-Hinweis (Step 4, 40-60 Wörter, `delayDays` 7)
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-06 – outreach 0.5.5
+
+Nacharbeit aus Testlauf 4 (DS-165): Betreff B, Kleinschreibung nach der Anrede, Beleg wörtlich.
+
+**outreach**
+- `outreach-copy` → Betreff B: auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“), nur der Gegenstand des Intros ohne Zusatz; Rückfall „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“ nur ohne sicheren Kurznamen. `save_lead_variables` ersetzt einen gebrochenen oder nackten Standard-Betreff entsprechend.
+- `outreach-copy` → Mail 2 bis 4: nach „Hallo …,“ klein weiter, auch in der Sie-Form („da ich bisher nichts gehört habe“); ListM8 setzt das erste Funktionswort selbst klein.
+- `outreach-copy` → Mail 3: Beleg wörtlich wie angegeben, kein „bis zu“, das nicht in der Angabe steht (Förderquoten der Karte D bleiben „bis zu“).
+
 ## 2026-11-06 – outreach 0.5.4, fulfillment 0.1.4
 
 Stand der Copy-Nacharbeit (Paket 2 und 3) auf Paket 1: zweiter Angebotssatz je Lead für A, B und C, Betreff-Test in Variante B, weitere Intros mit freiem Anker, Schwerpunkt je Lead.
