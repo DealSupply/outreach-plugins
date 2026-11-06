@@ -62,7 +62,7 @@ Text nie.
 | Modus | Pronomen | Gruß | Ohne benennbare Person |
 |:------|:---------|:-----|:-----------------------|
 | du (Standard) | du/dich/dir/dein; Tatsachen über den Betrieb auch ihr/euer | „Hallo {{Vorname}},“ | „Hallo,“ |
-| Sie (Ausnahme) | Sie/Ihnen/Ihre | „Hallo Frau Nachname,“ / „Hallo Herr Nachname,“ | „Guten Tag,“ |
+| Sie (Ausnahme) | Sie/Ihnen/Ihre | „Hallo Frau Nachname,“ / „Hallo Herr Nachname,“ (Herr/Frau nur, wenn belegt; nie „Guten Tag Herr/Frau Nachname,“; ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18)) | „Guten Tag,“ |
 
 - **Standard ist du, Singular**, auch bei Praxen, Kanzleien, Finanz und generischen Adressen. Die
   Mail richtet sich an die Person, die entscheidet, nicht an den Betrieb. Sie gilt nur, wenn der

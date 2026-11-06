@@ -90,7 +90,7 @@ muss dieselben Pronomen tragen wie der gewählte Modus.
 | `salutation` | Pronomen im ganzen Text | `hallo` | Fallback ohne benennbare Person |
 |---|---|---|---|
 | `du` (Standard) | Person: du/dich/dir/dein, nie ihr/euch als Anrede; Tatsachen über den Betrieb auch ihr/euer (siehe unten) | „Hallo Vorname,“ | „Hallo,“ |
-| `sie` (Ausnahme) | Sie/Ihnen/Ihre | „Hallo Frau Nachname,“ / „Hallo Herr Nachname,“ | „Guten Tag,“ |
+| `sie` (Ausnahme) | Sie/Ihnen/Ihre | „Hallo Frau Nachname,“ / „Hallo Herr Nachname,“ (Herr/Frau nur, wenn belegt; nie „Guten Tag Herr/Frau Nachname,“; ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18)) | „Guten Tag,“ |
 
 **Standard ist immer `du`, Singular** – auch bei Praxen, Kanzleien, Finanz und generischen Adressen:
 Die Mail richtet sich an den Ansprechpartner bzw. Entscheider, nicht an den Betrieb. Die Person wird nie mit ihr/euch angesprochen (keine Ihr- und keine Team-Form, auch nicht im Gruß). Tatsachen über einen Betrieb mit mehr als einer Person dürfen aber mit ihr/euer stehen („dass ihr nach ISO 9001 zertifiziert seid“, „auf eurer Website“) oder mit „dein Team“/„deine Firma“, je nachdem, was natürlicher klingt. Firmenleistungen (Projekte, Anlagen, Produkte, Zertifikate, Auszeichnungen) gehören dem Betrieb: nie „du hast die Anlage gebaut“ an eine Geschäftsführerin oder einen Vertriebsleiter; „du hast …“ nur, wenn die Person es nachweislich selbst getan hat, oder bei Ein-Personen-Betrieben, Personenmarken und kleinen Inhaberbetrieben, die sie verkörpert. Innerhalb eines Satzes nicht zwischen du und ihr wechseln („deine Bewertungen …, dass ihr …“ ist falsch). Ein „nie ihr/euch“ im Prompt einer Variable meint die Anrede der Person, nicht diese Tatsachen. Ohne benennbaren Ansprechpartner lautet der Gruß
@@ -118,7 +118,8 @@ bzw. „deine Praxis“.
   trägt der Lead selbst den Namen einer Person, ist sie gemeint, auch wenn die Recherche den
   Geschäftsführer einer Firma als Entscheider nennt. Ist keine Person klar erkennbar, steht nur
   „Hallo,“. Die Sie-Form geht analog mit Herr/Frau und Nachname, Fallback
-  „Guten Tag,“.
+  „Guten Tag,“; nie „Guten Tag Herr/Frau Nachname,“; ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18). Beide Personen einer Firma grüßen in derselben Form,
+  sobald ihre Anrede belegt ist (ListM8 macht aus „Guten Tag Herr Schneider,“ „Hallo Herr Schneider,“).
 - NIE „Hallo Herr/Frau Nachname,“ zusammen mit Du-Text (`du`), nie „Hallo <Firma> Team,“ oder
   „Hallo zusammen,“, nie „Hey …“, nie Sie und du gemischt.
 - Die Anrede kommt immer aus `{{ai.hallo}}`. Kein `{{firstName}}`, kein `{{companyName}}`, kein

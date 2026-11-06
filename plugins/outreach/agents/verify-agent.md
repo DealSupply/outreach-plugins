@@ -98,7 +98,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
     schlägt der Server je Lead aus einer festen Liste vor, eine eigene im selben Ton ist erlaubt;
     Wiederholungen über die Kampagne sind erwartet und kein Befund, solange sie wechseln; steht in fast
-    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Ausnahme: „das hab ich richtig gern gelesen“ („That was really nice to read.“) hinter Firmengeschichte, Gründung oder Alter ist die feste Reaktion (E54); derselbe Satz in vielen Mails und in zwei Intro-Varianten eines Leads ist dort gewollt, kein Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
+    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Ausnahme: „das hab ich richtig gern gelesen“ („That was really nice to read.“) hinter Firmengeschichte, Gründung oder Alter ist die feste Reaktion (E54); derselbe Satz in vielen Mails und in zwei Intro-Varianten eines Leads ist dort gewollt, kein Befund; ListM8 setzt ihn hinter dem Anker `geschichte` selbst ein (DS-172), beanstande die getauschte Form nicht. Ebenso ist „Hallo Herr/Frau Nachname,“ in der Sie-Form, die ListM8 aus „Guten Tag Herr/Frau …,“ macht, kein Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
     „so können sich Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als
     systematischen Befund.
   - Sterne: Anzahl oder Schnitt bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5,

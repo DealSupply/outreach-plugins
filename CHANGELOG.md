@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-06 – outreach 0.5.9
+
+Befunde aus dem Nachtest des Endstands (DS-172).
+
+**outreach**
+- `outreach-generate` → Den Anker `geschichte` ehrlich melden: ListM8 setzt dahinter die feste Reaktion „das hab ich richtig gern gelesen“ selbst ein, wenn das Intro mit einer anderen bekannten Reaktion endet (nicht bei Kampagnen, deren Intro-Prompt den Schluss selbst regelt), und nennt den Tausch in `server_adjusted`. Ein Intro von Person 2 ist mit keinem Intro von Person 1 wortgleich, gleich welche Variante.
+- `verify-agent` → Die getauschte Geschichts-Reaktion und die vom Server gesetzte Sie-Begrüßung sind kein Befund.
+- `outreach-copy`, `outreach-generate`, `outreach-verify` → Sie-Form: nie „Guten Tag Herr/Frau Nachname,“; mit belegter Anrede „Hallo Herr/Frau Nachname,“ ohne Titel und Vornamen, ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18). Beide Personen einer Firma grüßen in derselben Form.
+
 ## 2026-11-06 – outreach 0.5.8
 
 Entscheidungen vom 06.11.2026 aus dem Credits-Test (DS-170): Betreff B beginnt mit dem Detail, Reaktion nach einem Geschichts-Anker.
