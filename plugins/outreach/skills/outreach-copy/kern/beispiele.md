@@ -206,7 +206,7 @@ Betreff: kurze Frage
 
 Hallo Max,
 
-mir ist aufgefallen, dass du Holzfenster im Denkmalschutz nachbaust, Profil für Profil nach dem Original, das ist mir direkt hängen geblieben.
+mir ist aufgefallen, dass du Holzfenster im Denkmalschutz nachbaust, Profil für Profil nach dem Original, das hat mich angesprochen.
 
 Genau solche Handwerksbetriebe suchen wir als Partner. Wir haben regelmäßig Anfragen von Bauherren in der Region, die genau solche Projekte umsetzen wollen und einen zuverlässigen Betrieb suchen.
 

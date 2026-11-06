@@ -70,7 +70,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     Folgesatz lobt; sonst eine kurze Reaktion am Detail; eine Würdigung nur ausnahmsweise mit
     etwas Neuem und Konkretem). Verstoß ist ein Schluss, der eine Floskel oder ein Superlativ ohne Detail
     ist („finde ich stark“, „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“,
-    „das spricht für sich“), eine Würdigung im Gutachten-Ton oder als Folgerung über Ausrichtung,
+    „das spricht für sich“) oder „hängen geblieben“ in jeder Form enthält (seit 31.10.2026 verboten), eine Würdigung im Gutachten-Ton oder als Folgerung über Ausrichtung,
     Erfahrung oder Qualität („das zeigt, wie klar der Betrieb auf seine Kundschaft ausgerichtet ist“,
     „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“, „macht das Angebot schön
     konkret“, „ein bemerkenswert breiter Zuschnitt“), die das Detail nur noch einmal sagt, ein Vergleich
@@ -83,8 +83,8 @@ ihm mit `art` und `grund`, was zu tun ist.
     hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „zeigt, dass die Behandlung
     ankommt“), eine Reaktion, vor der im selben Satz kein Detail steht, oder eine Behauptung, die nicht
     direkt aus dem Detail folgt („deine Patienten lieben das“). Kein Befund: ein fehlender Schluss; eine
-    kurze Reaktion in der Vergangenheit am Detail („das fand ich richtig schön“, „das ist mir direkt
-    hängen geblieben“; „richtig“ ist keine Übertreibung), auch eine eigene kurze Reaktion im selben Ton statt der
+    kurze Reaktion in der Vergangenheit am Detail („das fand ich richtig schön“, „das hat mir gut
+    gefallen“; „richtig“ ist keine Übertreibung), auch eine eigene kurze Reaktion im selben Ton statt der
     vorgeschlagenen Form („da musste ich direkt schmunzeln“), solange sie zum Anker passt und keine
     Floskel ist; eine Würdigung mit konkretem neuem Inhalt („da steckt
     richtig viel Handarbeit drin“). Ein Schluss hinter einem Lob aus Bewertungstexten, einer
@@ -98,7 +98,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
     schlägt der Server je Lead aus einer festen Liste vor, eine eigene im selben Ton ist erlaubt;
     Wiederholungen über die Kampagne sind erwartet und kein Befund, solange sie wechseln; steht in fast
-    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
+    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Ausnahme: „das hab ich richtig gern gelesen“ („That was really nice to read.“) hinter Firmengeschichte, Gründung oder Alter ist die feste Reaktion (E54); derselbe Satz in vielen Mails und in zwei Intro-Varianten eines Leads ist dort gewollt, kein Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
     „so können sich Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als
     systematischen Befund.
   - Sterne: Anzahl oder Schnitt bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5,
@@ -106,7 +106,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
 - **Weitere Intro-Varianten** (`intro_b`, `intro_c`, seit 06.11.2026): Marke `rueckfall_trotz_anker` (Rückfall, obwohl „Stärkste Anker“ einen freien Eintrag hat) ist ein weicher Befund mit dem freien Eintrag als Vorschlag; ohne Marke ist ein Rückfall kein Befund. Die Marke `gleicher_gegenstand` wertest du vorerst nicht (seit 06.11.2026: sie traf in Lauf 4 einmal falsch und einmal strittig, ListM8 blendet sie aus, bis die Regel geschärft ist).
-- **Betreff B** (`betreff_b`, Betreff-Test seit 05.11.2026): 3 bis 6 Wörter (unter 3 ersetzt ListM8 seit 06.11.2026 durch den Rückfall), dasselbe Detail, mit dem das Intro beginnt, und direkt mit dem Detail beginnend (E53: nie „Frage zu/zum/zur …“, „question about …“; ListM8 zählt einen solchen Betreff als Rückfall, mit Detail im Intro ist das ein weicher Befund), kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund.
+- **Betreff B** (`betreff_b`, Betreff-Test seit 05.11.2026): 3 bis 6 Wörter (unter 3 ersetzt ListM8 seit 06.11.2026 durch den Rückfall), dasselbe Detail, mit dem das Intro beginnt, und direkt mit dem Detail beginnend (E53: nie „Frage zu/zum/zur …“, „question about …“; ListM8 zählt einen solchen Betreff in Kampagnen ab 06.11.2026 als Rückfall, mit Detail im Intro ist das ein weicher Befund), kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund.
 - **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter (Chance-Variable mit Beobachtung: 35), EIN Detail (gestapelte Lobpunkte,
   Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine

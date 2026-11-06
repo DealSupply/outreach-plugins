@@ -8,6 +8,9 @@ Entscheidungen vom 06.11.2026 aus dem Credits-Test (DS-170): Betreff B beginnt m
 - `outreach-copy`, `outreach-generate`, `verify-agent` → Ein echter Betreff B beginnt direkt mit dem Detail („Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“), nie mit „Frage zu/zum/zur …“ oder „question about …“; diese Form hat allein der Rückfall „Frage zu <Kurzname>“. ListM8 zählt einen Betreff in dieser Form immer als Rückfall (E53). Beispiele „Frage zu den Samstagskursen“ und „kurze Frage zum Neubau Freising“ ersetzt.
 - `check_copy.py` → Hinweis, wenn Betreff B wie der Rückfall beginnt.
 - `outreach-copy`, `lead-agent`, `verify-agent` → Hinter Firmengeschichte, Gründung oder Alter heißt die Reaktion immer „das hab ich richtig gern gelesen“ („That was really nice to read.“), nicht „das fand ich richtig sympathisch“ (E54).
+- Nach dem Review: Die Form „Frage zu …“ zählt in ListM8 nur in Kampagnen mit dem neuen Betreff-Prompt (Regel ANFANG/START) als Rückfall, ältere Kampagnen behalten ihren Prompt; ein nackter Standard-Betreff zählt immer als Rückfall. `check_copy.py` erkennt dieselben Formen wie ListM8 („Fragen zu“, „eine/kleine/kurze Frage zu“, „Frage wegen/an“, „questions about“, „a quick question about“, nie „Fragebogen“, „Rückfrage“, „questionnaire“).
+- `outreach-generate`, `verify-agent` → Die feste Geschichts-Reaktion darf in zwei Intro-Varianten gleich stehen; derselbe Satz in vielen Mails ist dort kein systematischer Befund. Rückfall von Betreff B ohne Kurznamen ist der Betreff von Variante A.
+- `outreach-copy`, `lead-agent`, `verify-agent` → „hängen geblieben“ (seit 31.10.2026 verboten) aus allen Reaktionslisten und Beispielen entfernt, steht in den Verbotslisten; `verify-agent` wertet es als Verstoß.
 
 ## 2026-11-06 – outreach 0.5.7
 

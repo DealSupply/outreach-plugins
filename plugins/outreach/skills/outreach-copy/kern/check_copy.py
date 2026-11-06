@@ -254,7 +254,9 @@ def subject_words(subject, company_names=()):
 
 
 # Form des Rückfalls (SOP Regel 10); ein echter Betreff B beginnt mit dem Detail (E53, 06.11.2026).
-FALLBACK_FORM = r"^\s*(?:kurze\s+)?frage\s+(?:zu|zum|zur)(?!\w)|^\s*(?:quick\s+)?question\s+(?:about|on|regarding)(?!\w)"
+# Wie SubjectLines::FALLBACK_FORM in ListM8; "Fragebogen", "Rückfrage", "questionnaire" zählen nicht.
+FALLBACK_FORM = (r"^\s*(?:(?:eine|kleine|kurze)\s+){0,2}fragen?\s+(?:zu|zum|zur|wegen|an)(?!\w)"
+                 r"|^\s*(?:a\s+)?(?:quick\s+|short\s+)?questions?\s+(?:about|on|regarding)(?!\w)")
 
 
 def check_subject_b(subject, kind, company_names=()):

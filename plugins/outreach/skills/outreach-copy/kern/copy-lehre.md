@@ -432,8 +432,8 @@ Schluss):
 2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem Detail, bei einem neutralen Faktum
    (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer Bewertungszahl. In der
    Vergangenheit erzählt, wie unter Kollegen. Richtung und Tonlage aus den Antwortdaten (725
-   kontaktierte Intros, Antwortquote 13,0 bis 6,1 %): „das fand ich richtig schön“, „das ist mir
-   direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das
+   kontaktierte Intros, Antwortquote 13,0 bis 6,1 %): „das fand ich richtig schön“, „das hat
+   mir gut gefallen“, „das fand ich richtig sympathisch“, „das
    hat mich angesprochen“. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton bilden
    (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs
    Wörter. „richtig“ ist erlaubt, Übertreibung („total begeistert“) nicht. Die Reaktion wechselt
@@ -493,7 +493,8 @@ Verboten im Schluss:
 - Selbstvorstellung oder Pitch („Wir sind …“, „Mein Name ist …“, „Wir helfen …“)
 - Floskeln: „Ich bin auf deine Webseite gestoßen“, „Tolle Webseite“, „das spricht für sich“, „das
   sieht man selten“, „hat man nicht alle Tage“, „finde ich stark“, „finde ich spannend“, „finde ich
-  bemerkenswert“, „Hammer“, „beeindruckend“ ohne Detail. Auch nicht als Beispiel in Vorlagen:
+  bemerkenswert“, „Hammer“, „beeindruckend“ ohne Detail, „hängen geblieben“ in jeder Form (seit
+  31.10.2026). Auch nicht als Beispiel in Vorlagen:
   Beispiele werden kopiert
 - erfundene Fakten, Personen, Rollen oder Zahlen; Kunden-, Projekt- oder Ergebniszahlen, die nur
   als Selbstangabe auf der Website stehen. Gründungsjahr mit seinem Ereignis und Teamgröße sind
@@ -511,7 +512,7 @@ Verboten im Schluss:
 |:------|:------|
 | Eigenes Verfahren (Handwerk), Reaktion | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang, das fand ich richtig schön.“ |
 | Ungewöhnliche Zeit (Dental), Reaktion | „mir ist aufgefallen, dass deine Praxis donnerstags bis 20 Uhr Termine hat, das hat mich angesprochen.“ |
-| Seltene Spezialisierung (Handwerk), Reaktion | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, das ist mir direkt hängen geblieben.“ |
+| Seltene Spezialisierung (Handwerk), Reaktion | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, das hat mich angesprochen.“ |
 | Auszeichnung (Handwerk), ohne Schluss | „ich hab mir deine Website angeschaut und den Handwerkspreis für deine Fachwerksanierung entdeckt.“ |
 | Lob aus Bewertungen (Dental), ohne Schluss | „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ |
 | Lob aus Bewertungen (Shop), ohne Schluss | „ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon.“ |
@@ -743,7 +744,7 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
 - beginnt direkt mit dem Detail („Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“),
   nie mit „Frage zu/zum/zur …“ oder „kurze Frage zu …“, englisch nie mit „question about …“: diese
   Form hat allein der Rückfall, damit echte Betreffs und Rückfälle in der Auswertung unterscheidbar
-  sind; ListM8 zählt einen Betreff in dieser Form immer als Rückfall (E53, 06.11.2026)
+  sind; ListM8 zählt einen Betreff in dieser Form in Kampagnen mit dem Betreff-Test ab 06.11.2026 immer als Rückfall (E53, 06.11.2026)
 - klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine
   Ankündigung, kein Lob, auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“)
 - nur der Gegenstand, wie das Intro ihn nennt, ohne Zusatz: keine Wirkung, kein Kanal, keine Anfragen

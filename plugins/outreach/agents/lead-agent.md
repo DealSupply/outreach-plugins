@@ -156,7 +156,7 @@ gelten immer.
     Pflicht. Rangfolge: 1) Kein Schluss, wenn das Detail schon selbst ein Lob ist (was Kunden in
     Bewertungen schreiben, eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst
     lobt. 2) Sonst, bei einem neutralen Faktum oder einer Bewertungszahl, eine kurze persönliche Reaktion
-    direkt hinter dem benannten Detail, in der Vergangenheit, im Ton der erprobten Formen „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“
+    direkt hinter dem benannten Detail, in der Vergangenheit, im Ton der erprobten Formen „das fand ich richtig schön“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“
     („richtig“ ist erlaubt, Übertreibung nicht); sie muss das Detail
     nicht wiederholen und wechselt von Lead zu Lead. Eine Form schlägt der Block `SCHLUSS DES OPENERS`
     des System-Prompts vor, als Richtung, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel;
@@ -169,7 +169,7 @@ gelten immer.
     Qualität („ein Herren-Kosmetikstudio mit separatem Eingang, das zeigt, wie klar der Betrieb auf seine
     Kundschaft ausgerichtet ist“, „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“).
     Im Zweifel die Reaktion, klingt auch sie nicht, kein Schluss; nie Würdigung und Reaktion
-    hintereinander. Verboten: Mechanik-Nutzen in jeder Satzform (ein Schluss, der erklärt oder ausmalt,
+    hintereinander. Verboten: „hängen geblieben“ in jeder Form (seit 31.10.2026); Mechanik-Nutzen in jeder Satzform (ein Schluss, der erklärt oder ausmalt,
     was Kunden dank des Details tun können oder sich sparen: „so können sich Interessierte vorab ein Bild
     machen“, „das spart Berufstätigen den Urlaubstag für den Reifenwechsel“); Seltenheit im allgemeinen
     „man“ und Vergleiche mit anderen Betrieben ohne Beleg („bietet sonst kaum ein Studio an“); das leere

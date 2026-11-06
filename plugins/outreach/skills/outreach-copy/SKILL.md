@@ -369,8 +369,8 @@ MUSS:
   loben.
   2) Sonst, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer
   Bewertungszahl, eine kurze persönliche Reaktion direkt hinter dem benannten Detail, in der
-  Vergangenheit erzählt wie unter Kollegen, im Ton der fünf Formen mit den besten Antwortquoten
-  (Prod-Dump 23.10.2026): „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“; „richtig“ ist erlaubt, Übertreibung („total begeistert“)
+  Vergangenheit erzählt wie unter Kollegen, im Ton der Formen mit den besten Antwortquoten
+  (Prod-Dump 23.10.2026): „das fand ich richtig schön“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“; „richtig“ ist erlaubt, Übertreibung („total begeistert“)
   und Floskeln nicht; am Detail und nie ohne es. Sie wechselt von Lead zu Lead, nie steht in allen Mails
   derselbe Satz: Der Block `SCHLUSS DES OPENERS` im System-Prompt (`emailGeneration.systemPrompt`)
   schlägt je Lead eine Form vor, als Richtung und Tonlage, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel; passt der
@@ -403,7 +403,7 @@ MUSS:
 - Ausschließlich positiv, getragen vom konkreten Detail selbst. Verboten sind austauschbare
   Bewertungsfloskeln und Superlative wie „das spricht für sich“, „das sieht man selten“, „das sieht
   man nicht immer“, „hat man nicht alle Tage“, „finde ich stark“, „finde ich spannend“, „finde ich
-  bemerkenswert“, „Hammer“, „beeindruckend“. Abgrenzung: „finde ich stark“ ist eine Formel, ein
+  bemerkenswert“, „Hammer“, „beeindruckend“ und „hängen geblieben“ in jeder Form (seit 31.10.2026). Abgrenzung: „finde ich stark“ ist eine Formel, ein
   gegenwärtiges Urteil ohne Inhalt; eine Würdigung oder Reaktion am benannten Detail ist erlaubt,
   Seltenheit und Superlativ nur mit dem Detail („so eine Nachsorge ist mir noch nicht begegnet“), nie allein
   („das sieht man selten“, „beeindruckend“) (siehe Positiver Schluss). Die Formeln machen alle Opener gleich (gilt zusätzlich
@@ -718,7 +718,7 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
 - beginnt direkt mit dem Detail („Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“),
   nie mit „Frage zu/zum/zur …“ oder „kurze Frage zu …“, englisch nie mit „question about …“: diese
   Form hat allein der Rückfall, damit echte Betreffs und Rückfälle in der Auswertung unterscheidbar
-  sind; ListM8 zählt einen Betreff in dieser Form immer als Rückfall (E53, 06.11.2026)
+  sind; ListM8 zählt einen Betreff in dieser Form in Kampagnen mit dem Betreff-Test ab 06.11.2026 immer als Rückfall (E53, 06.11.2026)
 - klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine
   Ankündigung, kein Lob, auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“)
 - nur der Gegenstand, wie das Intro ihn nennt, ohne Zusatz: keine Wirkung, kein Kanal, keine Anfragen
