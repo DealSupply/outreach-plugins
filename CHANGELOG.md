@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-06 – outreach 0.5.7
+
+Entscheidungen vom 06.11.2026 (DS-167): Wort für die Sache für jede Kampagne, Träger der Förderung.
+
+**outreach**
+- `outreach-copy` → Wort für die Sache auch ohne Schwerpunkte: Jede Kampagne hat in ListM8 ein eigenes Wort (Angebots-Seite, vom Assistenten vorgeschlagen). Es steht nur in der Schlussfrage von Mail 3, Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich.
+- `outreach-copy` → Karte D: Nennt der Nutzer Träger oder Programm der Förderung, steht er statt „der Staat“ („Wusstest du, dass das Land Baden-Württemberg aktuell bis zu …“).
+- Person 2 bekommt in ListM8 ein eigenes Intro mit Detail zur Firma, kein Kollegen-Intro mehr; die Regeln kommen aus `get_lead_data` (ZWEITE PERSON), der Anker `kollege` wird abgelehnt.
+
 ## 2026-11-06 – outreach 0.5.6
 
 Nacharbeit aus dem Gesamttest, Lauf 5 (DS-166): Schwerpunkte in den Folgemails, Schlussfrage von Mail 3, Betreff B.

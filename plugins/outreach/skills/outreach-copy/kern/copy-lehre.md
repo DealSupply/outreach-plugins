@@ -142,7 +142,7 @@ ohne Pitch. Weil er für alle Leads gleich ist, muss er zu JEDEM Intro passen.
 | **A: Kostenlose Teildienstleistung** | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [Deliverable] an.“ |
 | **B: Tester/Pilotprojekt** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
 | **C: Konkretes Deliverable (Reziprozität)** | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
-| **D: Förder-Hook** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?“ |
+| **D: Förder-Hook** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?“ (mit Träger, wenn der Nutzer ihn nennt: „dass das Land Baden-Württemberg …“) |
 | **E: Partner gesucht** | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ |
 
 Die Klammern füllst du beim Schreiben aus den Angaben des Absenders; im fertigen Text steht keine
@@ -219,7 +219,7 @@ nicht als Spam-Wort, im Betreff hat es nichts zu suchen.
 
 Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das Setup“),
 steht das Wort an der Stelle von „es“, mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir
-morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ Kein „Link“ im Schlusssatz (nicht
+morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ Ohne Schwerpunkte hat jede Kampagne ein eigenes Wort für die Sache (in ListM8 auf der Angebots-Seite unter der Schlussfrage, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3, Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link“ im Schlusssatz (nicht
 „… den Link dazu schicke?“), die Sache wird zugesendet. „morgen“ nur, wenn der Absender das
 Deliverable nach der Antwort wirklich bis zum nächsten Tag liefern kann, sonst „… wenn ich es dir
 zusende?“.
@@ -645,8 +645,8 @@ Update“ und neuer Thread). Sie bleibt trotzdem ohne Mail 1 verständlich.
 Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo {{Vorname}},“ klein weiter wie in Mail 1,
 auch in der Sie-Form: „ein Bauunternehmen aus …“, „bei rund 80 Gründungen …“), höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie in
 Mail 1, mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den
-Entwurf zusende? Völlig unverbindlich natürlich.“). Karten ohne Wort für die Sache (B, D, E oder eine
-eigene Frage) nehmen die Frage aus Mail 1 wörtlich: Mail 3 endet immer mit einer Frage, eine bloße
+Entwurf zusende? Völlig unverbindlich natürlich.“). Karten ohne Wort für die Sache (B, D, E, eine
+eigene Frage ohne Stelle dafür oder eine Kampagne ohne Wort) nehmen die Frage aus Mail 1 wörtlich: Mail 3 endet immer mit einer Frage, eine bloße
 Aufforderung wie „sag einfach kurz Bescheid“ reicht nicht (05.11.2026). Das Wort für die Sache steht nur in dieser Frage;
 kein eigener Satz um das Angebot („Falls du den Entwurf sehen möchtest, antworte kurz“), kein neues
 Offer, kein Pitch. Mail 3 endet mit genau einer Frage, nie mit einer Aussage („schick ich dir gern“)

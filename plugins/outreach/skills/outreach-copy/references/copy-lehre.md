@@ -483,7 +483,7 @@ Der wichtigste Baustein. Die Überleitung ist der statische Satz NACH dem indivi
 | **A: Kostenlose Teildienstleistung** | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [Deliverable] an." |
 | **B: Tester/Pilotprojekt** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region]." |
 | **C: Konkretes Deliverable (Reziprozität)** | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt." |
-| **D: Förder-Hook** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" |
+| **D: Förder-Hook** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" (mit Träger, wenn der Nutzer ihn nennt: „dass das Land Baden-Württemberg …") |
 | **E: Partner gesucht** | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen] die zu dir passen würden." |
 
 Bei Karte C steht das Deliverable als bereits erledigte Arbeit da, nie als Absicht („würde gerne erstellen"). Bei Karte A ist es ein Angebot („bieten … an"), nie erledigte Arbeit.
@@ -548,7 +548,7 @@ Genau EIN CTA pro Mail. Nie zwei Optionen.
 
 Der Schlusssatz ist immer eine Frage, keine Bitte („Antworte mir einfach kurz.") und keine Aussage (Stand 05.11.2026, wie die App).
 
-Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …", bei A „… das auch für Sie erstelle? …", bei B „Wären Sie grundsätzlich offen dafür?", bei D „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …", E bleibt gleich. Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
+Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …", bei A „… das auch für Sie erstelle? …", bei B „Wären Sie grundsätzlich offen dafür?", bei D „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …", E bleibt gleich. Ohne Schwerpunkte hat jede Kampagne ein eigenes Wort für die Sache (ListM8: Angebots-Seite, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3, Mail 1 behält „es" bzw. „das"; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
 
 Kein „Lass uns mal sprechen" ohne vorbereiteten Mehrwert. Kein Terminvorschlag in Mail 1. Kein Link in Mail 1 - der CTA ist die Antwort, nicht der Klick.
 

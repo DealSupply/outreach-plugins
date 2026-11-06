@@ -138,7 +138,7 @@ Wahl dem Nutzer in einem Satz.
 | A: Kostenlose Teildienstleistung | Standard, funktioniert in 80 % der Fälle. Im Zweifel diese. | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [Deliverable] an.“ |
 | B: Tester/Pilotprojekt | Neues Produkt, wenig Referenzen, Exklusivität als Narrativ | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
 | C: Konkretes Deliverable (Reziprozität) | Kleine Zielgruppe, hohe Reply Rate nötig. Höchste Reply Rate, mehr Aufwand pro Lead. | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
-| D: Förder-Hook | Nutzer hat förderfähige Produkte | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?“ |
+| D: Förder-Hook | Nutzer hat förderfähige Produkte | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?“ (nennt der Nutzer Träger oder Programm, steht er statt „der Staat“: „das Land Baden-Württemberg“) |
 | E: Partner gesucht | Nischen-Anbieter, Kooperation auf Augenhöhe | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ |
 
 Die Klammern füllst du beim Schreiben der Sequenz aus den Angaben des Nutzers; im fertigen Text
@@ -262,7 +262,7 @@ welches Programm für Sie infrage kommt? …“), E „Wäre das grundsätzlich 
 Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das Setup“, „die
 Anzeigen“), steht es bei C an der Stelle von „es“, mit anderer Wortstellung: „Wäre es in Ordnung,
 wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“, bei A an der Stelle von
-„das“. Kein „Link“ im Schlusssatz (nicht „… wenn ich dir morgen den Link dazu schicke?“), die Sache
+„das“. Ohne Schwerpunkte hat jede Kampagne ein eigenes Wort für die Sache (in ListM8 auf der Angebots-Seite unter der Schlussfrage, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3, Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link“ im Schlusssatz (nicht „… wenn ich dir morgen den Link dazu schicke?“), die Sache
 wird zugesendet. „morgen“ und „zusenden“ nur bei C, und nur, wenn der Nutzer das Deliverable nach der
 Antwort wirklich bis zum nächsten Tag liefern kann, sonst „… wenn ich es dir zusende?“. Der Zusatz
 „Völlig unverbindlich natürlich.“ senkt die Hürde und ist kein zweiter CTA. Eine Schlussfrage, die
