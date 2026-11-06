@@ -751,8 +751,10 @@ Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft 
 
 Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau
 Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“.
-`save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „kurze Frage“ und
-markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“.
+`save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch den Betreff von
+Variante A („kurze Frage“) und markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile
+„Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder
+eine Zeile „Kurzname: …“ an.
 
 ---
 

@@ -594,7 +594,7 @@ Seit 05.11.2026 legt der Assistent von ListM8 einen Betreff-Test an (ab Werk an)
 - verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates, „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
 - Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“, ohne Kurzname „kurze Frage“; gemeldet mit `betreff_b__rueckfall: "ja"`. Nie leer, nie erfunden.
 
-Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „kurze Frage“ und markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“.
+Gut: „3D-Rundgang bei Bad Becker“, „Frage zu den Samstagskursen“, „kurze Frage zum Neubau Freising“. Schlecht: „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch den Betreff von Variante A („kurze Frage“) und markiert ihn als Rückfall. In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder eine Zeile „Kurzname: …“ an.
 
 ## Signatur-Regeln
 

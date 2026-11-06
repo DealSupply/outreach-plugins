@@ -2,7 +2,11 @@
 """Prüft Cold-Mail-Copy gegen die mechanisch prüfbaren Regeln der Copy-Lehre.
 
 Aufruf:
-    python3 check_copy.py <copy-datei.md>
+    python3 check_copy.py <copy-datei.md> [--firma "<Kurzname>"] …
+
+Der Kurzname des Leads (bereinigt, ohne Rechtsform) zählt im Betreff B als ein Wort, wie in der
+App. Er kommt aus --firma (mehrfach möglich) oder einer Zeile "Kurzname: …" in der Datei;
+{{Firma}} und andere Platzhalter zählen ohnehin als ein Wort.
 
 Erwartetes Format (siehe beispiele.md): jede Mail unter einer Überschrift
 "## Step <n>: …" (oder "## Zusatz-Step: Dringlichkeit"), darin eine Zeile
@@ -52,6 +56,7 @@ OPT_OUT = r"\b(stopp?|abmeld\w*|abbestell\w*|austragen|unsubscribe|opt-?out)\b"
 # die frühere Fassung „…, dann melde ich mich nicht mehr.“ trägt dasselbe Merkmal.
 OPT_OUT_LINES = ("kein thema für", "a priority right now")
 SIGN_OFF_GAP = 2  # Leerzeilen zwischen letztem Satz und Grußformel
+KURZNAME = re.compile(r"^kurzname\s*:\s*(.+)$", re.IGNORECASE)
 ANNOUNCE = r"\b(website|webseite|entwurf|idee|ideen|konzept|angebot|setup|anzeigen)\b.*\bfür\b|ist fertig"
 
 
@@ -75,6 +80,8 @@ def parse(text):
         if current.get("closed"):
             continue
         stripped = line.strip()
+        if KURZNAME.match(stripped):
+            continue  # Angabe für die Prüfung, kein Mailtext
         if current["subject_b"] is None and re.match(r"^betreff\s+b\s*:", stripped, re.IGNORECASE):
             current["subject_b"] = stripped.split(":", 1)[1].strip()
             continue
@@ -231,11 +238,19 @@ def check(mail):
             soft.append("Betreff klingt nach Ankündigung („… für …“, „ist fertig“)")
     subject_b = mail.get("subject_b")
     if subject_b is not None:
-        hard.extend(check_subject_b(subject_b, kind))
+        hard.extend(check_subject_b(subject_b, kind, mail.get("company_names", ())))
     return kind, words, limit, hard, soft
 
 
-def check_subject_b(subject, kind):
+def subject_words(subject, company_names=()):
+    """Wörter des Betreffs; Platzhalter und der Kurzname der Firma zählen je als ein Wort."""
+    text = re.sub(r"\{\{.*?\}\}", "x", subject)
+    for name in sorted({n.strip() for n in company_names if n.strip()}, key=len, reverse=True):
+        text = re.sub(r"(?<!\w)" + re.escape(name) + r"(?!\w)", "x", text, flags=re.IGNORECASE)
+    return len(text.split())
+
+
+def check_subject_b(subject, kind, company_names=()):
     """Betreff von Variante B im Betreff-Test (SOP vom 05.11.2026): 3 bis 6 Wörter, gleiches Detail wie das Intro."""
     problems = []
     if kind != "entry":
@@ -243,7 +258,7 @@ def check_subject_b(subject, kind):
     if not subject:
         return ["Betreff B ist leer (Rückfall: „Frage zu {{Firma}}“ oder „kurze Frage“)"]
     sl = subject.lower()
-    count = len(re.sub(r"\{\{.*?\}\}", "x", subject).split())
+    count = subject_words(subject, company_names)
     if count > 6:
         problems.append(f"Betreff B hat {count} Wörter, höchstens 6")
     for word in SPAM + SUBJECT_EXTRA + ["angebot"]:
@@ -262,11 +277,27 @@ def check_subject_b(subject, kind):
     return problems
 
 
+def arguments(argv):
+    """Pfad der Copy-Datei und die Kurznamen aus --firma; None ohne gültigen Aufruf."""
+    path, names, rest = None, [], list(argv)
+    while rest:
+        arg = rest.pop(0)
+        if arg == "--firma" and rest:
+            names.append(rest.pop(0))
+        elif arg.startswith("--firma="):
+            names.append(arg.split("=", 1)[1])
+        elif path is None and not arg.startswith("--"):
+            path = arg
+        else:
+            return None, []
+    return path, names
+
+
 def main():
-    if len(sys.argv) != 2:
+    path, company_names = arguments(sys.argv[1:])
+    if path is None:
         print(__doc__)
         sys.exit(2)
-    path = sys.argv[1]
     try:
         with open(path, encoding="utf-8") as handle:
             text = handle.read()
@@ -275,6 +306,9 @@ def main():
         sys.exit(2)
 
     mails = parse(text)
+    company_names += [m.group(1).strip() for m in map(KURZNAME.match, (l.strip() for l in text.splitlines())) if m]
+    for mail in mails:
+        mail["company_names"] = company_names
     if not mails:
         print("Keine Mail gefunden. Erwartet werden Überschriften wie „## Step 1: Entry Mail“.")
         sys.exit(2)
