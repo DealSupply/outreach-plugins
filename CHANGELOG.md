@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-06 – outreach 0.5.8
+
+Entscheidungen vom 06.11.2026 aus dem Credits-Test (DS-170): Betreff B beginnt mit dem Detail, Reaktion nach einem Geschichts-Anker.
+
+**outreach**
+- `outreach-copy`, `outreach-generate`, `verify-agent` → Ein echter Betreff B beginnt direkt mit dem Detail („Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“), nie mit „Frage zu/zum/zur …“ oder „question about …“; diese Form hat allein der Rückfall „Frage zu <Kurzname>“. ListM8 zählt einen Betreff in dieser Form immer als Rückfall (E53). Beispiele „Frage zu den Samstagskursen“ und „kurze Frage zum Neubau Freising“ ersetzt.
+- `check_copy.py` → Hinweis, wenn Betreff B wie der Rückfall beginnt.
+- `outreach-copy`, `lead-agent`, `verify-agent` → Hinter Firmengeschichte, Gründung oder Alter heißt die Reaktion immer „das hab ich richtig gern gelesen“ („That was really nice to read.“), nicht „das fand ich richtig sympathisch“ (E54).
+
 ## 2026-11-06 – outreach 0.5.7
 
 Entscheidungen vom 06.11.2026 (DS-167): Wort für die Sache für jede Kampagne, Träger der Förderung.

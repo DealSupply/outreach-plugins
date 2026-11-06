@@ -91,7 +91,8 @@ ihm mit `art` und `grund`, was zu tun ist.
     Auszeichnung oder neben einem lobenden festen Folgesatz lobt doppelt: Hinweis (`text`). Eine
     übertriebene Reaktion („total begeistert“), eine frei gebildete Reaktion mit deutlich mehr als sechs
     Wörtern oder „sympathisch“ bzw. „schön“ hinter einer Bewertungszahl oder einem technischen Detail ist
-    ein Hinweis (`text`). Der Fallback-Satz der
+    ein Hinweis (`text`); ebenso hinter Firmengeschichte, Gründung oder Alter jede andere Reaktion als
+    „das hab ich richtig gern gelesen“ („That was really nice to read.“, E54). Der Fallback-Satz der
     Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
@@ -105,7 +106,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
 - **Weitere Intro-Varianten** (`intro_b`, `intro_c`, seit 06.11.2026): Marke `rueckfall_trotz_anker` (Rückfall, obwohl „Stärkste Anker“ einen freien Eintrag hat) ist ein weicher Befund mit dem freien Eintrag als Vorschlag; ohne Marke ist ein Rückfall kein Befund. Die Marke `gleicher_gegenstand` wertest du vorerst nicht (seit 06.11.2026: sie traf in Lauf 4 einmal falsch und einmal strittig, ListM8 blendet sie aus, bis die Regel geschärft ist).
-- **Betreff B** (`betreff_b`, Betreff-Test seit 05.11.2026): 3 bis 6 Wörter (unter 3 ersetzt ListM8 seit 06.11.2026 durch den Rückfall), dasselbe Detail, mit dem das Intro beginnt, kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund.
+- **Betreff B** (`betreff_b`, Betreff-Test seit 05.11.2026): 3 bis 6 Wörter (unter 3 ersetzt ListM8 seit 06.11.2026 durch den Rückfall), dasselbe Detail, mit dem das Intro beginnt, und direkt mit dem Detail beginnend (E53: nie „Frage zu/zum/zur …“, „question about …“; ListM8 zählt einen solchen Betreff als Rückfall, mit Detail im Intro ist das ein weicher Befund), kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund.
 - **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter (Chance-Variable mit Beobachtung: 35), EIN Detail (gestapelte Lobpunkte,
   Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine

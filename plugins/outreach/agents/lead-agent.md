@@ -160,7 +160,7 @@ gelten immer.
     („richtig“ ist erlaubt, Übertreibung nicht); sie muss das Detail
     nicht wiederholen und wechselt von Lead zu Lead. Eine Form schlägt der Block `SCHLUSS DES OPENERS`
     des System-Prompts vor, als Richtung, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel;
-    passt der Vorschlag nicht (etwa „schön“ hinter einer Bewertungszahl), eine eigene bilden. Fehlt der
+    passt der Vorschlag nicht (etwa „schön“ hinter einer Bewertungszahl), eine eigene bilden. Hinter Firmengeschichte, Gründung oder Alter des Betriebs heißt die Reaktion immer „das hab ich richtig gern gelesen“ (Sie-Form gleich, englisch „That was really nice to read.“), auch wenn der Vorschlag eine andere nennt; „das fand ich richtig sympathisch“ passt dort nicht (E54, 06.11.2026). Fehlt der
     Block (älterer Server), variiere sie selbst; nie derselbe Satz in allen Mails. Hinter einer Bewertungszahl steht immer die Reaktion.
     3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt, das
     nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,

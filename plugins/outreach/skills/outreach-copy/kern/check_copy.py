@@ -239,6 +239,9 @@ def check(mail):
     subject_b = mail.get("subject_b")
     if subject_b is not None:
         hard.extend(check_subject_b(subject_b, kind, mail.get("company_names", ())))
+        if subject_b and re.match(FALLBACK_FORM, subject_b, re.IGNORECASE):
+            soft.append("Betreff B beginnt wie der Rückfall („Frage zu …“, „question about …“): ein echter Betreff "
+                        "beginnt mit dem Detail, ListM8 zählt ihn sonst als Rückfall (E53)")
     return kind, words, limit, hard, soft
 
 
@@ -248,6 +251,10 @@ def subject_words(subject, company_names=()):
     for name in sorted({n.strip() for n in company_names if n.strip()}, key=len, reverse=True):
         text = re.sub(r"(?<!\w)" + re.escape(name) + r"(?!\w)", "x", text, flags=re.IGNORECASE)
     return len(text.split())
+
+
+# Form des Rückfalls (SOP Regel 10); ein echter Betreff B beginnt mit dem Detail (E53, 06.11.2026).
+FALLBACK_FORM = r"^\s*(?:kurze\s+)?frage\s+(?:zu|zum|zur)(?!\w)|^\s*(?:quick\s+)?question\s+(?:about|on|regarding)(?!\w)"
 
 
 def check_subject_b(subject, kind, company_names=()):
