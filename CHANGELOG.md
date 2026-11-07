@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-05 – outreach 0.5.2, datenbeschaffung 0.6.1
+
+Passt zu ListM8 MCP 4.12.0 (DS-109, Google-Kennungen am Lead). Ältere Server: Die Skills raten, die Spalte mit der Place ID in `place_id` umzubenennen.
+
+**outreach**
+- `outreach-import` → Google-Maps-Listen: Der Assistent prüft je Zeile, ob eine Place ID da ist (Spalte, `ChIJ…`-Wert oder Maps-Link), und weist bei fehlender Place ID darauf hin, die Liste mit Place ID neu zu exportieren. Kurzlinks, CID und `google_id` ersetzen sie nicht. Ab MCP 4.12.0 bleiben die Spalten unverändert, der Server erkennt Place ID und CID selbst.
+
+**datenbeschaffung**
+- `listm8-mcp.md` → Place ID und CID am Lead: Erkennung unter jedem Spaltennamen, in Maps-Links und als `ChIJ…`-Wert; die `place_id` reicht, die CID leitet der Server ab.
+
 ## 2026-11-01 – outreach 0.5.1
 
 Passt zu ListM8 v4.18 mit dem Weg „Mit deiner KI“ (LISTM8-86, MCP 4.7.0, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.

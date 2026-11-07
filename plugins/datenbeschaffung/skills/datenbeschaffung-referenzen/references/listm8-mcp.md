@@ -167,6 +167,13 @@ Bis zu 10000 Leads je Aufruf; Aufruf asynchron, Antwort mit `job_id`.
   `google_rezensionstexte` (Zeilen `JJJJ-MM-TT · N★ · Text` oder Array aus `{text,
   publishedAtDate, stars}`, ohne Namen der Verfasser) und `business_status`. Die Rezensionen
   liest die Recherche als eigenen Block und sucht dann nicht noch einmal nach Bewertungen.
+- **Place ID und CID am Lead (ab MCP 4.12.0):** Der Server erkennt die Place ID unter jedem
+  Spaltennamen, der sie nennt („Place ID“, „Google Place ID“ …), in Google-Maps-Links
+  (`place_id:`, `query_place_id=`, `!1s0x…:0x…`) und als `ChIJ…`-Wert in jeder Spalte; die CID
+  leitet er selbst aus der Place ID ab. Die `place_id` reicht also, umbenennen ist nicht nötig.
+  Ältere Server kennen nur `place_id`/`placeId`/`google_place_id`. Kurzlinks (`maps.app.goo.gl`)
+  ersetzen die Place ID nicht. Ohne Place ID sucht das Bewertungs-Power-up den Eintrag später
+  über Name und Ort, bei Ketten und Praxen mit mehreren Ärzten trifft das öfter daneben.
 - **Alle anderen Schlüssel** (auch `firstName`, `lastName`, `inhaber`, `kategorie`,
   `companyClean`, `hinweis`, `quelle`) werden nur gespeichert, wenn sie in `attribute_mappings`
   deklariert sind; sonst gehen sie verloren. Empfohlene Namen: `outreach-uebergabe.md`, Schritt 3.
