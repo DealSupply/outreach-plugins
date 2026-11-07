@@ -23,7 +23,7 @@ fertig“; der Aufwand fällt erst an, wenn jemand antwortet.
 | 3 fertige Werbeanzeigen (Meta oder Google) mit Texten und Bildideen | `demo-anzeigen` | 15–20 Min. | keine; Bildgenerierung optional mit Freigabe | keine Schaltung, kein Werbekonto |
 | Fertige Stellenanzeige / Recruiting-Anzeige | `demo-anzeigen` | 15 Min. | keine | Gehaltsangaben nur vom Lead |
 | Lead-System, das schon 30–50 passende Wunschkunden für den Lead gefunden hat (das System framen, nicht „ich schicke dir Leads“) | `demo-leadliste` | 20–30 Min. | Scraping-Kosten im Konto des Nutzers (harter Deckel 2 $) | nur Firmendaten, keine Privatpersonen |
-| Fertige Akquise-Kampagne: Zielgruppe, Offer, Mail-Sequenz, 3 personalisierte Beispiel-Mails | `demo-akquise-kampagne` | 25–30 Min. | keine (optional Leadliste) | nichts wird versendet |
+| Fertige Akquise-Kampagne: Zielgruppe, Offer, Mail-Sequenz, 3 personalisierte Beispiel-Mails | `demo-kampagne` | 25–30 Min. | keine (optional Leadliste) | nichts wird versendet |
 | 30-Tage-Content-Plan (Social Media, Blog) | `demo-anzeigen` (Abschnitt Content-Plan) | 15 Min. | keine | Themen nur aus belegten Leistungen |
 
 ## Nicht als Skill lieferbar (ehrlich sagen)
@@ -44,7 +44,7 @@ fertig“; der Aufwand fällt erst an, wenn jemand antwortet.
 | Website-Check | ein Entwurf, wie die Startseite aussehen könnte | `demo-webseite` |
 | Ads-Audit | 3 fertige Anzeigen für dein stärkstes Angebot | `demo-anzeigen` |
 | Potenzial-Check Neukunden | ein Lead-System, das schon 40 Firmen in deiner Region gefunden hat, die genau zu dir passen | `demo-leadliste` |
-| Beratung zur Kaltakquise | eine fertige Mail-Sequenz mit 3 Beispiel-Mails an echte Wunschkunden | `demo-akquise-kampagne` |
+| Beratung zur Kaltakquise | eine fertige Mail-Sequenz mit 3 Beispiel-Mails an echte Wunschkunden | `demo-kampagne` |
 
 Die endgültige Formulierung (Karte, Überleitung, Feinheiten-Satz) macht `outreach-copy`.
 

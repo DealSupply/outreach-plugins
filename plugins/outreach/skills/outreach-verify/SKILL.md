@@ -13,7 +13,7 @@ Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen 
 
 > **Hinweis zur Parallelisierung:** Wenn dein Client parallele Subagents unterstützt (z.B. Claude Code), spawne pro Lead einen Subagent wie beschrieben. Andernfalls arbeite die Leads **sequentiell** mit exakt denselben Schritten ab — das Ergebnis ist identisch, nur langsamer.
 
-> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto, Workspace und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt nur den Status `approved` (bereit für den CSV-Export, `export_leads`) und überträgt nichts nach Instantly; Push und Export sind eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
+> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto, Workspace und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt den Status `approved` (bereit für den CSV-Export, `export_leads`). Ist die Kampagne mit Instantly verknüpft und Auto-Push an, plant die Freigabe die Übertragung nach Instantly ein, wie in der App; sonst sind Push und Export eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`, für Mails im Review mit `regenerate_emails=true`; ohne den Schalter überspringt der Lauf sie); Änderungen an einem Variablen-Prompt über `update_ai_variable`, an der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
 
 ## Standard: Stichprobe statt Vollprüfung
 
@@ -109,11 +109,11 @@ Wenn KEINE campaign_id als Argument übergeben wurde:
 2. Zeige dem User die Kampagnen mit `leadCounts.pending_review > 0`
 3. Frage: "Für welche Kampagne soll ich Variablen reviewen?"
 4. Merke dir die campaign_id
-5. Vorprüfung: `list_lead_runs(campaign_id, active_only=true)` — solange für einen Lead ein Job der E-Mail- oder der Research-Stufe wartet oder läuft, lehnen `approve_lead_variables`/`reject_lead_variables` diesen Lead mit `lead_run_active` ab (Rennschutz). Erst nach dem Terminal-Status des Laufs reviewen. Nach einer Änderung der Kampagnenkonfiguration (Variablen, Schritte) vorhandene Werte nicht blind freigeben, sondern gegen die aktuelle Konfiguration prüfen (`export_campaign_blueprint`) und bei Abweichung neu generieren.
+5. Vorprüfung: `list_lead_runs(campaign_id, active_only=true)` — solange für einen Lead ein E-Mail-Job wartet oder läuft (`email_generation_active`) oder ein aktiver Lauf seine E-Mail-Stufe noch vor sich hat (`lead_run_active`), lehnen `approve_lead_variables`/`reject_lead_variables` genau diesen Lead ab (Rennschutz); die übrigen Leads lassen sich reviewen. Erst nach dem Terminal-Status des Laufs reviewen. Nach einer Änderung der Kampagnenkonfiguration (Variablen, Schritte) vorhandene Werte nicht blind freigeben, sondern gegen die aktuelle Konfiguration prüfen (`export_campaign_blueprint`) und bei Abweichung neu generieren.
 
 Wenn campaign_id als Argument übergeben wurde: Direkt zur Copy-Prüfung.
 
-**Copy-Prüfung der Kampagne (Pflicht, einmal pro Kampagne):** Den Skill `outreach-copy` laden und die Sequenz aus `export_campaign_blueprint(campaign_id)` gegen dessen Selbstprüfung (14 Punkte) und Prüfliste halten: Wortlimits je Step (Anrede und ein Bezug von bis zu 2 Sätzen eingerechnet), EIN CTA, kein Pitch, Offer und `{{ai.intro}}` nur in Step 1, Feinheiten-Satz bei Karte A/C, kein Link in Step 1, Spam-Wörter, nur erlaubte Platzhalter, Betreffzeilen, Umlaute, `salutation` passend zu Text und `hallo`-Prompt. Ist `campaign.language` `en` (ab MCP 4.7.0), müssen Sequenz und Prompts englisch sein, Anrede `Hi {first name},` bzw. `Hi there,` und Gruß `Best,`; die deutschen Punkte (Umlaute, du/Sie, „…“) entfallen dann (siehe `outreach-copy`, Abschnitt „Kampagnensprache“). Funde dem User vor dem Review nennen: Fehler im festen Text oder in den Prompts behebt kein Approve, sie gehören über `/outreach-campaign` korrigiert. Ob trotzdem reviewt wird, entscheidet der User.
+**Copy-Prüfung der Kampagne (Pflicht, einmal pro Kampagne):** Den Skill `outreach-copy` laden und die Sequenz aus `export_campaign_blueprint(campaign_id)` gegen dessen Selbstprüfung und Prüfliste halten: Wortlimits je Step (Anrede und ein Bezug von bis zu 2 Sätzen eingerechnet), EIN CTA, kein Pitch, Offer und `{{ai.intro}}` nur in Step 1, zweiter Satz zum Angebot passend zur Karte (A/B/C `{{ai.angebot_ausfuehrung}}`, bei C der Feinheiten-Satz, D/E keiner), kein Link in Step 1 und kein „Link“ im Schlusssatz, Spam-Wörter, nur erlaubte Platzhalter, Betreffzeilen, Umlaute, `salutation` passend zu Text und `hallo`-Prompt. Ist `campaign.language` `en` (ab MCP 4.7.0), müssen Sequenz und Prompts englisch sein, Anrede `Hi {first name},` bzw. `Hi there,` und Gruß `Best,`; die deutschen Punkte (Umlaute, du/Sie, „…“) entfallen dann (siehe `outreach-copy`, Abschnitt „Kampagnensprache“). Funde dem User vor dem Review nennen: Fehler im festen Text oder in den Prompts behebt kein Approve, sie gehören über `/outreach-campaign` korrigiert. Ob trotzdem reviewt wird, entscheidet der User.
 
 **Batch-Größe abfragen:**
 
@@ -168,13 +168,13 @@ Du reviewst AI-generierte Variablen für einen Lead via MCP Tools.
 
 KAMPAGNE: {campaign.name} (ID: {campaign.id})
 LEAD: {lead.company} (ID: {lead.id})
-LEAD EMAIL: {lead.email}
+LEAD VERSANDADRESSE: {lead.sendingEmail || lead.email}
 LEAD WEBSITE: {lead.website}
 
 ## Schritte
 
 1. Rufe get_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}) auf
-2. Lies JEDE Variable in variables[] sorgfältig (name + value)
+2. Lies JEDE Variable in variables[] sorgfältig (name + value); eine Zeile mit fallback: true ist eine Intro-Variante im Rückfall: Sie zeigt den aktuellen Text von Variante A, ist kein fehlender Wert und kein Befund, weil sie gleich lautet
 3. Prüfe Research-Daten und Lead-Stammdaten für Kontext
 4. REVIEW — Prüfe JEDE Variable gegen die Verification-Checkliste (siehe unten)
 5. ENTSCHEIDUNG (binär):
@@ -199,7 +199,7 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 - [ ] Keine M-dashes? (nur normale Bindestriche -)
 
 ### Copy-Regeln (outreach-copy)
-- [ ] hallo: nur die Begrüßungszeile mit Komma. Gibt der Variablen-Prompt der Kampagne eine eigene Form vor, gilt diese; sonst Format passend zur Ansprache (Du: „Hallo Vorname,“ der Person der Versandadresse, bei generischen Adressen des Entscheiders aus der Recherche, Fallback „Hallo,“ (dann Text im Singular, „dein Team“); Sie: „Hallo Frau/Herr Nachname,“ bzw. „Guten Tag,“)? Nie „Hallo Herr/Frau …“, „Hallo <Firma> Team,“ oder „Hallo zusammen,“, keine Anrede mit ihr/euch, kein erfundener Name oder Titel? Tatsachen über einen Betrieb mit mehreren Personen mit ihr/euer („dass ihr … habt“) sind KEIN Fehler, ein du/ihr-Wechsel im selben Satz schon; Firmenleistungen nie als „du hast …“ an eine Person, die sie nicht selbst erbracht hat.
+- [ ] hallo: nur die Begrüßungszeile mit Komma. Gibt der Variablen-Prompt der Kampagne eine eigene Form vor, gilt diese; sonst Format passend zur Ansprache (Du: „Hallo Vorname,“ der Person der Versandadresse, bei generischen Adressen des Entscheiders aus der Recherche, Fallback „Hallo,“ (dann Text im Singular, „dein Team“); Sie: „Hallo Frau/Herr Nachname,“ bzw. „Guten Tag,“, nie „Guten Tag Herr/Frau Nachname,“; ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18))? Nie „Hallo Herr/Frau …“, „Hallo <Firma> Team,“ oder „Hallo zusammen,“, keine Anrede mit ihr/euch, kein erfundener Name oder Titel? Tatsachen über einen Betrieb mit mehreren Personen mit ihr/euer („dass ihr … habt“) sind KEIN Fehler, ein du/ihr-Wechsel im selben Satz schon; Firmenleistungen nie als „du hast …“ an eine Person, die sie nicht selbst erbracht hat.
 - [ ] intro: max. 2 Sätze, erster Buchstabe klein, weitere Sätze groß?
 - [ ] intro: ausschließlich positiv (Lob/anerkennende Beobachtung), über den Empfänger, kein Problem benannt?
 - [ ] intro: keine verbotenen Wörter/Formen („Lücke", „Hürde", „Problem", „leider", „schade", „noch nicht", „fehlt", „begrenzt", „veraltet", „ausbaufähig", „verschenkt Potenzial", Konjunktiv-Wunsch, Ratschlag, Selbstvorstellung/Pitch, Floskel wie „bin auf eure Webseite gestoßen")?
@@ -221,7 +221,7 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 
 ## Entscheidungslogik
 
-- **approve_lead_variables**: ALLE Variablen passen die Checkliste → freigegeben für CSV-Export
+- **approve_lead_variables**: ALLE Variablen passen die Checkliste → freigegeben für CSV-Export; bei verknüpfter Kampagne mit Auto-Push geht der Lead danach nach Instantly
 - **reject_lead_variables(reason=...)**: MINDESTENS EINE Variable bricht die Checkliste oder ist grundlegend unbrauchbar:
   - Komplett generischer Text (kein Personalisierungs-Bezug)
   - Falsche Lead-Informationen (falsches Unternehmen, falsche Branche)
@@ -270,7 +270,7 @@ MCP Verify abgeschlossen
 Kampagne: {campaign.name} (ID: {campaign.id})
 Gesamt verarbeitet: {total_processed} Leads
 Freigegeben: {total_approved} | Abgelehnt: {total_rejected} | Fehler: {total_errors}
-Status: Freigegebene Leads auf "approved" gesetzt (ready für CSV-Export)
+Status: Freigegebene Leads auf "approved" gesetzt (ready für CSV-Export; mit Auto-Push auf dem Weg nach Instantly)
         Abgelehnte Leads auf "rejected" gesetzt (nicht im Export; siehe Hinweis)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -316,7 +316,14 @@ Gibt zurück:
   - `status` — "success", "error", "skipped"
   - `errorMessage` — bei status=error
   - `generatedAt` — ISO-Timestamp
-- `totalVariables` — Anzahl Variablen
+  - `anchorWritten`, `closingWritten` — Tags einer Intro-Variable (ab MCP 4.10.0; Anker wie `kundenstimme`, `besonderheit`, `ersatzsatz`, `rueckfall`; Schluss `reaktion`, `kein_abschluss`, `wuerdigung`), sonst `null`
+  - `fallback: true` — weitere Intro-Variante (`intro_b` …) ohne eigenen Text (keine Zeile, leer, fehlgeschlagen oder wörtlich wie Variante A): `value` ist der aktuelle Text von Variante A, `anchorWritten` ist `rueckfall`. Kein fehlender Wert, kein Ablehnungsgrund
+  - `notStored: true` — zusätzlich bei einem Rückfall ohne eigene Zeile
+  - `markWritten` — was der Server beim Speichern bemerkt hat, nie eine Ablehnung: `betreff_rueckfall`, `rueckfall_trotz_anker`, `gleicher_gegenstand`; sonst `null`
+  - `offerRole`, `templateState`, `deviationReason`, `deviationConfirmedAt` — ab MCP 4.11.0 bei Angebotsblöcken: `templateState: template` ist die Vorlage des Schwerpunkts (Serverwert, kein Befund zum Wortlaut), `adapted` eine Anpassung mit Grund
+- `offerFocus` — ab MCP 4.11.0 der Schwerpunkt des Leads (`focusRank`, `focusLabel`, `fitState`, `checkSource`, `checkAnswers`, `choiceState`)
+- `secondPerson` — ab MCP 4.11.0 Person 2 (`email`, `name`, `role`, `eligibility`, `reason`, `status`, eigene `variables`) oder `null`; eine Freigabe gilt für beide Personen
+- `totalVariables` — Anzahl Variablen (zählt `notStored`-Zeilen mit)
 
 ### approve_lead_variables
 
@@ -367,8 +374,12 @@ Success-Response:
 | `list_leads` gibt leere leads[] | "Keine Leads zur Review" -> STOP |
 | Sub-Agent approve/reject Error | Fehler notieren, weitermachen mit nächstem Lead |
 | `variables_not_found` | Keine erzeugten Werte — Lead gehört in die Generierung, nicht ins Review |
+| `no_contact_email` (approve) | Ab MCP 4.0.0: der Lead hat keine Versandadresse und darf nicht freigegeben werden. Überspringen, im Report nennen; mit `reject_lead_variables` ablehnen, wenn er aus dem Review verschwinden soll |
+| `undeliverable_address` (approve) | Ab MCP 4.6.0: Das Postfach der Versandadresse existiert laut Prüfung nicht. Überspringen, im Report nennen; eine andere Adresse desselben Betriebs nur auf Wunsch des Nutzers mit `switch_primary_email` wählen |
+| `foreign_sending_address` (approve) | Die Versandadresse gehört laut Recherche einem anderen Unternehmen: überspringen, im Report nennen |
 | `validation_failed` (reject) | `reason` fehlt oder ist leer — konkreten Grund nachliefern |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Review pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen |
+| `email_generation_active` | Die Mail dieses Leads wird gerade generiert — Lead überspringen und nach dem Job erneut prüfen, die übrigen weiter reviewen |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, im Report erwähnen |
 | Alle Agents eines Batches fehlgeschlagen | Warnung ausgeben, User fragen ob fortfahren |
 | Netzwerk/MCP-Verbindungsfehler | 1x Retry, dann STOP mit Fehlermeldung |

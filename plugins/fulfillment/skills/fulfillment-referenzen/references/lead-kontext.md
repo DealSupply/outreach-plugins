@@ -10,7 +10,7 @@ Die Antwort steckt unter `blueprint`.
 | Feld | Bedeutung für die Demo |
 |---|---|
 | `blueprint.campaign.intelligence.offer_contract.title.value` | **Das Offer.** Genau das wird geliefert. |
-| `blueprint.sequence.steps[0].body` | Mail 1 mit dem **Feinheiten-Satz** („vor allem …“): dieses On-Top-Detail wurde versprochen und muss in der Demo sichtbar sein |
+| `blueprint.sequence.steps[0].body` | Mail 1 mit dem **Feinheiten-Satz** („vor allem …“): dieses On-Top-Detail wurde versprochen und muss in der Demo sichtbar sein. Steht dort `{{ai.angebot_ausfuehrung}}` (Karte C seit 05.11.2026), schreibt die KI den Satz je Lead: dann aus `get_lead_variables(campaign_id, lead_id)` lesen |
 | `blueprint.campaign.intelligence.campaign_brief.business.value` | Was der Nutzer verkauft; die Demo führt dorthin |
 | `blueprint.campaign.intelligence.campaign_brief.usp.value` | Belege und Stärken des Nutzers (nie erfinden) |
 | `blueprint.campaign.intelligence.campaign_brief.target_audience.value` | Zielgruppe; hilft bei Branche und Tonalität |
@@ -23,15 +23,21 @@ beschreibt oft die bezahlte Leistung, nicht den Türöffner, und taugt deshalb n
 ## Wer hat geantwortet: `list_leads`
 
 ```
+list_leads(campaign_id, contact_status="opportunity", fit_level="", research_status="", campaign_status="")
 list_leads(campaign_id, contact_status="replied", fit_level="", research_status="", campaign_status="")
 ```
 
+- Zwei Abrufe, weil `contact_status` genau einen Wert vergleicht (eine Liste mehrerer Werte gibt es
+  nicht). Ein Lead mit interessierter Antwort steht auf `opportunity`, nicht auf `replied`; nur mit
+  `replied` fehlen genau die Leads, die den Türöffner am dringendsten brauchen.
+- Reihenfolge: `opportunity` zuerst anbieten, danach `replied`.
 - Die drei leeren Filter sind Pflicht: Ohne sie zeigt `list_leads` nur Leads, die noch bearbeitet
   werden, und ein angeschriebener Lead taucht nicht auf.
-- `replied` steht nur am Lead, wenn die App den Status aus Instantly abgeglichen hat. Fehlt der
+- `replied` und `opportunity` stehen am Lead, wenn die App den Status aus Instantly abgeglichen hat
+  (Interesse in Instantly wird `opportunity`) oder der Nutzer ihn in der App gesetzt hat. Fehlt der
   Abgleich, nennt der Nutzer den Lead (Firma oder E-Mail); dann `search_leads(query="<Firma oder Domain>")`,
   außerhalb des Standard-Workspaces mit `workspace=<uuid>` aus der Antwort zur Kampagne (`workspace.uuid`).
-- Weitere Werte: `opportunity` (vom Nutzer als Chance markiert), `contacted`, `all`.
+- Weitere Werte: `contacted`, `all`.
 - Den Lead immer mit dem Nutzer bestätigen; eine Antwort kann auch eine Absage sein.
 
 Jede Zeile liefert `id`, `company`, `website`, `city`, `phoneNumber`, `email`, `contactStatus`

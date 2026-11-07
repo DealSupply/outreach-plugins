@@ -26,12 +26,12 @@ Und eine Mail reicht nicht. Der größte Teil der Antworten kommt nicht auf die 
 
 | Mail | Step | Typ | Wörter | `delayDays` | Tag | Betreff / Thread |
 |:-----|:-----|:----|:-------|:------------|:----|:-----------------|
-| **Entry Mail** | 1 | Komplette Botschaft | max. 120, Ziel 50-90 | 0 | 0 | eigener Betreff, neuer Thread |
+| **Entry Mail** | 1 | Komplette Botschaft | max. 120, Ziel 50-90 | 0 | 0 | eigener Betreff, öffnet den Thread |
 | **FUP1** | 2 | Erinnerung | max. 50 | 3 | 3 | leer, Thread von Mail 1 |
-| **FUP2** | 3 | Neuer Winkel (Case Study) | max. 80 | 5 | 8 | eigener kurzer Betreff („kurzes Update“), NEUER Thread |
-| **FUP3** | 4 | Abschied mit Routing-Hinweis | max. 60 | 7 | 15 | leer, Thread von Mail 3 |
+| **FUP2** | 3 | Neuer Winkel (Case Study) | max. 80 | 5 | 8 | leer, Thread von Mail 1 |
+| **FUP3** | 4 | Abschied mit Routing-Hinweis | max. 60 | 7 | 15 | leer, Thread von Mail 1 |
 
-Der Standard sind drei Follow-Ups, zusammen mit der Entry Mail vier Steps. Praxis-Belege: Eric Nowoslawski arbeitet mit zwei bis drei Mails und nie alle im selben Thread, Jay mit vier Steps und Routing, ohne künstliche Knappheit. Deshalb startet Step 3 einen neuen Thread mit eigenem kurzen Betreff, und Step 4 verabschiedet sich mit dem Routing-Hinweis. „Dringlichkeit“ ist kein Standard-Step: Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step vor dem Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7).
+Der Standard sind drei Follow-Ups, zusammen mit der Entry Mail vier Steps. Praxis-Belege: Eric Nowoslawski arbeitet mit zwei bis drei Mails und nie alle im selben Thread, Jay mit vier Steps und Routing, ohne künstliche Knappheit, und testet Step 3 im selben oder einem neuen Thread. Seit 05.11.2026 laufen alle vier Mails in einem Thread (Entscheidung Giuliano): Step 3 hat keinen eigenen Betreff mehr, Step 4 verabschiedet sich mit dem Routing-Hinweis. „Dringlichkeit“ ist kein Standard-Step: Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step vor dem Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7).
 
 **Alle Zahlen sind Obergrenzen, keine Zielvorgaben.** Die abgenommenen Kampagnen liegen bei der Entry Mail zwischen 55 und 86 Wörtern, die Follow-Up-Bausteine teils deutlich darunter - die kürzeste empfohlene Reminder-Variante hat 14 Wörter. Wer dieselbe Botschaft in weniger Wörtern unterbringt, hat es besser gemacht, nicht schlechter.
 
@@ -94,7 +94,7 @@ Gegensatzpaare (die Spalte „besteht“ zeigt den Fund, nicht den fertigen Satz
 Das Intro besteht aus Einstieg, Anker und Abschluss; der Abschluss ist keine Pflicht. Rangfolge (Entscheidung 23.10.2026 nach Blindtests: Würdigungen gerieten in 18 von 77 Mails zum Gutachten oder wiederholten das Detail, Reaktionen wurden kaum bemängelt; bei Kampagne 301 kamen alle Interessenten aus Intros ohne Schluss):
 
 1. **Kein Schluss**, wenn das Detail schon selbst ein Lob ist (was Kunden in Bewertungen schreiben, eine Auszeichnung, ein Preis) oder der erste Satz des festen Mailtexts selbst lobt: nie zweimal loben.
-2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer Bewertungszahl, in der Vergangenheit erzählt wie unter Kollegen. Die Formen stammen aus den Antwortdaten (Prod-Dump 23.10.2026, 725 kontaktierte Intros, Antwortquote 13,0 bis 6,1 %): „das fand ich richtig schön“, „das ist mir direkt hängen geblieben“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“. Sie sind Richtung und Tonlage, keine Pflicht: Der Server schlägt je Lead eine vor. Passt eine eigene kurze Reaktion besser zum Detail, formuliert das Modell sie im selben Ton (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel (Entscheidung 23.10.2026, Mittelweg). „richtig“ ist erlaubt, Übertreibung („total begeistert“) und Floskeln nicht. Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein und wechselt von Lead zu Lead: nie derselbe Satz in allen Mails einer Kampagne.
+2. **Sonst eine kurze persönliche Reaktion** direkt hinter dem benannten Detail, bei einem neutralen Faktum (Öffnungszeit, Verfahren, Spezialisierung, Projekt) oder einer Bewertungszahl, in der Vergangenheit erzählt wie unter Kollegen. Die Formen stammen aus den Antwortdaten (Prod-Dump 23.10.2026, 725 kontaktierte Intros, Antwortquote 13,0 bis 6,1 %): „das fand ich richtig schön“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“. Sie sind Richtung und Tonlage, keine Pflicht: Der Server schlägt je Lead eine vor. Passt eine eigene kurze Reaktion besser zum Detail, formuliert das Modell sie im selben Ton (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel (Entscheidung 23.10.2026, Mittelweg). „richtig“ ist erlaubt, Übertreibung („total begeistert“) und Floskeln nicht. Sie sagt nur, dass es aufgefallen ist oder gefallen hat, muss das Detail nicht wiederholen, steht nie allein und wechselt von Lead zu Lead: nie derselbe Satz in allen Mails einer Kampagne. Hinter Firmengeschichte, Gründung oder Alter des Betriebs heißt die Reaktion immer „das hab ich richtig gern gelesen“ (Sie-Form gleich, englisch „That was really nice to read.“), auch wenn der Vorschlag eine andere nennt; „das fand ich richtig sympathisch“ passt dort nicht (E54, 06.11.2026).
 3. **Eine Würdigung nur ausnahmsweise**, wenn sie etwas Neues und Konkretes über den Betrieb sagt, das nicht schon im Detail steht: Anerkennung mit Inhalt („da steckt richtig viel Handarbeit drin“), Seltenheit als eigene Erfahrung („so eine Nachsorge ist mir noch nicht begegnet“), ein Superlativ am Detail nur bei wirklich beeindruckendem Anker. Nie Gutachten-Ton, nie „das zeigt, wie …“, „das zeigt, dass …“ oder „das spricht für …“ über Ausrichtung, Erfahrung oder Qualität. Im Zweifel die Reaktion; klingt auch sie nicht, bleibt das Faktum ohne Schluss. Nie Würdigung und Reaktion hintereinander.
 
 Verboten:
@@ -121,7 +121,7 @@ Leitplanken:
 | Eigenes Verfahren (Handwerk), Reaktion | „ich war gerade auf deiner Website: Du zeigst jedes Bad vorab als begehbaren 3D-Rundgang, das fand ich richtig schön.“ |
 | Ungewöhnliche Zeit (Dental), Reaktion | „mir ist aufgefallen, dass deine Praxis donnerstags bis 20 Uhr Termine hat, das hat mich angesprochen.“ |
 | Eigenes Konzept (Dental), Würdigung als Ausnahme: Anerkennung mit Inhalt | „beim Stöbern auf deiner Website hab ich ‚Krone To Go‘ entdeckt, die Krone am selben Termin. Respekt, dass du das an einem Tag hinbekommst.“ |
-| Seltene Spezialisierung (Handwerk), Reaktion | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, das ist mir direkt hängen geblieben.“ |
+| Seltene Spezialisierung (Handwerk), Reaktion | „du baust ausschließlich Holzfenster für denkmalgeschützte Häuser, das hat mich angesprochen.“ |
 | Auszeichnung (Handwerk), ohne Schluss | „ich hab mir deine Website angeschaut und den Handwerkspreis für deine Fachwerksanierung entdeckt.“ |
 | Lob aus Bewertungen (Dental), ohne Schluss | „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ |
 | Eigenname (Café), Reaktion | „mir ist aufgefallen, dass jede Torte bei dir nach einem Stammgast benannt ist, über die Torte ‚Herr Albers‘ hab ich mich beim Lesen gefreut.“ |
@@ -230,7 +230,7 @@ Einstiege: keiner ist Standard. Die letzte Ziffer der Lead-ID entscheidet, ein B
 
 - Abhebung statt Leistungsnennung: Der Opener besteht den Austauschtest und nennt kein Thema von der Sperrliste der Kampagne (außer als Lob aus Bewertungstexten). Ein Nutzen rettet keine Standardleistung
 - Nach einem neutralen Faktum oder einer Bewertungszahl ein kurzer positiver Schluss aus dem konkreten Detail (ein Lob aus Bewertungstexten oder eine Auszeichnung trägt sich selbst, nie zweimal loben): eine kurze, schlichte Reaktion am benannten Detail, je Lead wechselnd, eine Würdigung nur ausnahmsweise mit etwas Neuem und Konkretem; nie „das zeigt, wie …“, nie ein Mechanik-Nutzen und nie ein leeres Prüfer-Urteil (Rangfolge und Leitplanken unter „Positiver Schluss“); der Fallback-Satz bleibt ohne Schluss
-- Ausschließlich positiv: echtes Lob oder anerkennende Beobachtung, getragen vom konkreten Detail. Austauschbare Bewertungsfloskeln und Superlative ohne Detail („das spricht für sich", „das sieht man selten", „das sieht man nicht immer", „hat man nicht alle Tage", „finde ich stark", „finde ich spannend", „Hammer", „beeindruckend", auch umgestellt wie „ich finde spannend, dass …") sind verboten (ListM8-Regel), und zwar auch als Beispielsatz: Modelle kopieren Beispiele
+- Ausschließlich positiv: echtes Lob oder anerkennende Beobachtung, getragen vom konkreten Detail. Austauschbare Bewertungsfloskeln und Superlative ohne Detail („das spricht für sich", „das sieht man selten", „das sieht man nicht immer", „hat man nicht alle Tage", „finde ich stark", „finde ich spannend", „Hammer", „beeindruckend", „hängen geblieben" in jeder Form, auch umgestellt wie „ich finde spannend, dass …") sind verboten (ListM8-Regel), und zwar auch als Beispielsatz: Modelle kopieren Beispiele
 - Anker in der Rangfolge: Lob aus Bewertungstexten (Paraphrase; Plural oder „immer wieder" nur, wenn mindestens 2 Bewertungen dieses Lob tragen), dann abhebendes Website-Detail, dann Anzahl und Schnitt als eigener Anker (nur ab 30 Bewertungen und 4,5, Zahl gerundet, Schnitt mit Komma, bei widersprüchlichen Quellen der kleinere Wert), dann der Fallback
 - Stellenanzeige: die Erkenntnis über den Betrieb nutzen (Wachstum, Spezialisierung, Projekt), ohne anzukündigen, dass der Betrieb sucht oder einstellt
 - Ein zweiter Satz ist konkret und wiederholt oder nimmt nicht vorweg, was der feste Text danach sagt. Beginnt der feste Text mit „Das hat mich neugierig gemacht.", darf kein Intro-Satz mit dieser Aussage davor stehen
@@ -435,14 +435,14 @@ ANSPRACHE  →  INDIVIDUELLER BEZUG  →  ÜBERLEITUNG + OFFER  →  CTA
 {{ai.hallo}}   {{ai.intro}}          fester Text             fester Text
 ```
 
-Bei Karte A und C kommt zwischen Offer und CTA der Feinheiten-Satz als eigener Absatz (siehe unten).
+Zwischen Offer und CTA kommt bei Karte A, B und C ein zweiter Satz zum Angebot als eigener Absatz (siehe unten), bei D und E keiner.
 
 | Baustein | Was er macht | Beispiel |
 |:---------|:-------------|:---------|
 | **Ansprache** | Tür aufmachen | „Hallo Max," |
 | **Individueller Bezug** | Zeigen: ich hab mich mit dir beschäftigt | „ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen." |
 | **Überleitung + Offer** | Nahtloser Brücken-Satz zum Angebot. KEIN Pitch. | „Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln für dich aufgenommen." |
-| **CTA** | EINE Handlung. Nicht zwei | „Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich." |
+| **CTA** | EINE Handlung. Nicht zwei | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." |
 
 **Die Mail soll klingen wie eine WhatsApp von einem Freund, nicht wie eine Agentur-Website.**
 
@@ -483,34 +483,56 @@ Der wichtigste Baustein. Die Überleitung ist der statische Satz NACH dem indivi
 | **A: Kostenlose Teildienstleistung** | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [Deliverable] an." |
 | **B: Tester/Pilotprojekt** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region]." |
 | **C: Konkretes Deliverable (Reziprozität)** | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt." |
-| **D: Förder-Hook** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" |
+| **D: Förder-Hook** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" (mit Träger, wenn der Nutzer ihn nennt: „dass das Land Baden-Württemberg …") |
 | **E: Partner gesucht** | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen] die zu dir passen würden." |
 
-Bei Karte A und C steht das Deliverable als bereits erledigte bzw. laufende Arbeit da, nie als Absicht („würde gerne erstellen").
+Bei Karte C steht das Deliverable als bereits erledigte Arbeit da, nie als Absicht („würde gerne erstellen"). Bei Karte A ist es ein Angebot („bieten … an"), nie erledigte Arbeit.
 
 ### Warum das funktioniert
 
 „Genau deshalb...", „Deswegen war ich so frei...", „Genau solche Unternehmen..." - diese Formulierungen schließen sich an JEDEN individuellen Bezug an, egal ob der über Bewertungen, die Website oder die Branche spricht. Sie leiten direkt zum Offer über, ohne einen Pitch-Block dazwischen.
 
-## Value Stacking: der Feinheiten-Satz
+## Der zweite Satz zum Angebot
 
-Bei den Offer-Typen Teildienstleistung (A) und Reziprozität (C) folgt nach dem Marketing-Offer ein zweiter Satz, der den Wert stapelt, ohne ein zweites Offer zu werden: Die Arbeit ist schon (fast) erledigt, und es kommt noch etwas on top. Bei B ist er optional, bei D und E entfällt er.
+Stand 05.11.2026: Nach dem Angebotssatz folgt in Mail 1 immer ein zweiter Satz zum Angebot, als eigener Absatz zwischen Offer und CTA, passend zur Karte. Er stapelt den Wert, ohne ein zweites Offer zu werden.
 
-Wortlaut: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […], und werde morgen mit […] fertig." Er steht als eigener Absatz zwischen Offer und CTA.
+| Karte | Zweiter Satz | Wer schreibt ihn |
+|:------|:-------------|:-----------------|
+| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz, beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und nennt genau ein Detail je Lead | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| **A: Kostenlose Teildienstleistung** | Inhalt: was für diesen Lead konkret drin wäre, im Konjunktiv | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| **B: Tester/Pilotprojekt** | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | KI je Lead, `{{ai.angebot_ausfuehrung}}` |
+| **D: Förder-Hook, E: Partner gesucht** | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
+
+### Karte C: der Feinheiten-Satz (Value Stacking)
+
+Die Arbeit ist schon (fast) erledigt, und es kommt noch etwas on top. Die KI schreibt den Satz je Lead über `{{ai.angebot_ausfuehrung}}` (Stand 05.11.2026). Regel, wörtlich: Ein Satz, der genau so beginnt: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und dann genau ein Detail des schon erstellten Ergebnisses nennt, an dem noch gefeilt wird, passend zu diesem Lead (aus seiner Recherche oder dem Detail des Schwerpunkts), grammatisch vollständig (z. B. „an der …"). Kein „morgen", kein „fertig werden", keine neue Leistung. Das „morgen" der Fertigstellung steht im Schlusssatz.
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive Buchungssystem erstellt.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google und KI-Suchmaschinen, und werde morgen mit dem Entwurf fertig.
+Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google und KI-Suchmaschinen.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```
 
 Die Regeln:
 
 - **Erledigte Arbeit statt Absicht:** „war so frei und habe ... erstellt", nicht „würde gerne erstellen". Reziprozität wirkt erst, wenn das Geschenk schon existiert.
-- **Genau EIN On-Top-Detail** („vor allem ..."), aus den Angaben des Nutzers, und es muss wirklich lieferbar sein. Nichts erfinden.
+- **Genau EIN Detail je Lead** („vor allem ..."), aus dem, was schon erstellt ist, zugeschnitten auf die Recherche des Leads. Nichts erfinden.
 - **Kein zweiter CTA, kein zweites Offer.** Der Satz beschreibt dasselbe Deliverable, nur eine Schicht tiefer.
+
+### Karte A und B: der Satz je Lead (`{{ai.angebot_ausfuehrung}}`)
+
+Bei A und B gibt es keinen Feinheiten-Satz: Er behauptet Arbeit, die es vor der Antwort nicht gibt. Die KI schreibt den Satz je Lead neu, passend zu Recherche und Website des Leads.
+
+- **A, Inhaltssatz:** „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast."
+- **B, Rahmensatz:** macht den Pilot an diesem Lead fest, was er konkret bekäme, bezogen auf etwas aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches Feedback), nicht bei jedem Lead derselbe Satz: „Im Pilot schreibe ich dir die erste Mail an einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon hältst."
+
+Die Regeln:
+
+- **Nie als erledigte Arbeit:** kein „erstellt", „vorbereitet", „liegt bereit", kein Feinheiten-Wortlaut. A steht im Konjunktiv.
+- **Nur, was die Lieferzusage deckt:** keine Zahl, die weder Lieferzusage noch Recherche belegt, keine Frist, kein Gespräch, Termin oder Call.
+- **Kurz:** ein Satz, höchstens 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
 
 ## Der CTA
 
@@ -518,10 +540,15 @@ Genau EIN CTA pro Mail. Nie zwei Optionen.
 
 | Gut | Warum |
 |:----|:------|
-| „Antworte mir einfach kurz." | Niedrigste Hürde, die es gibt |
-| „Darf ich es dir zusenden?" | Ja/Nein-Frage, eine Sekunde Aufwand |
-| „Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich." (nach „werde morgen … fertig“) | Reziprozität plus Ja/Nein |
-| „Wäre das grundsätzlich interessant?" | Verpflichtet zu nichts |
+| „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich." | Karte A, Ja/Nein ohne Verpflichtung |
+| „Wärst du grundsätzlich offen dafür?" | Karte B, Pilot |
+| „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." | Karte C, Reziprozität plus Ja/Nein |
+| „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." | Karte D, Förderung |
+| „Wäre das grundsätzlich interessant?" | Karte E, verpflichtet zu nichts |
+
+Der Schlusssatz ist immer eine Frage, keine Bitte („Antworte mir einfach kurz.") und keine Aussage (Stand 05.11.2026, wie die App).
+
+Hat die Kampagne Schwerpunkte mit einem Wort für die Sache, steht das Wort an der Stelle von „es", mit anderer Wortstellung: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." Sie-Form: „… wenn ich es Ihnen morgen zusende? …", bei A „… das auch für Sie erstelle? …", bei B „Wären Sie grundsätzlich offen dafür?", bei D „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …", E bleibt gleich. Jede Kampagne hat außerdem ein eigenes Wort für die Sache (ListM8: Angebots-Seite, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3 und gilt dort, solange Mail 3 nicht das Wort des Schwerpunkts trägt (Variable `{{ai.offer_noun}}`); Mail 1 behält „es" bzw. „das"; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link" im Schlusssatz (nicht „… den Link dazu schicke?"), die Sache wird zugesendet. „morgen" nur, wenn der Nutzer bis zum nächsten Tag liefern kann.
 
 Kein „Lass uns mal sprechen" ohne vorbereiteten Mehrwert. Kein Terminvorschlag in Mail 1. Kein Link in Mail 1 - der CTA ist die Antwort, nicht der Klick.
 
@@ -533,14 +560,10 @@ Die Betreffzeile entscheidet, ob die Mail geöffnet wird. Nur Step 1 trägt eine
 
 | Stil | Beispiele | Warum |
 |:-----|:---------|:------|
-| **Neugier** | „kurze Frage" | Niedrige Hürde, macht neugierig; Standard für Karte C und jedes Entwurfs-Angebot |
+| **Neugier** | „kurze Frage" | Niedrige Hürde, macht neugierig; Standard für jede Karte (seit 05.11.2026) |
 | **Neugier** | „Frage zur Terminbuchung" | Wenn das Buchungssystem den Kern des Offers bildet |
 | **Neugier** | „Zugang freigeschaltet" | Was für ein Zugang? Muss ich aufmachen (nur mit echtem Zugang, siehe unten) |
-| **Persönlich** | „Meeting {{ai.firma}} & Julia" | Klingt nach echtem Termin (Karte A, nur mit `firma`) |
 | **Persönlich** | „Gespräch {{ai.firma}} & Arne" | Impliziert bestehende Beziehung (nur mit `firma`) |
-| **Direkt** | „Anfrage für {{ai.firma}}" | Business-like, ernst (Karte A/B, nur mit `firma`) |
-| **Förderung** | „Deine Förderung" | Geld = Aufmerksamkeit (nur Karte D) |
-| **Partner** | „Partnerschaft {{ai.firma}}?" | Augenhöhe (nur Karte E, nur mit `firma`) |
 
 ### Was nicht funktioniert
 
@@ -556,17 +579,29 @@ Zusätzlich: keine Großschreibung ganzer Wörter, keine Ausrufezeichen, keine Z
 
 ### Betreffzeilen für Follow-Ups
 
-Step 2 und Step 4 haben keinen Betreff: das Feld bleibt leer, die Mails laufen im Thread der vorigen Betreff-Mail (Step 2 in Step 1, Step 4 in Step 3). Kein „Re:“.
+Step 2, Step 3 und Step 4 haben keinen Betreff: das Feld bleibt leer, die Mails laufen im Thread von Step 1, der Empfänger sieht „Re: <Betreff von Step 1>“. Kein „Re:“ von Hand. Ein eigener Betreff in Step 3 („kurzes Update“) bricht den Thread; so lief es bis 05.11.2026.
 
-Step 3 startet einen neuen Thread und bekommt deshalb einen eigenen kurzen Betreff, z. B. „kurzes Update“. Er wiederholt den Betreff von Step 1 nicht, kündigt kein Ergebnis an und folgt denselben Regeln wie der Betreff von Step 1 (2-5 Wörter, kein Spam-Wort, Firmenname nur über `{{ai.firma}}`).
+### Betreff-Test: persönlicher Betreff in Variante B
 
-### Test von Hand: Betreff-Variante B
+Seit 05.11.2026 legt der Assistent von ListM8 einen Betreff-Test an (ab Werk an): Variante B von Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`, den die KI je Lead schreibt. Welche Variable der Betreff von B ist, sagt `emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name. Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`, `emailGeneration.subjectVariables`); Regeln für den persönlichen Betreff (SOP vom 05.11.2026):
 
-Der Standard für Step 1 bleibt „kurze Frage“. Als Testmöglichkeit legt man beim echten Versand in Instantly von Hand eine Variante B „Frage zu {{firma}}“ an, in ein bis zwei Kampagnen mit Variable `firma`. Das ist ein Hinweis, keine Pflicht; ListM8 kennt keine Betreff-Varianten.
+- 3 bis 6 Wörter, Ziel 4 bis 5; der Firmenname zählt als ein Wort, kein ganzer Satz; zwei Wörter
+  lesen sich wie ein Etikett und gelten als Verstoß
+- genau ein belegtes Detail, und zwar dasselbe, mit dem das Intro beginnt (der Betreff stellt die Frage, die erste Zeile löst sie ein)
+- beginnt direkt mit dem Detail („Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“), nie mit „Frage zu/zum/zur …“ oder „kurze Frage zu …“, englisch nie mit „question about …“: diese Form hat allein der Rückfall, damit echte Betreffs und Rückfälle in der Auswertung unterscheidbar sind; ListM8 zählt einen Betreff in dieser Form in Kampagnen mit dem Betreff-Test ab 06.11.2026 immer als Rückfall (E53, 06.11.2026)
+- klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine Ankündigung, kein Lob, auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“)
+- nur der Gegenstand, wie das Intro ihn nennt, ohne Zusatz: keine Wirkung, kein Kanal, keine Anfragen oder Zahlen, die das Intro nicht nennt (nicht „Anfragen über Ads bei Flowers“, wenn das Intro nur die Anzeigen nennt)
+- Firmenname nur als Kurzname ohne Rechtsform; erstes Wort klein, wenn es kein Substantiv ist
+- höchstens ein Fragezeichen am Ende; kein Ausrufezeichen, kein %, keine Anführungszeichen, keine Gedankenstriche, kein Emoji, keine Großbuchstaben-Wörter
+- am besten ohne Pronomen, sonst nach der Anrede (dein/euer bzw. Ihr); zeitlos, weil Mail 2 bis 4 drei Wochen lang als „Re: …“ darunter laufen
+- verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates, „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
+- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“ nur ohne sicheren Kurznamen; gemeldet mit `<name>__rueckfall: "ja"` (in Kampagnen des Assistenten `betreff_b__rueckfall`). Den Rückfall auf den Betreff von Variante A speichert ListM8 ohne eigenen Text und setzt beim Versand den aktuellen Betreff von A ein, auch für Person 2. Trägt das Intro ein Detail, ist es kein Rückfall. Nie leer, nie erfunden. Nur der Rückfall beginnt mit „Frage zu“.
+
+Gut: „3D-Rundgang bei Bad Becker“, „Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“, „Samstagskurse im Studio Mitte“. Schlecht: „Frage zur Dachsanierung am Hansmeyerhof“ (Form des Rückfalls), „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „Frage zu {{Firma}}“ mit dem Wert von `firma`, ohne nutzbaren Kurznamen durch den Betreff von Variante A (ohne eigenen Text gespeichert, beim Versand der aktuelle Betreff von A) („kurze Frage“), und markiert ihn als Rückfall; ebenso einen nackten Standard-Betreff, wenn `firma` gesetzt ist (seit 06.11.2026). In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder eine Zeile „Kurzname: …“ an.
 
 ## Signatur-Regeln
 
-Die Signatur darf NICHT wie eine Vertriebler-Signatur aussehen. Minimalistisch - Name, Titel, Firma. Fertig. Sie steht als Klartext aus den Angaben des Nutzers im festen Text, nie als `{{sender.*}}`-Variable. Ohne bekannten Absendernamen nur die Grußformel. Ausnahme ist die Signatur aus dem Konto (Kampagne aus dem Start-Satz der App): Dann steht unter der Grußformel `{{accountSignature}}`, und Instantly setzt die Signatur des Versandpostfachs ein, für die dieselben Regeln gelten.
+Die Signatur darf NICHT wie eine Vertriebler-Signatur aussehen. Minimalistisch - Name, Titel, Firma. Fertig. Sie steht als Klartext aus den Angaben des Nutzers im festen Text, nie als `{{sender.*}}`-Variable. Ohne bekannten Absendernamen nur die Grußformel. Vor der Grußformel stehen zwei Leerzeilen, eine mehr als zwischen den Absätzen (05.11.2026). Ausnahme ist die Signatur aus dem Konto (Kampagne aus dem Start-Satz der App): Dann steht unter der Grußformel `{{accountSignature}}`, und Instantly setzt die Signatur des Versandpostfachs ein, für die dieselben Regeln gelten.
 
 **So:**
 
@@ -601,10 +636,10 @@ Folge uns auf LinkedIn | Twitter | Instagram
 
 ## Vollständige Beispiele
 
-**Karte A, kostenlose Teildienstleistung (79 Wörter):**
+**Karte A, kostenlose Teildienstleistung (73 Wörter):**
 
 ```
-Betreff: Meeting {{ai.firma}} & Julia
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -612,20 +647,43 @@ mir ist aufgefallen, dass jedes Objekt bei dir ein festes
 Reinigungsteam hat, das man vorab mit Foto sieht. So weiß jeder
 Hausmeister, wer morgens kommt.
 
-Genau deshalb bereiten wir aktuell für zwei Unternehmen in der Region
-München ein kostenloses Google Ads Setup vor.
+Genau deshalb bieten wir aktuell für zwei Unternehmen in der Region
+München ein kostenloses Google Ads Setup an.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den
-Suchbegriffen für dein Gewerk, und werde morgen mit dem Setup fertig.
+Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige
+Anzeigentexte und die Ausrichtung auf dein Einzugsgebiet rund um München.
 
-Wenn das für dich spannend klingt, antworte mir einfach kurz.
+Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Julia Weinmann
 Co-Founder - Weinmann Media
 ```
 
-**Karte C, Reziprozität (86 Wörter):**
+**Karte B, Pilotprojekt (69 Wörter):**
+
+```
+Betreff: kurze Frage
+
+Hallo Max,
+
+mir ist aufgefallen, dass du auf deiner Website jeden Kunden mit
+einer eigenen kleinen Fallstudie vorstellst, das hat mir gut gefallen.
+
+Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt
+für persönliche Erstmails mit drei Agenturen in Köln.
+
+Dabei schreibe ich dir für einen Wunschkunden die komplette erste Mail,
+du sagst mir dafür ehrlich, was du davon hältst.
+
+Wärst du grundsätzlich offen dafür?
+
+Viele Grüße
+Paul Lehmann
+Gründer - Lehmann Outreach
+```
+
+**Karte C, Reziprozität (80 Wörter):**
 
 ```
 Betreff: kurze Frage
@@ -640,9 +698,9 @@ Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten
 Hebeln für deinen Shop aufgenommen.
 
 Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den
-Beispielen aus deinem Sortiment, und werde morgen mit dem Video fertig.
+Beispielen aus deinem Sortiment.
 
-Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
 Viele Grüße
 Angela Selbert
@@ -652,7 +710,7 @@ Geschäftsführerin - njoy online marketing GmbH
 **Karte E, Partner gesucht (64 Wörter):**
 
 ```
-Betreff: Partnerschaft {{ai.firma}}?
+Betreff: kurze Frage
 
 Hallo Max,
 
@@ -663,7 +721,8 @@ Gesicht, auch wenn die Fenster neu sind.
 Genau solche Handwerksbetriebe suchen wir als Partner. Wir haben
 regelmäßig Anfragen von Bauherren in der Region, die genau solche
 Projekte umsetzen wollen und einen zuverlässigen Betrieb suchen.
-Wäre das grundsätzlich interessant? Antworte mir einfach kurz.
+
+Wäre das grundsätzlich interessant?
 
 Viele Grüße
 Max Huber
@@ -700,23 +759,27 @@ Das ist alles. FUP1 ist die kürzeste Mail der Sequenz und darf sich anfühlen w
 
 **Aufgabe:** EIN neuer Aspekt. **HIER gehört der Social Proof hin - nicht in die Entry Mail.**
 
-**Neuer Thread:** Diese Mail bekommt einen eigenen kurzen Betreff (z. B. „kurzes Update“) und steht ohne den Verlauf von Mail 1. Sie muss für sich verständlich sein: höchstens ein Halbsatz Bezug auf das Angebot, kein neues Offer, kein Pitch. Wer Mail 1 nie geöffnet hat, sieht so eine frische Nachricht statt einer dritten Erinnerung im selben Faden.
+**Sie-Begrüßung:** „Hallo Frau/Herr Nachname,“, wenn Recherche oder Importdaten die Anrede belegen, ohne Titel und ohne Vornamen; nie „Guten Tag Herr/Frau Nachname,“; ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18); ohne Person „Guten Tag,“. Beide Personen einer Firma grüßen in derselben Form, sobald ihre Anrede belegt ist (Nachtest 06.11.2026: „Hallo Frau Tschernev-Schneider,“ neben „Guten Tag Herr Schneider,“; ListM8 macht die Mischform seit DS-172 zu „Hallo Herr Schneider,“).
+
+**Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein. Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo Vorname,“ klein weiter wie in Mail 1, auch in der Sie-Form), höchstens ein kurzer eigener Satz, dann als letzter Absatz die Schlussfrage aus Mail 1, mit dem Wort für die Sache statt „es“, wo die Karte eins hat. Kein eigener Satz zum Angebot, kein neues Offer, kein Pitch.
+
+Mail 3 endet mit genau einer Frage, nie mit einer Aussage oder Bitte: der Frage aus der Entry Mail, mit der Sache statt „es“, wo die Karte eine hat; jede Variante unten endet so.
 
 Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie ein Pitch. Hier, nach zwei Kontakten ohne Verkaufsdruck, wirkt er wie ein Beleg.
 
 | Variante | Text |
 |:---------|:-----|
-| **Case Study** | „Hallo Max, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Alles weg. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Falls das Thema für dich relevant ist, melde dich gerne." |
-| **Konkretes Ergebnis** | „Hallo Max, wir haben gerade ein Pilotprojekt im [Branche]-Bereich abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die komplette Auftragsabwicklung automatisiert läuft. Vorher war das ein Vollzeitjob, jetzt klickt der Inhaber morgens einmal drauf und der Rest läuft. Falls das auch für dich spannend klingt, melde dich gerne." |
-| **Relevanter Fakt** | „Hallo Max, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten plus Lohnkostenzuschuss. Das heißt konkret: Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Falls das auch für dich relevant ist, melde dich gerne. Ich kann dir in zwei Minuten sagen, was für dich drin wäre." |
+| **Case Study** | „Hallo Max, letzte Woche hatte ich einen Händler im Gespräch, der zwei Jahre lang gekämpft hat, seinen Amazon-Account wieder freizuschalten. Am Ende hat ihn eine falsche Handynummer endgültig rausgeworfen. Alles weg. Genau solche Geschichten zeigen, warum ein starker eigener Shop so wichtig ist. Wäre es in Ordnung, wenn ich dir morgen den Shop-Entwurf zusende? Völlig unverbindlich natürlich." |
+| **Konkretes Ergebnis** | „Hallo Max, wir haben gerade ein Pilotprojekt im [Branche]-Bereich abgeschlossen. Der Betrieb spart jetzt über 15 Stunden pro Woche, weil die komplette Auftragsabwicklung automatisiert läuft. Vorher war das ein Vollzeitjob, jetzt klickt der Inhaber morgens einmal drauf und der Rest läuft. Wärst du grundsätzlich offen dafür?" |
+| **Relevanter Fakt** | „Hallo Max, bei Unternehmen mit bis zu 49 Mitarbeitern liegt die Förderquote aktuell bei bis zu 100 % der Weiterbildungskosten plus Lohnkostenzuschuss. Das heißt konkret: Dein Team lernt neue Skills und der Staat zahlt den größten Teil. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." |
 
 **Regel für die Case Study:** eine Geschichte, eine Zahl, ein Ergebnis. Keine Aufzählung von Kunden, keine Logo-Parade. Nur Belege, die der Nutzer angegeben hat.
 
-**Regel für Zahlen:** immer als Spanne („bis zu"), nie als Zusage. Förderquoten und Ergebnisse hängen von Größe, Branche und Programm ab - eine pauschale Behauptung stimmt für einen Teil der Empfänger nicht und macht die ganze Mail unglaubwürdig.
+**Regel für Zahlen:** den Beleg wörtlich übernehmen, wie der Nutzer ihn angegeben hat: Zahlen genau so, kein „bis zu", „über" oder anderer Zusatz, der nicht in der Angabe steht (Lauf 4 am 06.11.2026: aus „neun" wurde „bis zu neun"). Ein Ergebnis bleibt ein berichtetes Ergebnis, nie eine Zusage. Nennt der Nutzer eine Förderquote, steht sie wie in Mail 1 als „bis zu".
 
 ## FUP3: Abschied mit Routing-Hinweis (Step 4, 40-60 Wörter, `delayDays` 7)
 
-**Aufgabe:** Tür offen lassen, ohne Druck, und mit einem Satz klären, ob jemand anderes der bessere Ansprechpartner ist. Betreff leer, die Mail läuft im Thread von Mail 3.
+**Aufgabe:** Tür offen lassen, ohne Druck, und mit einem Satz klären, ob jemand anderes der bessere Ansprechpartner ist. Betreff leer, die Mail läuft im Thread von Mail 1.
 
 | Variante | Text |
 |:---------|:-----|
@@ -727,7 +790,7 @@ Kein Vorwurf, keine letzte Chance, keine Schuldzuweisung, keine künstliche Knap
 
 ## Optional: Dringlichkeit als zusätzlicher Step
 
-„Dringlichkeit“ gehört nicht zum Standard. Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step zwischen Step 3 und den Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7, max. 60 Wörter, Betreff leer, Thread von Mail 3).
+„Dringlichkeit“ gehört nicht zum Standard. Nur wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt, kommt sie als zusätzlicher Step zwischen Step 3 und den Abschied (dann fünf Steps, `delayDays` 0/3/5/7/7, max. 60 Wörter, Betreff leer, Thread von Mail 1).
 
 | Variante | Text |
 |:---------|:-----|
@@ -742,7 +805,7 @@ Wenn die Dringlichkeit erfunden ist, merkt der Empfänger das - und dann ist auc
 |:-----|:--------------|:---------|
 | Entry | Erlaubnis erbitten | „Darf ich es dir zusenden?" |
 | FUP1 | Nur anstoßen | „Ist meine Mail angekommen?" |
-| FUP2 | Offen anbieten | „Falls das für dich relevant ist, melde dich gerne." |
+| FUP2 | Frage aus der Entry Mail, mit der Sache | „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." |
 | FUP3 | Tür offen lassen, Routing | „Sag mir gern kurz Bescheid, falls ich mich besser bei jemand anderem melden sollte." |
 
 Je später die Mail, desto niedriger die Hürde. Wer im Abschied plötzlich einen Termin verlangt, dreht die Logik um.
@@ -767,7 +830,7 @@ Weitere Regeln:
 
 - Kein personalisierter Opener in den Follow-Ups. Der individuelle Bezug ist in Mail 1 passiert und wirkt in Mail 3 wie ein Skript.
 - Jeder FUP hat max. EINEN neuen Aspekt. Nicht zwei, nicht drei.
-- Step 2 läuft im Thread der Entry Mail und Step 4 im Thread von Step 3, damit der Kontext sichtbar bleibt; ihr Betreff bleibt leer. Step 3 öffnet einen neuen Thread mit eigenem kurzem Betreff.
+- Step 2, 3 und 4 laufen im Thread der Entry Mail, damit der Kontext sichtbar bleibt; ihr Betreff bleibt leer.
 
 ## Wenn Antworten kommen, aber keine Termine
 
@@ -822,7 +885,7 @@ WARUM SCHLECHT:
 
 **So geht's besser:**
 
-„ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen. Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln zu deinem Online-Auftritt aufgenommen. / Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen für deine Startseite, und werde morgen mit dem Video fertig. / Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich." (/ = neuer Absatz)
+„ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen. Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln zu deinem Online-Auftritt aufgenommen. / Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen für deine Startseite. / Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (/ = neuer Absatz)
 
 Kein Pitch. Vom Bezug direkt zum Offer. Fertig.
 
@@ -856,7 +919,7 @@ SCHLECHT:
 "Antworte mir kurz oder buche dir hier einen Termin: [Link]"
 
 GUT:
-"Antworte mir einfach kurz."
+"Wäre das grundsätzlich interessant?"
 ```
 
 ### Anti-Pattern 6: KI-Sprache
@@ -865,7 +928,7 @@ GUT:
 |:----------|:-------|
 | „In der heutigen schnelllebigen Geschäftswelt..." | Weglassen |
 | M-Striche überall | Satz teilen oder Komma; Bindestriche nur innerhalb von Wörtern |
-| „Lass mich wissen, wenn du Interesse hast" | „Antworte mir kurz" |
+| „Lass mich wissen, wenn du Interesse hast" | Die Schlussfrage der Karte („Wäre das grundsätzlich interessant?") |
 | Perfekte Grammatik in lockerem Kontext | Schreib wie du sprichst |
 | „Gerne möchte ich Ihnen aufzeigen..." | „Ich zeig dir kurz..." |
 
@@ -878,7 +941,7 @@ Weitere Formulierungen, die eine Mail sofort nach Maschine klingen lassen:
 | „Darüber hinaus", „Nicht zuletzt", „Zusammenfassend" | In einer 100-Wort-Mail hat nichts davon Platz |
 | „Es ist wichtig zu verstehen, dass..." | Den Punkt einfach sagen |
 | „Wir sind bestrebt", „Synergien", „ganzheitlich", „nachhaltig skalieren" | Konkret sagen, was passiert |
-| „Ich freue mich auf Ihre Rückmeldung" | „Antworte mir einfach kurz" |
+| „Ich freue mich auf Ihre Rückmeldung" | Weglassen, die Schlussfrage reicht |
 | Drei Adjektive in einer Reihe | Eines reicht, meistens keines |
 
 ## Formale Anforderungen
@@ -893,9 +956,9 @@ Diese Punkte haben nichts mit Geschmack zu tun - sie entscheiden, ob die Mail im
 | **Keine Anhänge** | Sofort verdächtig. Erst nach Reply senden |
 | **Keine Bilder, keine Logos im Body** | Gleicher Effekt wie HTML-Layout |
 | **Keine Großschreibung ganzer Wörter** | Klassisches Spam-Merkmal, besonders im Betreff |
-| **Abmeldehinweis am Ende** | Eine schlichte Zeile, kein bunter Button. Wer keinen Abmeldeweg findet, klickt stattdessen auf Spam - und die Beschwerdequote ist der Wert, an dem die Zustellung hängt |
+| **Abmeldezeile unter der Signatur** | In Step 1 und Step 3 nach einer Leerzeile unter der Signatur, ohne „PS:“ und nie vor dem CTA, genau: „Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.“ (Sie-Form: „Falls das gerade kein Thema für Sie ist, geben Sie mir kurz Bescheid.“; gekürzt am 05.11.2026). Nie Opt-out-Fachsprache: kein „STOPP“ oder „Stop“, kein „abmelden“, „abbestellen“, „austragen“, „unsubscribe“, „Opt-out“, das klingt nach Massenversand. Den technischen Abmeldelink (List-Unsubscribe) setzt das Versandtool zusätzlich. Wer keinen Abmeldeweg findet, klickt stattdessen auf Spam, und die Beschwerdequote ist der Wert, an dem die Zustellung hängt |
 
-Open- und Link-Tracking sind Standard und ausdrücklich erlaubt - die KPI-Steuerung und das Nachtelefonieren nach Öffnern hängen daran. Eingerichtet wird beides im Versandtool, nicht in der Kampagne.
+Open- und Link-Tracking sind standardmäßig aus. Einschalten nur, wer Öffnungen als Signal nutzt, um sofort (in den ersten Minuten) anzurufen, also selbst Cold Calling macht oder ein Team dafür hat. Eingerichtet wird beides im Versandtool, nicht in der Kampagne (Details in `outreach-launch`, `references/technisches-setup.md`).
 
 ## Spam-Trigger im Deutschen
 
@@ -943,7 +1006,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 
 **Struktur:**
 
-- [ ] Folgt der Goldenen Formel (Bezug - Überleitung + Offer - [Feinheiten-Satz bei A/C] - CTA)?
+- [ ] Folgt der Goldenen Formel (Bezug - Überleitung + Offer - [zweiter Satz zum Angebot: C Feinheiten-Satz, A/B `{{ai.angebot_ausfuehrung}}`] - CTA)?
 - [ ] Wortlimit eingehalten?
 - [ ] Nur EIN CTA?
 - [ ] KEIN Pitch-Block? (keine Firmenvorstellung, kein „Wir sind seit X Jahren...")
@@ -955,7 +1018,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 - [ ] Besteht der individuelle Bezug den Austauschtest (passt nicht auf zehn andere Betriebe der Branche, nichts von der Sperrliste außer als Bewertungslob), mit kurzem positivem Schluss aus dem Detail, wo es nicht schon selbst ein Kundenlob ist (meist eine kurze Reaktion am Detail, eine Würdigung nur mit etwas Neuem, nie „das zeigt, wie …“, kein Mechanik-Nutzen, kein leeres Prüfer-Urteil) und ohne Lobadjektiv ohne Inhalt? Bewertungszahlen nur ab 30 Bewertungen und einem Schnitt von 4,5?
 - [ ] Stimmt die Anrede (Du-Form: Vorname der Person, der die Adresse gehört, bei generischen Adressen der Entscheider; sonst „Hallo,“)?
 - [ ] Ist das Offer konkret genug? (Würde ICH antworten?)
-- [ ] Kommt Social Proof erst im FUP2 (Step 3, neuer Thread), NICHT in der Entry Mail?
+- [ ] Kommt Social Proof erst im FUP2 (Step 3), NICHT in der Entry Mail?
 - [ ] Klingt die Signatur schlank und nicht wie ein Pitch?
 
 **Follow-Ups:**
@@ -967,7 +1030,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 **Formatierung:**
 
 - [ ] Keine M-Striche und keine Gedankenstriche als Trenner?
-- [ ] Betreff von Step 1: 2-5 Wörter, ohne Spam-Wort, ohne Ankündigung, ohne `{{firstName}}`/`{{companyName}}`, Firmenname nur als `{{ai.firma}}`? Step 3 mit eigenem kurzem Betreff (nicht gleich Step 1), Step 2 und 4 ohne Betreff?
+- [ ] Betreff von Step 1: 2-5 Wörter, ohne Spam-Wort, ohne Ankündigung, ohne `{{firstName}}`/`{{companyName}}`, Firmenname nur als `{{ai.firma}}`? Step 2, 3 und 4 ohne Betreff?
 - [ ] Anrede über `{{ai.hallo}}`, Pronomen passend zur `salutation`?
 - [ ] Klingt die Mail wie von einem Menschen, nicht wie ChatGPT?
 
@@ -977,7 +1040,7 @@ Vor dem Anlegen bzw. vor dem Export jede Mail mit dieser Liste prüfen.
 - [ ] Kein Spam-Wort im Betreff?
 - [ ] „kostenlos" höchstens einmal im Body, nie im Betreff?
 - [ ] Keine sichtbaren Platzhalter oder nicht aufgelösten Variablen?
-- [ ] Abmeldehinweis vorhanden?
+- [ ] Feste Abmeldezeile unter der Signatur von Step 1 und Step 3, kein „STOPP“ und keine Opt-out-Fachsprache?
 
 ## Der Prüfdurchlauf in acht Schritten
 

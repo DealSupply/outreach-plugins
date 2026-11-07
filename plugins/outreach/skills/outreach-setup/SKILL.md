@@ -16,33 +16,50 @@ Stelle fest, wo du läufst, und nenne es dem Nutzer in einem Satz:
 | Umgebung | Woran erkennbar | Besonderheit |
 |---|---|---|
 | Claude Code (Terminal, Desktop-Code-Tab) | Zugriff auf Dateisystem und Shell | Live-Ansicht (Band, Lead-Vorschau) verfügbar |
-| Claude App / claude.ai / Cowork | keine lokale Shell | Verbindung im Plugin unter „Connectors“ |
-| ChatGPT Desktop / Codex | OpenAI-Umgebung | Verbindung beim ersten Aufruf; ChatGPT im Browser erst später |
+| Claude App / claude.ai / Cowork | keine lokale Shell | Verbindung im Plugin `outreach`, Reiter „Connectors“ |
+| ChatGPT Desktop / Codex | OpenAI-Umgebung | Verbindung beim ersten Aufruf |
+| ChatGPT im Browser | OpenAI ohne Plugins | keine Skills aus dem Marketplace; nur die Verbindung über „Plugins“ → „+“ als eigener MCP-Server |
 | Cursor & andere | Skills ohne Plugin | MCP separat über die App-Seite „MCP & Skills“ |
 
 ## 2. Verbindung prüfen
 
 Rufe `list_campaigns` auf (nur lesend).
 
-- **Antwort kommt:** Verbindung steht. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
+- **Antwort kommt:** Verbindung steht. Zusätzlich `ping` aufrufen und die Server-Version nennen. Ab
+  `4.0.0` lassen sich Leads auch nur mit Website (ohne E-Mail) importieren; darunter (auch auf 3.x)
+  braucht jeder Lead eine E-Mail. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
 - **Kein Outreach-Tool verfügbar oder Anmeldung nötig:**
-  - **Akquise-Kunden:** Das Plugin bringt die Verbindung `akquise` mit (`outreach.akquise.de`).
-    - Claude Code: `/mcp` öffnen → `akquise` → anmelden.
-    - Claude App / claude.ai: Customize → Plugins → `outreach` → Connectors → `akquise` → Verbinden.
-    - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login akquise`.
-  - **Kunden einer anderen Outreach-App:** Die mitgelieferte Verbindung `akquise` unverbunden lassen.
+  - **DealSupply-Kunden:** Das Plugin bringt die Verbindung `dealsupply` mit (`app.dealsupply.ai`).
+    - Claude Code: `/mcp` öffnen → `dealsupply` → anmelden.
+    - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply`
+      „Connect“ → bei DealSupply anmelden und „Autorisieren“ bestätigen.
+    - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
+  - **Kunden einer anderen Outreach-App:** Die mitgelieferte Verbindung `dealsupply` nicht hinzufügen.
     Den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen; Skills und Live-Ansicht
     erkennen ihn automatisch an seinen Tools, der Name ist egal.
   - Danach `list_campaigns` erneut aufrufen.
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
   Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
+- **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Die Adresse entfällt, das
+  Plugin bringt sie nicht mehr mit. Steht sie trotzdem noch da (von Hand angelegt), dem Nutzer
+  empfehlen, sie zu entfernen (Claude Code `/mcp`, Codex `codex mcp remove akquise`, Claude App unter
+  Connectors) und `dealsupply` anzumelden.
 
 Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab. Englische Kampagnen (Kampagnensprache `campaign.language`) gibt es ab
-  MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch.
+  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.12.0. Was neuer ist als 3.0.0, nutzen sie
+  nur, wenn der Server es kennt:
+  - ab 4.0.0 Leads ohne E-Mail (E-Mail oder eigene Website je Lead), ab 4.4.0 der Kampagnen-Export als
+    Datei, ab 4.5.0 Workspaces, ab 4.6.0 Power-ups, ab 4.7.0 englische Kampagnen (`campaign.language`;
+    auf älteren Servern ist jede Kampagne deutsch);
+  - ab 4.8.0 die Close-Werkzeuge (`get_close_status`, `set_close_sync`), ab 4.9.0 die Freigabe einer in
+    der App eingerichteten Kampagne (`release_campaign`, Fehler `setup_open`);
+  - ab 4.10.0 Intro-Varianten mit Tags (`<name>__anker`, `<name>__schluss`; ältere Server nennen sie nicht
+    in `expectedOutput`, dann werden sie auch nicht mitgeschickt);
+  - ab 4.11.0 Schwerpunkte und Angebotsblöcke, zwei Personen je Firma, A/B-Varianten im Blueprint und
+    `set_offer_focus`; ab 4.12.0 nennt `save_lead_variables` die Korrekturen des Servers (`server_adjusted`).
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App

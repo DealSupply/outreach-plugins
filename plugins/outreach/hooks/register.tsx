@@ -41,17 +41,17 @@ const locals = atom({ plugin: 'outreach', key: 'locals' } as const, {})
 const origins = atom({ plugin: 'outreach', key: 'origins' } as const, {})
 const frame = atom({ plugin: 'outreach', key: 'frame' } as const, 0)
 const folded = atom({ plugin: 'outreach', key: 'folded' } as const, false)
-let configuredServer = 'akquise'
+let configuredServer = 'dealsupply'
 let poller: { cancel: () => void } | null = null
 const missedRounds = new Map<string, number>()
 let spinner: { cancel: () => void } | null = null
 
-let base = 'https://outreach.akquise.de'
+let base = 'https://app.dealsupply.ai'
 
 /**
  * Which MCP servers speak the outreach tools. A server is recognised by
  * what it offers, not by its name: every customer names it as they like when
- * setting it up ("akquise", "listm8", "Outreach" ...), and one session may hold
+ * setting it up ("dealsupply", "akquise", "listm8", "Outreach" ...), and one session may hold
  * several (a paid account and a local one). Cached per session; a server first
  * seen later (still connecting at start) is looked up when its first call comes.
  */
@@ -99,7 +99,7 @@ const recognize = async ($: EngineInterface, tool: string): Promise<Recognized |
 }
 
 /** Every server recognised now, the configured one included. */
-const akquiseServers = async ($: EngineInterface): Promise<string[]> => {
+const outreachServers = async ($: EngineInterface): Promise<string[]> => {
   await refreshServers($)
   const found = [...knownServers].filter(([, ok]) => ok).map(([srv]) => srv)
   return found.includes(configuredServer) ? found : [...found, configuredServer]
@@ -679,6 +679,8 @@ type Phase = (typeof PHASES)[number]
 
 const localKey = (campaignId: number, phase: Phase) => `${campaignId}:${phase}`
 
+const RESEARCH_FIELDS = new Set(['research', 'status', 'bestEmail', 'decisionMaker', 'contactRecommendation'])
+
 /** Which phase a successful write belongs to: email variables, a verdict, or research. */
 const phaseOfWrite = (name: string | null, input: Record<string, unknown>): Phase | null => {
   if (name === 'save_lead_variables') return 'email'
@@ -696,16 +698,34 @@ const withLead = (local: LocalRun, leadId: number, how: 'done' | 'skipped'): Loc
   return { ...local, doneLeadIds, skippedLeadIds, isTerminal, finishedAt: isTerminal ? Date.now() : null }
 }
 
+/** The lead a write answers with says the research found no address to send to (MCP 4.0.0 and later). */
+const leftWithoutAddress = (answer: Record<string, unknown> | null): boolean => {
+  const lead = answer !== null && typeof answer.lead === 'object' && answer.lead !== null
+    ? (answer.lead as Record<string, unknown>)
+    : answer
+  return lead?.contactEmailState === 'not_found'
+}
+
 /**
  * Counts one lead as done for its phase. A lead judged not qualified also leaves the research and
- * email phases of its campaign still going: they will never write it, and must not wait for it.
+ * email phases of its campaign still going: they will never write it, and must not wait for it. So
+ * does a lead imported without an address whose research found none: it gets no mail.
  */
-const countWrite = async ($: EngineInterface, phase: Phase, input: Record<string, unknown>, server: string) => {
+const countWrite = async (
+  $: EngineInterface,
+  phase: Phase,
+  input: Record<string, unknown>,
+  server: string,
+  answer: Record<string, unknown> | null = null,
+) => {
   const campaignId = Number(input.campaign_id)
   const leadId = Number(input.lead_id)
   if (!Number.isFinite(campaignId) || !Number.isFinite(leadId)) return
   const fields = typeof input.fields === 'object' && input.fields !== null ? (input.fields as Record<string, unknown>) : {}
   const leaves = phase === 'qualification' && fields.qualificationFitLevel === 'not_qualified'
+  // A combined write (verdict plus research in one call) also completes the research phase.
+  const carriesResearch = phase === 'research' || Object.keys(fields).some(f => RESEARCH_FIELDS.has(f))
+  const noAddress = carriesResearch && leftWithoutAddress(answer)
   const ended: LocalRun[] = []
   await update($, locals, all => {
     const next = { ...all }
@@ -718,12 +738,14 @@ const countWrite = async ($: EngineInterface, phase: Phase, input: Record<string
       next[key] = changed
     }
     touch(localKey(campaignId, phase), 'done')
+    if (phase === 'qualification' && carriesResearch && !leaves) touch(localKey(campaignId, 'research'), 'done')
     // Mail written without a research write: the lead's research already existed (it holds across campaigns).
     if (phase === 'email') touch(localKey(campaignId, 'research'), 'done')
     if (leaves) {
       touch(localKey(campaignId, 'research'), 'skipped')
       touch(localKey(campaignId, 'email'), 'skipped')
     }
+    if (noAddress) touch(localKey(campaignId, 'email'), 'skipped')
     return next
   })
   for (const local of ended) await endLocal($, local)
@@ -949,7 +971,7 @@ const statusCommand = async ($: EngineInterface, e: { args?: string }) => {
   await update($, folded, () => false)
   let active = 0
   let reached = 0
-  for (const server of await akquiseServers($)) {
+  for (const server of await outreachServers($)) {
     try {
       const listed = await call($, server, 'list_lead_runs', { active_only: true })
       reached += 1
@@ -963,12 +985,12 @@ const statusCommand = async ($: EngineInterface, e: { args?: string }) => {
 }
 
 export const register: Register = (on, options) => {
-  configuredServer = String(options.mcpServer ?? 'akquise').replace(/[^A-Za-z0-9_-]/g, '_')
+  configuredServer = String(options.mcpServer ?? 'dealsupply').replace(/[^A-Za-z0-9_-]/g, '_')
   knownServers = new Map()
   poller = null
   spinner = null
   missedRounds.clear()
-  base = String(options.appUrl ?? 'https://outreach.akquise.de')
+  base = String(options.appUrl ?? 'https://app.dealsupply.ai')
 
   // A standalone tool row: our card in place of the engine's result block.
   on('ui.render', { component: 'ToolResult' }, async ($, e, next) => {
@@ -977,7 +999,7 @@ export const register: Register = (on, options) => {
     return card ?? next(e)
   })
 
-  // Lookups like list_leads are folded into one group line ("Called akquise …"):
+  // Lookups like list_leads are folded into one group line ("Called dealsupply …"):
   // the engine's line stays, our cards follow beneath it.
   on('ui.render', { component: 'ToolGroup' }, async ($, e, next) => {
     const el = $.ui.resolve(e)
@@ -1057,7 +1079,7 @@ export const register: Register = (on, options) => {
     await learnOrigin($, server, payloadOf(ran.result))
     const written = phaseOfWrite(name, e as unknown as Record<string, unknown>)
     if (written !== null) {
-      await countWrite($, written, e as unknown as Record<string, unknown>, server)
+      await countWrite($, written, e as unknown as Record<string, unknown>, server, payloadOf(ran.result))
       return ran
     }
     if (name === 'import_leads' || name === 'get_job_status') {

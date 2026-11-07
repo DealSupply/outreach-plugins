@@ -7,7 +7,7 @@
 
 | Prüfung | Woran erkennbar |
 |---|---|
-| Keine Platzhalter | kein `[`, `{{`, „Lorem“, „Beispiel GmbH“, „XXX“, „TODO“ im sichtbaren Text (Ausnahmen: die ausdrücklich markierten Beispiel-Platzhalter und Variablen in `demo-akquise-kampagne` und Markdown-Links in einer `llms.txt`) |
+| Keine Platzhalter | kein `[`, `{{`, „Lorem“, „Beispiel GmbH“, „XXX“, „TODO“ im sichtbaren Text (Ausnahmen: die ausdrücklich markierten Beispiel-Platzhalter und Variablen in `demo-kampagne` und Markdown-Links in einer `llms.txt`) |
 | Firma, Ort, Telefon, E-Mail stimmen | Abgleich mit der Website des Leads, Zeichen für Zeichen |
 | Nichts erfunden | jede Zahl, jede Bewertung, jeder Preis, jede Auszeichnung hat eine Quelle (Website, Google-Profil, Recherche) |
 | Echte Umlaute | „ä ö ü ß“ statt „ae oe ue ss“ (Ausnahme: Web-Adressen) |

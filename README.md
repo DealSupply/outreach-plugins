@@ -5,11 +5,11 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 
 | Plugin | Inhalt | Für wen |
 |---|---|---|
-| **outreach** | Kampagnen anlegen und ändern, Cold-Mail-Copy nach SOP, Leads importieren, qualifizieren, recherchieren, Mails generieren und prüfen, Launch vorbereiten. Bringt die MCP-Verbindung `akquise` (`outreach.akquise.de`) und in Claude Code die Live-Ansicht (Lead-Vorschau, Fortschritt der Läufe) mit. | alle |
+| **outreach** | Kampagnen anlegen und ändern, Cold-Mail-Copy nach SOP, Leads importieren, qualifizieren, recherchieren, Mails generieren und prüfen, Launch vorbereiten. Bringt die MCP-Verbindung `dealsupply` (`app.dealsupply.ai`) und in Claude Code die Live-Ansicht (Lead-Vorschau, Fortschritt der Läufe) mit. | alle |
 | **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
-| **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Akquise-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
+| **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
-Die Skills passen zum Outreach-MCP mit **32 Tools** und **7 Prompts**. Der MCP verarbeitet
+Die Skills passen zum Outreach-MCP 4.12.0 mit **46 Tools** und **7 Prompts** (ältere Server ab 3.0.0 gehen auch, Neues nutzen die Skills nur, wo der Server es kennt). Der MCP verarbeitet
 Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
 (Instantly o. Ä.), nicht in der Plattform.
 
@@ -28,9 +28,11 @@ Skill `outreach`). Ältere Server ohne `list_workspaces` arbeiten wie bisher im 
 /plugin install fulfillment@outreach-plugins          (optional)
 ```
 
-**Claude App / claude.ai / Cowork:** Customize → Plugins → Add marketplace →
-`DealSupply/outreach-plugins` → `outreach` (und optional `datenbeschaffung`, `fulfillment`) installieren →
-im Plugin unter „Connectors“ die Verbindung `akquise` verbinden.
+**Claude App / claude.ai / Cowork:** Settings → Capabilities → „Code execution and file creation“
+(neu „Create and edit files“) einschalten, dann Customize → Plugins → + Add → Add marketplace →
+Add from a repository → `DealSupply/outreach-plugins` → Sync → bei `outreach` (und optional
+`datenbeschaffung`, `fulfillment`) „Add“ → im Plugin `outreach`, Reiter „Connectors“, bei `dealsupply`
+„Connect“. Plugins gibt es in den bezahlten Claude-Tarifen.
 
 **ChatGPT Desktop / Codex**
 
@@ -38,7 +40,9 @@ im Plugin unter „Connectors“ die Verbindung `akquise` verbinden.
 codex plugin marketplace add DealSupply/outreach-plugins
 ```
 
-danach unter `/plugins` installieren und neue Session starten.
+danach unter `/plugins` (ChatGPT Desktop: „Plugins“) installieren und neue Session starten. ChatGPT im
+Browser kann keine Plugins aus einem Marketplace; dort nur die Verbindung über „Plugins“ → „+“ als
+eigenen MCP-Server anlegen (Adresse auf der App-Seite „MCP & Skills“).
 
 **Cursor & andere Agenten (nur Skills):** `npx skills add DealSupply/outreach-plugins`, die
 MCP-Verbindung separat über die App-Seite „MCP & Skills“.
@@ -46,9 +50,13 @@ MCP-Verbindung separat über die App-Seite „MCP & Skills“.
 Nach der Installation: Skill **`outreach-setup`** aufrufen (bzw. **`datenbeschaffung-setup`** für das
 Plugin datenbeschaffung, **`fulfillment-setup`** für das Plugin fulfillment). Er prüft die Verbindung, räumt alte Skill-Kopien auf und zeigt die ersten Schritte.
 
-**Kunden einer anderen Outreach-App als Akquise:** Die mitgelieferte Verbindung `akquise`
-unverbunden lassen und den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen.
+**Kunden einer anderen Outreach-App als DealSupply:** Die mitgelieferte Verbindung `dealsupply`
+nicht hinzufügen und den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen.
 Skills und Live-Ansicht erkennen ihn an seinen Tools.
+
+**Umstieg von `akquise`:** Bis outreach 0.5.1 brachte das Plugin die Verbindung `akquise`
+(`outreach.akquise.de`) mit. Ab 0.6.0 heißt sie `dealsupply` und zeigt auf `app.dealsupply.ai`. Nach
+dem Update `dealsupply` einmal anmelden; eine von Hand angelegte Verbindung `akquise` entfernen.
 
 **Updates:** Skill `outreach-update`. In Claude Code am besten Auto-Update einschalten
 (`/plugin` → Marketplaces → `outreach-plugins`).
@@ -65,7 +73,7 @@ plugins/
   outreach/
     .claude-plugin/plugin.json      Manifest Claude
     plugin.json                     Manifest portabel (OpenAI)
-    .mcp.json / mcp.json            MCP-Verbindung akquise (Claude / OpenAI)
+    .mcp.json / mcp.json            MCP-Verbindung dealsupply (Claude / OpenAI)
     hooks/                          Live-Ansicht für Claude Code (register.tsx, model.ts)
     types/  tests/                  Typen und Tests der Live-Ansicht
     skills/
@@ -106,7 +114,7 @@ plugins/
       demo-seo             SEO-Ergebnis: Suchbegriffe auf Seite 2, lokale Suche, Titel, KI-Suchmaschinen
       demo-anzeigen        Meta-/Google-Anzeigen, Stellenanzeige, Content-Plan
       demo-leadliste       Lead-System mit 30–50 passenden Wunschkunden (datenbeschaffung im Geschenk-Modus)
-      demo-akquise-kampagne  Muster-Kampagne mit Sequenz und 3 Beispiel-Mails (nach outreach-copy)
+      demo-kampagne        Muster-Kampagne mit Sequenz und 3 Beispiel-Mails (nach outreach-copy)
       demo-ausliefern      Netlify (Connector, CLI oder Drop), noindex, demo-url am Lead, Antwort-Text
       fulfillment-referenzen   Demo-Katalog, Lead-Kontext, Umgebungen, Netlify, Qualität, Recht, Webseiten-Bauplan
 ```
