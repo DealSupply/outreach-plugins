@@ -54,6 +54,10 @@ Plugin datenbeschaffung, **`fulfillment-setup`** für das Plugin fulfillment). E
 nicht hinzufügen und den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen.
 Skills und Live-Ansicht erkennen ihn an seinen Tools.
 
+**Umstieg von `akquise`:** Bis outreach 0.5.1 brachte das Plugin die Verbindung `akquise`
+(`outreach.akquise.de`) mit. Ab 0.6.0 heißt sie `dealsupply` und zeigt auf `app.dealsupply.ai`. Nach
+dem Update `dealsupply` einmal anmelden; eine von Hand angelegte Verbindung `akquise` entfernen.
+
 **Updates:** Skill `outreach-update`. In Claude Code am besten Auto-Update einschalten
 (`/plugin` → Marketplaces → `outreach-plugins`).
 

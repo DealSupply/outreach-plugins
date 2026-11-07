@@ -38,13 +38,19 @@ Rufe `list_campaigns` auf (nur lesend).
   - Danach `list_campaigns` erneut aufrufen.
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
   Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
+- **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Die Adresse entfällt, das
+  Plugin bringt sie nicht mehr mit. Steht sie trotzdem noch da (von Hand angelegt), dem Nutzer
+  empfehlen, sie zu entfernen (Claude Code `/mcp`, Codex `codex mcp remove akquise`, Claude App unter
+  Connectors) und `dealsupply` anzumelden.
 
 Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
   OpenRouter-Konto ab. Englische Kampagnen (Kampagnensprache `campaign.language`) gibt es ab
-  MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch.
+  MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch. Intro-Varianten mit Tags
+  (`<name>__anker`, `<name>__schluss`) kennt der Server ab MCP 4.10.0; ältere Server nennen sie nicht
+  in `expectedOutput`, dann werden sie auch nicht mitgeschickt.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App

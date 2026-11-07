@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-11-05 – outreach 0.6.0
+
+Passt zu ListM8 MCP 4.10.0 (Sammelstand des Redesigns, DS-103). Die Verbindung zieht von `outreach.akquise.de` nach `app.dealsupply.ai`.
+
+**outreach** (Verbindung `dealsupply`)
+- `.mcp.json`, `mcp.json` → Die mitgelieferte MCP-Verbindung heißt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1`; die Verbindung `akquise` (`outreach.akquise.de`) entfällt. Nach dem Update `dealsupply` einmal anmelden (Claude Code `/mcp`, Claude App unter Connectors, Codex `codex mcp login dealsupply`); eine von Hand angelegte Verbindung `akquise` entfernen.
+- `outreach-setup`, README → Einrichtung mit `dealsupply`, Hinweis zum Umstieg von `akquise`, Kunden anderer Outreach-Apps lassen `dealsupply` unverbunden.
+- Live-Ansicht → Standard-Server `dealsupply`, Links in die App auf `app.dealsupply.ai`; Server mit anderem Namen (auch ein altes `akquise`) erkennt sie weiter an ihren Tools. Tests umgestellt.
+
+**outreach** (Intro-Varianten mit Tags, MCP 4.10.0)
+- `outreach-generate`, `lead-agent` → Intro-Variablen aus `emailGeneration.introVariables` in Rangfolge; Variante A ist das erste Element (meist `intro`, maßgeblich ist die Position, nicht der Name), dann `intro_b` …, jede mit eigenem Anker nach dem Block INTRO-VARIANTEN UND TAGS im `systemPrompt`. `expectedOutput` wörtlich übernehmen, also je Intro-Variable `<name>__anker` und `<name>__schluss` mitschicken. Eine weitere Variante ohne guten eigenen Anker ist ein Rückfall (`"<name>__anker": "rueckfall"`, leerer Wert); der Server speichert sie ohne eigenen Text, gesendet wird der aktuelle Text von Variante A. Eine wörtliche Kopie von A zählt ebenfalls als Rückfall. Zwei selbst geschriebene Varianten enden nie gleich, sonst `validation_failed`. `save_lead_variables`-Referenz mit `tags_written` und `fallbacks`.
+- `lead-agent` (Nachbessern) → unveränderte Variablen mit ihren Tags aus `anchorWritten`/`closingWritten` zurückschreiben; Zeilen mit `fallback: true` wieder leer als Rückfall schicken.
+- `outreach-verify`, `verify-agent` → `get_lead_variables` mit `anchorWritten`, `closingWritten`, `fallback` und `notStored`: Eine Rückfall-Zeile zeigt den aktuellen Text von Variante A, ist kein fehlender Wert und kein Ablehnungsgrund.
+- Ältere Server ohne Tags in `expectedOutput`: Tags werden nicht mitgeschickt, alles bleibt wie bisher.
+
 ## 2026-11-06 – outreach 0.5.9
 
 Befunde aus dem Nachtest des Endstands (DS-172).

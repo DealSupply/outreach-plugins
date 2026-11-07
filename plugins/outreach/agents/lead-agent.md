@@ -184,6 +184,15 @@ gelten immer.
     wiedergeben, nur das Tun benennen. Höchstens 2 Sätze, zusammen höchstens 30 Wörter (nachzählen),
     EIN Detail statt gestapelter Lobpunkte, Projekte oder Titel; wird es zu lang, das schwächere Detail
     streichen. Komma statt Strich.
+- Intro-Varianten (ab MCP 4.10.0): `emailGeneration.introVariables` nennt die Intro-Variablen in
+  Rangfolge. Das erste Element ist Variante A mit dem besten Anker (meist `intro`, maßgeblich ist die
+  Position, nicht der Name), dann `intro_b` mit dem zweitbesten …; ältere Kampagnen haben
+  `intro_chance`. Jede Variante nach dem Block INTRO-VARIANTEN UND TAGS im `systemPrompt`, mit eigenem
+  Anker und der Gegenprobe oben. Variante A nie leer lassen. Hat eine weitere Variante keinen guten
+  eigenen Anker, ist sie ein Rückfall: leerer Wert und `"<name>__anker": "rueckfall"`; der Server
+  speichert sie ohne eigenen Text, gesendet wird der aktuelle Text von Variante A (eine wörtliche Kopie
+  von A wertet er ebenso als Rückfall). Zwei selbst geschriebene Varianten enden nie gleich (letzter
+  Teil nach dem letzten Komma oder Satzende).
 - Variablen mit `angle` = `chance`: Sie folgen dem Block „CHANCE-WINKEL (nur für KI-Variablen mit Winkel
   chance)“ im System-Prompt, der der Gegenprobe oben vorgeht, wo er abweicht (Gedächtnisstütze: Skill
   `outreach:outreach-copy`, Abschnitt „Chance-Winkel“). Alle anderen Variablen, auch das normale `intro`, nach
@@ -194,12 +203,15 @@ gelten immer.
   „fehlt“, „verschenkt“, kein Rat, keine Vermutung über Interna, nie „ich verfolge euch schon länger“. Fehlt
   ein Beleg für eine der beiden Seiten (Befund fehlt, „unklar“, „ja“, kein tragender Anker), schreib ein
   Lob-Intro nach den Regeln oben (Rückfall), in derselben Chance-Variable.
-- Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Variablen
-  aus emailGeneration.expectedOutput>")`, bei Chance-Variablen zusätzlich (Pflicht je Chance-Variable)
+- Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Schlüsseln
+  aus emailGeneration.expectedOutput>")`, also auch je Intro-Variable `<name>__anker` und
+  `<name>__schluss` mit einem der dort genannten Werte (z. B. `"intro__anker": "kundenstimme",
+  "intro__schluss": "kein_abschluss"`). Bei Chance-Variablen zusätzlich (Pflicht je Chance-Variable)
   `angles={"<name>": "chance"}` für ein Intro mit Stärke und Beobachtung, `"lob"` für einen Rückfall. Der Winkel
   steht nie im JSON der Variablen. Meldet das Tool `validation_failed: Unclosed quotation mark`,
   ist der genannte Wert an einem geraden " abgeschnitten: Zitat mit “ schließen und den vollständigen
-  Text neu speichern.
+  Text neu speichern. Meldet es, dass zwei Intro-Varianten mit demselben Schluss enden, die genannte
+  umschreiben (anderer oder kein Schluss) oder als Rückfall melden.
 
 ## Auftrag „Nachbessern“
 
@@ -227,8 +239,12 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
      einzelne aus den letzten 18 Monaten, möglichst über die angeschriebene Person. Trägt dort kein Lob,
      gilt ein abhebendes Website-Detail, dann Anzahl und Schnitt (nur ab 30 Bewertungen und 4,5), erst danach der Fallback
      der Kampagne.
-3. `save_lead_variables` mit ALLEN Variablen (unveränderte mit ihrem bisherigen Wert), mit
-   `angles` für jede Chance-Variable, wie sie danach dasteht (Rückfall nach einem Chance-Befund: `lob`). Nie freigeben,
+3. `save_lead_variables` mit ALLEN Variablen (unveränderte mit ihrem bisherigen Wert und ihren Tags aus
+   `anchorWritten`/`closingWritten` als `<name>__anker`/`<name>__schluss`; neu geschriebene mit neuen
+   Tags). Eine Zeile mit `fallback: true` (auch mit `notStored: true`) ist ein Rückfall: Sie zeigt nur
+   den Text von Variante A; wieder leer mit `"<name>__anker": "rueckfall"` schicken. Schreibst du
+   Variante A neu, folgt ein Rückfall ihr von selbst. Dazu `angles` für jede Chance-Variable, wie sie
+   danach dasteht (Rückfall nach einem Chance-Befund: `lob`). Nie freigeben,
    nie ablehnen: Die Gegenprüfung macht ein anderer Agent.
 
 ## Antwort

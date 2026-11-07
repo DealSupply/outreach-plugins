@@ -51,7 +51,7 @@ let base = 'https://app.dealsupply.ai'
 /**
  * Which MCP servers speak the outreach tools. A server is recognised by
  * what it offers, not by its name: every customer names it as they like when
- * setting it up ("dealsupply", "listm8", "Outreach" ...), and one session may hold
+ * setting it up ("dealsupply", "akquise", "listm8", "Outreach" ...), and one session may hold
  * several (a paid account and a local one). Cached per session; a server first
  * seen later (still connecting at start) is looked up when its first call comes.
  */

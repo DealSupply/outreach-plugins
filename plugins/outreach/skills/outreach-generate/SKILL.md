@@ -126,7 +126,7 @@ LEAD: {lead.company} (ID: {lead.id})
 2. Lies den emailGeneration.systemPrompt sorgfältig — er definiert Ton, Stil und Kontext; dazu emailGeneration.language (Sprache aller Variablen: de oder en, fehlt es: de), emailGeneration.salutation/salutationRule (Ansprache) und campaignContext. Halte die Copy-Regeln „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ ein, die unten an diesen Auftrag angehängt sind. Bei language=en: alles auf Englisch, Anrede genau nach salutationRule („Hi Vorname,“ bzw. „Hi there,“), die deutschen Prüfpunkte in Schritt 6 (Umlaute, du/Sie, „Hallo …“, deutsche Einstiege, „vor allem“) entfallen, es gelten die Regeln aus systemPrompt
 3. Analysiere Research, Qualification und Custom Attributes
 4. Optional: Besuche die Lead-Website (lead.website), falls dein Client Websites laden kann — get_lead_data liefert KEINE Screenshots
-5. Generiere für JEDE Variable in emailGeneration.variables[] den Text gemäß ihrem Prompt
+5. Generiere für JEDE Variable in emailGeneration.variables[] den Text gemäß ihrem Prompt. Intro-Varianten (emailGeneration.introVariables, ab MCP 4.10.0, in Rangfolge: das ERSTE Element ist Variante A mit dem besten Anker, meist intro; dann intro_b mit dem zweitbesten …; ältere Kampagnen haben intro_chance) schreibst du nach dem Block INTRO-VARIANTEN UND TAGS im systemPrompt, jede mit eigenem Anker. Variante A erkennst du an der Position in introVariables, nicht am Namen. Hat eine weitere Variante (nie Variante A) keinen guten eigenen Anker, ist sie ein Rückfall: leerer Wert und "<name>__anker": "rueckfall"; der Server speichert sie ohne eigenen Text, Versand und Export nehmen den jeweils aktuellen Text von Variante A (eine wörtliche Kopie von A wertet er ebenso als Rückfall). Variante A selbst nie leer lassen. Zwei selbst geschriebene Varianten enden nie gleich (letzter Teil nach dem letzten Komma oder Satzende), sonst validation_failed
 6. REVIEW — Prüfe JEDE generierte Variable gegen diese Checkliste:
    - Umlaute korrekt geschrieben? (Ä/Ö/Ü/ä/ö/ü/ß — NIEMALS AE/OE/UE/ae/oe/ue/ss)
    - Keine internen Metriken erwähnt? (SEO-Score, Overall-Score, Fit-Level, Need-Flags, Dimension-Scores, Opportunity Score, ranked Keyword)
@@ -143,7 +143,7 @@ LEAD: {lead.company} (ID: {lead.id})
    Falls ein Kriterium verletzt: Korrigiere die Variable und prüfe erneut.
 7. Speichere via save_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}, variables=JSON-String)
 
-WICHTIG: variables ist ein JSON-STRING. ALLE Variablen aus emailGeneration.expectedOutput müssen enthalten sein.
+WICHTIG: variables ist ein JSON-STRING. ALLE Schlüssel aus emailGeneration.expectedOutput müssen enthalten sein, wörtlich übernommen: die Variablen und je Intro-Variable die beiden Tags "<name>__anker" und "<name>__schluss" mit einem der Werte, die expectedOutput dort nennt (z. B. kundenstimme, besonderheit, ersatzsatz bzw. reaktion, kein_abschluss, wuerdigung). Beispiel mit Rückfall: {"hallo": "...", "intro": "...", "intro__anker": "kundenstimme", "intro__schluss": "kein_abschluss", "intro_b": "", "intro_b__anker": "rueckfall"}
 
 # Copy-Regeln (aus dem Skill outreach-copy)
 
@@ -242,8 +242,9 @@ Gibt vollen Generierungs-Context zurück. Bei bereits kontaktierten Leads (Konta
 - `emailGeneration.systemPrompt` — Der aufgelöste System-Prompt
 - `emailGeneration.language` — Sprache der Variablen (`de` | `en`, ab MCP 4.7.0); bei `en` ist `salutationRule` die englische Anrede-Regel
 - `emailGeneration.salutation` / `salutationRule` / `campaignContext` — Ansprache und Kampagnenkontext
-- `emailGeneration.variables[]` — Variablen mit aufgelösten Prompts
-- `emailGeneration.expectedOutput` — JSON-Schema der erwarteten Ausgabe (Variablen-Namen)
+- `emailGeneration.variables[]` — Variablen mit aufgelösten Prompts (ab MCP 4.10.0 mit `angle`: `null`, `lob` oder `chance`; nur Variablen, die eine Mail nutzt)
+- `emailGeneration.introVariables` — Intro-Variablen in Rangfolge (ab MCP 4.10.0): das erste Element ist Variante A (meist `intro`, der Name ist nicht maßgeblich), dann `intro_b` = Variante B …
+- `emailGeneration.expectedOutput` — JSON-Schema der erwarteten Ausgabe: Variablen-Namen und ab MCP 4.10.0 je Intro-Variable `<name>__anker` und `<name>__schluss` mit den erlaubten Werten
 - `emailGeneration.subjectVariables` — Betreff-Variablen des Betreff-Tests (Rolle `subject_variant`, in Kampagnen des Assistenten `betreff_b`; erkennen über diese Liste, nie über den Namen; Betreff von Variante B in Mail 1, seit 05.11.2026): 3 bis 6 Wörter, die direkt mit demselben Detail beginnen wie das Intro (weniger als 3 ersetzt `save_lead_variables` seit 06.11.2026 durch den Rückfall; E53), Regeln im Prompt der Variable; Rückfall „Frage zu <Kurzname>“ mit dem Kurznamen aus `firma`, ohne Kurznamen der Betreff von Variante A (meist „kurze Frage“), mit `<name>__rueckfall: "ja"` (Schlüssel aus `expectedOutput`), sonst `"nein"`; den Rückfall auf den Betreff von A speichert ListM8 ohne eigenen Text und setzt beim Versand den aktuellen Betreff von A ein, auch für Person 2. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch diesen Rückfall und nennt ihn in `subject_fallbacks`; ein nackter Standard-Betreff zählt immer als Rückfall. Die Form „Frage zu …“ zählt nur in Kampagnen als Rückfall, deren Betreff-Prompt die Regel ANFANG bzw. START trägt (Betreff-Test ab 06.11.2026); ältere Kampagnen behalten ihren Prompt
 - Weitere Intro-Varianten (`intro_b`, `intro_c` …, seit 06.11.2026): Jede nimmt den nächsten freien Eintrag aus „Stärkste Anker“ (auch gleicher Typ bei anderem Gegenstand). Rückfall (`<name>__anker: "rueckfall"`, leerer Wert) nur, wenn kein freier Eintrag zu einem anderen Gegenstand mehr da ist, mit Grund unter `<name>__grund`. Zwei Varianten enden nie mit demselben Schluss (`save_lead_variables` lehnt das mit `validation_failed` ab); einzige Ausnahme ist die feste Reaktion hinter Firmengeschichte, Gründung oder Alter, „das hab ich richtig gern gelesen“ („That was really nice to read.“, E54), die bei gleichem Typ und anderem Gegenstand in beiden Varianten stehen darf. Melde den Anker `geschichte` ehrlich, sobald das Intro an Firmengeschichte, Gründung oder Alter hängt: Dann setzt `save_lead_variables` die feste Reaktion selbst ein, wenn das Intro mit einer anderen bekannten Reaktion endet (DS-172; nicht, wenn der Intro-Prompt der Kampagne den Schluss selbst regelt), und nennt das in `server_adjusted`. Ebenso macht es aus einer Sie-Begrüßung „Guten Tag Herr/Frau …,“ „Hallo Herr/Frau Nachname,“. Ein Intro von Person 2 darf mit keinem Intro von Person 1 wortgleich sein, gleich welche Variante. `save_lead_variables` lehnt für Rückfälle nichts ab, nennt aber in `intro_marks` „rueckfall_trotz_anker“ und „gleicher_gegenstand“
 
@@ -255,7 +256,9 @@ Gibt vollen Generierungs-Context zurück. Bei bereits kontaktierten Leads (Konta
 | `lead_id` | int | **required** | Lead-ID |
 | `variables` | string | **required** | JSON-String mit generierten Werten |
 
-**variables-Format:** `"{\"hallo\": \"...\", \"intro\": \"...\"}"`
+**variables-Format:** `"{\"hallo\": \"...\", \"intro\": \"...\", \"intro__anker\": \"besonderheit\", \"intro__schluss\": \"reaktion\"}"`
+
+**Intro-Tags (ab MCP 4.10.0):** Je Intro-Variable aus `emailGeneration.introVariables` gehören `<name>__anker` (bewertungszahl, kundenstimme, besonderheit, projekt, auszeichnung, geschichte, chance, ersatzsatz, rueckfall, sonstiges) und `<name>__schluss` (reaktion, kein_abschluss, wuerdigung) in `variables`. Sie werden nie als Variable gespeichert; ein unbekannter Wert wird `sonstiges`, ein fehlender `null`. Eine weitere Variante ohne guten eigenen Anker schickt `"<name>__anker": "rueckfall"` und einen leeren Wert (oder lässt den Schlüssel weg); sie wird ohne eigenen Text mit dem Schluss von Variante A gespeichert, Push, Export und Vorschau senden den jeweils aktuellen Text von Variante A (Antwort `fallbacks`). Eine weitere Variante, die Variante A wörtlich wiederholt, zählt ebenfalls als Rückfall. Abgelehnt mit `validation_failed`: zwei selbst geschriebene Intro-Varianten mit demselben Schluss und ein Rückfall, während Variante A leer ist. Ältere Server ohne Tags in `expectedOutput`: Tags weglassen.
 
 Verhalten: Persistiert eine neue `LeadAIVariableValue`-Version pro Variable (vorherige Versionen bleiben als Historie erhalten). Setzt `LeadCampaignStatus.status = pending_review`. Berührt KEINE Email-Steps (Body/Subject werden beim CSV-Export live aus den Variablen gerendert).
 
@@ -267,7 +270,10 @@ Success-Response:
   "campaign_id": 123,
   "version": 1,
   "variables_saved": 2,
-  "campaign_status": "pending_review"
+  "campaign_status": "pending_review",
+  "angles_written": {},
+  "tags_written": { "intro": { "anchor": "besonderheit", "closing": "reaktion" } },
+  "fallbacks": []
 }
 ```
 
@@ -281,13 +287,13 @@ Die fehlenden Namen stehen im Fehlertext — alle Variablen aus `emailGeneration
 
 Die Prüfung auf ein offenes deutsches Anführungszeichen („ ohne “, Code `validation_failed: Unclosed quotation mark`) läuft nur in deutschen Kampagnen.
 
-Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturierte Fehler-Response. Mögliche Codes: `validation_failed` (ungültiges JSON oder fehlende Variablen), `contact_gate` (Kontaktstatus des Leads blockiert — Lead überspringen), `variables_not_configured` (Kampagne hat keine AI-Variablen), `campaign_not_found`, `lead_not_found`, `lead_not_in_campaign`, `lead_run_active`, `insufficient_scope` und `internal_error`. Ist ein Wert kein String, speichert das Tool die Variable mit Status `error`.
+Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturierte Fehler-Response. Mögliche Codes: `validation_failed` (ungültiges JSON, fehlende Variablen, zwei selbst geschriebene Intro-Varianten mit demselben Schluss: eine umschreiben oder als Rückfall melden, oder ein Rückfall bei leerer Variante A), `contact_gate` (Kontaktstatus des Leads blockiert — Lead überspringen), `variables_not_configured` (Kampagne hat keine AI-Variablen), `campaign_not_found`, `lead_not_found`, `lead_not_in_campaign`, `lead_run_active`, `insufficient_scope` und `internal_error`. Ist ein Wert kein String, speichert das Tool die Variable mit Status `error`.
 
 ### Verification-Tools (siehe `/outreach-verify`)
 
 Die folgenden Tools werden im Verification-Workflow verwendet, NICHT in der Generierung:
 
-- **get_lead_variables** — lädt aktuelle Variablen-Werte (Name, Wert, Status, generatedAt) zur Prüfung
+- **get_lead_variables** — lädt aktuelle Variablen-Werte (Name, Wert, Status, generatedAt, ab MCP 4.10.0 die Tags `anchorWritten`/`closingWritten`) zur Prüfung; eine Zeile mit `fallback: true` (ohne eigene Zeile zusätzlich `notStored: true`) ist eine weitere Intro-Variante im Rückfall: Sie zeigt den aktuellen Text von Variante A und ist kein fehlender Wert
 - **approve_lead_variables** — gibt Variablen frei (`LeadCampaignStatus = approved`, ready für CSV-Export; bei verknüpfter Kampagne mit Auto-Push geht der Lead nach Instantly)
 - **reject_lead_variables** — lehnt Variablen ab mit `reason` (`LeadCampaignStatus = rejected`; NICHT final: der Lead zählt wieder als generierungsbedürftig und wird beim nächsten Generate/Run neu erzeugt. Dauerhaft raus = aus Kampagne entfernen oder `mark_leads_contacted(lead_ids=[<lead_id>], status="do_not_contact")`)
 
