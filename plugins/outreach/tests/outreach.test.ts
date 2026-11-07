@@ -70,7 +70,7 @@ describe('lead preview', () => {
         { id: 9, email: 'praxis@mueller.de', contactEmailState: 'present', company: 'Praxis Müller', city: 'München', score: 70, contactStatus: 'not_contacted', qualification: null },
       ],
     }
-    const ui = await $.ui.mount({ ...toolRow('mcp__akquise__list_leads', withoutEmail), surface: 'terminal' })
+    const ui = await $.ui.mount({ ...toolRow('mcp__dealsupply__list_leads', withoutEmail), surface: 'terminal' })
     expect(await ui.find({ text: /zahnarzt-berg\.de/ })).toBeDefined()
     expect(await ui.find({ text: /Praxis Müller/ })).toBeDefined()
     expect(await ui.find({ text: /null/ })).toBeUndefined()
@@ -586,7 +586,7 @@ describe('local workflow phases', () => {
     })
     for (const phase of ['research', 'email']) await progress($, { action: 'start', campaign_id: 2280, phase, total: 2 })
     const write = (tool: string, leadId: number, fields: Record<string, unknown>) =>
-      toolCall($, `mcp__akquise__${tool}`, { campaign_id: 2280, lead_id: leadId, fields, variables: '{}' })
+      toolCall($, `mcp__dealsupply__${tool}`, { campaign_id: 2280, lead_id: leadId, fields, variables: '{}' })
 
     await write('write_lead_details', 1, { research: 'Bericht', status: 'researched' })
     await write('write_lead_details', 2, { research: 'Bericht\n\n## Kontakt\nkeine Adresse', status: 'researched' })
@@ -608,7 +608,7 @@ describe('local workflow phases', () => {
     })
     for (const phase of ['qualification', 'research', 'email']) await progress($, { action: 'start', campaign_id: 2281, phase, total: 2 })
     const write = (tool: string, leadId: number, fields: Record<string, unknown>) =>
-      toolCall($, `mcp__akquise__${tool}`, { campaign_id: 2281, lead_id: leadId, fields, variables: '{}' })
+      toolCall($, `mcp__dealsupply__${tool}`, { campaign_id: 2281, lead_id: leadId, fields, variables: '{}' })
 
     await write('write_lead_details', 1, { qualificationStatus: 'completed', qualificationFitLevel: 'qualified' })
     await write('write_lead_details', 1, { research: 'Bericht', status: 'researched' })
@@ -772,7 +772,7 @@ describe('imports', () => {
     const clock = mock.clock(on)
     mcpAnswers(on, [jobStatus('completed', { status: 'success', imported: 470, total: 497, duplicates: [], rejected_count: 3 })])
     on('tool.call', () => ({ result: { ...IMPORT_QUEUED, received: 500, accepted: 497, rejected_total: 3 } }))
-    await toolCall($, 'mcp__akquise__import_leads', { campaign_id: 12, leads: [] })
+    await toolCall($, 'mcp__dealsupply__import_leads', { campaign_id: 12, leads: [] })
     await clock.advance(20_000)
     const done = await $.ui.mount({ ...BAND, surface: 'terminal' })
     expect(await done.find({ text: '470 importiert · 3 abgelehnt' })).toBeDefined()

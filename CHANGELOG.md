@@ -1,28 +1,75 @@
 # Changelog
 
-## 2026-11-01 – outreach 0.6.0
+## 2026-11-07 – outreach 0.6.0, datenbeschaffung 0.5.0, fulfillment 0.1.4
 
-Passt zu ListM8 MCP 4.8.0 (Close-Spiegel). Ältere Server kennen `get_close_status` und `set_close_sync` nicht.
+Sammelstand auf ListM8 MCP 4.12.0 (Stand develop, nächster Release nach v4.18.4). Er bringt alles, was der Server seit 4.0.0 kann und die Skills bisher nur auf Zweigen kannten, dazu die Copy-Nacharbeit von 0.4.8 bis 0.5.9 (Einträge darunter). Neues nutzen die Skills nur, wenn `ping` die passende Version meldet; ältere Server ab 3.0.0 laufen weiter wie bisher.
 
-**outreach** (Close)
-- `outreach` → neuer Abschnitt „Close erklären“: Fragen zum Stand in Close beantwortet `get_close_status` (Verbindung, Leads je Status im Workspace, zuletzt fehlgeschlagene, optional der Schalter einer Kampagne); `set_close_sync` schaltet eine Kampagne an oder aus (`enabled`, optional `transfer_backlog=false`), nur auf Wunsch des Nutzers. Verbinden, Einrichten, Einstiegsstufe und Lead-Status je Stufe gibt es nur in der App, für alle Kampagnen. Leads mit `do_not_contact` kommen nie neu nach Close.
-- `outreach-launch` → Zeile „ins CRM Close spiegeln“ in „Wer macht was“.
-- `outreach-setup` → Close-Werkzeuge ab MCP 4.8.0.
+**outreach** (neu in diesem Stand, MCP 4.9.0 bis 4.12.0)
+- `outreach-campaign` → Blueprint mit A/B-Varianten (`sequence.steps[].variants`, `variantAActive`, `aiVariables[].angle`/`title`/`description`/`role`), Schwerpunkten (`campaign.offerFocuses`, bis 20, Prüffragen mit `fitsWhen`), Angebotsblöcken (`aiVariables[].offerRole`), zwei Personen je Firma (`campaign.recipientsPerCompany`) und Station (`campaign.station`, nur aus dem Export übernehmen). Beim Bearbeiten Varianten mitschicken; `confirm_discard_variants` nur nach Ja mit `discard_variants=true`, `variants_transferred` ist nicht übersteuerbar (MCP 4.11.0).
+- `outreach-campaign`, `outreach-pipeline`, `outreach` → Eine in der App eingerichtete Kampagne gibt `release_campaign` frei, nur nach ausdrücklichem Ja; `release_blocked` nennt die Lücken. `start_lead_run` lehnt bis dahin mit `setup_open` ab, im Karten-Test sperrt `model_trial_locked` teure Modelle und Deep (MCP 4.9.0).
+- `outreach-generate`, `lead-agent` → Angebotsblöcke: `schwerpunkt` mit Grund, je Block `<name>__stand` `uebernommen` (Vorlage vom Server) oder `angepasst` mit Grund, `proof` und `noun` nie schreiben; `no_offer_focus` überspringt den Lead (`grund=kein-schwerpunkt`), `set_offer_focus` nur auf Wunsch des Nutzers. Person 2 über `second_person` im selben Aufruf, mit eigenem Intro und derselben Anredeform; `second_person_not_open`. Antwortfelder `offer_blocks`, `second_person`, `server_adjusted` (MCP 4.11.0, 4.12.0).
+- `outreach-verify`, `verify-agent` → `get_lead_variables` mit `markWritten`, `offerRole`/`templateState` (eine Vorlage ist ein Serverwert und kein Befund zum Wortlaut), `offerFocus` und `secondPerson`; Person 2 wird mitgeprüft, eine Freigabe gilt für beide.
+- `outreach-export` → Spalten für Person 2 und `rows_per_person`. `outreach-lists` → `check_leads_exist` trifft Person 2 (`matched_via: second_person`).
+- `outreach-setup`, README → Versionsliste von 4.0.0 bis 4.12.0, 46 Tools.
+- Power-ups gelten ab MCP 4.6.0 (die Zweige nannten 4.1.0 bzw. 4.4.0, so hat der Server sie nie ausgeliefert).
+- Live-Ansicht → die Tests zu Leads ohne E-Mail laufen über die Verbindung `dealsupply` (44 Tests grün).
 
-## 2026-11-05 – outreach 0.6.0
+### Bisher nur auf Zweigen: Intro-Varianten mit Tags und Verbindung `dealsupply` (MCP 4.10.0, PR #19)
 
 Passt zu ListM8 MCP 4.10.0 (Sammelstand des Redesigns, DS-103). Die Verbindung zieht von `outreach.akquise.de` nach `app.dealsupply.ai`.
 
-**outreach** (Verbindung `dealsupply`)
+*outreach* (Verbindung `dealsupply`)
 - `.mcp.json`, `mcp.json` → Die mitgelieferte MCP-Verbindung heißt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1`; die Verbindung `akquise` (`outreach.akquise.de`) entfällt. Nach dem Update `dealsupply` einmal anmelden (Claude Code `/mcp`, Claude App unter Connectors, Codex `codex mcp login dealsupply`); eine von Hand angelegte Verbindung `akquise` entfernen.
 - `outreach-setup`, README → Einrichtung mit `dealsupply`, Hinweis zum Umstieg von `akquise`, Kunden anderer Outreach-Apps lassen `dealsupply` unverbunden.
 - Live-Ansicht → Standard-Server `dealsupply`, Links in die App auf `app.dealsupply.ai`; Server mit anderem Namen (auch ein altes `akquise`) erkennt sie weiter an ihren Tools. Tests umgestellt.
 
-**outreach** (Intro-Varianten mit Tags, MCP 4.10.0)
+*outreach* (Intro-Varianten mit Tags, MCP 4.10.0)
 - `outreach-generate`, `lead-agent` → Intro-Variablen aus `emailGeneration.introVariables` in Rangfolge; Variante A ist das erste Element (meist `intro`, maßgeblich ist die Position, nicht der Name), dann `intro_b` …, jede mit eigenem Anker nach dem Block INTRO-VARIANTEN UND TAGS im `systemPrompt`. `expectedOutput` wörtlich übernehmen, also je Intro-Variable `<name>__anker` und `<name>__schluss` mitschicken. Eine weitere Variante ohne guten eigenen Anker ist ein Rückfall (`"<name>__anker": "rueckfall"`, leerer Wert); der Server speichert sie ohne eigenen Text, gesendet wird der aktuelle Text von Variante A. Eine wörtliche Kopie von A zählt ebenfalls als Rückfall. Zwei selbst geschriebene Varianten enden nie gleich, sonst `validation_failed`. `save_lead_variables`-Referenz mit `tags_written` und `fallbacks`.
 - `lead-agent` (Nachbessern) → unveränderte Variablen mit ihren Tags aus `anchorWritten`/`closingWritten` zurückschreiben; Zeilen mit `fallback: true` wieder leer als Rückfall schicken.
 - `outreach-verify`, `verify-agent` → `get_lead_variables` mit `anchorWritten`, `closingWritten`, `fallback` und `notStored`: Eine Rückfall-Zeile zeigt den aktuellen Text von Variante A, ist kein fehlender Wert und kein Ablehnungsgrund.
 - Ältere Server ohne Tags in `expectedOutput`: Tags werden nicht mitgeschickt, alles bleibt wie bisher.
+
+### Bisher nur auf Zweigen: Close (MCP 4.8.0, PR #18)
+
+Passt zu ListM8 MCP 4.8.0 (Close-Spiegel). Ältere Server kennen `get_close_status` und `set_close_sync` nicht.
+
+*outreach* (Close)
+- `outreach` → neuer Abschnitt „Close erklären“: Fragen zum Stand in Close beantwortet `get_close_status` (Verbindung, Leads je Status im Workspace, zuletzt fehlgeschlagene, optional der Schalter einer Kampagne); `set_close_sync` schaltet eine Kampagne an oder aus (`enabled`, optional `transfer_backlog=false`), nur auf Wunsch des Nutzers. Verbinden, Einrichten, Einstiegsstufe und Lead-Status je Stufe gibt es nur in der App, für alle Kampagnen. Leads mit `do_not_contact` kommen nie neu nach Close.
+- `outreach-launch` → Zeile „ins CRM Close spiegeln“ in „Wer macht was“.
+- `outreach-setup` → Close-Werkzeuge ab MCP 4.8.0.
+
+### Bisher nur auf Zweigen: Power-ups (MCP 4.6.0, aus PR #16 ohne „Leads finden“)
+
+*outreach* (Power-ups, ListM8-MCP 4.6.0, LISTM8-75). Alles Neue gilt erst ab Server-Version 4.6.0 (`ping`); ältere Server kennen die Tools nicht.
+- `lead-agent`, `outreach-research` → Eingeschaltete Power-ups aus `get_lead_data.researchGeneration.powerUps` über `run_power_up`: `verify_email` prüft nach dem Lesen der Seiten alle belegten Kandidaten in einem Aufruf (Anbietergebühr ohne Marge, nur Adressen mit Herkunft), `find_person_email` sucht erst nach Impressum, Team- und Kontaktseite und nur für einen Entscheider, dessen persönliche Adresse auf keiner gelesenen Seite steht (Treffer zum Stückpreis, ohne Treffer die Anbietergebühr; höchstens drei Personen). Ein Treffer von `find_person_email` mit Urteil `valid` ist belegt und wird `bestEmail`, auch statt einer allgemeinen Importadresse. Eine nur auf einer Seite gelesene Adresse kennt der Server erst nach dem Speichern: erst `bestEmail` schreiben, dann prüfen. `invalid` und `catch_all_unconfirmed` werden nie `bestEmail`; bei `failed`, `unavailable`, `limit_reached` kein zweiter Aufruf mit derselben Eingabe. Im Server-Lauf prüft der Server am Ende jeder Recherche eine noch ungeprüfte Versandadresse selbst (kostenlos) und wählt bei unzustellbarem Postfach neu.
+- `outreach-generate`, `outreach-verify`, `verify-agent` → `undeliverable_address` beim Speichern oder Freigeben: Das Postfach der Versandadresse existiert laut Prüfung nicht. Nicht wiederholen; eine andere Adresse desselben Betriebs mit `switch_primary_email` wählen (nur auf Wunsch des Nutzers) oder den Lead überspringen. Eine Versandadresse mit Urteil `invalid` in `emailVerdicts` ist ein Befund (`art=adresse`, ohne gültige Alternative `art=recht`).
+- `outreach-abo-lauf`, `outreach-pipeline` → `list_power_ups` vor dem Lauf, Einschalten mit `set_power_up` nur mit Zustimmung; der Power-up-Block von `quote_lead_run` gehört in die Preisnennung, Treffer und Credits aus `get_lead_run_status.powerUps` in den Bericht. Neuer Grund `invalid_address` in `skipReasons` und `quote_lead_run.without_work`.
+- `outreach-campaign` → Power-ups stehen nicht im Blueprint, sie werden nach dem Anlegen mit `set_power_up` geschaltet.
+
+### Bisher nur auf Zweigen: Leads ohne E-Mail (MCP 4.0.0, PR #10)
+
+Leads ohne E-Mail-Adresse (ListM8 MCP 4.0.0). Ein Lead braucht beim Import eine gültige E-Mail oder eine eigene Website; die Recherche sucht die Kontaktadresse dann selbst. Alles Neue gilt erst ab Server-Version 4.0.0 (`ping`); ältere Server behalten den alten Ablauf, jeder Lead braucht dort eine E-Mail.
+
+*outreach*
+- `outreach-import` → Prüft zuerst die Server-Version; nur sie entscheidet über den Kontrakt, nicht der Wortlaut einer Fehlermeldung. Ab 4.0.0 reicht E-Mail ODER eigene Website (Baukasten-Unterseiten wie `name.jimdosite.com` zählen, reine Profil- oder Plattform-Links nicht). Ungültige E-Mail mit brauchbarer Website wird ohne Adresse importiert. Teilimport statt Komplett-Ablehnung: `accepted`, `rejected_total`, `rejected_rows` mit Codes (`missing_contact`, `invalid_email`, `platform_only_website` usw.); `validation_failed` nur, wenn nichts importierbar ist; `limit_reached` ist dort ein Fehler für den ganzen Aufruf und nur im Job-Ergebnis ein Zeilencode. Bericht nennt Abgelehnte, Hinweise und Duplikate nach `matchedVia` (E-Mail oder Domain).
+- `outreach-research`, `lead-agent` → Ein Lead ohne Adresse bekommt als erstes Ziel die eigene Kontaktadresse (Regeln aus `researchGeneration.contactEmail`): persönliche Adresse von Inhaber oder Geschäftsführung vor info@, nie geraten, nie Plattform-, Verzeichnis-, Agentur- oder Kammeradressen. Fund als `bestEmail` schreiben (der Server macht sie zur Identität; `address_conflict` nicht wiederholen). Kein Fund: Recherche mit Abschnitt „## Kontakt“ und den geprüften Seiten speichern, der Lead scheidet mit `no_contact_email` aus und bekommt keine Mail-Variablen. Antwortzeile mit `adresse=` bzw. `grund=keine-adresse`. Ein Lead mit `not_found` bekommt im Abo-Lauf trotzdem sein Qualifizierungsurteil, sonst bliebe er in der Warteschlange.
+- `outreach-generate`, `outreach-verify`, `verify-agent` → `no_contact_email` beim Speichern oder Freigeben ist kein Fehler, nicht wiederholen. Versandadresse ist `sendingEmail`, sonst `email`; ein Lead ohne beide wird nie freigegeben.
+- `outreach-pipeline`, `outreach-abo-lauf` → Bericht zählt „ohne Adresse“ aus den `skipReasons` des Laufs bzw. den Antwortzeilen der Agents.
+- `outreach-lists`, `outreach-launch` → Leads ohne E-Mail: im Dedup-Index ist `e` leer (nur über `d` bekannt), `check_leads_exist` findet sie nur über die Domain (Abgleich nach ganzen Labels; `match_kind: website_identity` = derselbe Lead, `company_known` = Firma bekannt; ohne `match_kind` eigener Host-Vergleich), `mark_leads_contacted` erreicht sie nur über `lead_ids`; Export und Push nehmen nie Leads ohne Versandadresse mit.
+- `outreach-setup` → nennt die Server-Version und was ab 4.0.0 gilt. `outreach-campaign` (Recherche-Referenz) → Hinweis, dass die Regeln zur Kontaktadresse vom Server kommen.
+- Live-Ansicht → Import zeigt abgelehnte Zeilen („470 importiert · 3 abgelehnt“); ein Lead, dessen Recherche keine Adresse fand, verlässt im Abo-Lauf die Mail-Phase; Leads ohne E-Mail erscheinen mit ihrer Website bzw. Versandadresse; ein kombinierter Schreibaufruf (Urteil plus Recherche) zählt beide Phasen. 4 neue Tests.
+
+*datenbeschaffung*
+- `build_csv.py` → `--uebergabe kontakt` (E-Mail oder eigene Website, Standard für ListM8 ab 4.0.0) und `--uebergabe email` (alter Vertrag, `--require-email` bleibt als Alias); verworfene Zeilen mit Grund per `--verworfen` in eine eigene CSV; Hinweis `nur-plattform-url`; CSV als Eingabe, ein zweiter Durchlauf behält Inhaber, Zusatzspalten und frühere Hinweise. Neue Referenz `plattform-hosts.md` (Spiegel der Server-Liste: Profil-Plattformen, Marken mit Länderdomains, Baukästen).
+- `dedup.py` → Index-Zeilen ohne Adresse zählen über ihre Domain; Zeilen ohne E-Mail auf bekanntem Host fallen als derselbe Lead weg; Domains nach ganzen Labels wie `check_leads_exist` (ohne `www.`, Umlaut-Domains als Punycode, keine Teilstring-Treffer; derselbe Lead nur bei exakt gleichem Host, Eltern-Domain nur Warnung); `--drop-known-domains-ohne-email`. 9 neue Tests.
+- `datenbeschaffung`, `listen-qualitaet`, alle Wege, `impressum-enrichment`, `kontaktseiten-fallback`, `enrichment-waterfall`, `outscraper-bulk` → Die Kontaktlücke: vorab anreichern oder der ListM8-Recherche überlassen (Kosten- und Entscheidungstabelle in `datenumfang.md`); Anreicherung ist ab 4.0.0 optional. Bei ungültiger Adresse aus der Verifizierung bleibt die Zeile mit Website erhalten (Adresse raus, Hinweis `adresse-verworfen`).
+- `listm8-mcp.md`, `csv-spalten.md`, `outreach-uebergabe.md`, `listen-und-icp.md`, `erfahrungswerte.md` → neuer Import-Vertrag, Antwortfelder, Dedup über die Website, Platzhalter für die Fundquote der Recherche.
+
+### Bisher nur auf Zweigen: Mails im Review neu schreiben, Sperre je Lead (MCP 2.5.0, PR #9)
+
+*outreach* (ListM8-MCP 2.5.0: E-Mails neu generieren, Sperre je Lead)
+- `outreach-pipeline` → `start_lead_run` kennt `regenerate_emails` für Mails im Review (nur mit Stufe `email`, kostet erneut, nur mit Zustimmung); mit `select_by_filter` gilt dann `campaign_status=pending_review`. Während eines Laufs sperren die Variablen-Werkzeuge nur noch den einzelnen Lead.
+- `outreach-verify`, `outreach-generate`, Lead-Agent → kennen den Code `email_generation_active` (Mail dieses Leads wird gerade generiert) und überspringen nur diesen Lead; Neugenerierung im Review über `regenerate_emails=true`.
 
 ## 2026-11-06 – outreach 0.5.9
 
@@ -308,39 +355,6 @@ Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Serv
 - `outreach-copy`, `copy-lehre`, `beispiel-blueprint`, `lead-agent`, `verify-agent`, `outreach-verify`, `outreach-generate` → Ein Lob aus Bewertungstexten trägt das Intro allein; ein Schluss, der das Lob nur wiederholt, fällt weg, und neben einem lobenden festen Folgesatz wird nie zweimal gelobt. Ein neutrales Faktum und eine Bewertungszahl bekommen weiter einen kurzen Schluss. Grund: Bei der einzigen Kampagne mit Antwortdaten kamen alle Interessenten aus Intros ohne Schluss.
 - Die Reaktion aus dem Block `SCHLUSS DES OPENERS` ist ein Vorschlag, keine Vorgabe. `verify-agent`: fehlender Schluss hinter Kundenlob ist kein Befund, doppeltes Lob ein Hinweis.
 - `copy-lehre` → Beispiel zur Bewertungszahl schließt mit einer Reaktion statt mit einem Nutzen (Widerspruch zur Server-Regel behoben).
-
-## 2026-10-15 – outreach 0.3.32 (parallel auf main, update_ai_variable)
-## 2026-10-20 – outreach 0.5.0
-
-**outreach** (Power-ups, ListM8-MCP 4.1.0, LISTM8-75). Alles Neue gilt erst ab Server-Version 4.1.0 (`ping`); ältere Server kennen die Tools nicht.
-- `lead-agent`, `outreach-research` → Eingeschaltete Power-ups aus `get_lead_data.researchGeneration.powerUps` über `run_power_up`: `verify_email` prüft nach dem Lesen der Seiten alle belegten Kandidaten in einem Aufruf (Anbietergebühr ohne Marge, nur Adressen mit Herkunft), `find_person_email` sucht erst nach Impressum, Team- und Kontaktseite und nur für einen Entscheider, dessen persönliche Adresse auf keiner gelesenen Seite steht (Treffer zum Stückpreis, ohne Treffer die Anbietergebühr; höchstens drei Personen). Ein Treffer von `find_person_email` mit Urteil `valid` ist belegt und wird `bestEmail`, auch statt einer allgemeinen Importadresse. Eine nur auf einer Seite gelesene Adresse kennt der Server erst nach dem Speichern: erst `bestEmail` schreiben, dann prüfen. `invalid` und `catch_all_unconfirmed` werden nie `bestEmail`; bei `failed`, `unavailable`, `limit_reached` kein zweiter Aufruf mit derselben Eingabe. Im Server-Lauf prüft der Server am Ende jeder Recherche eine noch ungeprüfte Versandadresse selbst (kostenlos) und wählt bei unzustellbarem Postfach neu.
-- `outreach-generate`, `outreach-verify`, `verify-agent` → `undeliverable_address` beim Speichern oder Freigeben: Das Postfach der Versandadresse existiert laut Prüfung nicht. Nicht wiederholen; eine andere Adresse desselben Betriebs mit `switch_primary_email` wählen (nur auf Wunsch des Nutzers) oder den Lead überspringen. Eine Versandadresse mit Urteil `invalid` in `emailVerdicts` ist ein Befund (`art=adresse`, ohne gültige Alternative `art=recht`).
-- `outreach-abo-lauf`, `outreach-pipeline` → `list_power_ups` vor dem Lauf, Einschalten mit `set_power_up` nur mit Zustimmung; der Power-up-Block von `quote_lead_run` gehört in die Preisnennung, Treffer und Credits aus `get_lead_run_status.powerUps` in den Bericht. Neuer Grund `invalid_address` in `skipReasons` und `quote_lead_run.without_work`.
-- `outreach-campaign` → Power-ups stehen nicht im Blueprint, sie werden nach dem Anlegen mit `set_power_up` geschaltet.
-
-## 2026-10-16 – outreach 0.4.0, datenbeschaffung 0.5.0
-
-Leads ohne E-Mail-Adresse (ListM8 MCP 4.0.0). Ein Lead braucht beim Import eine gültige E-Mail oder eine eigene Website; die Recherche sucht die Kontaktadresse dann selbst. Alles Neue gilt erst ab Server-Version 4.0.0 (`ping`); ältere Server behalten den alten Ablauf, jeder Lead braucht dort eine E-Mail.
-
-**outreach**
-- `outreach-import` → Prüft zuerst die Server-Version; nur sie entscheidet über den Kontrakt, nicht der Wortlaut einer Fehlermeldung. Ab 4.0.0 reicht E-Mail ODER eigene Website (Baukasten-Unterseiten wie `name.jimdosite.com` zählen, reine Profil- oder Plattform-Links nicht). Ungültige E-Mail mit brauchbarer Website wird ohne Adresse importiert. Teilimport statt Komplett-Ablehnung: `accepted`, `rejected_total`, `rejected_rows` mit Codes (`missing_contact`, `invalid_email`, `platform_only_website` usw.); `validation_failed` nur, wenn nichts importierbar ist; `limit_reached` ist dort ein Fehler für den ganzen Aufruf und nur im Job-Ergebnis ein Zeilencode. Bericht nennt Abgelehnte, Hinweise und Duplikate nach `matchedVia` (E-Mail oder Domain).
-- `outreach-research`, `lead-agent` → Ein Lead ohne Adresse bekommt als erstes Ziel die eigene Kontaktadresse (Regeln aus `researchGeneration.contactEmail`): persönliche Adresse von Inhaber oder Geschäftsführung vor info@, nie geraten, nie Plattform-, Verzeichnis-, Agentur- oder Kammeradressen. Fund als `bestEmail` schreiben (der Server macht sie zur Identität; `address_conflict` nicht wiederholen). Kein Fund: Recherche mit Abschnitt „## Kontakt“ und den geprüften Seiten speichern, der Lead scheidet mit `no_contact_email` aus und bekommt keine Mail-Variablen. Antwortzeile mit `adresse=` bzw. `grund=keine-adresse`. Ein Lead mit `not_found` bekommt im Abo-Lauf trotzdem sein Qualifizierungsurteil, sonst bliebe er in der Warteschlange.
-- `outreach-generate`, `outreach-verify`, `verify-agent` → `no_contact_email` beim Speichern oder Freigeben ist kein Fehler, nicht wiederholen. Versandadresse ist `sendingEmail`, sonst `email`; ein Lead ohne beide wird nie freigegeben.
-- `outreach-pipeline`, `outreach-abo-lauf` → Bericht zählt „ohne Adresse“ aus den `skipReasons` des Laufs bzw. den Antwortzeilen der Agents.
-- `outreach-lists`, `outreach-launch` → Leads ohne E-Mail: im Dedup-Index ist `e` leer (nur über `d` bekannt), `check_leads_exist` findet sie nur über die Domain (Abgleich nach ganzen Labels; `match_kind: website_identity` = derselbe Lead, `company_known` = Firma bekannt; ohne `match_kind` eigener Host-Vergleich), `mark_leads_contacted` erreicht sie nur über `lead_ids`; Export und Push nehmen nie Leads ohne Versandadresse mit.
-- `outreach-setup` → nennt die Server-Version und was ab 4.0.0 gilt. `outreach-campaign` (Recherche-Referenz) → Hinweis, dass die Regeln zur Kontaktadresse vom Server kommen.
-- Live-Ansicht → Import zeigt abgelehnte Zeilen („470 importiert · 3 abgelehnt“); ein Lead, dessen Recherche keine Adresse fand, verlässt im Abo-Lauf die Mail-Phase; Leads ohne E-Mail erscheinen mit ihrer Website bzw. Versandadresse; ein kombinierter Schreibaufruf (Urteil plus Recherche) zählt beide Phasen. 4 neue Tests.
-
-**datenbeschaffung**
-- `build_csv.py` → `--uebergabe kontakt` (E-Mail oder eigene Website, Standard für ListM8 ab 4.0.0) und `--uebergabe email` (alter Vertrag, `--require-email` bleibt als Alias); verworfene Zeilen mit Grund per `--verworfen` in eine eigene CSV; Hinweis `nur-plattform-url`; CSV als Eingabe, ein zweiter Durchlauf behält Inhaber, Zusatzspalten und frühere Hinweise. Neue Referenz `plattform-hosts.md` (Spiegel der Server-Liste: Profil-Plattformen, Marken mit Länderdomains, Baukästen).
-- `dedup.py` → Index-Zeilen ohne Adresse zählen über ihre Domain; Zeilen ohne E-Mail auf bekanntem Host fallen als derselbe Lead weg; Domains nach ganzen Labels wie `check_leads_exist` (ohne `www.`, Umlaut-Domains als Punycode, keine Teilstring-Treffer; derselbe Lead nur bei exakt gleichem Host, Eltern-Domain nur Warnung); `--drop-known-domains-ohne-email`. 9 neue Tests.
-- `datenbeschaffung`, `listen-qualitaet`, alle Wege, `impressum-enrichment`, `kontaktseiten-fallback`, `enrichment-waterfall`, `outscraper-bulk` → Die Kontaktlücke: vorab anreichern oder der ListM8-Recherche überlassen (Kosten- und Entscheidungstabelle in `datenumfang.md`); Anreicherung ist ab 4.0.0 optional. Bei ungültiger Adresse aus der Verifizierung bleibt die Zeile mit Website erhalten (Adresse raus, Hinweis `adresse-verworfen`).
-- `listm8-mcp.md`, `csv-spalten.md`, `outreach-uebergabe.md`, `listen-und-icp.md`, `erfahrungswerte.md` → neuer Import-Vertrag, Antwortfelder, Dedup über die Website, Platzhalter für die Fundquote der Recherche.
-## 2026-10-16 – outreach 0.3.33
-
-**outreach** (ListM8-MCP 2.5.0: E-Mails neu generieren, Sperre je Lead)
-- `outreach-pipeline` → `start_lead_run` kennt `regenerate_emails` für Mails im Review (nur mit Stufe `email`, kostet erneut, nur mit Zustimmung); mit `select_by_filter` gilt dann `campaign_status=pending_review`. Während eines Laufs sperren die Variablen-Werkzeuge nur noch den einzelnen Lead.
-- `outreach-verify`, `outreach-generate`, Lead-Agent → kennen den Code `email_generation_active` (Mail dieses Leads wird gerade generiert) und überspringen nur diesen Lead; Neugenerierung im Review über `regenerate_emails=true`.
 
 ## 2026-10-15 – outreach 0.3.32
 

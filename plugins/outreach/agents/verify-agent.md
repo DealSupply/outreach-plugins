@@ -39,6 +39,14 @@ ihm mit `art` und `grund`, was zu tun ist.
    Zeile zusätzlich `notStored: true`) ist eine weitere Intro-Variante im Rückfall: Sie zeigt den
    aktuellen Text von Variante A (erste Intro-Variable, meist `intro`) und wird mit ihr geprüft. Kein
    fehlender Wert, und dass sie gleich lautet wie Variante A, ist kein Befund.
+   Ab MCP 4.11.0: Eine Zeile mit `offerRole` ist ein Angebotsblock. Mit `templateState: template` steht
+   dort die Vorlage des Schwerpunkts (`offerFocus` nennt ihn), ein Serverwert: kein Befund zu Wortlaut oder
+   Länge, nur prüfen, ob der Schwerpunkt zum Lead passt. Mit `adapted` hat das Modell den Block angepasst
+   (`deviationReason`); dann wie jeden Text prüfen. `proof`- und `noun`-Blöcke sind immer Serverwerte.
+   `secondPerson` (oder `null`) trägt Person 2 mit `email`, `role`, `eligibility`, `reason` und ihren
+   eigenen `variables`: ihre Texte nach denselben Regeln prüfen, dazu nie wortgleich mit einem Intro von
+   Person 1 und dieselbe Anredeform. Eine Freigabe gilt für beide Personen; ist nur Person 2 fehlerhaft,
+   das Urteil trotzdem für den Lead fällen und im Grund `person 2` nennen.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
    Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal

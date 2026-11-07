@@ -31,7 +31,7 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Lehnt `save_lead_variables` mit `no_contact_email` ab (der Lead hat keine Versandadresse): keine
   Wiederholung, kein `FEHLER`, sondern die Antwort mit `mail=übersprungen grund=keine-adresse`.
 - Lehnt `save_lead_variables` mit `undeliverable_address` ab (das Postfach der Versandadresse existiert
-  laut Prüfung nicht, MCP ab 4.4.0): keine Wiederholung, die Versandadresse nicht selbst wechseln, sondern
+  laut Prüfung nicht, MCP ab 4.6.0): keine Wiederholung, die Versandadresse nicht selbst wechseln, sondern
   `mail=übersprungen grund=adresse-unzustellbar`.
 
 ## Ablauf
@@ -137,7 +137,7 @@ gelten immer.
   Gehört die Importadresse laut Recherche belegt einem Dritten (Kammer, Portal, Agentur, andere
   Firma) und gibt es keine eigene belegte Adresse: `bestEmail` weglassen, im Report vermerken, keine
   Mail schreiben (Antwort `mail=übersprungen`). Keine DNS- oder MX-Prüfung.
-- Power-ups (ListM8-MCP ab 4.4.0, `ping`): Nennt `get_lead_data` unter `researchGeneration.powerUps` die Tools
+- Power-ups (ListM8-MCP ab 4.6.0, `ping`): Nennt `get_lead_data` unter `researchGeneration.powerUps` die Tools
   `verify_email` oder `find_person_email`, sind sie in der Kampagne eingeschaltet. Aufruf über
   `run_power_up(campaign_id, lead_id, tool, input)`, Eingabe nach `inputSchema`, Leitlinie aus `guidance`.
   - Erst nachsehen, was schon geprüft ist: `lead.emailVerdicts` und `lead.powerUpCalls` aus `get_lead_data`
@@ -259,6 +259,21 @@ gelten immer.
   „fehlt“, „verschenkt“, kein Rat, keine Vermutung über Interna, nie „ich verfolge euch schon länger“. Fehlt
   ein Beleg für eine der beiden Seiten (Befund fehlt, „unklar“, „ja“, kein tragender Anker), schreib ein
   Lob-Intro nach den Regeln oben (Rückfall), in derselben Chance-Variable.
+- Angebotsblöcke (ab MCP 4.11.0, nur wenn `emailGeneration.offerBlocks` gesetzt ist): Den Schwerpunkt
+  nach dem Block ANGEBOT UND SCHWERPUNKTE im `systemPrompt` wählen, Standard ist das Hauptangebot (Rang 1);
+  einen anderen nur, wenn die Recherche ihn trägt und die gespeicherte Prüfung (`offerBlocks.focusCheck`)
+  ihn nicht ausschließt. Melden als `"schwerpunkt": <Rang>` mit `"schwerpunkt__grund"`. Je Block mit
+  `offerRole` `offer`, `detail` oder `cta`: `"<name>__stand": "uebernommen"` und leerer Wert (der Server
+  setzt die Vorlage ein) oder `"angepasst"` mit eigenem Text und `"<name>__grund"`; anpassen nur mit
+  kurzem Halbsatz, ohne neues Versprechen und ohne Bitte um ein Gespräch. `proof`- und `noun`-Blöcke nie
+  schreiben. Lehnt das Tool mit `no_offer_focus` ab (kein Schwerpunkt passt), keinen Schwerpunkt von Hand
+  setzen, sondern `mail=übersprungen grund=kein-schwerpunkt` melden.
+- Person 2 (ab MCP 4.11.0, nur wenn `emailGeneration.secondPerson.available` true ist): Sie gehört in
+  denselben Aufruf als `second_person="<JSON-String nach secondPerson.expectedOutput>"` mit `fit`, `reason`,
+  ihren Texten und Intro-Tags, nach dem Block ZWEITE PERSON im `systemPrompt`. Ihr Intro hat ein eigenes
+  Detail zur Firma und ist nie wortgleich mit einem Intro von Person 1; Anrede in derselben Form wie bei
+  Person 1. Passt die Rolle nicht, `fit: false` mit Grund. `second_person_not_open` heißt, es gibt keine
+  offene Person 2: ohne `second_person` erneut speichern.
 - Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Schlüsseln
   aus emailGeneration.expectedOutput>")`, also auch je Intro-Variable `<name>__anker` und
   `<name>__schluss` mit einem der dort genannten Werte (z. B. `"intro__anker": "kundenstimme",
@@ -307,8 +322,8 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
 ## Antwort
 
 Am Ende NUR eine Zeile:
-`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
-(`grund` nur bei `mail=übersprungen` wegen fehlender, fremder oder unzustellbarer Versandadresse; bei Chance-Variablen angehängt: ` winkel=<name>:<chance|lob>`)
+`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar|kein-schwerpunkt>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
+(`grund` nur bei `mail=übersprungen` wegen fehlender, fremder oder unzustellbarer Versandadresse oder ohne passenden Schwerpunkt; bei Chance-Variablen angehängt: ` winkel=<name>:<chance|lob>`)
 bzw. nach „Nachbessern“
 `NACHGEBESSERT lead=<id> art=<…> geändert=<z. B. intro, hallo, adresse, recherche> neu=<kurz: neuer Anker bzw. Adresse>`
 oder `UNVERÄNDERT lead=<id> art=<…>: <warum nicht behebbar>`

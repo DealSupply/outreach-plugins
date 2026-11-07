@@ -9,7 +9,7 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 | **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
 | **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
-Die Skills passen zum Outreach-MCP mit **42 Tools** und **7 Prompts**. Der MCP verarbeitet
+Die Skills passen zum Outreach-MCP 4.12.0 mit **46 Tools** und **7 Prompts** (ältere Server ab 3.0.0 gehen auch, Neues nutzen die Skills nur, wo der Server es kennt). Der MCP verarbeitet
 Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
 (Instantly o. Ä.), nicht in der Plattform.
 

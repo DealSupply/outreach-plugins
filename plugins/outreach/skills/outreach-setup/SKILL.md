@@ -49,11 +49,17 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab. Englische Kampagnen (Kampagnensprache `campaign.language`) gibt es ab
-  MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch. Intro-Varianten mit Tags
-  (`<name>__anker`, `<name>__schluss`) kennt der Server ab MCP 4.10.0; ältere Server nennen sie nicht
-  in `expectedOutput`, dann werden sie auch nicht mitgeschickt. Die Close-Werkzeuge
-  (`get_close_status`, `set_close_sync`) gibt es ab MCP 4.8.0.
+  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.12.0. Was neuer ist als 3.0.0, nutzen sie
+  nur, wenn der Server es kennt:
+  - ab 4.0.0 Leads ohne E-Mail (E-Mail oder eigene Website je Lead), ab 4.4.0 der Kampagnen-Export als
+    Datei, ab 4.5.0 Workspaces, ab 4.6.0 Power-ups, ab 4.7.0 englische Kampagnen (`campaign.language`;
+    auf älteren Servern ist jede Kampagne deutsch);
+  - ab 4.8.0 die Close-Werkzeuge (`get_close_status`, `set_close_sync`), ab 4.9.0 die Freigabe einer in
+    der App eingerichteten Kampagne (`release_campaign`, Fehler `setup_open`);
+  - ab 4.10.0 Intro-Varianten mit Tags (`<name>__anker`, `<name>__schluss`; ältere Server nennen sie nicht
+    in `expectedOutput`, dann werden sie auch nicht mitgeschickt);
+  - ab 4.11.0 Schwerpunkte und Angebotsblöcke, zwei Personen je Firma, A/B-Varianten im Blueprint und
+    `set_offer_focus`; ab 4.12.0 nennt `save_lead_variables` die Korrekturen des Servers (`server_adjusted`).
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App

@@ -319,6 +319,10 @@ Gibt zurück:
   - `anchorWritten`, `closingWritten` — Tags einer Intro-Variable (ab MCP 4.10.0; Anker wie `kundenstimme`, `besonderheit`, `ersatzsatz`, `rueckfall`; Schluss `reaktion`, `kein_abschluss`, `wuerdigung`), sonst `null`
   - `fallback: true` — weitere Intro-Variante (`intro_b` …) ohne eigenen Text (keine Zeile, leer, fehlgeschlagen oder wörtlich wie Variante A): `value` ist der aktuelle Text von Variante A, `anchorWritten` ist `rueckfall`. Kein fehlender Wert, kein Ablehnungsgrund
   - `notStored: true` — zusätzlich bei einem Rückfall ohne eigene Zeile
+  - `markWritten` — was der Server beim Speichern bemerkt hat, nie eine Ablehnung: `betreff_rueckfall`, `rueckfall_trotz_anker`, `gleicher_gegenstand`; sonst `null`
+  - `offerRole`, `templateState`, `deviationReason`, `deviationConfirmedAt` — ab MCP 4.11.0 bei Angebotsblöcken: `templateState: template` ist die Vorlage des Schwerpunkts (Serverwert, kein Befund zum Wortlaut), `adapted` eine Anpassung mit Grund
+- `offerFocus` — ab MCP 4.11.0 der Schwerpunkt des Leads (`focusRank`, `focusLabel`, `fitState`, `checkSource`, `checkAnswers`, `choiceState`)
+- `secondPerson` — ab MCP 4.11.0 Person 2 (`email`, `name`, `role`, `eligibility`, `reason`, `status`, eigene `variables`) oder `null`; eine Freigabe gilt für beide Personen
 - `totalVariables` — Anzahl Variablen (zählt `notStored`-Zeilen mit)
 
 ### approve_lead_variables
@@ -371,7 +375,7 @@ Success-Response:
 | Sub-Agent approve/reject Error | Fehler notieren, weitermachen mit nächstem Lead |
 | `variables_not_found` | Keine erzeugten Werte — Lead gehört in die Generierung, nicht ins Review |
 | `no_contact_email` (approve) | Ab MCP 4.0.0: der Lead hat keine Versandadresse und darf nicht freigegeben werden. Überspringen, im Report nennen; mit `reject_lead_variables` ablehnen, wenn er aus dem Review verschwinden soll |
-| `undeliverable_address` (approve) | Ab MCP 4.4.0: Das Postfach der Versandadresse existiert laut Prüfung nicht. Überspringen, im Report nennen; eine andere Adresse desselben Betriebs nur auf Wunsch des Nutzers mit `switch_primary_email` wählen |
+| `undeliverable_address` (approve) | Ab MCP 4.6.0: Das Postfach der Versandadresse existiert laut Prüfung nicht. Überspringen, im Report nennen; eine andere Adresse desselben Betriebs nur auf Wunsch des Nutzers mit `switch_primary_email` wählen |
 | `foreign_sending_address` (approve) | Die Versandadresse gehört laut Recherche einem anderen Unternehmen: überspringen, im Report nennen |
 | `validation_failed` (reject) | `reason` fehlt oder ist leer — konkreten Grund nachliefern |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Review pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen |

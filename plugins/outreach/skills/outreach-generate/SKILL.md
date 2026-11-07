@@ -126,7 +126,7 @@ LEAD: {lead.company} (ID: {lead.id})
 2. Lies den emailGeneration.systemPrompt sorgfältig — er definiert Ton, Stil und Kontext; dazu emailGeneration.language (Sprache aller Variablen: de oder en, fehlt es: de), emailGeneration.salutation/salutationRule (Ansprache) und campaignContext. Halte die Copy-Regeln „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ ein, die unten an diesen Auftrag angehängt sind. Bei language=en: alles auf Englisch, Anrede genau nach salutationRule („Hi Vorname,“ bzw. „Hi there,“), die deutschen Prüfpunkte in Schritt 6 (Umlaute, du/Sie, „Hallo …“, deutsche Einstiege, „vor allem“) entfallen, es gelten die Regeln aus systemPrompt
 3. Analysiere Research, Qualification und Custom Attributes
 4. Optional: Besuche die Lead-Website (lead.website), falls dein Client Websites laden kann — get_lead_data liefert KEINE Screenshots
-5. Generiere für JEDE Variable in emailGeneration.variables[] den Text gemäß ihrem Prompt. Intro-Varianten (emailGeneration.introVariables, ab MCP 4.10.0, in Rangfolge: das ERSTE Element ist Variante A mit dem besten Anker, meist intro; dann intro_b mit dem zweitbesten …; ältere Kampagnen haben intro_chance) schreibst du nach dem Block INTRO-VARIANTEN UND TAGS im systemPrompt, jede mit eigenem Anker. Variante A erkennst du an der Position in introVariables, nicht am Namen. Hat eine weitere Variante (nie Variante A) keinen guten eigenen Anker, ist sie ein Rückfall: leerer Wert und "<name>__anker": "rueckfall"; der Server speichert sie ohne eigenen Text, Versand und Export nehmen den jeweils aktuellen Text von Variante A (eine wörtliche Kopie von A wertet er ebenso als Rückfall). Variante A selbst nie leer lassen. Zwei selbst geschriebene Varianten enden nie gleich (letzter Teil nach dem letzten Komma oder Satzende), sonst validation_failed
+5. Generiere für JEDE Variable in emailGeneration.variables[] den Text gemäß ihrem Prompt. Intro-Varianten (emailGeneration.introVariables, ab MCP 4.10.0, in Rangfolge: das ERSTE Element ist Variante A mit dem besten Anker, meist intro; dann intro_b mit dem zweitbesten …; ältere Kampagnen haben intro_chance) schreibst du nach dem Block INTRO-VARIANTEN UND TAGS im systemPrompt, jede mit eigenem Anker. Variante A erkennst du an der Position in introVariables, nicht am Namen. Hat eine weitere Variante (nie Variante A) keinen guten eigenen Anker, ist sie ein Rückfall: leerer Wert und "<name>__anker": "rueckfall"; der Server speichert sie ohne eigenen Text, Versand und Export nehmen den jeweils aktuellen Text von Variante A (eine wörtliche Kopie von A wertet er ebenso als Rückfall). Variante A selbst nie leer lassen. Zwei selbst geschriebene Varianten enden nie gleich (letzter Teil nach dem letzten Komma oder Satzende), sonst validation_failed. Angebotsblöcke (ab MCP 4.11.0, nur wenn emailGeneration.offerBlocks gesetzt ist): nach dem Block ANGEBOT UND SCHWERPUNKTE im systemPrompt den Schwerpunkt wählen und melden ("schwerpunkt": Rang, "schwerpunkt__grund"); je Block "<name>__stand": "uebernommen" (Wert leer, der Server setzt die Vorlage ein) oder "angepasst" mit eigenem Text und "<name>__grund"; Blöcke mit Rolle proof und noun nie schreiben. Person 2 (nur wenn emailGeneration.secondPerson.available true ist): nach dem Block ZWEITE PERSON eigene Texte in second_person schreiben, nie wortgleich mit einem Intro von Person 1
 6. REVIEW — Prüfe JEDE generierte Variable gegen diese Checkliste:
    - Umlaute korrekt geschrieben? (Ä/Ö/Ü/ä/ö/ü/ß — NIEMALS AE/OE/UE/ae/oe/ue/ss)
    - Keine internen Metriken erwähnt? (SEO-Score, Overall-Score, Fit-Level, Need-Flags, Dimension-Scores, Opportunity Score, ranked Keyword)
@@ -141,7 +141,7 @@ LEAD: {lead.company} (ID: {lead.id})
    - Keine Leerzeilen am Anfang oder Ende einer Variable?
    - Jede Variable unter 10.000 Zeichen?
    Falls ein Kriterium verletzt: Korrigiere die Variable und prüfe erneut.
-7. Speichere via save_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}, variables=JSON-String)
+7. Speichere via save_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}, variables=JSON-String), mit Person 2 zusätzlich second_person=JSON-String nach emailGeneration.secondPerson.expectedOutput. Lehnt das Tool mit no_offer_focus ab, den Lead überspringen und so melden; nie selbst set_offer_focus aufrufen
 
 WICHTIG: variables ist ein JSON-STRING. ALLE Schlüssel aus emailGeneration.expectedOutput müssen enthalten sein, wörtlich übernommen: die Variablen und je Intro-Variable die beiden Tags "<name>__anker" und "<name>__schluss" mit einem der Werte, die expectedOutput dort nennt (z. B. kundenstimme, besonderheit, ersatzsatz bzw. reaktion, kein_abschluss, wuerdigung). Beispiel mit Rückfall: {"hallo": "...", "intro": "...", "intro__anker": "kundenstimme", "intro__schluss": "kein_abschluss", "intro_b": "", "intro_b__anker": "rueckfall"}
 
@@ -255,10 +255,20 @@ Gibt vollen Generierungs-Context zurück. Bei bereits kontaktierten Leads (Konta
 | `campaign_id` | int | **required** | Kampagnen-ID |
 | `lead_id` | int | **required** | Lead-ID |
 | `variables` | string | **required** | JSON-String mit generierten Werten |
+| `check_answers` | string | – | Ab MCP 4.11.0: JSON-Liste der eigenen Schwerpunkt-Prüfung `[{"focusRank": 1, "question": "…", "answer": "ja\|nein\|unbekannt", "source": "WEBSITE-BEFUND oder URL", "evidence": "…"}]`; ersetzt die gespeicherte Prüfung, auch eine Wahl von Hand. Ohne Angabe gilt die gespeicherte |
+| `second_person` | string | – | Ab MCP 4.11.0: JSON-Objekt für Person 2 (`fit`, `reason`, ihre Texte und Intro-Tags) |
+| `angles` | object | – | Winkel je Chance-Variable (`lob` oder `chance`); ohne Angabe folgt er dem Anker-Tag |
 
 **variables-Format:** `"{\"hallo\": \"...\", \"intro\": \"...\", \"intro__anker\": \"besonderheit\", \"intro__schluss\": \"reaktion\"}"`
 
 **Intro-Tags (ab MCP 4.10.0):** Je Intro-Variable aus `emailGeneration.introVariables` gehören `<name>__anker` (bewertungszahl, kundenstimme, besonderheit, projekt, auszeichnung, geschichte, chance, ersatzsatz, rueckfall, sonstiges) und `<name>__schluss` (reaktion, kein_abschluss, wuerdigung) in `variables`. Sie werden nie als Variable gespeichert; ein unbekannter Wert wird `sonstiges`, ein fehlender `null`. Eine weitere Variante ohne guten eigenen Anker schickt `"<name>__anker": "rueckfall"` und einen leeren Wert (oder lässt den Schlüssel weg); sie wird ohne eigenen Text mit dem Schluss von Variante A gespeichert, Push, Export und Vorschau senden den jeweils aktuellen Text von Variante A (Antwort `fallbacks`). Eine weitere Variante, die Variante A wörtlich wiederholt, zählt ebenfalls als Rückfall. Abgelehnt mit `validation_failed`: zwei selbst geschriebene Intro-Varianten mit demselben Schluss und ein Rückfall, während Variante A leer ist. Ältere Server ohne Tags in `expectedOutput`: Tags weglassen.
+
+**Angebotsblöcke und Schwerpunkt (ab MCP 4.11.0):** Nur in Kampagnen, deren `get_lead_data` unter `emailGeneration.offerBlocks` Schwerpunkte nennt (`focuses[]` mit `rank`, `label`, `phrase`, `checkQuestions`, `templates`, dazu `focusCheck`, die gespeicherte Prüfung des Leads). Variablen mit `offerRole` sind Angebotsblöcke und keine Pflicht-Variablen mehr:
+- `schwerpunkt` (Rang des gewählten Schwerpunkts, Standard 1) und `schwerpunkt__grund` in `variables`. Standard ist das Hauptangebot; ein anderer Schwerpunkt nur, wenn der Lead ihn wirklich braucht. Schließt die gespeicherte Prüfung den gemeldeten aus, gilt der der Prüfung.
+- Je Block mit Rolle `offer`, `detail` oder `cta`: `<name>__stand` `uebernommen` (Wert leer lassen, der Server setzt die Vorlage des Schwerpunkts ein) oder `angepasst` mit eigenem Text und `<name>__grund`. Text ohne `<name>__stand: angepasst` ersetzt der Server durch die Vorlage. Eine Anpassung, die ein Versprechenswort weglässt, Neues verspricht, um ein Gespräch bittet oder über einen kurzen Halbsatz hinauswächst, fällt auf die Vorlage zurück (`offer_blocks.blocks[<name>].refused`). Blöcke mit Rolle `proof` und `noun` sind immer Serverwerte.
+- `no_offer_focus`: Die gespeicherte Prüfung (oder `check_answers`) schließt jeden Schwerpunkt aus. Lead überspringen und dem Nutzer nennen; nur auf seinen Wunsch mit `set_offer_focus(campaign_id, lead_id, rank)` einen Schwerpunkt von Hand setzen (überstimmt die Prüfung, `unknown_focus` bei einem Rang ohne aktiven Schwerpunkt) und erneut speichern.
+
+**Person 2 (ab MCP 4.11.0):** Schreibt die Kampagne zwei Personen je Firma an und meldet `emailGeneration.secondPerson.available: true`, gehört Person 2 in denselben Aufruf: `second_person` als JSON-Objekt nach `secondPerson.expectedOutput` mit `fit` (`true`/`false`), `reason`, ihren Texten und Intro-Tags (Regeln im Block ZWEITE PERSON des `systemPrompt`: eigenes Intro mit Detail zur Firma, nie wortgleich mit einem Intro von Person 1, Anrede in derselben Form). `fit: false` lässt die Firma bei einer Person. Verstöße lehnen den ganzen Aufruf ab (`validation_failed: second_person: …`); `second_person_not_open` heißt, es gibt keine offene Person 2 (Kampagne mit einer Person, Person 2 schon übertragen oder keine vorhanden). Ohne `second_person` hat diese Version keine Person 2. `available: false` mit `gap` heißt, die Firma hat keine Person 2.
 
 Verhalten: Persistiert eine neue `LeadAIVariableValue`-Version pro Variable (vorherige Versionen bleiben als Historie erhalten). Setzt `LeadCampaignStatus.status = pending_review`. Berührt KEINE Email-Steps (Body/Subject werden beim CSV-Export live aus den Variablen gerendert).
 
@@ -273,7 +283,9 @@ Success-Response:
   "campaign_status": "pending_review",
   "angles_written": {},
   "tags_written": { "intro": { "anchor": "besonderheit", "closing": "reaktion" } },
-  "fallbacks": []
+  "fallbacks": [],
+  "subject_fallbacks": [],
+  "server_adjusted": { "history_reaction": ["intro"] }
 }
 ```
 
@@ -283,11 +295,13 @@ Fehler bei fehlenden Variablen: Das MCP-Tool-Result trägt `isError: true`; sein
 validation_failed: Variable(s) missing from submission: 'intro'
 ```
 
+`server_adjusted` (ab MCP 4.12.0) nennt, was der Server ohne zweiten KI-Aufruf geändert hat (`history_reaction`, `greeting`), für Person 2 unter `second_person.server_adjusted`; fehlt, wenn nichts geändert wurde. In Kampagnen mit Angebotsblöcken trägt die Antwort `offer_blocks` (`focus_rank`, `focus_label`, `choice`: `taken`, `adapted` oder `switched`, je Block `state` und `refused`), mit Person 2 `second_person` (`email`, `eligibility`, `reason`, `variables_saved`, `subject_fallbacks`).
+
 Die fehlenden Namen stehen im Fehlertext — alle Variablen aus `emailGeneration.expectedOutput` nachliefern und erneut senden.
 
 Die Prüfung auf ein offenes deutsches Anführungszeichen („ ohne “, Code `validation_failed: Unclosed quotation mark`) läuft nur in deutschen Kampagnen.
 
-Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturierte Fehler-Response. Mögliche Codes: `validation_failed` (ungültiges JSON, fehlende Variablen, zwei selbst geschriebene Intro-Varianten mit demselben Schluss: eine umschreiben oder als Rückfall melden, oder ein Rückfall bei leerer Variante A), `contact_gate` (Kontaktstatus des Leads blockiert: Lead überspringen), `no_contact_email` (ab MCP 4.0.0: der Lead hat keine Versandadresse, weder importiert noch von der Recherche gefunden: Lead überspringen, nicht wiederholen), `foreign_sending_address` (die Versandadresse gehört laut Recherche einem anderen Unternehmen: Lead überspringen), `undeliverable_address` (ab MCP 4.6.0: das Postfach der Versandadresse existiert laut Prüfung nicht: Lead überspringen), `variables_not_configured` (Kampagne hat keine AI-Variablen), `campaign_not_found`, `lead_not_found`, `lead_not_in_campaign`, `lead_run_active`, `insufficient_scope` und `internal_error`. Ist ein Wert kein String, speichert das Tool die Variable mit Status `error`.
+Das Tool liefert nur den Text `<lowercase_code>: <message>` und keine strukturierte Fehler-Response. Mögliche Codes: `validation_failed` (ungültiges JSON, fehlende Variablen, zwei selbst geschriebene Intro-Varianten mit demselben Schluss: eine umschreiben oder als Rückfall melden, oder ein Rückfall bei leerer Variante A), `contact_gate` (Kontaktstatus des Leads blockiert: Lead überspringen), `no_contact_email` (ab MCP 4.0.0: der Lead hat keine Versandadresse, weder importiert noch von der Recherche gefunden: Lead überspringen, nicht wiederholen), `foreign_sending_address` (die Versandadresse gehört laut Recherche einem anderen Unternehmen: Lead überspringen), `undeliverable_address` (ab MCP 4.6.0: das Postfach der Versandadresse existiert laut Prüfung nicht: Lead überspringen), `no_offer_focus` (ab MCP 4.11.0: kein Schwerpunkt passt zum Lead, siehe oben), `second_person_not_open` (keine offene Person 2), `variables_not_configured` (Kampagne hat keine AI-Variablen), `campaign_not_found`, `lead_not_found`, `lead_not_in_campaign`, `lead_run_active`, `email_generation_active` (die Mail dieses Leads wird gerade generiert: Lead überspringen), `insufficient_scope` und `internal_error`. Ist ein Wert kein String, speichert das Tool die Variable mit Status `error`.
 
 ### Verification-Tools (siehe `/outreach-verify`)
 
@@ -306,7 +320,7 @@ Details: siehe `/outreach-verify` Skill.
 | `list_leads` gibt leere leads[] | "Keine Leads in Queue" -> STOP |
 | Sub-Agent save_lead_variables Error | Fehler notieren, weitermachen mit nächstem Lead |
 | `no_contact_email` | Kein Fehler: der Lead hat keine Versandadresse und bekommt keine Mail. Als „ohne Adresse“ zählen, nicht wiederholen. Die Standard-Warteschlange (`list_leads`) enthält solche Leads ab MCP 4.0.0 nicht; tauchen sie trotzdem auf, greift der Schleifenschutz aus Phase 6 |
-| `undeliverable_address` | Ab MCP 4.4.0: Das Postfach der Versandadresse existiert laut Prüfung nicht; der Lead bekommt keine Mail. Als „Adresse unzustellbar“ zählen, nicht wiederholen. Eine andere Adresse wählt nur der Nutzer (`switch_primary_email`) |
+| `undeliverable_address` | Ab MCP 4.6.0: Das Postfach der Versandadresse existiert laut Prüfung nicht; der Lead bekommt keine Mail. Als „Adresse unzustellbar“ zählen, nicht wiederholen. Eine andere Adresse wählt nur der Nutzer (`switch_primary_email`) |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Batch pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen (Queue ist idempotent) |
 | `email_generation_active` | Die Mail dieses Leads wird gerade generiert — Lead überspringen, nach dem Job erneut prüfen |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, im Report erwähnen |

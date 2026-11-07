@@ -28,7 +28,7 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
 - **Workspace:** Alle Aufrufe des Laufs tragen `campaign_id` und `lead_id` und laufen damit im Workspace
   der Kampagne. Den Agents keinen Workspace mitgeben (Workspace-Regel im Skill `outreach`). Vor dem
   Start den Workspace nennen.
-- **Power-ups** (ListM8-MCP ab 4.4.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
+- **Power-ups** (ListM8-MCP ab 4.6.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
   nennen, was eingeschaltet ist, was ein Treffer kostet und dass jede andere Antwort die Anbietergebühr
   kostet (meist Hundertstel Credits). Mit eingeschalteten Power-ups bucht also auch der Abo-Lauf
   Credits. Eingeschaltete Tools nutzt der `lead-agent`
@@ -68,7 +68,7 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
    Abwarten (`get_lead_run_status`), dann diese Leads erneut starten.
 5. **Ohne Adresse:** `no_contact_email` (Lead ohne Versandadresse) beendet einen Lead ohne Fehler; nicht
    erneut starten. Dasselbe gilt für `undeliverable_address` (Postfach der Versandadresse existiert laut
-   Prüfung nicht, MCP ab 4.4.0); im Bericht als „Adresse unzustellbar“ zählen.
+   Prüfung nicht, MCP ab 4.6.0); im Bericht als „Adresse unzustellbar“ zählen.
 
 ## Workflow-Skript (Claude Code)
 
