@@ -62,7 +62,7 @@ Wenn KEINE campaign_id als Argument übergeben wurde:
 2. Zeige dem User die Kampagnen mit `leadCounts.needs_email_generation > 0`
 3. Frage: "Für welche Kampagne soll ich Variablen generieren?"
 4. Merke dir die campaign_id
-5. Vorprüfung: `list_lead_runs(campaign_id, active_only=true)` — läuft ein serverseitiger Lauf mit E-Mail-Stufe, lehnt `save_lead_variables` mit `lead_run_active` ab (Rennschutz). Erst nach Terminal-Status starten (`get_lead_run_status`) oder den Lauf nach Rücksprache mit `cancel_lead_run` stoppen (bereits laufende Jobs laufen aus).
+5. Vorprüfung: `list_lead_runs(campaign_id, active_only=true)` — läuft ein serverseitiger Lauf mit E-Mail-Stufe, lehnt `save_lead_variables` die Leads, deren E-Mail-Stufe er noch vor sich hat, mit `lead_run_active` ab, einen Lead mit laufendem E-Mail-Job mit `email_generation_active` (Rennschutz je Lead). Erst nach Terminal-Status starten (`get_lead_run_status`) oder den Lauf nach Rücksprache mit `cancel_lead_run` stoppen (bereits laufende Jobs laufen aus).
 
 Wenn campaign_id als Argument übergeben wurde: Direkt zur Batch-Größe-Abfrage.
 
@@ -308,6 +308,7 @@ Details: siehe `/outreach-verify` Skill.
 | `no_contact_email` | Kein Fehler: der Lead hat keine Versandadresse und bekommt keine Mail. Als „ohne Adresse“ zählen, nicht wiederholen. Die Standard-Warteschlange (`list_leads`) enthält solche Leads ab MCP 4.0.0 nicht; tauchen sie trotzdem auf, greift der Schleifenschutz aus Phase 6 |
 | `undeliverable_address` | Ab MCP 4.4.0: Das Postfach der Versandadresse existiert laut Prüfung nicht; der Lead bekommt keine Mail. Als „Adresse unzustellbar“ zählen, nicht wiederholen. Eine andere Adresse wählt nur der Nutzer (`switch_primary_email`) |
 | `lead_run_active` | Parallel läuft ein Server-Lauf mit E-Mail-Stufe — Batch pausieren, `get_lead_run_status` bis Terminal-Status, dann fortsetzen (Queue ist idempotent) |
+| `email_generation_active` | Die Mail dieses Leads wird gerade generiert — Lead überspringen, nach dem Job erneut prüfen |
 | Sub-Agent Timeout/Crash | Als Fehler zählen, im Report erwähnen |
 | Alle Agents eines Batches fehlgeschlagen | Warnung ausgeben, User fragen ob fortfahren |
 | Netzwerk/MCP-Verbindungsfehler | 1x Retry, dann STOP mit Fehlermeldung |

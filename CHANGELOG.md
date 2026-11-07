@@ -336,6 +336,11 @@ Leads ohne E-Mail-Adresse (ListM8 MCP 4.0.0). Ein Lead braucht beim Import eine 
 - `dedup.py` → Index-Zeilen ohne Adresse zählen über ihre Domain; Zeilen ohne E-Mail auf bekanntem Host fallen als derselbe Lead weg; Domains nach ganzen Labels wie `check_leads_exist` (ohne `www.`, Umlaut-Domains als Punycode, keine Teilstring-Treffer; derselbe Lead nur bei exakt gleichem Host, Eltern-Domain nur Warnung); `--drop-known-domains-ohne-email`. 9 neue Tests.
 - `datenbeschaffung`, `listen-qualitaet`, alle Wege, `impressum-enrichment`, `kontaktseiten-fallback`, `enrichment-waterfall`, `outscraper-bulk` → Die Kontaktlücke: vorab anreichern oder der ListM8-Recherche überlassen (Kosten- und Entscheidungstabelle in `datenumfang.md`); Anreicherung ist ab 4.0.0 optional. Bei ungültiger Adresse aus der Verifizierung bleibt die Zeile mit Website erhalten (Adresse raus, Hinweis `adresse-verworfen`).
 - `listm8-mcp.md`, `csv-spalten.md`, `outreach-uebergabe.md`, `listen-und-icp.md`, `erfahrungswerte.md` → neuer Import-Vertrag, Antwortfelder, Dedup über die Website, Platzhalter für die Fundquote der Recherche.
+## 2026-10-16 – outreach 0.3.33
+
+**outreach** (ListM8-MCP 2.5.0: E-Mails neu generieren, Sperre je Lead)
+- `outreach-pipeline` → `start_lead_run` kennt `regenerate_emails` für Mails im Review (nur mit Stufe `email`, kostet erneut, nur mit Zustimmung); mit `select_by_filter` gilt dann `campaign_status=pending_review`. Während eines Laufs sperren die Variablen-Werkzeuge nur noch den einzelnen Lead.
+- `outreach-verify`, `outreach-generate`, Lead-Agent → kennen den Code `email_generation_active` (Mail dieses Leads wird gerade generiert) und überspringen nur diesen Lead; Neugenerierung im Review über `regenerate_emails=true`.
 
 ## 2026-10-15 – outreach 0.3.32
 
