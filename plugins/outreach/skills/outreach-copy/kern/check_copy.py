@@ -11,7 +11,8 @@ App. Er kommt aus --firma (mehrfach möglich) oder einer Zeile "Kurzname: …" i
 Erwartetes Format (siehe beispiele.md): jede Mail unter einer Überschrift
 "## Step <n>: …" (oder "## Zusatz-Step: Dringlichkeit"), darin eine Zeile
 "Betreff: …" (nur Step 1; "Betreff: (leer …)" für Step 2 bis 4 im Thread), in Step 1 optional
-"Betreff B: …" (persönlicher Betreff des Betreff-Tests, 3 bis 6 Wörter), danach der Body bis
+"Betreff B: …" (Betreff des Betreff-Tests: seit 07.11.2026 „Frage zu {{Firma}}“, E61; ältere
+Kampagnen persönlicher Betreff mit 3 bis 6 Wörtern), danach der Body bis
 zur Grußformel ("Viele Grüße" o. Ä., nach zwei Leerzeilen), dann die Signatur und
 nach einer Leerzeile die Abmeldezeile (Step 1 und 3).
 
@@ -239,9 +240,9 @@ def check(mail):
     subject_b = mail.get("subject_b")
     if subject_b is not None:
         hard.extend(check_subject_b(subject_b, kind, mail.get("company_names", ())))
-        if subject_b and re.match(FALLBACK_FORM, subject_b, re.IGNORECASE):
-            soft.append("Betreff B beginnt wie der Rückfall („Frage zu …“, „question about …“): ein echter Betreff "
-                        "beginnt mit dem Detail, ListM8 zählt ihn sonst als Rückfall (E53)")
+        if subject_b and not re.match(COMPANY_FORM, subject_b, re.IGNORECASE):
+            soft.append("Betreff B ohne die Form „Frage zu {{Firma}}“ / „question about {{Firma}}“: so nur in Kampagnen "
+                        "vor dem 07.11.2026 mit persönlichem Betreff (E61)")
     return kind, words, limit, hard, soft
 
 
@@ -253,14 +254,13 @@ def subject_words(subject, company_names=()):
     return len(text.split())
 
 
-# Form des Rückfalls (SOP Regel 10); ein echter Betreff B beginnt mit dem Detail (E53, 06.11.2026).
-# Wie SubjectLines::FALLBACK_FORM in ListM8; "Fragebogen", "Rückfrage", "questionnaire" zählen nicht.
-FALLBACK_FORM = (r"^\s*(?:(?:eine|kleine|kurze)\s+){0,2}fragen?\s+(?:zu|zum|zur|wegen|an)(?!\w)"
-                 r"|^\s*(?:a\s+)?(?:quick\s+|short\s+)?questions?\s+(?:about|on|regarding)(?!\w)")
+# Betreff B seit 07.11.2026 (E61): immer „Frage zu {{Firma}}“ bzw. „question about {{Firma}}“, wie
+# SubjectLines::ofCompany() in ListM8. Ältere Kampagnen mit persönlichem Betreff (E53) bekommen nur einen Hinweis.
+COMPANY_FORM = r"^\s*(?:frage\s+zu|question\s+about)\s+\S"
 
 
 def check_subject_b(subject, kind, company_names=()):
-    """Betreff von Variante B im Betreff-Test (SOP vom 05.11.2026): 3 bis 6 Wörter, gleiches Detail wie das Intro."""
+    """Betreff von Variante B im Betreff-Test: harte Regeln für „Frage zu {{Firma}}“ (E61) und ältere persönliche Betreffs."""
     problems = []
     if kind != "entry":
         return ["Betreff B gibt es nur in Step 1"]
