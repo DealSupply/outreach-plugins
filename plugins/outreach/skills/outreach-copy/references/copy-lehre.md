@@ -554,7 +554,7 @@ Kein „Lass uns mal sprechen" ohne vorbereiteten Mehrwert. Kein Terminvorschlag
 
 ## Betreffzeilen
 
-Die Betreffzeile entscheidet, ob die Mail geöffnet wird. Nur Step 1 trägt einen Betreff: 2-5 Wörter, keine Werbung. Er klingt wie eine harmlose Frage eines Menschen, keine Ankündigung und keine Ergebnisansage („Website für …“, „Entwurf für …“, „Idee für …“, „Website ist fertig“). Einen Firmennamen trägt er nur über `{{ai.firma}}` (bereinigter Kurzname), nie über das rohe `{{lead.company}}`: Importnamen sind oft Google-Titel oder Domains. Ohne Variable `firma` steht kein Name im Betreff, dann „kurze Frage“. Nie `{{firstName}}` (gibt es nicht) oder ein Custom-Attribut, das leer sein kann.
+Die Betreffzeile entscheidet, ob die Mail geöffnet wird. Nur Step 1 trägt einen Betreff: 2-5 Wörter (der Firmenname zählt als ein Wort; gilt für A und B im Betreff-Test), keine Werbung. Er klingt wie eine harmlose Frage eines Menschen, keine Ankündigung und keine Ergebnisansage („Website für …“, „Entwurf für …“, „Idee für …“, „Website ist fertig“). Einen Firmennamen trägt er nur über `{{ai.firma}}` (bereinigter Kurzname), nie über das rohe `{{lead.company}}`: Importnamen sind oft Google-Titel oder Domains. Ohne Variable `firma` steht kein Name im Betreff, dann „kurze Frage“. Nie `{{firstName}}` (gibt es nicht) oder ein Custom-Attribut, das leer sein kann.
 
 ### Was funktioniert
 
@@ -563,7 +563,6 @@ Die Betreffzeile entscheidet, ob die Mail geöffnet wird. Nur Step 1 trägt eine
 | **Neugier** | „kurze Frage" | Niedrige Hürde, macht neugierig; Standard für jede Karte (seit 05.11.2026) |
 | **Neugier** | „Frage zur Terminbuchung" | Wenn das Buchungssystem den Kern des Offers bildet |
 | **Neugier** | „Zugang freigeschaltet" | Was für ein Zugang? Muss ich aufmachen (nur mit echtem Zugang, siehe unten) |
-| **Persönlich** | „Gespräch {{ai.firma}} & Arne" | Impliziert bestehende Beziehung (nur mit `firma`) |
 
 ### Was nicht funktioniert
 
@@ -581,23 +580,17 @@ Zusätzlich: keine Großschreibung ganzer Wörter, keine Ausrufezeichen, keine Z
 
 Step 2, Step 3 und Step 4 haben keinen Betreff: das Feld bleibt leer, die Mails laufen im Thread von Step 1, der Empfänger sieht „Re: <Betreff von Step 1>“. Kein „Re:“ von Hand. Ein eigener Betreff in Step 3 („kurzes Update“) bricht den Thread; so lief es bis 05.11.2026.
 
-### Betreff-Test: persönlicher Betreff in Variante B
+### Betreff-Test: „Frage zu {{Firma}}“ in Variante B
 
-Seit 05.11.2026 legt der Assistent von ListM8 einen Betreff-Test an (ab Werk an): Variante B von Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`, den die KI je Lead schreibt. Welche Variable der Betreff von B ist, sagt `emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name. Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`, `emailGeneration.subjectVariables`); Regeln für den persönlichen Betreff (SOP vom 05.11.2026):
+Seit 05.11.2026 legt der Assistent von ListM8 einen Betreff-Test an (ab Werk an): Variante B von Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`. Welche Variable der Betreff von B ist, sagt `emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name. Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`, `emailGeneration.subjectVariables`) und sagt, welche Fassung gilt:
 
-- 3 bis 6 Wörter, Ziel 4 bis 5; der Firmenname zählt als ein Wort, kein ganzer Satz; zwei Wörter
-  lesen sich wie ein Etikett und gelten als Verstoß
-- genau ein belegtes Detail, und zwar dasselbe, mit dem das Intro beginnt (der Betreff stellt die Frage, die erste Zeile löst sie ein)
-- beginnt direkt mit dem Detail („Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“), nie mit „Frage zu/zum/zur …“ oder „kurze Frage zu …“, englisch nie mit „question about …“: diese Form hat allein der Rückfall, damit echte Betreffs und Rückfälle in der Auswertung unterscheidbar sind; ListM8 zählt einen Betreff in dieser Form in Kampagnen mit dem Betreff-Test ab 06.11.2026 immer als Rückfall (E53, 06.11.2026)
-- klingt wie die harmlose Frage oder Notiz eines Menschen: kein Angebot, kein Ergebnis, keine Ankündigung, kein Lob, auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“)
-- nur der Gegenstand, wie das Intro ihn nennt, ohne Zusatz: keine Wirkung, kein Kanal, keine Anfragen oder Zahlen, die das Intro nicht nennt (nicht „Anfragen über Ads bei Flowers“, wenn das Intro nur die Anzeigen nennt)
-- Firmenname nur als Kurzname ohne Rechtsform; erstes Wort klein, wenn es kein Substantiv ist
-- höchstens ein Fragezeichen am Ende; kein Ausrufezeichen, kein %, keine Anführungszeichen, keine Gedankenstriche, kein Emoji, keine Großbuchstaben-Wörter
-- am besten ohne Pronomen, sonst nach der Anrede (dein/euer bzw. Ihr); zeitlos, weil Mail 2 bis 4 drei Wochen lang als „Re: …“ darunter laufen
-- verboten: Vorname, vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Privates, „Re:“/„AW:“/„Fwd:“, Spam-Wörter (auch „Angebot“, „unverbindlich“)
-- Rückfall ohne belegtes Detail: „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“ nur ohne sicheren Kurznamen; gemeldet mit `<name>__rueckfall: "ja"` (in Kampagnen des Assistenten `betreff_b__rueckfall`). Den Rückfall auf den Betreff von Variante A speichert ListM8 ohne eigenen Text und setzt beim Versand den aktuellen Betreff von A ein, auch für Person 2. Trägt das Intro ein Detail, ist es kein Rückfall. Nie leer, nie erfunden. Nur der Rückfall beginnt mit „Frage zu“.
+- **Kampagnen ab 07.11.2026 (E61):** Der Betreff von B lautet immer „Frage zu {{Firma}}“, englisch „question about {{Firma}}“, kein Detail und kein anderer Wortlaut. Der Kurzname steht unter `firma`: ohne Rechtsform (GmbH, GmbH & Co. KG, e.K., UG, Ltd), ohne Zusätze wie „Meisterbetrieb“ und ohne Ort, normal geschrieben statt in Großbuchstaben, außer die Firma führt ihren Namen als Kürzel („ZAR“). Steckt der Vorname der angeschriebenen Person im Firmennamen, fällt er weg („Immobilien Thomas Braun“ wird „Frage zu Immobilien Braun“); das gilt je Person, auch für Person 2. `save_lead_variables` setzt den Betreff selbst aus `firma` zusammen und prüft den Kurznamen gegen Firmennamen, Website und Ort; ohne sicheren Kurznamen bekommt der Lead den Betreff von Variante A (ohne eigenen Text gespeichert, beim Versand der aktuelle Betreff von A, als Rückfall markiert). Melde `firma` deshalb immer und `<name>__rueckfall: "ja"` nur ohne sicheren Kurznamen.
+- **Ältere Kampagnen** behalten ihren gespeicherten Prompt mit dem persönlichen Betreff je Lead: 3 bis 6 Wörter, dasselbe Detail wie das Intro, beginnt direkt mit dem Detail, „Frage zu {{Firma}}“ nur als Rückfall (E22 bis E26, E53). Es gilt immer der Prompt der Variable.
+- **Immer verboten:** der Vorname (E62), eine vorgetäuschte Kundenanfrage („ich suche eine Fassadenfirma“), Spam-Wörter (auch „Angebot“, „unverbindlich“), „Re:“/„AW:“/„Fwd:“, Großbuchstaben-Wörter außer einem Kürzel.
 
-Gut: „3D-Rundgang bei Bad Becker“, „Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“, „Samstagskurse im Studio Mitte“. Schlecht: „Frage zur Dachsanierung am Hansmeyerhof“ (Form des Rückfalls), „Mehr Patienten für Zahnarzt Müller“, „Anna, tolle Google-Bewertungen!“. `save_lead_variables` ersetzt einen Betreff, der eine harte Regel bricht, durch „Frage zu {{Firma}}“ mit dem Wert von `firma`, ohne nutzbaren Kurznamen durch den Betreff von Variante A (ohne eigenen Text gespeichert, beim Versand der aktuelle Betreff von A) („kurze Frage“), und markiert ihn als Rückfall; ebenso einen nackten Standard-Betreff, wenn `firma` gesetzt ist (seit 06.11.2026). In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder eine Zeile „Kurzname: …“ an.
+Gut: „Frage zu Becker Bäder“, „Frage zu Immobilien Braun“, „Frage zu ZAR“. Schlecht: „Frage zu Becker Bäder GmbH & Co. KG“ (Rechtsform), „Frage zu MÜLLER BAU“ (Großbuchstaben), „Frage zu Immobilien Thomas Braun“ (Vorname), „Dachsanierung am Hansmeyerhof“ (Detail statt Firma; so nur in älteren Kampagnen).
+
+In `check_copy.py` steht er als Zeile „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder eine Zeile „Kurzname: …“ an.
 
 ## Signatur-Regeln
 

@@ -154,7 +154,7 @@ gelten immer.
     (meist deutlich unter einem Credit). Erst nach Impressum, Team- und Kontaktseite und nur für einen
     namentlich genannten Entscheider, dessen persönliche Adresse auf keiner gelesenen Seite steht; steht
     sie dort, sie übernehmen und mit `verify_email` prüfen. Ohne genannte Person kein Aufruf. Höchstens drei Personen, die wichtigste zuerst, Domain = eigene Domain
-    der Firma (`{"first_name", "last_name", "domain"}`). Ein Treffer (`result.status` `ok`, Urteil `valid`)
+    der Firma (`{"first_name", "last_name", "domain"}`, ab MCP 4.13.0 optional `role_type`: `owner`, `manager`, `practice_lead`, `marketing` oder `other`). Ein Treffer (`result.status` `ok`, Urteil `valid`)
     ist eine belegte persönliche Adresse des Entscheiders, auch mit `source` `pattern` oder `finder`: Er ist
     per Postfach-Prüfung bestätigt, bezahlt und steht schon im Kontaktprofil. Er wird `bestEmail` und
     ersetzt eine allgemeine Importadresse wie info@ (Anrede dann mit dem Vornamen).
