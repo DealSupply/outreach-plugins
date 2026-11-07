@@ -28,6 +28,16 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
 - **Workspace:** Alle Aufrufe des Laufs tragen `campaign_id` und `lead_id` und laufen damit im Workspace
   der Kampagne. Den Agents keinen Workspace mitgeben (Workspace-Regel im Skill `outreach`). Vor dem
   Start den Workspace nennen.
+- **Power-ups** (ListM8-MCP ab 4.4.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
+  nennen, was eingeschaltet ist, was ein Treffer kostet und dass jede andere Antwort die Anbietergebühr
+  kostet (meist Hundertstel Credits). Mit eingeschalteten Power-ups bucht also auch der Abo-Lauf
+  Credits. Eingeschaltete Tools nutzt der `lead-agent`
+  über `run_power_up` (Regeln dort). Ein Power-up nur mit ausdrücklicher Zustimmung des Nutzers per
+  `set_power_up` einschalten, nie von sich aus. Jede Stufe hat ihren eigenen Schalter (`stage`:
+  `research`, der Standard, oder `qualification`; ab Werk überall aus, `list_power_ups` zeigt `stages`).
+  Der Quali-Schalter prüft in Server-Läufen nach jedem passenden Urteil die Adressen des Leads; im
+  Abo-Lauf erlaubt er `verify_email`, `find_person_email` nur der Recherche-Schalter. Im Bericht: Anzahl der Treffer und die gebuchten Credits
+  (`credits` in den `run_power_up`-Antworten).
 
 ## Ablauf
 
@@ -49,11 +59,16 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
    `aufhänger=`-Angaben der `bau`-Zeilen mit `mail=gespeichert` auszählen: Zeigt mehr als ein Drittel
    dasselbe Anker-Thema (z. B. lauter Angstpatienten), im Bericht als systematischen Befund melden und
    vorschlagen, Sperrliste und `intro`-Prompt über `outreach-campaign` nachzuschärfen (bei
-   `nur_pruefen` fehlt die Angabe, dann entfällt die Zählung). Danach alle angemeldeten
+   `nur_pruefen` fehlt die Angabe, dann entfällt die Zählung). Zeilen mit `grund=keine-adresse`
+   (ab MCP 4.0.0: Lead ohne E-Mail importiert, Recherche fand keine eigene Adresse, keine Mail)
+   zählen als „ohne Adresse“ und sind kein Fehler. Danach alle angemeldeten
    Phasen mit `outreach_progress(action="end", campaign_id, phase=…)` schließen, auch wenn alles gezählt
    scheint: Leads ohne Schreibaufruf (Recherche vorhanden, aussortiert, Fehler) hält das Band sonst offen.
 4. **Rennschutz:** Meldet ein Agent `lead_run_active`, läuft parallel ein Server-Lauf über dieselben Leads.
    Abwarten (`get_lead_run_status`), dann diese Leads erneut starten.
+5. **Ohne Adresse:** `no_contact_email` (Lead ohne Versandadresse) beendet einen Lead ohne Fehler; nicht
+   erneut starten. Dasselbe gilt für `undeliverable_address` (Postfach der Versandadresse existiert laut
+   Prüfung nicht, MCP ab 4.4.0); im Bericht als „Adresse unzustellbar“ zählen.
 
 ## Workflow-Skript (Claude Code)
 

@@ -19,7 +19,10 @@ ihm mit `art` und `grund`, was zu tun ist.
 - Modus laut Auftrag:
   - „Modus: nur Urteil“ (Standard, wenn nichts genannt ist): nichts schreiben, nur die Antwortzeile.
   - „Modus: entscheiden“: bei `freigeben` `approve_lead_variables`, bei `ablehnen`
-    `reject_lead_variables(reason=…)`; bei `hinweis` nichts schreiben.
+    `reject_lead_variables(reason=…)`; bei `hinweis` nichts schreiben. Lehnt `approve_lead_variables`
+    mit `no_contact_email` (keine Versandadresse), `foreign_sending_address` oder `undeliverable_address`
+    (Postfach existiert laut Prüfung nicht) ab: nicht wiederholen, `FEHLER lead=<id>: keine Versandadresse`
+    bzw. `…: fremde Versandadresse` bzw. `…: unzustellbare Versandadresse` melden.
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei. Prüfe danach, dass `lead.id`
   und `campaign.id` genau deinem Auftrag entsprechen; parallel laufende Agents können eine abgelegte
   Antwort überschreiben. Stimmt die ID nicht, erneut abrufen; stimmt sie dann immer noch nicht,
@@ -29,7 +32,9 @@ ihm mit `art` und `grund`, was zu tun ist.
 
 1. `get_lead_variables(campaign_id, lead_id)`: Variablen, Recherche, Qualifizierung. Die Versandadresse ist
    `lead.sendingEmail` (kann eine persönliche Adresse aus der Recherche sein); `lead.email` ist nur die
-   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`. Am Wert einer KI-Variable mit Winkel steht
+   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`. Fehlen beide (Lead ohne Adresse, ab MCP
+   4.0.0 möglich): nie `freigeben`, sondern `URTEIL … ergebnis=hinweis art=recht grund=keine Versandadresse`.
+   Am Wert einer KI-Variable mit Winkel steht
    `angleWritten` (`chance` oder `lob`); bei Variablen ohne Winkel fehlt es. Eine Zeile mit `fallback: true` (ohne eigene
    Zeile zusätzlich `notStored: true`) ist eine weitere Intro-Variante im Rückfall: Sie zeigt den
    aktuellen Text von Variante A (erste Intro-Variable, meist `intro`) und wird mit ihr geprüft. Kein
@@ -152,7 +157,9 @@ ihm mit `art` und `grund`, was zu tun ist.
   einem Dritten zugeordnet, untersagt das Impressum Werbung oder gibt es einen Kontaktsperre-Hinweis:
   Urteil `hinweis` mit `art=recht`, nie `freigeben`. Gehört die Versandadresse keiner belegten Person
   und empfiehlt die Recherche eine andere Adresse desselben Betriebs: `art=adresse`. `bestEmail`
-  immer gegen die Adress-Hinweise der Recherche halten.
+  immer gegen die Adress-Hinweise der Recherche halten. Steht die Versandadresse in
+  `get_lead_data.lead.emailVerdicts` mit Urteil `invalid`, ist sie nicht zustellbar: gibt es eine andere
+  Adresse desselben Betriebs mit Urteil `valid`, `art=adresse`, sonst `hinweis` mit `art=recht`.
 - **Kein Kleinkram:** Ob `routing` Fall B oder C gewählt wurde oder eine belegte Alternative weniger
   genannt ist, ist kein Grund für `hinweis`, solange der Text zum gewählten Fall passt und niemand
   Falsches genannt wird.

@@ -9,7 +9,7 @@ description: 'Use when user says "outreach:campaign", "mcp:campaign", "erstelle 
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
 
-Dieser Skill erstellt vollständige Kampagnen über `create_campaign`, füllt eine leere Kampagne, die die App für den Nutzer angelegt hat (Start-Satz, siehe „Genannte leere Kampagne füllen“), und ändert vorhandene über den Dreischritt `export_campaign_blueprint` → Blueprint anpassen → `edit_campaign` (Scope `campaigns:write`, Lesen: `campaigns:read`). Ändert sich nur der Prompt einer KI-Variable, reicht `update_ai_variable` (ab ListM8-MCP 2.4.0). Grundlage ist das CampaignBlueprint-Schema v1; die vollständige Referenz liefert der MCP-Prompt `campaign_blueprint_guide`.
+Dieser Skill erstellt vollständige Kampagnen über `create_campaign`, füllt eine leere Kampagne, die die App für den Nutzer angelegt hat (Start-Satz, siehe „Genannte leere Kampagne füllen“), und ändert vorhandene über den Dreischritt `export_campaign_blueprint` → Blueprint anpassen → `edit_campaign` (Scope `campaigns:write`, Lesen: `campaigns:read`). Ändert sich nur der Prompt einer KI-Variable, reicht `update_ai_variable` (ab ListM8-MCP 2.4.0). Grundlage ist das CampaignBlueprint-Schema v1; die vollständige Referenz liefert der MCP-Prompt `campaign_blueprint_guide`. Power-ups gehören nicht in den Blueprint (ein Feld dafür wird ignoriert): Sie werden nach dem Anlegen mit `set_power_up(campaign_id, power_up, enabled)` geschaltet (ab ListM8-MCP 4.6.0), und nur mit Zustimmung des Nutzers, weil Treffer Credits kosten.
 
 ## Aufruf
 
