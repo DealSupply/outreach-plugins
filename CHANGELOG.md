@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-01 – outreach 0.6.0
+
+Passt zu ListM8 MCP 4.8.0 (Close-Spiegel). Ältere Server kennen `get_close_status` und `set_close_sync` nicht.
+
+**outreach** (Close)
+- `outreach` → neuer Abschnitt „Close erklären“: Fragen zum Stand in Close beantwortet `get_close_status` (Verbindung, Leads je Status im Workspace, zuletzt fehlgeschlagene, optional der Schalter einer Kampagne); `set_close_sync` schaltet eine Kampagne an oder aus (`enabled`, optional `transfer_backlog=false`), nur auf Wunsch des Nutzers. Verbinden, Einrichten, Einstiegsstufe und Lead-Status je Stufe gibt es nur in der App, für alle Kampagnen. Leads mit `do_not_contact` kommen nie neu nach Close.
+- `outreach-launch` → Zeile „ins CRM Close spiegeln“ in „Wer macht was“.
+- `outreach-setup` → Close-Werkzeuge ab MCP 4.8.0.
+
 ## 2026-11-05 – outreach 0.6.0
 
 Passt zu ListM8 MCP 4.10.0 (Sammelstand des Redesigns, DS-103). Die Verbindung zieht von `outreach.akquise.de` nach `app.dealsupply.ai`.

@@ -50,7 +50,8 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
   OpenRouter-Konto ab. Englische Kampagnen (Kampagnensprache `campaign.language`) gibt es ab
   MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch. Intro-Varianten mit Tags
   (`<name>__anker`, `<name>__schluss`) kennt der Server ab MCP 4.10.0; ältere Server nennen sie nicht
-  in `expectedOutput`, dann werden sie auch nicht mitgeschickt.
+  in `expectedOutput`, dann werden sie auch nicht mitgeschickt. Die Close-Werkzeuge
+  (`get_close_status`, `set_close_sync`) gibt es ab MCP 4.8.0.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App
