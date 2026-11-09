@@ -239,9 +239,12 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
   Zurückgesetzt werden nur kontaktierte Leads ohne Reaktion (keine Antwort, kein Interesse, keine
   Abmeldung, kein Bounce) und mit beendeter Instantly-Sequenz. Ein zurückgesetzter Lead bekommt
   beim nächsten `start_lead_run` neue Recherche und neue E-Mail, braucht eine neue Freigabe und
-  lässt sich danach nur in eine andere Instantly-Kampagne übertragen. Alle anderen bleiben
+  lässt sich danach nur in eine andere Instantly-Kampagne übertragen. Ab MCP 4.13.0 gehen auch
+  exportierte, nie angeschriebene Leads zurück, wenn Instantly live bestätigt, dass sie nicht mehr im
+  verbundenen Workspace liegen (vorher dort löschen); ihre Recherche bleibt. Alle anderen bleiben
   unverändert und stehen je Grund in `reset_blocked`: `replied`, `opportunity`, `do_not_contact`,
-  `exported` (hochgeladen, noch nicht angeschrieben), `reaction`, `sequence_active` (Sequenz läuft
+  `exported` (liegt noch in Instantly), `exported_unverified` (Instantly konnte es nicht bestätigen,
+  etwa weil ein anderer Workspace verbunden ist), `reaction`, `sequence_active` (Sequenz läuft
   noch), `not_synced` (noch nicht mit Instantly abgeglichen).
 
 ## Aufräumen

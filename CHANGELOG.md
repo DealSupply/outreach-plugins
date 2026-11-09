@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-09 – outreach 0.6.1, datenbeschaffung 0.5.1
+
+Passt zu ListM8 mit MCP 4.13.0 (DS-190). Folgt auf outreach 0.6.0 und datenbeschaffung 0.5.0 (#21, #22). Ältere Server lehnen das Zurücksetzen exportierter Leads weiter mit `reset_blocked.exported` ab.
+
+**outreach**
+- `outreach-launch` → Aufräumen: Hochgeladene, noch nicht angeschriebene Leads lassen sich nach dem Löschen in Instantly per `mark_leads_contacted(status="not_contacted", confirm_reset=true)` zurücksetzen; der Server prüft live bei Instantly. Bedeutung von `exported` und `exported_unverified` in `reset_blocked`.
+
+**datenbeschaffung**
+- `listm8-mcp.md` → `mark_leads_contacted`: Zurücksetzen exportierter Leads nach Live-Prüfung, neuer Grund `exported_unverified`.
+
 ## 2026-11-01 – outreach 0.5.1
 
 Passt zu ListM8 v4.18 mit dem Weg „Mit deiner KI“ (LISTM8-86, MCP 4.7.0, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.
