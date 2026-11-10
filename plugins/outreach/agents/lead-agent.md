@@ -42,9 +42,7 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 `campaign.id` in der Antwort genau deinem Auftrag entsprechen. Laufen mehrere Agents parallel, kann
 eine als Datei abgelegte Antwort von einem anderen Agenten überschrieben sein. Stimmt die ID nicht,
 `get_lead_data` erneut aufrufen; stimmt sie dann immer noch nicht, nichts schreiben und
-`FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. `offer_instruction_outdated` (ab MCP 4.15.0) kommt schon von `get_lead_data`, sobald der Mail-Teil gebaut wird (auch ohne `stage`): Die Kampagne trägt eine eigene Anweisung von „Angebot je Lead“ in der alten Nummerierung (Haupt-Angebot zuletzt). Das gilt für die ganze Kampagne. Dann nichts schreiben und
-`FEHLER lead=<id> stufe=daten: anweisung-veraltet` melden; der Lauf stoppt die Kampagne und sagt es dem
-Nutzer. Darin stehen `qualificationGeneration`
+`FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden.Darin stehen `qualificationGeneration`
 (Kriterien), `researchGeneration` (Recherche-Vorgaben), `emailGeneration` (System-Prompt, Ansprache,
 Variablen mit ihrem Winkel) sowie die vorhandene Qualifizierung und Recherche. `lead.contactEmailState` (ab MCP 4.0.0)
 sagt, ob der Lead eine Adresse hat (`present`), noch eine sucht (`searching`) oder ohne Fund
@@ -277,9 +275,7 @@ gelten immer.
   als `"angebot": <Nr.>`, unter `angebot_ausfuehrung` nur Absatz 2 (ein Satz, höchstens 25 Wörter, Regel
   der Karte aus der Anweisung, Bedingung nie im Text), `offer_text` und `offer_cta` leer schicken: Absatz 1
   und 3 setzt der Server. Lehnt das Tool mit `validation_failed` ab, weil `angebot` fehlt oder kein
-  Angebot nennt, die Nummer nach den gültigen Nummern der Meldung korrigieren und erneut speichern. Bei
-  `offer_instruction_outdated` (eigene Anweisung in der alten Nummerierung) nichts speichern, sondern
-  `mail=übersprungen grund=anweisung-veraltet` melden. Haupt-Angebot ist das Angebot, das die
+  Angebot nennt, die Nummer nach den gültigen Nummern der Meldung korrigieren und erneut speichern. Haupt-Angebot ist das Angebot, das die
   Anweisung als „(Haupt-Angebot)“ führt (ab MCP 4.15.0 die 1).
 - Person 2 (ab MCP 4.11.0, nur wenn `emailGeneration.secondPerson.available` true ist): Sie gehört in
   denselben Aufruf als `second_person="<JSON-String nach secondPerson.expectedOutput>"` mit `fit`, `reason`,
@@ -335,7 +331,7 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
 ## Antwort
 
 Am Ende NUR eine Zeile:
-`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar|kein-schwerpunkt|anweisung-veraltet>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
+`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar|kein-schwerpunkt>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
 (`grund` nur bei `mail=übersprungen` wegen fehlender, fremder oder unzustellbarer Versandadresse oder ohne passenden Schwerpunkt; bei Chance-Variablen angehängt: ` winkel=<name>:<chance|lob>`)
 bzw. nach „Nachbessern“
 `NACHGEBESSERT lead=<id> art=<…> geändert=<z. B. intro, hallo, adresse, recherche> neu=<kurz: neuer Anker bzw. Adresse>`

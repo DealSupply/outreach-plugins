@@ -523,11 +523,8 @@ Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
   das Haupt-Angebot (Nummer 1). Sie meldet die Nummer unter `angebot`, schreibt
   `angebot_ausfuehrung` (nur Absatz 2) und schickt `offer_text` und `offer_cta` leer. Ab MCP 4.15.0
   lehnt `save_lead_variables` eine fehlende oder unbekannte Nummer mit `validation_failed` ab und
-  nennt die gültigen Nummern: Nummer korrigieren und erneut speichern. `offer_instruction_outdated`
-  (schon von `get_lead_data`) heißt, die Kampagne trägt eine eigene Anweisung in der alten
-  Nummerierung: für die ganze Kampagne stoppen und dem Nutzer melden (bestätigen oder ersetzen in
-  der App, oder per `update_ai_variable` in der heutigen Nummerierung). Person 2 übernimmt Absatz 1 und 3 von
-  Person 1.
+  nennt die gültigen Nummern: Nummer korrigieren und erneut speichern. Person 2 übernimmt Absatz 1
+  und 3 von Person 1.
 - **Prüfen** (`outreach-verify`, `verify-agent`): `offer_text` und `offer_cta` sind Serverwerte,
   kein Befund zum Wortlaut. `angebot_ausfuehrung` wird nach den Regeln der Anweisung geprüft (Regel
   der Form, ein Satz mit höchstens 25 Wörtern, nichts über die Lieferzusage hinaus, nichts, was das

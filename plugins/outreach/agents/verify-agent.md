@@ -54,8 +54,7 @@ ihm mit `art` und `grund`, was zu tun ist.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
    Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
-   `get_lead_data(campaign_id, lead_id, stage="email")` lesen (antwortet es `offer_instruction_outdated`, ab
-   MCP 4.15.0: `FEHLER lead=<id>: anweisung-veraltet` melden und nichts schreiben): `emailGeneration.systemPrompt` und
+   `get_lead_data(campaign_id, lead_id, stage="email")` lesen: `emailGeneration.systemPrompt` und
    `salutationRule` sind dann die Prüfgrundlage. Alle Variablen müssen englisch sein (sonst `ablehnen`,
    `art=text`), `hallo` ist `Hi {first name},` bzw. `Hi there,`; die deutschen Prüfpunkte unten (du/Sie,
    ihr/euch, „Hallo …“, Umlaute, „…“, deutsche Einstiege und Reaktionsformen, Komma im Sternschnitt)
