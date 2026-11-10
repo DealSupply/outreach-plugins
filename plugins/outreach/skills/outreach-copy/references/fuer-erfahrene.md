@@ -6,7 +6,8 @@
 > das Plugin auf ausdrücklichen Wunsch zusätzlich anlegt, mit denselben Feldern, Vorlagen und
 > Namen wie die App.
 
-Die Texte in „…“, die der Kunde zu sehen bekommt, sind die Texte der App. Wortgetreu übernehmen,
+Die Texte in „…“, die der Kunde zu sehen bekommt, sind die Texte der App bzw. die beim Bau
+abgenommenen Ergänzungen (Kundentexte Weg A, „Ergänzt beim Bau“, W18, W20). Wortgetreu übernehmen,
 nicht umformulieren. Englische Kampagnen nehmen die englische Spalte.
 
 ## Die eine Frage beim Anlegen
@@ -174,7 +175,7 @@ Audit; bei C nur, was wirklich bis morgen lieferbar ist; die Bedingung beschreib
 Angebot passt, nie einen Mangel, den die Mail ausspricht. Sache und Wort ohne eckige Klammern und
 ohne `{{`, keine Gedankenstriche.
 
-### Die Anweisung (Vorlage, abgenommen am 10.11.2026)
+### Die Anweisung (Vorlage, abgenommen am 10.11.2026, Ergänzungen beim Bau abgenommen)
 
 Bevor angelegt wird, zeigt das Plugin dem Kunden die fertige Anweisung unter der Überschrift „So
 schreibt die KI den Angebotsteil“ („How the AI writes the offer part“), zusammen mit den Angeboten.
