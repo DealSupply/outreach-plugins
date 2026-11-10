@@ -113,7 +113,9 @@ Beschwerden und Bounces → Open Rate → Reply Rate → Termine. Einzelne Tage 
 | viele negative Antworten | **Liste**: Zielgruppe falsch, ICP schärfen | `datenbeschaffung` (ICP), Qualifizierung in `outreach-campaign` |
 | Antworten, aber keine Termine | nachtelefonieren, nicht die Mail ändern | `references/launch-und-optimierung.md` |
 
-Getestet wird immer nur eine Variable, mindestens 100 (besser 200) Mails je Variante und 7 Tage, in
+Tests sind eine Option für Erfahrene (standardmäßig aus): Varianten von Mail 1 gehören nur in den
+Launch-Check, wenn der Nutzer beim Anlegen Tests gewählt hat. Getestet wird immer nur eine Variable,
+mindestens 100 (besser 200) Mails je Variante und 7 Tage, in
 der Reihenfolge Offer → Betreff → Opener-Angle → CTA → FUP-Timing. Einen einzelnen Variablen-Prompt
 (etwa `intro`) ändert `update_ai_variable`; Änderungen an der Sequenz laufen über
 `export_campaign_blueprint` → `edit_campaign` (Vollersatz der Schritte). Erzeugte Werte bleiben

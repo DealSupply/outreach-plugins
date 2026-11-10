@@ -268,6 +268,14 @@ gelten immer.
   kurzem Halbsatz, ohne neues Versprechen und ohne Bitte um ein Gespräch. `proof`- und `noun`-Blöcke nie
   schreiben. Lehnt das Tool mit `no_offer_focus` ab (kein Schwerpunkt passt), keinen Schwerpunkt von Hand
   setzen, sondern `mail=übersprungen grund=kein-schwerpunkt` melden.
+- „Angebot je Lead“ (ab MCP 4.14.0, nur wenn `expectedOutput` den Schlüssel `angebot` nennt): Der Prompt
+  von `angebot_ausfuehrung` ist die Anweisung mit den Angeboten. Die Bedingungen unter WAHL DES ANGEBOTS
+  am Abschnitt `WEBSITE-BEFUND` der Recherche prüfen („unklar“ oder nicht erwähnt ist nicht belegt), das
+  oberste passende Angebot wählen, sonst das Haupt-Angebot (letzte Nummer). Melden als `"angebot": <Nr.>`,
+  unter `angebot_ausfuehrung` nur Absatz 2 (ein Satz, höchstens 25 Wörter, Regel der Karte aus der
+  Anweisung, Bedingung nie im Text), `offer_text` und `offer_cta` leer schicken: Absatz 1 und 3 setzt der
+  Server. Nennt die Antwort `offer_per_lead`, galt das Haupt-Angebot; passt Absatz 2 nicht dazu, neu
+  speichern.
 - Person 2 (ab MCP 4.11.0, nur wenn `emailGeneration.secondPerson.available` true ist): Sie gehört in
   denselben Aufruf als `second_person="<JSON-String nach secondPerson.expectedOutput>"` mit `fit`, `reason`,
   ihren Texten und Intro-Tags, nach dem Block ZWEITE PERSON im `systemPrompt`. Ihr Intro hat ein eigenes

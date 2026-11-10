@@ -15,7 +15,7 @@ Und beide werden regelmäßig übersprungen. Deshalb hat die Hälfte der „Cold
 1. [ ] Neue Kampagne erstellen, oder aus ListM8 heraus anlegen und verknüpfen (Reiter „Instantly" der ListM8-Kampagne)
 2. [ ] Leads übernehmen: Push der freigegebenen Leads aus ListM8 (manuell oder per Auto-Push) oder CSV-Export aus ListM8 hochladen
 3. [ ] Sequenz einrichten (Entry Mail + 3 FUPs — die vier Steps aus der Kampagne; alle im Thread von Step 1, nur Step 1 mit Betreff): per Sequenz-Übertragung aus ListM8 oder von Hand
-4. [ ] 2 Entry-Mail-Varianten als A/B-Test anlegen (in Instantly; eine erneute Sequenz-Übertragung aus ListM8 ersetzt die Sequenz dort nach Bestätigung, angelegte Varianten also mit)
+4. [ ] Nur wenn Tests gewählt sind (für Erfahrene, standardmäßig aus): Die Varianten von Mail 1 kommen mit der Sequenz-Übertragung aus ListM8 mit (Betreff-Test als B, Intro-Test als nächste Variante). Ohne gewählte Tests entfällt der Punkt, eine einzige Fassung von Mail 1 ist richtig. Eine erneute Sequenz-Übertragung ersetzt die Sequenz in Instantly nach Bestätigung, von Hand angelegte Varianten also mit
 5. [ ] Alle 10 Sender-Accounts der Kampagne zuweisen
 6. [ ] Schedule: Mo-Fr, 09:00-17:00 mitteleuropäische Zeit (so legt ListM8 die Kampagne an, bleibt so)
 7. [ ] Daily limit der Kampagne: Postfächer mal 30 (300 bei 10 Inboxen); am Postfach Daily campaign limit 30 und Campaign slow ramp an
@@ -133,7 +133,8 @@ Ein Hinweis zur Open Rate: Sie wird über ein Pixel gemessen, und manche Mail-Pr
 
 ## A/B-Test Reihenfolge
 
-Was zuerst testen, was zuletzt:
+Tests sind eine Option für Erfahrene, kein Pflichtpunkt beim Launch. Wer testen will, testet in
+dieser Reihenfolge:
 
 1. **Offer** (größter Hebel) - komplett anderes Angebot testen
 2. **Betreffzeile** - 2-3 Varianten parallel

@@ -43,6 +43,10 @@ ihm mit `art` und `grund`, was zu tun ist.
    dort die Vorlage des Schwerpunkts (`offerFocus` nennt ihn), ein Serverwert: kein Befund zu Wortlaut oder
    Länge, nur prüfen, ob der Schwerpunkt zum Lead passt. Mit `adapted` hat das Modell den Block angepasst
    (`deviationReason`); dann wie jeden Text prüfen. `proof`- und `noun`-Blöcke sind immer Serverwerte.
+   Ab MCP 4.14.0, „Angebot je Lead“ (Mail 1 mit `offer_text`, `angebot_ausfuehrung` und `offer_cta`,
+   alle ohne `offerRole`): `offer_text` und `offer_cta` sind Absatz 1 und 3 des Angebots, das die KI
+   gewählt hat, vom Server eingesetzt: kein Befund zu Wortlaut oder Länge. Welches Angebot gewählt
+   ist, zeigt `offer_text` im Vergleich mit den Angeboten im Prompt von `angebot_ausfuehrung`.
    `secondPerson` (oder `null`) trägt Person 2 mit `email`, `role`, `eligibility`, `reason` und ihren
    eigenen `variables`: ihre Texte nach denselben Regeln prüfen, dazu nie wortgleich mit einem Intro von
    Person 1 und dieselbe Anredeform. Eine Freigabe gilt für beide Personen; ist nur Person 2 fehlerhaft,
@@ -160,7 +164,28 @@ ihm mit `art` und `grund`, was zu tun ist.
   oben geprüft. In allen anderen Variablen, auch im normalen `intro`, ist jede Beobachtung zur Website wie
   bisher ein Verstoß gegen „nur positiv“. Nenne in `grund` für jede Chance-Variable den geschriebenen Winkel
   (`winkel=intro_chance:chance` oder `winkel=intro_chance:lob`).
-- **Technik:** Jede Variable hat Status `success` und ist nicht leer.
+- **Zweiter Satz und Tests:** Ein fester zweiter Satz in Mail 1 statt einer Variable ist richtig
+  (Standard neuer Kampagnen), keine Variable `angebot_ausfuehrung` ist kein Befund. Varianten von
+  Mail 1 sind für Erfahrene und standardmäßig aus: eine fehlende Variante oder ein fehlender Wert
+  für `betreff_b` oder ein zweites Intro ist nur ein Befund, wenn die Kampagne diese Tests trägt.
+- **Angebot je Lead** (nur wenn die Kampagne es trägt, siehe Ablauf 1): `angebot_ausfuehrung` ist
+  Absatz 2 und folgt der Anweisung in ihrem Prompt: genau ein Satz, höchstens 25 Wörter, nach der
+  Regel der Karte (Karte C beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten
+  dran, vor allem“ und nennt genau ein Detail des schon Erstellten, ohne „morgen“ und ohne „fertig
+  werden“; Karte A im Konjunktiv, was für diesen Lead drin wäre, nie als erledigte Arbeit), nichts
+  über die Lieferzusage hinaus, keine Zahl, die sie nicht nennt, keine Frist, kein Gespräch oder
+  Termin, keine zweite Leistung, keine Frage, kein Lob, keine Wiederholung von Absatz 1, keine
+  Gedankenstriche, die Bedingung steht nicht im Text und nichts klingt nach einem Mangel des Leads,
+  der Satz gehört zum Angebot in `offer_text`, Anrede wie im Rest. Verstoß: `ablehnen`, `art=text`.
+  Wahl des Angebots: Ein weiteres Angebot passt nur, wenn seine Bedingung im Abschnitt
+  `WEBSITE-BEFUND` der Recherche belegt ist („unklar“ oder nicht erwähnt ist nicht belegt), sonst
+  gilt das Haupt-Angebot; passen mehrere, das oberste. Eine andere Wahl bricht die Anweisung: ein
+  weiteres Angebot ohne Beleg, das Haupt-Angebot, obwohl eine Bedingung belegt ist, oder ein
+  tieferes Angebot, obwohl ein oberes passt (`ablehnen`, `art=text`, das richtige Angebot im
+  Grund). Ist der Befund der Website nur offen, aber nachlesbar, stattdessen `art=recherche`. Nenne
+  in `grund` die Nummer des gewählten Angebots (`angebot=<Nr.>`).
+- **Technik:** Jede Variable hat Status `success` und ist nicht leer (`offer_text` und `offer_cta`
+  bei „Angebot je Lead“ setzt der Server; sind sie leer, `hinweis` mit `art=text`).
 - **Versand:** Ist die Versandadresse oder die gespeicherte `bestEmail` laut Recherche ungültig oder
   einem Dritten zugeordnet, untersagt das Impressum Werbung oder gibt es einen Kontaktsperre-Hinweis:
   Urteil `hinweis` mit `art=recht`, nie `freigeben`. Gehört die Versandadresse keiner belegten Person
