@@ -109,7 +109,8 @@ und der Schlussfrage.
 - Nur Karte A und C (W1). Bei B, D und E gibt es die Option nicht.
 - Beim Anlegen einer neuen Kampagne (`create_campaign`) oder beim Füllen einer genannten leeren
   Kampagne. Eine bestehende Kampagne nur auf ausdrücklichen Wunsch und nur, solange noch kein Lead
-  Mails hat (`list_leads` mit `campaign_status="pending_review"` und `"approved"` leer): dann per
+  Mails hat (`list_leads` mit `campaign_status` `"pending_review"`, `"approved"` und `"rejected"` leer;
+  auch ein abgelehnter Lead hat Werte): dann per
   `edit_campaign` (Vollersatz aus dem Export) genauso gebaut wie beim Anlegen. Haben Leads schon
   Mails, ginge das über den Blueprint nicht: Diese Leads zeigten „[NOT GENERATED]“. Dann geht es nur
   in der App (Angebots-Blatt, Schalter „Angebot je Lead“, dort trägt ListM8 die bisherigen Absätze

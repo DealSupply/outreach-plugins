@@ -9,7 +9,7 @@ Die Antwort steckt unter `blueprint`.
 
 | Feld | Bedeutung für die Demo |
 |---|---|
-| `blueprint.campaign.intelligence.offer_contract.title.value` | **Das Offer.** Genau das wird geliefert. |
+| `blueprint.campaign.intelligence.offer_contract.title.value` | **Das Offer.** Genau das wird geliefert, außer bei „Angebot je Lead“ (dann `offer_text` des Leads, siehe nächste Zeile). |
 | `blueprint.sequence.steps[0].body` | Mail 1 mit dem **Feinheiten-Satz**: Nennt er ein Detail („vor allem …“), wurde dieses On-Top-Detail versprochen und muss in der Demo sichtbar sein; der feste Satz „Ich bin gerade noch an den letzten Feinheiten dran.“ nennt keins. Steht dort `{{ai.angebot_ausfuehrung}}`, schreibt die KI den Satz je Lead: dann aus `get_lead_variables(campaign_id, lead_id)` lesen. Steht dort `{{ai.offer_text}}` („Angebot je Lead“), ist das versprochene Angebot der Wert von `offer_text` dieses Leads, nicht `offer_contract` |
 | `blueprint.campaign.intelligence.campaign_brief.business.value` | Was der Nutzer verkauft; die Demo führt dorthin |
 | `blueprint.campaign.intelligence.campaign_brief.usp.value` | Belege und Stärken des Nutzers (nie erfinden) |
