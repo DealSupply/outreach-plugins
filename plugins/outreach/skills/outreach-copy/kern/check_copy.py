@@ -57,6 +57,13 @@ OPT_OUT = r"\b(stopp?|abmeld\w*|abbestell\w*|austragen|unsubscribe|opt-?out)\b"
 # die frühere Fassung „…, dann melde ich mich nicht mehr.“ trägt dasselbe Merkmal.
 OPT_OUT_LINES = ("kein thema für", "a priority right now")
 SIGN_OFF_GAP = 2  # Leerzeilen zwischen letztem Satz und Grußformel
+# Neutraler Schluss von Step 3, wenn jeder Lead sein eigenes Angebot bekommt (ein Angebot je Lead):
+# Dann passt keine Schlussfrage zu jedem Angebot.
+NEUTRAL_STEP3 = (
+    "falls das thema für dich relevant ist, melde dich gerne",
+    "falls das thema für sie relevant ist, melden sie sich gerne",
+    "if this is relevant for you, feel free to get in touch",
+)
 KURZNAME = re.compile(r"^kurzname\s*:\s*(.+)$", re.IGNORECASE)
 ANNOUNCE = r"\b(website|webseite|entwurf|idee|ideen|konzept|angebot|setup|anzeigen)\b.*\bfür\b|ist fertig"
 
@@ -200,8 +207,8 @@ def check(mail):
         if lines and re.match(r"^[^.?!:]{1,30}:", lines[0]) and len(lines[0].split(":")[0].split()) <= 3:
             hard.append(f"Doppelpunkt-Opener: „{lines[0].split(':')[0]}:“")
     if kind == "neuer winkel":
-        if "?" not in body:
-            hard.append("Step 3 ohne Schlussfrage: dieselbe Frage wie in Step 1 (mit dem Wort für die Sache, wo die Karte eins hat)")
+        if "?" not in body and not any(closing in low for closing in NEUTRAL_STEP3):
+            hard.append("Step 3 ohne Schlussfrage: dieselbe Frage wie in Step 1 (mit dem Wort für die Sache, wo die Karte eins hat), mit einem Angebot je Lead der neutrale Schluss")
         if len(mail["body"]) > 1 and re.match(r"^(Ein|Eine|Einen|Einem|Einer|Der|Die|Das|Den|Dem|Zwei|Drei|Vier|Fünf|Unser|Unsere|Mein|Meine|Viele)\b", mail["body"][1]):
             soft.append("Step 3 nach der Anrede groß weiter: klein weiterschreiben wie in Step 1")
     if mail["body"] and not re.match(r"^(hallo|guten tag|servus|moin|grüß)", mail["body"][0], re.IGNORECASE):

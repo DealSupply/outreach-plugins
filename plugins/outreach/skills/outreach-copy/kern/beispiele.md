@@ -15,7 +15,6 @@ Das Format ist zugleich das Ausgabeformat des Skills: Jede Mail steht unter eine
 **Absender:** Jonas Weber, Weber Webdesign, Ein-Mann-Studio für Websites ästhetischer Praxen.
 **Zielgruppe:** inhabergeführte Zahnarzt- und Ästhetikpraxen im DACH-Raum.
 **Offer (Karte C):** fertiger Entwurf einer neuen Startseite inklusive Online-Terminbuchung.
-**On-Top-Detail:** Behandlungsseiten gleich für Google und KI-Suchmaschinen mitgedacht.
 **Beleg für Step 3:** Praxis in Stuttgart, Online-Terminanfragen nach dem Relaunch in vier Monaten
 verdreifacht.
 **Sperrliste:** Angstpatienten, Lachgas, Sedierung, Kinderbehandlung, Notdienst, Prophylaxe,
@@ -23,7 +22,7 @@ digitaler Scan, Implantate allgemein.
 **Fallback-Satz:** „als ästhetische Praxis in deiner Stadt bist du genau die Art Praxis, für die
 ich Websites baue.“
 
-## Step 1: Entry Mail, Variante A
+## Step 1: Entry Mail
 
 Betreff: kurze Frage
 
@@ -33,7 +32,7 @@ Hallo {{Vorname}},
 
 Deswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebauter Online-Terminbuchung.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.
+Ich bin gerade noch an den letzten Feinheiten dran.
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
@@ -44,29 +43,8 @@ Inhaber - Weber Webdesign
 
 Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
-## Step 1: Entry Mail, Variante B
-
-Betreff: kurze Frage
-
-Hallo {{Vorname}},
-
-{{Intro}}
-
-Deswegen war ich so frei und habe dir einen Entwurf für deine neue Startseite gebaut, auf der Patienten ihren Termin direkt online buchen können.
-
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken.
-
-Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
-
-
-Viele Grüße
-Jonas Weber
-Inhaber - Weber Webdesign
-
-Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
-
-Variante B ändert nur einen Hebel: die Offer-Formulierung aus Sicht der Patienten statt als
-Funktionsliste.
+Der zweite Satz ist der feste Satz der Karte C, für alle Leads gleich. Varianten von Mail 1 gibt es
+nur, wenn der Absender einen Test will (Teil C).
 
 ## Step 2: Erinnerung
 
@@ -139,7 +117,7 @@ mir ist aufgefallen, dass jedes Objekt bei dir ein festes Reinigungsteam hat, da
 
 Genau deshalb bieten wir aktuell für zwei Unternehmen in der Region München ein kostenloses Google Ads Setup an.
 
-Darin wären die Suchbegriffe für deine Unterhaltsreinigung, fertige Anzeigentexte und die Ausrichtung auf dein Einzugsgebiet rund um München.
+Darin wäre alles genau auf euch zugeschnitten.
 
 Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.
 
@@ -150,8 +128,8 @@ Co-Founder - Kern Media
 
 Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
-Der Satz nach dem Angebot („Darin wären …“) wird bei Karte A je Lead geschrieben, aus Recherche und
-Website des Leads, im Konjunktiv und nie als erledigte Arbeit.
+Der Satz nach dem Angebot ist der feste Satz der Karte A, im Konjunktiv und nie als erledigte
+Arbeit; „euch“ meint den Betrieb.
 
 ## Step 1: Entry Mail, Karte B
 
@@ -163,7 +141,7 @@ mir ist aufgefallen, dass du auf deiner Website jeden Kunden mit einer eigenen k
 
 Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für persönliche Erstmails mit drei Agenturen in Köln.
 
-Im Pilot schreibe ich dir die erste Mail an eine Kölner Kanzlei als Wunschkunde, du sagst mir dafür ehrlich, was du davon hältst.
+Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.
 
 Wärst du grundsätzlich offen dafür?
 
@@ -174,10 +152,8 @@ Gründer - Lehmann Outreach
 
 Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
-Der Rahmensatz („Im Pilot schreibe ich dir …“) wird bei Karte B je Lead geschrieben: Er macht
-den Pilot an diesem Lead fest (was er konkret bekäme, bezogen auf seine Leistung, Zielkunden oder
-Region, und was er dafür gibt), höchstens 25 Wörter, nur aus der Lieferzusage, nicht bei jedem
-Lead derselbe Satz.
+Der Satz nach dem Angebot ist der feste Satz der Karte B: was der Lead im Pilot bekommt und was er
+dafür gibt.
 
 ## Step 1: Entry Mail, Karte C
 
@@ -189,7 +165,7 @@ ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lie
 
 Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln für deinen Shop aufgenommen.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an den Beispielen aus deinem Sortiment.
+Ich bin gerade noch an den letzten Feinheiten dran.
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
@@ -218,3 +194,80 @@ Felix Hartmann
 Geschäftsführer - Hartmann Architekten
 
 Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
+
+---
+
+# Teil C: Für Erfahrene
+
+Beides nur, wenn der Absender es ausdrücklich will. Standard sind Teil A und B.
+
+## Step 1: Entry Mail mit Betreff-Test
+
+Betreff: kurze Frage
+Betreff B: Frage zu {{Firma}}
+
+Hallo {{Vorname}},
+
+{{Intro}}
+
+Deswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebauter Online-Terminbuchung.
+
+Ich bin gerade noch an den letzten Feinheiten dran.
+
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
+
+
+Viele Grüße
+Jonas Weber
+Inhaber - Weber Webdesign
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
+
+Variante B ist wörtlich Variante A, nur der Betreff fragt nach der Firma. Ein Intro-Test wäre die
+nächste Variante mit dem zweitbesten Intro; ein Hebel je Variante, gleiche Follow-ups.
+
+## Step 1: Entry Mail mit einem Angebot je Lead
+
+Betreff: kurze Frage
+
+Hallo Lena,
+
+ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.
+
+Deswegen war ich so frei und habe dir eine Seite für die Online-Terminbuchung erstellt.
+
+Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Reihenfolge deiner Veneers und Bleachings.
+
+Wäre es in Ordnung, wenn ich dir morgen die Buchungsseite zusende? Völlig unverbindlich natürlich.
+
+
+Viele Grüße
+Jonas Weber
+Inhaber - Weber Webdesign
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
+
+Aufgelöst für eine Praxis ohne Online-Buchung: Von drei Angeboten (Buchungsseite, wenn die Website
+keine Online-Buchung hat; Galerie, wenn sie keine Galerie hat; sonst das Haupt-Angebot, der
+Startseiten-Entwurf) passt hier das erste. Angebotssatz und Schlussfrage gehören zu diesem Angebot,
+der zweite Absatz folgt der Regel der Karte C und nennt ein Detail für diesen Lead.
+
+## Step 3: Neuer Winkel mit einem Angebot je Lead
+
+Betreff: (leer, läuft im Thread von Step 1)
+
+Hallo {{Vorname}},
+
+bei einer Zahnarztpraxis in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen.
+
+Falls das Thema für dich relevant ist, melde dich gerne.
+
+
+Viele Grüße
+Jonas Weber
+Inhaber - Weber Webdesign
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
+
+Mit einem Angebot je Lead endet Step 3 neutral statt mit der Schlussfrage aus Step 1: Jeder Lead
+kann ein anderes Angebot bekommen haben.

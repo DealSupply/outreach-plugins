@@ -22,7 +22,7 @@ In dieser Reihenfolge:
 2. Sonst aus dem Angebot des Nutzers abgeleitet (seine Leistungen und Kanäle aus dem Gespräch).
 3. Sonst einen Vorschlag nach Karte A machen und vom Nutzer bestätigen lassen.
 
-Ein Offer, das der Nutzer nicht liefern kann, wird nicht geschrieben. Auch das On-Top-Detail im Feinheiten-Satz (Karte C) und der Inhalt des zweiten Angebotssatzes bei Karte A und B kommen aus seinen Angaben. Was sich mit KI so liefern lässt, dass dem Nutzer nach der Antwort 5-10 Minuten eigene Arbeit bleiben, steht im Demo-Katalog des Plugins **fulfillment** (Einstieg `fulfillment`, Modus „Offer finden“); dort liegen auch die Bau-Skills für die Lieferung nach der Antwort.
+Ein Offer, das der Nutzer nicht liefern kann, wird nicht geschrieben. Auch was „Angebot je Lead“ je Angebot als „konkret drin“ nennt, kommt aus seinen Angaben. Was sich mit KI so liefern lässt, dass dem Nutzer nach der Antwort 5-10 Minuten eigene Arbeit bleiben, steht im Demo-Katalog des Plugins **fulfillment** (Einstieg `fulfillment`, Modus „Offer finden“); dort liegen auch die Bau-Skills für die Lieferung nach der Antwort.
 
 ## Die 5 bewährten Offer-Typen
 
@@ -88,7 +88,7 @@ Beispiele:
 - „Ich habe mir deinen Shop angeschaut und ein kurzes Video mit 3 Hebeln aufgenommen. Darf ich es dir zusenden?"
 - „Wir haben eine kurze Ersteinschätzung deiner Fördermöglichkeiten vorbereitet. Darf ich sie dir schicken?"
 
-**Wichtig:** In der Mail steht das Deliverable als bereits erledigte Arbeit („war so frei und habe … erstellt"), nie als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert. Dazu gehört der Feinheiten-Satz als eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […]." mit genau einem konkreten, lieferbaren Detail, und das „morgen" im Schlusssatz („Wäre es in Ordnung, wenn ich es dir morgen zusende?"). Beides macht die Fertigstellung nach der Antwort ehrlich, denn der eigentliche Aufwand (5-10 Min.) fällt erst an, wenn jemand antwortet.
+**Wichtig:** In der Mail steht das Deliverable als bereits erledigte Arbeit („war so frei und habe … erstellt"), nie als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert. Dazu gehört der Feinheiten-Satz als eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran." (mit „Angebot je Lead" je Lead mit genau einem konkreten, lieferbaren Detail: „…, vor allem […]."), und das „morgen" im Schlusssatz („Wäre es in Ordnung, wenn ich es dir morgen zusende?"). Beides macht die Fertigstellung nach der Antwort ehrlich, denn der eigentliche Aufwand (5-10 Min.) fällt erst an, wenn jemand antwortet.
 
 **Wann nutzen:** Wenn die Zielgruppe kleiner ist und man höhere Reply Rates braucht. NICHT bei Massenkampagnen (zu viel Aufwand pro Reply).
 
@@ -96,7 +96,7 @@ Beispiele:
 
 Die Überleitung ist statisch und für alle Leads gleich; sie folgt direkt auf den individuellen Bezug (`{{ai.intro}}`). Die Klammern füllst du beim Schreiben aus den Angaben des Nutzers, im fertigen Text steht keine Klammer mehr.
 
-Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absatz und passend zur Karte (Stand 05.11.2026): bei C der Feinheiten-Satz (Fortschritt), bei A ein Inhaltssatz und bei B ein Rahmensatz, alle drei je Lead von der KI über `{{ai.angebot_ausfuehrung}}` geschrieben, bei D und E keiner. Regeln und Prompt-Inhalt: `SKILL.md`, Abschnitt „Anatomie der Entry-Mail“.
+Nach dem Angebotssatz folgt ein zweiter Satz zum Angebot, als eigener Absatz und passend zur Karte (Stand 10.11.2026, wie die App): bei A, B und C der feste Satz der Karte, für alle Leads gleich, bei D und E keiner. Angebotssatz, zweiter Satz und CTA stehen je in einem eigenen Absatz. Für Erfahrene gibt es bei A und C „Angebot je Lead“: Die KI wählt je Lead eines von bis zu vier Angeboten und schreibt den zweiten Satz (`fuer-erfahrene.md`, Teil 2). Regeln: `SKILL.md`, Abschnitt „Anatomie der Entry-Mail“.
 
 ### Karte A: Kostenlose Teildienstleistung
 
@@ -108,7 +108,7 @@ Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absa
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an." |
-| **Zweiter Satz (Pflicht, eigener Absatz)** | Inhaltssatz je Lead, `{{ai.angebot_ausfuehrung}}`: was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit, kein Feinheiten-Satz. Beispiel: „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast." |
+| **Zweiter Satz (Pflicht, eigener Absatz)** | fest: „Darin wäre alles genau auf euch zugeschnitten." (Sie: „Darin wäre alles genau auf Sie zugeschnitten."); mit „Angebot je Lead" je Lead im Konjunktiv, was für diesen Lead konkret drin wäre, nie als erledigte Arbeit |
 | **CTA** | „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich." (Sie: „… das auch für Sie erstelle? …") |
 
 **Typischer Fehler:** „Kostenlose Beratung" statt „Kostenloses Google Ads Setup". Beratung = Sales Call in Verkleidung.
@@ -123,7 +123,7 @@ Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absa
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region]." |
-| **Zweiter Satz (Pflicht, eigener Absatz)** | Rahmensatz je Lead, `{{ai.angebot_ausfuehrung}}`: macht den Pilot an diesem Lead fest, was er konkret bekäme, bezogen auf etwas aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches Feedback); höchstens 25 Wörter, nur aus der Lieferzusage, nicht bei jedem Lead derselbe Satz. Beispiel: „Im Pilot schreibe ich dir die erste Mail an einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon hältst." |
+| **Zweiter Satz (Pflicht, eigener Absatz)** | fest: „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback." (Sie: „Im Pilot bekommen Sie das kostenlos, dafür bräuchten wir nur ehrliches Feedback."); „Angebot je Lead" gibt es bei B nicht |
 | **CTA** | „Wärst du grundsätzlich offen dafür?" (Sie: „Wären Sie grundsätzlich offen dafür?") |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
@@ -136,7 +136,7 @@ Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absa
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" (nie eine Ankündigung wie „Website für …"; ist das Buchungssystem der Kern: „Frage zur Terminbuchung") |
 | **Überleitung + Offer** | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt." |
-| **Feinheiten-Satz (Pflicht, eigener Absatz)** | je Lead über `{{ai.angebot_ausfuehrung}}`: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und nennt genau ein Detail des schon Erstellten, passend zu diesem Lead, grammatisch vollständig, ohne „morgen" |
+| **Feinheiten-Satz (Pflicht, eigener Absatz)** | fest: „Ich bin gerade noch an den letzten Feinheiten dran." (Sie gleich); mit „Angebot je Lead" je Lead: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und nennt genau ein Detail des schon Erstellten, passend zu diesem Lead, grammatisch vollständig, ohne „morgen" |
 | **CTA** | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …"; nie „Link") |
 
 **Wichtig:** Der Feinheiten-Satz gehört bei Karte C zur Pflicht. Fertiggestellt wird nach der Antwort, 5-10 Min. Aufwand.
@@ -145,7 +145,7 @@ Muster, direkt nach dem Lob-Intro:
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive Buchungssystem erstellt.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google und KI-Suchmaschinen.
+Ich bin gerade noch an den letzten Feinheiten dran.
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```

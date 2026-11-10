@@ -23,9 +23,9 @@ In dieser Reihenfolge:
 2. Sonst aus seinem Angebot abgeleitet (seine Leistungen und Kanäle).
 3. Sonst ein Vorschlag nach Karte A, den der Absender bestätigt.
 
-Ein Offer, das der Absender nicht liefern kann, wird nicht geschrieben. Auch das On-Top-Detail im
-Feinheiten-Satz (Karte C) und der Inhalt des zweiten Angebotssatzes bei A und B kommen aus seinen
-Angaben und der Recherche des Leads. Gut geeignet sind Deliverables, die sich mit KI so
+Ein Offer, das der Absender nicht liefern kann, wird nicht geschrieben. Auch was ein Angebot je
+Lead als „konkret drin“ nennt, kommt aus seinen Angaben, zugeschnitten auf die Recherche des
+Leads. Gut geeignet sind Deliverables, die sich mit KI so
 vorbereiten lassen, dass nach einer Antwort 5-10 Minuten eigene Arbeit bleiben.
 
 ## Die 5 bewährten Offer-Karten
@@ -77,8 +77,8 @@ Die rechte Spalte ist die Sprache für Offer und Mail. Die linke steht auf seine
 
 Statt „Darf ich dir etwas anbieten?“ heißt es „Ich habe schon etwas für dich gemacht, darf ich es
 dir zusenden?“. In der Mail steht das Deliverable als erledigte Arbeit („war so frei und habe …
-erstellt“), nie als Absicht. Dazu gehören der Feinheiten-Satz mit genau einem lieferbaren Detail
-und das „morgen“ im Schlusssatz. Beides macht die Fertigstellung nach der Antwort ehrlich: Der
+erstellt“), nie als Absicht. Dazu gehören der Feinheiten-Satz („Ich bin gerade noch an den
+letzten Feinheiten dran.“) und das „morgen“ im Schlusssatz. Beides macht die Fertigstellung nach der Antwort ehrlich: Der
 eigentliche Aufwand fällt erst an, wenn jemand antwortet.
 
 Nicht bei Massenkampagnen mit großem Lieferaufwand je Antwort.
@@ -88,10 +88,10 @@ Nicht bei Massenkampagnen mit großem Lieferaufwand je Antwort.
 Die Überleitung ist statisch und für alle Leads gleich, sie folgt direkt auf das Intro. Klammern
 beim Schreiben füllen, im fertigen Text steht keine Klammer mehr.
 
-Nach dem Angebotssatz folgt immer ein zweiter Satz zum Angebot, als eigener Absatz und passend zur
-Karte (Stand 05.11.2026): bei C der Feinheiten-Satz, bei A ein Inhaltssatz, bei B ein Rahmensatz,
-alle drei je Lead geschrieben, bei D und E keiner. Regeln: `copy-lehre.md`, „Der zweite Satz zum
-Angebot“.
+Nach dem Angebotssatz folgt ein zweiter Satz zum Angebot, als eigener Absatz und passend zur
+Karte (Stand 10.11.2026): bei A, B und C der feste Satz der Karte, für alle Leads gleich, bei D und
+E keiner. Angebotssatz, zweiter Satz und CTA stehen je in einem eigenen Absatz. Für Erfahrene gibt
+es bei A und C ein Angebot je Lead. Regeln: `copy-lehre.md`, „Der zweite Satz zum Angebot“.
 
 ### Karte A: Kostenlose Teildienstleistung
 
@@ -102,7 +102,7 @@ sich zu verpflichten.
 |:---------|:--------|
 | Betreff | „kurze Frage“ |
 | Überleitung + Offer | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an.“ |
-| Zweiter Satz | Pflicht, eigener Absatz: Inhaltssatz je Lead, was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit, kein Feinheiten-Satz („Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“) |
+| Zweiter Satz | Pflicht, eigener Absatz, fest: „Darin wäre alles genau auf euch zugeschnitten.“ (Sie: „Darin wäre alles genau auf Sie zugeschnitten.“); mit einem Angebot je Lead im Konjunktiv, was für diesen Lead konkret drin wäre, nie als erledigte Arbeit |
 | CTA | „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.“ (Sie: „… das auch für Sie erstelle? …“) |
 
 Typischer Fehler: „Kostenlose Beratung“ statt „Kostenloses Google Ads Setup“. Beratung ist ein
@@ -117,7 +117,7 @@ Dringlichkeit, aber nur, wenn die Plätze wirklich begrenzt sind.
 |:---------|:--------|
 | Betreff | „kurze Frage“ |
 | Überleitung + Offer | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
-| Zweiter Satz | Pflicht, eigener Absatz: Rahmensatz je Lead, der den Pilot an diesem Lead festmacht: was er konkret bekäme, bezogen auf etwas aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches Feedback); höchstens 25 Wörter, nur aus der Lieferzusage, nicht bei jedem Lead derselbe Satz („Im Pilot schreibe ich dir die erste Mail an einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon hältst.“) |
+| Zweiter Satz | Pflicht, eigener Absatz, fest: „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“ (Sie: „Im Pilot bekommen Sie das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“) |
 | CTA | „Wärst du grundsätzlich offen dafür?“ (Sie: „Wären Sie grundsätzlich offen dafür?“) |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
@@ -129,15 +129,14 @@ Feinheiten macht man nach der Antwort.
 |:---------|:--------|
 | Betreff | „kurze Frage“ (nie „Website für …“; ist das Buchungssystem der Kern: „Frage zur Terminbuchung“) |
 | Überleitung + Offer | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
-| Feinheiten-Satz | Pflicht, eigener Absatz, je Lead geschrieben: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und nennt genau ein Detail des schon Erstellten, passend zu diesem Lead, grammatisch vollständig (z. B. „an der …“), ohne „morgen“ |
+| Feinheiten-Satz | Pflicht, eigener Absatz, fest: „Ich bin gerade noch an den letzten Feinheiten dran.“ (Sie gleich); mit einem Angebot je Lead je Lead geschrieben: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und nennt genau ein Detail des schon Erstellten, grammatisch vollständig (z. B. „an der …“), ohne „morgen“ |
 | CTA | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (Sie: „… es Ihnen morgen zusende? …“; mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …“; nie „Link“) |
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
 Buchungssystem erstellt.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google
-und KI-Suchmaschinen.
+Ich bin gerade noch an den letzten Feinheiten dran.
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```

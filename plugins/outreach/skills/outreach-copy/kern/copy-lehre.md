@@ -100,9 +100,9 @@ Hallo {{Vorname}},            1. Anrede
 {{Intro}}                     2. individueller Bezug: Lob am konkreten Detail (Teil 2)
 Überleitung + Offer           3. fester Text, für alle Leads gleich, benennt KEIN lead-spezifisches
                                  Problem; bei Karte C als erledigte Arbeit, bei A als Angebot
-Zweiter Satz zum Angebot      4. eigener Absatz, je Karte: A, B und C je Lead geschrieben wie
-                                 das Intro (C der Feinheiten-Satz), D und E keiner
-EIN Frage-CTA                 5. niedrige Hürde
+Zweiter Satz zum Angebot      4. eigener Absatz, je Karte: A, B und C der feste Satz der Karte
+                                 (C der Feinheiten-Satz), D und E keiner
+EIN Frage-CTA                 5. niedrige Hürde, eigener Absatz
 Signatur im Klartext          6. Grußformel, Name, „Rolle - Firma“
 Abmeldezeile                  7. nach einer Leerzeile unter der Signatur, in Step 1 und Step 3
 ```
@@ -151,58 +151,64 @@ darf das Intro diese Aussage nicht vorwegnehmen.
 
 ## Der zweite Satz zum Angebot
 
-Stand 05.11.2026: Nach dem Angebotssatz folgt in Mail 1 immer ein zweiter Satz zum Angebot, als
-eigener Absatz zwischen Offer und CTA, passend zur Karte. KEIN zweites Offer, KEIN zweiter CTA:
-Der Satz beschreibt dasselbe Deliverable, nur eine Schicht tiefer.
+Stand 10.11.2026: Nach dem Angebotssatz folgt in Mail 1 ein zweiter Satz zum Angebot, als eigener
+Absatz zwischen Offer und CTA, passend zur Karte. KEIN zweites Offer, KEIN zweiter CTA: Der Satz
+beschreibt dasselbe Deliverable, nur eine Schicht tiefer. Standard ist der **feste Satz der Karte**,
+für alle Leads gleich. Angebotssatz, zweiter Satz und CTA stehen immer in drei eigenen Absätzen.
 
-| Karte | Zweiter Satz | Wer schreibt ihn |
-|:------|:-------------|:-----------------|
-| **C: Konkretes Deliverable** | Fortschritt: der Feinheiten-Satz, genau ein Detail je Lead | je Lead, wie das Intro |
-| **A: Kostenlose Teildienstleistung** | Inhalt: was für diesen Lead konkret drin wäre, im Konjunktiv | je Lead, wie das Intro |
-| **B: Tester/Pilotprojekt** | Rahmen: was der Empfänger im Pilot bekommt und was er dafür gibt | je Lead, wie das Intro |
-| **D: Förder-Hook, E: Partner gesucht** | kein weiterer Satz, die Überleitung hat schon zwei Sätze | entfällt |
-
-### Karte C: der Feinheiten-Satz (Value Stacking)
-
-Der Satz wird je Lead geschrieben (Stand 05.11.2026), nicht mehr als fester Text mit einer Lücke
-für die ganze Liste. Regel, wörtlich: Ein Satz, der genau so beginnt: „Ich bin gerade noch an den
-letzten Feinheiten dran, vor allem“ und dann genau ein Detail des schon erstellten Ergebnisses
-nennt, an dem noch gefeilt wird, passend zu diesem Lead (aus seiner Recherche oder dem Detail des
-Schwerpunkts), grammatisch vollständig (z. B. „an der …“). Kein „morgen“, kein „fertig werden“,
-keine neue Leistung. Englisch: „I'm just finishing up the last few details, mainly …“.
-
-- Der Anfang bleibt wörtlich, nicht umformulieren, nicht „Feinschliff“. Nichts erfinden: Das
-  Detail gehört zu dem, was schon erstellt ist.
-- Das „morgen“ der Fertigstellung steht im Schlusssatz, nicht im Feinheiten-Satz, sonst stünde es
-  zweimal da.
+| Karte | Fester zweiter Satz (du) | Sie | Englisch |
+|:------|:-------------------------|:----|:---------|
+| **C: Konkretes Deliverable** | „Ich bin gerade noch an den letzten Feinheiten dran.“ | gleich | “I'm just finishing up the last few details.” |
+| **A: Kostenlose Teildienstleistung** | „Darin wäre alles genau auf euch zugeschnitten.“ | „Darin wäre alles genau auf Sie zugeschnitten.“ | “Everything in it would be tailored to your business.” |
+| **B: Tester/Pilotprojekt** | „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“ | „Im Pilot bekommen Sie das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“ | “You'd get it free during the pilot, all we'd ask for is honest feedback.” |
+| **D: Förder-Hook, E: Partner gesucht** | kein weiterer Satz, die Überleitung hat schon zwei Sätze | | |
 
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive
 Buchungssystem erstellt.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google
-und KI-Suchmaschinen.
+Ich bin gerade noch an den letzten Feinheiten dran.
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```
 
-### Karte A und B: der Satz je Lead
+- Die Sätze gelten wörtlich. „euch“ (A) und „ihr“ (B) meinen den Betrieb, nicht die Person.
+- Der Feinheiten-Satz steht nur bei C: Er behauptet Arbeit, die es bei A und B vor der Antwort
+  nicht gibt.
+- Das „morgen“ der Fertigstellung steht im Schlusssatz, nicht im zweiten Satz.
 
-Bei A und B gibt es keinen Feinheiten-Satz: Er behauptet Arbeit, die es vor der Antwort nicht
-gibt. Der Satz wird je Lead neu geschrieben, passend zu Recherche und Website des Leads.
+### Für Erfahrene: ein Angebot je Lead
 
-- **A, Inhaltssatz:** „Darin wären deine drei meistgebuchten Behandlungen mit Preis, Ablauf und
-  Buchungsknopf, gebaut aus den Texten und Fotos, die du schon online hast.“
-- **B, Rahmensatz:** macht den Pilot an diesem Lead fest: was er konkret bekäme, bezogen auf etwas
-  aus seiner Recherche (Leistung, Zielkunden, Region), und was er dafür gibt (ehrliches
-  Feedback), nicht bei jedem Lead derselbe Satz. „Im Pilot schreibe ich dir die erste Mail an
-  einen deiner Wunschkunden aus dem Maschinenbau, du sagst mir dafür ehrlich, was du davon
-  hältst.“
-- Nie als erledigte Arbeit: kein „erstellt“, „vorbereitet“, „liegt bereit“, kein
-  Feinheiten-Wortlaut. A steht im Konjunktiv.
-- Nur Inhalte, die die Lieferzusage des Absenders deckt: keine Zahl, die weder Lieferzusage noch
-  Recherche belegt, keine Frist, kein Gespräch, Termin oder Call.
-- Ein Satz, höchstens 25 Wörter, keine Frage (der CTA folgt fest), kein zweites Offer.
+Wer mehrere Türöffner hat, kann je Lead das passende wählen lassen, nur bei Karte A und C. Neben
+dem Haupt-Angebot stehen höchstens drei weitere Angebote, je mit der Sache, wie sie im Satz der
+Karte steht, dem Wort für die Sache in der Schlussfrage, dem, was konkret drin ist, und einer
+Bedingung, die man auf der Website des Leads sieht (etwa „Die Website hat keine Online-Buchung.“).
+Ist keine Bedingung belegt, gilt das Haupt-Angebot. Für das gewählte Angebot stehen sein
+Angebotssatz und seine Schlussfrage fest; der zweite Absatz wird je Lead geschrieben, nach der
+Regel der Karte:
+
+- **C:** beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und
+  nennt genau ein Detail des schon Erstellten, passend zum Lead, kein „morgen“, kein „fertig werden“.
+- **A:** sagt im Konjunktiv, was für diesen Lead konkret drin wäre („Darin wären …“), nie als
+  erledigte Arbeit.
+- Für beide: ein Satz mit höchstens 25 Wörtern, nur was die Lieferzusage deckt, keine Zahl ohne
+  Beleg, keine Frist, kein Gespräch, keine Frage, kein Lob, keine Wiederholung des Angebotssatzes;
+  die Bedingung steht nie im Text, und nichts klingt nach einem Mangel des Leads.
+
+Beispiel (Karte C, Praxis ohne Online-Buchung):
+
+```
+Deswegen war ich so frei und habe dir eine Seite für die Online-Terminbuchung erstellt.
+
+Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Reihenfolge deiner
+Veneers und Bleachings.
+
+Wäre es in Ordnung, wenn ich dir morgen die Buchungsseite zusende? Völlig unverbindlich natürlich.
+```
+
+Weil jeder Lead ein anderes Angebot bekommen kann, nennen die Follow-ups kein einzelnes Angebot, und
+Step 3 endet neutral (siehe Teil 3). In ListM8 ist das die Option „Angebot je Lead“: eine
+KI-Variable mit festgelegter Vorlage (`outreach-copy`, `references/fuer-erfahrene.md`).
 
 ## Der CTA
 
@@ -302,23 +308,24 @@ Opt-out-Fachsprache in der Copy: kein „STOPP“ oder „Stop“, kein „abmel
 technischen Abmeldelink (List-Unsubscribe) setzt das Versandtool zusätzlich. Die Zeile zählt nicht
 zum Wortlimit.
 
-## Zwei Varianten für den A/B-Test
+## Für Erfahrene: der A/B-Test
 
-Kann das Versandtool A/B-Tests (etwa Instantly), entstehen zwei Entry-Mail-Varianten:
+Ein A/B-Test ist eine Option für Erfahrene, kein Standard. Ohne ausdrücklichen Wunsch gibt es genau
+eine Fassung von Mail 1; die Empfehlung ist „ohne Tests“. Wer testen will und ein Versandtool mit
+A/B-Tests hat (etwa Instantly), baut die Varianten so:
 
 - gleiche Offer-Karte, gleiches Offer, nie zwei verschiedene Karten in einem Test
-- Variante B ändert genau EINEN Hebel: Blickwinkel der Offer-Formulierung, das On-Top-Detail im
-  Feinheiten-Satz (Karte C) bzw. die Vorgabe für den zweiten Satz (A, B) oder die CTA-Form. So
-  zeigt der Test, was gewirkt hat
-- beide Varianten halten alle Regeln dieser Lehre
-- die Follow-ups sind für beide Varianten gleich
+- jede weitere Variante ändert genau EINEN Hebel, etwa den Betreff, das Intro, den Blickwinkel der
+  Offer-Formulierung oder die CTA-Form. So zeigt der Test, was gewirkt hat
+- alle Varianten halten alle Regeln dieser Lehre
+- die Follow-ups sind für alle Varianten gleich
 
 Ein echter Offer-Test ist ein Kartenwechsel (A gegen C), aber dann als eigene Kampagne, nicht als
 Variante.
 
-In ListM8 legt der Assistent die Varianten von Mail 1 selbst an: den Betreff-Test (B mit
-„Frage zu {{Firma}}“, ab Werk an, siehe Teil 4) und auf Wunsch den Intro-Test (C mit dem
-zweitbesten Intro). Eigene Varianten wie oben kommen im Reiter Sequenzen dazu.
+In ListM8 sind es zwei Tests, beide standardmäßig aus: der Betreff-Test (B mit „Frage zu
+{{Firma}}“, siehe Teil 4) und der Intro-Test (die nächste Variante mit dem zweitbesten Intro); beide
+zusammen ergeben A, B und C. Bestehende Varianten bleiben beim Bearbeiten einer Kampagne stehen.
 
 ---
 
@@ -618,7 +625,7 @@ Regeln für alle Follow-ups:
 |:-----|:--------------|:---------|
 | 1 | Erlaubnis erbitten | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ |
 | 2 | nur anstoßen | „Gib mir gerne kurz Bescheid.“ |
-| 3 | Frage aus Step 1, mit der Sache | „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ |
+| 3 | Frage aus Step 1, mit der Sache (mit einem Angebot je Lead neutral) | „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“ |
 | 4 | Tür offen lassen | „Sag mir gern kurz Bescheid, falls ich mich besser bei jemand anderem melden sollte.“ |
 
 ## Step 2: Erinnerung
@@ -652,6 +659,11 @@ Aufforderung wie „sag einfach kurz Bescheid“ reicht nicht (05.11.2026). Das 
 kein eigener Satz um das Angebot („Falls du den Entwurf sehen möchtest, antworte kurz“), kein neues
 Offer, kein Pitch. Mail 3 endet mit genau einer Frage, nie mit einer Aussage („schick ich dir gern“)
 oder Bitte; jede Variante unten endet mit der Frage aus Mail 1 ihrer Karte.
+
+Einzige Ausnahme: Bekommt jeder Lead sein eigenes Angebot (für Erfahrene, siehe „Der zweite Satz zum
+Angebot“), endet Step 3 neutral, weil keine Frage zu jedem Angebot passt: „Falls das Thema für dich
+relevant ist, melde dich gerne.“ (Sie „Falls das Thema für Sie relevant ist, melden Sie sich
+gerne.“, englisch “If this is relevant for you, feel free to get in touch.”).
 
 | Variante | Text |
 |:---------|:-----|
@@ -731,7 +743,7 @@ Nicht: „Kostenlose Beratung für …“ (zu lang, Spam), „Exklusives Angebot
 
 ## Betreff-Test: „Frage zu {{Firma}}“ in Variante B
 
-Seit 05.11.2026 legt der Assistent von ListM8 einen Betreff-Test an (ab Werk an): Variante B von Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`. Welche Variable der Betreff von B ist, sagt `emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name. Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`, `emailGeneration.subjectVariables`) und sagt, welche Fassung gilt:
+Nur für Erfahrene und nur auf Wunsch (seit 10.11.2026 standardmäßig aus, in ListM8 wie im Plugin): Variante B von Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`. Welche Variable der Betreff von B ist, sagt `emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name. Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`, `emailGeneration.subjectVariables`) und sagt, welche Fassung gilt:
 
 - **Kampagnen ab 07.11.2026 (E61):** Der Betreff von B lautet immer „Frage zu {{Firma}}“, englisch „question about {{Firma}}“, kein Detail und kein anderer Wortlaut. Der Kurzname steht unter `firma`: ohne Rechtsform (GmbH, GmbH & Co. KG, e.K., UG, Ltd), ohne Zusätze wie „Meisterbetrieb“ und ohne Ort, normal geschrieben statt in Großbuchstaben, außer die Firma führt ihren Namen als Kürzel („ZAR“). Steckt der Vorname der angeschriebenen Person im Firmennamen, fällt er weg („Immobilien Thomas Braun“ wird „Frage zu Immobilien Braun“); das gilt je Person, auch für Person 2. `save_lead_variables` setzt den Betreff selbst aus `firma` zusammen und prüft den Kurznamen gegen Firmennamen, Website und Ort; ohne sicheren Kurznamen bekommt der Lead den Betreff von Variante A (ohne eigenen Text gespeichert, beim Versand der aktuelle Betreff von A, als Rückfall markiert). Melde `firma` deshalb immer und `<name>__rueckfall: "ja"` nur ohne sicheren Kurznamen.
 - **Ältere Kampagnen** behalten ihren gespeicherten Prompt mit dem persönlichen Betreff je Lead: 3 bis 6 Wörter, dasselbe Detail wie das Intro, beginnt direkt mit dem Detail, „Frage zu {{Firma}}“ nur als Rückfall (E22 bis E26, E53). Es gilt immer der Prompt der Variable.
@@ -834,8 +846,9 @@ Korrekturen erzeugen neue Fehler, besonders beim Kürzen.
 7. **Spam-Scan.** Betreff und Body gegen die Liste, „kostenlos“ höchstens einmal im Body.
 8. **Struktur-Scan.** Offer nur in Step 1, Intro nur in Step 1, Social Proof nur in Step 3, Step 3
    endet mit der Schlussfrage aus Step 1 (Wort für die Sache statt „es“),
-   zweiter Satz zum Angebot passend zur Karte (C Feinheiten-Satz, A und B Satz je Lead, D und E
-   keiner), kein „Link“ im Schlusssatz, Betreff nur in Step 1 (Step 2 bis 4 im Thread), kein Doppelpunkt-Opener,
+   zweiter Satz zum Angebot passend zur Karte (A, B und C der feste Satz, D und E keiner; mit einem
+   Angebot je Lead der Satz nach der Regel der Karte), Angebotssatz, zweiter Satz und CTA je ein
+   eigener Absatz, Varianten nur bei gewähltem Test, kein „Link“ im Schlusssatz, Betreff nur in Step 1 (Step 2 bis 4 im Thread), kein Doppelpunkt-Opener,
    Abmeldezeile unter der Signatur von Step 1 und 3, kein „STOPP“ und keine Opt-out-Fachsprache.
 9. **Anrede-Scan.** Gruß und Pronomen passen zum Modus, kein du/ihr-Wechsel im Satz, Fallback
    „Hallo,“ für Leads ohne Vornamen geklärt.
