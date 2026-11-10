@@ -60,10 +60,13 @@ Eine Frage, wenn es nicht aus dem Auftrag hervorgeht:
 
 1. **Kampagne:** `export_campaign_blueprint(campaign_id)` lesen. Das Offer steht in
    `blueprint.campaign.intelligence.offer_contract.title.value`; fehlt es, beim Nutzer erfragen.
-   Das On-Top-Detail aus dem Feinheiten-Satz steht in Mail 1: seit 05.11.2026 je Lead in der
-   Variable `angebot_ausfuehrung` (`get_lead_variables(campaign_id, lead_id)`), bei älteren
-   Kampagnen fest im Body (`blueprint.sequence.steps[0].body`); es MUSS in der Demo sichtbar
-   umgesetzt sein, denn es wurde versprochen.
+   Trägt Mail 1 `{{ai.offer_text}}` („Angebot je Lead“, outreach 0.7.0), hat jeder Lead sein eigenes
+   Angebot: Versprochen ist, was im Wert von `offer_text` dieses Leads steht
+   (`get_lead_variables(campaign_id, lead_id)`), nicht das Haupt-Angebot. Ein On-Top-Detail gibt es
+   nur, wenn der zweite Satz eins nennt („… vor allem …“): je Lead im Wert von `angebot_ausfuehrung`,
+   bei älteren Kampagnen fest im Body (`blueprint.sequence.steps[0].body`); dann MUSS es in der Demo
+   sichtbar umgesetzt sein, denn es wurde versprochen. Der feste Satz „Ich bin gerade noch an den
+   letzten Feinheiten dran.“ (Standard seit outreach 0.7.0) nennt keins: dann kein Detail erfinden.
 2. **Lead:** Wer hat geantwortet? Zwei Abrufe, weil `contact_status` genau einen Wert nimmt:
    erst `list_leads(campaign_id, contact_status="opportunity", fit_level="", research_status="", campaign_status="")`
    (interessiert, braucht den Türöffner zuerst), dann dasselbe mit `contact_status="replied"`.

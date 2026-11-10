@@ -1,6 +1,6 @@
 # Changelog
 
-## 2026-11-10 – outreach 0.7.0 (benötigt ListM8 MCP 4.14.0 für „Angebot je Lead“)
+## 2026-11-10 – outreach 0.7.0, fulfillment 0.1.5 (benötigt ListM8 MCP 4.14.0 für „Angebot je Lead“)
 
 Neue Kampagnen starten wie in der App einfach: ein Angebot für alle Leads mit dem festen zweiten Satz der Karte, ohne A/B-Test. Tests und „Angebot je Lead“ gibt es für Erfahrene auf Wunsch (DS-195, Weg A). „Angebot je Lead“ braucht ListM8 MCP 4.14.0 (`ping`); ältere Server bekommen immer ein Angebot für alle, alles andere läuft dort wie bisher.
 
@@ -14,6 +14,9 @@ Neue Kampagnen starten wie in der App einfach: ein Angebot für alle Leads mit d
 - `kern/check_copy.py` → Step 3 darf mit „Angebot je Lead“ mit dem neutralen Schluss enden.
 - `outreach-setup`, README → abgestimmt auf MCP 4.14.0.
 - Enthält die Copy-Korrekturen aus DS-180 (Betreff B „Frage zu {{Firma}}“, Auffang-Schwerpunkt, eine Längenregel), die bisher ohne eigene Version waren.
+
+**fulfillment**
+- `fulfillment`, `fulfillment-referenzen` (`lead-kontext.md`, `demo-link.md`, `qualitaet.md`), `demo-webseite` → Bei „Angebot je Lead“ ist das versprochene Angebot der Wert von `offer_text` des Leads, nicht das Haupt-Angebot. Ein On-Top-Detail gibt es nur, wo der zweite Satz eins nennt; der feste Feinheiten-Satz nennt keins, dann entfällt „Ich habe vor allem … umgesetzt.“ und nichts wird erfunden.
 
 ## 2026-11-07 – outreach 0.6.0, datenbeschaffung 0.5.0, fulfillment 0.1.4
 

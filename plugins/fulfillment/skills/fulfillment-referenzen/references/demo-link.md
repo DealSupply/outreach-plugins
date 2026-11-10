@@ -50,6 +50,10 @@ Viele Grüße
 [Name]
 ```
 
+Nennt Mail 1 kein On-Top-Detail (der feste Satz „Ich bin gerade noch an den letzten Feinheiten
+dran.“), entfällt „Ich habe vor allem … umgesetzt.“; der Absatz beginnt dann mit „Schau ihn dir in
+Ruhe an, …“. Nie ein Detail erfinden.
+
 **SEO-Ergebnis (du):**
 
 ```
