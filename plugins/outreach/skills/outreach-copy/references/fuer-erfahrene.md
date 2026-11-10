@@ -325,9 +325,9 @@ Write in English, in the same casual tone as email 1.
 **Lieferzusage der Form** (wörtlich, danach mit einem Leerzeichen die Lieferzusage des Kunden aus
 dem Briefing, ohne Angabe nichts):
 
-- C, deutsch: `Bis morgen nach der Antwort lieferbar, nach dem Fulfillment-Maßstab (5 bis 10 Minuten Nutzerzeit je Antwort mit KI).`
+- C, deutsch: `Bis morgen nach der Antwort lieferbar.`
 - A, deutsch: `Geliefert wird erst nach der Antwort. Formuliert als Angebot, nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt bereit“).`
-- C, englisch: `Deliverable by tomorrow after a reply, within 5 to 10 minutes of user time per reply with AI.`
+- C, englisch: `Deliverable by tomorrow after a reply.`
 - A, englisch: `Delivered only after a reply. Phrased as an offer, never as finished work (no “created”, “prepared” or “ready”).`
 
 Absatz 3 des Haupt-Angebots trägt sein Wort aus der Karte, ohne eigenes Wort das Wort für die Sache
@@ -471,7 +471,7 @@ Ein Satz, der genau so beginnt: „Ich bin gerade noch an den letzten Feinheiten
 Grundlage ist, was beim gewählten Angebot konkret drin ist, zugeschnitten auf das, was die Recherche über den Lead weiß.
 Absatz 2 greift nichts auf, was das Intro dieses Leads schon nennt (kein Projekt, keinen Kunden, kein Produkt, keine Auszeichnung, keinen Ort und keine Zahl daraus): Das Intro steht direkt darüber, eine Wiederholung liest sich wie ein Echo. Nimm ein anderes Detail aus der Recherche oder nur, was beim Angebot konkret drin ist.
 LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Ein vorgegebener Satzanfang zählt mit. 25 ist eine harte Grenze: Ein Satz mit 26 Wörtern ist falsch, auch wenn er sonst gut ist. Zähl die Wörter vor der Antwort einzeln (ein Wort mit Bindestrich zählt als eins); hat der Satz mehr als 25, kürze das Detail, statt den Satz abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 100 Wörter.
-Lieferzusage, über die der Satz nie hinausgeht: Bis morgen nach der Antwort lieferbar, nach dem Fulfillment-Maßstab (5 bis 10 Minuten Nutzerzeit je Antwort mit KI). Gebaut aus den Texten und Fotos, die die Praxis schon online hat.
+Lieferzusage, über die der Satz nie hinausgeht: Bis morgen nach der Antwort lieferbar. Gebaut aus den Texten und Fotos, die die Praxis schon online hat.
 Keine Zahl, die die Lieferzusage nicht nennt, auch keine aus der Recherche (keine Bewertung, keine Punkte, keine Jahre, keine Kundenzahl), keine Frist (ein „morgen“ steht nur in der Schlussfrage), kein Gespräch und kein Termin, keine zweite Leistung, keine Frage, kein Lob (das steht schon im Intro), keine Wiederholung von Absatz 1. Keine Gedankenstriche.
 
 FÜR ALLE DREI ABSÄTZE
