@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-11-10 – outreach 0.8.0 (benötigt ListM8 MCP 4.15.0 für „Angebot je Lead“)
+
+„Angebot je Lead“ folgt dem freigegebenen Wortlaut und der Nummerierung der App (DS-195, Server DS-206). Plugin und Server kommen im selben Release: Ein Server vor 4.15.0 zählt das Haupt-Angebot als letzte Nummer, dort legt das Plugin nur noch Kampagnen mit einem Angebot für alle an.
+
+**outreach**
+- `outreach-copy/references/fuer-erfahrene.md` → Die Anweisung ist neu aus dem Server übernommen (Deutsch Du, Deutsch Sie, Englisch): Absatz 1 und 3 in Kundensprache, kein Echo des Intros in Absatz 2, strengere Länge, keine Zahlen aus der Recherche, Lieferzusage der Karte C ohne den Satz zur Schlussfrage. Das Haupt-Angebot ist Angebot 1, die weiteren folgen ab 2; passen mehrere, gilt das mit der kleinsten Nummer. ListM8 baut die Anweisung beim Import selbst, das Plugin zeigt sie nur vor dem Anlegen.
+- Mail 3 mit „Angebot je Lead“ endet mit „Melde dich gerne, wenn das Thema für dich relevant ist.“ (Sie „Melden Sie sich gerne, wenn das Thema für Sie relevant ist.“, englisch “Feel free to get in touch if this is relevant for you.”); `kern/check_copy.py` und die Beispiele folgen.
+- `outreach-generate`, `lead-agent` → Wahl nach der kleinsten Nummer, sonst Nummer 1; `validation_failed` bei fehlendem oder unbekanntem `angebot`: Nummer korrigieren und erneut speichern; `offer_instruction_outdated`: Lead überspringen und melden (`grund=anweisung-veraltet`).
+- `outreach-verify`, `verify-agent` → prüfen die Wahl nach derselben Regel.
+- `outreach-campaign` → `offer_per_lead_inconsistent` beim Anlegen oder Bearbeiten: nicht erneut senden, sondern Mail 1 und die drei Variablen passend mitschicken oder in der App umschalten lassen; nicht übernommene Station-Antworten aus `warnings` dem Nutzer zeigen.
+- `outreach-setup`, README → abgestimmt auf MCP 4.15.0.
+
 ## 2026-11-10 – outreach 0.7.0, fulfillment 0.1.5 (benötigt ListM8 MCP 4.14.0 für „Angebot je Lead“)
 
 Neue Kampagnen starten wie in der App einfach: ein Angebot für alle Leads mit dem festen zweiten Satz der Karte, ohne A/B-Test. Tests und „Angebot je Lead“ gibt es für Erfahrene auf Wunsch (DS-195, Weg A). „Angebot je Lead“ braucht ListM8 MCP 4.14.0 (`ping`); ältere Server bekommen immer ein Angebot für alle, alles andere läuft dort wie bisher.
