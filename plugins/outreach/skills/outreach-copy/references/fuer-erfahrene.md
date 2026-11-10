@@ -29,7 +29,7 @@ beide wählt, bekommt beide.
 
 **„Angebot je Lead“** („Offer per lead“), nur bei Karte A (Kostenlose Teildienstleistung, in der App
 „Kostenlose Teilleistung“) und Karte C (Konkretes Deliverable, in der App „Schon erledigte
-Vorarbeit“), nur ab ListM8-MCP 4.14.0 (`ping`):
+Vorarbeit“), nur ab ListM8-MCP 4.15.0 (`ping`):
 
 | Ort | Deutsch | Englisch |
 |---|---|---|
@@ -119,7 +119,8 @@ und der Schlussfrage.
   steht `campaign.station`). Standard-Kampagnen aus dem Plugin haben keine; das dem Nutzer so sagen.
 - Nie zusammen mit Schwerpunkten (`campaign.offerFocuses`) oder Angebotsblöcken (Variablen mit
   `offerRole`). Eine Kampagne mit beidem nimmt ListM8 nicht in „Angebot je Lead“.
-- Nur ab ListM8-MCP 4.14.0. Ältere Server kennen die Option nicht: dann ein Angebot für alle.
+- Nur ab ListM8-MCP 4.15.0 (`ping`). Ältere Server kennen die Option nicht oder zählen das
+  Haupt-Angebot noch als letzte Nummer (4.14.x): dann ein Angebot für alle.
 
 ### Was abgefragt wird (dieselben Felder wie die Karten der App)
 
@@ -175,46 +176,57 @@ Audit; bei C nur, was wirklich bis morgen lieferbar ist; die Bedingung beschreib
 Angebot passt, nie einen Mangel, den die Mail ausspricht. Sache und Wort ohne eckige Klammern und
 ohne `{{`, keine Gedankenstriche.
 
-### Die Anweisung (Vorlage, abgenommen am 10.11.2026, Ergänzungen beim Bau abgenommen)
+### Die Anweisung (Vorlage, abgenommen am 10.11.2026, Wortlaut seit DS-206)
 
-Bevor angelegt wird, zeigt das Plugin dem Kunden die fertige Anweisung unter der Überschrift „So
-schreibt die KI den Angebotsteil“ („How the AI writes the offer part“), zusammen mit den Angeboten.
-Erst nach seinem Ja wird angelegt.
+Die Anweisung ist der Prompt von `angebot_ausfuehrung`. ListM8 baut sie selbst aus den Karten: Ein
+Blueprint mit „Angebot je Lead“ und ohne `offerPrompt` bekommt beim Import die Anweisung des
+Servers, was auch immer das Plugin als Prompt schickt. Das Plugin baut sie deshalb nur, um sie dem
+Kunden zu zeigen, und schickt dieselbe Fassung als Prompt mit (der Server braucht die Variable,
+der Prompt muss mindestens 10 Zeichen haben).
 
-Die Anweisung ist der Prompt von `angebot_ausfuehrung`, gebaut wie in der App. Zeilen mit `\n`
-trennen, Abschnitte mit einer Leerzeile. Nummeriert werden zuerst die weiteren Angebote in der
-Reihenfolge des Kunden, das Haupt-Angebot zuletzt. Eine Zeile `konkret drin` entfällt, wenn das
-Angebot kein Detail hat; die Zeile „Zusätzlich: …“ nur mit Freitext.
+Bevor angelegt wird, zeigt das Plugin dem Kunden die Anweisung unter der Überschrift „So schreibt
+die KI den Angebotsteil“ („How the AI writes the offer part“), zusammen mit den Angeboten. Erst
+nach seinem Ja wird angelegt.
 
-**Deutsch, Du-Fassung:**
+Aufbau wie in der App: Nummeriert wie die Karten, das Haupt-Angebot ist Angebot 1, die weiteren
+folgen ab 2 in der Reihenfolge des Kunden. Unter „WAHL DES ANGEBOTS“ stehen zuerst die Bedingungen
+der weiteren Angebote, zuletzt das Haupt-Angebot; ohne weitere Angebote heißt diese Zeile „Angebot 1
+(Haupt-Angebot): gilt für jeden Lead.“ („Offer 1 (main offer): applies to every lead.“). Unter „DIE
+ANGEBOTE“ steht das Haupt-Angebot zuerst. Eine Zeile `konkret drin` entfällt, wenn das Angebot kein
+Detail hat; „ Zusätzlich: …“ nur mit Freitext. Zeilen mit `\n` trennen, Abschnitte mit einer
+Leerzeile.
+
+**Deutsch, Du-Fassung** (ein weiteres Angebot; mit mehr Angeboten je Angebot eine Zeile unter WAHL
+und ein Block unter DIE ANGEBOTE):
 
 ```
-Schreib den Angebotsteil von Mail 1 für diesen Lead. Er hat drei Absätze: Absatz 1 und 3 des gewählten Angebots setzt der Server ein, du schreibst nur Absatz 2 und meldest die Nummer des gewählten Angebots unter „angebot“. Gib nur Absatz 2 aus und sonst nichts: keinen Namen eines Angebots, keine Begründung, keine Überschrift.
+Schreib den Angebotsteil von Mail 1 für diesen Lead. Er hat drei Absätze: Absatz 1 und 3 stehen bei jedem Angebot fest und werden zum gewählten Angebot automatisch eingesetzt. Du schreibst nur Absatz 2 und gibst die Nummer des gewählten Angebots unter „angebot“ an. Gib nur Absatz 2 aus und sonst nichts: keinen Namen eines Angebots, keine Begründung, keine Überschrift.
 
 WAHL DES ANGEBOTS
-Angebot {Nr.} passt, wenn die Recherche belegt: {Bedingung}{ Zusätzlich: {Freitext}}
-Haupt-Angebot: gilt, wenn keine dieser Bedingungen belegt ist.
-Eine Bedingung ist nur belegt, wenn die Recherche sie für diesen Lead feststellt; „unklar“ oder nicht erwähnt zählt als nicht belegt. Passen mehrere Angebote, nimm das oberste.
+Angebot 2 passt, wenn die Recherche belegt: {Bedingung} Zusätzlich: {Freitext}
+Angebot 1 (Haupt-Angebot): gilt nur, wenn keine dieser Bedingungen belegt ist.
+Eine Bedingung ist nur belegt, wenn die Recherche sie für diesen Lead feststellt; „unklar“ oder nicht erwähnt zählt als nicht belegt. Passen mehrere Angebote, nimm unter ihnen das mit der kleinsten Nummer.
 
 DIE ANGEBOTE
-Angebot {Nr.}:
+Angebot 1 (Haupt-Angebot):
+- Absatz 1: „{Satz der Form mit der Sache des Haupt-Angebots}“
+- Absatz 3: „{Schlussfrage der Form mit seinem Wort}“
+- konkret drin: „{Detail}“
+Angebot 2:
 - Absatz 1: „{Satz der Form mit der Sache}“
 - Absatz 3: „{Schlussfrage der Form mit dem Wort für die Sache}“
 - konkret drin: „{Detail}“
-Angebot {letzte Nr.} (Haupt-Angebot):
-- Absatz 1: „…“
-- Absatz 3: „…“
-- konkret drin: „…“
 
 ABSATZ 1 UND 3
-Absatz 1 und Absatz 3 des gewählten Angebots setzt der Server wörtlich ein; schreib sie nicht.
+Absatz 1 und Absatz 3 des gewählten Angebots stehen fest und werden wörtlich eingesetzt; schreib sie nicht.
 
 ABSATZ 2
 {Regel der Form für den zweiten Satz}
 Grundlage ist, was beim gewählten Angebot konkret drin ist, zugeschnitten auf das, was die Recherche über den Lead weiß.
-LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Zähl die Wörter vor der Antwort; hat der Satz mehr als 25, kürze ihn, statt ihn abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 100 Wörter.
+Absatz 2 greift nichts auf, was das Intro dieses Leads schon nennt (kein Projekt, keinen Kunden, kein Produkt, keine Auszeichnung, keinen Ort und keine Zahl daraus): Das Intro steht direkt darüber, eine Wiederholung liest sich wie ein Echo. Nimm ein anderes Detail aus der Recherche oder nur, was beim Angebot konkret drin ist.
+LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Ein vorgegebener Satzanfang zählt mit. 25 ist eine harte Grenze: Ein Satz mit 26 Wörtern ist falsch, auch wenn er sonst gut ist. Zähl die Wörter vor der Antwort einzeln (ein Wort mit Bindestrich zählt als eins); hat der Satz mehr als 25, kürze das Detail, statt den Satz abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 100 Wörter.
 Lieferzusage, über die der Satz nie hinausgeht: {Lieferzusage der Form} {Lieferzusage des Kunden}
-Keine Zahl, die die Lieferzusage nicht nennt, keine Frist (ein „morgen“ steht nur in der Schlussfrage), kein Gespräch und kein Termin, keine zweite Leistung, keine Frage, kein Lob (das steht schon im Intro), keine Wiederholung von Absatz 1. Keine Gedankenstriche.
+Keine Zahl, die die Lieferzusage nicht nennt, auch keine aus der Recherche (keine Bewertung, keine Punkte, keine Jahre, keine Kundenzahl), keine Frist (ein „morgen“ steht nur in der Schlussfrage), kein Gespräch und kein Termin, keine zweite Leistung, keine Frage, kein Lob (das steht schon im Intro), keine Wiederholung von Absatz 1. Keine Gedankenstriche.
 
 FÜR ALLE DREI ABSÄTZE
 Die Bedingung steht nie im Text, und nichts klingt nach einem Mangel des Leads.
@@ -231,32 +243,33 @@ Anrede: Sprich die Person mit Sie an (Sie, Ihnen, Ihre). Nie du oder ihr, nie Si
 **Englisch:**
 
 ```
-Write the offer part of email 1 for this lead. It has three paragraphs: the server inserts paragraphs 1 and 3 of the chosen offer, you write paragraph 2 only and report the number of the chosen offer under "angebot". Output nothing but paragraph 2: no name of an offer, no reasoning, no heading.
+Write the offer part of email 1 for this lead. It has three paragraphs: paragraphs 1 and 3 are fixed for each offer and are inserted automatically for the offer you choose. You write paragraph 2 only and give the number of the chosen offer under "angebot". Output nothing but paragraph 2: no name of an offer, no reasoning, no heading.
 
 CHOOSING THE OFFER
-Offer {No.} fits if the research shows: {condition}{ Also: {free text}}
-Main offer: applies if none of these conditions is shown.
-A condition only counts as shown if the research states it for this lead; "unclear" or not mentioned counts as not shown. If several offers fit, take the one listed first.
+Offer 2 fits if the research shows: {condition} Also: {free text}
+Offer 1 (main offer): applies only if none of these conditions is shown.
+A condition only counts as shown if the research states it for this lead; "unclear" or not mentioned counts as not shown. If several offers fit, take the one with the lowest number among them.
 
 THE OFFERS
-Offer {No.}:
+Offer 1 (main offer):
+- Paragraph 1: "{the form's sentence with the main offer's thing}"
+- Paragraph 3: "{the form's closing question with its word}"
+- what's in it: "{detail}"
+Offer 2:
 - Paragraph 1: "{the form's sentence with the thing}"
 - Paragraph 3: "{the form's closing question with the word for the thing}"
 - what's in it: "{detail}"
-Offer {last No.} (main offer):
-- Paragraph 1: "…"
-- Paragraph 3: "…"
-- what's in it: "…"
 
 PARAGRAPHS 1 AND 3
-The server inserts paragraph 1 and paragraph 3 of the chosen offer word for word; do not write them.
+Paragraphs 1 and 3 of the chosen offer are fixed and inserted word for word; do not write them.
 
 PARAGRAPH 2
 {the form's rule for the second sentence}
 Base it on what's in the chosen offer, tailored to what the research knows about the lead.
-LENGTH: exactly one sentence of at most 25 words, ideally 15 to 20. Count the words before you answer; if the sentence has more than 25, shorten it instead of handing it in (a semicolon doesn't make it two sentences, it counts). Email 1 has 100 words at most in total.
+Paragraph 2 picks up nothing the intro of this lead already names (no project, client, product, award, place or number from it): the intro sits right above, so a repeat reads like an echo. Take another detail from the research, or only what's in the chosen offer.
+LENGTH: exactly one sentence of at most 25 words, ideally 15 to 20. A given opening counts. 25 is a hard limit: a sentence of 26 words is wrong, however good it is otherwise. Count the words one by one before you answer (a hyphenated word counts as one); if the sentence has more than 25, shorten the detail instead of handing it in (a semicolon doesn't make it two sentences, it counts). Email 1 has 100 words at most in total.
 Delivery promise the sentence never goes beyond: {the form's delivery promise} {the customer's delivery promise}
-No number the delivery promise doesn't name, no deadline (a "tomorrow" only appears in the closing question), no call and no meeting, no second service, no question, no praise (that is already in the intro), no repeat of paragraph 1. No dashes.
+No number the delivery promise doesn't name, none from the research either (no rating, no score, no years, no client count), no deadline (a "tomorrow" only appears in the closing question), no call and no meeting, no second service, no question, no praise (that is already in the intro), no repeat of paragraph 1. No dashes.
 
 FOR ALL THREE PARAGRAPHS
 The condition never appears in the text, and nothing sounds like something the lead is missing.
@@ -312,25 +325,20 @@ Write in English, in the same casual tone as email 1.
 **Lieferzusage der Form** (wörtlich, danach mit einem Leerzeichen die Lieferzusage des Kunden aus
 dem Briefing, ohne Angabe nichts):
 
-- C, deutsch: `Bis morgen nach der Antwort lieferbar, nach dem Fulfillment-Maßstab (5 bis 10 Minuten Nutzerzeit je Antwort mit KI). Der Schlusssatz nennt keinen Link: „… wenn ich es dir morgen zusende?“, mit Schwerpunkt dessen Wort („… wenn ich dir morgen den Entwurf zusende?“).`
+- C, deutsch: `Bis morgen nach der Antwort lieferbar, nach dem Fulfillment-Maßstab (5 bis 10 Minuten Nutzerzeit je Antwort mit KI).`
 - A, deutsch: `Geliefert wird erst nach der Antwort. Formuliert als Angebot, nie als erledigte Arbeit (kein „erstellt“, „vorbereitet“, „liegt bereit“).`
-- C, englisch: `Deliverable by tomorrow after a reply, within 5 to 10 minutes of user time per reply with AI. The closing question names no link: “send it over”, with a focus its word (“send over the draft”).`
+- C, englisch: `Deliverable by tomorrow after a reply, within 5 to 10 minutes of user time per reply with AI.`
 - A, englisch: `Delivered only after a reply. Phrased as an offer, never as finished work (no “created”, “prepared” or “ready”).`
 
-Die Absätze 1 und 3 in der Anweisung sind nur zur Orientierung der KI: ListM8 setzt sie beim
-Speichern selbst aus den Karten ein, auch wenn der Text der Anweisung im Einzelfall abweicht. Die
-App vergleicht die Anweisung aber mit der, die sie aus den Karten baut: Weicht sie ab, zeigt sie
-„Von Hand geändert“, und geänderte Karten bauen sie erst nach einer Bestätigung neu. Deshalb die
-Anweisung Zeichen für Zeichen nach dieser Vorlage bauen. Die App setzt die Region nach „in“ mit
-Artikel (etwa „in der Schweiz“, „im Raum München“) und stellt einen Nebensatz der Sache ans
-Satzende; im Zweifel die Region schlicht als Ort angeben („München“).
+Absatz 3 des Haupt-Angebots trägt sein Wort aus der Karte, ohne eigenes Wort das Wort für die Sache
+der Kampagne (`ctaNoun`).
 
 ### Was im Blueprint steht
 
 Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eingerichtet.
 
 1. **`campaign.station`** mit den Antworten, aus denen ListM8 die Angebote kennt (optionaler,
-   tolerant gelesener Schlüssel ab MCP 4.14.0):
+   tolerant gelesener Schlüssel ab MCP 4.15.0):
 
    ```json
    "station": {
@@ -385,17 +393,29 @@ Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eing
    | Name | Prompt |
    |---|---|
    | `offer_text` | „Vom Server gesetzt: Absatz 1 des Angebots, das die KI für den Lead gewählt hat (Angebot je Lead). Schreibt nie die KI.“ (englisch “Set by the server: paragraph 1 of the offer the AI picked for the lead (offer per lead). Never written by the AI.”) |
-   | `angebot_ausfuehrung` | die Anweisung oben |
+   | `angebot_ausfuehrung` | die Anweisung oben, wie sie dem Kunden gezeigt wurde (ListM8 ersetzt sie beim Import durch die eigene) |
    | `offer_cta` | „Vom Server gesetzt: Absatz 3 des Angebots, das die KI für den Lead gewählt hat (Angebot je Lead). Schreibt nie die KI.“ (englisch “Set by the server: paragraph 3 of the offer the AI picked for the lead (offer per lead). Never written by the AI.”) |
 
 4. **Mail 3 endet neutral** (W5) statt mit der Schlussfrage aus Mail 1, damit sie keinem Angebot
-   widerspricht: „Falls das Thema für dich relevant ist, melde dich gerne.“ · Sie „Falls das Thema
-   für Sie relevant ist, melden Sie sich gerne.“ · englisch “If this is relevant for you, feel free
-   to get in touch.” Mail 2 bis 4 nennen kein einzelnes Angebot.
+   widerspricht: „Melde dich gerne, wenn das Thema für dich relevant ist.“ · Sie „Melden Sie sich
+   gerne, wenn das Thema für Sie relevant ist.“ · englisch “Feel free to get in touch if this is
+   relevant for you.” Mail 2 bis 4 nennen kein einzelnes Angebot.
 
 5. **Keine** `campaign.offerFocuses`, keine Variable mit `offerRole`, kein `offerPrompt`.
 
 Tests lassen sich dazu wählen: Die Varianten übernehmen Mail 1 mit den drei Platzhaltern.
+
+**Antworten des Servers beim Anlegen und Bearbeiten (ab MCP 4.15.0):**
+
+- `offer_per_lead_inconsistent`: Der Blueprint würde „Angebot je Lead“ einer Kampagne mit Station
+  ein- oder ausschalten, ohne dass Mail 1 und die Variablen dazu passen; nichts wurde übernommen.
+  Nicht unverändert erneut senden. Einschalten: Mail 1 mit den drei Platzhaltern und die drei
+  Variablen mitschicken. Ausschalten: Mail 1 mit Angebotssatz, festem zweitem Satz und Schlussfrage
+  statt der Platzhalter. Oder den Nutzer in der App umschalten lassen (Angebots-Blatt, Schalter
+  „Angebot je Lead“); die Meldung nennt, was fehlt.
+- `warnings` nennen Station-Antworten, die nicht übernommen wurden (etwa mehr als drei weitere
+  Angebote, ein unbekanntes `feature`, Karte für Karte begründet), und Lücken, die nichts
+  umschalten. Die gespeicherten Werte bleiben. Dem Nutzer zeigen und den Blueprint korrigieren.
 
 ### Beispiel (Karte C, du)
 
@@ -404,44 +424,45 @@ Angebote aus den Vorschlägen, vom Kunden geprüft:
 
 | Nr. | Sache | Wort | konkret drin | Passt, wenn |
 |---|---|---|---|---|
-| 1 | eine Seite für die Online-Terminbuchung | die Buchungsseite | Behandlungen mit Dauer und Buchungsknopf, aus den Texten der Website | Die Website hat keine Online-Buchung. |
-| 2 | eine Galerie mit deinen Vorher-nachher-Fällen | die Galerie | Vorher-nachher-Fälle aus dem Material der Praxis, sortiert nach Behandlung | Die Website hat keine Galerie. |
-| 3 | einen Entwurf für deine neue Startseite | den Entwurf | Startseite mit den Behandlungen, die die Praxis hervorhebt, echten Bewertungen und Buchungsknopf | Haupt-Angebot |
+| 1 | einen Entwurf für deine neue Startseite | den Entwurf | Startseite mit den Behandlungen, die die Praxis hervorhebt, echten Bewertungen und Buchungsknopf | Haupt-Angebot |
+| 2 | eine Seite für die Online-Terminbuchung | die Buchungsseite | Behandlungen mit Dauer und Buchungsknopf, aus den Texten der Website | Die Website hat keine Online-Buchung. |
+| 3 | eine Galerie mit deinen Vorher-nachher-Fällen | die Galerie | Vorher-nachher-Fälle aus dem Material der Praxis, sortiert nach Behandlung | Die Website hat keine Galerie. |
 
 Die Anweisung, die das Plugin daraus baut und vor dem Anlegen zeigt:
 
 ```
-Schreib den Angebotsteil von Mail 1 für diesen Lead. Er hat drei Absätze: Absatz 1 und 3 des gewählten Angebots setzt der Server ein, du schreibst nur Absatz 2 und meldest die Nummer des gewählten Angebots unter „angebot“. Gib nur Absatz 2 aus und sonst nichts: keinen Namen eines Angebots, keine Begründung, keine Überschrift.
+Schreib den Angebotsteil von Mail 1 für diesen Lead. Er hat drei Absätze: Absatz 1 und 3 stehen bei jedem Angebot fest und werden zum gewählten Angebot automatisch eingesetzt. Du schreibst nur Absatz 2 und gibst die Nummer des gewählten Angebots unter „angebot“ an. Gib nur Absatz 2 aus und sonst nichts: keinen Namen eines Angebots, keine Begründung, keine Überschrift.
 
 WAHL DES ANGEBOTS
-Angebot 1 passt, wenn die Recherche belegt: Die Website hat keine Online-Buchung.
-Angebot 2 passt, wenn die Recherche belegt: Die Website hat keine Galerie.
-Haupt-Angebot: gilt, wenn keine dieser Bedingungen belegt ist.
-Eine Bedingung ist nur belegt, wenn die Recherche sie für diesen Lead feststellt; „unklar“ oder nicht erwähnt zählt als nicht belegt. Passen mehrere Angebote, nimm das oberste.
+Angebot 2 passt, wenn die Recherche belegt: Die Website hat keine Online-Buchung.
+Angebot 3 passt, wenn die Recherche belegt: Die Website hat keine Galerie.
+Angebot 1 (Haupt-Angebot): gilt nur, wenn keine dieser Bedingungen belegt ist.
+Eine Bedingung ist nur belegt, wenn die Recherche sie für diesen Lead feststellt; „unklar“ oder nicht erwähnt zählt als nicht belegt. Passen mehrere Angebote, nimm unter ihnen das mit der kleinsten Nummer.
 
 DIE ANGEBOTE
-Angebot 1:
-- Absatz 1: „Deswegen war ich so frei und habe dir eine Seite für die Online-Terminbuchung erstellt.“
-- Absatz 3: „Wäre es in Ordnung, wenn ich dir morgen die Buchungsseite zusende? Völlig unverbindlich natürlich.“
-- konkret drin: „Behandlungen mit Dauer und Buchungsknopf, aus den Texten der Website“
-Angebot 2:
-- Absatz 1: „Deswegen war ich so frei und habe dir eine Galerie mit deinen Vorher-nachher-Fällen erstellt.“
-- Absatz 3: „Wäre es in Ordnung, wenn ich dir morgen die Galerie zusende? Völlig unverbindlich natürlich.“
-- konkret drin: „Vorher-nachher-Fälle aus dem Material der Praxis, sortiert nach Behandlung“
-Angebot 3 (Haupt-Angebot):
+Angebot 1 (Haupt-Angebot):
 - Absatz 1: „Deswegen war ich so frei und habe dir einen Entwurf für deine neue Startseite erstellt.“
 - Absatz 3: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“
 - konkret drin: „Startseite mit den Behandlungen, die die Praxis hervorhebt, echten Bewertungen und Buchungsknopf“
+Angebot 2:
+- Absatz 1: „Deswegen war ich so frei und habe dir eine Seite für die Online-Terminbuchung erstellt.“
+- Absatz 3: „Wäre es in Ordnung, wenn ich dir morgen die Buchungsseite zusende? Völlig unverbindlich natürlich.“
+- konkret drin: „Behandlungen mit Dauer und Buchungsknopf, aus den Texten der Website“
+Angebot 3:
+- Absatz 1: „Deswegen war ich so frei und habe dir eine Galerie mit deinen Vorher-nachher-Fällen erstellt.“
+- Absatz 3: „Wäre es in Ordnung, wenn ich dir morgen die Galerie zusende? Völlig unverbindlich natürlich.“
+- konkret drin: „Vorher-nachher-Fälle aus dem Material der Praxis, sortiert nach Behandlung“
 
 ABSATZ 1 UND 3
-Absatz 1 und Absatz 3 des gewählten Angebots setzt der Server wörtlich ein; schreib sie nicht.
+Absatz 1 und Absatz 3 des gewählten Angebots stehen fest und werden wörtlich eingesetzt; schreib sie nicht.
 
 ABSATZ 2
 Ein Satz, der genau so beginnt: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und dann genau ein Detail des schon erstellten Ergebnisses nennt, an dem noch gefeilt wird, passend zu diesem Lead (aus seiner Recherche oder dem Detail des Schwerpunkts), grammatisch vollständig (z. B. „an der …“). Kein „morgen“, kein „fertig werden“, keine neue Leistung.
 Grundlage ist, was beim gewählten Angebot konkret drin ist, zugeschnitten auf das, was die Recherche über den Lead weiß.
-LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Zähl die Wörter vor der Antwort; hat der Satz mehr als 25, kürze ihn, statt ihn abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 100 Wörter.
-Lieferzusage, über die der Satz nie hinausgeht: Bis morgen nach der Antwort lieferbar, nach dem Fulfillment-Maßstab (5 bis 10 Minuten Nutzerzeit je Antwort mit KI). Der Schlusssatz nennt keinen Link: „… wenn ich es dir morgen zusende?“, mit Schwerpunkt dessen Wort („… wenn ich dir morgen den Entwurf zusende?“). Gebaut aus den Texten und Fotos, die die Praxis schon online hat.
-Keine Zahl, die die Lieferzusage nicht nennt, keine Frist (ein „morgen“ steht nur in der Schlussfrage), kein Gespräch und kein Termin, keine zweite Leistung, keine Frage, kein Lob (das steht schon im Intro), keine Wiederholung von Absatz 1. Keine Gedankenstriche.
+Absatz 2 greift nichts auf, was das Intro dieses Leads schon nennt (kein Projekt, keinen Kunden, kein Produkt, keine Auszeichnung, keinen Ort und keine Zahl daraus): Das Intro steht direkt darüber, eine Wiederholung liest sich wie ein Echo. Nimm ein anderes Detail aus der Recherche oder nur, was beim Angebot konkret drin ist.
+LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Ein vorgegebener Satzanfang zählt mit. 25 ist eine harte Grenze: Ein Satz mit 26 Wörtern ist falsch, auch wenn er sonst gut ist. Zähl die Wörter vor der Antwort einzeln (ein Wort mit Bindestrich zählt als eins); hat der Satz mehr als 25, kürze das Detail, statt den Satz abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 100 Wörter.
+Lieferzusage, über die der Satz nie hinausgeht: Bis morgen nach der Antwort lieferbar, nach dem Fulfillment-Maßstab (5 bis 10 Minuten Nutzerzeit je Antwort mit KI). Gebaut aus den Texten und Fotos, die die Praxis schon online hat.
+Keine Zahl, die die Lieferzusage nicht nennt, auch keine aus der Recherche (keine Bewertung, keine Punkte, keine Jahre, keine Kundenzahl), keine Frist (ein „morgen“ steht nur in der Schlussfrage), kein Gespräch und kein Termin, keine zweite Leistung, keine Frage, kein Lob (das steht schon im Intro), keine Wiederholung von Absatz 1. Keine Gedankenstriche.
 
 FÜR ALLE DREI ABSÄTZE
 Die Bedingung steht nie im Text, und nichts klingt nach einem Mangel des Leads.
@@ -449,7 +470,7 @@ Alle Texte dieses Leads folgen dem gewählten Angebot; nenn nirgends ein anderes
 Anrede: Sprich die Person mit du an (du, dich, dein). Für Tatsachen über den Betrieb darfst du ihr und euer nutzen, aber nie du und ihr im selben Satz. Nie Sie.
 ```
 
-So kommt Mail 1 für eine Praxis ohne Online-Buchung beim Empfänger an (Angebot 1, Absatz 2 von der
+So kommt Mail 1 für eine Praxis ohne Online-Buchung beim Empfänger an (Angebot 2, Absatz 2 von der
 KI, Absatz 1 und 3 von ListM8):
 
 ```
@@ -488,9 +509,14 @@ Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 - **Generieren** (`outreach-generate`, `lead-agent`): `get_lead_data` nennt in `expectedOutput` den
   Schlüssel `angebot` (die Nummern der Angebote) und für `offer_text` und `offer_cta` „set by the
   server“. Die KI wählt nach „WAHL DES ANGEBOTS“ anhand des Abschnitts `WEBSITE-BEFUND` der
-  Recherche, meldet die Nummer unter `angebot`, schreibt `angebot_ausfuehrung` (nur Absatz 2) und
-  schickt `offer_text` und `offer_cta` leer. Eine fehlende oder unbekannte Nummer gilt als
-  Haupt-Angebot (`offer_per_lead` in der Antwort). Person 2 übernimmt Absatz 1 und 3 von Person 1.
+  Recherche: unter den Angeboten, deren Bedingung belegt ist, das mit der kleinsten Nummer, sonst
+  das Haupt-Angebot (Nummer 1). Sie meldet die Nummer unter `angebot`, schreibt
+  `angebot_ausfuehrung` (nur Absatz 2) und schickt `offer_text` und `offer_cta` leer. Ab MCP 4.15.0
+  lehnt `save_lead_variables` eine fehlende oder unbekannte Nummer mit `validation_failed` ab und
+  nennt die gültigen Nummern: Nummer korrigieren und erneut speichern. `offer_instruction_outdated`
+  heißt, die Kampagne trägt eine eigene Anweisung in der alten Nummerierung: Lead überspringen und
+  dem Nutzer melden (bestätigen oder ersetzen in der App). Person 2 übernimmt Absatz 1 und 3 von
+  Person 1.
 - **Prüfen** (`outreach-verify`, `verify-agent`): `offer_text` und `offer_cta` sind Serverwerte,
   kein Befund zum Wortlaut. `angebot_ausfuehrung` wird nach den Regeln der Anweisung geprüft (Regel
   der Form, ein Satz mit höchstens 25 Wörtern, nichts über die Lieferzusage hinaus, keine Zahl, Frist,

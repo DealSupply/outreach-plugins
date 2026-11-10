@@ -60,9 +60,9 @@ SIGN_OFF_GAP = 2  # Leerzeilen zwischen letztem Satz und Grußformel
 # Neutraler Schluss von Step 3, wenn jeder Lead sein eigenes Angebot bekommt (ein Angebot je Lead):
 # Dann passt keine Schlussfrage zu jedem Angebot.
 NEUTRAL_STEP3 = (
-    "falls das thema für dich relevant ist, melde dich gerne",
-    "falls das thema für sie relevant ist, melden sie sich gerne",
-    "if this is relevant for you, feel free to get in touch",
+    "melde dich gerne, wenn das thema für dich relevant ist",
+    "melden sie sich gerne, wenn das thema für sie relevant ist",
+    "feel free to get in touch if this is relevant for you",
 )
 KURZNAME = re.compile(r"^kurzname\s*:\s*(.+)$", re.IGNORECASE)
 ANNOUNCE = r"\b(website|webseite|entwurf|idee|ideen|konzept|angebot|setup|anzeigen)\b.*\bfür\b|ist fertig"

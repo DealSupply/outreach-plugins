@@ -524,7 +524,7 @@ Kampagnen, die bis outreach 0.6.0 angelegt wurden, tragen den zweiten Satz je Le
 
 ### Für Erfahrene: „Angebot je Lead" (Karte A und C)
 
-Auf ausdrücklichen Wunsch, nur bei Karte A und C und nur ab ListM8-MCP 4.14.0: Der Kunde nennt neben dem Haupt-Angebot bis zu drei weitere Angebote, je mit der Sache, wie sie im Satz der Karte steht, dem Wort für die Sache in der Schlussfrage, dem, was konkret drin ist, und einer Bedingung aus den sieben Website-Merkmalen der Recherche (Online-Buchung, Bewertungen, Kontaktformular, Seiten zu einzelnen Projekten, Karriereseite, Galerie, Vertriebsrollen im Team, je „hat" oder „hat keine"). Daraus entsteht **eine** KI-Variable mit der abgenommenen Vorlage: Die KI wählt je Lead das passende Angebot (Haupt-Angebot, wenn keine Bedingung belegt ist) und schreibt den zweiten Absatz nach der Regel der Karte; den Angebotssatz und die Schlussfrage des gewählten Angebots setzt ListM8 ein.
+Auf ausdrücklichen Wunsch, nur bei Karte A und C und nur ab ListM8-MCP 4.15.0: Der Kunde nennt neben dem Haupt-Angebot bis zu drei weitere Angebote, je mit der Sache, wie sie im Satz der Karte steht, dem Wort für die Sache in der Schlussfrage, dem, was konkret drin ist, und einer Bedingung aus den sieben Website-Merkmalen der Recherche (Online-Buchung, Bewertungen, Kontaktformular, Seiten zu einzelnen Projekten, Karriereseite, Galerie, Vertriebsrollen im Team, je „hat" oder „hat keine"). Daraus entsteht **eine** KI-Variable mit der abgenommenen Vorlage: Die KI wählt je Lead das passende Angebot (Haupt-Angebot, wenn keine Bedingung belegt ist) und schreibt den zweiten Absatz nach der Regel der Karte; den Angebotssatz und die Schlussfrage des gewählten Angebots setzt ListM8 ein.
 
 Mail 1 trägt dann an der Stelle der drei Sätze drei Platzhalter in eigenen Absätzen:
 
@@ -550,7 +550,7 @@ Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Reihenfolge
 Wäre es in Ordnung, wenn ich dir morgen die Buchungsseite zusende? Völlig unverbindlich natürlich.
 ```
 
-Mail 3 endet dann neutral („Falls das Thema für dich relevant ist, melde dich gerne."), weil jeder Lead ein anderes Angebot bekommen haben kann. Felder, Vorschläge, die Vorlage DE und EN, der Blueprint und die Prüfung: `fuer-erfahrene.md`, Teil 2.
+Mail 3 endet dann neutral („Melde dich gerne, wenn das Thema für dich relevant ist."), weil jeder Lead ein anderes Angebot bekommen haben kann. Felder, Vorschläge, die Vorlage DE und EN, der Blueprint und die Prüfung: `fuer-erfahrene.md`, Teil 2.
 
 ## Der CTA
 
@@ -788,7 +788,7 @@ Das ist alles. FUP1 ist die kürzeste Mail der Sequenz und darf sich anfühlen w
 
 **Im Thread von Mail 1:** Betreff leer (seit 05.11.2026, vorher eigener Betreff „kurzes Update“ und neuer Thread). Die Mail muss trotzdem für sich verständlich sein. Aufbau: Anrede, der Beleg als erster Absatz (nach „Hallo Vorname,“ klein weiter wie in Mail 1, auch in der Sie-Form), höchstens ein kurzer eigener Satz, dann als letzter Absatz die Schlussfrage aus Mail 1, mit dem Wort für die Sache statt „es“, wo die Karte eins hat. Kein eigener Satz zum Angebot, kein neues Offer, kein Pitch.
 
-Mail 3 endet mit genau einer Frage, nie mit einer Aussage oder Bitte: der Frage aus der Entry Mail, mit der Sache statt „es“, wo die Karte eine hat; jede Variante unten endet so. Einzige Ausnahme ist „Angebot je Lead": Dann endet Mail 3 neutral mit „Falls das Thema für dich relevant ist, melde dich gerne." (Sie „Falls das Thema für Sie relevant ist, melden Sie sich gerne.", englisch “If this is relevant for you, feel free to get in touch.”), weil jeder Lead ein anderes Angebot bekommen haben kann, und Mail 2 bis 4 nennen kein einzelnes Angebot.
+Mail 3 endet mit genau einer Frage, nie mit einer Aussage oder Bitte: der Frage aus der Entry Mail, mit der Sache statt „es“, wo die Karte eine hat; jede Variante unten endet so. Einzige Ausnahme ist „Angebot je Lead": Dann endet Mail 3 neutral mit „Melde dich gerne, wenn das Thema für dich relevant ist." (Sie „Melden Sie sich gerne, wenn das Thema für Sie relevant ist.", englisch “Feel free to get in touch if this is relevant for you.”), weil jeder Lead ein anderes Angebot bekommen haben kann, und Mail 2 bis 4 nennen kein einzelnes Angebot.
 
 Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie ein Pitch. Hier, nach zwei Kontakten ohne Verkaufsdruck, wirkt er wie ein Beleg.
 

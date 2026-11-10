@@ -246,14 +246,14 @@ diese Regeln:
   15 bis 20 (nachzählen, ein Strichpunkt zählt mit); Pronomen gemäß `salutation`. Kein zweiter Prüf-
   oder Korrekturlauf.
 
-**Für Erfahrene: „Angebot je Lead“ (nur Karte A und C, ab ListM8-MCP 4.14.0):** Auf ausdrücklichen
+**Für Erfahrene: „Angebot je Lead“ (nur Karte A und C, ab ListM8-MCP 4.15.0):** Auf ausdrücklichen
 Wunsch wählt die KI je Lead eines von bis zu vier Angeboten des Kunden (Haupt-Angebot plus höchstens
 drei weitere, je mit einer Bedingung aus den sieben Website-Merkmalen der Recherche) und schreibt den
 zweiten Absatz; Angebotssatz und Schlussfrage des gewählten Angebots setzt ListM8 ein. Es ist eine
 KI-Variable mit der abgenommenen Vorlage, keine Zusatzlogik: Mail 1 trägt an der Stelle der drei
 Sätze `{{ai.offer_text}}`, `{{ai.angebot_ausfuehrung}}` und `{{ai.offer_cta}}` in drei eigenen
 Absätzen, die Antworten der Karten stehen im Station-Block des Blueprints, und Mail 3 endet neutral
-(„Falls das Thema für dich relevant ist, melde dich gerne.“). Felder, Vorschläge, Vorlage DE und EN,
+(„Melde dich gerne, wenn das Thema für dich relevant ist.“). Felder, Vorschläge, Vorlage DE und EN,
 Blueprint und Beispiel: `references/fuer-erfahrene.md`, Teil 2. Bei Karte B, D und E gibt es die
 Option nicht.
 
@@ -628,7 +628,9 @@ Der `intro`-Prompt MUSS enthalten:
 Der `angebot_ausfuehrung`-Prompt einer neuen Kampagne ist immer die Anweisung von „Angebot je Lead“:
 die abgenommene Vorlage (Deutsch Du, Deutsch Sie, Englisch), gefüllt aus den Karten des Kunden,
 nach `references/fuer-erfahrene.md`, Teil 2. Nicht frei formulieren, nicht kürzen, keine eigenen
-Regeln dazuschreiben; der Kunde sieht sie vor dem Anlegen. `offer_text` und `offer_cta` tragen den
+Regeln dazuschreiben; der Kunde sieht sie vor dem Anlegen. Beim Import ersetzt ListM8 den Prompt
+durch die Anweisung, die es selbst aus den Karten baut (ohne `offerPrompt`); kleine Abweichungen der
+gezeigten Fassung schaden deshalb nicht. `offer_text` und `offer_cta` tragen den
 festen Prompt „Vom Server gesetzt: …“ und nie eine `offerRole`.
 
 Bestehende Kampagnen mit einem eigenen `angebot_ausfuehrung`-Prompt (bis outreach 0.6.0) behalten
@@ -686,7 +688,7 @@ deshalb nur in Step 1, in Step 2, 3 und 4 bleibt er leer.
 |---|---|---|---|---|---|
 | 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, öffnet den Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (A/B/C der feste Satz der Karte, D/E keiner) + EIN CTA, jeder als eigener Absatz + Signatur; mit „Angebot je Lead“ statt der drei Sätze `{{ai.offer_text}}`, `{{ai.angebot_ausfuehrung}}`, `{{ai.offer_cta}}` in drei Absätzen |
 | 2 | Erinnerung | 3 | 50 | leer, Thread von Mail 1 | `{{ai.hallo}}` + nur nachhaken, weich wie eine schnell getippte Nachricht („du hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail angekommen ist“). Kein Doppelpunkt-Opener, kein Offer, kein neuer Aspekt, kein `{{ai.intro}}` |
-| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Karten ohne Wort für die Sache (B, D, E, eigene Frage) nehmen die Frage aus Mail 1 wörtlich; Mail 3 endet mit einer Frage, nie mit einer bloßen Aufforderung („sag einfach kurz Bescheid“). Einzige Ausnahme ist „Angebot je Lead“: Dann endet Mail 3 neutral mit „Falls das Thema für dich relevant ist, melde dich gerne.“ (Sie „Falls das Thema für Sie relevant ist, melden Sie sich gerne.“, englisch “If this is relevant for you, feel free to get in touch.”), weil jeder Lead ein anderes Angebot bekommen haben kann (W5). Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}`. Eine eigene Schlussfrage weicht in ListM8 der Frage aus Mail 1 (seit 06.11.2026). Mit Schwerpunkten oder „Angebot je Lead“ nennen Mail 2 bis 4 nie einen Schwerpunkt oder ein einzelnes Angebot (sie gelten für alle Leads, das Angebot ist je Lead verschieden); ListM8 streicht einen Satz, der ein Schwerpunkt-Label enthält |
+| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Karten ohne Wort für die Sache (B, D, E, eigene Frage) nehmen die Frage aus Mail 1 wörtlich; Mail 3 endet mit einer Frage, nie mit einer bloßen Aufforderung („sag einfach kurz Bescheid“). Einzige Ausnahme ist „Angebot je Lead“: Dann endet Mail 3 neutral mit „Melde dich gerne, wenn das Thema für dich relevant ist.“ (Sie „Melden Sie sich gerne, wenn das Thema für Sie relevant ist.“, englisch “Feel free to get in touch if this is relevant for you.”), weil jeder Lead ein anderes Angebot bekommen haben kann (W5). Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}`. Eine eigene Schlussfrage weicht in ListM8 der Frage aus Mail 1 (seit 06.11.2026). Mit Schwerpunkten oder „Angebot je Lead“ nennen Mail 2 bis 4 nie einen Schwerpunkt oder ein einzelnes Angebot (sie gelten für alle Leads, das Angebot ist je Lead verschieden); ListM8 streicht einen Satz, der ein Schwerpunkt-Label enthält |
 | 4 | Abschied mit Routing-Hinweis | 7 | 60 | leer, Thread von Mail 1 | `{{ai.hallo}}` + Tür offen lassen, ohne Druck und ohne Vorwurf + Routing-Hinweis („sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte“). Kein Offer |
 
 - Gezählt wird der Body ohne Betreff und ohne Signatur, den Bezug aus `{{ai.intro}}` (bis zu

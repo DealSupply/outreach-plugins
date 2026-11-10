@@ -43,7 +43,7 @@ ihm mit `art` und `grund`, was zu tun ist.
    dort die Vorlage des Schwerpunkts (`offerFocus` nennt ihn), ein Serverwert: kein Befund zu Wortlaut oder
    Länge, nur prüfen, ob der Schwerpunkt zum Lead passt. Mit `adapted` hat das Modell den Block angepasst
    (`deviationReason`); dann wie jeden Text prüfen. `proof`- und `noun`-Blöcke sind immer Serverwerte.
-   Ab MCP 4.14.0, „Angebot je Lead“ (Mail 1 mit `offer_text`, `angebot_ausfuehrung` und `offer_cta`,
+   Ab MCP 4.15.0, „Angebot je Lead“ (Mail 1 mit `offer_text`, `angebot_ausfuehrung` und `offer_cta`,
    alle ohne `offerRole`): `offer_text` und `offer_cta` sind Absatz 1 und 3 des Angebots, das die KI
    gewählt hat, vom Server eingesetzt: kein Befund zu Wortlaut oder Länge. Welches Angebot gewählt
    ist, zeigt `offer_text` im Vergleich mit den Angeboten im Prompt von `angebot_ausfuehrung`.
@@ -179,9 +179,9 @@ ihm mit `art` und `grund`, was zu tun ist.
   der Satz gehört zum Angebot in `offer_text`, Anrede wie im Rest. Verstoß: `ablehnen`, `art=text`.
   Wahl des Angebots: Ein weiteres Angebot passt nur, wenn seine Bedingung im Abschnitt
   `WEBSITE-BEFUND` der Recherche belegt ist („unklar“ oder nicht erwähnt ist nicht belegt), sonst
-  gilt das Haupt-Angebot; passen mehrere, das oberste. Eine andere Wahl bricht die Anweisung: ein
-  weiteres Angebot ohne Beleg, das Haupt-Angebot, obwohl eine Bedingung belegt ist, oder ein
-  tieferes Angebot, obwohl ein oberes passt (`ablehnen`, `art=text`, das richtige Angebot im
+  gilt das Haupt-Angebot (Nummer 1); passen mehrere, das mit der kleinsten Nummer. Eine andere Wahl
+  bricht die Anweisung: ein weiteres Angebot ohne Beleg, das Haupt-Angebot, obwohl eine Bedingung
+  belegt ist, oder eine höhere Nummer, obwohl eine kleinere passt (`ablehnen`, `art=text`, das richtige Angebot im
   Grund). Ist der Befund der Website nur offen, aber nachlesbar, stattdessen `art=recherche`. Nenne
   in `grund` die Nummer des gewählten Angebots (`angebot=<Nr.>`).
 - **Technik:** Jede Variable hat Status `success` und ist nicht leer (`offer_text` und `offer_cta`

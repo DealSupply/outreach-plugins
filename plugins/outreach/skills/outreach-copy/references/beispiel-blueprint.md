@@ -191,8 +191,8 @@ in `fuer-erfahrene.md`. Gegenüber dem Blueprint oben ändert sich:
 - **„Angebot je Lead“ (Karte A und C):** `campaign.station` mit den Antworten der Karten, in Step 1
   `{{ai.offer_text}}\n\n{{ai.angebot_ausfuehrung}}\n\n{{ai.offer_cta}}` statt Angebotssatz, festem
   Satz und Schlussfrage, die drei Variablen `offer_text`, `angebot_ausfuehrung` (die Anweisung nach
-  der Vorlage) und `offer_cta`, und Step 3 endet mit „Falls das Thema für dich relevant ist, melde
-  dich gerne.“ statt mit der Schlussfrage. Vollständiges Beispiel mit diesem Absender:
+  der Vorlage, ListM8 baut sie beim Import selbst) und `offer_cta`, und Step 3 endet mit „Melde dich gerne, wenn das Thema für dich relevant
+  ist.“ statt mit der Schlussfrage. Vollständiges Beispiel mit diesem Absender:
   `fuer-erfahrene.md`, Teil 2.
 
 ## Variante der Ansprache: Sie

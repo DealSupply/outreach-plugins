@@ -661,9 +661,9 @@ Offer, kein Pitch. Mail 3 endet mit genau einer Frage, nie mit einer Aussage (�
 oder Bitte; jede Variante unten endet mit der Frage aus Mail 1 ihrer Karte.
 
 Einzige Ausnahme: Bekommt jeder Lead sein eigenes Angebot (für Erfahrene, siehe „Der zweite Satz zum
-Angebot“), endet Step 3 neutral, weil keine Frage zu jedem Angebot passt: „Falls das Thema für dich
-relevant ist, melde dich gerne.“ (Sie „Falls das Thema für Sie relevant ist, melden Sie sich
-gerne.“, englisch “If this is relevant for you, feel free to get in touch.”).
+Angebot“), endet Step 3 neutral, weil keine Frage zu jedem Angebot passt: „Melde dich gerne, wenn das
+Thema für dich relevant ist.“ (Sie „Melden Sie sich gerne, wenn das Thema für Sie relevant ist.“,
+englisch “Feel free to get in touch if this is relevant for you.”).
 
 | Variante | Text |
 |:---------|:-----|

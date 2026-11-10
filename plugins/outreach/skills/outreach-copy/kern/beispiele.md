@@ -247,9 +247,9 @@ Inhaber - Weber Webdesign
 
 Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
-Aufgelöst für eine Praxis ohne Online-Buchung: Von drei Angeboten (Buchungsseite, wenn die Website
-keine Online-Buchung hat; Galerie, wenn sie keine Galerie hat; sonst das Haupt-Angebot, der
-Startseiten-Entwurf) passt hier das erste. Angebotssatz und Schlussfrage gehören zu diesem Angebot,
+Aufgelöst für eine Praxis ohne Online-Buchung: Von drei Angeboten (das Haupt-Angebot, der
+Startseiten-Entwurf; die Buchungsseite, wenn die Website keine Online-Buchung hat; die Galerie, wenn
+sie keine Galerie hat) passt hier die Buchungsseite. Angebotssatz und Schlussfrage gehören zu diesem Angebot,
 der zweite Absatz folgt der Regel der Karte C und nennt ein Detail für diesen Lead.
 
 ## Step 3: Neuer Winkel mit einem Angebot je Lead
@@ -260,7 +260,7 @@ Hallo {{Vorname}},
 
 bei einer Zahnarztpraxis in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen.
 
-Falls das Thema für dich relevant ist, melde dich gerne.
+Melde dich gerne, wenn das Thema für dich relevant ist.
 
 
 Viele Grüße

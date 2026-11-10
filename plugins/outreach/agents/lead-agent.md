@@ -268,14 +268,16 @@ gelten immer.
   kurzem Halbsatz, ohne neues Versprechen und ohne Bitte um ein Gespräch. `proof`- und `noun`-Blöcke nie
   schreiben. Lehnt das Tool mit `no_offer_focus` ab (kein Schwerpunkt passt), keinen Schwerpunkt von Hand
   setzen, sondern `mail=übersprungen grund=kein-schwerpunkt` melden.
-- „Angebot je Lead“ (ab MCP 4.14.0, nur wenn `expectedOutput` den Schlüssel `angebot` nennt): Der Prompt
+- „Angebot je Lead“ (ab MCP 4.15.0, nur wenn `expectedOutput` den Schlüssel `angebot` nennt): Der Prompt
   von `angebot_ausfuehrung` ist die Anweisung mit den Angeboten. Die Bedingungen unter WAHL DES ANGEBOTS
   am Abschnitt `WEBSITE-BEFUND` der Recherche prüfen („unklar“ oder nicht erwähnt ist nicht belegt), das
-  oberste passende Angebot wählen, sonst das Haupt-Angebot (letzte Nummer). Melden als `"angebot": <Nr.>`,
-  unter `angebot_ausfuehrung` nur Absatz 2 (ein Satz, höchstens 25 Wörter, Regel der Karte aus der
-  Anweisung, Bedingung nie im Text), `offer_text` und `offer_cta` leer schicken: Absatz 1 und 3 setzt der
-  Server. Nennt die Antwort `offer_per_lead`, galt das Haupt-Angebot; passt Absatz 2 nicht dazu, neu
-  speichern.
+  Angebot mit der kleinsten Nummer unter den passenden wählen, sonst das Haupt-Angebot (Nummer 1). Melden
+  als `"angebot": <Nr.>`, unter `angebot_ausfuehrung` nur Absatz 2 (ein Satz, höchstens 25 Wörter, Regel
+  der Karte aus der Anweisung, Bedingung nie im Text), `offer_text` und `offer_cta` leer schicken: Absatz 1
+  und 3 setzt der Server. Lehnt das Tool mit `validation_failed` ab, weil `angebot` fehlt oder kein
+  Angebot nennt, die Nummer nach den gültigen Nummern der Meldung korrigieren und erneut speichern. Bei
+  `offer_instruction_outdated` (eigene Anweisung in der alten Nummerierung) nichts speichern, sondern
+  `mail=übersprungen grund=anweisung-veraltet` melden.
 - Person 2 (ab MCP 4.11.0, nur wenn `emailGeneration.secondPerson.available` true ist): Sie gehört in
   denselben Aufruf als `second_person="<JSON-String nach secondPerson.expectedOutput>"` mit `fit`, `reason`,
   ihren Texten und Intro-Tags, nach dem Block ZWEITE PERSON im `systemPrompt`. Ihr Intro hat ein eigenes
@@ -330,7 +332,7 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
 ## Antwort
 
 Am Ende NUR eine Zeile:
-`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar|kein-schwerpunkt>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
+`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar|kein-schwerpunkt|anweisung-veraltet>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
 (`grund` nur bei `mail=übersprungen` wegen fehlender, fremder oder unzustellbarer Versandadresse oder ohne passenden Schwerpunkt; bei Chance-Variablen angehängt: ` winkel=<name>:<chance|lob>`)
 bzw. nach „Nachbessern“
 `NACHGEBESSERT lead=<id> art=<…> geändert=<z. B. intro, hallo, adresse, recherche> neu=<kurz: neuer Anker bzw. Adresse>`
