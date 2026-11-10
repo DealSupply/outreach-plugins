@@ -66,7 +66,12 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
    scheint: Leads ohne Schreibaufruf (Recherche vorhanden, aussortiert, Fehler) hält das Band sonst offen.
 4. **Rennschutz:** Meldet ein Agent `lead_run_active`, läuft parallel ein Server-Lauf über dieselben Leads.
    Abwarten (`get_lead_run_status`), dann diese Leads erneut starten.
-5. **Ohne Adresse:** `no_contact_email` (Lead ohne Versandadresse) beendet einen Lead ohne Fehler; nicht
+5. **Veraltete Anweisung:** Meldet ein Agent `anweisung-veraltet` (`offer_instruction_outdated`, ab MCP 4.15.0),
+   trägt die Kampagne eine eigene Anweisung von „Angebot je Lead“ in der alten Nummerierung; jeder weitere
+   Lead scheitert genauso. Keine weiteren Leads starten, dem Nutzer einmal sagen, dass er die Anweisung in
+   der App bestätigt oder ersetzt (Angebots-Blatt, „Fassung aus den Angeboten übernehmen“) oder per
+   `update_ai_variable` in der heutigen Nummerierung schickt, dann den Lauf neu starten.
+6. **Ohne Adresse:** `no_contact_email` (Lead ohne Versandadresse) beendet einen Lead ohne Fehler; nicht
    erneut starten. Dasselbe gilt für `undeliverable_address` (Postfach der Versandadresse existiert laut
    Prüfung nicht, MCP ab 4.6.0); im Bericht als „Adresse unzustellbar“ zählen.
 

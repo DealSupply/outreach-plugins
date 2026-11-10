@@ -42,7 +42,9 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 `campaign.id` in der Antwort genau deinem Auftrag entsprechen. Laufen mehrere Agents parallel, kann
 eine als Datei abgelegte Antwort von einem anderen Agenten überschrieben sein. Stimmt die ID nicht,
 `get_lead_data` erneut aufrufen; stimmt sie dann immer noch nicht, nichts schreiben und
-`FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. Darin stehen `qualificationGeneration`
+`FEHLER lead=<id> stufe=daten: fremder Lead in der Antwort` melden. `offer_instruction_outdated` (ab MCP 4.15.0) kommt schon von `get_lead_data`, sobald der Mail-Teil gebaut wird (auch ohne `stage`): Die Kampagne trägt eine eigene Anweisung von „Angebot je Lead“ in der alten Nummerierung (Haupt-Angebot zuletzt). Das gilt für die ganze Kampagne. Dann nichts schreiben und
+`FEHLER lead=<id> stufe=daten: anweisung-veraltet` melden; der Lauf stoppt die Kampagne und sagt es dem
+Nutzer. Darin stehen `qualificationGeneration`
 (Kriterien), `researchGeneration` (Recherche-Vorgaben), `emailGeneration` (System-Prompt, Ansprache,
 Variablen mit ihrem Winkel) sowie die vorhandene Qualifizierung und Recherche. `lead.contactEmailState` (ab MCP 4.0.0)
 sagt, ob der Lead eine Adresse hat (`present`), noch eine sucht (`searching`) oder ohne Fund
@@ -271,13 +273,14 @@ gelten immer.
 - „Angebot je Lead“ (ab MCP 4.15.0, nur wenn `expectedOutput` den Schlüssel `angebot` nennt): Der Prompt
   von `angebot_ausfuehrung` ist die Anweisung mit den Angeboten. Die Bedingungen unter WAHL DES ANGEBOTS
   am Abschnitt `WEBSITE-BEFUND` der Recherche prüfen („unklar“ oder nicht erwähnt ist nicht belegt), das
-  Angebot mit der kleinsten Nummer unter den passenden wählen, sonst das Haupt-Angebot (Nummer 1). Melden
+  Angebot mit der kleinsten Nummer unter den passenden wählen, sonst das Haupt-Angebot. Melden
   als `"angebot": <Nr.>`, unter `angebot_ausfuehrung` nur Absatz 2 (ein Satz, höchstens 25 Wörter, Regel
   der Karte aus der Anweisung, Bedingung nie im Text), `offer_text` und `offer_cta` leer schicken: Absatz 1
   und 3 setzt der Server. Lehnt das Tool mit `validation_failed` ab, weil `angebot` fehlt oder kein
   Angebot nennt, die Nummer nach den gültigen Nummern der Meldung korrigieren und erneut speichern. Bei
   `offer_instruction_outdated` (eigene Anweisung in der alten Nummerierung) nichts speichern, sondern
-  `mail=übersprungen grund=anweisung-veraltet` melden.
+  `mail=übersprungen grund=anweisung-veraltet` melden. Haupt-Angebot ist das Angebot, das die
+  Anweisung als „(Haupt-Angebot)“ führt (ab MCP 4.15.0 die 1).
 - Person 2 (ab MCP 4.11.0, nur wenn `emailGeneration.secondPerson.available` true ist): Sie gehört in
   denselben Aufruf als `second_person="<JSON-String nach secondPerson.expectedOutput>"` mit `fit`, `reason`,
   ihren Texten und Intro-Tags, nach dem Block ZWEITE PERSON im `systemPrompt`. Ihr Intro hat ein eigenes

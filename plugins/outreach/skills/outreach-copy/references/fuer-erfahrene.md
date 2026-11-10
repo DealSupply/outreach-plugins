@@ -333,6 +333,11 @@ dem Briefing, ohne Angabe nichts):
 Absatz 3 des Haupt-Angebots trägt sein Wort aus der Karte, ohne eigenes Wort das Wort für die Sache
 der Kampagne (`ctaNoun`).
 
+Bei Karte A setzt ListM8 die Region nach „in“ mit Artikel („in der Schweiz“, „im Raum München“) und
+stellt einen Nebensatz der Sache ans Satzende; die gezeigte Fassung kann dort leicht abweichen. Wer
+es genau zeigen will, zeigt nach dem Anlegen den Prompt von `angebot_ausfuehrung` aus
+`export_campaign_blueprint`: Das ist die Anweisung, mit der die Leads geschrieben werden.
+
 ### Was im Blueprint steht
 
 Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eingerichtet.
@@ -405,22 +410,27 @@ Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eing
 
 Tests lassen sich dazu wählen: Die Varianten übernehmen Mail 1 mit den drei Platzhaltern.
 
-**Antworten des Servers beim Anlegen und Bearbeiten (ab MCP 4.15.0):**
+**Antworten des Servers (ab MCP 4.15.0):**
 
-- `offer_per_lead_inconsistent`: Der Blueprint würde „Angebot je Lead“ einer Kampagne mit Station
-  ein- oder ausschalten, ohne dass Mail 1 und die Variablen dazu passen; nichts wurde übernommen.
-  Nicht unverändert erneut senden. Einschalten: Mail 1 mit den drei Platzhaltern und die drei
-  Variablen mitschicken. Ausschalten: Mail 1 mit Angebotssatz, festem zweitem Satz und Schlussfrage
-  statt der Platzhalter. Oder den Nutzer in der App umschalten lassen (Angebots-Blatt, Schalter
-  „Angebot je Lead“); die Meldung nennt, was fehlt.
-- `warnings` nennen Station-Antworten, die nicht übernommen wurden (etwa mehr als drei weitere
-  Angebote, ein unbekanntes `feature`, Karte für Karte begründet), und Lücken, die nichts
-  umschalten. Die gespeicherten Werte bleiben. Dem Nutzer zeigen und den Blueprint korrigieren.
+- `offer_per_lead_inconsistent` (nur `edit_campaign`, bei einer Kampagne mit Station): Der Blueprint
+  würde „Angebot je Lead“ ein- oder ausschalten, ohne dass Mail 1 mit ihren Varianten und die
+  Variablen dazu passen; nichts wurde übernommen, die Meldung nennt, was fehlt. Nicht unverändert
+  erneut senden. Einschalten: Mail 1 (und jede Variante) mit den drei Platzhaltern und die drei
+  Variablen mitschicken. Ausschalten: Mail 1 und ihre Varianten mit Angebotssatz, festem zweitem
+  Satz und Schlussfrage statt `{{ai.offer_text}}` und `{{ai.offer_cta}}`. Oder den Nutzer in der App
+  umschalten lassen (Angebots-Blatt, Schalter „Angebot je Lead“).
+- `create_campaign` lehnt nicht ab, sondern nennt dieselbe Lücke unter `warnings` („offer_per_lead: …
+  is on, but mail 1 lacks …“) und legt die Kampagne halb eingerichtet an. Dann vor den Leads mit
+  `edit_campaign` (Vollersatz aus dem Export) Mail 1 und die Variablen nachreichen.
+- `warnings` nennen außerdem Station-Antworten, die nicht übernommen wurden (etwa mehr als drei
+  weitere Angebote, ein unbekanntes `feature`, Karte für Karte begründet). Die gespeicherten Werte
+  bleiben. Dem Nutzer zeigen und den Blueprint korrigieren.
 
 ### Beispiel (Karte C, du)
 
 Weber Webdesign aus `beispiel-blueprint.md`, Haupt-Angebot der Startseiten-Entwurf, zwei weitere
-Angebote aus den Vorschlägen, vom Kunden geprüft:
+Angebote aus den Vorschlägen, vom Kunden geprüft. Lieferzusage des Kunden (`delivery`): „Gebaut aus
+den Texten und Fotos, die die Praxis schon online hat.“
 
 | Nr. | Sache | Wort | konkret drin | Passt, wenn |
 |---|---|---|---|---|
@@ -514,12 +524,14 @@ Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
   `angebot_ausfuehrung` (nur Absatz 2) und schickt `offer_text` und `offer_cta` leer. Ab MCP 4.15.0
   lehnt `save_lead_variables` eine fehlende oder unbekannte Nummer mit `validation_failed` ab und
   nennt die gültigen Nummern: Nummer korrigieren und erneut speichern. `offer_instruction_outdated`
-  heißt, die Kampagne trägt eine eigene Anweisung in der alten Nummerierung: Lead überspringen und
-  dem Nutzer melden (bestätigen oder ersetzen in der App). Person 2 übernimmt Absatz 1 und 3 von
+  (schon von `get_lead_data`) heißt, die Kampagne trägt eine eigene Anweisung in der alten
+  Nummerierung: für die ganze Kampagne stoppen und dem Nutzer melden (bestätigen oder ersetzen in
+  der App, oder per `update_ai_variable` in der heutigen Nummerierung). Person 2 übernimmt Absatz 1 und 3 von
   Person 1.
 - **Prüfen** (`outreach-verify`, `verify-agent`): `offer_text` und `offer_cta` sind Serverwerte,
   kein Befund zum Wortlaut. `angebot_ausfuehrung` wird nach den Regeln der Anweisung geprüft (Regel
-  der Form, ein Satz mit höchstens 25 Wörtern, nichts über die Lieferzusage hinaus, keine Zahl, Frist,
+  der Form, ein Satz mit höchstens 25 Wörtern, nichts über die Lieferzusage hinaus, nichts, was das
+  Intro schon nennt, keine Zahl (auch keine aus der Recherche), keine Frist, keine
   Frage, kein Termin, kein Lob, keine Wiederholung von Absatz 1, keine Bedingung im Text, kein
   Mangel, passend zum gewählten Angebot). Ob das gewählte Angebot zum Lead passt, zeigt `offer_text`
   zusammen mit dem `WEBSITE-BEFUND` der Recherche.

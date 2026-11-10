@@ -54,7 +54,8 @@ ihm mit `art` und `grund`, was zu tun ist.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
    Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
-   `get_lead_data(campaign_id, lead_id, stage="email")` lesen: `emailGeneration.systemPrompt` und
+   `get_lead_data(campaign_id, lead_id, stage="email")` lesen (antwortet es `offer_instruction_outdated`, ab
+   MCP 4.15.0: `FEHLER lead=<id>: anweisung-veraltet` melden und nichts schreiben): `emailGeneration.systemPrompt` und
    `salutationRule` sind dann die Prüfgrundlage. Alle Variablen müssen englisch sein (sonst `ablehnen`,
    `art=text`), `hallo` ist `Hi {first name},` bzw. `Hi there,`; die deutschen Prüfpunkte unten (du/Sie,
    ihr/euch, „Hallo …“, Umlaute, „…“, deutsche Einstiege und Reaktionsformen, Komma im Sternschnitt)
@@ -173,13 +174,15 @@ ihm mit `art` und `grund`, was zu tun ist.
   Regel der Karte (Karte C beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten
   dran, vor allem“ und nennt genau ein Detail des schon Erstellten, ohne „morgen“ und ohne „fertig
   werden“; Karte A im Konjunktiv, was für diesen Lead drin wäre, nie als erledigte Arbeit), nichts
-  über die Lieferzusage hinaus, keine Zahl, die sie nicht nennt, keine Frist, kein Gespräch oder
+  über die Lieferzusage hinaus, keine Zahl, die sie nicht nennt, auch keine aus der Recherche
+  (Bewertung, Punkte, Jahre, Kundenzahl), nichts, was das Intro dieses Leads schon nennt (Projekt,
+  Kunde, Produkt, Auszeichnung, Ort, Zahl), keine Frist, kein Gespräch oder
   Termin, keine zweite Leistung, keine Frage, kein Lob, keine Wiederholung von Absatz 1, keine
   Gedankenstriche, die Bedingung steht nicht im Text und nichts klingt nach einem Mangel des Leads,
   der Satz gehört zum Angebot in `offer_text`, Anrede wie im Rest. Verstoß: `ablehnen`, `art=text`.
   Wahl des Angebots: Ein weiteres Angebot passt nur, wenn seine Bedingung im Abschnitt
   `WEBSITE-BEFUND` der Recherche belegt ist („unklar“ oder nicht erwähnt ist nicht belegt), sonst
-  gilt das Haupt-Angebot (Nummer 1); passen mehrere, das mit der kleinsten Nummer. Eine andere Wahl
+  gilt das Haupt-Angebot (in der Anweisung „(Haupt-Angebot)“, ab MCP 4.15.0 die 1); passen mehrere, das mit der kleinsten Nummer. Eine andere Wahl
   bricht die Anweisung: ein weiteres Angebot ohne Beleg, das Haupt-Angebot, obwohl eine Bedingung
   belegt ist, oder eine höhere Nummer, obwohl eine kleinere passt (`ablehnen`, `art=text`, das richtige Angebot im
   Grund). Ist der Befund der Website nur offen, aber nachlesbar, stattdessen `art=recherche`. Nenne

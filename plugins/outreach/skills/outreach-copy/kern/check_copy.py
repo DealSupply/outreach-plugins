@@ -63,6 +63,10 @@ NEUTRAL_STEP3 = (
     "melde dich gerne, wenn das thema für dich relevant ist",
     "melden sie sich gerne, wenn das thema für sie relevant ist",
     "feel free to get in touch if this is relevant for you",
+    # frühere Fassung (bis DS-206), in schon angelegten Kampagnen
+    "falls das thema für dich relevant ist, melde dich gerne",
+    "falls das thema für sie relevant ist, melden sie sich gerne",
+    "if this is relevant for you, feel free to get in touch",
 )
 KURZNAME = re.compile(r"^kurzname\s*:\s*(.+)$", re.IGNORECASE)
 ANNOUNCE = r"\b(website|webseite|entwurf|idee|ideen|konzept|angebot|setup|anzeigen)\b.*\bfür\b|ist fertig"
