@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-11-10 – outreach 0.7.0 (benötigt ListM8 MCP 4.14.0 für „Angebot je Lead“)
+
+Neue Kampagnen starten wie in der App einfach: ein Angebot für alle Leads mit dem festen zweiten Satz der Karte, ohne A/B-Test. Tests und „Angebot je Lead“ gibt es für Erfahrene auf Wunsch (DS-195, Weg A). „Angebot je Lead“ braucht ListM8 MCP 4.14.0 (`ping`); ältere Server bekommen immer ein Angebot für alle, alles andere läuft dort wie bisher.
+
+**outreach**
+- `outreach-copy` (SKILL, `references/copy-lehre.md`, `kern/copy-lehre.md`, beide `marketing-offer.md`, `beispiel-blueprint.md`, `kern/beispiele.md`) → Der zweite Satz zum Angebot ist bei Karte A, B und C der feste Satz der App (C „Ich bin gerade noch an den letzten Feinheiten dran.“, A „Darin wäre alles genau auf euch zugeschnitten.“, B „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“, je in der Sie-Form und auf Englisch), D und E ohne. `angebot_ausfuehrung` entsteht nicht mehr von selbst. Angebotssatz, zweiter Satz und Schlussfrage stehen immer in drei eigenen Absätzen. Bestehende Kampagnen mit `angebot_ausfuehrung` behalten ihre Variable.
+- Neu `outreach-copy/references/fuer-erfahrene.md` → die eine Frage „Für Erfahrene“ beim Anlegen; Tests in Mail 1 wie in der App (Betreff-Test als B mit „Frage zu {{Firma}}“, Intro-Test als nächste Variante, beide A, B und C), Empfehlung „ohne Tests“; „Angebot je Lead“ für Karte A und C mit denselben Feldern wie die Karten der App (Haupt-Angebot plus höchstens drei weitere, je Sache, Wort, Detail und Bedingung aus den sieben Website-Merkmalen), Vorschlägen, der abgenommenen Vorlage (Deutsch Du, Deutsch Sie, Englisch), Blueprint (Station-Antworten `offerPerLead`, `offerCards`, drei Platzhalter in Mail 1, Mail 3 neutral) und Beispiel.
+- `outreach-campaign` → fragt einmal „Für Erfahrene“, baut ohne Wahl den Standard, zeigt bei „Angebot je Lead“ Angebote und Anweisung vor dem Anlegen und prüft danach den Station-Block. Keine `offerFocuses`, keine `offerRole`, kein `offerPrompt`. Beim Bearbeiten bleiben Varianten, Schwerpunkte, Station und Variablen, wie sie sind; „Angebot je Lead“ für bestehende Kampagnen in der App.
+- `outreach-launch` → der A/B-Test ist ein Punkt der Launch-Checkliste nur bei gewählten Tests.
+- `outreach-verify`, `verify-agent` → ein fester zweiter Satz und fehlende Varianten ohne gewählte Tests sind kein Befund; bei „Angebot je Lead“ sind `offer_text` und `offer_cta` Serverwerte, `angebot_ausfuehrung` wird nach den Regeln der Anweisung geprüft, die Wahl des Angebots gegen den `WEBSITE-BEFUND`.
+- `outreach-generate`, `lead-agent` → bei „Angebot je Lead“ die Nummer unter `angebot` melden, nur Absatz 2 schreiben, `offer_text` und `offer_cta` leer schicken.
+- `kern/check_copy.py` → Step 3 darf mit „Angebot je Lead“ mit dem neutralen Schluss enden.
+- `outreach-setup`, README → abgestimmt auf MCP 4.14.0.
+- Enthält die Copy-Korrekturen aus DS-180 (Betreff B „Frage zu {{Firma}}“, Auffang-Schwerpunkt, eine Längenregel), die bisher ohne eigene Version waren.
+
 ## 2026-11-07 – outreach 0.6.0, datenbeschaffung 0.5.0, fulfillment 0.1.4
 
 Sammelstand auf ListM8 MCP 4.12.0 (Stand develop, nächster Release nach v4.18.4). Er bringt alles, was der Server seit 4.0.0 kann und die Skills bisher nur auf Zweigen kannten, dazu die Copy-Nacharbeit von 0.4.8 bis 0.5.9 (Einträge darunter). Neues nutzen die Skills nur, wenn `ping` die passende Version meldet; ältere Server ab 3.0.0 laufen weiter wie bisher.
