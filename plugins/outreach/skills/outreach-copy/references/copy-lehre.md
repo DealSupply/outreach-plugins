@@ -669,9 +669,12 @@ Darin wäre alles genau auf euch zugeschnitten.
 
 Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.
 
+
 Viele Grüße
 Julia Weinmann
 Co-Founder - Weinmann Media
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 ```
 
 **Karte B, Pilotprojekt (58 Wörter):**
@@ -692,9 +695,12 @@ Feedback.
 
 Wärst du grundsätzlich offen dafür?
 
+
 Viele Grüße
 Paul Lehmann
 Gründer - Lehmann Outreach
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 ```
 
 **Karte C, Reziprozität (72 Wörter):**
@@ -715,9 +721,12 @@ Ich bin gerade noch an den letzten Feinheiten dran.
 
 Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 
+
 Viele Grüße
 Angela Selbert
 Geschäftsführerin - njoy online marketing GmbH
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 ```
 
 **Karte E, Partner gesucht (60 Wörter):**
@@ -737,9 +746,12 @@ Projekte umsetzen wollen und einen zuverlässigen Betrieb suchen.
 
 Wäre das grundsätzlich interessant?
 
+
 Viele Grüße
 Max Huber
 Geschäftsführer - Huber Architekten
+
+Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 ```
 
 Alle vier liegen zwischen 58 und 72 Wörtern, also im Korridor, in dem die abgenommenen Kampagnen arbeiten (55 bis 86). Gezählt ist der Body ohne Betreff und Signatur, Anrede und Bezug eingerechnet.

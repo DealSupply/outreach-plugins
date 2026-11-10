@@ -171,7 +171,7 @@ Step 1 `body`:
 Step 1 `body`:
 
 ```json
-"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suche ich gerade. Ich starte ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\n\nIm Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.\n\nWärst du grundsätzlich offen dafür?\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suchen wir gerade. Wir starten ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\n\nIm Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.\n\nWärst du grundsätzlich offen dafür?\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
 ```
 
 Die festen Sätze der Karten gelten wörtlich, auch in der Sie-Form („Darin wäre alles genau auf Sie

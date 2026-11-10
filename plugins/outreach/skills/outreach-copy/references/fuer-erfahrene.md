@@ -107,11 +107,14 @@ und der Schlussfrage.
 ### Wann
 
 - Nur Karte A und C (W1). Bei B, D und E gibt es die Option nicht.
-- Nur beim Anlegen einer neuen Kampagne (`create_campaign`) oder beim Füllen einer genannten leeren
-  Kampagne ohne Leads. Eine bestehende Kampagne bekommt „Angebot je Lead“ in der App (Angebots-Blatt,
-  Schalter „Angebot je Lead“): Dort trägt ListM8 für Leads, die schon Mails haben, die bisherigen
-  Absätze als Werte ein; über den Blueprint ginge das nicht, und diese Leads zeigten
-  „[NOT GENERATED]“.
+- Beim Anlegen einer neuen Kampagne (`create_campaign`) oder beim Füllen einer genannten leeren
+  Kampagne. Eine bestehende Kampagne nur auf ausdrücklichen Wunsch und nur, solange noch kein Lead
+  Mails hat (`list_leads` mit `campaign_status="pending_review"` und `"approved"` leer): dann per
+  `edit_campaign` (Vollersatz aus dem Export) genauso gebaut wie beim Anlegen. Haben Leads schon
+  Mails, ginge das über den Blueprint nicht: Diese Leads zeigten „[NOT GENERATED]“. Dann geht es nur
+  in der App (Angebots-Blatt, Schalter „Angebot je Lead“, dort trägt ListM8 die bisherigen Absätze
+  als Werte ein), und den Schalter gibt es dort nur, wenn die Kampagne eine Station trägt (im Export
+  steht `campaign.station`). Standard-Kampagnen aus dem Plugin haben keine; das dem Nutzer so sagen.
 - Nie zusammen mit Schwerpunkten (`campaign.offerFocuses`) oder Angebotsblöcken (Variablen mit
   `offerRole`). Eine Kampagne mit beidem nimmt ListM8 nicht in „Angebot je Lead“.
 - Nur ab ListM8-MCP 4.14.0. Ältere Server kennen die Option nicht: dann ein Angebot für alle.
@@ -132,8 +135,8 @@ Je Angebot drei Felder:
 | „Was ist konkret drin?“ (“What's in it?”) | Grundlage des zweiten Absatzes | Grundlage des zweiten Absatzes |
 
 Hinweis der Karte C: „Nur Angebote, die du jedem passenden Lead wirklich bis morgen schicken
-kannst.“ („Only offers you can really send every matching lead by tomorrow.“) Hinweis der Karte A:
-„Was du nach der Antwort lieferst.“ („What you deliver after a reply.“)
+kannst.“ (“Only offers you can really send every matching lead by tomorrow.”) Hinweis der Karte A:
+„Was du nach der Antwort lieferst.“ (“What you deliver after a reply.”)
 
 Je weiteres Angebot eine Bedingung, „Passt, wenn“ („Fits if“): „Die Website {hat · hat keine}
 {Merkmal}“ („The website {has · has no} {feature}“) mit genau einem der sieben Merkmale der
@@ -313,7 +316,12 @@ dem Briefing, ohne Angabe nichts):
 - A, englisch: `Delivered only after a reply. Phrased as an offer, never as finished work (no “created”, “prepared” or “ready”).`
 
 Die Absätze 1 und 3 in der Anweisung sind nur zur Orientierung der KI: ListM8 setzt sie beim
-Speichern selbst aus den Karten ein, auch wenn der Text der Anweisung im Einzelfall abweicht.
+Speichern selbst aus den Karten ein, auch wenn der Text der Anweisung im Einzelfall abweicht. Die
+App vergleicht die Anweisung aber mit der, die sie aus den Karten baut: Weicht sie ab, zeigt sie
+„Von Hand geändert“, und geänderte Karten bauen sie erst nach einer Bestätigung neu. Deshalb die
+Anweisung Zeichen für Zeichen nach dieser Vorlage bauen. Die App setzt die Region nach „in“ mit
+Artikel (etwa „in der Schweiz“, „im Raum München“) und stellt einen Nebensatz der Sache ans
+Satzende; im Zweifel die Region schlicht als Ort angeben („München“).
 
 ### Was im Blueprint steht
 
@@ -330,10 +338,13 @@ Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eing
        "offer": "<was der Absender verkauft, ein Satz>",
        "audience": "<Zielgruppe>",
        "region": "<Region, nur bei Karte A nötig>",
-       "salutation": "du",
+       "salutation": "<du oder sie, wie emailAgentConfig.salutation>",
        "openerForm": "C",
        "prepared": "<Sache des Haupt-Angebots, wie sie im Satz steht>",
        "delivery": "<Lieferzusage des Kunden, optional>",
+       "ctaNoun": "<Wort für die Sache des Haupt-Angebots, optional>",
+       "subjectTest": false,
+       "introTest": false,
        "elaborationPerLead": false,
        "offerPerLead": true,
        "offerCards": {
@@ -350,9 +361,15 @@ Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eing
    `openerForm` ist `"C"` für Karte C und `"A"` für Karte A (dieselben Buchstaben wie in der App).
    `companyName`, `offer`, `audience`, `openerForm` und `prepared` sind Pflicht: Ohne sie nimmt
    ListM8 den ganzen Block still als nicht gesetzt, und die Variable bekäme keine Angebote.
-   `elaborationPerLead: false` sorgt dafür, dass Mail 1 beim Ausschalten in der App den festen
-   zweiten Satz bekommt. `offerPrompt` (eigene Anweisung) schickt das Plugin nie. Englische
-   Kampagnen setzen `salutation` auf `"du"`.
+   `salutation` ist dieselbe Ansprache wie `emailAgentConfig.salutation`: Ohne `"sie"` setzt ListM8
+   Absatz 1 und 3 auch in einer Sie-Kampagne in der Du-Form ein. Englische Kampagnen setzen `"du"`.
+   `subjectTest` und `introTest` stehen so, wie der Nutzer die Tests gewählt hat (ohne Schlüssel
+   gälte der Betreff-Test als an, falls die Mails später in der App neu erzeugt werden).
+   `elaborationPerLead: false` und `ctaNoun` sorgen dafür, dass Mail 1 und Mail 3 beim Ausschalten in
+   der App den festen zweiten Satz und die Schlussfrage mit dem Wort bekommen. `offerPrompt` (eigene
+   Anweisung) schickt das Plugin nie. Längen: Sache höchstens 200 Zeichen, Wort 120, Detail 1000,
+   Zusatz 500, ohne eckige Klammern und ohne `{{`; eine ungültige Karte lässt ListM8 alle Karten
+   still fallen.
 
 2. **Mail 1** mit den drei Platzhaltern in eigenen Absätzen (W17), an der Stelle von Angebotssatz,
    zweitem Satz und Schlussfrage:
@@ -386,7 +403,7 @@ Angebote aus den Vorschlägen, vom Kunden geprüft:
 | Nr. | Sache | Wort | konkret drin | Passt, wenn |
 |---|---|---|---|---|
 | 1 | eine Seite für die Online-Terminbuchung | die Buchungsseite | Behandlungen mit Dauer und Buchungsknopf, aus den Texten der Website | Die Website hat keine Online-Buchung. |
-| 2 | eine Galerie mit deinen Vorher-nachher-Fällen | die Galerie | die Fälle, die schon online stehen, sortiert nach Behandlung | Die Website hat keine Galerie. |
+| 2 | eine Galerie mit deinen Vorher-nachher-Fällen | die Galerie | Vorher-nachher-Fälle aus dem Material der Praxis, sortiert nach Behandlung | Die Website hat keine Galerie. |
 | 3 | einen Entwurf für deine neue Startseite | den Entwurf | Startseite mit den Behandlungen, die die Praxis hervorhebt, echten Bewertungen und Buchungsknopf | Haupt-Angebot |
 
 Die Anweisung, die das Plugin daraus baut und vor dem Anlegen zeigt:
@@ -408,7 +425,7 @@ Angebot 1:
 Angebot 2:
 - Absatz 1: „Deswegen war ich so frei und habe dir eine Galerie mit deinen Vorher-nachher-Fällen erstellt.“
 - Absatz 3: „Wäre es in Ordnung, wenn ich dir morgen die Galerie zusende? Völlig unverbindlich natürlich.“
-- konkret drin: „die Fälle, die schon online stehen, sortiert nach Behandlung“
+- konkret drin: „Vorher-nachher-Fälle aus dem Material der Praxis, sortiert nach Behandlung“
 Angebot 3 (Haupt-Angebot):
 - Absatz 1: „Deswegen war ich so frei und habe dir einen Entwurf für deine neue Startseite erstellt.“
 - Absatz 3: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“
@@ -456,9 +473,10 @@ Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 
 `export_campaign_blueprint(campaign_id)`:
 
-- `campaign.station.answers` trägt `offerPerLead: true` und `offerCards` mit allen Angeboten. Fehlt
-  der Block, war eine Pflichtantwort leer: mit `edit_campaign` (Vollersatz aus dem Export) die
-  vollständigen Antworten nachreichen.
+- `campaign.station.answers` trägt `offerPerLead: true`, die `salutation` der Kampagne und
+  `offerCards` mit allen Angeboten (nur das Haupt-Angebot ohne Wort und Detail kommt ohne
+  `offerCards` aus). Fehlt der Block, war eine Pflichtantwort leer; fehlen Karten, war eine Karte
+  ungültig: mit `edit_campaign` (Vollersatz aus dem Export) nachreichen.
 - Step 1 hat `{{ai.offer_text}}`, `{{ai.angebot_ausfuehrung}}` und `{{ai.offer_cta}}` je in einem
   eigenen Absatz; Step 3 endet mit dem neutralen Satz.
 - Die drei Variablen stehen ohne `offerRole` da; es gibt keine `offerFocuses`.
