@@ -17,9 +17,18 @@ Nenne dem Nutzer den Befehl für seine Umgebung und führe ihn aus, wo du das ka
 
 Dauerhaft in Claude Code: `/plugin` → Reiter „Marketplaces“ → `outreach-plugins` → Auto-Update einschalten
 (für Marketplaces von Drittanbietern standardmäßig aus). Weitere Plugins aus dem Marketplace
-(`outreach`, `datenbeschaffung`, `fulfillment`) genauso aktualisieren. Mehrere Konfigurationsprofile,
-Projekt-Scope und die alte Quelle `RankM8/outreach-plugins`: Skill `outreach-update`, Abschnitt
-„Claude Code“.
+(`outreach`, `datenbeschaffung`, `fulfillment`) genauso aktualisieren.
+
+- **Projekt-Scope:** Liegt das Plugin nur in einem Projekt, `claude plugin update fulfillment@outreach-plugins
+  --scope project` in diesem Projekt ausführen.
+- **Mehrere Profile:** Wer Claude Code mit mehreren Konfigurationsprofilen nutzt (eigene
+  Konfigurationsordner, etwa über `CLAUDE_CONFIG_DIR`), hat in jedem Profil eigene Plugins; die Schritte
+  in jedem Profil ausführen, in dem `fulfillment` installiert ist.
+- **Alte Quelle:** Das Repo hieß bis Oktober 2026 `RankM8/outreach-plugins`; GitHub leitet weiter.
+  `claude plugin marketplace list` zeigt die Quelle. Schlägt die Aktualisierung trotzdem fehl, den
+  Marketplace neu hinzufügen: `/plugin marketplace remove outreach-plugins`, dann
+  `/plugin marketplace add DealSupply/outreach-plugins` und die Plugins neu installieren
+  (`/plugin install fulfillment@outreach-plugins`).
 
 ## Was sich geändert hat
 

@@ -46,7 +46,10 @@ Marketplace neu hinzufügen: `/plugin marketplace remove outreach-plugins`, dann
 ## Danach: einmal mit DealSupply anmelden
 
 Seit outreach 0.6.0 bringt das Plugin die Verbindung `dealsupply` (`app.dealsupply.ai`) mit. Nach dem
-Update von 0.5.x oder älter wird sie einmal angemeldet, mit den Zugangsdaten von DealSupply:
+Update von 0.5.x oder älter wird sie einmal angemeldet, mit den Zugangsdaten von DealSupply. Wer
+bisher nur über Akquise in die App kam (oft ohne eigenes Passwort), meldet sich zuerst in der App über
+Akquise an (`https://app.dealsupply.ai/sso/akquise`) und verbindet danach im selben Browser; sonst auf
+der Anmeldeseite „Passwort vergessen“. Anmelden:
 
 - Claude Code: `/mcp` öffnen → `plugin:outreach:dealsupply` → anmelden.
 - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply` „Connect“.

@@ -126,8 +126,11 @@ Bis zu 1000 Einträge je Aufruf (E-Mails und Domains zusammen).
   nur, wenn der Host der `website` des Treffers (ohne `www.`) gleich der geprüften Domain ist;
   alles andere als „Firma bekannt“ werten.
 - Zeilen ohne E-Mail lassen sich nur über `domains` prüfen.
-- Treffer sind pro Eintrag auf 10 begrenzt; `summary.truncated=true` meldet das (meist viele Leads
-  auf demselben Host, etwa einer Kette).
+- Treffer teilen sich einen gemeinsamen Deckel: je Trefferliste (`email_matches`, `domain_matches`)
+  höchstens 10 mal die Zahl der Eingaben, nicht 10 je Eintrag. `summary.truncated=true` meldet, dass
+  der Deckel erreicht ist; dann zählt die Zusammenfassung zu wenig (`emails_found`,
+  `domains_matched`, `do_not_contact_hits`). Ursache ist meist eine zu breite Domain oder viele Leads
+  auf demselben Host, etwa einer Kette: die Eingabe enger fassen oder aufteilen und erneut prüfen.
 
 Antwort: `email_matches[]` (`query`, `lead_id`, `email`, `contact_status`, `in_campaigns`,
 `matched_via`), `domain_matches[]` (`domain`, `lead_id`, `email` (kann null sein), `website`,
@@ -307,7 +310,9 @@ Kampagne und in keiner anderen Liste sind; alle übrigen werden nur gelöst. Das
 rückgängig und gibt die Plätze im Lead-Limit sofort wieder frei; schon gebuchte Credits für
 gelöschte Leads werden nicht erstattet. Antwort: `deleted_list`,
 `leads_deleted`, `leads_detached`. Das Löschen von Leads ist unwiderruflich: nur auf ausdrücklichen
-Wunsch.
+Wunsch. Ab MCP 4.16.0 (laut `ping`) antwortet `delete_list` mit `lead_mutation_busy`, wenn gerade
+eine andere Änderung an den Leads läuft (etwa ein Import): Es wurde nichts gelöscht, nach kurzer Zeit
+denselben Aufruf wiederholen. Dasselbe meldet `add_leads_to_campaign` schon auf älteren Servern.
 
 ## Ausscheiden ohne Adresse
 

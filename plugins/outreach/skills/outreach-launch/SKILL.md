@@ -125,8 +125,9 @@ Instantly samt dort angelegter Varianten.
 
 ## Phase 6: Rückmeldung nach DealSupply
 
-- Mit Instantly-Integration übernimmt der Kontaktstatus-Sync (täglich, oder „Jetzt abgleichen")
-  kontaktierte Leads, Antworten (`replied`), Interessierte (`opportunity`) sowie Bounces und
+- Mit Instantly-Integration übernimmt der Kontaktstatus-Sync (alle 15 Minuten für Kampagnen mit neuen
+  Antworten, Opportunities, Bounces oder Abmeldungen, einmal täglich der volle Abgleich, oder sofort
+  über „Jetzt abgleichen") kontaktierte Leads, Antworten (`replied`), Interessierte (`opportunity`) sowie Bounces und
   Abmeldungen (`do_not_contact`) aus dem ganzen Workspace.
 - Ohne Integration oder für Abmeldungen per Antwort, Telefon oder Brief:
   `mark_leads_contacted(emails=[…], status="do_not_contact" | "contacted" | "replied" | "opportunity")`,
@@ -135,9 +136,11 @@ Instantly samt dort angelegter Varianten.
   herabgestuft; ein Zurücksetzen auf `not_contacted` nur auf ausdrücklichen
   Wunsch und nie für gesperrte Leads.
 - Neue Ansprache versendeter Leads ohne Reaktion (etwa über eine neue Domain): In DealSupply fragt der
-  KI-Lauf beim Start, ob sie neu bearbeitet werden sollen. Per MCP erst
-  `mark_leads_contacted(status="not_contacted", confirm_reset=true)`, dann `start_lead_run`. Der
-  Server setzt nur kontaktierte Leads ohne Reaktion und mit beendeter Instantly-Sequenz zurück und
+  KI-Lauf beim Start, ob sie neu bearbeitet werden sollen. Per MCP entweder direkt
+  `start_lead_run(reset_contacted=true)` (vorher `quote_lead_run(reset_contacted=true)` für den Preis)
+  oder erst `mark_leads_contacted(status="not_contacted", confirm_reset=true)`, dann `start_lead_run`;
+  beides nur nach ausdrücklicher Zustimmung des Nutzers. Der Server setzt auf beiden Wegen nur
+  kontaktierte Leads ohne Reaktion und mit beendeter Instantly-Sequenz zurück; `mark_leads_contacted`
   meldet den Rest in `reset_blocked`. Neu generierte Mails brauchen eine neue Freigabe und gehen
   nur in eine andere Instantly-Kampagne als die bisherige; liegt der Lead noch in der verknüpften,
   hält DealSupply ihn zurück.

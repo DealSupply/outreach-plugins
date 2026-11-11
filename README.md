@@ -53,7 +53,9 @@ Plugin datenbeschaffung, **`fulfillment-setup`** für das Plugin fulfillment). E
 **Umstieg von `akquise`:** Bis outreach 0.5.1 brachte das Plugin die Verbindung `akquise`
 (`outreach.akquise.de`) mit. Ab 0.6.0 heißt sie `dealsupply` und zeigt auf `app.dealsupply.ai`. Nach
 dem Update `dealsupply` einmal mit DealSupply anmelden (in Claude Code unter `/mcp` als
-`plugin:outreach:dealsupply`), auch wer bisher über Akquise kam. Eine von Hand angelegte Verbindung
+`plugin:outreach:dealsupply`). Wer bisher nur über Akquise in die App kam, hat oft kein eigenes
+Passwort: zuerst in der App über Akquise anmelden (`https://app.dealsupply.ai/sso/akquise`), dann im
+selben Browser verbinden, sonst auf der Anmeldeseite „Passwort vergessen“. Eine von Hand angelegte Verbindung
 `akquise` wird nicht mehr gepflegt und zeigt die alte Marke Akquise; sie sollte entfernt werden.
 
 **Updates:** Skill `outreach-update`. In Claude Code ist Auto-Update für Marketplaces von
