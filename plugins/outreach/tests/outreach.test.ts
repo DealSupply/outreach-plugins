@@ -143,6 +143,28 @@ describe('which MCP server is ours', () => {
     await foreign.unmount()
   })
 
+  test('the server this plugin brings along is ours under its Claude Code name plugin_outreach_dealsupply', async ($, on) => {
+    engineDraws(on)
+    on('tool.list', () => ({ value: [] }))
+    const ui = await $.ui.mount({ ...toolRow('mcp__plugin_outreach_dealsupply__list_leads', LIST_LEADS), surface: 'terminal' })
+    expect(await ui.find({ text: /Dr\. Huber Zahnmedizin/ })).toBeDefined()
+    await ui.unmount()
+  })
+
+  test('/outreach-status asks the plugin server under its Claude Code name first, and the bare name only without an answer', async ($, on) => {
+    engineDraws(on)
+    mock.clock(on)
+    const asked: string[] = []
+    on('tool.list', () => ({ value: [] }))
+    on('mcp.call', (_$, e) => {
+      asked.push(String((e as { server: string }).server))
+      return { value: { content: [{ type: 'text', text: JSON.stringify({ runs: [RUN_STATUS], count: 1 }) }], isError: false } }
+    })
+    const res = await $.command.run({ command: 'outreach-status' } as Parameters<typeof $.command.run>[0])
+    expect(String((res as { text?: string }).text)).toContain('1 laufende')
+    expect(asked).toEqual(['plugin_outreach_dealsupply'])
+  })
+
   test('a link the server sends wins over the configured app address', async $ => {
     const withLinks = {
       ...LIST_LEADS,
