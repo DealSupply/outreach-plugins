@@ -25,7 +25,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
 | Ansprache | `salutation: "du"`: „Hallo Vorname,“ (Person der Versandadresse, bei info@ o. Ä. der Inhaber aus der Recherche), Fallback „Hallo,“, durchgehend du/dir/dein | Du-Form, eine Person (Inhaberin/Inhaber) |
 | Betreffs | Step 1 „kurze Frage“, Step 2, 3 und 4 leer | Entwurfs-Angebot (Karte C): Frage statt Ankündigung; Step 2 bis 4 antworten im Thread von Mail 1 |
 | Sequenz | 4 Steps, `delayDays` 0/3/5/7 | Standard; Step 3 ist der neue Winkel mit dem Beleg als Ich-Satz, Step 4 der Abschied der App mit `{{ai.routing}}`; ohne echten Zeit- oder Kapazitätsgrund des Nutzers keine Dringlichkeits-Mail |
-| Variablen | `hallo`, `intro`, `routing` | wie die App; der `intro`-Prompt trägt nur Kontext, Sperrliste und Ersatzsatz (die Opener-Regeln gibt der Server), der `routing`-Prompt ist wörtlich der ROUTING-PROMPT aus `campaign_blueprint_guide` (hier als Platzhalter gezeigt, beim Anlegen den echten Text einsetzen) |
+| Variablen | `hallo`, `intro`, `routing` | wie die App; der `intro`-Prompt trägt nur Kontext, Sperrliste und Ersatzsatz (die Opener-Regeln gibt der Server), der `routing`-Prompt ist wörtlich die Du-Fassung der App (`routing-baustein.md`, „Die drei Fassungen“; hier als Platzhalter gezeigt, beim Anlegen den echten Text einsetzen) |
 | Signatur | „Viele Grüße“, darunter `{{accountSignature}}` | wie die App; keine Unterschrift mit Name, Rolle oder Firma im Mailtext |
 | Sperrliste | Angstpatienten, Lachgas, Sedierung/Narkose, Kinderbehandlung, Notdienst, Prophylaxe/Dentalhygiene, digitaler Scan/Abdruck, Implantate allgemein; für Beauty und Dermatologie Botox/Hyaluron, Microneedling, Laser-Haarentfernung | branchenübliche Leistungen tragen keinen Opener (Austauschtest); steht gleichlautend in `researchAgentConfig.additionalPrompt` und im `intro`-Prompt |
 | Wörter (fester Text ohne Signatur) | 41 / 23 / 37 / 20 | Step 1 mit Anrede und Bezug (bis 2 Sätze, höchstens 30 Wörter) etwa 70, unter 120; Step 4 mit dem Routing-Absatz (höchstens 35) unter 60 |
@@ -112,7 +112,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
     },
     {
       "name": "routing",
-      "prompt": "<ROUTING-PROMPT aus campaign_blueprint_guide, Fassung für salutation du, wörtlich>",
+      "prompt": "<Routing-Prompt der App, Du-Fassung aus routing-baustein.md, wörtlich>",
       "sortOrder": 3
     }
   ],
@@ -211,7 +211,7 @@ Text bleibt im Singular („dein Team“, „deine Praxis“); eine Ihr- oder Te
 wenn der Nutzer die Kampagne siezen will (Kampagnen an sehr große Unternehmen), ändert man drei
 Stellen gemeinsam: `emailAgentConfig.salutation`, die Format-Regeln im `hallo`-Prompt und die
 Pronomen im festen Sequenztext (inklusive `offer_contract.cta` und der Zeile „Ansprache“ im
-`intro`-Prompt) und die Fassung des `routing`-Prompts (Sie-Fassung des ROUTING-PROMPTs).
+`intro`-Prompt) und die Fassung des `routing`-Prompts (Sie-Fassung, `routing-baustein.md`).
 
 | `salutation` | `hallo`-Regel im Prompt | fester Text, Beispiel Step 1 |
 |---|---|---|

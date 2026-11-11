@@ -53,7 +53,7 @@ Aber der Opener ist kein Kompliment-Generator, sondern ein Beweis. Er beweist, d
 
 **Nachher (mit AI-Personalisierung):**
 
-„Hallo Max, ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen..."
+„Hallo Max, ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass deine Lieferung schneller da war als bei Amazon..."
 
 ## Abhebung und Austauschtest
 
@@ -373,7 +373,7 @@ Zwischen Offer und CTA kommt bei Karte A, B und C der feste zweite Satz der Kart
 |:---------|:-------------|:---------|
 | **Ansprache** | Tür aufmachen | „Hallo Max," |
 | **Individueller Bezug** | Zeigen: ich hab mich mit dir beschäftigt | „ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass deine Lieferung schneller da war als bei Amazon." |
-| **Überleitung + Offer** | Nahtloser Brücken-Satz zum Angebot. KEIN Pitch. | „Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln für dich aufgenommen." |
+| **Überleitung + Offer** | Nahtloser Brücken-Satz zum Angebot. KEIN Pitch. | „Deswegen war ich so frei und habe dir ein kurzes Video mit drei konkreten Hebeln erstellt." |
 | **CTA** | EINE Handlung. Nicht zwei | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." |
 
 **Die Mail soll klingen wie eine WhatsApp von einem Freund, nicht wie eine Agentur-Website.**
@@ -737,7 +737,7 @@ Das ist der Slot, den die meisten verschenken. In der Entry Mail wirkt Proof wie
 |:---------|:-----|
 | **Case Study** | „Hallo Max, ich habe für einen Online-Händler den eigenen Shop neu aufgesetzt, nachdem sein Amazon-Account gesperrt war, und nach drei Monaten kam ein Drittel seines Umsatzes über den Shop. Wäre es in Ordnung, wenn ich dir morgen den Shop-Entwurf zusende? Völlig unverbindlich natürlich." |
 | **Konkretes Ergebnis** | „Hallo Max, wir haben gerade ein Pilotprojekt mit einem Malerbetrieb abgeschlossen, der jetzt 15 Stunden pro Woche spart, weil die Auftragsabwicklung automatisiert läuft. Wärst du grundsätzlich offen dafür?" |
-| **Relevanter Fakt** | „Hallo Max, bei Unternehmen mit bis zu 49 Mitarbeitern übernimmt das Programm aktuell bis zu 100 % der Weiterbildungskosten, dazu kommt ein Lohnkostenzuschuss. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." |
+| **Beleg zur Förderung** | „Hallo Max, ich habe dieses Jahr schon 40 Betrieben mit bis zu 49 Mitarbeitern geholfen, ihre Weiterbildung über das Programm fördern zu lassen, bei den meisten zu 100 %. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." |
 | **Ohne Beleg** | „Hallo Max, eine neue Website lohnt sich oft erst, wenn Besucher dort direkt einen Termin buchen können. Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich." |
 
 **Regel für die Case Study:** eine Geschichte, eine Zahl, ein Ergebnis. Keine Aufzählung von Kunden, keine Logo-Parade. Nur Belege, die der Nutzer angegeben hat; Zahlen und Namen in den Varianten oben sind erfunden und stehen nur für den Aufbau.
@@ -867,7 +867,7 @@ WARUM SCHLECHT:
 
 **So geht's besser:**
 
-„ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon. Das ist ein Grund, direkt bei dir statt bei Amazon zu bestellen. Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln zu deinem Online-Auftritt aufgenommen. / Ich bin gerade noch an den letzten Feinheiten dran. / Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (/ = neuer Absatz)
+„ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass deine Lieferung schneller da war als bei Amazon. Deswegen war ich so frei und habe dir ein kurzes Video mit drei konkreten Hebeln zu deinem Online-Auftritt erstellt. / Ich bin gerade noch an den letzten Feinheiten dran. / Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (/ = neuer Absatz)
 
 Kein Pitch. Vom Bezug direkt zum Offer. Fertig.
 

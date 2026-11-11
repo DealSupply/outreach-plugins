@@ -688,7 +688,7 @@ englisch “Feel free to get in touch if this is relevant for you.”).
 |:---------|:-----|
 | Case Study | „Hallo {{Vorname}}, ich habe für einen Online-Händler den eigenen Shop neu aufgesetzt, nachdem sein Amazon-Account gesperrt war, und nach drei Monaten kam ein Drittel seines Umsatzes über den Shop. Wäre es in Ordnung, wenn ich dir morgen den Shop-Entwurf zusende? Völlig unverbindlich natürlich.“ |
 | Konkretes Ergebnis | „Hallo {{Vorname}}, wir haben gerade ein Pilotprojekt mit einem Handwerksbetrieb abgeschlossen, der jetzt 15 Stunden pro Woche spart, weil die Auftragsabwicklung automatisiert läuft. Wärst du grundsätzlich offen dafür?“ |
-| Relevanter Fakt | „Hallo {{Vorname}}, bei Unternehmen mit bis zu 49 Mitarbeitern übernimmt das Programm aktuell bis zu 100 % der Weiterbildungskosten. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ |
+| Beleg zur Förderung | „Hallo {{Vorname}}, ich habe dieses Jahr schon 40 Betrieben mit bis zu 49 Mitarbeitern geholfen, ihre Weiterbildung über das Programm fördern zu lassen, bei den meisten zu 100 %. Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ |
 
 - Eine Geschichte, eine Zahl, ein Ergebnis. Keine Kundenliste, keine Logo-Parade.
 - Der Beleg steht als ganzer Satz aus Sicht des Absenders, mit ich oder wir, nie dem Empfänger

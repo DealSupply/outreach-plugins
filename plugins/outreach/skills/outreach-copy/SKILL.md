@@ -704,9 +704,10 @@ Gibt die Recherche keinen Anker her, der den Austauschtest besteht, schreibe gen
 fortgesetzt.“ Die Intro-Regeln oben gelten trotzdem: für das Prüfen der Werte und überall, wo das
 Plugin Intros selbst schreibt (`outreach-generate`, Abo-Lauf).
 
-Der `routing`-Prompt ist wörtlich der ROUTING-PROMPT aus dem MCP-Prompt `campaign_blueprint_guide`
-(deutsch je `salutation` die Du- oder die Sie-Fassung, englisch die eine Fassung), nicht selbst
-formuliert oder gekürzt. Er schreibt je Lead den Routing-Absatz des Abschieds (höchstens 35 Wörter,
+Der `routing`-Prompt ist wörtlich der Prompt der App, nicht selbst formuliert oder gekürzt: deutsch
+je `salutation` die Du- oder die Sie-Fassung des ROUTING-PROMPTs aus dem MCP-Prompt
+`campaign_blueprint_guide`, englisch die englische Fassung aus `references/routing-baustein.md`
+(der Guide liefert nur die deutschen). Er schreibt je Lead den Routing-Absatz des Abschieds (höchstens 35 Wörter,
 beginnt groß) in vier Fällen: A andere belegte Ansprechpartner mit Namen, B der feste Team-Satz,
 C bei Einzelbetrieb oder eindeutig zuständigem Empfänger eine weiche Nachfrage zum Angebot der
 ersten Mail, D bei einer zweiten angeschriebenen Person der Firma der Hinweis auf sie. Details:
@@ -913,8 +914,8 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
 11. Trägt der `intro`-Prompt nur Kontext (mit dem festen Folgesatz), Sperrliste und einen
     Ersatzsatz, der keine unbelegte Tatsache behauptet, ohne kopierte Opener-Regeln, Verbotslisten
     oder Beispielsätze (eine eigene Anker-Reihenfolge nur, wenn die Kampagne bewusst abweicht)?
-    Steht dieselbe Sperrliste in den Research-Vorgaben? Ist der `routing`-Prompt wörtlich der
-    ROUTING-PROMPT zur `salutation`, und trägt der Abschied `{{ai.routing}}` als eigenen Absatz?
+    Steht dieselbe Sperrliste in den Research-Vorgaben? Ist der `routing`-Prompt wörtlich die
+    Fassung der App zu Sprache und `salutation` (`references/routing-baustein.md`), und trägt der Abschied `{{ai.routing}}` als eigenen Absatz?
 12. Passen `salutation`, `hallo`-Prompt und die Pronomen des festen Texts zusammen (kein
     „Hallo Herr/Frau …“, „… Team,“ oder „Hallo zusammen,“ mit Du-Text, kein du/ihr-Wechsel in einem Satz und keine Anrede mit ihr/euch, auch
     nicht ohne Ansprechpartner: „Hallo,“ und „dein Team“)?
