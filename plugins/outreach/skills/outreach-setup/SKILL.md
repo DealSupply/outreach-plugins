@@ -25,7 +25,9 @@ Stelle fest, wo du läufst, und nenne es dem Nutzer in einem Satz:
 
 Rufe `list_campaigns` auf (nur lesend).
 
-- **Antwort kommt:** Verbindung steht. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
+- **Antwort kommt:** Verbindung steht. Zusätzlich `ping` aufrufen und die Server-Version nennen. Ab
+  `4.0.0` lassen sich Leads auch nur mit Website (ohne E-Mail) importieren; darunter (auch auf 3.x)
+  braucht jeder Lead eine E-Mail. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
 - **Kein Outreach-Tool verfügbar oder Anmeldung nötig:**
   - **DealSupply-Kunden:** Das Plugin bringt die Verbindung `dealsupply` mit (`app.dealsupply.ai`).
     - Claude Code: `/mcp` öffnen → `dealsupply` → anmelden.
@@ -38,13 +40,31 @@ Rufe `list_campaigns` auf (nur lesend).
   - Danach `list_campaigns` erneut aufrufen.
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
   Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
+- **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Die Adresse entfällt, das
+  Plugin bringt sie nicht mehr mit. Steht sie trotzdem noch da (von Hand angelegt), dem Nutzer
+  empfehlen, sie zu entfernen (Claude Code `/mcp`, Codex `codex mcp remove akquise`, Claude App unter
+  Connectors) und `dealsupply` anzumelden.
 
 Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab. Englische Kampagnen (Kampagnensprache `campaign.language`) gibt es ab
-  MCP 4.7.0; auf älteren Servern ist jede Kampagne deutsch.
+  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.15.0. Was neuer ist als 3.0.0, nutzen sie
+  nur, wenn der Server es kennt:
+  - ab 4.0.0 Leads ohne E-Mail (E-Mail oder eigene Website je Lead), ab 4.4.0 der Kampagnen-Export als
+    Datei, ab 4.5.0 Workspaces, ab 4.6.0 Power-ups, ab 4.7.0 englische Kampagnen (`campaign.language`;
+    auf älteren Servern ist jede Kampagne deutsch);
+  - ab 4.8.0 die Close-Werkzeuge (`get_close_status`, `set_close_sync`), ab 4.9.0 die Freigabe einer in
+    der App eingerichteten Kampagne (`release_campaign`, Fehler `setup_open`);
+  - ab 4.10.0 Intro-Varianten mit Tags (`<name>__anker`, `<name>__schluss`; ältere Server nennen sie nicht
+    in `expectedOutput`, dann werden sie auch nicht mitgeschickt);
+  - ab 4.11.0 Schwerpunkte und Angebotsblöcke, zwei Personen je Firma, A/B-Varianten im Blueprint und
+    `set_offer_focus`; ab 4.12.0 nennt `save_lead_variables` die Korrekturen des Servers (`server_adjusted`);
+  - ab 4.15.0 „Angebot je Lead“ (Station-Antworten `offerPerLead`, `offerCards` im Blueprint, Schlüssel
+    `angebot` in `get_lead_data` und `save_lead_variables`, Haupt-Angebot als Nummer 1, ungültige
+    Nummer abgelehnt, `offer_per_lead_inconsistent` beim halben Umschalten); auf älteren Servern
+    (auch 4.14.x, dort war das Haupt-Angebot die letzte Nummer) legt `outreach-campaign` neue
+    Kampagnen immer mit einem Angebot für alle an.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App
