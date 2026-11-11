@@ -1,6 +1,6 @@
 import type { ImportView, RunView, StageView } from '../types'
 
-/** Die Farben des Bands (Akquise-Palette). */
+/** Die Farben des Bands (brand palette). */
 export const BRAND = {
   /** primary 500, Grün: Rahmen, laufende Arbeit, Fortschritt. */
   accent: '#36ae66',

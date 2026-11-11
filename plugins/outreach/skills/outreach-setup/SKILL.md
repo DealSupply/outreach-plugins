@@ -16,8 +16,9 @@ Stelle fest, wo du läufst, und nenne es dem Nutzer in einem Satz:
 | Umgebung | Woran erkennbar | Besonderheit |
 |---|---|---|
 | Claude Code (Terminal, Desktop-Code-Tab) | Zugriff auf Dateisystem und Shell | Live-Ansicht (Band, Lead-Vorschau) verfügbar |
-| Claude App / claude.ai / Cowork | keine lokale Shell | Verbindung im Plugin unter „Connectors“ |
-| ChatGPT Desktop / Codex | OpenAI-Umgebung | Verbindung beim ersten Aufruf; ChatGPT im Browser erst später |
+| Claude App / claude.ai / Cowork | keine lokale Shell | Verbindung im Plugin `outreach`, Reiter „Connectors“ |
+| ChatGPT Desktop / Codex | OpenAI-Umgebung | Verbindung beim ersten Aufruf |
+| ChatGPT im Browser | OpenAI ohne Plugins | keine Skills aus dem Marketplace; nur die Verbindung über „Plugins“ → „+“ als eigener MCP-Server |
 | Cursor & andere | Skills ohne Plugin | MCP separat über die App-Seite „MCP & Skills“ |
 
 ## 2. Verbindung prüfen
@@ -26,11 +27,12 @@ Rufe `list_campaigns` auf (nur lesend).
 
 - **Antwort kommt:** Verbindung steht. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
 - **Kein Outreach-Tool verfügbar oder Anmeldung nötig:**
-  - **Akquise-Kunden:** Das Plugin bringt die Verbindung `akquise` mit (`outreach.akquise.de`).
-    - Claude Code: `/mcp` öffnen → `akquise` → anmelden.
-    - Claude App / claude.ai: Customize → Plugins → `outreach` → Connectors → `akquise` → Verbinden.
-    - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login akquise`.
-  - **Kunden einer anderen Outreach-App:** Die mitgelieferte Verbindung `akquise` unverbunden lassen.
+  - **DealSupply-Kunden:** Das Plugin bringt die Verbindung `dealsupply` mit (`app.dealsupply.ai`).
+    - Claude Code: `/mcp` öffnen → `dealsupply` → anmelden.
+    - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply`
+      „Connect“ → bei DealSupply anmelden und „Autorisieren“ bestätigen.
+    - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
+  - **Kunden einer anderen Outreach-App:** Die mitgelieferte Verbindung `dealsupply` nicht hinzufügen.
     Den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen; Skills und Live-Ansicht
     erkennen ihn automatisch an seinen Tools, der Name ist egal.
   - Danach `list_campaigns` erneut aufrufen.
