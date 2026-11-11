@@ -1092,7 +1092,7 @@ export const register: Register = (on, options) => {
       if (listed !== null) await putActiveRuns($, listed, server)
       return ran
     }
-    // resume_lead_run brings a credits_exhausted run back: putRun keeps the view before, the band asks again.
+    // resume_lead_run brings a credits_exhausted or budget_exhausted run back: putRun keeps the view before, the band asks again.
     const isRun = name === 'start_lead_run' || name === 'resume_lead_run' || name === 'get_lead_run_status' || name === 'cancel_lead_run'
     if (!isRun) return ran
     const payload = payloadOf(ran.result)
