@@ -148,7 +148,7 @@ Dazu kommen je nach Vorgehen die Kosten für Leads (beim Datenanbieter) und für
 - [ ] Daily campaign limit 30 je Postfach, Campaign slow ramp an, Tageslimit der Kampagne Postfächer mal 30, Sendefenster Mo-Fr 09:00-17:00
 - [ ] Open- und Link-Tracking aus (außer für sofortiges Anrufen nach Öffnung), keine Links in den Mails
 - [ ] List-Unsubscribe-Header aktiviert
-- [ ] Signatur genau einmal: Nach `outreach-copy` steht sie als schlanker Klartext in der Sequenz. Eine Postfach-Signatur in Instantly nur, wenn die Sequenz keine eigene trägt, sonst steht sie doppelt. Trägt die Sequenz `{{accountSignature}}` (Kampagne aus dem Start-Satz der App), hat jedes Versandpostfach in Instantly eine schlanke Signatur mit Name, Rolle und Firma, sonst endet die Mail nach der Grußformel
+- [ ] Signatur genau einmal: Die Sequenz trägt unter der Grußformel `{{accountSignature}}` (so baut `outreach-copy` jede Kampagne, wie die App). Jedes Versandpostfach in Instantly braucht deshalb eine schlanke Signatur mit Name, Rolle und Firma, sonst endet die Mail nach der Grußformel. Ältere Kampagnen mit einer Signatur als Klartext in der Sequenz: dann keine Postfach-Signatur, sonst steht sie doppelt
 - [ ] Leadliste verifiziert, Bounce-Prognose unter 3 %
 
 Erst wenn jeder Punkt steht, geht die erste Kampagne live.

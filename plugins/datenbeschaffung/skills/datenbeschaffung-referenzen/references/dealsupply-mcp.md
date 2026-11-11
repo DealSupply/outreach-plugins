@@ -306,7 +306,10 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
 `delete_list(list_id, delete_leads=false, confirm_delete=false)` entfernt standardmäßig nur die
 Gruppierung, alle Leads bleiben. Mit `delete_leads=true` (verlangt `confirm_delete=true`, sonst
 `confirmation_required`) werden zusätzlich nur Leads gelöscht, die nie kontaktiert wurden, in keiner
-Kampagne und in keiner anderen Liste sind; alle übrigen werden nur gelöst. Das macht Test-Importe
+Kampagne und in keiner anderen Liste sind, ab MCP 4.16.0 (laut `ping`) außerdem ohne laufenden Job und
+ohne offene E-Mail-Suche; alle übrigen werden nur gelöst. Ab 4.16.0 bricht der Aufruf mit
+`lead_mutation_busy` ab, wenn gerade eine andere Änderung an den Leads läuft (etwa ein Import): kurz
+warten und erneut versuchen, gelöscht wurde dann nichts. Das macht Test-Importe
 rückgängig und gibt die Plätze im Lead-Limit sofort wieder frei; schon gebuchte Credits für
 gelöschte Leads werden nicht erstattet. Antwort: `deleted_list`,
 `leads_deleted`, `leads_detached`. Das Löschen von Leads ist unwiderruflich: nur auf ausdrücklichen
