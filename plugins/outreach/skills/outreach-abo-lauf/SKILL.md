@@ -127,7 +127,7 @@ return ergebnis.map((r, i) => r ?? { bau: `FEHLER lead=${leads[i].id} stufe=work
 
 Je Lead kommt `{ bau, urteil?, nach?, gegen? }` zurück:
 
-- `bau`: `OK lead=… fit=… recherche=… mail=…` bzw. `FEHLER …`. `fit=not_qualified` heißt aussortiert.
+- `bau`: `OK lead=… fit=… recherche=… mail=…` bzw. `FEHLER …`. `fit=not_qualified` heißt aussortiert, `fit=offen` (`grund=nur-importdaten`) heißt ohne Urteil: Website ohne Evidenz und die Importdaten allein passen nicht; der Lead bleibt offen und geht mit diesem Grund an den Nutzer.
 - `urteil` (nur Stichprobe): `URTEIL lead=… ergebnis=<freigeben|ablehnen|hinweis> art=…`.
 - `nach` und `gegen`: eine Runde Nachbessern für `art=text|recherche|adresse` und die Gegenprüfung.
   Besteht die Gegenprüfung nicht oder lautet `nach` `UNVERÄNDERT`, geht der Lead mit Grund an den Nutzer,

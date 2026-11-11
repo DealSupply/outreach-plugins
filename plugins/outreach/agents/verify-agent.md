@@ -81,10 +81,12 @@ ihm mit `art` und `grund`, was zu tun ist.
   Variablen-Prompt das erlaubt, zum Entscheider hinter einer Sammeladresse. Routing-Namen stehen mit
   aktueller Rolle in der Recherche, nie der Empfänger.
 - **Kampagnenregeln:** Form von `hallo`, Fallbacks und Fall-Logik (z. B. `routing` Fall A/B/C/D) genau
-  wie im Variablen-Prompt; Anrede in allen Variablen gleich und passend zum festen Text. Schreibt die
-  Kampagne auch Person 2 an (`secondPerson` gesetzt), nennt `routing` die jeweils andere angeschriebene
-  Person nie als Alternative, sondern sagt offen, dass sie auch eine Mail bekommen hat (Fall D); sonst
-  `ablehnen`, `art=text`.
+  wie im Variablen-Prompt; Anrede in allen Variablen gleich und passend zum festen Text. Bekommt
+  Person 2 eine eigene Mail (`secondPerson.eligibility` ist `eligible` und sie hat eigene Variablen;
+  `secondPerson` allein heißt das nicht, es steht auch bei abgelehnter Person 2), nennt `routing` die
+  jeweils andere angeschriebene Person nie als Alternative, sondern sagt offen, dass sie auch eine Mail
+  bekommen hat (Fall D); sonst `ablehnen`, `art=text`. Ohne eigene Mail für Person 2 gilt Fall D nicht
+  (einen Satz, sie sei auch angeschrieben, entfernt der Server beim Speichern).
 - **Opener:** Die Sperrliste steht in `researchAgentConfig.additionalPrompt` bzw. im `intro`-Prompt
   des Blueprints. Verstoß ist jeder dieser Punkte:
   - Austauschtest: Der Anker passt auf zehn andere Betriebe derselben Branche in der Stadt

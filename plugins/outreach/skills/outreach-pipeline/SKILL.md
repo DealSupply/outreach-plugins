@@ -25,7 +25,7 @@ Stufen und dieselbe Lead-Auswahl, enden im selben Bericht und führen zum selben
 gemeinsam: ping + list_campaigns -> export_campaign_blueprint -> list_lead_runs(active_only=true)
            -> Leads und Stufen wählen -> Laufart wählen
 Server:    get_credit_balance -> quote_lead_run -> Zustimmung -> start_lead_run(quote_hash)
-           -> get_lead_run_status (poll bis is_terminal); bei resumable resume_lead_run
+           -> get_lead_run_status (poll bis is_terminal); wenn fortsetzbar resume_lead_run
 Abo:       outreach-abo-lauf (Workflow: bauen -> Stichprobe prüfen -> nachbessern)
 gemeinsam: Bericht -> Stichprobe prüfen und freigeben (outreach-verify)
 ```
@@ -105,14 +105,14 @@ Das MCP-Tool `start_lead_run` verkettet Qualifizierung, Research und E-Mail-Vari
 |--------|-----------|-------------------|
 | `completed` | Alle Leads durch | Stichprobe mit /outreach-verify |
 | `completed_with_failures` | Mind. ein Job endgültig gescheitert | Fehl-Leads berichten, Folgelauf anbieten |
-| `credits_exhausted` | Guthaben aufgebraucht, Rest wartet bzw. ist storniert; fortsetzbar (`resumable: true`) | Nachkauf nur bei `get_credit_balance.purchase.allowed` vorschlagen (Link `purchase.app_url`), sonst Plan wechseln; während des Karten-Tests (`purchase.blocker: trial`) startet der Nutzer stattdessen jetzt das Abo in der App. Danach mit `get_credit_balance` prüfen, dass `available` über null liegt, und `resume_lead_run(lead_run_id)` für DENSELBEN Lauf aufrufen, keinen neuen starten; der Lauf behält seinen Preis. Ab MCP 4.16.0 behält er auch sein Budget: Der Rest stoppt am beim Start gesetzten Budget, ein neues Budget für den Rest nur über `budget_credits` (Angebot vorher per `quote_lead_run(lead_run_id, budget_credits)`). Antwortet `resume_lead_run` wieder mit `credits_exhausted`, reicht das Guthaben weiter nicht: zurück an den Nutzer, keine Schleife. Ist kein Kauf möglich, den Rest als Abo-Lauf anbieten |
+| `credits_exhausted` | Guthaben aufgebraucht, Rest wartet bzw. ist storniert; fortsetzbar (ab MCP 4.16.0 `resumable: true`, vorher immer) | Nachkauf nur bei `get_credit_balance.purchase.allowed` vorschlagen (Link `purchase.app_url`), sonst Plan wechseln; während des Karten-Tests (`purchase.blocker: trial`) startet der Nutzer stattdessen jetzt das Abo in der App. Danach mit `get_credit_balance` prüfen, dass `available` über null liegt, und `resume_lead_run(lead_run_id)` für DENSELBEN Lauf aufrufen, keinen neuen starten; der Lauf behält seinen Preis. Ab MCP 4.16.0 behält er auch sein Budget: Der Rest stoppt am beim Start gesetzten Budget, ein neues Budget für den Rest nur über `budget_credits` (Angebot vorher per `quote_lead_run(lead_run_id, budget_credits)`). Antwortet `resume_lead_run` wieder mit `credits_exhausted`, reicht das Guthaben weiter nicht: zurück an den Nutzer, keine Schleife. Ist kein Kauf möglich, den Rest als Abo-Lauf anbieten |
 | `budget_exhausted` | Lauf-Budget erreicht (`budget_percent` bzw. `budget_credits`; bei `byok` `budget_usd`), Rest wartet bzw. ist storniert | **Ab MCP 4.16.0 bei einem Credit-Lauf fortsetzbar** (`resumable: true`): Restmenge (`lead_counts.open`) beziffern und den Nutzer nach einem neuen Budget fragen, dann `quote_lead_run(lead_run_id, budget_credits=<neu>)` zeigt Preis und Deckel des Rests zum eingefrorenen Preis (ohne `quote_hash`), nach Zustimmung `resume_lead_run(lead_run_id, budget_credits=<neu>)`. Ohne neues Budget antwortet der Server `budget_used_up`. `remove_budget=true` (Rest ohne Budget, nur das Guthaben deckelt) nur, wenn der Nutzer es ausdrücklich will, nie zusammen mit `budget_credits`. Einen Folgelauf nur anbieten, wenn der Lauf nicht fortsetzbar ist: vor 4.16.0, bei `byok` (`budget_usd`) und wenn `resumable` false ist; dann Folgelauf mit neuem Angebot oder Abo-Lauf für den Rest |
 | `limit_exhausted` | Plan-Limit mitten im Lauf | An den User (Plan/Limit) — kein Auto-Retry |
 | `provider_exhausted` | Störung beim KI-Anbieter bzw. beim Plattform-Key; bei `byok` lehnt OpenRouter das eigene Konto ab (Guthaben leer oder Key abgelehnt) | An den User, kein Retry; Abo-Lauf als Ausweg anbieten |
 | `cancelled` | Vom User gestoppt (oder beim Umstellen des Abrechnungsmodus abgebrochen, siehe `statusReason`) | Stand berichten |
 | `failed` | Vorbereitung gescheitert, nichts verarbeitet | `statusReason` ausgeben, Vorbedingungen prüfen |
 
-Fortsetzen nur, wenn `get_lead_run_status.resumable` true ist; der Lauf verarbeitet dann nur seine offenen Leads, schon erledigte Stufen werden übersprungen. Ablehnungen von `resume_lead_run` (und von `quote_lead_run` mit `lead_run_id`), nie in eine Schleife:
+Fortsetzen nur, wenn `get_lead_run_status.resumable` true ist. Fehlt das Feld (Server vor MCP 4.16.0), ist nur `credits_exhausted` fortsetzbar, `budget_exhausted` und alle anderen Endzustände nicht. Der Lauf verarbeitet dann nur seine offenen Leads, schon erledigte Stufen werden übersprungen. Ablehnungen von `resume_lead_run` (und von `quote_lead_run` mit `lead_run_id`), nie in eine Schleife:
 
 | Code | Bedeutung | Handlung |
 |---|---|---|

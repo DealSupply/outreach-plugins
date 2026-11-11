@@ -27,7 +27,7 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei vollständig mit Read.
 - Allgemeine Werbehinweise auf Website oder im Impressum nur als Hinweis mit Quelle festhalten; sie
   ändern weder Fit noch Score. Gespeicherte Kontaktstatus nie ändern oder aus Website-Text ableiten.
-- Lehnt ein Werkzeug mit `lead_run_active`, `email_generation_active`, `contact_gate`, `verdict_final`, `verdict_locked`, `verdict_needs_research`, `verdict_being_judged` oder `workspace_read_only` ab: aufhören und das melden.
+- Lehnt ein Werkzeug mit `lead_run_active`, `email_generation_active`, `contact_gate`, `verdict_final`, `verdict_locked`, `verdict_needs_research`, `verdict_being_judged` oder `workspace_read_only` ab: aufhören und das melden. Einzige Ausnahme: `verdict_needs_research` beim Auftrag „neu urteilen“ mit Recherche-Stufe (Schritt 2).
 - Lehnt `save_lead_variables` mit `no_contact_email` ab (der Lead hat keine Versandadresse): keine
   Wiederholung, kein `FEHLER`, sondern die Antwort mit `mail=übersprungen grund=keine-adresse`.
 - Lehnt `save_lead_variables` mit `undeliverable_address` ab (das Postfach der Versandadresse existiert
@@ -92,7 +92,10 @@ gelten immer.
     Im Zweifel durchlassen: Unsicherheit oder „passt halbwegs“ ist nie ein Ablehnungsgrund.
   - `qualified`: Fit positiv belegt, nicht nur keine No-Gos; `highly_qualified`: besonders starker Fit.
   - Nur Importdaten (keine Website-Evidenz): passen sie, höchstens `mid_qualified` und „nur Importdaten“
-    in der Zusammenfassung; passen sie erkennbar nicht, `not_qualified`.
+    in der Zusammenfassung. Passen sie erkennbar nicht oder spräche nur aus ihnen ein Ausschlussgrund:
+    KEIN Urteil schreiben (ohne Website-Evidenz zählt eine Ablehnung nicht als Urteil, der Server-Lauf
+    lässt den Lead dann ebenfalls offen), hier aufhören und
+    `OK lead=<id> fit=offen recherche=übersprungen mail=übersprungen grund=nur-importdaten aufhänger=-` melden.
   - Geschmacksurteile (hässliche Website, wenig Inhalt) sind nie ein Disqualifier, außer die Kampagne sagt es.
   - Score passend (0–39 | 40–59 | 60–79 | 80–100).
 - Speichern: `write_lead_details(campaign_id, lead_id, fields={qualificationStatus: "completed",
@@ -113,8 +116,10 @@ gelten immer.
 - Vorher prüfen: Steht in `get_lead_data` unter `research.text` schon ein Text (kam die Antwort als
   Datei, dieses Feld gezielt darin suchen), ist dieser Schritt übersprungen. Dann kein
   `write_lead_details` mit `research`, `bestEmail`, `decisionMaker` oder `contactRecommendation`;
-  eine vorhandene Recherche wird nie überschrieben, auch nicht mit einer besseren. Einzige Ausnahme ist
-  der Auftrag „Nachbessern“ mit `art=recherche` (unten): Er ergänzt, ohne zu kürzen.
+  eine vorhandene Recherche wird nie überschrieben, auch nicht mit einer besseren. Ausnahmen sind
+  der Auftrag „Nachbessern“ mit `art=recherche` (unten): Er ergänzt, ohne zu kürzen; und der Auftrag
+  „neu urteilen“ mit Recherche-Stufe nach `verdict_needs_research` (Schritt 2): Er recherchiert neu und
+  schreibt die Recherche zusammen mit dem Urteil.
 
 - Fehlt `lead.website`, gilt das wie eine Website, die nichts liefert (Suche nur im Rahmen der Stufe).
 - `researchGeneration.config` bestimmt, WONACH du suchst; `agent.additionalPrompt` gilt zusätzlich,
@@ -157,7 +162,7 @@ gelten immer.
   Geschäftsführung vor Funktionsadresse vor info@/kontakt@; Adressen auf der eigenen Domain oder
   Freemail mit Fundstelle). Der Server macht sie auch zur Identität des Leads. Nie Adressen einer
   Plattform, eines Verzeichnisses, des Webdesigners, Hosters, einer Kammer oder eines Portals, nie
-  geraten, nie Platzhalter. Findet sich keine: `bestEmail` weglassen, unter „### Team & Kontaktinformationen“
+  geraten, nie Platzhalter. Findet sich keine: `bestEmail` weglassen, unter „## Team & Kontaktinformationen“
   „Keine E-Mail-Adresse auf der Website gefunden“ schreiben und die geprüften
   Seiten nennen, trotzdem `status: "researched"`, Schritt 4 entfällt (Antwort
   `mail=übersprungen grund=keine-adresse`). Meldet `warnings` `address_conflict`, gehört die Adresse
@@ -472,8 +477,8 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
 ## Antwort
 
 Am Ende NUR eine Zeile:
-`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar|kein-schwerpunkt>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
-(`grund` nur bei `mail=übersprungen` wegen fehlender, fremder oder unzustellbarer Versandadresse oder ohne passenden Schwerpunkt; bei Chance-Variablen angehängt: ` winkel=<name>:<chance|lob>`)
+`OK lead=<id> fit=<fitLevel> recherche=<neu|vorhanden|übersprungen> mail=<gespeichert|übersprungen> [grund=<keine-adresse|fremde-adresse|adresse-unzustellbar|kein-schwerpunkt|nur-importdaten>] aufhänger=<Thema des Ankers in 2–4 Wörtern, z. B. Bewertungslob Erklären, Fallback>`
+(`grund` nur bei `mail=übersprungen` wegen fehlender, fremder oder unzustellbarer Versandadresse, ohne passenden Schwerpunkt oder bei `fit=offen` ohne Urteil aus Importdaten allein; bei Chance-Variablen angehängt: ` winkel=<name>:<chance|lob>`)
 bzw. nach „Nachbessern“
 `NACHGEBESSERT lead=<id> art=<…> geändert=<z. B. intro, hallo, adresse, recherche> neu=<kurz: neuer Anker bzw. Adresse>`
 oder `UNVERÄNDERT lead=<id> art=<…>: <warum nicht behebbar>`
