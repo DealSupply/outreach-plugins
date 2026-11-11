@@ -75,6 +75,8 @@ Wenn `leads` leer: "Keine Leads mit ausstehendem Research." -> STOP.
 
 Für JEDEN Lead genau einen Agent spawnen (Typ und Modell nach „Abo-Lauf“ oben, `run_in_background: true`, höchstens 10 gleichzeitig in EINEM Message-Block, `name`: "res-{lead.company}" gekürzt).
 
+**Berichtsformat:** Der Bericht folgt genau dem Format des Servers (`references/berichtsformat.md` in diesem Skill). Der `outreach:lead-agent` kennt es. Für die Vorlage unten die Datei einmal lesen und ihren Codeblock an der Stelle `{BERICHTSFORMAT}` einsetzen. Ohne die Pflichtabschnitte (`## WEBSITE-BEFUND`, `## BEWERTUNGEN EXTERN`, `## Stärkste Anker für einen Opener` mit `**Bester Anker:**`, `### Weitere Ansprechpartner`) fehlt später der Angebotswahl, der Schwerpunkt-Prüfung, den Intro-Varianten und dem Routing die Grundlage, auch in Server-Läufen anderer Kampagnen.
+
 ### Sub-Agent Prompt Template
 
 ```
@@ -93,9 +95,10 @@ LEAD: {lead.company} (ID: {lead.id})
    - "contactEmail" (ab MCP 4.0.0) = {required, rules}. Ist "required" true (der Lead hat noch keine Adresse, `lead.contactEmailState` ist nicht "present"), ist die eigene Kontaktadresse des Betriebs ZIEL 0 der Recherche; "rules" sagen, welche Adressen zählen, und gehen den Plugin-Regeln unten vor.
 3. Recherchiere:
    - ZIEL 0, nur wenn der Lead keine Adresse hat: Impressum, Kontakt-, Team- und Datenschutzseite sowie den Footer der eigenen Website nach einer Adresse des Betriebs selbst durchsuchen (innerhalb von "researchTier.rules"; Basis erlaubt die Website, das genügt meist). Persönliche Adresse von Inhaber oder Geschäftsführung vor Funktionsadresse vor info@/kontakt@; info@ ist erlaubt. Nur wörtlich auf einer Seite stehende Adressen mit Fundstelle.
-   - Website (lead.website) per WebFetch laden; relevante Unterseiten (Leistungen, Über uns, Team, Referenzen, Impressum, Kontakt) gezielt nachladen.
-   - Suchen nur nach "researchTier.rules": Basis keine WebSearch und keine fremden Seiten (Bewertungszahlen nur aus den Lead-Attributen), außer genau einer Suche nach "<Firma> <Ort>", wenn die Website gar nichts liefert; Smart erst ohne Suche, dann höchstens eine Suche "<Firma> <Ort> Bewertungen", wenn kein starker Anker belegt ist und keine Rezensionstexte importiert sind; Deep nach Bedarf. Jede Suche unter "## Recherche-Details" mit Suchanfrage vermerken.
-   - Bewertungen (bei Deep zuerst, bei Smart nur in der einen erlaubten Suche): WebSearch liefert nur Links, die Treffer von Bewertungsportalen und Verzeichnissen per WebFetch öffnen (Google Maps und Google-Seiten sind so nicht lesbar). Anzahl und Schnitt aus den Lead-Attributen des Imports gelten als Quelle.
+   - Website (lead.website) per WebFetch laden; relevante Unterseiten (Leistungen, Über uns, Team, Referenzen, Impressum, Kontakt) gezielt nachladen. Fehlt lead.website, gilt das wie eine Website, die nichts liefert (Suche nur nach "researchTier.rules").
+   - Google-Bewertungen (ab MCP 4.16.0): Steht in lead.googleReviews ein Rezensionstext, sind das die Bewertungen des Leads (Zahlen, neueste Texte mit Datum und Sternen, Beiträge des Betriebs). Dann NICHT selbst nach Bewertungen suchen und nur zitieren, was die Texte sagen; Beiträge des Betriebs taugen höchstens als abhebendes Detail, nie als Lob. Namen von Rezensierenden nie.
+   - Suchen nur nach "researchTier.rules": Basis keine WebSearch und keine fremden Seiten (Bewertungszahlen nur aus den Lead-Attributen), außer genau einer Suche nach "<Firma> <Ort>", wenn die Website gar nichts liefert; Smart erst ohne Suche, dann höchstens eine Suche "<Firma> <Ort> Bewertungen", wenn kein starker Anker belegt ist und weder lead.googleReviews noch der Import Rezensionstexte bringen; Deep nach Bedarf (Bewertungen nur ohne Rezensionstexte in lead.googleReviews). Jede Suche unter "## Recherche-Details" mit Suchanfrage vermerken.
+   - Bewertungen ohne lead.googleReviews (bei Deep zuerst, bei Smart nur in der einen erlaubten Suche): WebSearch liefert nur Links, die Treffer von Bewertungsportalen und Verzeichnissen per WebFetch öffnen (Google Maps und Google-Seiten sind so nicht lesbar). Anzahl und Schnitt aus den Lead-Attributen des Imports gelten als Quelle.
    - Die Sperrliste der Kampagne (Research-Vorgaben) beachten: gesperrte Standardleistungen nicht als Aufhänger vormerken, außer als Lob aus Bewertungstexten.
    - Qualifizierungs-Kontext (lead.qualification) als Ausgangspunkt nutzen.
    - Bericht nur mit Ergebnissen über die Firma, in Alltagssprache und mit Quelle; er erscheint für Kunden in der Lead-Ansicht. `anchorRules`, `campaignFrame` und `researchTier` sind Arbeitsanweisungen: weder ihre Namen (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, Prüfaufträge) noch ihre Inhalte stehen im Bericht, also keine Schwellen („ab 30 Bewertungen“), keine Abwägung, ob ein Anker trägt, keine Abhakliste der Ausschlussgründe („kein Franchise, keine Klinik“; stattdessen die Tatsache: „Einzelpraxis mit drei Behandlerinnen“), kein Seitenbudget, keine Recherche-Stufe, keine Herkunft „aus der Vorqualifizierung“: Quelle ist die Seite oder Plattform (URL, Impressum, Google-Profil, Import), nie ein Arbeitsschritt wie Vorqualifizierung oder Recherche, kein Prüfstatus von Adressen, keine Suchvorlage mit Platzhaltern (nur die tatsächlichen Suchwörter). Probe für jeden Satz: Liest der Inhaber ihn als Aussage über seine Firma? Superlative und Vergleiche mit anderen Betrieben („einzigartig“, „kaum ein anderes Institut“, „fast keine Agentur“) nur mit Beleg aus der Quelle, sonst nur das Detail nennen; was einen Anker abhebt, steht am Detail selbst („Sprechstunde bis 21 Uhr“), nicht als „ungewöhnlich“ oder Urteil über die Branche.
@@ -104,13 +107,15 @@ LEAD: {lead.company} (ID: {lead.id})
    - Entscheider (Name/Rolle, meist im Impressum/Über-uns) und die Adresse, über die die Entscheidungsperson am wahrscheinlichsten erreicht wird (Regel in Schritt 5).
 5. Schreibe das Ergebnis:
    write_lead_details(campaign_id={campaign.id}, lead_id={lead.id}, fields={
-     "research": "<Markdown-Report: ## Unternehmen, ## Aufhänger (mit Quellen-URLs), ## Kontakt, ## Besonderheiten>",
+     "research": "<Markdown-Bericht exakt im Format unten>",
      "bestEmail": "<gewählte Versandadresse nach der Regel unten>",
      "decisionMaker": "<Name, Rolle — nur wenn öffentlich belegt>",
      "contactRecommendation": "<1-2 Sätze: wen wie ansprechen>",
      "status": "researched"
    })
    Felder ohne belegte Erkenntnis WEGLASSEN (nicht mit Vermutungen füllen).
+   Format des Berichts, alle Abschnitte in dieser Reihenfolge, Überschriften wörtlich, Platzhalter in [ ] durch Belegtes ersetzen ("Anker-Regeln oben" = researchGeneration.anchorRules):
+{BERICHTSFORMAT}
    `bestEmail` ist die gewählte Versandadresse. Gewählt wird die Adresse, über die die
    Entscheidungsperson am wahrscheinlichsten erreicht wird: belegte persönliche Adresse der
    Entscheidungsperson vor Funktionsadresse (vertrieb@, geschäftsführung@) vor allgemeiner
@@ -126,15 +131,16 @@ LEAD: {lead.company} (ID: {lead.id})
    (`warnings` meldet das). Nie Adressen einer Plattform, eines Verzeichnisses, des Webdesigners,
    Hosters, einer Kammer oder eines Portals, nie geraten, nie Platzhalter. Meldet `warnings`
    `address_conflict`, gehört die Adresse schon einem anderen Lead: nicht wiederholen, im Report
-   vermerken. Findet sich keine Adresse: `bestEmail` WEGLASSEN, unter "## Kontakt" die geprüften
-   URLs nennen und trotzdem status="researched" setzen. Der Lead scheidet dann mit dem Grund
+   vermerken. Findet sich keine Adresse: `bestEmail` WEGLASSEN, unter "## Team & Kontaktinformationen"
+   "Keine E-Mail-Adresse auf der Website gefunden" mit den geprüften Seiten schreiben und trotzdem
+   status="researched" setzen. Der Lead scheidet dann mit dem Grund
    `no_contact_email` aus und bekommt keine Mail.
    Fremde Importadresse: Gehört die Importadresse laut Recherche belegt einem Dritten (Kammer,
    Verband, Portal, Agentur, andere Firma) und findest du keine eigene belegte Adresse des
    Betriebs, `bestEmail` weglassen und die fremde Adresse im Report vermerken. Der Lead bekommt
-   dann keine Mail (der ListM8-Server überspringt ihn in der E-Mail-Stufe). Eine eigene DNS- oder
+   dann keine Mail (der Server überspringt ihn in der E-Mail-Stufe). Eine eigene DNS- oder
    MX-Prüfung der Adresse gibt es nicht und gehört nicht zur Recherche.
-   Power-ups (ListM8-MCP ab 4.6.0): Nennt `researchGeneration.powerUps` die Tools `verify_email`
+   Power-ups (MCP ab 4.6.0): Nennt `researchGeneration.powerUps` die Tools `verify_email`
    oder `find_person_email`, prüft bzw. sucht der Sub-Agent die Adresse über
    `run_power_up(campaign_id, lead_id, tool, input)` nach den Regeln im `lead-agent` (schon geprüfte
    Adressen aus `lead.emailVerdicts` und `lead.powerUpCalls` nicht erneut prüfen): Kandidaten in
