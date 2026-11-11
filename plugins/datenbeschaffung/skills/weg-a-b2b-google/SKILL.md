@@ -7,13 +7,13 @@ description: Weg A des Datenbeschaffungs-Pakets — B2B-Dienstleister (Agenturen
 
 Der Weg für Firmen, die man über ihre Website findet, nicht über einen Maps-Eintrag: Agenturen,
 Kanzleien, Beratungen, Systemhäuser, Makler-, Architektur- und Ingenieurbüros. SERP liefert
-Domains; Kontaktdaten kommen danach optional über `impressum-enrichment` (ab ListM8 MCP 4.0.0 kann
+Domains; Kontaktdaten kommen danach optional über `impressum-enrichment` (ab MCP 4.0.0 kann
 auch die Recherche der Plattform sie suchen). Der Ablauf ist
 manuell: Actor im eigenen Apify-Konto starten, Ergebnis prüfen, als CSV an `listen-qualitaet`, von
-dort Import nach ListM8 (Oberfläche oder MCP `import_leads`).
+dort Import nach DealSupply (Oberfläche oder MCP `import_leads`).
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 Braucht der Nutzer Kontaktdaten ab Werk und ist die Zielgruppe über Firmografien beschreibbar,
 ist `weg-a-apollo` der kürzere Weg — einmal erwähnen, dann hier weitermachen.
@@ -93,7 +93,7 @@ Deckel: kalkulierte Kosten + 50 %. Läuft ein Lauf länger als ein paar Minuten:
 
 ## Schritt 4 — Kontaktdaten holen (optional)
 
-Ab ListM8 MCP 4.0.0 gibt es zwei Wege, Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“
+Ab MCP 4.0.0 gibt es zwei Wege, Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“
 (SERP-Domains haben keine Kontaktdaten, ab etwa 50 Domains ist der Impressum-Lauf meist billiger):
 
 - **Vorab anreichern:** die Domain-CSV aus Schritt 3 an `impressum-enrichment` geben (dort stehen

@@ -107,7 +107,7 @@ Die Spalte `email.emails_validator.status` entscheidet:
 | `BLACKLISTED` | Adresse entfernen |
 | leer | keine Adresse |
 
-Ab ListM8 MCP 4.0.0 bleibt eine Zeile ohne (brauchbare) Adresse erhalten, wenn sie eine eigene
+Ab MCP 4.0.0 bleibt eine Zeile ohne (brauchbare) Adresse erhalten, wenn sie eine eigene
 Website hat: Die Recherche sucht dann die Adresse; nur Zeilen ohne eigene Website fliegen raus.
 Auf älteren Servern fällt jede Zeile ohne `RECEIVING`-Adresse weg.
 

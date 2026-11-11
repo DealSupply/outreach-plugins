@@ -1,6 +1,6 @@
 ---
 name: listen-qualitaet
-description: Dieser Skill wird nach jedem Datenbeschaffungs-Lauf oder bei „Liste prüfen“, „Liste bereinigen“, „Leads qualitätssichern“ und „Liste importieren“ verwendet. Macht aus der Roh-CSV eines manuellen Scrapes (Apify oder Outscraper) eine bereinigte, gegen den Bestand abgeglichene und rückverfolgbare Liste und importiert sie in ListM8.
+description: Dieser Skill wird nach jedem Datenbeschaffungs-Lauf oder bei „Liste prüfen“, „Liste bereinigen“, „Leads qualitätssichern“ und „Liste importieren“ verwendet. Macht aus der Roh-CSV eines manuellen Scrapes (Apify oder Outscraper) eine bereinigte, gegen den Bestand abgeglichene und rückverfolgbare Liste und importiert sie in DealSupply.
 ---
 
 # Listen-Qualität: die Pflicht-Endstation
@@ -12,7 +12,7 @@ Trichter-Prinzip beachten: Diese Stufe sortiert MECHANISCH (Duplikate, Sperren, 
 prüft per Stichprobe. Sie beurteilt NICHT die inhaltliche Passung einzelner Leads: das macht die
 Qualifizierung in der App, und die arbeitet bewusst offen.
 
-**Übergabemodus:** Der Master merkt sich `ping.version`. Ab ListM8 MCP 4.0.0 gilt `kontakt`
+**Übergabemodus:** Der Master merkt sich `ping.version`. Ab MCP 4.0.0 gilt `kontakt`
 (E-Mail oder eigene Website je Zeile), darunter oder ohne Version `email` (jede Zeile braucht eine
 Adresse). Fehlt die Angabe, hier selbst `ping` aufrufen.
 
@@ -49,7 +49,7 @@ export_leads(format="index")  →  bestand-index.json
 python3 ../datenbeschaffung-referenzen/scripts/dedup.py --index bestand-index.json --in roh.csv --out neu.csv
 ```
 
-Index, Prüfung und Import im selben Workspace (`listm8-mcp.md`, Abschnitt „Workspace“).
+Index, Prüfung und Import im selben Workspace (`dealsupply-mcp.md`, Abschnitt „Workspace“).
 
 Der Report nennt: behalten / schon im Bestand / **do_not_contact entfernt** (namentlich, die werden
 NIE angeschrieben) / Domain-Warnungen / ohne E-Mail behalten. Zeilen ohne E-Mail, deren Website
@@ -57,7 +57,7 @@ schon ein Lead ohne E-Mail im Bestand trägt, entfernt `dedup.py` als Dublette. 
 dieser Schritt. Duplikate innerhalb der Datei hat `build_csv.py` bereits entfernt; im Bericht
 ausdrücklich sagen, dass der Bestand-Abgleich fehlte.
 
-**Kontakt-Gate** (ab ListM8 MCP 4.0.0): Zeilen mit E-Mail **oder** eigener Website gehen in die
+**Kontakt-Gate** (ab MCP 4.0.0): Zeilen mit E-Mail **oder** eigener Website gehen in die
 Übergabe. Zeilen nur mit Plattform-Link oder ganz ohne Kontaktmerkmal in eine eigene Datei
 abspalten und die Zahl je Grund berichten:
 
@@ -83,7 +83,7 @@ So wird das Ergebnis des Verifiers gelesen (Test vom 11.10.2026, 200 Adressen):
 | `status` / `reason` | Entscheidung |
 |---|---|
 | `good` | behalten |
-| `bad` | Adresse verwerfen. Ab ListM8 4.0.0: Zeile mit eigener Website ohne Adresse behalten (Hinweis `adresse-verworfen`, die Recherche sucht neu), ohne Website verwerfen. Darunter: Zeile verwerfen |
+| `bad` | Adresse verwerfen. Ab MCP 4.0.0: Zeile mit eigener Website ohne Adresse behalten (Hinweis `adresse-verworfen`, die Recherche sucht neu), ohne Website verwerfen. Darunter: Zeile verwerfen |
 | `risky` + `catch_all_domain` | behalten, wenn die Adresse zur eigenen Domain gehört (bei Maps-Adressen ein Drittel; die Domain nimmt alles an, info@ kommt an) |
 | `risky` + `smtp_unreachable` | wie `bad` |
 | Hinweis `geratene-adresse` | nur `good` behalten (geratene Adressen: 23 von 51 unzustellbar) |
@@ -119,7 +119,7 @@ Dem Nutzer die Stichprobe zeigen (Firma, Website, passt/passt-nicht mit einem Ha
   berichten: `imported`, `linked_to_list`, abgelehnte Zeilen (`rejected_total` aus der Antwort,
   `rejected_by_code` aus dem Job) sowie die Anzahl der Einträge in den Listen `duplicates` und
   `do_not_contact_hits`. Abgelehnte Zeilen nicht wiederholen, sondern mit Grund nennen.
-  Signaturen: `listm8-mcp.md`. In eine Kampagne (`add_leads_to_campaign`) nur auf ausdrücklichen Wunsch.
+  Signaturen: `dealsupply-mcp.md`. In eine Kampagne (`add_leads_to_campaign`) nur auf ausdrücklichen Wunsch.
 - OHNE MCP: finale CSV liefern + Import-Anleitung, mit dem ehrlichen Hinweis, welche Prüfungen
   (Bestand, do_not_contact) erst der App-Import übernimmt.
 

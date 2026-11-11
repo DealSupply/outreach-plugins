@@ -10,7 +10,7 @@ Etsy-Manufakturen, gewerbliche eBay-Verkäufer. **Ergebnis dieses Wegs ist immer
 Kontaktweg, nie eine Produktliste.** Eine Zeile ohne identifizierbaren Händler ist kein Lead.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 **Belegstand:** Für diesen Weg gibt es keine Kurs-Lektion und keine belegten Ist-Kosten wie bei
 Weg C. Grundlage ist die Actor-Recherche vom 19.08.2026 (Plattform-Verkäufer-Sektion in
@@ -85,7 +85,7 @@ Shop-Seiten auf dem Marktplatz (amazon.de, etsy.com, ebay.de) sind Profil-Links,
 
 Etsy und die eBay-Fallbacks liefern oft nur Shop-URLs. Dann `impressum-enrichment` (deutsche Shops
 mit eigener Website) oder `kontaktseiten-fallback` (internationale Domains) über die **eigenen
-Domains der Händler** laufen lassen; ab ListM8 MCP 4.0.0 optional, dann sucht die Recherche die
+Domains der Händler** laufen lassen; ab MCP 4.0.0 optional, dann sucht die Recherche die
 Adresse auf der Händler-Domain (Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“). Händler
 ohne eigene Domain und ohne Adresse sind nicht importierbar. Die Marktplatz-Domains selbst (amazon.de, etsy.com, ebay.de)
 werden **nie** angereichert — sie gehören in die `domainBlacklist` aus `noise-domains.md`, sonst

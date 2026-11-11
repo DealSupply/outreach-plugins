@@ -1,12 +1,12 @@
 ---
 name: impressum-enrichment
-description: Optionaler Anreicherungs-Baustein des Datenbeschaffungs-Pakets: holt für Domains ohne E-Mail-Adresse die Adresse aus dem deutschen Impressum, manuell über einen Apify-Actor im eigenen Konto. Spart Recherche-Kosten und liefert geprüfte Adressen vor dem Import; seit ListM8 MCP 4.0.0 keine Pflicht mehr (Leads mit eigener Website dürfen ohne E-Mail importiert werden). Entscheider, Register und persönliche Adressen findet die Recherche der Plattform. Wird von weg-*-Skills für Leads ohne E-Mail geladen, nie direkt.
+description: Optionaler Anreicherungs-Baustein des Datenbeschaffungs-Pakets: holt für Domains ohne E-Mail-Adresse die Adresse aus dem deutschen Impressum, manuell über einen Apify-Actor im eigenen Konto. Spart Recherche-Kosten und liefert geprüfte Adressen vor dem Import; seit MCP 4.0.0 keine Pflicht mehr (Leads mit eigener Website dürfen ohne E-Mail importiert werden). Entscheider, Register und persönliche Adressen findet die Recherche der Plattform. Wird von weg-*-Skills für Leads ohne E-Mail geladen, nie direkt.
 ---
 
 # Impressum-Enrichment — der DACH-Lückenfüller
 
 Holt aus deutschen Impressumsseiten eine E-Mail-Adresse je Lead (info@ reicht). Wird von
-Weg-Skills für die Kontaktlücke gerufen: er ist KEIN eigener Weg. Ab ListM8 MCP 4.0.0 ist er
+Weg-Skills für die Kontaktlücke gerufen: er ist KEIN eigener Weg. Ab MCP 4.0.0 ist er
 **optional**: Leads mit eigener Website dürfen ohne E-Mail importiert werden, dann sucht die
 Recherche die Adresse. Er lohnt, wenn er billiger ist als die Recherche und vor der Qualifizierung
 liegt (Kriterien unten unter „Wann es sich lohnt“). Auf älteren Servern ist er der Weg, Leads ohne
@@ -14,7 +14,7 @@ Adresse überhaupt importierbar zu machen. Den
 Ansprechpartner, seine persönliche Adresse und Registerdaten sucht danach die Recherche der
 Plattform; dafür lohnt kein eigener Lauf (`../datenbeschaffung-referenzen/references/datenumfang.md`).
 Bei Google Maps steckt das Impressum schon in der Kontaktanreicherung des Scrapes, `build_csv.py`
-nimmt die Adresse von dort: Diese Stufe läuft nur noch für die Domains, bei denen beides leer blieb. ListM8 selbst reichert nichts per Impressum an: der Lauf findet
+nimmt die Adresse von dort: Diese Stufe läuft nur noch für die Domains, bei denen beides leer blieb. DealSupply selbst reichert nichts per Impressum an: der Lauf findet
 beim Anbieter (Apify, eigenes Konto) statt, das Ergebnis wird in die Roh-CSV gemerged und läuft
 über `listen-qualitaet` in den Import.
 
