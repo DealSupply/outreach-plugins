@@ -1,57 +1,68 @@
-# Routing-Follow-up – „bei dir richtig oder eher bei X oder Y?“
+# Routing im Abschied – „bei dir richtig oder eher bei X oder Y?“
 
-Ein Follow-up, das den Empfänger fragt, ob eine andere, namentlich genannte Person der bessere
-Ansprechpartner ist. Wirkt, weil es eine leichte Antwort erlaubt („schreib Anna“) und zeigt, dass
-recherchiert wurde. Erprobt in einer Agentur-Kampagne mit über 400 generierten Leads.
-
-## Wann einsetzen
-
-- Zielgruppen mit Teams und verteilter Zuständigkeit: Agenturen, Praxen mit Praxismanagement,
-  Kanzleien, Finanz-/Maklerbüros, Bau- und Immobilienfirmen.
-- Besonders bei Sammelpostfächern (info@, team@, kontakt@), wo unklar ist, wer liest.
-- Bei Solo-Betrieben fällt der Baustein von selbst auf eine normale, weiche Nachfrage zurück.
+Der letzte Step jeder Sequenz (der Abschied) fragt den Empfänger je Lead, ob eine andere, namentlich
+genannte Person der bessere Ansprechpartner ist. Wirkt, weil es eine leichte Antwort erlaubt („schreib
+Anna“) und zeigt, dass recherchiert wurde. Seit 31.10.2026 ist das in der App der Standard jeder neuen
+Sequenz; das Plugin baut den Abschied genauso.
 
 ## Wo in der Sequenz
 
-Als **Step 4** (Abschied mit Routing-Hinweis, Thread von Step 1). Der Standard-Step trägt den
-Routing-Hinweis als festen Satz im Body („sag mir gern kurz Bescheid, falls ich mich damit besser
-bei jemand anderem im Team melden sollte“). Diese Datei beschreibt die Ausbaustufe mit belegten
-Namen: Body des Steps dann `{{ai.hallo}}` + Leerzeile + `{{ai.routing}}`. Hat der Nutzer einen
+Als **Step 4** (Abschied, `delayDays` 7, leerer Betreff, Thread von Step 1). Hat der Nutzer einen
 echten Zeit- oder Kapazitätsgrund, steht eine Dringlichkeits-Mail davor, der Abschied wird Step 5.
+Der Body ist der Abschied der App: Anrede, fester Abschiedssatz, `{{ai.routing}}` als eigener Absatz,
+Grußformel und Signatur. Nie ein fester Routing-Satz an dieser Stelle.
 
-## Drei Teile, die zusammengehören
-
-1. **Recherche-Ziel** (in `researchAgentConfig.researchGoals`/`additionalPrompt`): höchstens zwei
-   andere, aktuell bei der Firma beschäftigte Personen mit plausibler Verantwortung für das Thema
-   des Angebots, je mit Name, Rolle und Quellen-URL; Empfänger selbst ausschließen. Bei Solo-Betrieb
-   oder eindeutig zuständigem Empfänger „Routing nicht sinnvoll“ vermerken. Namen nie aus E-Mail-
-   Adressen raten; `secondary_emails` sind kein Beleg für Personen.
-2. **AI-Variable `routing`** (nach `hallo` und `intro`), Prompt siehe unten.
-3. **Step-Body** wie oben, ohne Signatur-Dopplung.
-
-## Prompt der Variable `routing` (Vorlage)
-
-Angebotsbezogene Stellen in `<…>` anpassen; Du-Form gezeigt, Sie-Form nur bei einer gesiezten Kampagne.
+Deutsch (Du- und Sie-Form gleich):
 
 ```text
-Erzeuge ausschließlich den vollständigen Text des Routing-Follow-ups, OHNE Anrede und Signatur,
-maximal 55 Wörter. Nutze hallo aus demselben Ergebnis und die Routing-Belege der Recherche.
-Ton: locker wie „not sure if I should be speaking to you or X or Y, let me know“, keine förmliche
-Zuständigkeitsabfrage.
-Fall A, belegte andere Personen: 'ich bin mir nicht sicher, ob ich damit
-bei dir richtig bin oder eher bei <Name 1> oder <Name 2>. Gib mir gern kurz Bescheid.'
-Bei nur einer Person die zweite Alternative weglassen.
-Fall B, keine belegten Alternativen und Zuständigkeit unklar: exakt 'sag mir gern kurz Bescheid,
-falls ich mich damit besser bei jemand anderem im Team melden sollte.'
-Fall C, Solo-Betrieb, eindeutig zuständiger Empfänger oder Recherche-Vermerk „Routing nicht sinnvoll“: keine künstliche Unsicherheit; stattdessen
-eine weiche Nachfrage zum Angebot, '<möchtest du dir … ansehen? Ich schicke dir gern …>'.
-Namen nur aus belegter aktueller Firmenzugehörigkeit mit passender Rolle; nie den Empfänger selbst.
-Kein leerer Wert, keine Platzhalter, kein erneuter Pitch, keine Frist, keine Gedankenstriche.
+{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung.\n\n{{ai.routing}}\n\n\nViele Grüße\n{{accountSignature}}
 ```
+
+Englisch:
+
+```text
+{{ai.hallo}}\n\nSince I haven't heard back, I'll assume the timing isn't right, and that's completely fine.\n\n{{ai.routing}}\n\n\nBest,\n{{accountSignature}}
+```
+
+## Die Variable `routing`
+
+- Name `routing`, in jeder neuen Kampagne, nach den übrigen Variablen.
+- Prompt: wörtlich der ROUTING-PROMPT aus dem MCP-Prompt `campaign_blueprint_guide`. Deutsche
+  Kampagnen nehmen die Fassung zur `salutation` (Du oder Sie), englische die eine englische Fassung.
+  Nicht selbst formulieren, nicht kürzen, keine angebotsbezogenen Stellen einsetzen: Das Angebot der
+  ersten Mail kennt der Prompt aus der Kampagne. Ist der Guide nicht greifbar, `routing` mit dem
+  Prompt einer bestehenden Kampagne aus `export_campaign_blueprint` übernehmen, nie aus dem
+  Gedächtnis.
+- Der Prompt schreibt höchstens 35 Wörter, beginnt groß, ohne Anrede, Abschiedssatz und Gruß, in vier
+  Fällen:
+  - **A**, die Recherche belegt andere, aktuell beschäftigte Personen mit passender Rolle: „Ich bin
+    mir nicht sicher, ob ich damit bei dir richtig bin oder eher bei <Vorname 1> oder <Vorname 2>.
+    Gib mir gern kurz Bescheid.“
+  - **B**, keine belegten Alternativen und die Zuständigkeit ist unklar: genau „Sag mir gern kurz
+    Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte.“
+  - **C**, Einzelbetrieb, eindeutig zuständiger Empfänger oder der Vermerk „Routing nicht sinnvoll“:
+    eine weiche Nachfrage zum Angebot der ersten Mail („Falls du dir <das Angebot der ersten Mail>
+    später doch ansehen möchtest, gib mir einfach kurz Bescheid.“), kein neues Angebot.
+  - **D**, die Kampagne schreibt auch eine zweite Person der Firma an: „Ich hab mich auch bei
+    <Vorname> gemeldet …“ und die Frage, wer von beiden zuständig ist.
+- Namen nur aus belegter aktueller Firmenzugehörigkeit mit passender Rolle, nie die begrüßte Person,
+  nie aus E-Mail-Adressen geraten.
+
+## Woher die Namen kommen
+
+Die Recherche der App sucht die Personen selbst: Der Bericht trägt unter „Team &
+Kontaktinformationen“ den Abschnitt „Weitere Ansprechpartner“ mit höchstens zwei Personen außer der
+empfohlenen Kontaktperson (Name, Rolle, Quelle), sonst „Routing nicht sinnvoll“. Ein eigenes
+Recherche-Ziel im `researchAgentConfig.additionalPrompt` ist dafür nicht nötig.
+
+## Bestehende Kampagnen
+
+Kampagnen, die noch einen festen Routing-Satz im Abschied tragen (angelegt bis outreach 0.8.0),
+behalten ihn beim Bearbeiten, außer der Nutzer will umstellen. Dann Step 4 wie oben, die Variable
+`routing` dazu, Vollersatz nach `outreach-campaign`, Phase 3.
 
 ## Erfahrungswerte
 
-In der Agentur-Kampagne verteilten sich die generierten Werte auf etwa 20 % mit Namen (Fall A),
-20 % Team-Fallback (Fall B) und 60 % Solo/zuständig (Fall C). Wer mehr Fall A will, braucht eine
-Recherche, die Team- und Über-uns-Seiten gezielt liest; die Quote ist eine gute Kennzahl für die
-Recherche-Qualität.
+In einer Agentur-Kampagne mit über 400 generierten Leads verteilten sich die Werte auf etwa 20 % mit
+Namen (Fall A), 20 % Team-Satz (Fall B) und 60 % Einzelbetrieb oder eindeutig zuständig (Fall C). Die
+Quote von Fall A ist eine gute Kennzahl für die Recherche-Qualität.

@@ -2,7 +2,10 @@
 """Prüft Cold-Mail-Copy gegen die mechanisch prüfbaren Regeln der Copy-Lehre.
 
 Aufruf:
-    python3 check_copy.py <copy-datei.md> [--firma "<Kurzname>"] …
+    python3 check_copy.py <copy-datei.md> [--firma "<Kurzname>"] … [--sprache de|en]
+
+--sprache en prüft die Entry Mail gegen das englische Limit von 100 Wörtern (Standard de: 120,
+auch mit einem Angebot je Lead). Die übrigen Prüfungen sind auf deutsche Copy ausgelegt.
 
 Der Kurzname des Leads (bereinigt, ohne Rechtsform) zählt im Betreff B als ein Wort, wie in der
 App. Er kommt aus --firma (mehrfach möglich) oder einer Zeile "Kurzname: …" in der Datei;
@@ -122,6 +125,9 @@ def parse(text):
     return mails
 
 
+ENTRY_LIMIT = {"de": 120, "en": 100}
+
+
 def role(mail):
     """Rolle, Wortlimit, ob die Mail einen Betreff trägt, ob die Abmeldezeile darunter steht.
 
@@ -133,7 +139,7 @@ def role(mail):
         return "dringlichkeit", 60, False, False
     n = mail["num"] or 0
     if n == 1:
-        return "entry", 120, True, True
+        return "entry", ENTRY_LIMIT[mail.get("language", "de")], True, True
     if n == 2:
         return "erinnerung", 50, False, False
     if n == 3:
@@ -300,23 +306,27 @@ def check_subject_b(subject, kind, company_names=()):
 
 
 def arguments(argv):
-    """Pfad der Copy-Datei und die Kurznamen aus --firma; None ohne gültigen Aufruf."""
-    path, names, rest = None, [], list(argv)
+    """Pfad der Copy-Datei, die Kurznamen aus --firma und die Sprache; None ohne gültigen Aufruf."""
+    path, names, language, rest = None, [], "de", list(argv)
     while rest:
         arg = rest.pop(0)
         if arg == "--firma" and rest:
             names.append(rest.pop(0))
         elif arg.startswith("--firma="):
             names.append(arg.split("=", 1)[1])
+        elif arg == "--sprache" and rest and rest[0] in ENTRY_LIMIT:
+            language = rest.pop(0)
+        elif arg.startswith("--sprache=") and arg.split("=", 1)[1] in ENTRY_LIMIT:
+            language = arg.split("=", 1)[1]
         elif path is None and not arg.startswith("--"):
             path = arg
         else:
-            return None, []
-    return path, names
+            return None, [], "de"
+    return path, names, language
 
 
 def main():
-    path, company_names = arguments(sys.argv[1:])
+    path, company_names, language = arguments(sys.argv[1:])
     if path is None:
         print(__doc__)
         sys.exit(2)
@@ -331,6 +341,7 @@ def main():
     company_names += [m.group(1).strip() for m in map(KURZNAME.match, (l.strip() for l in text.splitlines())) if m]
     for mail in mails:
         mail["company_names"] = company_names
+        mail["language"] = language
     if not mails:
         print("Keine Mail gefunden. Erwartet werden Überschriften wie „## Step 1: Entry Mail“.")
         sys.exit(2)

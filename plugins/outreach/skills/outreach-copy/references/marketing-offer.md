@@ -3,7 +3,7 @@
 > Offer-Lehre zu `outreach-copy`. Bei einem Widerspruch gilt die `SKILL.md` des Skills.
 > Die Formulierungen sind deutsch. In englischen Kampagnen (`campaign.language` `en`) nicht übersetzen;
 > dort gelten die Regeln aus `outreach-copy`, Abschnitt „Kampagnensprache“.
-> Betreffzeilen und CTAs sind auf die Platzhalter von ListM8 umgestellt; die Texte stehen in der
+> Betreffzeilen und CTAs sind auf die Platzhalter von DealSupply umgestellt; die Texte stehen in der
 > Du-Form (Standard), bei `emailAgentConfig.salutation` `sie` umschreiben. Der Betreff ist bei jeder
 > Karte „kurze Frage“ (seit 05.11.2026). Nur Step 1 trägt einen Betreff, Step 2 bis 4 laufen im
 > Thread von Step 1 mit leerem Betreff.
@@ -28,23 +28,25 @@ Ein Offer, das der Nutzer nicht liefern kann, wird nicht geschrieben. Auch was �
 
 | Typ | Beispiel | Wann nutzen |
 |:----|:---------|:------------|
-| **A: Kostenlose Teildienstleistung** | „Kostenlose Recruiting-Anzeige", „Kostenloses Google Ads Setup" | Standard-Offer, funktioniert fast immer |
-| **B: Tester gesucht / Pilotprojekt** | „Wir suchen 3 Unternehmen für ein KI-Pilotprojekt" | Neues Produkt, keine Referenzen |
-| **C: Konkretes Deliverable** | „2-3 CVs von passenden Fachkräften", „Video mit 3 Hebeln" | Wenn man direkt Mehrwert liefern kann |
-| **D: Förder-Hook** | „Staat zahlt bis zu 100 % der Weiterbildung" | Wenn der Nutzer förderfähige Produkte hat |
-| **E: Partner gesucht** | „Wir suchen Küchenstudios als Partner" | Nischen-Anbieter mit starker Positionierung |
+| **A: Kostenlose Teildienstleistung** | „Kostenlose Recruiting-Anzeige", „Kostenloses Google Ads Setup" | Die Teilleistung ist nach der Antwort lieferbar, vorab für jeden Lead aber zu aufwendig |
+| **B: Tester gesucht / Pilotprojekt** | „ein Pilotprojekt zur Neukundengewinnung" | Neues Angebot mit wenigen Referenzen und echt begrenzten Plätzen |
+| **C: Konkretes Deliverable** | „2-3 CVs von passenden Fachkräften", „Video mit 3 Hebeln" | Das Ergebnis passt zum einzelnen Lead und ist mit KI in 5 bis 10 Minuten Nutzerzeit bis morgen lieferbar |
+| **D: Förder-Hook** | „Staat zahlt bis zu 100 % der Weiterbildung" | Der Nutzer nennt Programm und Quote, oder seine Website nennt sie |
+| **E: Partner gesucht** | „Wir suchen Küchenstudios als Partner" | Der Absender hat nachweislich regelmäßig Anfragen für die Zielgruppe |
 
 ### Welche Karte nehme ich?
 
-| Situation | Karte | Beispiel-Offer |
-|:----------|:------|:---------------|
-| Standard-Fall, du weißt nicht wo anfangen | **A: Kostenlose Teildienstleistung** | Kostenloses Google Ads Setup, 3 CVs |
-| Neues Produkt, wenig Referenzen, Exklusivität als Narrativ | **B: Tester/Pilotprojekt** | „Wir suchen 3 Pilotunternehmen" |
-| Kleine Zielgruppe, hohe Reply Rate nötig | **C: Konkretes Deliverable (Reziprozität)** | Video mit 3 Hebeln, Ersteinschätzung |
-| Nutzer hat förderfähige Produkte | **D: Förder-Hook** | „Staat zahlt bis zu 100 % der Weiterbildung" |
-| Nischen-Anbieter, Kooperation auf Augenhöhe | **E: Partner gesucht** | „Wir haben Anfragen, die zu dir passen" |
+Dieselbe Regel wie in der App: Empfohlen ist genau eine Karte, **C**, wenn das Ergebnis je Lead mit KI in 5 bis 10 Minuten Nutzerzeit bis morgen lieferbar ist, **sonst A**. E nur, wenn der Absender belegt regelmäßig Anfragen für die Zielgruppe hat, B nur bei einem neuen Angebot mit echt begrenzten Plätzen, D nur mit Beleg. C, A, E und B stehen immer zur Wahl, auch wenn sie nicht empfohlen sind; D ohne Beleg passt nicht.
 
-**Faustregel:** Im Zweifel mit Karte A starten. Karte C hat die höchsten Reply Rates, braucht aber mehr Aufwand pro Lead. Wähle GENAU EINE Karte und begründe die Wahl dem Nutzer in einem Satz.
+| Karte | Passt nicht, wenn |
+|:------|:------------------|
+| **C: Konkretes Deliverable (Reziprozität)** | das Ergebnis je Lead mehr als 5 bis 10 Minuten Nutzerzeit braucht oder nicht bis morgen lieferbar ist (dann A) |
+| **A: Kostenlose Teildienstleistung** | sich das Ergebnis je Lead schon bis morgen mit KI erstellen lässt (dann C), oder die Leistung ein Gespräch, eine Analyse oder ein Audit ist |
+| **E: Partner gesucht** | es keinen Beleg für echte Anfragen gibt |
+| **B: Tester/Pilotprojekt** | das Angebot schon breit läuft oder die Plätze nicht wirklich begrenzt sind (künstliche Knappheit) |
+| **D: Förder-Hook** | Programm oder Quote nicht belegt sind: eine Förderquote zu nennen wäre geraten |
+
+Wähle GENAU EINE Karte und begründe die Wahl dem Nutzer in einem Satz.
 
 ## Offer-Qualitäts-Check
 
@@ -90,7 +92,7 @@ Beispiele:
 
 **Wichtig:** In der Mail steht das Deliverable als bereits erledigte Arbeit („war so frei und habe … erstellt"), nie als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert. Dazu gehört der Feinheiten-Satz als eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran." (mit „Angebot je Lead" je Lead mit genau einem konkreten, lieferbaren Detail: „…, vor allem […]."), und das „morgen" im Schlusssatz („Wäre es in Ordnung, wenn ich es dir morgen zusende?"). Beides macht die Fertigstellung nach der Antwort ehrlich, denn der eigentliche Aufwand (5-10 Min.) fällt erst an, wenn jemand antwortet.
 
-**Wann nutzen:** Wenn die Zielgruppe kleiner ist und man höhere Reply Rates braucht. NICHT bei Massenkampagnen (zu viel Aufwand pro Reply).
+**Wann nutzen:** Wenn das Ergebnis je Lead mit KI in 5 bis 10 Minuten Nutzerzeit bis morgen lieferbar ist (Karte C). Braucht es je Antwort mehr, ist A die richtige Karte.
 
 ## Die Karten im Detail
 
@@ -100,14 +102,14 @@ Nach dem Angebotssatz folgt ein zweiter Satz zum Angebot, als eigener Absatz und
 
 ### Karte A: Kostenlose Teildienstleistung
 
-**Wann:** Standard-Offer, funktioniert in 80 % der Fälle. Im Zweifel diese.
+**Wann:** Die Teilleistung ist nach der Antwort lieferbar, vorab für jeden Lead aber zu aufwendig. Lässt sie sich je Lead schon bis morgen mit KI erstellen, ist C die bessere Karte.
 
 **Mechanik:** Wir machen etwas Konkretes kostenlos - nicht „beraten", sondern wirklich machen. Der Empfänger bekommt etwas Greifbares, ohne dass er sich zu irgendwas verpflichtet.
 
 | Baustein | Vorlage |
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" |
-| **Überleitung + Offer** | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an." |
+| **Überleitung + Offer** | „Genau deshalb bieten wir aktuell für eine Handvoll [Empfänger] in [Region] [konkretes Deliverable] an." (Sie gleich; eine Anzahl statt „eine Handvoll“ nur, wenn die Lieferzusage sie trägt) |
 | **Zweiter Satz (Pflicht, eigener Absatz)** | fest: „Darin wäre alles genau auf euch zugeschnitten." (Sie: „Darin wäre alles genau auf Sie zugeschnitten."); mit „Angebot je Lead" je Lead im Konjunktiv, was für diesen Lead konkret drin wäre, nie als erledigte Arbeit |
 | **CTA** | „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich." (Sie: „… das auch für Sie erstelle? …") |
 
@@ -115,27 +117,27 @@ Nach dem Angebotssatz folgt ein zweiter Satz zum Angebot, als eigener Absatz und
 
 ### Karte B: Tester gesucht / Pilotprojekt
 
-**Wann:** Neues Produkt, wenig Referenzen, oder wenn man Exklusivität als Narrativ nutzen will.
+**Wann:** Neues Angebot mit wenigen Referenzen und echt begrenzten Plätzen. Läuft das Angebot schon breit oder sind die Plätze nicht wirklich begrenzt, passt B nicht.
 
 **Mechanik:** Der Empfänger wird als Auserwählter positioniert. Begrenzte Plätze schaffen natürliche Dringlichkeit, aber nur, wenn die Plätze wirklich begrenzt sind; künstliche Knappheit („noch ein Platz frei“) ist tabu.
 
 | Baustein | Vorlage |
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" |
-| **Überleitung + Offer** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region]." |
+| **Überleitung + Offer** | „Genau solche [Empfänger] suchen wir gerade. Wir starten [Pilotprojekt] mit einer Handvoll [Empfänger] in [Region]." ([Pilotprojekt] ohne eigenes „mit“ und ohne „starten“) |
 | **Zweiter Satz (Pflicht, eigener Absatz)** | fest: „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback." (Sie: „Im Pilot bekommen Sie das kostenlos, dafür bräuchten wir nur ehrliches Feedback."); „Angebot je Lead" gibt es bei B nicht |
 | **CTA** | „Wärst du grundsätzlich offen dafür?" (Sie: „Wären Sie grundsätzlich offen dafür?") |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
 
-**Wann:** Wenn die Zielgruppe klein ist und man höhere Reply Rates braucht.
+**Wann:** Das Ergebnis passt zum einzelnen Lead und ist mit KI in 5 bis 10 Minuten Nutzerzeit bis morgen lieferbar. Braucht es mehr, gilt A.
 
 **Mechanik:** Reziprozitätsprinzip - „Wir haben schon etwas FÜR dich gemacht." Deshalb steht es in der Mail als erledigt; die letzten Feinheiten macht man nach der Antwort.
 
 | Baustein | Vorlage |
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" (nie eine Ankündigung wie „Website für …"; ist das Buchungssystem der Kern: „Frage zur Terminbuchung") |
-| **Überleitung + Offer** | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt." |
+| **Überleitung + Offer** | „Deswegen war ich so frei und habe dir [Deliverable] erstellt." (Sie: „… habe Ihnen [Deliverable] erstellt.") |
 | **Feinheiten-Satz (Pflicht, eigener Absatz)** | fest: „Ich bin gerade noch an den letzten Feinheiten dran." (Sie gleich); mit „Angebot je Lead" je Lead: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und nennt genau ein Detail des schon Erstellten, passend zu diesem Lead, grammatisch vollständig, ohne „morgen" |
 | **CTA** | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …"; nie „Link") |
 
@@ -152,12 +154,12 @@ Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natü
 
 ### Karte D: Förder-Hook
 
-**Wann:** Wenn der Nutzer förderfähige Produkte hat. Extrem stark, weil „der Staat zahlt" ein unschlagbares Argument ist.
+**Wann:** Nur, wenn der Nutzer Programm und Quote nennt oder seine Website sie nennt. Ohne Beleg wäre eine Förderquote geraten. Extrem stark, weil „der Staat zahlt" ein unschlagbares Argument ist.
 
 | Baustein | Vorlage |
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" |
-| **Überleitung + Offer** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" Nennt der Nutzer Träger oder Programm, steht er statt „der Staat" („das Land Baden-Württemberg"). |
+| **Überleitung + Offer** | „Wusstest du, dass der Staat aktuell bis zu [Quote] der Kosten für [Leistung] übernimmt?" (Sie: „Wussten Sie, …"). Nennt der Nutzer Träger oder Programm, steht er statt „der Staat" („das Land Baden-Württemberg"). [Quote] ohne „bis zu". |
 | **Zweiter Satz** | entfällt |
 | **CTA** | „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." (Sie: „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …") |
 
@@ -167,14 +169,14 @@ Quoten immer als Spanne nennen („bis zu 100 %"), nie als Zusage - die Förderh
 
 ### Karte E: Partner gesucht
 
-**Wann:** Nischen-Anbieter mit starker Positionierung, wo Partnerschaft auf Augenhöhe Sinn macht.
+**Wann:** Der Absender hat nachweislich regelmäßig Anfragen für die Zielgruppe. Ohne Beleg für echte Anfragen passt E nicht.
 
 **Mechanik:** Kein Verkauf, sondern Kooperation. „Wir haben Kunden, die zu dir passen." Das ist Augenhöhe.
 
 | Baustein | Vorlage |
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" |
-| **Überleitung + Offer** | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden." |
+| **Überleitung + Offer** | „Genau solche [Empfänger] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden." (Sie: „… zu Ihnen …"; [Anfragen] von Kunden der Empfänger, ohne eigenen Relativsatz) |
 | **Zweiter Satz** | entfällt |
 | **CTA** | „Wäre das grundsätzlich interessant?" (gleich für Sie, eine einzige Frage) |
 
