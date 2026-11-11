@@ -12,6 +12,7 @@
 - `outreach-campaign` → `offer_per_lead_inconsistent` beim Bearbeiten: nicht erneut senden, sondern Mail 1 mit ihren Varianten und die drei Variablen passend mitschicken oder in der App umschalten lassen; beim Anlegen kommt dieselbe Lücke als Warnung und wird vor den Leads repariert; nicht übernommene Station-Antworten aus `warnings` dem Nutzer zeigen.
 - `outreach-verify`, `verify-agent` → prüfen auch die neuen Regeln der Anweisung (kein Echo des Intros, keine Zahl aus der Recherche).
 - `outreach-setup`, README → abgestimmt auf MCP 4.15.0.
+- `outreach-update` → neuer Abschnitt für das Update von 0.5.x oder älter: Verbindung `dealsupply` einmal neu anmelden, danach eine von Hand angelegte oder alte Verbindung `akquise` entfernen.
 
 ## 2026-11-10 – outreach 0.7.0, fulfillment 0.1.5 (benötigt ListM8 MCP 4.14.0 für „Angebot je Lead“)
 

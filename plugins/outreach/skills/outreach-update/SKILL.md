@@ -17,6 +17,19 @@ Nenne dem Nutzer den Befehl für seine Umgebung und führe ihn aus, wo du das ka
 
 Dauerhaft in Claude Code: `/plugin` → Marketplaces → `outreach-plugins` → Auto-Update einschalten.
 
+## Nach dem Update von 0.5.x oder älter: Verbindung neu anmelden
+
+Die mitgelieferte Verbindung heißt jetzt `dealsupply` (`app.dealsupply.ai`). Sie wird einmal neu
+angemeldet, mit den Zugangsdaten von DealSupply:
+
+- Claude Code: `/mcp` öffnen → `dealsupply` → anmelden.
+- Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply` „Connect“.
+- ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
+
+Danach `list_campaigns` aufrufen. Antwortet es, eine von Hand angelegte Verbindung zu DealSupply und
+eine alte Verbindung `akquise` entfernen, damit nichts doppelt erscheint. Einzelheiten: `outreach-setup`,
+Schritt 2.
+
 ## Was sich geändert hat
 
 Die Änderungen stehen in `CHANGELOG.md` im Repo `DealSupply/outreach-plugins`. Nenne dem Nutzer
