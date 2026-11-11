@@ -1,1 +1,1 @@
-{ "mcpServers": { "akquise": { "type": "http", "url": "https://outreach.akquise.de/_mcp/v1" } } }
+{ "mcpServers": { "dealsupply": { "type": "http", "url": "https://app.dealsupply.ai/_mcp/v1" } } }

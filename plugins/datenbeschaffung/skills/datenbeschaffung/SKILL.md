@@ -16,9 +16,11 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
    fachliche Qualifizierung und der spätere Review bleiben eigene Schritte.
 2. **Nur beschaffen, was die Plattform nicht selbst findet.** Die Recherche liest Website und
    Impressum, findet den Ansprechpartner und dessen persönliche Adresse. Die Beschaffung liefert
-   die Liste, eine Adresse je Lead (info@ reicht) und das, was nur auf der Quelle steht:
-   Google-Bewertung und Rezensionen, Follower, Plattform-Bewertung, Shop-Technologie. Details
-   je Quelle: `../datenbeschaffung-referenzen/references/datenumfang.md`.
+   die Liste, je Lead eine Adresse (info@ reicht) **oder** die eigene Website (ab ListM8 MCP
+   4.0.0: fehlt die Adresse, sucht die Recherche sie; ein Profil-Link wie Instagram oder Linktree
+   reicht nicht) und das, was nur auf der Quelle steht: Google-Bewertung und Rezensionen,
+   Follower, Plattform-Bewertung, Shop-Technologie. Details je Quelle:
+   `../datenbeschaffung-referenzen/references/datenumfang.md`.
 3. **Kosten vorab bestätigen lassen.** Vor jedem kostenpflichtigen Lauf beim Anbieter die erwarteten
    Kosten nennen, einen harten Deckel setzen und die ausdrückliche Freigabe des Nutzers einholen.
    Gilt auch für Piloten und Wiederholungen.
@@ -42,6 +44,9 @@ Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst k
 - **Workspace:** Abgleich, Liste und Import laufen im gewählten Workspace der App. Vor dem ersten
   Abgleich klären, welcher es ist (Regel: `../datenbeschaffung-referenzen/references/listm8-mcp.md`,
   Abschnitt „Workspace“).
+- **Server-Version merken:** `ping.version` ab `4.0.0` heißt Übergabemodus `kontakt` (E-Mail oder
+  eigene Website je Lead), darunter oder ohne Version `email` (jede Zeile braucht eine Adresse).
+  Den Modus an `listen-qualitaet` weitergeben (`build_csv.py --uebergabe …`).
 - **Scraping-Zugang:** erst nach der Wahl des Wegs (Phase 2) prüfen und nur, wenn der Weg ihn
   braucht. Fast alle Wege laufen über ein eigenes Apify-Konto samt Token (Details:
   `../datenbeschaffung-referenzen/references/setup.md`); Apollo mit eigenem Zugang und StoreLeads
@@ -100,6 +105,15 @@ Adresse sucht danach die Recherche der Plattform.“
   nach ausdrücklichem Ja einen Anreicherungs-Lauf planen.
 - Der Weg-Skill schreibt die Spalten über `build_csv.py`; nur Rohfelder mit Einstieg zusätzlich
   per `--keep`.
+- **Kontaktlücke** (Leads mit eigener Website, aber ohne Adresse): ab ListM8 4.0.0 entscheidet der
+  Nutzer, ob vorab angereichert wird oder die Recherche sucht. Entscheidungstabelle in
+  `datenumfang.md`, Abschnitt „Die Kontaktlücke“. Dem Nutzer sinngemäß sagen: „N Leads haben eine
+  eigene Website, aber keine Adresse. Ich kann sie so importieren, dann sucht die Recherche in
+  ListM8 die Kontaktadresse; findet sie keine, scheidet der Lead aus und bekommt keine Mail. Bis
+  dahin kostet er im Server-Lauf etwa 2 bis 3 Cent bzw. Abo-Kontingent und einen Platz im
+  Lead-Kontingent. Vorab das Impressum über dein Apify-Konto auszulesen kostet rund 0,2 Cent je
+  Domain, lohnt ab etwa 50 Domains und liefert geprüfte Adressen vor dem Import. Vorab anreichern
+  oder direkt importieren?“
 
 ## Phase 3: Vorab-Abgleich (nur mit MCP)
 
@@ -127,9 +141,11 @@ scrapen. Import und Listen kosten in ListM8 keine Credits.
    `../datenbeschaffung-referenzen/references/csv-spalten.md`, nie mit einer Übergabe und nie mit
    einem eigenen Qualitätsurteil. Zugriffsschicht (Apify-MCP, REST, CLI):
    `../datenbeschaffung-referenzen/references/zugriff.md`.
-4. Bei Leads ohne Adresse nach Bedarf `impressum-enrichment` (DACH) bzw. `kontaktseiten-fallback`
-   nur für die Adresse nutzen, mit Kostenfreigabe. `enrichment-waterfall` ist keine Lückenfüllung,
-   sondern eine Ausnahme für wenige wertvolle Leads nach der Recherche (siehe dort).
+4. Bei Leads ohne Adresse **optional** `impressum-enrichment` (DACH) bzw. `kontaktseiten-fallback`
+   nur für die Adresse nutzen, nach der Entscheidung aus Phase 2b und mit Kostenfreigabe (auf
+   Servern unter 4.0.0 ist das der einzige Weg, sie zu importieren). `enrichment-waterfall` ist
+   keine Lückenfüllung, sondern eine Ausnahme für wenige wertvolle Leads nach der Recherche
+   (siehe dort).
 
 ## Phase 5: Pflicht-Endstation
 
@@ -146,15 +162,18 @@ Credits (vorher `quote_lead_run`) oder ein Abo-Lauf ohne Credits.
 Keine erfundene `list_id` an `start_lead_run` übergeben und nicht automatisch alle Kampagnenleads
 auswählen. Beschaffung und Import allein starten keine Qualifizierung und versenden keine E-Mails.
 
-Bei der Übergabe eine Recherche-Tiefe für die Kampagne empfehlen (Tabelle in `datenumfang.md`):
-lokale Betriebe mit Website und Rezensionstexten kommen meist mit `quick` aus. Die Einstellung ändert
-der Nutzer in der Kampagne (`outreach-campaign`). Den Credit-Preis je Lead im Server-Lauf bestimmt
-die Recherche-Stufe (`basis`, `smart`, `deep`), nicht die Tiefe; verbindlich ist `quote_lead_run`.
+Bei der Übergabe eine Recherche-Stufe für die Kampagne empfehlen (Tabelle in `datenumfang.md`):
+lokale Betriebe mit Website und Rezensionstexten kommen meist mit `basis` aus, das senkt die
+Recherchekosten deutlich; mit vielen Leads ohne Adresse `smart` (eine gezielte Impressum-Suche,
+wenn die Website keine Adresse zeigt). Die Einstellung ändert der Nutzer in der Kampagne
+(`outreach-campaign`). Den Credit-Preis je Lead im Server-Lauf bestimmt die Recherche-Stufe;
+verbindlich ist `quote_lead_run`.
 
 ## Berichtsform
 
 Nach jedem Lauf ein kompakter Block: Weg, Query und Filter, Pilot-Trefferquote, Anteil mit Bewertung,
 Rezensionstext bzw. Plattform-Einstieg (aus dem Bericht von `build_csv.py`), Stückzahlen je Stufe
-(roh, nach Dedup, nach Verifizierung, übergeben), reale Kosten beim Anbieter und was beim nächsten
+(roh, nach Dedup, nach Verifizierung, übergeben, davon ohne E-Mail mit Website, verworfen je Grund),
+reale Kosten beim Anbieter und was beim nächsten
 Lauf anders gemacht würde. Die Herkunft steht dauerhaft an der Liste in ListM8 (`source` bei
 `create_list`).

@@ -7,12 +7,12 @@
 
 | Prüfung | Woran erkennbar |
 |---|---|
-| Keine Platzhalter | kein `[`, `{{`, „Lorem“, „Beispiel GmbH“, „XXX“, „TODO“ im sichtbaren Text (Ausnahmen: die ausdrücklich markierten Beispiel-Platzhalter und Variablen in `demo-akquise-kampagne` und Markdown-Links in einer `llms.txt`) |
+| Keine Platzhalter | kein `[`, `{{`, „Lorem“, „Beispiel GmbH“, „XXX“, „TODO“ im sichtbaren Text (Ausnahmen: die ausdrücklich markierten Beispiel-Platzhalter und Variablen in `demo-kampagne` und Markdown-Links in einer `llms.txt`) |
 | Firma, Ort, Telefon, E-Mail stimmen | Abgleich mit der Website des Leads, Zeichen für Zeichen |
 | Nichts erfunden | jede Zahl, jede Bewertung, jeder Preis, jede Auszeichnung hat eine Quelle (Website, Google-Profil, Recherche) |
 | Echte Umlaute | „ä ö ü ß“ statt „ae oe ue ss“ (Ausnahme: Web-Adressen) |
 | Keine Gedankenstriche als Satzzeichen | kein „ – “, „ — “ und kein „ - “ (Bindestrich mit Leerzeichen) im Fließtext |
-| Versprechen erfüllt | Offer aus der Kampagne und On-Top-Detail aus dem Feinheiten-Satz sind sichtbar umgesetzt |
+| Versprechen erfüllt | das Offer, das der Lead bekommen hat (bei „Angebot je Lead“ sein `offer_text`), und, wo Mail 1 eins nennt, das On-Top-Detail aus dem Feinheiten-Satz sind sichtbar umgesetzt |
 | Entwurfs-Hinweis vorhanden | Demo ist als Entwurf von [Absender] erkennbar (siehe `recht-und-grenzen.md`) |
 | `noindex` gesetzt | Meta-Tag in jeder HTML-Seite, `_headers` wenn die KI die Dateien schreibt (siehe `netlify.md`) |
 | Keine Namen aus Rezensionen | Lob nur sinngemäß, ohne Verfasser |

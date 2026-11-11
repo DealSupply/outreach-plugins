@@ -1,6 +1,6 @@
 import type { ImportView, RunView, StageView } from '../types'
 
-/** Die Farben des Bands (Akquise-Palette). */
+/** Die Farben des Bands (brand palette). */
 export const BRAND = {
   /** primary 500, Grün: Rahmen, laufende Arbeit, Fortschritt. */
   accent: '#36ae66',
@@ -202,6 +202,10 @@ export function importFrom(p: Obj, previous?: ImportView): ImportView | null {
     duplicates: Array.isArray(result?.duplicates)
       ? result.duplicates.length
       : typeof result?.duplicates === 'number' ? result.duplicates : (previous?.duplicates ?? null),
+    // import_leads counts refused rows up front, the finished job once more; older servers neither.
+    rejected: typeof result?.rejected_count === 'number'
+      ? result.rejected_count
+      : typeof p.rejected_total === 'number' ? p.rejected_total : (previous?.rejected ?? null),
     isTerminal,
     isDemo: previous?.isDemo ?? false,
     finishedAt: previous?.finishedAt ?? null,
@@ -215,7 +219,8 @@ export function importFrom(p: Obj, previous?: ImportView): ImportView | null {
 export function importOutcome(job: ImportView): string {
   if (job.status === 'completed') {
     const dupes = job.duplicates ? ` · ${job.duplicates} Duplikate` : ''
-    return `${job.imported ?? job.received} importiert${dupes}`
+    const refused = job.rejected ? ` · ${job.rejected} abgelehnt` : ''
+    return `${job.imported ?? job.received} importiert${dupes}${refused}`
   }
   const label = IMPORT_STATUS_LABEL[job.status] ?? job.status
   if (job.isTerminal) return job.message ? `${label} · ${job.message}` : label

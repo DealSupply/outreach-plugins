@@ -1,5 +1,209 @@
 # Changelog
 
+## 2026-11-10 – outreach 0.8.0 (benötigt ListM8 MCP 4.15.0 für „Angebot je Lead“)
+
+„Angebot je Lead“ folgt dem freigegebenen Wortlaut und der Nummerierung der App (DS-195, Server DS-206). Plugin und Server kommen im selben Release: Ein Server vor 4.15.0 zählt das Haupt-Angebot als letzte Nummer, dort legt das Plugin nur noch Kampagnen mit einem Angebot für alle an.
+
+**outreach**
+- `outreach-copy/references/fuer-erfahrene.md` → Die Anweisung ist neu aus dem Server übernommen (Deutsch Du, Deutsch Sie, Englisch): Absatz 1 und 3 in Kundensprache, kein Echo des Intros in Absatz 2, strengere Länge, keine Zahlen aus der Recherche, Lieferzusage der Karte C ohne den Satz zur Schlussfrage. Das Haupt-Angebot ist Angebot 1, die weiteren folgen ab 2; passen mehrere, gilt das mit der kleinsten Nummer. ListM8 baut die Anweisung beim Import selbst, das Plugin zeigt sie nur vor dem Anlegen.
+- Mail 3 mit „Angebot je Lead“ endet mit „Melde dich gerne, wenn das Thema für dich relevant ist.“ (Sie „Melden Sie sich gerne, wenn das Thema für Sie relevant ist.“, englisch “Feel free to get in touch if this is relevant for you.”); `kern/check_copy.py` und die Beispiele folgen.
+- `outreach-generate`, `lead-agent` → Wahl nach der kleinsten Nummer, sonst das Haupt-Angebot (Nummer 1); `validation_failed` bei fehlendem oder unbekanntem `angebot`: Nummer korrigieren und erneut speichern.
+- `outreach-verify`, `verify-agent` → prüfen die Wahl nach derselben Regel.
+- `outreach-campaign` → `offer_per_lead_inconsistent` beim Bearbeiten: nicht erneut senden, sondern Mail 1 mit ihren Varianten und die drei Variablen passend mitschicken oder in der App umschalten lassen; beim Anlegen kommt dieselbe Lücke als Warnung und wird vor den Leads repariert; nicht übernommene Station-Antworten aus `warnings` dem Nutzer zeigen.
+- `outreach-verify`, `verify-agent` → prüfen auch die neuen Regeln der Anweisung (kein Echo des Intros, keine Zahl aus der Recherche).
+- `outreach-setup`, README → abgestimmt auf MCP 4.15.0.
+- `outreach-update` → neuer Abschnitt für das Update von 0.5.x oder älter: Verbindung `dealsupply` einmal neu anmelden, danach eine von Hand angelegte oder alte Verbindung `akquise` entfernen.
+
+## 2026-11-10 – outreach 0.7.0, fulfillment 0.1.5 (benötigt ListM8 MCP 4.14.0 für „Angebot je Lead“)
+
+Neue Kampagnen starten wie in der App einfach: ein Angebot für alle Leads mit dem festen zweiten Satz der Karte, ohne A/B-Test. Tests und „Angebot je Lead“ gibt es für Erfahrene auf Wunsch (DS-195, Weg A). „Angebot je Lead“ braucht ListM8 MCP 4.14.0 (`ping`); ältere Server bekommen immer ein Angebot für alle, alles andere läuft dort wie bisher.
+
+**outreach**
+- `outreach-copy` (SKILL, `references/copy-lehre.md`, `kern/copy-lehre.md`, beide `marketing-offer.md`, `beispiel-blueprint.md`, `kern/beispiele.md`) → Der zweite Satz zum Angebot ist bei Karte A, B und C der feste Satz der App (C „Ich bin gerade noch an den letzten Feinheiten dran.“, A „Darin wäre alles genau auf euch zugeschnitten.“, B „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“, je in der Sie-Form und auf Englisch), D und E ohne. `angebot_ausfuehrung` entsteht nicht mehr von selbst. Angebotssatz, zweiter Satz und Schlussfrage stehen immer in drei eigenen Absätzen. Bestehende Kampagnen mit `angebot_ausfuehrung` behalten ihre Variable.
+- Neu `outreach-copy/references/fuer-erfahrene.md` → die eine Frage „Für Erfahrene“ beim Anlegen; Tests in Mail 1 wie in der App (Betreff-Test als B mit „Frage zu {{Firma}}“, Intro-Test als nächste Variante, beide A, B und C), Empfehlung „ohne Tests“; „Angebot je Lead“ für Karte A und C mit denselben Feldern wie die Karten der App (Haupt-Angebot plus höchstens drei weitere, je Sache, Wort, Detail und Bedingung aus den sieben Website-Merkmalen), Vorschlägen, der abgenommenen Vorlage (Deutsch Du, Deutsch Sie, Englisch), Blueprint (Station-Antworten `offerPerLead`, `offerCards`, drei Platzhalter in Mail 1, Mail 3 neutral) und Beispiel.
+- `outreach-campaign` → fragt einmal „Für Erfahrene“, baut ohne Wahl den Standard, zeigt bei „Angebot je Lead“ Angebote und Anweisung vor dem Anlegen und prüft danach den Station-Block. Keine `offerFocuses`, keine `offerRole`, kein `offerPrompt`. Beim Bearbeiten bleiben Varianten, Schwerpunkte, Station und Variablen, wie sie sind; „Angebot je Lead“ für bestehende Kampagnen in der App.
+- `outreach-launch` → der A/B-Test ist ein Punkt der Launch-Checkliste nur bei gewählten Tests.
+- `outreach-verify`, `verify-agent` → ein fester zweiter Satz und fehlende Varianten ohne gewählte Tests sind kein Befund; bei „Angebot je Lead“ sind `offer_text` und `offer_cta` Serverwerte, `angebot_ausfuehrung` wird nach den Regeln der Anweisung geprüft, die Wahl des Angebots gegen den `WEBSITE-BEFUND`.
+- `outreach-generate`, `lead-agent` → bei „Angebot je Lead“ die Nummer unter `angebot` melden, nur Absatz 2 schreiben, `offer_text` und `offer_cta` leer schicken.
+- `kern/check_copy.py` → Step 3 darf mit „Angebot je Lead“ mit dem neutralen Schluss enden.
+- `outreach-setup`, README → abgestimmt auf MCP 4.14.0.
+- Enthält die Copy-Korrekturen aus DS-180 (Betreff B „Frage zu {{Firma}}“, Auffang-Schwerpunkt, eine Längenregel), die bisher ohne eigene Version waren.
+
+**fulfillment**
+- `fulfillment`, `fulfillment-referenzen` (`lead-kontext.md`, `demo-link.md`, `qualitaet.md`), `demo-webseite` → Bei „Angebot je Lead“ ist das versprochene Angebot der Wert von `offer_text` des Leads, nicht das Haupt-Angebot. Ein On-Top-Detail gibt es nur, wo der zweite Satz eins nennt; der feste Feinheiten-Satz nennt keins, dann entfällt „Ich habe vor allem … umgesetzt.“ und nichts wird erfunden.
+
+## 2026-11-07 – outreach 0.6.0, datenbeschaffung 0.5.0, fulfillment 0.1.4
+
+Sammelstand auf ListM8 MCP 4.12.0 (Stand develop, nächster Release nach v4.18.4). Er bringt alles, was der Server seit 4.0.0 kann und die Skills bisher nur auf Zweigen kannten, dazu die Copy-Nacharbeit von 0.4.8 bis 0.5.9 (Einträge darunter). Neues nutzen die Skills nur, wenn `ping` die passende Version meldet; ältere Server ab 3.0.0 laufen weiter wie bisher.
+
+**outreach** (neu in diesem Stand, MCP 4.9.0 bis 4.12.0)
+- `outreach-campaign` → Blueprint mit A/B-Varianten (`sequence.steps[].variants`, `variantAActive`, `aiVariables[].angle`/`title`/`description`/`role`), Schwerpunkten (`campaign.offerFocuses`, bis 20, Prüffragen mit `fitsWhen`), Angebotsblöcken (`aiVariables[].offerRole`), zwei Personen je Firma (`campaign.recipientsPerCompany`) und Station (`campaign.station`, nur aus dem Export übernehmen). Beim Bearbeiten Varianten mitschicken; `confirm_discard_variants` nur nach Ja mit `discard_variants=true`, `variants_transferred` ist nicht übersteuerbar (MCP 4.11.0).
+- `outreach-campaign`, `outreach-pipeline`, `outreach` → Eine in der App eingerichtete Kampagne gibt `release_campaign` frei, nur nach ausdrücklichem Ja; `release_blocked` nennt die Lücken. `start_lead_run` lehnt bis dahin mit `setup_open` ab, im Karten-Test sperrt `model_trial_locked` teure Modelle und Deep (MCP 4.9.0).
+- `outreach-generate`, `lead-agent` → Angebotsblöcke: `schwerpunkt` mit Grund, je Block `<name>__stand` `uebernommen` (Vorlage vom Server) oder `angepasst` mit Grund, `proof` und `noun` nie schreiben; `no_offer_focus` überspringt den Lead (`grund=kein-schwerpunkt`), `set_offer_focus` nur auf Wunsch des Nutzers. Person 2 über `second_person` im selben Aufruf, mit eigenem Intro und derselben Anredeform; `second_person_not_open`. Antwortfelder `offer_blocks`, `second_person`, `server_adjusted` (MCP 4.11.0, 4.12.0).
+- `outreach-verify`, `verify-agent` → `get_lead_variables` mit `markWritten`, `offerRole`/`templateState` (eine Vorlage ist ein Serverwert und kein Befund zum Wortlaut), `offerFocus` und `secondPerson`; Person 2 wird mitgeprüft, eine Freigabe gilt für beide.
+- `outreach-export` → Spalten für Person 2 und `rows_per_person`. `outreach-lists` → `check_leads_exist` trifft Person 2 (`matched_via: second_person`).
+- `outreach-setup`, README → Versionsliste von 4.0.0 bis 4.12.0, 46 Tools.
+- Power-ups gelten ab MCP 4.6.0 (die Zweige nannten 4.1.0 bzw. 4.4.0, so hat der Server sie nie ausgeliefert).
+- Live-Ansicht → die Tests zu Leads ohne E-Mail laufen über die Verbindung `dealsupply` (44 Tests grün).
+
+### Bisher nur auf Zweigen: Intro-Varianten mit Tags und Verbindung `dealsupply` (MCP 4.10.0, PR #19)
+
+Passt zu ListM8 MCP 4.10.0 (Sammelstand des Redesigns, DS-103). Die Verbindung zieht von `outreach.akquise.de` nach `app.dealsupply.ai`.
+
+*outreach* (Verbindung `dealsupply`)
+- `.mcp.json`, `mcp.json` → Die mitgelieferte MCP-Verbindung heißt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1`; die Verbindung `akquise` (`outreach.akquise.de`) entfällt. Nach dem Update `dealsupply` einmal anmelden (Claude Code `/mcp`, Claude App unter Connectors, Codex `codex mcp login dealsupply`); eine von Hand angelegte Verbindung `akquise` entfernen.
+- `outreach-setup`, README → Einrichtung mit `dealsupply`, Hinweis zum Umstieg von `akquise`, Kunden anderer Outreach-Apps lassen `dealsupply` unverbunden.
+- Live-Ansicht → Standard-Server `dealsupply`, Links in die App auf `app.dealsupply.ai`; Server mit anderem Namen (auch ein altes `akquise`) erkennt sie weiter an ihren Tools. Tests umgestellt.
+
+*outreach* (Intro-Varianten mit Tags, MCP 4.10.0)
+- `outreach-generate`, `lead-agent` → Intro-Variablen aus `emailGeneration.introVariables` in Rangfolge; Variante A ist das erste Element (meist `intro`, maßgeblich ist die Position, nicht der Name), dann `intro_b` …, jede mit eigenem Anker nach dem Block INTRO-VARIANTEN UND TAGS im `systemPrompt`. `expectedOutput` wörtlich übernehmen, also je Intro-Variable `<name>__anker` und `<name>__schluss` mitschicken. Eine weitere Variante ohne guten eigenen Anker ist ein Rückfall (`"<name>__anker": "rueckfall"`, leerer Wert); der Server speichert sie ohne eigenen Text, gesendet wird der aktuelle Text von Variante A. Eine wörtliche Kopie von A zählt ebenfalls als Rückfall. Zwei selbst geschriebene Varianten enden nie gleich, sonst `validation_failed`. `save_lead_variables`-Referenz mit `tags_written` und `fallbacks`.
+- `lead-agent` (Nachbessern) → unveränderte Variablen mit ihren Tags aus `anchorWritten`/`closingWritten` zurückschreiben; Zeilen mit `fallback: true` wieder leer als Rückfall schicken.
+- `outreach-verify`, `verify-agent` → `get_lead_variables` mit `anchorWritten`, `closingWritten`, `fallback` und `notStored`: Eine Rückfall-Zeile zeigt den aktuellen Text von Variante A, ist kein fehlender Wert und kein Ablehnungsgrund.
+- Ältere Server ohne Tags in `expectedOutput`: Tags werden nicht mitgeschickt, alles bleibt wie bisher.
+
+### Bisher nur auf Zweigen: Close (MCP 4.8.0, PR #18)
+
+Passt zu ListM8 MCP 4.8.0 (Close-Spiegel). Ältere Server kennen `get_close_status` und `set_close_sync` nicht.
+
+*outreach* (Close)
+- `outreach` → neuer Abschnitt „Close erklären“: Fragen zum Stand in Close beantwortet `get_close_status` (Verbindung, Leads je Status im Workspace, zuletzt fehlgeschlagene, optional der Schalter einer Kampagne); `set_close_sync` schaltet eine Kampagne an oder aus (`enabled`, optional `transfer_backlog=false`), nur auf Wunsch des Nutzers. Verbinden, Einrichten, Einstiegsstufe und Lead-Status je Stufe gibt es nur in der App, für alle Kampagnen. Leads mit `do_not_contact` kommen nie neu nach Close.
+- `outreach-launch` → Zeile „ins CRM Close spiegeln“ in „Wer macht was“.
+- `outreach-setup` → Close-Werkzeuge ab MCP 4.8.0.
+
+### Bisher nur auf Zweigen: Power-ups (MCP 4.6.0, aus PR #16 ohne „Leads finden“)
+
+*outreach* (Power-ups, ListM8-MCP 4.6.0, LISTM8-75). Alles Neue gilt erst ab Server-Version 4.6.0 (`ping`); ältere Server kennen die Tools nicht.
+- `lead-agent`, `outreach-research` → Eingeschaltete Power-ups aus `get_lead_data.researchGeneration.powerUps` über `run_power_up`: `verify_email` prüft nach dem Lesen der Seiten alle belegten Kandidaten in einem Aufruf (Anbietergebühr ohne Marge, nur Adressen mit Herkunft), `find_person_email` sucht erst nach Impressum, Team- und Kontaktseite und nur für einen Entscheider, dessen persönliche Adresse auf keiner gelesenen Seite steht (Treffer zum Stückpreis, ohne Treffer die Anbietergebühr; höchstens drei Personen). Ein Treffer von `find_person_email` mit Urteil `valid` ist belegt und wird `bestEmail`, auch statt einer allgemeinen Importadresse. Eine nur auf einer Seite gelesene Adresse kennt der Server erst nach dem Speichern: erst `bestEmail` schreiben, dann prüfen. `invalid` und `catch_all_unconfirmed` werden nie `bestEmail`; bei `failed`, `unavailable`, `limit_reached` kein zweiter Aufruf mit derselben Eingabe. Im Server-Lauf prüft der Server am Ende jeder Recherche eine noch ungeprüfte Versandadresse selbst (kostenlos) und wählt bei unzustellbarem Postfach neu.
+- `outreach-generate`, `outreach-verify`, `verify-agent` → `undeliverable_address` beim Speichern oder Freigeben: Das Postfach der Versandadresse existiert laut Prüfung nicht. Nicht wiederholen; eine andere Adresse desselben Betriebs mit `switch_primary_email` wählen (nur auf Wunsch des Nutzers) oder den Lead überspringen. Eine Versandadresse mit Urteil `invalid` in `emailVerdicts` ist ein Befund (`art=adresse`, ohne gültige Alternative `art=recht`).
+- `outreach-abo-lauf`, `outreach-pipeline` → `list_power_ups` vor dem Lauf, Einschalten mit `set_power_up` nur mit Zustimmung; der Power-up-Block von `quote_lead_run` gehört in die Preisnennung, Treffer und Credits aus `get_lead_run_status.powerUps` in den Bericht. Neuer Grund `invalid_address` in `skipReasons` und `quote_lead_run.without_work`.
+- `outreach-campaign` → Power-ups stehen nicht im Blueprint, sie werden nach dem Anlegen mit `set_power_up` geschaltet.
+
+### Bisher nur auf Zweigen: Leads ohne E-Mail (MCP 4.0.0, PR #10)
+
+Leads ohne E-Mail-Adresse (ListM8 MCP 4.0.0). Ein Lead braucht beim Import eine gültige E-Mail oder eine eigene Website; die Recherche sucht die Kontaktadresse dann selbst. Alles Neue gilt erst ab Server-Version 4.0.0 (`ping`); ältere Server behalten den alten Ablauf, jeder Lead braucht dort eine E-Mail.
+
+*outreach*
+- `outreach-import` → Prüft zuerst die Server-Version; nur sie entscheidet über den Kontrakt, nicht der Wortlaut einer Fehlermeldung. Ab 4.0.0 reicht E-Mail ODER eigene Website (Baukasten-Unterseiten wie `name.jimdosite.com` zählen, reine Profil- oder Plattform-Links nicht). Ungültige E-Mail mit brauchbarer Website wird ohne Adresse importiert. Teilimport statt Komplett-Ablehnung: `accepted`, `rejected_total`, `rejected_rows` mit Codes (`missing_contact`, `invalid_email`, `platform_only_website` usw.); `validation_failed` nur, wenn nichts importierbar ist; `limit_reached` ist dort ein Fehler für den ganzen Aufruf und nur im Job-Ergebnis ein Zeilencode. Bericht nennt Abgelehnte, Hinweise und Duplikate nach `matchedVia` (E-Mail oder Domain).
+- `outreach-research`, `lead-agent` → Ein Lead ohne Adresse bekommt als erstes Ziel die eigene Kontaktadresse (Regeln aus `researchGeneration.contactEmail`): persönliche Adresse von Inhaber oder Geschäftsführung vor info@, nie geraten, nie Plattform-, Verzeichnis-, Agentur- oder Kammeradressen. Fund als `bestEmail` schreiben (der Server macht sie zur Identität; `address_conflict` nicht wiederholen). Kein Fund: Recherche mit Abschnitt „## Kontakt“ und den geprüften Seiten speichern, der Lead scheidet mit `no_contact_email` aus und bekommt keine Mail-Variablen. Antwortzeile mit `adresse=` bzw. `grund=keine-adresse`. Ein Lead mit `not_found` bekommt im Abo-Lauf trotzdem sein Qualifizierungsurteil, sonst bliebe er in der Warteschlange.
+- `outreach-generate`, `outreach-verify`, `verify-agent` → `no_contact_email` beim Speichern oder Freigeben ist kein Fehler, nicht wiederholen. Versandadresse ist `sendingEmail`, sonst `email`; ein Lead ohne beide wird nie freigegeben.
+- `outreach-pipeline`, `outreach-abo-lauf` → Bericht zählt „ohne Adresse“ aus den `skipReasons` des Laufs bzw. den Antwortzeilen der Agents.
+- `outreach-lists`, `outreach-launch` → Leads ohne E-Mail: im Dedup-Index ist `e` leer (nur über `d` bekannt), `check_leads_exist` findet sie nur über die Domain (Abgleich nach ganzen Labels; `match_kind: website_identity` = derselbe Lead, `company_known` = Firma bekannt; ohne `match_kind` eigener Host-Vergleich), `mark_leads_contacted` erreicht sie nur über `lead_ids`; Export und Push nehmen nie Leads ohne Versandadresse mit.
+- `outreach-setup` → nennt die Server-Version und was ab 4.0.0 gilt. `outreach-campaign` (Recherche-Referenz) → Hinweis, dass die Regeln zur Kontaktadresse vom Server kommen.
+- Live-Ansicht → Import zeigt abgelehnte Zeilen („470 importiert · 3 abgelehnt“); ein Lead, dessen Recherche keine Adresse fand, verlässt im Abo-Lauf die Mail-Phase; Leads ohne E-Mail erscheinen mit ihrer Website bzw. Versandadresse; ein kombinierter Schreibaufruf (Urteil plus Recherche) zählt beide Phasen. 4 neue Tests.
+
+*datenbeschaffung*
+- `build_csv.py` → `--uebergabe kontakt` (E-Mail oder eigene Website, Standard für ListM8 ab 4.0.0) und `--uebergabe email` (alter Vertrag, `--require-email` bleibt als Alias); verworfene Zeilen mit Grund per `--verworfen` in eine eigene CSV; Hinweis `nur-plattform-url`; CSV als Eingabe, ein zweiter Durchlauf behält Inhaber, Zusatzspalten und frühere Hinweise. Neue Referenz `plattform-hosts.md` (Spiegel der Server-Liste: Profil-Plattformen, Marken mit Länderdomains, Baukästen).
+- `dedup.py` → Index-Zeilen ohne Adresse zählen über ihre Domain; Zeilen ohne E-Mail auf bekanntem Host fallen als derselbe Lead weg; Domains nach ganzen Labels wie `check_leads_exist` (ohne `www.`, Umlaut-Domains als Punycode, keine Teilstring-Treffer; derselbe Lead nur bei exakt gleichem Host, Eltern-Domain nur Warnung); `--drop-known-domains-ohne-email`. 9 neue Tests.
+- `datenbeschaffung`, `listen-qualitaet`, alle Wege, `impressum-enrichment`, `kontaktseiten-fallback`, `enrichment-waterfall`, `outscraper-bulk` → Die Kontaktlücke: vorab anreichern oder der ListM8-Recherche überlassen (Kosten- und Entscheidungstabelle in `datenumfang.md`); Anreicherung ist ab 4.0.0 optional. Bei ungültiger Adresse aus der Verifizierung bleibt die Zeile mit Website erhalten (Adresse raus, Hinweis `adresse-verworfen`).
+- `listm8-mcp.md`, `csv-spalten.md`, `outreach-uebergabe.md`, `listen-und-icp.md`, `erfahrungswerte.md` → neuer Import-Vertrag, Antwortfelder, Dedup über die Website, Platzhalter für die Fundquote der Recherche.
+
+### Bisher nur auf Zweigen: Mails im Review neu schreiben, Sperre je Lead (MCP 2.5.0, PR #9)
+
+*outreach* (ListM8-MCP 2.5.0: E-Mails neu generieren, Sperre je Lead)
+- `outreach-pipeline` → `start_lead_run` kennt `regenerate_emails` für Mails im Review (nur mit Stufe `email`, kostet erneut, nur mit Zustimmung); mit `select_by_filter` gilt dann `campaign_status=pending_review`. Während eines Laufs sperren die Variablen-Werkzeuge nur noch den einzelnen Lead.
+- `outreach-verify`, `outreach-generate`, Lead-Agent → kennen den Code `email_generation_active` (Mail dieses Leads wird gerade generiert) und überspringen nur diesen Lead; Neugenerierung im Review über `regenerate_emails=true`.
+
+## 2026-11-06 – outreach 0.5.9
+
+Befunde aus dem Nachtest des Endstands (DS-172).
+
+**outreach**
+- `outreach-generate` → Den Anker `geschichte` ehrlich melden: ListM8 setzt dahinter die feste Reaktion „das hab ich richtig gern gelesen“ selbst ein, wenn das Intro mit einer anderen bekannten Reaktion endet (nicht bei Kampagnen, deren Intro-Prompt den Schluss selbst regelt), und nennt den Tausch in `server_adjusted`. Ein Intro von Person 2 ist mit keinem Intro von Person 1 wortgleich, gleich welche Variante.
+- `verify-agent` → Die getauschte Geschichts-Reaktion und die vom Server gesetzte Sie-Begrüßung sind kein Befund.
+- `outreach-copy`, `outreach-generate`, `verify-agent` → Der Betreff von B wird über `emailGeneration.subjectVariables` (Rolle `subject_variant`) erkannt, nicht über den Namen `betreff_b`; der Rückfall-Schlüssel ist `<name>__rueckfall`. Der Rückfall auf den Betreff von A ist in ListM8 keine gespeicherte Kopie: Er bleibt ohne Text und wird beim Versand eingesetzt, auch für Person 2; `get_lead_variables` zeigt ihn mit `fallback: true` (Stand develop, Xeno bccd25e0c).
+- `outreach-copy`, `outreach-generate`, `outreach-verify` → Sie-Form: nie „Guten Tag Herr/Frau Nachname,“; mit belegter Anrede „Hallo Herr/Frau Nachname,“ ohne Titel und Vornamen, ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18). Beide Personen einer Firma grüßen in derselben Form.
+
+## 2026-11-06 – outreach 0.5.8
+
+Entscheidungen vom 06.11.2026 aus dem Credits-Test (DS-170): Betreff B beginnt mit dem Detail, Reaktion nach einem Geschichts-Anker.
+
+**outreach**
+- `outreach-copy`, `outreach-generate`, `verify-agent` → Ein echter Betreff B beginnt direkt mit dem Detail („Dachsanierung am Hansmeyerhof“, „Traufblechmontage bei Nitz“), nie mit „Frage zu/zum/zur …“ oder „question about …“; diese Form hat allein der Rückfall „Frage zu <Kurzname>“. ListM8 zählt einen Betreff in dieser Form immer als Rückfall (E53). Beispiele „Frage zu den Samstagskursen“ und „kurze Frage zum Neubau Freising“ ersetzt.
+- `check_copy.py` → Hinweis, wenn Betreff B wie der Rückfall beginnt.
+- `outreach-copy`, `lead-agent`, `verify-agent` → Hinter Firmengeschichte, Gründung oder Alter heißt die Reaktion immer „das hab ich richtig gern gelesen“ („That was really nice to read.“), nicht „das fand ich richtig sympathisch“ (E54).
+- Nach dem Review: Die Form „Frage zu …“ zählt in ListM8 nur in Kampagnen mit dem neuen Betreff-Prompt (Regel ANFANG/START) als Rückfall, ältere Kampagnen behalten ihren Prompt; ein nackter Standard-Betreff zählt immer als Rückfall. `check_copy.py` erkennt dieselben Formen wie ListM8 („Fragen zu“, „eine/kleine/kurze Frage zu“, „Frage wegen/an“, „questions about“, „a quick question about“, nie „Fragebogen“, „Rückfrage“, „questionnaire“).
+- `outreach-generate`, `verify-agent` → Die feste Geschichts-Reaktion darf in zwei Intro-Varianten gleich stehen; derselbe Satz in vielen Mails ist dort kein systematischer Befund. Rückfall von Betreff B ohne Kurznamen ist der Betreff von Variante A.
+- `outreach-copy`, `lead-agent`, `verify-agent` → „hängen geblieben“ (seit 31.10.2026 verboten) aus allen Reaktionslisten und Beispielen entfernt, steht in den Verbotslisten; `verify-agent` wertet es als Verstoß.
+
+## 2026-11-06 – outreach 0.5.7
+
+Entscheidungen vom 06.11.2026 (DS-167): Wort für die Sache für jede Kampagne, Träger der Förderung.
+
+**outreach**
+- `outreach-copy` → Wort für die Sache auch ohne Schwerpunkte: Jede Kampagne hat in ListM8 ein eigenes Wort (Angebots-Seite, vom Assistenten vorgeschlagen). Es steht nur in der Schlussfrage von Mail 3, Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich.
+- `outreach-copy` → Karte D: Nennt der Nutzer Träger oder Programm der Förderung, steht er statt „der Staat“ („Wusstest du, dass das Land Baden-Württemberg aktuell bis zu …“).
+- `outreach-copy` → Das Wort für die Sache der Kampagne gilt in Mail 3, solange dort nicht das Wort des Schwerpunkts steht (`{{ai.offer_noun}}`), auch bei aktiven Schwerpunkten; ListM8 speichert es ohne Satzzeichen und Anführungszeichen, mit kleinem Artikel. Der Träger der Förderung steht mit Artikel („das Land Baden-Württemberg“).
+- Person 2 bekommt in ListM8 ein eigenes Intro mit Detail zur Firma, kein Kollegen-Intro mehr; die Regeln kommen aus `get_lead_data` (ZWEITE PERSON), der Anker `kollege` wird abgelehnt.
+
+## 2026-11-06 – outreach 0.5.6
+
+Nacharbeit aus dem Gesamttest, Lauf 5 (DS-166): Schwerpunkte in den Folgemails, Schlussfrage von Mail 3, Betreff B.
+
+**outreach**
+- `outreach-copy` → Mail 2 bis 4 nennen mit Schwerpunkten nie einen Schwerpunkt beim Namen; ListM8 streicht einen Satz mit Schwerpunkt-Label. Mail 3 endet immer mit der Frage aus Mail 1, eine eigene Schlussfrage weicht ihr.
+- `outreach-copy` → Zweiter Satz und Routing folgen dem gewählten Schwerpunkt, nie dem Haupt-Offer, wenn ein anderer gewählt ist; Pilot-Satz am besten 15 bis 20 Wörter; Prüffragen am besten nach einer Sache mit fester Recherche-Zeile.
+- `outreach-copy`, `verify-agent`, `check_copy.py` → Betreff B unter 3 Wörtern ist ein Verstoß, ListM8 setzt den Rückfall.
+
+## 2026-11-06 – outreach 0.5.5
+
+Nacharbeit aus Testlauf 4 (DS-165): Betreff B, Kleinschreibung nach der Anrede, Beleg wörtlich.
+
+**outreach**
+- `outreach-copy` → Betreff B: auch kein wertendes Wort zum Detail („Pragmatische Lösungen von Artd“), nur der Gegenstand des Intros ohne Zusatz; Rückfall „Frage zu {{Firma}}“ mit dem Kurznamen aus `firma`, „kurze Frage“ nur ohne sicheren Kurznamen. `save_lead_variables` ersetzt einen gebrochenen oder nackten Standard-Betreff entsprechend.
+- `outreach-copy` → Mail 2 bis 4: nach „Hallo …,“ klein weiter, auch in der Sie-Form („da ich bisher nichts gehört habe“); ListM8 setzt das erste Funktionswort selbst klein.
+- `outreach-copy` → Mail 3: Beleg wörtlich wie angegeben, kein „bis zu“, das nicht in der Angabe steht (Förderquoten der Karte D bleiben „bis zu“).
+- `verify-agent` → Die Marke `gleicher_gegenstand` gilt vorerst nicht als Befund (wie in der Review von ListM8 ausgeblendet, bis die Regel geschärft ist).
+
+## 2026-11-06 – outreach 0.5.4, fulfillment 0.1.4
+
+Stand der Copy-Nacharbeit (Paket 2 und 3) auf Paket 1: zweiter Angebotssatz je Lead für A, B und C, Betreff-Test in Variante B, weitere Intros mit freiem Anker, Schwerpunkt je Lead.
+
+**outreach**
+- `outreach-copy` → Karte B: Rahmensatz je Lead, der den Pilot an diesem Lead festmacht (was er konkret bekäme, bezogen auf seine Recherche, und was er dafür gibt), höchstens 25 Wörter; das Detail des gewählten Schwerpunkts ist Grundlage des zweiten Satzes.
+- `outreach-copy` → Karte C: Der Feinheiten-Satz kommt je Lead von der KI über `{{ai.angebot_ausfuehrung}}` wie bei A und B; er beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“. Ältere Kampagnen behalten den festen Satz im Body.
+- `outreach-copy` → Betreff-Test: Variante B von Mail 1 ist Variante A mit dem persönlichen Betreff `{{ai.betreff_b}}` je Lead (Regeln, Rückfall „Frage zu {{Firma}}“ bzw. „kurze Frage“); der Intro-Test läuft als Variante C. `check_copy.py` zeigt „Betreff B: …“ und zählt den Kurznamen der Firma als ein Wort (`--firma` oder Zeile „Kurzname: …“); ein Betreff, der eine harte Regel bricht, wird zum Betreff von Variante A.
+- `outreach-copy` → Schwerpunkte: je Lead der, der nach Prüfung und Recherche am besten passt, Rang 1 nur ohne klar besseren; Prüffragen nur nach Sichtbarem auf der Website.
+- `outreach-generate`, `verify-agent` → weitere Intro-Varianten nehmen den nächsten freien Eintrag aus „Stärkste Anker“; Marken `rueckfall_trotz_anker` und `gleicher_gegenstand` als weiche Befunde.
+- `outreach-campaign`, `outreach-verify`, `beispiel-blueprint.md` → zweiter Satz bei A, B und C, Schlussfragen und Wortzahlen nach dem zusammengeführten Stand.
+
+**fulfillment**
+- `fulfillment`, `lead-kontext.md` → Das On-Top-Detail der Karte C steht seit 05.11.2026 je Lead in `angebot_ausfuehrung` (`get_lead_variables`), bei älteren Kampagnen fest im Body.
+
+## 2026-11-05 – outreach 0.5.3
+
+Stand der Copy-Nacharbeit (Paket 1): Mail 3 und die Schlussfragen je Karte folgen der App.
+
+**outreach**
+- `outreach-copy` → Mail 3 endet mit genau einer Frage, der Schlussfrage aus Mail 1 (mit dem Wort für die Sache, wo die Karte eins hat); die Beispiele für Step 3 enden nicht mehr mit „melde dich gerne“.
+- `outreach-copy` → Schlussfragen je Karte wie in der App, mit Sie-Form: A „Wäre es in Ordnung, wenn ich das auch für dich erstelle? …“, B „Wärst du grundsätzlich offen dafür?“, C unverändert, D „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? …“, E „Wäre das grundsätzlich interessant?“.
+- `outreach-copy` → Betreff von Step 1 bei jeder Karte „kurze Frage“; die Karten-Betreffs („Meeting …“, „Anfrage für …“, „Deine Förderung“, „Partnerschaft …?“) entfallen. Nur Step 1 trägt einen Betreff.
+- `references/copy-lehre.md` → Aufbau von Step 3 wie in der App: Beleg als erster Absatz, höchstens ein kurzer eigener Satz, Schlussfrage aus Mail 1 als letzter Absatz.
+- `beispiel-blueprint.md` → Step 3 mit einem Beleg direkt nach der Anrede und der Schlussfrage aus Mail 1; Varianten A und B mit ihren Schlussfragen.
+
+## 2026-11-05 – outreach 0.5.2, fulfillment 0.1.3
+
+Führt zwei getrennt gewachsene Stände zusammen: die Linie 0.5.x auf GitHub (Workspaces, Export, Kampagnensprache, Start-Satz aus der App mit `{{accountSignature}}`) und die lokale Linie 0.4.2 bis 0.4.8 (Copy-Kern, Chance-Winkel, Abmeldezeile, Import, Verbindung `dealsupply`, Versand-Setup, zweiter Satz zum Angebot, Schlussfrage ohne „Link“). Beide Einträge unten bleiben gültig; die Versionsnummern 0.4.x und fulfillment 0.1.1/0.1.2 der lokalen Linie wurden nie veröffentlicht.
+
+**outreach**
+- `outreach-copy` → Signatur aus dem Konto (`{{accountSignature}}`) und feste Abmeldezeile stehen nebeneinander; die Abmeldezeile folgt unter `{{accountSignature}}`.
+- `outreach-campaign` → Setup-Check prüft `campaign.language`, `salutation` nur bei `de` und `angebot_ausfuehrung` bei Karte A und B.
+- `outreach-verify` → Copy-Prüfung mit zweitem Satz je Karte, Schlusssatz ohne „Link“ und den Regeln für englische Kampagnen.
+- `verify-agent` → liest `angleWritten` und die Kampagnensprache.
+- `beispiel-blueprint.md` → zweiter Satz, Schlusssatz und Sprache in der Übersicht.
+- `outreach-launch` → Sperren gelten im ganzen Workspace (Regel 5 nach der neuen Tracking-Regel).
+
+**fulfillment**
+- `lead-kontext.md` → Antworter mit `opportunity` und `replied`, Suche außerhalb des Standard-Workspaces mit `workspace`.
+
+## 2026-11-05 – outreach 0.4.8
+
+**outreach**
+- `outreach-copy` → Mail 1 bekommt nach dem Angebotssatz immer einen zweiten Satz zum Angebot, passend zur Karte: bei C der Feinheiten-Satz (Fortschritt, „Ich bin gerade noch an den letzten Feinheiten dran, vor allem …“), bei A ein Inhaltssatz (was für diesen Lead konkret drin wäre, im Konjunktiv, nie als erledigte Arbeit), bei B ein Rahmensatz (was der Empfänger im Pilot bekommt und was er dafür gibt), bei D und E keiner. Ersetzt „Feinheiten-Satz Pflicht bei A und C, optional bei B“. Bei A und B schreibt die KI den Satz je Lead über die neue Variable `{{ai.angebot_ausfuehrung}}` (eigener Absatz direkt nach dem Angebotssatz); Pflichtinhalt des Prompts, Selbstprüfung und Prüfliste nachgezogen, Beispiele für A und B neu.
+- `outreach-copy` → Schlusssatz ohne „Link“: Standard „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (Sie-Form „… wenn ich es Ihnen morgen zusende? …“), mit Wort für die Sache „… wenn ich dir morgen den Entwurf zusende? …“. Das „morgen“ steht damit im Schlusssatz, der Halbsatz „und werde morgen mit … fertig“ im Feinheiten-Satz entfällt.
+- `beispiel-blueprint.md` → Variante für Karte A und B mit Step-1-Body und ausformuliertem `angebot_ausfuehrung`-Prompt je Karte.
+- `outreach-campaign` → `angebot_ausfuehrung` bei Karte A und B anlegen; `outreach-verify` prüft den zweiten Satz je Karte und den Schlusssatz ohne „Link“.
+- Copy-Kern (`skills/outreach-copy/kern/`) → dieselben Regeln, Beispiele für Karte A und B.
+
 ## 2026-11-01 – outreach 0.5.1
 
 Passt zu ListM8 v4.18 mit dem Weg „Mit deiner KI“ (LISTM8-86, MCP 4.7.0, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.
@@ -58,6 +262,47 @@ Passt zu ListM8 MCP 4.7.0 (Kampagnensprache). Ältere Server kennen `campaign.la
 
 **fulfillment**
 - `lead-kontext`, `demo-link` → Die Antwort an den Lead in der Sprache der Kampagne (`campaign.language`), in englischen Kampagnen mit `Hi Vorname,` und `Best,`.
+
+## 2026-11-01 – outreach 0.4.7
+
+**outreach**
+- `outreach-launch` → Versand-Setup auf DealSupplys Stand: Domains beim Domain-Anbieter kaufen (Endungen wie .de, .at, .com, .info, .org; Zapmail selbst verkauft kein .de) und in Zapmail über „Connect Existing Domains“ verbinden, bei Cloudflare über die Verbindung des Cloudflare-Kontos statt Nameservern; Namen nah an der Hauptdomain. Postfächer bei Google oder Microsoft (beides in Zapmail), eine echte Person in Schreibweisen, Profilbild. Warm-up mit Instantlys Voreinstellungen, Start erst bei Health Score über 90 %, am besten 98 bis 100 %. Daily campaign limit 30 und „Campaign slow ramp“ am Postfach statt Wochenplan 100, 200, 300; die Kampagne bekommt gleich Postfächer mal 30. Sendefenster Mo bis Fr 09:00 bis 17:00 wie in der App. Open- und Link-Tracking standardmäßig aus, nur für sofortiges Anrufen nach dem Öffnen an.
+- `outreach-copy` → Tracking-Absatz auf dieselbe Regel gebracht.
+
+## 2026-11-01 – fulfillment 0.1.2
+
+**fulfillment**
+- `fulfillment` (Modus B) und `lead-kontext.md` → Antworter in zwei Abrufen: erst `contact_status="opportunity"` (interessierte Antwort, auch aus dem Instantly-Abgleich), dann `"replied"`. Bisher fand der Skill nur `replied` und bot interessierte Leads nie an. Der Filter nimmt genau einen Wert, deshalb zwei Aufrufe.
+
+## 2026-11-01 – outreach 0.4.6, fulfillment 0.1.1
+
+**outreach**
+- Die mitgelieferte MCP-Verbindung heißt jetzt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1` (vorher `akquise`, `outreach.akquise.de`). Wer das Plugin bisher über die Verbindung `akquise` genutzt hat, meldet sich einmal neu an; eine von Hand angelegte DealSupply-Verbindung kann danach weg.
+- Live-Ansicht in Claude Code: Standard-Server `dealsupply`, Links ohne eigene Adresse vom Server führen auf `app.dealsupply.ai`.
+- `outreach-copy` → keine Verweise mehr auf fremde Regelwerke anderer Marken; die Regeln selbst bleiben gleich.
+- `outreach-setup` → Anmeldeweg für DealSupply-Kunden mit den heutigen Menünamen der Claude App („Connectors“ → „Connect“); ChatGPT im Browser als eigene Umgebung (nur Verbindung, keine Skills).
+
+**fulfillment**
+- `demo-akquise-kampagne` heißt jetzt `demo-kampagne` (Aufruf `/demo-kampagne`, in Claude Code `/fulfillment:demo-kampagne`); Inhalt unverändert. `fulfillment`, `fulfillment-setup` und die Referenzen nennen den neuen Namen.
+
+## 2026-11-01 – outreach 0.4.5
+
+**outreach**
+- `outreach-import` → auf den Stand des Import-Werkzeugs gebracht: Leads brauchen eine Mail **oder** eine eigene Website, Leads ohne Mail werden normal recherchiert; ungültige Zeilen meldet der Server einzeln in `rejected_rows`, statt den ganzen Aufruf abzuweisen; Person der Zeile über `firstName`, `lastName`, `academicTitle`, `salutation` oder `fullName`; Platzprüfung und Report zählen neue Leads statt neuer Mail-Adressen.
+
+## 2026-11-01 – outreach 0.4.4
+
+**outreach**
+- `outreach-import` → Google-Maps-Listen: die Place ID immer als `place_id` mitgeben. Der Skill erkennt sie an Spaltennamen, am Wertformat (`ChIJ…`) und in Maps-Links, trennt sie von `cid` und `google_id` und fragt nach, wenn sie in einer Maps-Liste fehlt. Dazu die Liste der Google-Maps-Schlüssel, die der Import ohne `attribute_mappings` behält.
+
+## 2026-10-27 – outreach 0.4.2
+
+Fasst die Arbeitsstände 0.3.43 bis 0.3.45 auf der Linie 0.4.x zusammen.
+
+**outreach**
+- `outreach-copy` → software-freier Copy-Kern unter `skills/outreach-copy/kern/` (Copy-Lehre, Offer-Lehre, Beispiele, Prüfskript). Er ist die Quelle für den Heartbeat-Skill `cold-mail-copy`; `scripts/export-copy-kern.sh` überträgt ihn, `--check` meldet Abweichungen.
+- `outreach-copy`, `lead-agent`, `verify-agent` → Chance-Winkel für KI-Variablen in Instantly-Varianten (A/B-Test der Intros: Lob gegen Chance, ohne Beleg Rückfall auf Lob).
+- `outreach-copy`, `verify-agent`, Copy-Kern → feste, menschliche Abmeldezeile unter der Signatur („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid, dann melde ich mich nicht mehr.“). „STOPP“, „Abmelden“, „unsubscribe“ und ähnliche Opt-out-Fachsprache sind verboten; der technische Abmeldeweg im Versandtool bleibt.
 
 ## 2026-10-27 – Umzug nach DealSupply (ohne neue Plugin-Version)
 
@@ -143,7 +388,7 @@ Passt zu ListM8 MCP 4.3.0 (Richtpreis mit Abrechnung nach Aufwand). Ältere Serv
 - Die Reaktion aus dem Block `SCHLUSS DES OPENERS` ist ein Vorschlag, keine Vorgabe. `verify-agent`: fehlender Schluss hinter Kundenlob ist kein Befund, doppeltes Lob ein Hinweis.
 - `copy-lehre` → Beispiel zur Bewertungszahl schließt mit einer Reaktion statt mit einem Nutzen (Widerspruch zur Server-Regel behoben).
 
-## 2026-10-15 – outreach 0.3.32 (parallel auf main, update_ai_variable)
+## 2026-10-15 – outreach 0.3.32
 
 **outreach** (Kundenfall 15.10.2026: Claude lehnte eine Prompt-Änderung über den MCP ab)
 - `outreach-campaign` → Einen Variablen-Prompt ändert `update_ai_variable` (ListM8-MCP 2.4.0) ohne Export und Voll-Blueprint. Die Warnung, `edit_campaign` lösche alle erzeugten Werte, ist ersetzt: Der Server gleicht Variablen seit August 2026 per Name ab, Werte bleiben. Rückfrage bleibt Pflicht, bevor schon erzeugte Leads neu generiert werden.
