@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-11 – outreach 0.5.2
+
+**outreach**
+- Die mitgelieferte MCP-Verbindung heißt jetzt `dealsupply` und zeigt auf `https://app.dealsupply.ai/_mcp/v1` (vorher `akquise`, `outreach.akquise.de`). Die alte Verbindung führte DealSupply-Kunden auf die Anmeldung von akquise.de, wo ihre Zugangsdaten nicht gelten. Wer das Plugin bisher über die Verbindung `akquise` genutzt hat, meldet sich einmal neu an; eine von Hand angelegte DealSupply-Verbindung kann danach weg.
+- Live-Ansicht in Claude Code: Standard-Server `dealsupply`, Links ohne eigene Adresse vom Server führen auf `app.dealsupply.ai`.
+- `outreach-setup`, README → Anmeldeweg für DealSupply-Kunden mit den heutigen Menünamen der Claude App („Connectors“ → „Connect“); ChatGPT im Browser als eigene Umgebung (nur Verbindung, keine Skills).
+
 ## 2026-11-01 – outreach 0.5.1
 
 Passt zu ListM8 v4.18 mit dem Weg „Mit deiner KI“ (LISTM8-86, MCP 4.7.0, `list_campaigns` mit `setup_state`/`setup_path`). Ältere Server ohne diese Felder: Der Ablauf erkennt die leere Kampagne an fehlenden Schritten und Variablen.
