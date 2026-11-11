@@ -28,21 +28,20 @@ Rufe `list_campaigns` auf (nur lesend).
 - **Antwort kommt:** Verbindung steht. Zusätzlich `ping` aufrufen und die Server-Version nennen. Ab
   `4.0.0` lassen sich Leads auch nur mit Website (ohne E-Mail) importieren; darunter (auch auf 3.x)
   braucht jeder Lead eine E-Mail. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
-- **Kein Outreach-Tool verfügbar oder Anmeldung nötig:**
-  - **DealSupply-Kunden:** Das Plugin bringt die Verbindung `dealsupply` mit (`app.dealsupply.ai`).
-    - Claude Code: `/mcp` öffnen → `dealsupply` → anmelden.
-    - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply`
-      „Connect“ → bei DealSupply anmelden und „Autorisieren“ bestätigen.
-    - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
-  - **Kunden einer anderen Outreach-App:** Die mitgelieferte Verbindung `dealsupply` nicht hinzufügen.
-    Den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen; Skills und Live-Ansicht
-    erkennen ihn automatisch an seinen Tools, der Name ist egal.
+- **Kein Outreach-Tool verfügbar oder Anmeldung nötig:** Das Plugin bringt die Verbindung `dealsupply`
+  mit (`app.dealsupply.ai`). Angemeldet wird mit den Zugangsdaten von DealSupply, auch von Kunden,
+  die bisher über Akquise kamen.
+  - Claude Code: `/mcp` öffnen → `plugin:outreach:dealsupply` (so heißt die vom Plugin mitgebrachte
+    Verbindung dort) → anmelden.
+  - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply`
+    „Connect“ → bei DealSupply anmelden und „Autorisieren“ bestätigen.
+  - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
   - Danach `list_campaigns` erneut aufrufen.
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
   Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
-- **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Die Adresse entfällt, das
-  Plugin bringt sie nicht mehr mit. Steht sie trotzdem noch da (von Hand angelegt), dem Nutzer
-  empfehlen, sie zu entfernen (Claude Code `/mcp`, Codex `codex mcp remove akquise`, Claude App unter
+- **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Das Plugin bringt sie nicht
+  mehr mit; sie wird nicht mehr gepflegt und zeigt noch die alte Marke Akquise. Steht sie noch da (von
+  Hand angelegt), dem Nutzer empfehlen, sie zu entfernen (Claude Code `/mcp`, Codex `codex mcp remove akquise`, Claude App unter
   Connectors) und `dealsupply` anzumelden.
 
 Steht die Verbindung, zwei weitere lesende Aufrufe:

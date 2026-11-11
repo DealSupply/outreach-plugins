@@ -1,6 +1,6 @@
 # Outreach Plugins
 
-Ein Marketplace mit drei Plugins für Kunden der Outreach-Plattform – für Claude (App, claude.ai,
+Ein Marketplace mit drei Plugins für Kunden von DealSupply – für Claude (App, claude.ai,
 Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 
 | Plugin | Inhalt | Für wen |
@@ -50,19 +50,26 @@ MCP-Verbindung separat über die App-Seite „MCP & Skills“.
 Nach der Installation: Skill **`outreach-setup`** aufrufen (bzw. **`datenbeschaffung-setup`** für das
 Plugin datenbeschaffung, **`fulfillment-setup`** für das Plugin fulfillment). Er prüft die Verbindung, räumt alte Skill-Kopien auf und zeigt die ersten Schritte.
 
-**Kunden einer anderen Outreach-App als DealSupply:** Die mitgelieferte Verbindung `dealsupply`
-nicht hinzufügen und den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen.
-Skills und Live-Ansicht erkennen ihn an seinen Tools.
-
 **Umstieg von `akquise`:** Bis outreach 0.5.1 brachte das Plugin die Verbindung `akquise`
 (`outreach.akquise.de`) mit. Ab 0.6.0 heißt sie `dealsupply` und zeigt auf `app.dealsupply.ai`. Nach
-dem Update `dealsupply` einmal anmelden; eine von Hand angelegte Verbindung `akquise` entfernen.
+dem Update `dealsupply` einmal mit DealSupply anmelden (in Claude Code unter `/mcp` als
+`plugin:outreach:dealsupply`), auch wer bisher über Akquise kam. Eine von Hand angelegte Verbindung
+`akquise` wird nicht mehr gepflegt und zeigt die alte Marke Akquise; sie sollte entfernt werden.
 
-**Updates:** Skill `outreach-update`. In Claude Code am besten Auto-Update einschalten
-(`/plugin` → Marketplaces → `outreach-plugins`).
+**Updates:** Skill `outreach-update`. In Claude Code ist Auto-Update für Marketplaces von
+Drittanbietern standardmäßig aus. Wer eine ältere Version hat, aktualisiert einmal von Hand:
+
+```
+/plugin marketplace update outreach-plugins
+/reload-plugins
+```
+
+Bleibt die Version alt: `/plugin` → „Installed“ → „Update now“ bzw.
+`claude plugin update outreach@outreach-plugins`. Danach `/plugin` → „Marketplaces“ →
+`outreach-plugins` → Auto-Update einschalten. Mehrere Konfigurationsprofile: in jedem Profil.
 
 Das Repo lag bis Oktober 2026 unter `RankM8/outreach-plugins`. GitHub leitet die alte Adresse
-weiter; bestehende Installationen aktualisieren sich ohne Neuinstallation.
+weiter; neu installiert wird immer aus `DealSupply/outreach-plugins`.
 
 ## Aufbau
 

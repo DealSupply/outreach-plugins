@@ -1,7 +1,7 @@
 {
   "name": "fulfillment",
   "version": "0.1.5",
-  "description": "Das Marketing-Offer einer Kampagne liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, veröffentlichen und den Link zurück an den Lead schreiben.",
+  "description": "Das Marketing-Offer einer Kampagne liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, nicht auffindbar veröffentlichen und den Link am Lead speichern.",
   "author": {
     "name": "DealSupply"
   },
