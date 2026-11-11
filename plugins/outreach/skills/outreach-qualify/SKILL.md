@@ -129,7 +129,7 @@ LEAD: {lead.company} (ID: {lead.id})
 
 ## Phase 3: Report & nächster Batch
 
-Wie /outreach-generate: Batch-Report (Erfolg/Fehler/Verbleibend), dann erneut `list_leads` bis `remaining == 0`. Fehlgeschlagene Leads bleiben `qualification_status=pending` und tauchen im nächsten Lauf wieder auf — kein automatischer Einzel-Retry. Leads mit `OFFEN` (nur Importdaten, kein Urteil) bleiben ebenfalls `pending`: ihre IDs festhalten, in diesem Lauf nicht erneut vergeben; die Schleife endet, sobald nur noch solche Leads übrig sind und im Abschluss-Report mit Grund nennen.
+Wie /outreach-generate: Batch-Report (Erfolg/Fehler/Verbleibend), dann erneut `list_leads` bis `remaining == 0`. Fehlgeschlagene Leads bleiben `qualification_status=pending` und tauchen im nächsten Lauf wieder auf — kein automatischer Einzel-Retry. Leads mit `OFFEN` aus der Vorlage bzw. `OK lead=<id> fit=offen … grund=nur-importdaten` vom `outreach:lead-agent` (nur Importdaten, kein Urteil) bleiben ebenfalls `pending`: ihre IDs festhalten, in diesem Lauf nicht erneut vergeben; die Schleife endet, sobald nur noch solche Leads übrig sind und im Abschluss-Report mit Grund nennen.
 
 Abschluss-Report + Hinweis: "Nächster Schritt: /outreach-research — qualifizierte Leads recherchieren".
 

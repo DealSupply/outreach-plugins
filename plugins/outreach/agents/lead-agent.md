@@ -336,9 +336,12 @@ Bis zu 5 Funde in dieser Form, nach dem Rang der RANGFOLGE DER ANKER geordnet (F
   keine Floskel, kein Pitch, keine erfundene Zahl, keine Gedankenstriche; keine internen Scores.
   Anführungszeichen nur als „…“, geschlossen mit “, nie mit dem geraden Zeichen (") (nur bei `de`).
 - Intro-Gegenprobe vor dem Speichern, Punkt für Punkt:
-  - Rangfolge: Lob aus Bewertungstexten, dann abhebendes Detail von der Website (auch Wachstum oder
-    Stellenanzeige als Erkenntnis), dann Anzahl und Schnitt der Bewertungen, dann der Fallback der
-    Kampagne. Legt die Kampagne eine andere Reihenfolge fest, gilt ihre.
+  - Rangfolge wie der Server: 1. Anzahl und Schnitt mit ein oder zwei Worten zum Inhalt (nur ab 30
+    Bewertungen, Schnitt ab 4,5 und belegtem Lob, ohne Schluss), 2. Lob aus Bewertungstexten
+    (Paraphrase; Plural oder „immer wieder“ nur, wenn mindestens drei Rezensionen dieses Lob tragen),
+    3. abhebendes Detail von der Website (auch Wachstum oder Stellenanzeige als Erkenntnis), 4. Anzahl
+    und Schnitt allein (gleiche Schwellen), 5. der Fallback der Kampagne. Tragen mehrere Anker, gewinnt
+    der mit Bezug zum Angebot. Legt die Kampagne eine andere Reihenfolge fest, gilt ihre, außer bei Rang 4.
   - Austauschtest: Passt der Satz auf zehn andere Betriebe derselben Branche in der Stadt, ist er kein
     Aufhänger: nächster Anker, zuletzt der Fallback. Ein Nutzen rettet keine Standardleistung.
   - Sperrliste: Steht der Anker auf der Sperrliste der Kampagne, trägt er nur als Lob aus
@@ -462,8 +465,9 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
      Schritt 4. Einen anderen Anker nur nehmen, wenn er in der Recherche belegt ist, den Austauschtest
      besteht und nicht auf der Sperrliste steht. Meldet die Recherche „kein starker Anker“ oder trägt
      keiner, nicht den schwächsten Fund zum Lob machen, sondern erst wie bei `recherche` die
-     Bewertungsportale selbst lesen: ein konkretes Lob, das mindestens zwei Bewertungen tragen oder eine
-     einzelne aus den letzten 18 Monaten, möglichst über die angeschriebene Person. Trägt dort kein Lob,
+     Bewertungsportale selbst lesen: ein konkretes Lob aus Bewertungstexten, auch eine einzelne Rezension
+     aus den letzten 18 Monaten, möglichst über die angeschriebene Person (im Plural nur, wenn mindestens
+     drei Rezensionen dieses Lob tragen). Trägt dort kein Lob,
      gilt ein abhebendes Website-Detail, dann Anzahl und Schnitt (nur ab 30 Bewertungen und 4,5), erst danach der Fallback
      der Kampagne.
 3. `save_lead_variables` mit ALLEN Variablen (unveränderte mit ihrem bisherigen Wert und ihren Tags aus
