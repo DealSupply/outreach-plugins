@@ -29,7 +29,7 @@ beide wählt, bekommt beide.
 
 **„Angebot je Lead“** („Offer per lead“), nur bei Karte A (Kostenlose Teildienstleistung, in der App
 „Kostenlose Teilleistung“) und Karte C (Konkretes Deliverable, in der App „Schon erledigte
-Vorarbeit“), nur ab ListM8-MCP 4.15.0 (`ping`):
+Vorarbeit“), nur ab MCP 4.15.0 (`ping`):
 
 | Ort | Deutsch | Englisch |
 |---|---|---|
@@ -62,7 +62,7 @@ Im Blueprint (ab MCP 4.11.0) stehen sie unter `sequence.steps[0].variants`, je
   `"description": "Betreff der Variante B von Mail 1: „Frage zu <Kurzname>“ mit dem Kurznamen der Firma. Ohne sicheren Kurznamen der Betreff von Variante A, als Rückfall markiert."`
   (englisch `"Subject variant B"`, `"Subject of variant B of email 1: \"question about <short name>\" with the company's short name. Without a reliable short name the subject of variant A, marked as a fallback."`).
   Der Prompt ist wörtlich der des Servers. Die Zeile „- FORM: …“ muss genau so stehen: An ihr
-  erkennt ListM8, dass B „Frage zu <Kurzname>“ heißt und den Betreff selbst aus `firma` setzt.
+  erkennt DealSupply, dass B „Frage zu <Kurzname>“ heißt und den Betreff selbst aus `firma` setzt.
 
   Deutsch:
 
@@ -102,7 +102,7 @@ Follow-ups. Die Launch-Checkliste (`outreach-launch`) nennt den Test nur, wenn e
 
 Eine KI-Variable mit Vorlage statt eines Systems: Die KI wählt je Lead eines der Angebote des
 Kunden und schreibt den zweiten Absatz; den ersten und dritten Absatz des gewählten Angebots setzt
-ListM8 selbst ein. Ohne die Option bleibt Mail 1 beim festen Angebotssatz, dem festen zweiten Satz
+DealSupply selbst ein. Ohne die Option bleibt Mail 1 beim festen Angebotssatz, dem festen zweiten Satz
 und der Schlussfrage.
 
 ### Wann
@@ -114,12 +114,12 @@ und der Schlussfrage.
   auch ein abgelehnter Lead hat Werte): dann per
   `edit_campaign` (Vollersatz aus dem Export) genauso gebaut wie beim Anlegen. Haben Leads schon
   Mails, ginge das über den Blueprint nicht: Diese Leads zeigten „[NOT GENERATED]“. Dann geht es nur
-  in der App (Angebots-Blatt, Schalter „Angebot je Lead“, dort trägt ListM8 die bisherigen Absätze
+  in der App (Angebots-Blatt, Schalter „Angebot je Lead“, dort trägt DealSupply die bisherigen Absätze
   als Werte ein), und den Schalter gibt es dort nur, wenn die Kampagne eine Station trägt (im Export
   steht `campaign.station`). Standard-Kampagnen aus dem Plugin haben keine; das dem Nutzer so sagen.
 - Nie zusammen mit Schwerpunkten (`campaign.offerFocuses`) oder Angebotsblöcken (Variablen mit
-  `offerRole`). Eine Kampagne mit beidem nimmt ListM8 nicht in „Angebot je Lead“.
-- Nur ab ListM8-MCP 4.15.0 (`ping`). Ältere Server kennen die Option nicht oder zählen das
+  `offerRole`). Eine Kampagne mit beidem nimmt DealSupply nicht in „Angebot je Lead“.
+- Nur ab MCP 4.15.0 (`ping`). Ältere Server kennen die Option nicht oder zählen das
   Haupt-Angebot noch als letzte Nummer (4.14.x): dann ein Angebot für alle.
 
 ### Was abgefragt wird (dieselben Felder wie die Karten der App)
@@ -178,11 +178,15 @@ ohne `{{`, keine Gedankenstriche.
 
 ### Die Anweisung (Vorlage, abgenommen am 10.11.2026, Wortlaut seit DS-206)
 
-Die Anweisung ist der Prompt von `angebot_ausfuehrung`. ListM8 baut sie selbst aus den Karten: Ein
+Die Anweisung ist der Prompt von `angebot_ausfuehrung`. DealSupply baut sie selbst aus den Karten: Ein
 Blueprint mit „Angebot je Lead“ und ohne `offerPrompt` bekommt beim Import die Anweisung des
 Servers, was auch immer das Plugin als Prompt schickt. Das Plugin baut sie deshalb nur, um sie dem
 Kunden zu zeigen, und schickt dieselbe Fassung als Prompt mit (der Server braucht die Variable,
 der Prompt muss mindestens 10 Zeichen haben).
+
+Wortgrenze für Mail 1 mit „Angebot je Lead“: deutsch höchstens 120 Wörter, englisch 100, wie ohne
+die Option (DS-234). Nennt die Anweisung, die DealSupply beim Import selbst baut, auf Deutsch noch
+100 Wörter, gilt trotzdem 120.
 
 Bevor angelegt wird, zeigt das Plugin dem Kunden die Anweisung unter der Überschrift „So schreibt
 die KI den Angebotsteil“ („How the AI writes the offer part“), zusammen mit den Angeboten. Erst
@@ -224,7 +228,7 @@ ABSATZ 2
 {Regel der Form für den zweiten Satz}
 Grundlage ist, was beim gewählten Angebot konkret drin ist, zugeschnitten auf das, was die Recherche über den Lead weiß.
 Absatz 2 greift nichts auf, was das Intro dieses Leads schon nennt (kein Projekt, keinen Kunden, kein Produkt, keine Auszeichnung, keinen Ort und keine Zahl daraus): Das Intro steht direkt darüber, eine Wiederholung liest sich wie ein Echo. Nimm ein anderes Detail aus der Recherche oder nur, was beim Angebot konkret drin ist.
-LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Ein vorgegebener Satzanfang zählt mit. 25 ist eine harte Grenze: Ein Satz mit 26 Wörtern ist falsch, auch wenn er sonst gut ist. Zähl die Wörter vor der Antwort einzeln (ein Wort mit Bindestrich zählt als eins); hat der Satz mehr als 25, kürze das Detail, statt den Satz abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 100 Wörter.
+LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Ein vorgegebener Satzanfang zählt mit. 25 ist eine harte Grenze: Ein Satz mit 26 Wörtern ist falsch, auch wenn er sonst gut ist. Zähl die Wörter vor der Antwort einzeln (ein Wort mit Bindestrich zählt als eins); hat der Satz mehr als 25, kürze das Detail, statt den Satz abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 120 Wörter.
 Lieferzusage, über die der Satz nie hinausgeht: {Lieferzusage der Form} {Lieferzusage des Kunden}
 Keine Zahl, die die Lieferzusage nicht nennt, auch keine aus der Recherche (keine Bewertung, keine Punkte, keine Jahre, keine Kundenzahl), keine Frist (ein „morgen“ steht nur in der Schlussfrage), kein Gespräch und kein Termin, keine zweite Leistung, keine Frage, kein Lob (das steht schon im Intro), keine Wiederholung von Absatz 1. Keine Gedankenstriche.
 
@@ -333,7 +337,7 @@ dem Briefing, ohne Angabe nichts):
 Absatz 3 des Haupt-Angebots trägt sein Wort aus der Karte, ohne eigenes Wort das Wort für die Sache
 der Kampagne (`ctaNoun`).
 
-Bei Karte A setzt ListM8 die Region nach „in“ mit Artikel („in der Schweiz“, „im Raum München“) und
+Bei Karte A setzt DealSupply die Region nach „in“ mit Artikel („in der Schweiz“, „im Raum München“) und
 stellt einen Nebensatz der Sache ans Satzende; die gezeigte Fassung kann dort leicht abweichen. Wer
 es genau zeigen will, zeigt nach dem Anlegen den Prompt von `angebot_ausfuehrung` aus
 `export_campaign_blueprint`: Das ist die Anweisung, mit der die Leads geschrieben werden.
@@ -342,7 +346,7 @@ es genau zeigen will, zeigt nach dem Anlegen den Prompt von `angebot_ausfuehrung
 
 Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eingerichtet.
 
-1. **`campaign.station`** mit den Antworten, aus denen ListM8 die Angebote kennt (optionaler,
+1. **`campaign.station`** mit den Antworten, aus denen DealSupply die Angebote kennt (optionaler,
    tolerant gelesener Schlüssel ab MCP 4.15.0):
 
    ```json
@@ -375,22 +379,23 @@ Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eing
 
    `openerForm` ist `"C"` für Karte C und `"A"` für Karte A (dieselben Buchstaben wie in der App).
    `companyName`, `offer`, `audience`, `openerForm` und `prepared` sind Pflicht: Ohne sie nimmt
-   ListM8 den ganzen Block still als nicht gesetzt, und die Variable bekäme keine Angebote.
-   `salutation` ist dieselbe Ansprache wie `emailAgentConfig.salutation`: Ohne `"sie"` setzt ListM8
+   DealSupply den ganzen Block still als nicht gesetzt, und die Variable bekäme keine Angebote.
+   `salutation` ist dieselbe Ansprache wie `emailAgentConfig.salutation`: Ohne `"sie"` setzt DealSupply
    Absatz 1 und 3 auch in einer Sie-Kampagne in der Du-Form ein. Englische Kampagnen setzen `"du"`.
-   `subjectTest` und `introTest` stehen so, wie der Nutzer die Tests gewählt hat (ohne Schlüssel
-   gälte der Betreff-Test als an, falls die Mails später in der App neu erzeugt werden).
+   `subjectTest` und `introTest` stehen so, wie der Nutzer die Tests gewählt hat (`false` auch
+   ausdrücklich mitschicken).
    `elaborationPerLead: false` und `ctaNoun` sorgen dafür, dass Mail 1 und Mail 3 beim Ausschalten in
    der App den festen zweiten Satz und die Schlussfrage mit dem Wort bekommen. `offerPrompt` (eigene
    Anweisung) schickt das Plugin nie. Längen: Sache höchstens 200 Zeichen, Wort 120, Detail 1000,
-   Zusatz 500, ohne eckige Klammern und ohne `{{`; eine ungültige Karte lässt ListM8 alle Karten
-   still fallen.
+   Zusatz 500, ohne eckige Klammern und ohne `{{`. Eine ungültige Karte lässt DealSupply alle
+   Karten fallen und meldet das mit dem Grund je Karte unter `warnings` (die gespeicherten Karten
+   bleiben, siehe „Antworten des Servers“).
 
 2. **Mail 1** mit den drei Platzhaltern in eigenen Absätzen (W17), an der Stelle von Angebotssatz,
    zweitem Satz und Schlussfrage:
 
    ```
-   {{ai.hallo}}\n\n{{ai.intro}}\n\n{{ai.offer_text}}\n\n{{ai.angebot_ausfuehrung}}\n\n{{ai.offer_cta}}\n\n\nViele Grüße\n<Signatur>\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
+   {{ai.hallo}}\n\n{{ai.intro}}\n\n{{ai.offer_text}}\n\n{{ai.angebot_ausfuehrung}}\n\n{{ai.offer_cta}}\n\n\nViele Grüße\n{{accountSignature}}\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
    ```
 
 3. **Drei Variablen** direkt nach `intro` (bzw. `firma`), ohne `offerRole`:
@@ -398,7 +403,7 @@ Fünf Teile gehören zusammen. Fehlt einer, ist „Angebot je Lead“ nicht eing
    | Name | Prompt |
    |---|---|
    | `offer_text` | „Vom Server gesetzt: Absatz 1 des Angebots, das die KI für den Lead gewählt hat (Angebot je Lead). Schreibt nie die KI.“ (englisch “Set by the server: paragraph 1 of the offer the AI picked for the lead (offer per lead). Never written by the AI.”) |
-   | `angebot_ausfuehrung` | die Anweisung oben, wie sie dem Kunden gezeigt wurde (ListM8 ersetzt sie beim Import durch die eigene) |
+   | `angebot_ausfuehrung` | die Anweisung oben, wie sie dem Kunden gezeigt wurde (DealSupply ersetzt sie beim Import durch die eigene) |
    | `offer_cta` | „Vom Server gesetzt: Absatz 3 des Angebots, das die KI für den Lead gewählt hat (Angebot je Lead). Schreibt nie die KI.“ (englisch “Set by the server: paragraph 3 of the offer the AI picked for the lead (offer per lead). Never written by the AI.”) |
 
 4. **Mail 3 endet neutral** (W5) statt mit der Schlussfrage aus Mail 1, damit sie keinem Angebot
@@ -470,7 +475,7 @@ ABSATZ 2
 Ein Satz, der genau so beginnt: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und dann genau ein Detail des schon erstellten Ergebnisses nennt, an dem noch gefeilt wird, passend zu diesem Lead (aus seiner Recherche oder dem Detail des Schwerpunkts), grammatisch vollständig (z. B. „an der …“). Kein „morgen“, kein „fertig werden“, keine neue Leistung.
 Grundlage ist, was beim gewählten Angebot konkret drin ist, zugeschnitten auf das, was die Recherche über den Lead weiß.
 Absatz 2 greift nichts auf, was das Intro dieses Leads schon nennt (kein Projekt, keinen Kunden, kein Produkt, keine Auszeichnung, keinen Ort und keine Zahl daraus): Das Intro steht direkt darüber, eine Wiederholung liest sich wie ein Echo. Nimm ein anderes Detail aus der Recherche oder nur, was beim Angebot konkret drin ist.
-LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Ein vorgegebener Satzanfang zählt mit. 25 ist eine harte Grenze: Ein Satz mit 26 Wörtern ist falsch, auch wenn er sonst gut ist. Zähl die Wörter vor der Antwort einzeln (ein Wort mit Bindestrich zählt als eins); hat der Satz mehr als 25, kürze das Detail, statt den Satz abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 100 Wörter.
+LÄNGE: genau ein Satz mit höchstens 25 Wörtern, am besten 15 bis 20. Ein vorgegebener Satzanfang zählt mit. 25 ist eine harte Grenze: Ein Satz mit 26 Wörtern ist falsch, auch wenn er sonst gut ist. Zähl die Wörter vor der Antwort einzeln (ein Wort mit Bindestrich zählt als eins); hat der Satz mehr als 25, kürze das Detail, statt den Satz abzugeben (ein Strichpunkt macht keine zwei Sätze daraus, er zählt mit). Mail 1 hat insgesamt höchstens 120 Wörter.
 Lieferzusage, über die der Satz nie hinausgeht: Bis morgen nach der Antwort lieferbar. Gebaut aus den Texten und Fotos, die die Praxis schon online hat.
 Keine Zahl, die die Lieferzusage nicht nennt, auch keine aus der Recherche (keine Bewertung, keine Punkte, keine Jahre, keine Kundenzahl), keine Frist (ein „morgen“ steht nur in der Schlussfrage), kein Gespräch und kein Termin, keine zweite Leistung, keine Frage, kein Lob (das steht schon im Intro), keine Wiederholung von Absatz 1. Keine Gedankenstriche.
 
@@ -481,7 +486,8 @@ Anrede: Sprich die Person mit du an (du, dich, dein). Für Tatsachen über den B
 ```
 
 So kommt Mail 1 für eine Praxis ohne Online-Buchung beim Empfänger an (Angebot 2, Absatz 2 von der
-KI, Absatz 1 und 3 von ListM8):
+KI, Absatz 1 und 3 von DealSupply, die Signatur setzt Instantly aus dem Versandpostfach für
+`{{accountSignature}}` ein):
 
 ```
 Hallo Lena,
