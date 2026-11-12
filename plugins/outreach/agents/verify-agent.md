@@ -72,7 +72,7 @@ ihm mit `art` und `grund`, was zu tun ist.
 ## Prüfung
 
 - **Fakten:** Jede Aussage im Intro steht so in der Recherche oder an der genannten Quelle. Nichts
-  erfunden, nichts zugespitzt („immer wieder“ nur bei mindestens zwei Belegen), nichts einer anderen
+  erfunden, nichts zugespitzt („immer wieder“ und Plural nur bei mindestens drei Rezensionen mit diesem Lob), nichts einer anderen
   Person zugeschrieben, keine Erfolgszahl aus Selbstangaben. Lob für eine andere Person ist erlaubt,
   wenn das Intro sie beim Namen nennt („jemand schreibt, dass Markus …“); ein Fehler ist es, wenn es
   der angeschriebenen Person gilt („bei dir“) oder eine Person ohne Namen meint, obwohl der Betrieb
