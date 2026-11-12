@@ -313,9 +313,7 @@ warten und erneut versuchen, gelöscht wurde dann nichts. Das macht Test-Importe
 rückgängig und gibt die Plätze im Lead-Limit sofort wieder frei; schon gebuchte Credits für
 gelöschte Leads werden nicht erstattet. Antwort: `deleted_list`,
 `leads_deleted`, `leads_detached`. Das Löschen von Leads ist unwiderruflich: nur auf ausdrücklichen
-Wunsch. Ab MCP 4.16.0 (laut `ping`) antwortet `delete_list` mit `lead_mutation_busy`, wenn gerade
-eine andere Änderung an den Leads läuft (etwa ein Import): Es wurde nichts gelöscht, nach kurzer Zeit
-denselben Aufruf wiederholen. Dasselbe meldet `add_leads_to_campaign` schon auf älteren Servern.
+Wunsch. `lead_mutation_busy` meldet `add_leads_to_campaign` schon auf älteren Servern.
 
 ## Ausscheiden ohne Adresse
 
