@@ -22,8 +22,7 @@ Marketplaces von Drittanbietern standardmäßig aus. Wer eine ältere Version ha
 von Hand:
 
 1. **Marketplace aktualisieren:** `/plugin marketplace update outreach-plugins` (im Terminal:
-   `claude plugin marketplace update outreach-plugins`). Immer mit dem Namen `outreach-plugins`;
-   ohne Namen wird nur der Katalog neu gelesen.
+   `claude plugin marketplace update outreach-plugins`). Immer mit dem Namen `outreach-plugins`.
 2. **Plugin aktualisieren, falls nötig:** Zeigt `/plugin` → Reiter „Installed“ bei `outreach` noch die
    alte Version, dort „Update now“ wählen, oder im Terminal
    `claude plugin update outreach@outreach-plugins`. Ebenso `datenbeschaffung@outreach-plugins` und
@@ -55,9 +54,19 @@ der Anmeldeseite „Passwort vergessen“. Anmelden:
 - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply` „Connect“.
 - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
 
-Danach `list_campaigns` aufrufen. Antwortet es, eine von Hand angelegte Verbindung zu DealSupply und
-eine alte Verbindung `akquise` entfernen, damit nichts doppelt erscheint. Einzelheiten: `outreach-setup`,
-Schritt 2.
+Vor dem Prüfen ältere Verbindungen entfernen, sonst antwortet womöglich noch eine von ihnen und
+nichts zeigt, ob die neue steht. Das betrifft eine von Hand angelegte Verbindung zu DealSupply und
+eine alte Verbindung `akquise`:
+
+- Claude Code: `claude mcp list` im Terminal zeigt die Verbindungen. Eine von Hand angelegte mit
+  `claude mcp remove <name>` entfernen, zum Beispiel `claude mcp remove dealsupply` oder
+  `claude mcp remove akquise`. Die Verbindung des Plugins (`plugin:outreach:dealsupply`) bleibt dabei
+  bestehen.
+- Claude App / claude.ai: unter Connectors den alten Eintrag entfernen.
+- Codex: `codex mcp remove <name>`.
+
+Erst danach `list_campaigns` aufrufen. Kommt die Liste der Kampagnen, steht die neue Verbindung.
+Einzelheiten: `outreach-setup`, Schritt 2.
 
 ## Was sich geändert hat
 

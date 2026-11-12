@@ -9,7 +9,7 @@ Nenne dem Nutzer den Befehl für seine Umgebung und führe ihn aus, wo du das ka
 
 | Umgebung | Aktualisieren |
 |---|---|
-| Claude Code | `/plugin marketplace update outreach-plugins` (immer mit dem Namen; ohne Namen wird nur der Katalog neu gelesen). Zeigt `/plugin` → „Installed“ danach noch die alte Version: dort „Update now“ oder `claude plugin update fulfillment@outreach-plugins`. Dann `/reload-plugins` oder neue Sitzung |
+| Claude Code | `/plugin marketplace update outreach-plugins` (immer mit dem Namen). Zeigt `/plugin` → „Installed“ danach noch die alte Version: dort „Update now“ oder `claude plugin update fulfillment@outreach-plugins`. Dann `/reload-plugins` oder neue Sitzung |
 | Claude App / claude.ai / Cowork | Customize → Plugins → Marketplace `outreach-plugins` → „Check for updates“ bzw. „Sync automatically“ |
 | Codex | `codex plugin marketplace upgrade outreach-plugins`, danach neue Session |
 | ChatGPT Desktop | App neu starten |

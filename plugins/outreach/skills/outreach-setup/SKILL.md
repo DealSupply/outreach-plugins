@@ -42,11 +42,15 @@ Rufe `list_campaigns` auf (nur lesend).
   - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
   - Danach `list_campaigns` erneut aufrufen.
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
-  Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
+  Dem Nutzer empfehlen, die von Hand angelegte zu entfernen. In Claude Code entsteht sie mit dem
+  Befehl aus der App,
+  `claude mcp add --scope user --transport http dealsupply https://app.dealsupply.ai/_mcp/v1`,
+  und verschwindet mit `claude mcp remove dealsupply` (`claude mcp list` zeigt die Namen). Die
+  Verbindung des Plugins (`plugin:outreach:dealsupply`) bleibt dabei bestehen.
 - **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Das Plugin bringt sie nicht
   mehr mit; sie wird nicht mehr gepflegt und zeigt noch die alte Marke Akquise. Steht sie noch da (von
-  Hand angelegt), dem Nutzer empfehlen, sie zu entfernen (Claude Code `/mcp`, Codex `codex mcp remove akquise`, Claude App unter
-  Connectors) und `dealsupply` anzumelden.
+  Hand angelegt), dem Nutzer empfehlen, sie zu entfernen (Claude Code `claude mcp remove akquise`, Codex
+  `codex mcp remove akquise`, Claude App unter Connectors) und `dealsupply` anzumelden.
 
 Steht die Verbindung, zwei weitere lesende Aufrufe:
 
