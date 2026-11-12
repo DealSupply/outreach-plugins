@@ -14,7 +14,7 @@ Zusatznutzen: Wer mit seinem Profil bei Google rankt, ist meist professioneller 
 Durchschnitt der Nische.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 ## Ehrliche Erwartungswerte (vor dem ersten Lauf nennen)
 
@@ -92,7 +92,7 @@ Was der Schritt liefert und wofür es taugt:
 - **Follower-Zahl** (exakt statt Google-Schätzung) — Segmentierung
 - **Vollständige Bio** — Personalisierungs-Anker
 - **Link in Bio** — die eigentliche Kontakt-Quelle; nach Typ sortieren: eigene Website
-  (→ optional `impressum-enrichment`, im DACH-Raum steht dort E-Mail und Telefon; ab ListM8 MCP
+  (→ optional `impressum-enrichment`, im DACH-Raum steht dort E-Mail und Telefon; ab MCP
   4.0.0 kann auch die Recherche die Adresse dort suchen), Linktree/Beacons (mehrere Wege, aber
   ein Profil-Link, keine Website: ohne E-Mail nicht importierbar), Calendly (Coach sucht aktiv
   Kunden), kein Link (nur per DM erreichbar: für Cold Mail wertlos)
@@ -108,7 +108,7 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in profile.json \
 
 `instagram_url`, `follower`, `bio` und `link_typ` als Zusatzspalten mitgeben (`csv-spalten.md`).
 Zeilen ohne E-Mail bleiben ohne E-Mail: das Kontakt-Gate in `listen-qualitaet` entscheidet, ob
-daraus ein Lead wird (eigene Website: ja, ab ListM8 MCP 4.0.0; nur Instagram- oder Linktree-Link:
+daraus ein Lead wird (eigene Website: ja, ab MCP 4.0.0; nur Instagram- oder Linktree-Link:
 nein).
 
 ## Schritt 7 — Übergabe

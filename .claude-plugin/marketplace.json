@@ -18,7 +18,7 @@
     {
       "name": "fulfillment",
       "source": "./plugins/fulfillment",
-      "description": "Das Marketing-Offer liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, nicht auffindbar veröffentlichen und den Link am Lead speichern.",
+      "description": "Das Marketing-Offer einer Kampagne liefern: Demo-Webseite, SEO-Ergebnis, Anzeigen, Leadliste oder Muster-Kampagne für einen Lead bauen, nicht auffindbar veröffentlichen und den Link am Lead speichern.",
       "category": "productivity"
     }
   ]

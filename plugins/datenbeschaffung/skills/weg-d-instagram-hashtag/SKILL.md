@@ -10,7 +10,7 @@ Der Weg für B2C-Coaches, die bei Google nicht auftauchen, aber regelmäßig pos
 sieht, wie sich jemand positioniert, bevor man einen Cent für Profildaten ausgibt.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 ## Ehrliche Erwartungswerte (vor dem ersten Lauf nennen)
 
@@ -109,7 +109,7 @@ Klassifiziert wird mit exakt denselben Regeln wie im Piloten — sonst sind die 
 
 Erst danach die Profile der bestätigten Treffer anreichern (Qualifizierungs-Actor aus
 `apify-actors.md`): Bio, Followerzahl, Link in Bio. Den Link nach Typ sortieren — eigene Website
-(→ optional `impressum-enrichment`; ab ListM8 MCP 4.0.0 kann auch die Recherche die Adresse dort
+(→ optional `impressum-enrichment`; ab MCP 4.0.0 kann auch die Recherche die Adresse dort
 suchen), Linktree (Profil-Link, keine Website: ohne E-Mail nicht importierbar), Calendly, kein
 Link (nur per DM erreichbar, für Cold Mail wertlos). E-Mail und Telefon zusätzlich aus dem
 Bio-Text lesen, wo vorhanden.
@@ -135,7 +135,7 @@ An `listen-qualitaet` — immer, ohne Ausnahme. Diesem Skill gehört kein Qualit
   englischsprachige Konten, nur 31 von 50 Beiträgen waren deutsch (Test 11.10.2026). Deutsche
   Hashtags (`vertriebscoach`) treffen DACH besser.
 - **Profile bringen keine Adresse:** 15 von 27 Profilen hatten eine Website, keines eine Adresse in
-  der Bio. Der Kontakt kommt über die Website (vorab `impressum-enrichment` oder ab ListM8 MCP
+  der Bio. Der Kontakt kommt über die Website (vorab `impressum-enrichment` oder ab MCP
   4.0.0 die Recherche der Plattform); Profile ohne eigene Website sind für Cold Mail verloren.
 
 - **Instagram-Scraping ist volatil.** Hashtag-Actors brechen nach Plattform-Änderungen; leere

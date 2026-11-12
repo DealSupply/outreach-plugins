@@ -17,7 +17,7 @@ Daraus folgt:
 - **Nicht beschaffen:** Entscheider-Namen, persönliche E-Mail-Adressen, Handelsregister, USt-Id,
   Firmenbeschreibungen von der Website. Das macht die Recherche, und sie prüft es auch.
 - **Immer beschaffen:** die Liste selbst (wer gehört zur Zielgruppe), je Lead eine E-Mail-Adresse
-  **oder** die eigene Website (ab ListM8 MCP 4.0.0; ohne Adresse sucht die Recherche sie) und alles,
+  **oder** die eigene Website (ab MCP 4.0.0; ohne Adresse sucht die Recherche sie) und alles,
   was nur auf der Quelle steht und einen Einstieg trägt: Google-Bewertungen und Rezensionen,
   Follower und Bio, Plattform-Bewertung, Shop-Technologie.
 
@@ -25,7 +25,7 @@ Daraus folgt:
 
 | Feld | Warum |
 |---|---|
-| `email` **oder** `website` | Ab ListM8 MCP 4.0.0 reicht eins von beiden. **info@ reicht**, die Recherche sucht die persönliche Adresse selbst. Ohne Adresse sucht sie auf der Website eine; findet sie keine, scheidet der Lead aus (keine Mail). Ein Profil-Link (Instagram, Linktree, Portal) zählt nicht als Website. Ältere Server verlangen weiter eine Adresse je Lead. |
+| `email` **oder** `website` | Ab MCP 4.0.0 reicht eins von beiden. **info@ reicht**, die Recherche sucht die persönliche Adresse selbst. Ohne Adresse sucht sie auf der Website eine; findet sie keine, scheidet der Lead aus (keine Mail). Ein Profil-Link (Instagram, Linktree, Portal) zählt nicht als Website. Ältere Server verlangen weiter eine Adresse je Lead. |
 | `website` | Auch mit Adresse fast immer nötig: ohne Website hat die Recherche keinen Startpunkt (Ausnahme: Zielgruppe ohne Website, siehe Maps-Weg). |
 | `company` | Anzeige und Anrede. |
 
@@ -62,7 +62,7 @@ Weitere Rohfelder nur mit `--keep` und nur, wenn sie einen Einstieg tragen, den 
 
 ## Die Kontaktlücke: vorab anreichern oder der Recherche überlassen
 
-Treffer ohne Adresse (bei Maps 20 bis 50 %) dürfen ab ListM8 MCP 4.0.0 mit ihrer eigenen Website
+Treffer ohne Adresse (bei Maps 20 bis 50 %) dürfen ab MCP 4.0.0 mit ihrer eigenen Website
 importiert werden: Die Recherche sucht dann die Kontaktadresse (Impressum, Kontaktseite, Footer).
 Findet sie keine, scheidet der Lead aus und bekommt keine Mail. Auf älteren Servern braucht jede
 Zeile weiter eine Adresse; dann gilt die Reihenfolge unten als Pflicht.
@@ -72,7 +72,7 @@ Was eine Lücke kostet:
 | Weg | Kosten je Lead |
 |---|---|
 | Impressum-Actor vorab (`impressum-enrichment`) | rund 0,2 Cent je Domain plus Startgebühr, Batches ab etwa 50 Domains (`kosten.md`) |
-| ListM8-Server-Lauf | Qualifizierung plus Recherche, rund 2 bis 3 Cent je Lead, auch wenn am Ende keine Adresse kommt; dazu ein Platz im Lead-Kontingent |
+| DealSupply-Server-Lauf | Qualifizierung plus Recherche, rund 2 bis 3 Cent je Lead, auch wenn am Ende keine Adresse kommt; dazu ein Platz im Lead-Kontingent |
 | Abo-Lauf | kein Geld, aber Abo-Kontingent je Lead |
 
 Entscheidung, jeweils mit dem Nutzer:

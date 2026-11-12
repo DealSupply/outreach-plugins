@@ -28,22 +28,29 @@ Rufe `list_campaigns` auf (nur lesend).
 - **Antwort kommt:** Verbindung steht. Zusätzlich `ping` aufrufen und die Server-Version nennen. Ab
   `4.0.0` lassen sich Leads auch nur mit Website (ohne E-Mail) importieren; darunter (auch auf 3.x)
   braucht jeder Lead eine E-Mail. Nenne die Zahl der Kampagnen und weiter mit Schritt 3.
-- **Kein Outreach-Tool verfügbar oder Anmeldung nötig:**
-  - **DealSupply-Kunden:** Das Plugin bringt die Verbindung `dealsupply` mit (`app.dealsupply.ai`).
-    - Claude Code: `/mcp` öffnen → `dealsupply` → anmelden.
-    - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply`
-      „Connect“ → bei DealSupply anmelden und „Autorisieren“ bestätigen.
-    - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
-  - **Kunden einer anderen Outreach-App:** Die mitgelieferte Verbindung `dealsupply` nicht hinzufügen.
-    Den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen; Skills und Live-Ansicht
-    erkennen ihn automatisch an seinen Tools, der Name ist egal.
+- **Kein Outreach-Tool verfügbar oder Anmeldung nötig:** Das Plugin bringt die Verbindung `dealsupply`
+  mit (`app.dealsupply.ai`). Angemeldet wird mit den Zugangsdaten von DealSupply.
+  **Konto aus Akquise:** Wer bisher nur über Akquise in die App kam, hat oft kein eigenes Passwort,
+  und die Anmeldeseite der Verbindung bietet keinen Akquise-Knopf. Dann erst in der App über Akquise
+  anmelden (`https://app.dealsupply.ai/sso/akquise` öffnen oder in Akquise auf den Link zu Outreach
+  klicken) und danach im selben Browser die Verbindung anmelden. Geht das nicht, auf der Anmeldeseite
+  „Passwort vergessen“ wählen und ein Passwort setzen.
+  - Claude Code: `/mcp` öffnen → `plugin:outreach:dealsupply` (so heißt die vom Plugin mitgebrachte
+    Verbindung dort) → anmelden.
+  - Claude App / claude.ai: Customize → Plugins → `outreach` → Reiter „Connectors“ → bei `dealsupply`
+    „Connect“ → bei DealSupply anmelden und „Autorisieren“ bestätigen.
+  - ChatGPT Desktop / Codex: beim ersten Aufruf anmelden, in Codex alternativ `codex mcp login dealsupply`.
   - Danach `list_campaigns` erneut aufrufen.
 - **Zwei Verbindungen zur selben Adresse** (eine von Hand angelegt, eine aus dem Plugin): Eine reicht.
-  Dem Nutzer empfehlen, die von Hand angelegte zu entfernen.
-- **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Die Adresse entfällt, das
-  Plugin bringt sie nicht mehr mit. Steht sie trotzdem noch da (von Hand angelegt), dem Nutzer
-  empfehlen, sie zu entfernen (Claude Code `/mcp`, Codex `codex mcp remove akquise`, Claude App unter
-  Connectors) und `dealsupply` anzumelden.
+  Dem Nutzer empfehlen, die von Hand angelegte zu entfernen. In Claude Code entsteht sie mit dem
+  Befehl aus der App,
+  `claude mcp add --scope user --transport http dealsupply https://app.dealsupply.ai/_mcp/v1`,
+  und verschwindet mit `claude mcp remove dealsupply` (`claude mcp list` zeigt die Namen). Die
+  Verbindung des Plugins (`plugin:outreach:dealsupply`) bleibt dabei bestehen.
+- **Alte Verbindung `akquise`** (`outreach.akquise.de`, bis Plugin 0.5.1): Das Plugin bringt sie nicht
+  mehr mit; sie wird nicht mehr gepflegt und zeigt noch die alte Marke Akquise. Steht sie noch da (von
+  Hand angelegt), dem Nutzer empfehlen, sie zu entfernen (Claude Code `claude mcp remove akquise`, Codex
+  `codex mcp remove akquise`, Claude App unter Connectors) und `dealsupply` anzumelden.
 
 Steht die Verbindung, zwei weitere lesende Aufrufe:
 
@@ -64,7 +71,13 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     `angebot` in `get_lead_data` und `save_lead_variables`, Haupt-Angebot als Nummer 1, ungültige
     Nummer abgelehnt, `offer_per_lead_inconsistent` beim halben Umschalten); auf älteren Servern
     (auch 4.14.x, dort war das Haupt-Angebot die letzte Nummer) legt `outreach-campaign` neue
-    Kampagnen immer mit einem Angebot für alle an.
+    Kampagnen immer mit einem Angebot für alle an;
+  - ab 4.16.0 das Budget eines Server-Laufs in Credits (`budget_credits`, `remove_budget`), das
+    Fortsetzen nach einem Budget-Stopp (`resume_lead_run` mit neuem `budget_credits`), offene Leads in
+    `lead_counts.open`, neue Fehlercodes (etwa `budget_used_up`, `budget_too_low`, `lead_mutation_busy`
+    bei `delete_list`) und die
+    Google-Bewertungen am Lead (`lead.googleReviews`). Auf 4.15.0 gelten die bisherigen Regeln; die
+    Skills nennen diese Stellen mit „ab 4.16.0 (laut `ping`)“.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App

@@ -1,6 +1,6 @@
-# ListM8-MCP: Import- und Bestands-Tools
+# DealSupply-MCP: Import- und Bestands-Tools
 
-Vertragsstand: ListM8 MCP 4.0.0 (16.10.2026: Leads ohne E-Mail), Credits je Lead seit MCP 3.0.0,
+Vertragsstand: MCP 4.0.0 (16.10.2026: Leads ohne E-Mail), Credits je Lead seit MCP 3.0.0,
 Workspaces seit MCP 4.5.0. Die Referenz deckt die Tools ab, die in der Datenbeschaffung gebraucht
 werden. Die vollständige Werkzeugliste liefert die
 Tool-Discovery des MCP-Servers; jede Werkzeugbeschreibung dort ist der aktuelle Vertrag und geht
@@ -13,16 +13,16 @@ sobald eine Zeile ohne gültige E-Mail dabei ist. Welcher Kontrakt gilt, entsche
 `ping`-Version, nie der Wortlaut einer Fehlermeldung: Auch die Meldung eines 4.0.0-Servers nennt
 `"email"` („needs a valid "email" or a usable "website"“).
 
-## Was ListM8 heute (nicht) kann
+## Was DealSupply heute (nicht) kann
 
-- ListM8 scrapt **nicht**. Es gibt keinen Quellenkatalog, keine serverseitigen Quellenläufe, keine
+- DealSupply scrapt **nicht**. Es gibt keinen Quellenkatalog, keine serverseitigen Quellenläufe, keine
   Beschaffungsaufträge und kein serverseitiges Impressum oder Verifizieren.
-- Der Kunde scrapt mit **eigenem Apify- oder Outscraper-Konto** außerhalb von ListM8, bereinigt die
+- Der Kunde scrapt mit **eigenem Apify- oder Outscraper-Konto** außerhalb von DealSupply, bereinigt die
   Ergebnisse und lädt sie hoch: über die Oberfläche (Leads, CSV-Import) oder per MCP `import_leads`,
   optional in eine Liste (`create_list`, `list_id`).
-- Kosten fallen beim Anbieter an. ListM8 erfasst sie nicht; wer sie festhalten will, trägt sie in
+- Kosten fallen beim Anbieter an. DealSupply erfasst sie nicht; wer sie festhalten will, trägt sie in
   `source` der Liste ein (`costUsd`).
-- Import und Listen kosten in ListM8 keine Credits; Credits kostet nur die KI-Verarbeitung im
+- Import und Listen kosten in DealSupply keine Credits; Credits kostet nur die KI-Verarbeitung im
   Server-Lauf (`start_lead_run`). Jeder neue Lead belegt aber einen Platz im Lead-Limit des Plans.
 - Es gibt keinen Probelauf als Produktfunktion. Der Pilot ist ein kleiner, freigegebener Scrape beim
   Anbieter.
@@ -126,8 +126,11 @@ Bis zu 1000 Einträge je Aufruf (E-Mails und Domains zusammen).
   nur, wenn der Host der `website` des Treffers (ohne `www.`) gleich der geprüften Domain ist;
   alles andere als „Firma bekannt“ werten.
 - Zeilen ohne E-Mail lassen sich nur über `domains` prüfen.
-- Treffer sind pro Eintrag auf 10 begrenzt; `summary.truncated=true` meldet das (meist viele Leads
-  auf demselben Host, etwa einer Kette).
+- Treffer teilen sich einen gemeinsamen Deckel: je Trefferliste (`email_matches`, `domain_matches`)
+  höchstens 10 mal die Zahl der Eingaben, nicht 10 je Eintrag. `summary.truncated=true` meldet, dass
+  der Deckel erreicht ist; dann zählt die Zusammenfassung zu wenig (`emails_found`,
+  `domains_matched`, `do_not_contact_hits`). Ursache ist meist eine zu breite Domain oder viele Leads
+  auf demselben Host, etwa einer Kette: die Eingabe enger fassen oder aufteilen und erneut prüfen.
 
 Antwort: `email_matches[]` (`query`, `lead_id`, `email`, `contact_status`, `in_campaigns`,
 `matched_via`), `domain_matches[]` (`domain`, `lead_id`, `email` (kann null sein), `website`,
@@ -191,7 +194,7 @@ Bis zu 10000 Leads je Aufruf; Aufruf asynchron, Antwort mit `job_id`.
   reine Plattform-URL ist (Facebook, Instagram, Linktree, Doctolib, Branchenportale …; Liste:
   `plattform-hosts.md`). Baukasten-Subdomains wie `praxis.jimdosite.com` zählen als eigene Website.
   Fehlt die E-Mail: `email` weglassen oder `null`. Optional: `company`, `phoneNumber`, `city`.
-- Ohne E-Mail sucht die **Recherche** in ListM8 die Kontaktadresse auf der Website. Findet sie
+- Ohne E-Mail sucht die **Recherche** in DealSupply die Kontaktadresse auf der Website. Findet sie
   eine, wird sie Versand- und Identitätsadresse. Findet sie keine, scheidet der Lead aus
   (`no_contact_email`) und bekommt nie eine Mail. Bis dahin kostet er Qualifizierung und Recherche
   und belegt einen Platz im Lead-Kontingent.
@@ -303,11 +306,14 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
 `delete_list(list_id, delete_leads=false, confirm_delete=false)` entfernt standardmäßig nur die
 Gruppierung, alle Leads bleiben. Mit `delete_leads=true` (verlangt `confirm_delete=true`, sonst
 `confirmation_required`) werden zusätzlich nur Leads gelöscht, die nie kontaktiert wurden, in keiner
-Kampagne und in keiner anderen Liste sind; alle übrigen werden nur gelöst. Das macht Test-Importe
+Kampagne und in keiner anderen Liste sind, ab MCP 4.16.0 (laut `ping`) außerdem ohne laufenden Job und
+ohne offene E-Mail-Suche; alle übrigen werden nur gelöst. Ab 4.16.0 bricht der Aufruf mit
+`lead_mutation_busy` ab, wenn gerade eine andere Änderung an den Leads läuft (etwa ein Import): kurz
+warten und erneut versuchen, gelöscht wurde dann nichts. Das macht Test-Importe
 rückgängig und gibt die Plätze im Lead-Limit sofort wieder frei; schon gebuchte Credits für
 gelöschte Leads werden nicht erstattet. Antwort: `deleted_list`,
 `leads_deleted`, `leads_detached`. Das Löschen von Leads ist unwiderruflich: nur auf ausdrücklichen
-Wunsch.
+Wunsch. `lead_mutation_busy` meldet `add_leads_to_campaign` schon auf älteren Servern.
 
 ## Ausscheiden ohne Adresse
 

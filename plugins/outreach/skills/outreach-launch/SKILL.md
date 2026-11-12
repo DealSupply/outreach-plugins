@@ -1,6 +1,6 @@
 ---
 name: outreach-launch
-description: 'Use when user says "Kampagne launchen", "Kampagne live schalten", "Versand vorbereiten", "Domains einrichten", "Postfächer einrichten", "Zapmail", "SPF DKIM DMARC", "Warm-up", "Warmup", "Instantly einrichten", "Cloudflare Domain", "Health Score", "Campaign slow ramp", "Tracking", "Sendelimit", "Versandvolumen", "Kampagne hochfahren", "Antwortquote verbessern", "Reply Rate verbessern", "Bounce Rate zu hoch", "Mails landen im Spam", "Kampagne auswerten", "Kampagne optimieren", "A/B-Test", "Nachtelefonieren", or asks what happens after the export from ListM8. Versand-Vorbereitung und Launch außerhalb von ListM8: Domains, Postfächer, Warm-up, Instantly-Setup, Hochfahren, KPI-Auswertung, Stopp-Schwellen, Optimierung und wann Copy, Offer oder Liste geändert werden.'
+description: 'Use when user says "Kampagne launchen", "Kampagne live schalten", "Versand vorbereiten", "Domains einrichten", "Postfächer einrichten", "Zapmail", "SPF DKIM DMARC", "Warm-up", "Warmup", "Instantly einrichten", "Cloudflare Domain", "Health Score", "Campaign slow ramp", "Tracking", "Sendelimit", "Versandvolumen", "Kampagne hochfahren", "Antwortquote verbessern", "Reply Rate verbessern", "Bounce Rate zu hoch", "Mails landen im Spam", "Kampagne auswerten", "Kampagne optimieren", "A/B-Test", "Nachtelefonieren", or asks what happens after the export from DealSupply. Versand-Vorbereitung und Launch außerhalb von DealSupply: Domains, Postfächer, Warm-up, Instantly-Setup, Hochfahren, KPI-Auswertung, Stopp-Schwellen, Optimierung und wann Copy, Offer oder Liste geändert werden.'
 ---
 
 # Outreach Launch — vom Export zur laufenden Kampagne
@@ -9,11 +9,11 @@ description: 'Use when user says "Kampagne launchen", "Kampagne live schalten", 
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
 
-ListM8 versendet keine Mails. Es qualifiziert, recherchiert, erzeugt die AI-Variablen und übergibt
+DealSupply versendet keine Mails. Es qualifiziert, recherchiert, erzeugt die AI-Variablen und übergibt
 die freigegebenen Leads per CSV-Export oder Push an Instantly. Domains, Postfächer, Warm-up,
 Versand, Antworten und Telefonate laufen beim Kunden in Instantly (oder einem vergleichbaren
 Versandtool). Dieser Skill führt durch genau diesen Teil und sagt, wann die Arbeit zurück in
-ListM8 gehört.
+DealSupply gehört.
 
 Ausführliche Lehre: `references/technisches-setup.md` (Domains, Zapmail, DNS, Postfächer,
 Warm-up, Versand-Einstellungen, Kosten) und `references/launch-und-optimierung.md` (Einrichten in
@@ -25,19 +25,19 @@ Referenzen und dieser SKILL.md gilt diese SKILL.md.
 
 | Schritt | Wo | Skill / Werkzeug |
 |---|---|---|
-| Leads beschaffen (eigenes Apify-/Outscraper-Konto), bereinigen, verifizieren, importieren | beim Kunden, Import in ListM8 | `datenbeschaffung`, `listen-qualitaet`, `import_leads` |
-| Kampagne mit Sequenz, Variablen-Prompts, Qualifizierung und Research anlegen | ListM8 | `outreach-campaign`, `outreach-copy` |
-| Qualifizieren, recherchieren, Variablen erzeugen | ListM8 | `outreach-pipeline` (`start_lead_run`) |
-| Review und Freigabe | ListM8 | `outreach-verify` (`approve_lead_variables`, `reject_lead_variables`) |
-| Übergabe an Instantly: Push (Verknüpfung, Variablen-Zuordnung, Sequenz-Übertragung, Lead-Push) oder CSV-Export | Push: ListM8-Oberfläche, Reiter „Instantly" der Kampagne; CSV: Oberfläche oder MCP | Push: kein MCP-Tool; CSV: `outreach-export` (Zweck `sending`) |
+| Leads beschaffen (eigenes Apify-/Outscraper-Konto), bereinigen, verifizieren, importieren | beim Kunden, Import in DealSupply | `datenbeschaffung`, `listen-qualitaet`, `import_leads` |
+| Kampagne mit Sequenz, Variablen-Prompts, Qualifizierung und Research anlegen | DealSupply | `outreach-campaign`, `outreach-copy` |
+| Qualifizieren, recherchieren, Variablen erzeugen | DealSupply | `outreach-pipeline` (`start_lead_run`) |
+| Review und Freigabe | DealSupply | `outreach-verify` (`approve_lead_variables`, `reject_lead_variables`) |
+| Übergabe an Instantly: Push (Verknüpfung, Variablen-Zuordnung, Sequenz-Übertragung, Lead-Push) oder CSV-Export | Push: DealSupply-Oberfläche, Reiter „Instantly" der Kampagne; CSV: Oberfläche oder MCP | Push: kein MCP-Tool; CSV: `outreach-export` (Zweck `sending`) |
 | Domains, Postfächer, DNS, Warm-up | beim Kunden (Domain-Anbieter, Zapmail, Instantly) | `references/technisches-setup.md` |
 | Versand, Zeitplan, Limits, A/B-Varianten | Instantly | `references/launch-und-optimierung.md` |
 | Antworten, Nachtelefonieren, Termine | Postfach, Telefon, CRM | `references/launch-und-optimierung.md` |
-| Angeschriebene Leads ins CRM Close spiegeln (Stufe, Antwort, Briefing; Smart Views für die Caller) | ListM8 → Close-Org des Kunden; einrichten in der App unter Integrationen → Close | Stand per `get_close_status`, je Kampagne an/aus per `set_close_sync` (ab MCP 4.8.0) |
-| Kontaktstatus zurück nach ListM8 (kontaktiert, geantwortet, gesperrt) | ListM8 | Kontaktstatus-Sync der Instantly-Integration, sonst `mark_leads_contacted` |
+| Angeschriebene Leads ins CRM Close spiegeln (Stufe, Antwort, Briefing; Smart Views für die Caller) | DealSupply → Close-Org des Kunden; einrichten in der App unter Integrationen → Close | Stand per `get_close_status`, je Kampagne an/aus per `set_close_sync` (ab MCP 4.8.0) |
+| Kontaktstatus zurück nach DealSupply (kontaktiert, geantwortet, gesperrt) | DealSupply | Kontaktstatus-Sync der Instantly-Integration, sonst `mark_leads_contacted` |
 
 Der Agent kann weder Instantly noch Zapmail noch einen Domain-Anbieter bedienen. Er erklärt die
-Schritte, prüft Angaben des Nutzers gegen die Checklisten und erledigt die ListM8-Seite per MCP.
+Schritte, prüft Angaben des Nutzers gegen die Checklisten und erledigt die DealSupply-Seite per MCP.
 Käufe und Abos (Domains, Zapmail, Instantly) entscheidet und bezahlt der Kunde.
 
 ## Regeln
@@ -52,22 +52,22 @@ Käufe und Abos (Domains, Zapmail, Instantly) entscheidet und bezahlt der Kunde.
 4. **Stopp vor Optimierung.** Beschwerdequote über 0,3 % oder Bounce Rate über 5 %: Versand
    anhalten, nicht weiterlaufen lassen.
 5. **Sperren gelten im ganzen Workspace und dauerhaft.** Abmeldungen und Beschwerden werden in
-   ListM8 zu `do_not_contact`; einen Lead nur aus der Kampagne zu nehmen reicht nicht. `do_not_contact` nie
+   DealSupply zu `do_not_contact`; einen Lead nur aus der Kampagne zu nehmen reicht nicht. `do_not_contact` nie
    zurücksetzen.
 6. **Nichts behaupten, was nicht passiert ist.** Weder Versand noch Zustellung noch Antworten aus
-   ListM8 ableiten, solange der Nutzer oder der Kontaktstatus es nicht belegt.
+   DealSupply ableiten, solange der Nutzer oder der Kontaktstatus es nicht belegt.
 
-## Phase 1: Setup (parallel zur Arbeit in ListM8)
+## Phase 1: Setup (parallel zur Arbeit in DealSupply)
 
 `references/technisches-setup.md` durchgehen: 5 Sekundärdomains beim Domain-Anbieter (oder
 Cloudflare), mit Zapmail verbunden, 10 Postfächer bei Google oder Microsoft mit echtem Namen und
 Profilbild, SPF/DKIM/DMARC (DMARC mit `p=none` und Reporting-Adresse), Export nach Instantly,
 Warm-up für alle Postfächer (Flamme grün), Daily campaign limit 30 und Campaign slow ramp,
 Versand-Einstellungen. Während der 14 Tage Warm-up
-entstehen Liste und Kampagne in ListM8. Am Ende die Checkliste „Setup fertig?" mit dem Nutzer
+entstehen Liste und Kampagne in DealSupply. Am Ende die Checkliste „Setup fertig?" mit dem Nutzer
 abhaken.
 
-## Phase 2: Übergabe aus ListM8
+## Phase 2: Übergabe aus DealSupply
 
 1. `list_campaigns` und `export_campaign_blueprint(campaign_id)`: Stimmt die Kampagne, sind Sequenz
    und Variablen nach `outreach-copy` geprüft?
@@ -92,7 +92,7 @@ abhaken.
 
 Kampagne in Instantly einrichten, Launch-Check und Hochfahren nach
 `references/launch-und-optimierung.md`. Kern des Launch-Checks ist die Stichprobe der ersten
-40 AI-Opener: Fallen mehr als 8 durch, nicht starten, sondern in ListM8 nachschärfen (Ablehnung mit
+40 AI-Opener: Fallen mehr als 8 durch, nicht starten, sondern in DealSupply nachschärfen (Ablehnung mit
 `reject_lead_variables` plus `set_lead_email_feedback`, Prompt über `outreach-campaign`).
 Ab Tag 1 nachtelefonieren.
 
@@ -123,10 +123,11 @@ dabei stehen; sie stammen aber aus dem alten Prompt, und sie neu zu generieren k
 deshalb das vorher ausdrücklich bestätigen lassen. Eine neue Sequenz-Übertragung ersetzt die Sequenz in
 Instantly samt dort angelegter Varianten.
 
-## Phase 6: Rückmeldung nach ListM8
+## Phase 6: Rückmeldung nach DealSupply
 
-- Mit Instantly-Integration übernimmt der Kontaktstatus-Sync (täglich, oder „Jetzt abgleichen")
-  kontaktierte Leads, Antworten (`replied`), Interessierte (`opportunity`) sowie Bounces und
+- Mit Instantly-Integration übernimmt der Kontaktstatus-Sync (alle 15 Minuten für Kampagnen mit neuen
+  Antworten, Opportunities, Bounces oder Abmeldungen, einmal täglich der volle Abgleich, oder sofort
+  über „Jetzt abgleichen") kontaktierte Leads, Antworten (`replied`), Interessierte (`opportunity`) sowie Bounces und
   Abmeldungen (`do_not_contact`) aus dem ganzen Workspace.
 - Ohne Integration oder für Abmeldungen per Antwort, Telefon oder Brief:
   `mark_leads_contacted(emails=[…], status="do_not_contact" | "contacted" | "replied" | "opportunity")`,
@@ -134,18 +135,20 @@ Instantly samt dort angelegter Varianten.
   4.0.0) nur über `lead_ids`. Status werden nie
   herabgestuft; ein Zurücksetzen auf `not_contacted` nur auf ausdrücklichen
   Wunsch und nie für gesperrte Leads.
-- Neue Ansprache versendeter Leads ohne Reaktion (etwa über eine neue Domain): In ListM8 fragt der
-  KI-Lauf beim Start, ob sie neu bearbeitet werden sollen. Per MCP erst
-  `mark_leads_contacted(status="not_contacted", confirm_reset=true)`, dann `start_lead_run`. Der
-  Server setzt nur kontaktierte Leads ohne Reaktion und mit beendeter Instantly-Sequenz zurück und
+- Neue Ansprache versendeter Leads ohne Reaktion (etwa über eine neue Domain): In DealSupply fragt der
+  KI-Lauf beim Start, ob sie neu bearbeitet werden sollen. Per MCP entweder direkt
+  `start_lead_run(reset_contacted=true)` (vorher `quote_lead_run(reset_contacted=true)` für den Preis)
+  oder erst `mark_leads_contacted(status="not_contacted", confirm_reset=true)`, dann `start_lead_run`;
+  beides nur nach ausdrücklicher Zustimmung des Nutzers. Der Server setzt auf beiden Wegen nur
+  kontaktierte Leads ohne Reaktion und mit beendeter Instantly-Sequenz zurück; `mark_leads_contacted`
   meldet den Rest in `reset_blocked`. Neu generierte Mails brauchen eine neue Freigabe und gehen
   nur in eine andere Instantly-Kampagne als die bisherige; liegt der Lead noch in der verknüpften,
-  hält ListM8 ihn zurück.
+  hält DealSupply ihn zurück.
 - Die nächste Liste entsteht, während die Kampagne läuft (`datenbeschaffung`); der Bestandsabgleich
   dort berücksichtigt den Kontaktstatus.
 
 ## Verwandt
 
 - `outreach-copy` — Copy-Regeln, Betreffzeilen, Offer; gilt bei Widersprüchen.
-- `outreach-campaign`, `outreach-pipeline`, `outreach-verify` — die ListM8-Seite bis zur Freigabe.
+- `outreach-campaign`, `outreach-pipeline`, `outreach-verify` — die DealSupply-Seite bis zur Freigabe.
 - `datenbeschaffung` und `listen-qualitaet` — Liste, ICP, Verifizierung, Sperren.

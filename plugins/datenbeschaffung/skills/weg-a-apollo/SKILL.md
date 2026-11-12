@@ -27,7 +27,7 @@ Konto nie freigeben; Adressen mit Hinweis `geratene-adresse` nur nach Verifizier
 Engineering“ lieferte Bauingenieure.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz + Anti-ICP, Apollo-Account (Free reicht zum
-Testen), Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Testen), Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 ## Schritt 0 — Zugriffsweg
 

@@ -10,7 +10,7 @@ Vergleichsportale. Der Filter ist hier die eigentliche Arbeit: die Nischen-Queri
 zuverlässig, aber die ersten Seiten gehören strukturell Amazon, Otto und Idealo.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 Will der Nutzer nach Shop-Technologie, Umsatzklasse oder Traffic filtern statt nach Nische:
 `weg-b-storeleads` erwähnen — das ist Beratung ohne Scrape. Sonst hier weiter.
@@ -93,7 +93,7 @@ Queries hinweg. Deckel: kalkulierte Kosten + 50 %.
 
 Die Shop-Domains an `impressum-enrichment` geben (Actor, Betriebsregeln und Kosten stehen dort).
 Shops sind impressumspflichtig und liefern hier überdurchschnittlich gut. `.com`-Marken ohne
-deutsches Impressum gehen in den `kontaktseiten-fallback`. Ab ListM8 MCP 4.0.0 ist das optional
+deutsches Impressum gehen in den `kontaktseiten-fallback`. Ab MCP 4.0.0 ist das optional
 (Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“): Ohne Anreicherung die Domain-CSV direkt
 in `build_csv.py` geben (`--in domains.csv`), dann sucht die Recherche die Adresse.
 
