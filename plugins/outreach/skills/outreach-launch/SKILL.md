@@ -143,10 +143,17 @@ Instantly samt dort angelegter Varianten.
   hält ListM8 ihn zurück.
 - Hochgeladene, noch nicht angeschriebene Leads in eine andere Kampagne holen (etwa eine Sie-Fassung):
   erst in Instantly löschen, dann `mark_leads_contacted(status="not_contacted", confirm_reset=true)`.
-  Ab MCP 4.13.0 fragt der Server Instantly live und setzt nur zurück, was dort nicht mehr liegt; die
-  Recherche bleibt. `reset_blocked.exported` heißt: liegt noch in Instantly, dort löschen und erneut
-  aufrufen. `reset_blocked.exported_unverified` heißt: Instantly konnte es nicht bestätigen (anderer
-  Workspace verbunden, Instantly antwortet nicht); dem Nutzer sagen, nicht wiederholen.
+  Ab MCP 4.17.0 (`ping`) setzt der Aufruf sie nicht selbst zurück, sondern startet einen Job und nennt
+  ihn in `release_job.job_id`. Der Job prüft bei Instantly, ob der Lead dort fehlt und ob seine
+  Kampagne ihm eine Mail geschickt hat; Instantly erlaubt dafür nur 20 Abfragen pro Minute, große
+  Mengen dauern Minuten. Mit `get_job_status` abwarten (etwa jede Minute, nicht schneller) und das
+  Ergebnis aus `execution.progress_message` dem Nutzer sagen. Die Recherche bleibt, der Lead darf
+  wieder in dieselbe Instantly-Kampagne. Gründe im Ergebnis: `exported` liegt noch in Instantly,
+  dort löschen und erneut aufrufen; `exported_sent` hat schon eine Mail bekommen, bleibt gesperrt,
+  nicht wiederholen; `exported_unverified` ließ sich nicht bestätigen (anderer Workspace verbunden,
+  Schlüssel ohne Leserecht für Mails), dem Nutzer sagen, nicht wiederholen; `instantly_unavailable`
+  Instantly hat nicht geantwortet, in ein paar Minuten erneut aufrufen. Ältere Server melden
+  `reset_blocked.exported` und setzen nicht zurück.
 - Die nächste Liste entsteht, während die Kampagne läuft (`datenbeschaffung`); der Bestandsabgleich
   dort berücksichtigt den Kontaktstatus.
 
