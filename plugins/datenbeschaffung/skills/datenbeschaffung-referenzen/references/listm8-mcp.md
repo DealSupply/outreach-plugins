@@ -295,8 +295,15 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
   beim nächsten `start_lead_run` neue Recherche und neue E-Mail, braucht eine neue Freigabe und
   lässt sich danach nur in eine andere Instantly-Kampagne übertragen. Alle anderen bleiben
   unverändert und stehen je Grund in `reset_blocked`: `replied`, `opportunity`, `do_not_contact`,
-  `exported` (hochgeladen, noch nicht angeschrieben), `reaction`, `sequence_active` (Sequenz läuft
-  noch), `not_synced` (noch nicht mit Instantly abgeglichen).
+  `reaction`, `sequence_active` (Sequenz läuft noch), `not_synced` (noch nicht mit Instantly
+  abgeglichen). Exportierte, nie angeschriebene Leads (vorher in Instantly löschen) setzt ab MCP
+  4.18.0 ein Job zurück: Antwort `release_job` (`job_id`, `leads`), Ergebnis per `get_job_status` in
+  `execution.progress_message`. Er gibt einen Lead nur frei, wenn Instantly ihn nicht mehr listet und
+  seine Kampagne ihm seit dem Push keine Mail geschickt hat; die Recherche bleibt, und der Lead darf
+  wieder in dieselbe Instantly-Kampagne. Gründe im Ergebnis: `exported` (liegt noch in Instantly),
+  `exported_sent` (hat eine Mail bekommen), `exported_unverified` (nicht bestätigbar, etwa anderer
+  Workspace), `instantly_unavailable` (Instantly hat nicht geantwortet, später erneut). Vor 4.18.0
+  stehen exportierte Leads als `exported` in `reset_blocked`.
 
 ## Aufräumen
 

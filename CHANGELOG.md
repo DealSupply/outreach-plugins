@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-13 – outreach 0.8.1, datenbeschaffung 0.5.1 (benötigt ListM8 MCP 4.18.0 für das Zurücksetzen exportierter Leads)
+
+Passt zu ListM8 mit MCP 4.18.0 (DS-190). Hochgeladene, nie angeschriebene Leads lassen sich nach dem Löschen in Instantly zurücksetzen; ListM8 prüft dafür in einem Job, ob sie dort fehlen und ob Instantly eine Mail an sie listet. Ältere Server lehnen das Zurücksetzen weiter mit `reset_blocked.exported` ab.
+
+**outreach**
+- `outreach-launch` → Aufräumen: Leads in eine andere Kampagne holen (etwa eine Sie-Fassung): in Instantly löschen, `mark_leads_contacted(status="not_contacted", confirm_reset=true)`, dann `release_job.job_id` mit `get_job_status` abwarten (große Mengen dauern Minuten) und das Ergebnis je Grund dem Nutzer sagen.
+
+**datenbeschaffung**
+- `listm8-mcp.md` → `mark_leads_contacted`: `release_job` und die Gründe `exported`, `exported_sent`, `exported_unverified`, `instantly_unavailable` im Ergebnis des Jobs.
+
 ## 2026-11-10 – outreach 0.8.0 (benötigt ListM8 MCP 4.15.0 für „Angebot je Lead“)
 
 „Angebot je Lead“ folgt dem freigegebenen Wortlaut und der Nummerierung der App (DS-195, Server DS-206). Plugin und Server kommen im selben Release: Ein Server vor 4.15.0 zählt das Haupt-Angebot als letzte Nummer, dort legt das Plugin nur noch Kampagnen mit einem Angebot für alle an.
