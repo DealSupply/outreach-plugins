@@ -143,7 +143,7 @@ Instantly samt dort angelegter Varianten.
   hält ListM8 ihn zurück.
 - Hochgeladene, noch nicht angeschriebene Leads in eine andere Kampagne holen (etwa eine Sie-Fassung):
   erst in Instantly löschen, dann `mark_leads_contacted(status="not_contacted", confirm_reset=true)`.
-  Ab MCP 4.17.0 (`ping`) setzt der Aufruf sie nicht selbst zurück, sondern startet einen Job und nennt
+  Ab MCP 4.18.0 (`ping`) setzt der Aufruf sie nicht selbst zurück, sondern startet einen Job und nennt
   ihn in `release_job.job_id`. Der Job prüft bei Instantly, ob der Lead dort fehlt und ob seine
   Kampagne ihm eine Mail geschickt hat; Instantly erlaubt dafür nur 20 Abfragen pro Minute, große
   Mengen dauern Minuten. Mit `get_job_status` abwarten (etwa jede Minute, nicht schneller) und das
