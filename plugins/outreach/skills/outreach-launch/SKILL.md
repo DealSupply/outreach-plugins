@@ -1,6 +1,6 @@
 ---
 name: outreach-launch
-description: 'Use when user says "Kampagne launchen", "Kampagne live schalten", "Versand vorbereiten", "Domains einrichten", "Postfächer einrichten", "Zapmail", "SPF DKIM DMARC", "Warm-up", "Warmup", "Instantly einrichten", "Sendelimit", "Versandvolumen", "Kampagne hochfahren", "Antwortquote verbessern", "Reply Rate verbessern", "Bounce Rate zu hoch", "Mails landen im Spam", "Kampagne auswerten", "Kampagne optimieren", "A/B-Test", "Nachtelefonieren", or asks what happens after the export from ListM8. Versand-Vorbereitung und Launch außerhalb von ListM8: Domains, Postfächer, Warm-up, Instantly-Setup, Hochfahren, KPI-Auswertung, Stopp-Schwellen, Optimierung und wann Copy, Offer oder Liste geändert werden.'
+description: 'Use when user says "Kampagne launchen", "Kampagne live schalten", "Versand vorbereiten", "Domains einrichten", "Postfächer einrichten", "Zapmail", "SPF DKIM DMARC", "Warm-up", "Warmup", "Instantly einrichten", "Cloudflare Domain", "Health Score", "Campaign slow ramp", "Tracking", "Sendelimit", "Versandvolumen", "Kampagne hochfahren", "Antwortquote verbessern", "Reply Rate verbessern", "Bounce Rate zu hoch", "Mails landen im Spam", "Kampagne auswerten", "Kampagne optimieren", "A/B-Test", "Nachtelefonieren", or asks what happens after the export from ListM8. Versand-Vorbereitung und Launch außerhalb von ListM8: Domains, Postfächer, Warm-up, Instantly-Setup, Hochfahren, KPI-Auswertung, Stopp-Schwellen, Optimierung und wann Copy, Offer oder Liste geändert werden.'
 ---
 
 # Outreach Launch — vom Export zur laufenden Kampagne
@@ -33,6 +33,7 @@ Referenzen und dieser SKILL.md gilt diese SKILL.md.
 | Domains, Postfächer, DNS, Warm-up | beim Kunden (Domain-Anbieter, Zapmail, Instantly) | `references/technisches-setup.md` |
 | Versand, Zeitplan, Limits, A/B-Varianten | Instantly | `references/launch-und-optimierung.md` |
 | Antworten, Nachtelefonieren, Termine | Postfach, Telefon, CRM | `references/launch-und-optimierung.md` |
+| Angeschriebene Leads ins CRM Close spiegeln (Stufe, Antwort, Briefing; Smart Views für die Caller) | ListM8 → Close-Org des Kunden; einrichten in der App unter Integrationen → Close | Stand per `get_close_status`, je Kampagne an/aus per `set_close_sync` (ab MCP 4.8.0) |
 | Kontaktstatus zurück nach ListM8 (kontaktiert, geantwortet, gesperrt) | ListM8 | Kontaktstatus-Sync der Instantly-Integration, sonst `mark_leads_contacted` |
 
 Der Agent kann weder Instantly noch Zapmail noch einen Domain-Anbieter bedienen. Er erklärt die
@@ -41,23 +42,28 @@ Käufe und Abos (Domains, Zapmail, Instantly) entscheidet und bezahlt der Kunde.
 
 ## Regeln
 
-1. **Setup vor Versand.** Kein echter Versand vor 14 Tagen Warm-up mit gutem Score, auch nicht
-   „nur 20 Mails zum Testen". Nie die Hauptdomain für Cold Mailing.
+1. **Setup vor Versand.** Kein echter Versand vor 14 Tagen Warm-up und einem Health Score über 90 %
+   (am besten 98 bis 100 %), auch nicht „nur 20 Mails zum Testen". Nie die Hauptdomain für Cold Mailing.
 2. **Mehr Volumen heißt mehr Postfächer, nie mehr Mails pro Postfach.** 30 Mails pro Inbox und Tag,
-   langsam hochfahren (Woche 1: 100-150, Woche 2: 200-250, ab Woche 3: 300 bei 10 Inboxen).
-3. **Stopp vor Optimierung.** Beschwerdequote über 0,3 % oder Bounce Rate über 5 %: Versand
+   immer. Langsam hochfahren über „Campaign slow ramp“ am Postfach (Start 2, jeden Tag 2 mehr, an
+   Tag 15 bei 30); die Kampagne bekommt gleich Postfächer mal 30 (300 bei 10 Inboxen).
+3. **Tracking aus.** Open- und Link-Tracking aus, keine Links in den Mails. Einschalten nur, wer
+   Öffnungen nutzt, um in den ersten Minuten anzurufen (selbst oder mit Cold-Calling-Team).
+4. **Stopp vor Optimierung.** Beschwerdequote über 0,3 % oder Bounce Rate über 5 %: Versand
    anhalten, nicht weiterlaufen lassen.
-4. **Sperren gelten im ganzen Workspace und dauerhaft.** Abmeldungen und Beschwerden werden in
+5. **Sperren gelten im ganzen Workspace und dauerhaft.** Abmeldungen und Beschwerden werden in
    ListM8 zu `do_not_contact`; einen Lead nur aus der Kampagne zu nehmen reicht nicht. `do_not_contact` nie
    zurücksetzen.
-5. **Nichts behaupten, was nicht passiert ist.** Weder Versand noch Zustellung noch Antworten aus
+6. **Nichts behaupten, was nicht passiert ist.** Weder Versand noch Zustellung noch Antworten aus
    ListM8 ableiten, solange der Nutzer oder der Kontaktstatus es nicht belegt.
 
 ## Phase 1: Setup (parallel zur Arbeit in ListM8)
 
-`references/technisches-setup.md` durchgehen: 5 Sekundärdomains, Zapmail, 10 Microsoft-365-
-Postfächer, SPF/DKIM/DMARC (DMARC mit `p=none` und Reporting-Adresse), Export nach Instantly,
-Warm-up für alle Postfächer (Flamme grün), Versand-Einstellungen. Während der 14 Tage Warm-up
+`references/technisches-setup.md` durchgehen: 5 Sekundärdomains beim Domain-Anbieter (oder
+Cloudflare), mit Zapmail verbunden, 10 Postfächer bei Google oder Microsoft mit echtem Namen und
+Profilbild, SPF/DKIM/DMARC (DMARC mit `p=none` und Reporting-Adresse), Export nach Instantly,
+Warm-up für alle Postfächer (Flamme grün), Daily campaign limit 30 und Campaign slow ramp,
+Versand-Einstellungen. Während der 14 Tage Warm-up
 entstehen Liste und Kampagne in ListM8. Am Ende die Checkliste „Setup fertig?" mit dem Nutzer
 abhaken.
 
@@ -70,10 +76,15 @@ abhaken.
 3. Übergabe in der Oberfläche: Im Reiter „Instantly" der Kampagne die Instantly-Kampagne verknüpfen
    oder anlegen, die Sequenz übertragen, die Variablen-Zuordnung vervollständigen (ungemappte
    Pflicht-Platzhalter blockieren den Push), die Vorschau mit einem freigegebenen Lead ansehen,
-   dann die Leads pushen. Auto-Push überträgt Freigaben aus der Oberfläche sofort; nach Freigaben
-   über den MCP das offene Delta (Pipeline-Streifen „Ausstehend") per Push-Button übertragen.
+   dann die Leads pushen. Auto-Push überträgt Freigaben sofort, aus der Oberfläche wie über den MCP
+   (`approve_lead_variables`); ohne Auto-Push das offene Delta (Pipeline-Streifen „Ausstehend") per
+   Push-Button übertragen.
    Ohne Integration: CSV-Export der Kampagne (`outreach-export`, Zweck `sending`, `scope="approved_new"`,
    `mark_exported=true`) in Instantly hochladen und die Variablen dort zuordnen.
+   Export und Push nehmen nie Leads ohne Versandadresse mit (ab MCP 4.0.0).
+   Adressen, die erst die Recherche gefunden hat (Leads ohne E-Mail importiert), sind nicht
+   verifiziert: vor dem Versand die Verifizierung in Instantly einschalten oder die Adressen
+   nachprüfen (`listen-qualitaet`, Schritt 3).
 4. Übertragene Leads tragen danach den Kontaktstatus `exported_to_instantly` (prüfbar mit
    `search_leads(contact_status="exported_to_instantly")`).
 
@@ -96,13 +107,15 @@ Beschwerden und Bounces → Open Rate → Reply Rate → Termine. Einzelne Tage 
 |---|---|---|
 | Beschwerdequote über 0,3 % | Versand stoppen, Betreff und Zielgruppe prüfen | Instantly, dann `outreach-copy` bzw. `datenbeschaffung` |
 | Bounce Rate über 5 % | Versand stoppen, Liste bereinigen und neu verifizieren | `listen-qualitaet`; Bounces landen per Sync als `do_not_contact` |
-| Open Rate unter 40 % | erst Domain-Reputation und Warm-up, dann Betreffzeilen | `references/technisches-setup.md`, `outreach-copy` |
+| Open Rate unter 40 % (nur messbar, wenn Tracking bewusst an ist) | erst Domain-Reputation und Warm-up, dann Betreffzeilen | `references/technisches-setup.md`, `outreach-copy` |
 | Reply Rate unter 0,5 % nach 200+ Mails je Variante | **Offer** neu (andere Karte, nicht andere Formulierung) | `outreach-copy` (Marketing-Offer), dann `outreach-campaign` |
 | Reply Rate unter 1 %, Mail lang oder generisch | **Copy**: kürzen, `intro`-Prompt schärfen | `outreach-copy`, `outreach-campaign` |
 | viele negative Antworten | **Liste**: Zielgruppe falsch, ICP schärfen | `datenbeschaffung` (ICP), Qualifizierung in `outreach-campaign` |
 | Antworten, aber keine Termine | nachtelefonieren, nicht die Mail ändern | `references/launch-und-optimierung.md` |
 
-Getestet wird immer nur eine Variable, mindestens 100 (besser 200) Mails je Variante und 7 Tage, in
+Tests sind eine Option für Erfahrene (standardmäßig aus): Varianten von Mail 1 gehören nur in den
+Launch-Check, wenn der Nutzer beim Anlegen Tests gewählt hat. Getestet wird immer nur eine Variable,
+mindestens 100 (besser 200) Mails je Variante und 7 Tage, in
 der Reihenfolge Offer → Betreff → Opener-Angle → CTA → FUP-Timing. Einen einzelnen Variablen-Prompt
 (etwa `intro`) ändert `update_ai_variable`; Änderungen an der Sequenz laufen über
 `export_campaign_blueprint` → `edit_campaign` (Vollersatz der Schritte). Erzeugte Werte bleiben
@@ -117,7 +130,8 @@ Instantly samt dort angelegter Varianten.
   Abmeldungen (`do_not_contact`) aus dem ganzen Workspace.
 - Ohne Integration oder für Abmeldungen per Antwort, Telefon oder Brief:
   `mark_leads_contacted(emails=[…], status="do_not_contact" | "contacted" | "replied" | "opportunity")`,
-  im Workspace der Kampagne (`workspace=<uuid>` außerhalb des Standards). Status werden nie
+  im Workspace der Kampagne (`workspace=<uuid>` außerhalb des Standards). Leads ohne E-Mail (ab MCP
+  4.0.0) nur über `lead_ids`. Status werden nie
   herabgestuft; ein Zurücksetzen auf `not_contacted` nur auf ausdrücklichen
   Wunsch und nie für gesperrte Leads.
 - Neue Ansprache versendeter Leads ohne Reaktion (etwa über eine neue Domain): In ListM8 fragt der

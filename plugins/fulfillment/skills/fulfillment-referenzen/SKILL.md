@@ -17,4 +17,4 @@ Kein eigenständiger Skill, sondern die geteilte Wissensbasis der Fulfillment-Fa
 | `references/demo-link.md` | Link am Lead speichern (`demo-url`, `demo-datum`), Antwort-Vorlagen, wann der Link verschickt wird |
 | `references/qualitaet.md` | Qualitätsprüfung vor dem Veröffentlichen (für alle Demo-Arten) |
 | `references/recht-und-grenzen.md` | Bilder, Logos, Texte des Leads, Datenschutz, Kennzeichnung, Branchen mit Werberegeln |
-| `references/webseiten-bauplan.md` | Aufbau, Gestaltung und Technik einer Demo-Webseite (genutzt von `demo-webseite`; als Hülle für die Darstellung auch von `demo-seo`, `demo-anzeigen`, `demo-leadliste`, `demo-akquise-kampagne`) |
+| `references/webseiten-bauplan.md` | Aufbau, Gestaltung und Technik einer Demo-Webseite (genutzt von `demo-webseite`; als Hülle für die Darstellung auch von `demo-seo`, `demo-anzeigen`, `demo-leadliste`, `demo-kampagne`) |

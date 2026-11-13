@@ -4,9 +4,9 @@
 > Die Formulierungen sind deutsch. In englischen Kampagnen (`campaign.language` `en`) nicht übersetzen;
 > dort gelten die Regeln aus `outreach-copy`, Abschnitt „Kampagnensprache“.
 > Betreffzeilen und CTAs sind auf die Platzhalter von ListM8 umgestellt; die Texte stehen in der
-> Du-Form (Standard), bei `emailAgentConfig.salutation` `sie` umschreiben. Einen Firmennamen im
-> Betreff gibt es nur über `{{ai.firma}}`; ohne die Variable steht „kurze Frage“. Nur Step 1 und
-> Step 3 tragen einen Betreff, Step 2 und 4 haben keinen.
+> Du-Form (Standard), bei `emailAgentConfig.salutation` `sie` umschreiben. Der Betreff ist bei jeder
+> Karte „kurze Frage“ (seit 05.11.2026). Nur Step 1 trägt einen Betreff, Step 2 bis 4 laufen im
+> Thread von Step 1 mit leerem Betreff.
 
 ## Grundhaltung
 
@@ -22,7 +22,7 @@ In dieser Reihenfolge:
 2. Sonst aus dem Angebot des Nutzers abgeleitet (seine Leistungen und Kanäle aus dem Gespräch).
 3. Sonst einen Vorschlag nach Karte A machen und vom Nutzer bestätigen lassen.
 
-Ein Offer, das der Nutzer nicht liefern kann, wird nicht geschrieben. Auch das On-Top-Detail im Feinheiten-Satz kommt aus seinen Angaben. Was sich mit KI so liefern lässt, dass dem Nutzer nach der Antwort 5-10 Minuten eigene Arbeit bleiben, steht im Demo-Katalog des Plugins **fulfillment** (Einstieg `fulfillment`, Modus „Offer finden“); dort liegen auch die Bau-Skills für die Lieferung nach der Antwort.
+Ein Offer, das der Nutzer nicht liefern kann, wird nicht geschrieben. Auch was „Angebot je Lead“ je Angebot als „konkret drin“ nennt, kommt aus seinen Angaben. Was sich mit KI so liefern lässt, dass dem Nutzer nach der Antwort 5-10 Minuten eigene Arbeit bleiben, steht im Demo-Katalog des Plugins **fulfillment** (Einstieg `fulfillment`, Modus „Offer finden“); dort liegen auch die Bau-Skills für die Lieferung nach der Antwort.
 
 ## Die 5 bewährten Offer-Typen
 
@@ -88,13 +88,15 @@ Beispiele:
 - „Ich habe mir deinen Shop angeschaut und ein kurzes Video mit 3 Hebeln aufgenommen. Darf ich es dir zusenden?"
 - „Wir haben eine kurze Ersteinschätzung deiner Fördermöglichkeiten vorbereitet. Darf ich sie dir schicken?"
 
-**Wichtig:** In der Mail steht das Deliverable als bereits erledigte Arbeit („war so frei und habe … erstellt"), nie als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert. Dazu gehört der Feinheiten-Satz als eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […], und werde morgen mit […] fertig." mit genau einem konkreten, lieferbaren Detail. Genau der macht die Fertigstellung nach der Antwort ehrlich, denn der eigentliche Aufwand (5-10 Min.) fällt erst an, wenn jemand antwortet.
+**Wichtig:** In der Mail steht das Deliverable als bereits erledigte Arbeit („war so frei und habe … erstellt"), nie als Absicht. Reziprozität wirkt erst, wenn das Geschenk schon existiert. Dazu gehört der Feinheiten-Satz als eigener Absatz: „Ich bin gerade noch an den letzten Feinheiten dran." (mit „Angebot je Lead" je Lead mit genau einem konkreten, lieferbaren Detail: „…, vor allem […]."), und das „morgen" im Schlusssatz („Wäre es in Ordnung, wenn ich es dir morgen zusende?"). Beides macht die Fertigstellung nach der Antwort ehrlich, denn der eigentliche Aufwand (5-10 Min.) fällt erst an, wenn jemand antwortet.
 
 **Wann nutzen:** Wenn die Zielgruppe kleiner ist und man höhere Reply Rates braucht. NICHT bei Massenkampagnen (zu viel Aufwand pro Reply).
 
 ## Die Karten im Detail
 
 Die Überleitung ist statisch und für alle Leads gleich; sie folgt direkt auf den individuellen Bezug (`{{ai.intro}}`). Die Klammern füllst du beim Schreiben aus den Angaben des Nutzers, im fertigen Text steht keine Klammer mehr.
+
+Nach dem Angebotssatz folgt ein zweiter Satz zum Angebot, als eigener Absatz und passend zur Karte (Stand 10.11.2026, wie die App): bei A, B und C der feste Satz der Karte, für alle Leads gleich, bei D und E keiner. Angebotssatz, zweiter Satz und CTA stehen je in einem eigenen Absatz. Für Erfahrene gibt es bei A und C „Angebot je Lead“: Die KI wählt je Lead eines von bis zu vier Angeboten und schreibt den zweiten Satz (`fuer-erfahrene.md`, Teil 2). Regeln: `SKILL.md`, Abschnitt „Anatomie der Entry-Mail“.
 
 ### Karte A: Kostenlose Teildienstleistung
 
@@ -104,10 +106,10 @@ Die Überleitung ist statisch und für alle Leads gleich; sie folgt direkt auf d
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Meeting {{ai.firma}} & [Absender-Vorname]" (ohne `firma`: „kurze Frage") |
+| **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an." |
-| **Feinheiten-Satz (Pflicht, eigener Absatz)** | „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […], und werde morgen mit […] fertig." |
-| **CTA** | „Wenn das für dich spannend klingt, antworte mir einfach kurz." |
+| **Zweiter Satz (Pflicht, eigener Absatz)** | fest: „Darin wäre alles genau auf euch zugeschnitten." (Sie: „Darin wäre alles genau auf Sie zugeschnitten."); mit „Angebot je Lead" je Lead im Konjunktiv, was für diesen Lead konkret drin wäre, nie als erledigte Arbeit |
+| **CTA** | „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich." (Sie: „… das auch für Sie erstelle? …") |
 
 **Typischer Fehler:** „Kostenlose Beratung" statt „Kostenloses Google Ads Setup". Beratung = Sales Call in Verkleidung.
 
@@ -119,10 +121,10 @@ Die Überleitung ist statisch und für alle Leads gleich; sie folgt direkt auf d
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Anfrage für {{ai.firma}}" / „kurze Frage" |
+| **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region]." |
-| **Feinheiten-Satz** | optional |
-| **CTA** | „Falls du dazugehören willst, antworte mir einfach kurz." |
+| **Zweiter Satz (Pflicht, eigener Absatz)** | fest: „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback." (Sie: „Im Pilot bekommen Sie das kostenlos, dafür bräuchten wir nur ehrliches Feedback."); „Angebot je Lead" gibt es bei B nicht |
+| **CTA** | „Wärst du grundsätzlich offen dafür?" (Sie: „Wären Sie grundsätzlich offen dafür?") |
 
 ### Karte C: Konkretes Deliverable (Reziprozität)
 
@@ -134,8 +136,8 @@ Die Überleitung ist statisch und für alle Leads gleich; sie folgt direkt auf d
 |:---------|:--------|
 | **Betreffzeile** | „kurze Frage" (nie eine Ankündigung wie „Website für …"; ist das Buchungssystem der Kern: „Frage zur Terminbuchung") |
 | **Überleitung + Offer** | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt." |
-| **Feinheiten-Satz (Pflicht, eigener Absatz)** | „Ich bin gerade noch an den letzten Feinheiten dran, vor allem […], und werde morgen mit […] fertig." |
-| **CTA** | „Wäre es in Ordnung, wenn ich es dir zusende? Völlig unverbindlich natürlich." |
+| **Feinheiten-Satz (Pflicht, eigener Absatz)** | fest: „Ich bin gerade noch an den letzten Feinheiten dran." (Sie gleich); mit „Angebot je Lead" je Lead: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem" und nennt genau ein Detail des schon Erstellten, passend zu diesem Lead, grammatisch vollständig, ohne „morgen" |
+| **CTA** | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich." (mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …"; nie „Link") |
 
 **Wichtig:** Der Feinheiten-Satz gehört bei Karte C zur Pflicht. Fertiggestellt wird nach der Antwort, 5-10 Min. Aufwand.
 
@@ -143,9 +145,9 @@ Muster, direkt nach dem Lob-Intro:
 ```
 Deswegen war ich so frei und habe dir einen kompletten Webseitenentwurf inklusive Buchungssystem erstellt.
 
-Ich bin gerade noch an den letzten Feinheiten dran, vor allem an der Optimierung für Google und KI-Suchmaschinen, und werde morgen mit dem Entwurf fertig.
+Ich bin gerade noch an den letzten Feinheiten dran.
 
-Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
+Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.
 ```
 
 ### Karte D: Förder-Hook
@@ -154,10 +156,10 @@ Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Deine Förderung" |
-| **Überleitung + Offer** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt? Ich hab mal gecheckt, was für dich drin wäre." |
-| **Feinheiten-Satz** | entfällt |
-| **CTA** | „Darf ich dir die Einschätzung zusenden?" |
+| **Betreffzeile** | „kurze Frage" |
+| **Überleitung + Offer** | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?" Nennt der Nutzer Träger oder Programm, steht er statt „der Staat" („das Land Baden-Württemberg"). |
+| **Zweiter Satz** | entfällt |
+| **CTA** | „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich." (Sie: „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …") |
 
 **Typischer Fehler:** Zu kompliziert erklären. Der Empfänger muss nicht verstehen WIE die Förderung funktioniert - nur DASS er Geld bekommt. Details kommen im Call.
 
@@ -171,16 +173,17 @@ Quoten immer als Spanne nennen („bis zu 100 %"), nie als Zusage - die Förderh
 
 | Baustein | Vorlage |
 |:---------|:--------|
-| **Betreffzeile** | „Partnerschaft {{ai.firma}}?" (ohne `firma`: „kurze Frage") |
+| **Betreffzeile** | „kurze Frage" |
 | **Überleitung + Offer** | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden." |
-| **Feinheiten-Satz** | entfällt |
-| **CTA** | „Wäre das grundsätzlich interessant? Antworte mir einfach kurz." |
+| **Zweiter Satz** | entfällt |
+| **CTA** | „Wäre das grundsätzlich interessant?" (gleich für Sie, eine einzige Frage) |
 
 ## Bewährte Formulierungen je Leistung (Offer-Bibliothek)
 
 Quelle: Kurs Outbound 3.0, Lektion 2.5 „Die Offer-Bibliothek“. Alle folgen der Master-Formel (Lob →
-„Deswegen …“ → Offer → „… und werde morgen mit [dem Deliverable] fertig.“ → „Wäre es in Ordnung, wenn ich dir das
-zusende? Völlig unverbindlich natürlich.“). Nur das Offer wechselt. Die Formulierungen sind Vorlagen
+„Deswegen …“ → Offer → Feinheiten-Satz → „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig
+unverbindlich natürlich.“; der Kurs trägt das „morgen“ noch im Halbsatz „… und werde morgen mit [dem
+Deliverable] fertig.“). Nur das Offer wechselt. Die Formulierungen sind Vorlagen
 für die Überleitung in Mail 1, Pronomen an die `salutation` der Kampagne anpassen (Standard: du,
 Singular).
 
@@ -207,11 +210,11 @@ Detailregeln:
 - **Kein Erfinden:** Ein Offer aus der Tabelle steht nur, wenn der Nutzer genau diese Leistung liefern
   kann. Zahlen (neun Anzeigen, zehn Leads) nur, wenn sie zu seiner Lieferung passen.
 - **Vorleistung erst nach der Antwort:** Das Offer muss vor dem Versand nicht fertig sein. Es wird nach
-  einem Ja erstellt (Kurs Lektion 2.6), deshalb „werde morgen mit … fertig“.
+  einem Ja erstellt (Kurs Lektion 2.6), deshalb „… wenn ich es dir morgen zusende?“ im Schlusssatz.
 
 ## Follow-Ups rund um das Offer
 
-Ohne Follow-up verpufft auch ein gutes Offer — viele Leads sehen erst den Nachfass. Der Kampagnen-Standard ist die Entry Mail plus 3 Follow-Ups (4 Steps, `delayDays` 0/3/5/7). Das Offer steht nur in Mail 1; die Follow-Ups wiederholen es nicht. Step 2 antwortet im Thread von Mail 1, damit der Lead den ursprünglichen Pitch im Verlauf sieht (Betreff leer). Step 3 öffnet einen neuen Thread mit eigenem kurzem Betreff und einem neuen Winkel, Step 4 verabschiedet sich im Thread von Step 3 (Betreff leer). „Dringlichkeit“ kommt nur als zusätzlicher Step dazu, wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt.
+Ohne Follow-up verpufft auch ein gutes Offer — viele Leads sehen erst den Nachfass. Der Kampagnen-Standard ist die Entry Mail plus 3 Follow-Ups (4 Steps, `delayDays` 0/3/5/7). Das Offer steht nur in Mail 1; die Follow-Ups wiederholen es nicht. Step 2 antwortet im Thread von Mail 1, damit der Lead den ursprünglichen Pitch im Verlauf sieht (Betreff leer). Step 3 bringt im selben Thread einen neuen Winkel, Step 4 verabschiedet sich ebenfalls dort (Betreff jeweils leer). „Dringlichkeit“ kommt nur als zusätzlicher Step dazu, wenn der Nutzer einen echten Zeit- oder Kapazitätsgrund nennt.
 
 ## Das Offer schnell liefern
 

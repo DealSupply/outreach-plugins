@@ -13,7 +13,7 @@ recherchiert wurde. Erprobt in einer Agentur-Kampagne mit über 400 generierten 
 
 ## Wo in der Sequenz
 
-Als **Step 4** (Abschied mit Routing-Hinweis, Thread von Step 3). Der Standard-Step trägt den
+Als **Step 4** (Abschied mit Routing-Hinweis, Thread von Step 1). Der Standard-Step trägt den
 Routing-Hinweis als festen Satz im Body („sag mir gern kurz Bescheid, falls ich mich damit besser
 bei jemand anderem im Team melden sollte“). Diese Datei beschreibt die Ausbaustufe mit belegten
 Namen: Body des Steps dann `{{ai.hallo}}` + Leerzeile + `{{ai.routing}}`. Hat der Nutzer einen

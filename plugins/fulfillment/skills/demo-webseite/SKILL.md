@@ -31,8 +31,9 @@ Nutzer zeigen, Lücken markieren. Bilder und Logo mit Thema auflisten.
 
 ### 2. Struktur festlegen (2 Min.)
 
-Abschnitte nach Abschnitt 2 des Bauplans wählen, passend zur Branche. Das On-Top-Detail aus dem
-Feinheiten-Satz bekommt einen eigenen, sichtbaren Abschnitt. Dem Nutzer in einer Zeile nennen:
+Abschnitte nach Abschnitt 2 des Bauplans wählen, passend zur Branche. Nennt der Feinheiten-Satz
+ein On-Top-Detail, bekommt es einen eigenen, sichtbaren Abschnitt (der feste Satz ohne Detail
+verspricht keins). Dem Nutzer in einer Zeile nennen:
 „Startseite mit Hero, Leistungen, Bewertungen, Buchungsbereich, FAQ, Kontakt.“
 
 ### 3. Bauen (10–15 Min.)

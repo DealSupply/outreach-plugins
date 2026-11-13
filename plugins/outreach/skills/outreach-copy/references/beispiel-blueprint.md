@@ -17,13 +17,15 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
 |---|---|---|
 | Offer-Karte | C: Konkretes Deliverable (Reziprozität) | kleine Zielgruppe, hohe Reply Rate nötig |
 | Marketing-Offer | fertiger Entwurf der neuen Startseite inklusive Online-Terminbuchungs-Flow | Deliverable, kein Gespräch; vom Nutzer lieferbar |
-| Feinheiten-Satz | „Ich bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken, und werde morgen mit dem Entwurf fertig.“ | Pflicht bei Karte C, eigener Absatz, genau ein On-Top-Detail |
+| Zweiter Satz zum Angebot | der feste Satz der Karte C: „Ich bin gerade noch an den letzten Feinheiten dran.“ | Standard seit 10.11.2026 wie in der App: für alle Leads gleich, als Text im Body, eigener Absatz zwischen Angebotssatz und Schlussfrage; das „morgen“ steht im Schlusssatz. Karte A und B siehe „Variante Karte A und B“ unten |
+| Für Erfahrene | keine Tests, ein Angebot für alle | Standard; Tests und „Angebot je Lead“ nur auf Wunsch, siehe „Für Erfahrene“ unten |
+| Schlusssatz | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ | Standard bei Karte C, ohne „Link“ |
 | Sprache | `language: "de"` | deutschsprachige Praxen; eine englische Kampagne hat eigene Regeln (`outreach-copy`, Abschnitt „Kampagnensprache“) |
 | Ansprache | `salutation: "du"`: „Hallo Vorname,“ (Person der Versandadresse, bei info@ o. Ä. der Inhaber aus der Recherche), Fallback „Hallo,“, durchgehend du/dir/dein | Du-Form, eine Person (Inhaberin/Inhaber) |
-| Betreffs | Step 1 „kurze Frage“, Step 3 „kurzes Update“, Step 2 und 4 leer | Entwurfs-Angebot (Karte C): Frage statt Ankündigung; Step 2 antwortet im Thread von Mail 1, Step 3 öffnet einen neuen Thread, Step 4 antwortet darin |
+| Betreffs | Step 1 „kurze Frage“, Step 2, 3 und 4 leer | Entwurfs-Angebot (Karte C): Frage statt Ankündigung; Step 2 bis 4 antworten im Thread von Mail 1 |
 | Sequenz | 4 Steps, `delayDays` 0/3/5/7 | Standard; Step 3 ist der neue Winkel mit Social Proof, Step 4 der Abschied mit Routing-Hinweis; ohne echten Zeit- oder Kapazitätsgrund des Nutzers keine Dringlichkeits-Mail |
 | Sperrliste | Angstpatienten, Lachgas, Sedierung/Narkose, Kinderbehandlung, Notdienst, Prophylaxe/Dentalhygiene, digitaler Scan/Abdruck, Implantate allgemein; für Beauty und Dermatologie Botox/Hyaluron, Microneedling, Laser-Haarentfernung | branchenübliche Leistungen tragen keinen Opener (Austauschtest); steht gleichlautend in `researchAgentConfig.additionalPrompt` und im `intro`-Prompt |
-| Wörter (fester Text ohne Signatur) | 57 / 23 / 72 / 55 | Step 1 mit Anrede und Bezug (bis 2 Sätze) etwa 85-95, unter 120 |
+| Wörter (fester Text ohne Signatur) | 41 / 23 / 54 / 55 | Step 1 mit Anrede und Bezug (bis 2 Sätze, höchstens 30 Wörter) etwa 70, unter 120 |
 
 ## Blueprint
 
@@ -70,7 +72,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
           "status": "confirmed"
         },
         "cta": {
-          "value": "Wäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.",
+          "value": "Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.",
           "source": "answer",
           "status": "confirmed"
         }
@@ -111,28 +113,28 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
       {
         "stepNumber": 1,
         "subject": "kurze Frage",
-        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran, vor allem daran, die Behandlungsseiten gleich für Google und KI-Suchmaschinen mitzudenken, und werde morgen mit dem Entwurf fertig.\n\nWäre es in Ordnung, wenn ich dir das zusende? Völlig unverbindlich natürlich.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran.\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.",
         "delayDays": 0,
         "delayUnit": "days"
       },
       {
         "stepNumber": 2,
         "subject": "",
-        "body": "{{ai.hallo}}\n\ndu hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail bei dir angekommen ist.\n\nEin kurzes Ja reicht mir.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\ndu hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail bei dir angekommen ist.\n\nEin kurzes Ja reicht mir.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 3,
         "delayUnit": "days"
       },
       {
         "stepNumber": 3,
-        "subject": "kurzes Update",
-        "body": "{{ai.hallo}}\n\nzu dem Entwurf für deine neue Startseite ein Beispiel, was so etwas bringen kann. Bei der Praxis Dr. Sommer in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen. Beim Beauty-Studio Glow in München stieg die Buchungsquote der Behandlungsseiten um 60 Prozent.\n\nWenn du magst, schicke ich dir die Case Study als PDF.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "subject": "",
+        "body": "{{ai.hallo}}\n\nbei der Praxis Dr. Sommer in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten bis zu verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen.\n\nWäre es in Ordnung, wenn ich dir morgen den Entwurf für deine neue Startseite zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.",
         "delayDays": 5,
         "delayUnit": "days"
       },
       {
         "stepNumber": 4,
         "subject": "",
-        "body": "{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung. Sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte. Der Entwurf bleibt bei mir liegen, falls das Thema irgendwann wieder aktuell wird.\n\nAlles Gute für die Praxis.\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung. Sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte. Der Entwurf bleibt bei mir liegen, falls das Thema irgendwann wieder aktuell wird.\n\nAlles Gute für die Praxis.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
         "delayDays": 7,
         "delayUnit": "days"
       }
@@ -140,6 +142,58 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
   }
 }
 ```
+
+## Variante Karte A und B: fester zweiter Satz
+
+Wählt der Nutzer Karte A (kostenlose Teildienstleistung) oder B (Pilotprojekt), gibt es keinen
+Feinheiten-Satz: Er behauptet Arbeit, die es vor der Antwort nicht gibt. Der zweite Satz ist der
+feste Satz der Karte, als eigener Absatz direkt nach dem Angebotssatz, ohne KI-Variable. Gegenüber
+dem Blueprint oben ändern sich drei Stellen gemeinsam:
+
+1. Step 1 `body`: Angebotssatz der Karte, darunter der feste Satz der Karte, darunter der CTA der
+   Karte, jeder als eigener Absatz.
+2. `intro`-Prompt: Der feste Folgesatz heißt „Genau deshalb …“ (A) bzw. „Genau solche Praxen …“ (B)
+   statt „Deswegen war ich so frei …“, und das Angebot ist kein fertig vorbereiteter Entwurf.
+3. `offer_contract`: Titel und CTA der Karte; der Betreff von Step 1 bleibt „kurze Frage“. Step 3
+   endet mit der Schlussfrage der Karte aus Step 1 (A: „Wäre es in Ordnung, wenn ich das auch für dich
+   erstelle? Völlig unverbindlich natürlich.“, B: „Wärst du grundsätzlich offen dafür?“).
+
+### Karte A
+
+Step 1 `body`:
+
+```json
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau deshalb biete ich aktuell für fünf Praxen im DACH-Raum einen kostenlosen Entwurf für eine neue Startseite mit Online-Terminbuchung an.\n\nDarin wäre alles genau auf euch zugeschnitten.\n\nWäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
+```
+
+### Karte B
+
+Step 1 `body`:
+
+```json
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suchen wir gerade. Wir starten ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\n\nIm Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.\n\nWärst du grundsätzlich offen dafür?\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
+```
+
+Die festen Sätze der Karten gelten wörtlich, auch in der Sie-Form („Darin wäre alles genau auf Sie
+zugeschnitten.“, „Im Pilot bekommen Sie das kostenlos, dafür bräuchten wir nur ehrliches
+Feedback.“; bei C gleich) und auf Englisch (`outreach-copy`, „Zweiter Satz zum Angebot“).
+
+## Für Erfahrene: Tests und „Angebot je Lead“
+
+Beides nur, wenn der Nutzer es auf die Frage „Für Erfahrene“ ausdrücklich wählt; Bau und Wortlaut
+in `fuer-erfahrene.md`. Gegenüber dem Blueprint oben ändert sich:
+
+- **Betreff-Test:** neue Variable `betreff_b` mit `"role": "subject_variant"` und dem Prompt des
+  Servers, dazu in Step 1 `"variants": [{"subject": "{{ai.betreff_b}}", "body": <Body von Step 1 wörtlich>, "active": true}]`.
+- **Intro-Test:** neue Variable `intro_b` (mit Betreff-Test `intro_c`) mit `"role": "intro_variant"`
+  und dem Prompt von `intro`, dazu eine Variante mit Betreff „kurze Frage“ und dem Body von Step 1,
+  in dem `{{ai.intro_b}}` bzw. `{{ai.intro_c}}` statt `{{ai.intro}}` steht.
+- **„Angebot je Lead“ (Karte A und C):** `campaign.station` mit den Antworten der Karten, in Step 1
+  `{{ai.offer_text}}\n\n{{ai.angebot_ausfuehrung}}\n\n{{ai.offer_cta}}` statt Angebotssatz, festem
+  Satz und Schlussfrage, die drei Variablen `offer_text`, `angebot_ausfuehrung` (die Anweisung nach
+  der Vorlage, ListM8 baut sie beim Import selbst) und `offer_cta`, und Step 3 endet mit „Melde dich gerne, wenn das Thema für dich relevant
+  ist.“ statt mit der Schlussfrage. Vollständiges Beispiel mit diesem Absender:
+  `fuer-erfahrene.md`, Teil 2.
 
 ## Variante der Ansprache: Sie
 
@@ -152,14 +206,14 @@ Pronomen im festen Sequenztext (inklusive `offer_contract.cta` und der Pronomen-
 
 | `salutation` | `hallo`-Regel im Prompt | fester Text, Beispiel Step 1 |
 |---|---|---|
-| `sie` | „Hallo Frau <Nachname>,“ / „Hallo Herr <Nachname>,“, Titel nur wenn belegt; Fallback „Guten Tag,“ | „Deswegen war ich so frei und habe Ihnen einen kompletten Entwurf … erstellt …“ / „Wäre es in Ordnung, wenn ich Ihnen das zusende? Völlig unverbindlich natürlich.“ |
+| `sie` | „Hallo Frau <Nachname>,“ / „Hallo Herr <Nachname>,“, Titel nur wenn belegt; Fallback „Guten Tag,“ | „Deswegen war ich so frei und habe Ihnen einen kompletten Entwurf … erstellt …“ / „Wäre es in Ordnung, wenn ich es Ihnen morgen zusende? Völlig unverbindlich natürlich.“ |
 
 Nie „Hallo Herr/Frau …“ zusammen mit Du-Text.
 
 ## Optional: Kurzname `firma`
 
 Führt die Kampagne nach `outreach-campaign` den Kurznamen als AI-Variable `firma`, kommt sie
-als dritte Variable dazu (Reihenfolge `hallo`, `firma`, `intro`, `sortOrder` 1-3). Der Betreff
+dazu (Reihenfolge `hallo`, `firma`, `intro`, `sortOrder` 1-3; mit „Angebot je Lead“ danach `offer_text`, `angebot_ausfuehrung`, `offer_cta`). Der Betreff
 von Step 1 bleibt „kurze Frage“; nur Karte A, B und E tragen den Namen im Betreff, und dann
 ausschließlich als `{{ai.firma}}`, nie als rohes `{{lead.company}}`. Am Copy-Regelwerk ändert
 das nichts.

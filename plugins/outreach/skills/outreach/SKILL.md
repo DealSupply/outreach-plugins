@@ -1,6 +1,6 @@
 ---
 name: outreach
-description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“, „wie viele Credits habe ich“, „Guthaben“, „freie Plätze“, „Credits nachkaufen“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter. Enthält die Workspace-Regel, die alle Outreach-Skills befolgen.
+description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“, „wie viele Credits habe ich“, „Guthaben“, „freie Plätze“, „Credits nachkaufen“, „Close“, „CRM“, „was ist in Close“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter. Enthält die Workspace-Regel, die alle Outreach-Skills befolgen.
 ---
 
 # Outreach – Einstieg
@@ -35,6 +35,10 @@ passenden Skill. Dazu hält er die Workspace-Regel, auf die alle Outreach-Skills
 | neue Leads beschaffen (Apify, Outscraper) | `datenbeschaffung` – gehört zum Plugin **datenbeschaffung**; ist es nicht installiert, auf `outreach-setup` verweisen |
 | prüfen, welches Offer sich mit KI liefern lässt, oder für einen Lead, der geantwortet hat, die versprochene Demo bauen (Webseiten-Entwurf, SEO, Anzeigen, Leadliste, Muster-Kampagne) | `fulfillment` – gehört zum Plugin **fulfillment**; ist es nicht installiert: `/plugin install fulfillment@outreach-plugins` (Claude Code) bzw. im Marketplace installieren |
 | Guthaben, Credits, Preise, Limits, freie Plätze im Account, Nachkauf | kein eigener Skill: direkt `get_credit_balance` (nur lesend) aufrufen und erklären, siehe unten |
+| eine in der App eingerichtete Kampagne freigeben (`setup_state: open`, `start_lead_run` meldet `setup_open`) | `outreach-campaign`, Schritt „Freigeben“: `release_campaign` nur nach ausdrücklichem Ja (ab MCP 4.9.0) |
+| Power-ups einer Kampagne ansehen oder schalten (E-Mail prüfen, Person finden) | kein eigener Skill: `list_power_ups(campaign_id)` (nur lesend); `set_power_up` nur auf ausdrücklichen Wunsch, Treffer kosten Credits (ab MCP 4.6.0) |
+| für einen Lead den Schwerpunkt des Angebots von Hand setzen („trotzdem mit Haupt-Offer schreiben“) | kein eigener Skill: `set_offer_focus(campaign_id, lead_id, rank)` nur auf ausdrücklichen Wunsch (ab MCP 4.11.0); überstimmt die Schwerpunkt-Prüfung, danach neu generieren |
+| Stand der Übertragung ins CRM Close, eine Kampagne nach Close an- oder ausschalten | kein eigener Skill: `get_close_status` (nur lesend) bzw. `set_close_sync`, siehe unten |
 | Plugin aktualisieren | `outreach-update` |
 
 ## Guthaben und Limits erklären
@@ -60,6 +64,22 @@ passenden Skill. Dazu hält er die Workspace-Regel, auf die alle Outreach-Skills
 Preise je Lead nie aus dem Gedächtnis nennen: Den verbindlichen Preis zeigt `quote_lead_run` vor einem
 Server-Lauf (`outreach-pipeline`). Wer ein Jahresabo hat, wechselt erst nach Ende der Laufzeit auf ein
 Monatsabo; mehr nicht zusagen.
+
+## Close erklären (ab MCP 4.8.0)
+
+Mit verbundenem und eingerichtetem Close überträgt die App jeden Lead, an den Instantly verschickt
+hat, in die Close-Org des Kunden: mit Stufe (`sent`, `opened`, `clicked`, `neutral_reply`,
+`interested`, `not_interested`, `do_not_contact`), Antwort und Briefing-Notiz. Verbinden und
+Einrichten gehen nur in der App (Integrationen → Close), ebenso Einstiegsstufe und Lead-Status je
+Stufe; beides gilt für alle Kampagnen.
+
+- `get_close_status` (nur lesend): Verbindung, Leads je Status (`waiting`, `pushed`, `failed`) im
+  Workspace und die zuletzt fehlgeschlagenen mit Grund; mit `campaign_id` auch, ob die Kampagne
+  nach Close geht. Fehlen `counts`, ist Close nicht verbunden, gestört oder abgeschaltet.
+- `set_close_sync`: `campaign_id`, `enabled` (an oder aus), optional `transfer_backlog=false` (nur
+  Outreach ab jetzt). Nur auf ausdrücklichen Wunsch des Nutzers ändern.
+- Ein Lead mit `do_not_contact` (Abmeldung, Bounce, Sperre) kommt nie neu nach Close; steht er schon
+  dort, bekommt er nur diese Stufe. Gelöscht wird in Close nie etwas.
 
 ## Regeln
 

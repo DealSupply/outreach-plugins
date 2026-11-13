@@ -46,3 +46,7 @@ Braucht MCP 4.4.0 (`ping`). Kennt der Server `export_campaign_leads` nicht, auf 
   (`full`, `sending`, `crm`) überschreiben den Zweck, ebenso `format` (`xlsx`, `csv`) und `sendable_only`.
 - Höchstens 25.000 Leads je Datei (`too_large`): Umfang eingrenzen oder in Auswahlen teilen.
 - `mark_exported` braucht `leads:write`; ohne das Recht ohne Markieren exportieren.
+- Zwei Personen je Firma (ab MCP 4.11.0): In solchen Kampagnen trägt die Datei die Spalten
+  `second_person_email`, `_first_name`, `_last_name`, `_role` und `_status`. `rows_per_person=true` (nur CSV)
+  gibt Person 2 eine eigene Zeile; für Instantly fragen, ob der Nutzer das will (jede Person ein eigener
+  Kontakt), sonst bleibt eine Zeile je Firma.

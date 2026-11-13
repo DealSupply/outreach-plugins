@@ -19,7 +19,10 @@ ihm mit `art` und `grund`, was zu tun ist.
 - Modus laut Auftrag:
   - „Modus: nur Urteil“ (Standard, wenn nichts genannt ist): nichts schreiben, nur die Antwortzeile.
   - „Modus: entscheiden“: bei `freigeben` `approve_lead_variables`, bei `ablehnen`
-    `reject_lead_variables(reason=…)`; bei `hinweis` nichts schreiben.
+    `reject_lead_variables(reason=…)`; bei `hinweis` nichts schreiben. Lehnt `approve_lead_variables`
+    mit `no_contact_email` (keine Versandadresse), `foreign_sending_address` oder `undeliverable_address`
+    (Postfach existiert laut Prüfung nicht) ab: nicht wiederholen, `FEHLER lead=<id>: keine Versandadresse`
+    bzw. `…: fremde Versandadresse` bzw. `…: unzustellbare Versandadresse` melden.
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei. Prüfe danach, dass `lead.id`
   und `campaign.id` genau deinem Auftrag entsprechen; parallel laufende Agents können eine abgelegte
   Antwort überschreiben. Stimmt die ID nicht, erneut abrufen; stimmt sie dann immer noch nicht,
@@ -29,7 +32,25 @@ ihm mit `art` und `grund`, was zu tun ist.
 
 1. `get_lead_variables(campaign_id, lead_id)`: Variablen, Recherche, Qualifizierung. Die Versandadresse ist
    `lead.sendingEmail` (kann eine persönliche Adresse aus der Recherche sein); `lead.email` ist nur die
-   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`.
+   Importadresse. Fehlt `sendingEmail`, gilt `lead.email`. Fehlen beide (Lead ohne Adresse, ab MCP
+   4.0.0 möglich): nie `freigeben`, sondern `URTEIL … ergebnis=hinweis art=recht grund=keine Versandadresse`.
+   Am Wert einer KI-Variable mit Winkel steht
+   `angleWritten` (`chance` oder `lob`); bei Variablen ohne Winkel fehlt es. Eine Zeile mit `fallback: true` (ohne eigene
+   Zeile zusätzlich `notStored: true`) ist eine weitere Intro-Variante im Rückfall: Sie zeigt den
+   aktuellen Text von Variante A (erste Intro-Variable, meist `intro`) und wird mit ihr geprüft. Kein
+   fehlender Wert, und dass sie gleich lautet wie Variante A, ist kein Befund.
+   Ab MCP 4.11.0: Eine Zeile mit `offerRole` ist ein Angebotsblock. Mit `templateState: template` steht
+   dort die Vorlage des Schwerpunkts (`offerFocus` nennt ihn), ein Serverwert: kein Befund zu Wortlaut oder
+   Länge, nur prüfen, ob der Schwerpunkt zum Lead passt. Mit `adapted` hat das Modell den Block angepasst
+   (`deviationReason`); dann wie jeden Text prüfen. `proof`- und `noun`-Blöcke sind immer Serverwerte.
+   Ab MCP 4.15.0, „Angebot je Lead“ (Mail 1 mit `offer_text`, `angebot_ausfuehrung` und `offer_cta`,
+   alle ohne `offerRole`): `offer_text` und `offer_cta` sind Absatz 1 und 3 des Angebots, das die KI
+   gewählt hat, vom Server eingesetzt: kein Befund zu Wortlaut oder Länge. Welches Angebot gewählt
+   ist, zeigt `offer_text` im Vergleich mit den Angeboten im Prompt von `angebot_ausfuehrung`.
+   `secondPerson` (oder `null`) trägt Person 2 mit `email`, `role`, `eligibility`, `reason` und ihren
+   eigenen `variables`: ihre Texte nach denselben Regeln prüfen, dazu nie wortgleich mit einem Intro von
+   Person 1 und dieselbe Anredeform. Eine Freigabe gilt für beide Personen; ist nur Person 2 fehlerhaft,
+   das Urteil trotzdem für den Lead fällen und im Grund `person 2` nennen.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
    Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
@@ -69,7 +90,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     Folgesatz lobt; sonst eine kurze Reaktion am Detail; eine Würdigung nur ausnahmsweise mit
     etwas Neuem und Konkretem). Verstoß ist ein Schluss, der eine Floskel oder ein Superlativ ohne Detail
     ist („finde ich stark“, „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“,
-    „das spricht für sich“), eine Würdigung im Gutachten-Ton oder als Folgerung über Ausrichtung,
+    „das spricht für sich“) oder „hängen geblieben“ in jeder Form enthält (seit 31.10.2026 verboten), eine Würdigung im Gutachten-Ton oder als Folgerung über Ausrichtung,
     Erfahrung oder Qualität („das zeigt, wie klar der Betrieb auf seine Kundschaft ausgerichtet ist“,
     „seit 2004 in der Branche, das spricht für viel Branchenerfahrung“, „macht das Angebot schön
     konkret“, „ein bemerkenswert breiter Zuschnitt“), die das Detail nur noch einmal sagt, ein Vergleich
@@ -82,40 +103,98 @@ ihm mit `art` und `grund`, was zu tun ist.
     hält man nur, wenn die Arbeit stimmt“, „da machst du vieles richtig“, „zeigt, dass die Behandlung
     ankommt“), eine Reaktion, vor der im selben Satz kein Detail steht, oder eine Behauptung, die nicht
     direkt aus dem Detail folgt („deine Patienten lieben das“). Kein Befund: ein fehlender Schluss; eine
-    kurze Reaktion in der Vergangenheit am Detail („das fand ich richtig schön“, „das ist mir direkt
-    hängen geblieben“; „richtig“ ist keine Übertreibung), auch eine eigene kurze Reaktion im selben Ton statt der
+    kurze Reaktion in der Vergangenheit am Detail („das fand ich richtig schön“, „das hat mir gut
+    gefallen“; „richtig“ ist keine Übertreibung), auch eine eigene kurze Reaktion im selben Ton statt der
     vorgeschlagenen Form („da musste ich direkt schmunzeln“), solange sie zum Anker passt und keine
     Floskel ist; eine Würdigung mit konkretem neuem Inhalt („da steckt
     richtig viel Handarbeit drin“). Ein Schluss hinter einem Lob aus Bewertungstexten, einer
     Auszeichnung oder neben einem lobenden festen Folgesatz lobt doppelt: Hinweis (`text`). Eine
     übertriebene Reaktion („total begeistert“), eine frei gebildete Reaktion mit deutlich mehr als sechs
     Wörtern oder „sympathisch“ bzw. „schön“ hinter einer Bewertungszahl oder einem technischen Detail ist
-    ein Hinweis (`text`). Der Fallback-Satz der
+    ein Hinweis (`text`); ebenso hinter Firmengeschichte, Gründung oder Alter jede andere Reaktion als
+    „das hab ich richtig gern gelesen“ („That was really nice to read.“, E54). Der Fallback-Satz der
     Kampagne steht wörtlich und ohne Schluss.
   - Gleiche Reaktion: Du siehst nur diesen Lead. Ist der Schluss eine Reaktion, nenne sie wörtlich
     in `grund` (auch bei `freigeben`, z. B. `grund=schluss-reaktion „hat mir gut gefallen“`). Die Reaktion
     schlägt der Server je Lead aus einer festen Liste vor, eine eigene im selben Ton ist erlaubt;
     Wiederholungen über die Kampagne sind erwartet und kein Befund, solange sie wechseln; steht in fast
-    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
+    allen Mails derselbe Satz, auch ein frei gebildeter, ist das ein systematischer Befund. Ausnahme: „das hab ich richtig gern gelesen“ („That was really nice to read.“) hinter Firmengeschichte, Gründung oder Alter ist die feste Reaktion (E54); derselbe Satz in vielen Mails und in zwei Intro-Varianten eines Leads ist dort gewollt, kein Befund; ListM8 setzt ihn hinter dem Anker `geschichte` selbst ein (DS-172), beanstande die getauschte Form nicht. Ebenso ist „Hallo Herr/Frau Nachname,“ in der Sie-Form, die ListM8 aus „Guten Tag Herr/Frau …,“ macht, kein Befund. Gleich lautende Würdigungen und Mechanik-Nutzen über mehrere Leads (etwa
     „so können sich Interessierte vorab orientieren“ hinter Bewertungszahlen) meldet der Bericht als
     systematischen Befund.
   - Sterne: Anzahl oder Schnitt bei weniger als 30 Bewertungen oder einem Schnitt unter 4,5,
     ungerundete Zahl, Schnitt ohne Komma, der größere von zwei widersprüchlichen Werten, oder nur Zahlen, obwohl die Recherche ein Lob aus
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
-- **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter, EIN Detail (gestapelte Lobpunkte,
+- **Weitere Intro-Varianten** (`intro_b`, `intro_c`, seit 06.11.2026): Marke `rueckfall_trotz_anker` (Rückfall, obwohl „Stärkste Anker“ einen freien Eintrag hat) ist ein weicher Befund mit dem freien Eintrag als Vorschlag; ohne Marke ist ein Rückfall kein Befund. Die Marke `gleicher_gegenstand` wertest du vorerst nicht (seit 06.11.2026: sie traf in Lauf 4 einmal falsch und einmal strittig, ListM8 blendet sie aus, bis die Regel geschärft ist).
+- **Betreff B** (die Variablen aus `emailGeneration.subjectVariables`, Rolle `subject_variant`, meist `betreff_b`; Betreff-Test seit 05.11.2026). **Kampagnen ab 07.11.2026 (E61, der Prompt der Variable sagt „Frage zu <Kurzname>“):** B ist immer „Frage zu <Kurzname>“ bzw. „question about <short name>“; ListM8 setzt ihn selbst aus dem geprüften Kurznamen zusammen. Befund ist nur ein Kurzname mit Rechtsform, Zusatz, Ort, Großbuchstaben (außer einem Kürzel wie ZAR) oder dem Vornamen der angeschriebenen Person (E26, E62); der Betreff von A mit Marke `betreff_rueckfall` (kein sicherer Kurzname) ist kein Befund. **Ältere Kampagnen:** 3 bis 6 Wörter (unter 3 ersetzt ListM8 seit 06.11.2026 durch den Rückfall), dasselbe Detail, mit dem das Intro beginnt, und direkt mit dem Detail beginnend (E53: nie „Frage zu/zum/zur …“, „question about …“; ListM8 zählt einen solchen Betreff in Kampagnen ab 06.11.2026 als Rückfall, mit Detail im Intro ist das ein weicher Befund), kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund. Der Rückfall auf den Betreff von A ist ohne eigenen Text gespeichert; `get_lead_variables` zeigt ihn als den aktuellen Betreff von A mit `fallback: true` und Marke `betreff_rueckfall`, das ist kein fehlender Betreff.
+- **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter (Chance-Variable mit Beobachtung: 35), EIN Detail (gestapelte Lobpunkte,
   Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine
   internen Scores. Der feste Folgesatz schließt flüssig an. Kein heikler Aufhänger (Preis, „günstig“,
   persönliche Merkmale oder Familie von Rezensierenden, Gesundheitsdetails), auch nicht als Teil eines
   Bewertungslobs. Ein Bewertungsanker nennt die Quelle im Einstieg („ich hab mir deine Bewertungen
   angeschaut, und …“), nicht nur „jemand schreibt“. Verstoß: `ablehnen`, `art=text`.
-- **Technik:** Jede Variable hat Status `success` und ist nicht leer.
+- **Abmeldezeile:** „STOPP“ oder „Stop“, „abmelden“, „abbestellen“, „austragen“, „unsubscribe“ und andere
+  Opt-out-Fachsprache sind ein Fehler. In einer Variable: `ablehnen`, `art=text`. In den festen Steps des
+  Blueprints (betrifft alle Leads) oder wenn Step 1 oder Step 3 die feste Abmeldezeile unter der Signatur
+  fehlt („Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.“, Sie-Form „… für Sie ist,
+  geben Sie mir kurz Bescheid.“; die frühere Fassung „…, dann melde ich mich nicht mehr.“ zählt auch): das Urteil des Leads bleibt davon unberührt,
+  `grund` nennt es als `systematisch: fester Text Abmeldezeile`, damit der Bericht es meldet.
+- **Chance-Variablen (Werte mit `angleWritten`, etwa `intro_chance`):** Sie stehen in Instantly in einer
+  eigenen Variante der ersten Mail anstelle von `intro` und werden für sich allein geprüft. Chance heißt: Lob für eine
+  belegte Stärke plus genau EINE Beobachtung zur Website (Stärke dort kaum oder nicht zu sehen, oder Buchen
+  bzw. Termine nur per Anfrage, Telefon oder Mail), ohne Schluss, höchstens 2 Sätze und 35 Wörter. Ein
+  solches Intro ist kein Befund, solange beide Seiten belegt sind: die Stärke wie bei jedem Anker, die
+  Beobachtung wörtlich im Abschnitt `WEBSITE-BEFUND` der Recherche („Bewertungen oder Kundenstimmen auf der
+  Website: nein“ zu einer Stärke aus Bewertungen, „Online-Buchung oder Terminbuchung: nur Anfrageformular“
+  oder „nur Telefon oder Mail“). „kaum“, „nichts“, „nur“, „bisher“, „noch nicht“ in dieser einen Aussage sind kein Verstoß
+  gegen „nur positiv“. Regeln und Beispiele: Skill `outreach:outreach-copy`, Abschnitt „Chance-Winkel“.
+  Verstoß (`ablehnen`, `art=text`) ist:
+  - ein Chance-Intro ohne Beleg für beide Seiten: `WEBSITE-BEFUND` fehlt, meldet „unklar“ oder „ja“, die
+    Beobachtung ist nur daraus geschlossen, dass der Bericht nichts erwähnt, oder die Stärke trägt nicht;
+    Nachbessern schreibt dann ein Lob-Intro (Rückfall). Ist nur die Website-Frage offen und lässt sie sich
+    nachlesen, stattdessen `art=recherche` mit genau dieser Frage;
+  - eine Beobachtung mit „Problem“, „Lücke“, „leider“, „schade“, „fehlt“, „verschenkt“, „Potenzial“, mit Rat
+    oder Konjunktiv-Wunsch, als Vorwurf („obwohl“, „du zeigst sie nicht“), mit Folge oder Vermutung über
+    Interna („dadurch gehen Buchungen an Booking“), mit unwahrer Nähe („ich verfolge euch schon länger“),
+    mit Erwähnung einer Agentur, mit Schluss oder Reaktion dahinter, oder mehr als eine Beobachtung;
+  - `angleWritten` passt nicht zum Text (`chance` bei einem reinen Lob-Intro oder `lob` bei einem Intro mit
+    Beobachtung) oder fehlt an einer Chance-Variable.
+  Ein Rückfall auf Lob mit `angleWritten` = `lob` ist kein Befund; er wird wie jedes Intro nach den Regeln
+  oben geprüft. In allen anderen Variablen, auch im normalen `intro`, ist jede Beobachtung zur Website wie
+  bisher ein Verstoß gegen „nur positiv“. Nenne in `grund` für jede Chance-Variable den geschriebenen Winkel
+  (`winkel=intro_chance:chance` oder `winkel=intro_chance:lob`).
+- **Zweiter Satz und Tests:** Ein fester zweiter Satz in Mail 1 statt einer Variable ist richtig
+  (Standard neuer Kampagnen), keine Variable `angebot_ausfuehrung` ist kein Befund. Varianten von
+  Mail 1 sind für Erfahrene und standardmäßig aus: eine fehlende Variante oder ein fehlender Wert
+  für `betreff_b` oder ein zweites Intro ist nur ein Befund, wenn die Kampagne diese Tests trägt.
+- **Angebot je Lead** (nur wenn die Kampagne es trägt, siehe Ablauf 1): `angebot_ausfuehrung` ist
+  Absatz 2 und folgt der Anweisung in ihrem Prompt: genau ein Satz, höchstens 25 Wörter, nach der
+  Regel der Karte (Karte C beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten
+  dran, vor allem“ und nennt genau ein Detail des schon Erstellten, ohne „morgen“ und ohne „fertig
+  werden“; Karte A im Konjunktiv, was für diesen Lead drin wäre, nie als erledigte Arbeit), nichts
+  über die Lieferzusage hinaus, keine Zahl, die sie nicht nennt, auch keine aus der Recherche
+  (Bewertung, Punkte, Jahre, Kundenzahl), nichts, was das Intro dieses Leads schon nennt (Projekt,
+  Kunde, Produkt, Auszeichnung, Ort, Zahl), keine Frist, kein Gespräch oder
+  Termin, keine zweite Leistung, keine Frage, kein Lob, keine Wiederholung von Absatz 1, keine
+  Gedankenstriche, die Bedingung steht nicht im Text und nichts klingt nach einem Mangel des Leads,
+  der Satz gehört zum Angebot in `offer_text`, Anrede wie im Rest. Verstoß: `ablehnen`, `art=text`.
+  Wahl des Angebots: Ein weiteres Angebot passt nur, wenn seine Bedingung im Abschnitt
+  `WEBSITE-BEFUND` der Recherche belegt ist („unklar“ oder nicht erwähnt ist nicht belegt), sonst
+  gilt das Haupt-Angebot (in der Anweisung „(Haupt-Angebot)“, ab MCP 4.15.0 die 1); passen mehrere, das mit der kleinsten Nummer. Eine andere Wahl
+  bricht die Anweisung: ein weiteres Angebot ohne Beleg, das Haupt-Angebot, obwohl eine Bedingung
+  belegt ist, oder eine höhere Nummer, obwohl eine kleinere passt (`ablehnen`, `art=text`, das richtige Angebot im
+  Grund). Ist der Befund der Website nur offen, aber nachlesbar, stattdessen `art=recherche`. Nenne
+  in `grund` die Nummer des gewählten Angebots (`angebot=<Nr.>`).
+- **Technik:** Jede Variable hat Status `success` und ist nicht leer (`offer_text` und `offer_cta`
+  bei „Angebot je Lead“ setzt der Server; sind sie leer, `hinweis` mit `art=text`).
 - **Versand:** Ist die Versandadresse oder die gespeicherte `bestEmail` laut Recherche ungültig oder
   einem Dritten zugeordnet, untersagt das Impressum Werbung oder gibt es einen Kontaktsperre-Hinweis:
   Urteil `hinweis` mit `art=recht`, nie `freigeben`. Gehört die Versandadresse keiner belegten Person
   und empfiehlt die Recherche eine andere Adresse desselben Betriebs: `art=adresse`. `bestEmail`
-  immer gegen die Adress-Hinweise der Recherche halten.
+  immer gegen die Adress-Hinweise der Recherche halten. Steht die Versandadresse in
+  `get_lead_data.lead.emailVerdicts` mit Urteil `invalid`, ist sie nicht zustellbar: gibt es eine andere
+  Adresse desselben Betriebs mit Urteil `valid`, `art=adresse`, sonst `hinweis` mit `art=recht`.
 - **Kein Kleinkram:** Ob `routing` Fall B oder C gewählt wurde oder eine belegte Alternative weniger
   genannt ist, ist kein Grund für `hinweis`, solange der Text zum gewählten Fall passt und niemand
   Falsches genannt wird.
