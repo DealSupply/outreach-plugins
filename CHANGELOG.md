@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-14 – outreach 0.9.0 (nutzt ListM8 MCP 4.18.0 zum Melden)
+
+Fehler und Wünsche gehen aus dem Chat an DealSupply (DS-278). Die Skills fragen erst, gemeldet wird nur nach einem Ja. Auf Servern vor 4.18.0 kennen sie `report_feedback` nicht und verweisen auf „Melden“ in der App; sonst ändert sich dort nichts.
+
+**outreach**
+- `outreach` → neue Melde-Regel für alle Skills: Nach einem Fehler, der sich nicht im Chat lösen lässt, kommt die Frage „Soll ich das als Fehler an DealSupply melden?“, gemeldet wird erst nach einem Ja mit `report_feedback` und `attach_last_failure=true`, damit die Aufzeichnung des Servers mitgeht statt einer Nacherzählung. Selbst lösbare Fehler (falsche ID, `validation_failed`, Scope, Workspace, Credits, Limits) sind kein Anlass. Kann DealSupply etwas nicht, bietet es an, das als Wunsch zu melden. Kein Geheimnis und keine Daten von Leads im Text; danach der Weg zum Stand: Roadmap, Reiter „Meine Meldungen“.
+- `outreach-campaign`, `outreach-import`, `outreach-lists`, `outreach-export`, `outreach-qualify`, `outreach-research`, `outreach-generate`, `outreach-verify`, `outreach-pipeline`, `outreach-launch` → verweisen auf die Melde-Regel.
+- `outreach-abo-lauf` → fragt nach dem Bericht einmal für alle Fehler der Agents, je Fehlerbild eine Meldung mit `failed_call_id`.
+- `lead-agent`, `verify-agent` → melden nie selbst, sondern nennen den Fehler in ihrer Antwort.
+- `outreach-setup`, README → abgestimmt auf MCP 4.18.0.
+
 ## 2026-11-10 – outreach 0.8.0 (benötigt ListM8 MCP 4.15.0 für „Angebot je Lead“)
 
 „Angebot je Lead“ folgt dem freigegebenen Wortlaut und der Nummerierung der App (DS-195, Server DS-206). Plugin und Server kommen im selben Release: Ein Server vor 4.15.0 zählt das Haupt-Angebot als letzte Nummer, dort legt das Plugin nur noch Kampagnen mit einem Angebot für alle an.

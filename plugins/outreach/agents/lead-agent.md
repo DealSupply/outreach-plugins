@@ -28,6 +28,8 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 - Allgemeine Werbehinweise auf Website oder im Impressum nur als Hinweis mit Quelle festhalten; sie
   ändern weder Fit noch Score. Gespeicherte Kontaktstatus nie ändern oder aus Website-Text ableiten.
 - Lehnt ein Werkzeug mit `lead_run_active`, `email_generation_active`, `contact_gate`, `verdict_final` oder `workspace_read_only` ab: aufhören und das melden.
+- Nie `report_feedback` aufrufen. Ein Fehler, den du nicht lösen kannst, gehört mit Werkzeug und
+  Fehlercode als Hinweis in die Antwort; ob gemeldet wird, fragt die Sitzung, die den Lauf gestartet hat.
 - Lehnt `save_lead_variables` mit `no_contact_email` ab (der Lead hat keine Versandadresse): keine
   Wiederholung, kein `FEHLER`, sondern die Antwort mit `mail=übersprungen grund=keine-adresse`.
 - Lehnt `save_lead_variables` mit `undeliverable_address` ab (das Postfach der Versandadresse existiert
