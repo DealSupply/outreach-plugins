@@ -23,6 +23,8 @@ ihm mit `art` und `grund`, was zu tun ist.
     mit `no_contact_email` (keine Versandadresse), `foreign_sending_address` oder `undeliverable_address`
     (Postfach existiert laut Prüfung nicht) ab: nicht wiederholen, `FEHLER lead=<id>: keine Versandadresse`
     bzw. `…: fremde Versandadresse` bzw. `…: unzustellbare Versandadresse` melden.
+- Nie `report_feedback` aufrufen. Ein Fehler, den du nicht lösen kannst, gehört mit Werkzeug und
+  Fehlercode in die Antwortzeile; ob gemeldet wird, fragt die Sitzung, die die Prüfung gestartet hat.
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei. Prüfe danach, dass `lead.id`
   und `campaign.id` genau deinem Auftrag entsprechen; parallel laufende Agents können eine abgelegte
   Antwort überschreiben. Stimmt die ID nicht, erneut abrufen; stimmt sie dann immer noch nicht,

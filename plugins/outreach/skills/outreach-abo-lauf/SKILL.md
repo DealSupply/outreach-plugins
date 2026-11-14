@@ -64,6 +64,9 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
    zählen als „ohne Adresse“ und sind kein Fehler. Danach alle angemeldeten
    Phasen mit `outreach_progress(action="end", campaign_id, phase=…)` schließen, auch wenn alles gezählt
    scheint: Leads ohne Schreibaufruf (Recherche vorhanden, aussortiert, Fehler) hält das Band sonst offen.
+   Nennen Agents einen Fehler, den sie nicht lösen konnten, nach dem Bericht einmal für alle zusammen
+   nach der Melde-Regel im Skill `outreach` fragen (ab MCP 4.18.0); bei einem Ja je Fehlerbild eine
+   Meldung mit `failed_call_id` aus `recent_failed_calls`, nie eine je Lead.
 4. **Rennschutz:** Meldet ein Agent `lead_run_active`, läuft parallel ein Server-Lauf über dieselben Leads.
    Abwarten (`get_lead_run_status`), dann diese Leads erneut starten.
 5. **Ohne Adresse:** `no_contact_email` (Lead ohne Versandadresse) beendet einen Lead ohne Fehler; nicht

@@ -8,6 +8,8 @@ description: Use when user says "outreach:verify", "mcp:verify", "verify emails"
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+>
+> **Fehler und Wünsche:** Es gilt die Melde-Regel aus dem Skill `outreach`: Nach einem Fehler, den du nicht selbst lösen kannst, fragen, ob du ihn an DealSupply melden sollst, und erst nach einem Ja `report_feedback` mit `attach_last_failure=true` aufrufen. Einen Wunsch, den DealSupply nicht kann, als Wunsch melden anbieten.
 
 Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen via MCP Business Tools. Claude reviewt jede Variable, gibt qualifizierte Variablen frei (`approve_lead_variables`) oder lehnt unbrauchbare ab (`reject_lead_variables`). Behebbare Fehler werden dabei direkt nachgebessert und gegengeprüft, statt sie dem Nutzer vorzulegen.
 

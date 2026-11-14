@@ -49,7 +49,7 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.15.0. Was neuer ist als 3.0.0, nutzen sie
+  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.18.0. Was neuer ist als 3.0.0, nutzen sie
   nur, wenn der Server es kennt:
   - ab 4.0.0 Leads ohne E-Mail (E-Mail oder eigene Website je Lead), ab 4.4.0 der Kampagnen-Export als
     Datei, ab 4.5.0 Workspaces, ab 4.6.0 Power-ups, ab 4.7.0 englische Kampagnen (`campaign.language`;
@@ -64,7 +64,9 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     `angebot` in `get_lead_data` und `save_lead_variables`, Haupt-Angebot als Nummer 1, ungültige
     Nummer abgelehnt, `offer_per_lead_inconsistent` beim halben Umschalten); auf älteren Servern
     (auch 4.14.x, dort war das Haupt-Angebot die letzte Nummer) legt `outreach-campaign` neue
-    Kampagnen immer mit einem Angebot für alle an.
+    Kampagnen immer mit einem Angebot für alle an;
+  - ab 4.18.0 Fehler und Wünsche an DealSupply melden (`report_feedback`, Melde-Regel im Skill
+    `outreach`); auf älteren Servern verweisen die Skills auf „Melden“ in der App.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App

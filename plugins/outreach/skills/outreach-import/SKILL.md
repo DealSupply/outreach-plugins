@@ -8,6 +8,8 @@ description: Use when user says "outreach:import", "mcp:import", "importiere lea
 > **Live-Ansicht (Claude Code mit Plugin `outreach`):** Ergebnisse von `list_leads`, `import_leads`/`get_job_status` und Lead-Runs erscheinen dort als Karte bzw. im Band über dem Prompt. Dann die Liste **nicht noch einmal als Tabelle** wiederholen – nur kurz zusammenfassen, was der Nutzer wissen oder entscheiden muss. In anderen Umgebungen (Claude-Chat, ChatGPT, Codex) wie gewohnt als kurze Liste ausgeben.
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
+>
+> **Fehler und Wünsche:** Es gilt die Melde-Regel aus dem Skill `outreach`: Nach einem Fehler, den du nicht selbst lösen kannst, fragen, ob du ihn an DealSupply melden sollst, und erst nach einem Ja `report_feedback` mit `attach_last_failure=true` aufrufen. Einen Wunsch, den DealSupply nicht kann, als Wunsch melden anbieten.
 
 Dieser Skill lädt Lead-Listen über das MCP-Tool `import_leads` (Scope `leads:write`) in ListM8 — aus CSV-Dateien (z. B. Apify- oder Outscraper-Exporte), JSON oder Inline-Daten. Das Scraping selbst passiert außerhalb von ListM8 (der Kunde nutzt Apify, Outscraper o. Ä.); der MCP bekommt nur das Ergebnis. Mit `campaign_id` werden die Leads der Kampagne zugeordnet (Status `processing`); ohne entstehen unkategorisierte Leads im globalen Bestand. Der Import startet KEINE Verarbeitung — anschließend `/outreach-pipeline` (serverseitiger Lauf via `start_lead_run`) oder die Einzel-Skills.
 

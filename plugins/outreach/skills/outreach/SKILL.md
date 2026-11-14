@@ -1,12 +1,12 @@
 ---
 name: outreach
-description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“, „wie viele Credits habe ich“, „Guthaben“, „freie Plätze“, „Credits nachkaufen“, „Close“, „CRM“, „was ist in Close“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter. Enthält die Workspace-Regel, die alle Outreach-Skills befolgen.
+description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“, „wie viele Credits habe ich“, „Guthaben“, „freie Plätze“, „Credits nachkaufen“, „Close“, „CRM“, „was ist in Close“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter. Enthält die Workspace-Regel und die Melde-Regel (Fehler und Wünsche an DealSupply melden), die alle Outreach-Skills befolgen.
 ---
 
 # Outreach – Einstieg
 
 Dieser Skill leitet weiter: Frage den Nutzer, was er erreichen will, und lade dann genau den
-passenden Skill. Dazu hält er die Workspace-Regel, auf die alle Outreach-Skills verweisen.
+passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die alle Outreach-Skills verweisen.
 
 ## Erst prüfen
 
@@ -39,6 +39,7 @@ passenden Skill. Dazu hält er die Workspace-Regel, auf die alle Outreach-Skills
 | Power-ups einer Kampagne ansehen oder schalten (E-Mail prüfen, Person finden) | kein eigener Skill: `list_power_ups(campaign_id)` (nur lesend); `set_power_up` nur auf ausdrücklichen Wunsch, Treffer kosten Credits (ab MCP 4.6.0) |
 | für einen Lead den Schwerpunkt des Angebots von Hand setzen („trotzdem mit Haupt-Offer schreiben“) | kein eigener Skill: `set_offer_focus(campaign_id, lead_id, rank)` nur auf ausdrücklichen Wunsch (ab MCP 4.11.0); überstimmt die Schwerpunkt-Prüfung, danach neu generieren |
 | Stand der Übertragung ins CRM Close, eine Kampagne nach Close an- oder ausschalten | kein eigener Skill: `get_close_status` (nur lesend) bzw. `set_close_sync`, siehe unten |
+| einen Fehler oder Wunsch an DealSupply melden („melde das“, „das sollte gehen“, „kann DealSupply das nicht?“), sehen, was aus einer Meldung wurde | kein eigener Skill: Melde-Regel unten |
 | Plugin aktualisieren | `outreach-update` |
 
 ## Guthaben und Limits erklären
@@ -117,3 +118,43 @@ Workspace, auch der Bestand für den Dubletten-Abgleich.
    sagen, dass er dafür Mitglied oder Admin des Workspaces sein muss.
 7. **Älterer Server** (kein `list_workspaces` in der Tool-Liste): Alles läuft im Standard-Workspace.
    `workspace` nie mitgeben und Workspaces nicht erwähnen.
+
+## Melde-Regel: Fehler und Wünsche an DealSupply (ab MCP 4.18.0)
+
+Gilt für jeden Outreach-Skill, auch wenn er direkt aufgerufen wird. Nur wenn der Server
+`report_feedback` kennt (Tool-Liste, `ping` ab 4.18.0); auf älteren Servern auf „Melden“ in der App
+verweisen.
+
+1. **Fehler des Produkts.** Schlägt ein Aufruf fehl und du kannst es nicht selbst lösen, oder schildert
+   der Nutzer etwas, das nicht funktioniert: in ein, zwei Sätzen sagen, was schiefging, dann fragen:
+   „Soll ich das als Fehler an DealSupply melden? Ich hänge an, was der Server zu dem Aufruf
+   aufgezeichnet hat. Du musst nichts erklären.“ Dann auf die Antwort warten.
+2. **Selbst lösbar ist kein Fehler.** Falsche oder fremde ID, fehlendes Argument, `validation_failed`,
+   `insufficient_scope`, `workspace_read_only`, `workspace_mismatch`, `setup_open`, `rate_limited`,
+   erschöpfte Credits oder Limits: beheben oder dem Nutzer erklären, keine Meldung anbieten. Punkt 1
+   gilt erst, wenn es danach weiter scheitert oder der Fehler unerklärlich ist (`internal_error`, ein
+   Abbruch ohne Grund, ein Ergebnis, das nicht stimmen kann).
+3. **Wunsch.** Will der Nutzer etwas, das DealSupply nicht kann (kein Werkzeug, keine Einstellung dafür):
+   klar sagen, dass es heute nicht geht, und anbieten: „Soll ich das als Wunsch an DealSupply melden?“
+   Dazu in einem Satz, was du schreiben würdest.
+4. **Nur nach einem Ja melden**, mit `report_feedback`:
+   - `kind`: `bug` (Fehler), `wish` (Wunsch) oder `question` (Frage).
+   - `text`: erste Zeile ein kurzer Titel, dann was der Nutzer versucht und was er erwartet hat, in seinen
+     Worten und seiner Sprache.
+   - Bei einem Fehler `attach_last_failure=true`: Dann geht die Aufzeichnung des Servers mit (Werkzeug,
+     Argumente ohne Geheimnisse, Fehler, Zeit). Fehlertexte und Argumente nicht selbst abschreiben.
+     Ist nicht der letzte fehlgeschlagene Aufruf gemeint, `failed_call_id` aus `recent_failed_calls`
+     eines früheren Ergebnisses.
+   - Optional `campaign_id` und `area` (`Kampagnen`, `Leads`, `Mails`, `Versand`, `Integrationen`,
+     `Konto und Abrechnung`).
+5. **Nichts Geheimes, keine Daten Dritter.** In `text` nie API-Schlüssel, Passwörter oder Tokens und nie
+   Namen, E-Mail-Adressen oder Telefonnummern von Leads. Die Kampagne nennen statt der Personen.
+6. **Danach** bestätigen, den Titel nennen und sagen, wo der Nutzer den Stand sieht: „Den Stand findest
+   du in DealSupply unter Roadmap, Reiter Meine Meldungen.“ (`app_url` der Antwort). Bei einem Fehler
+   anbieten, den Schritt später noch einmal zu versuchen; bei einem Wunsch sagen, dass er auf der Roadmap
+   mit „Will ich auch“ dafür stimmen kann, sobald er dort steht.
+7. **Sagt der Nutzer nein:** nichts melden, weitermachen und für dasselbe nicht noch einmal fragen.
+   Dasselbe nie zweimal melden.
+8. **Agents und Workflows** (`lead-agent`, `verify-agent`, Abo-Lauf) melden nie und fragen nicht. Sie
+   nennen einen Fehler, den sie nicht lösen können, mit Werkzeug und Fehlercode in ihrer Antwort. Die
+   Sitzung, die den Lauf gestartet hat, fragt den Nutzer nach dem Bericht einmal für alle zusammen.
