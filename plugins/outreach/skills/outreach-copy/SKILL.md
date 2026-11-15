@@ -946,7 +946,7 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
 
 **Was nur du prüfst** (das Skript kann es nicht): ob Step 1 den festen zweiten Satz der Karte trägt (A, B, C) und die drei Sätze je ein eigener Absatz sind; ob der Abschied neben `{{ai.routing}}` noch einen festen Routing-Satz hat; ob der Wortlaut der Karte stimmt (Übergang, Schlussfrage, „morgen“ nur bei C); Ton, Lesbarkeit und Fakten; alle Regeln für die Werte der Variablen (Intro, Anrede, Routing), die erst je Lead entstehen; ob Variablen und Prompts im Blueprint vollständig sind.
 
-Diese Regeln lassen sich mechanisch prüfen. DealSupply prüft sie beim Anlegen nicht, also prüfst du
+Die Tabelle führt die Regeln, die sich an der fertigen Sequenz abhaken lassen. Das Skript prüft davon nur, was oben unter „Was das Skript prüft“ steht; die Zeilen „Zweiter Angebotssatz“ und der Teil „kein fester Routing-Satz“ der Zeile „Routing“ gehören zu „Was nur du prüfst“. DealSupply prüft die Regeln beim Anlegen nicht, also prüfst du
 sie: vor dem Anlegen der Sequenz und beim Review der Werte abhaken. „Hart“ = Fehler, „weich“ =
 Hinweis, der begründet werden muss.
 

@@ -16,7 +16,8 @@ Der Kurzname des Leads (bereinigt, ohne Rechtsform) zählt im Betreff B als ein 
 App. Er kommt aus --firma (mehrfach möglich) oder einer Zeile "Kurzname: …" in der Datei;
 {{Firma}} und andere Platzhalter zählen ohnehin als ein Wort.
 
-Erwartetes Format (siehe beispiele.md): jede Mail unter einer Überschrift
+Erwartetes Format (werkzeugneutral: beispiele.md; als Sequenz in DealSupply mit --dealsupply:
+references/beispiel-sequenz.md im Skill outreach-copy): jede Mail unter einer Überschrift
 "## Step <n>: …" (oder "## Zusatz-Step: Dringlichkeit"), darin eine Zeile
 "Betreff: …" (nur Step 1; "Betreff: (leer …)" für Step 2 bis 4 im Thread), in Step 1 optional
 "Betreff B: …" (Betreff des Betreff-Tests: seit 07.11.2026 „Frage zu {{Firma}}“, E61; ältere
