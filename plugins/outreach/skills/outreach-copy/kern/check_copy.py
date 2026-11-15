@@ -2,7 +2,12 @@
 """Prüft Cold-Mail-Copy gegen die mechanisch prüfbaren Regeln der Copy-Lehre.
 
 Aufruf:
-    python3 check_copy.py <copy-datei.md> [--firma "<Kurzname>"] … [--sprache de|en]
+    python3 -I check_copy.py <copy-datei.md> [--dealsupply] [--firma "<Kurzname>"] … [--sprache de|en]
+
+--dealsupply prüft eine Sequenz, wie DealSupply sie speichert: jede Mail beginnt mit {{ai.hallo}},
+Step 1 trägt {{ai.intro}}, nur bekannte Platzhalter, unter der Grußformel nur {{accountSignature}},
+der Abschied trägt {{ai.routing}}. Ohne die Angabe gilt das, sobald die Datei {{ai.…}} oder
+{{accountSignature}} enthält.
 
 --sprache en prüft die Entry Mail gegen das englische Limit von 100 Wörtern (Standard de: 120,
 auch mit einem Angebot je Lead). Die übrigen Prüfungen sind auf deutsche Copy ausgelegt.
@@ -29,6 +34,11 @@ INTRO_WORDS = 30  # Obergrenze des Intros, wird für {{Intro}} bzw. {{ai.intro}}
 # Platzhalter der Sequenz in DealSupply: {{ai.intro}} zählt wie {{Intro}}, {{ai.hallo}} ist die Anrede.
 INTRO_TOKEN = r"\{\{\s*(?:ai\.)?intro\s*\}\}"
 SALUTATION_TOKEN = r"\{\{\s*(?:ai\.)?(?:hallo|anrede)\s*\}\}"
+# Sequenzen in DealSupply (--dealsupply): nur diese Platzhalter werden aufgelöst, die Signatur kommt
+# aus dem Versandpostfach, der Abschied trägt den Routing-Absatz als Variable.
+KNOWN_PLACEHOLDER = re.compile(r"ai\.[A-Za-z0-9_]+|lead\.(email|company|website|phoneNumber|city)|custom\.[\w.-]+|accountSignature")
+PLACEHOLDER = re.compile(r"\{\{\s*(.*?)\s*\}\}")
+ACCOUNT_SIGNATURE = re.compile(r"^\{\{\s*accountSignature\s*\}\}$")
 
 SPAM = [
     "gratis", "100 %", "100%", "garantiert", "garantie", "jetzt zugreifen", "jetzt handeln",
@@ -219,6 +229,23 @@ def check(mail):
         lines = mail["body"][1:] if mail["body"] else []
         if lines and re.match(r"^[^.?!:]{1,30}:", lines[0]) and len(lines[0].split(":")[0].split()) <= 3:
             hard.append(f"Doppelpunkt-Opener: „{lines[0].split(':')[0]}:“")
+    for line in mail["body"]:
+        if "?" in line and re.search(r"\blink\b", line, re.IGNORECASE):
+            hard.append("„Link“ in einer Frage: die Sache wird zugesendet, kein Link im Schlusssatz")
+    if mail.get("dealsupply"):
+        for name in PLACEHOLDER.findall("\n".join([subject, body] + mail["sig"] + mail["tail"])):
+            if not KNOWN_PLACEHOLDER.fullmatch(name):
+                hard.append(f"unbekannter Platzhalter {{{{{name}}}}}: DealSupply löst nur {{{{ai.*}}}}, {{{{lead.*}}}}, {{{{custom.*}}}} und {{{{accountSignature}}}} auf")
+        if mail["body"] and not re.match(r"^\{\{\s*ai\.hallo\s*\}\}$", mail["body"][0]):
+            hard.append("Mail beginnt nicht mit {{ai.hallo}} in einer eigenen Zeile")
+        if kind == "entry" and not re.search(r"\{\{\s*ai\.intro\s*\}\}", body):
+            hard.append("Step 1 ohne {{ai.intro}}")
+        if kind == "abschied" and not re.search(r"\{\{\s*ai\.routing\s*\}\}", body):
+            hard.append("Abschied ohne {{ai.routing}} (Routing-Absatz als Variable, kein fester Routing-Satz)")
+        if not mail["sig"]:
+            hard.append("Grußformel fehlt")
+        elif len(mail["sig"]) != 2 or not ACCOUNT_SIGNATURE.match(mail["sig"][1]):
+            hard.append("unter der Grußformel steht nicht genau {{accountSignature}} (keine Unterschrift mit Name, Rolle oder Firma)")
     if kind == "neuer winkel":
         if "?" not in body and not any(closing in low for closing in NEUTRAL_STEP3):
             hard.append("Step 3 ohne Schlussfrage: dieselbe Frage wie in Step 1 (mit dem Wort für die Sache, wo die Karte eins hat), mit einem Angebot je Lead der neutrale Schluss")
@@ -310,7 +337,7 @@ def check_subject_b(subject, kind, company_names=()):
 
 def arguments(argv):
     """Pfad der Copy-Datei, die Kurznamen aus --firma und die Sprache; None ohne gültigen Aufruf."""
-    path, names, language, rest = None, [], "de", list(argv)
+    path, names, language, rest = None, [], "de", [a for a in argv if a != "--dealsupply"]
     while rest:
         arg = rest.pop(0)
         if arg == "--firma" and rest:
@@ -341,10 +368,13 @@ def main():
         sys.exit(2)
 
     mails = parse(text)
+    # Sequenz in DealSupply: ausdrücklich mit --dealsupply, sonst erkannt an ihren Platzhaltern.
+    dealsupply = "--dealsupply" in sys.argv[1:] or bool(re.search(r"\{\{\s*(ai\.|accountSignature)", text))
     company_names += [m.group(1).strip() for m in map(KURZNAME.match, (l.strip() for l in text.splitlines())) if m]
     for mail in mails:
         mail["company_names"] = company_names
         mail["language"] = language
+        mail["dealsupply"] = dealsupply
     if not mails:
         print("Keine Mail gefunden. Erwartet werden Überschriften wie „## Step 1: Entry Mail“.")
         sys.exit(2)

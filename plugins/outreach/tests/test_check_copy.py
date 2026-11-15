@@ -29,11 +29,11 @@ Falls das gerade kein Thema für dich ist, gib mir kurz Bescheid.
 """
 
 
-def run(text: str) -> tuple[int, str]:
+def run(text: str, *flags: str) -> tuple[int, str]:
     with tempfile.TemporaryDirectory() as folder:
         path = Path(folder) / "copy.md"
         path.write_text(text, encoding="utf-8")
-        done = subprocess.run([sys.executable, "-I", str(SCRIPT), str(path)], capture_output=True, text=True)
+        done = subprocess.run([sys.executable, "-I", str(SCRIPT), str(path), *flags], capture_output=True, text=True)
     return done.returncode, done.stdout + done.stderr
 
 
@@ -50,8 +50,26 @@ def main() -> None:
     assert "steht außerhalb der Entry Mail" in out, out
     assert code == 1, out
 
-    code, out = run("## Step 1\nBetreff: kurze Frage\n\n" + BODY.replace("{{ai.hallo}}", "Hallo Max,").replace("{{ai.intro}}", "{{Intro}}"))
+    # Werkzeugneutrales Format des Copy-Kerns: Anrede als Text, {{Intro}}, Unterschrift mit Name.
+    neutral = BODY.replace("{{ai.hallo}}", "Hallo Max,").replace("{{ai.intro}}", "{{Intro}}").replace("{{accountSignature}}", "Jonas Weber")
+    code, out = run("## Step 1\nBetreff: kurze Frage\n\n" + neutral)
     assert "keine Anrede am Anfang" not in out and code == 0, out
+
+    # Sequenz in DealSupply: das Beispiel besteht, die typischen Fehler fallen auf.
+    example = (SCRIPT.parents[1] / "references" / "beispiel-sequenz.md").read_text(encoding="utf-8")
+    example = "## Step 1" + example.split("## Step 1", 1)[1]  # ohne den Vorspann, der die Platzhalter nur nennt
+    code, out = run(example, "--dealsupply")
+    assert code == 0 and "0 Fehler, 0 Hinweise" in out, out
+    for broken, expected in [
+        (example.replace("{{ai.hallo}}", "Hallo {{firstName}},", 1), "unbekannter Platzhalter {{firstName}}"),
+        (example.replace("{{accountSignature}}", "Jonas Weber\nInhaber", 1), "nicht genau {{accountSignature}}"),
+        (example.replace("{{accountSignature}}", "{{sender.firstName}}", 1), "unbekannter Platzhalter {{sender.firstName}}"),
+        (example.replace("{{ai.routing}}", "Sag mir gern kurz Bescheid, falls ich mich besser bei jemand anderem melden sollte."), "Abschied ohne {{ai.routing}}"),
+        (example.replace("wenn ich es dir morgen zusende?", "wenn ich dir morgen den Link dazu schicke?"), "„Link“ in einer Frage"),
+        (example.replace("{{ai.intro}}\n\n", "", 1), "Step 1 ohne {{ai.intro}}"),
+    ]:
+        code, out = run(broken, "--dealsupply")
+        assert code == 1 and expected in out, (expected, out)
     print("OK")
 
 
