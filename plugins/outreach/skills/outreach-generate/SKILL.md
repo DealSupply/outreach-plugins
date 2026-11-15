@@ -240,6 +240,9 @@ Gibt vollen Generierungs-Context zurück. Bei bereits kontaktierten Leads (Konta
 - `qualification` — Urteil DIESER Kampagne (status, fitLevel, category, summary, completedAt, snapshot); in einer anderen Kampagne qualifizierte Leads zeigen hier ein leeres Urteil
 - `research` (text, bestEmail, decisionMaker, contactRecommendation)
 - `customAttributes` (key-value Paare)
+- `websiteFacts` (ab MCP 4.17.0; `null`, solange das Konto die Fakten nicht sieht): was der Quelltext der Startseite zeigt (`checked`, `system`, `shop`, `tracking`, `tagManager`, `careerLink`). `checked: false` heißt nicht gelesen, nie „nichts gefunden“. Neutral verwenden, ohne Defizit-Ton; Tracking und Pixel sind nie Aufhänger einer Mail
+- `companyFacts` (ab MCP 4.17.0; `null`, solange nichts bekannt ist): `employeeCount` und `foundedYear`, je mit `value`, `source` und `approximate` (bei einer Spanne `upTo`). Ein Wert mit `approximate: true` steht nie als genaue Zahl in einer Mail
+- `googleReviews` (ab MCP 4.16.0), `googlePlaceId`, `googleCid` und `personKey` (gesetzt bei einem Lead aus der Personensuche, sonst `null`)
 - `emailGeneration.systemPrompt` — Der aufgelöste System-Prompt
 - `emailGeneration.language` — Sprache der Variablen (`de` | `en`, ab MCP 4.7.0); bei `en` ist `salutationRule` die englische Anrede-Regel
 - `emailGeneration.salutation` / `salutationRule` / `campaignContext` — Ansprache und Kampagnenkontext

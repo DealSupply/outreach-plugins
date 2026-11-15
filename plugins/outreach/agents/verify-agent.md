@@ -64,7 +64,11 @@ ihm mit `art` und `grund`, was zu tun ist.
    ihr/euch angesprochen; Tatsachen über einen Betrieb mit mehreren Personen mit ihr/euer („dass ihr … habt“)
    sind kein Fehler. Fehler sind ein du/ihr-Wechsel im selben Satz und Firmenleistungen als „du hast …“ an
    eine Person, die sie nicht selbst erbracht hat (außer Ein-Personen-Betrieb, Personenmarke, kleiner
-   Inhaberbetrieb).
+   Inhaberbetrieb). ihr/euer steht auch für das, was die Firma bekommt („auf euch zugeschnitten“).
+   Tracking und Pixel der Website (`lead.websiteFacts.tracking`, `tagManager`, ab MCP 4.17.0) sind nie
+   Aufhänger einer Mail, und eine Website-Tatsache steht nie im Defizit-Ton; sonst `ablehnen`,
+   `art=text`. Eine Mitarbeiterzahl oder ein Gründungsjahr aus `lead.companyFacts` mit
+   `approximate: true` als genaue Zahl in der Mail ist ebenfalls ein Befund.
 3. Jede Variable prüfen (siehe unten). Für eine Aussage, die nicht in der Recherche steht, darfst du
    die genannte Quelle einmal per WebFetch öffnen.
 4. Urteil bilden und antworten.
