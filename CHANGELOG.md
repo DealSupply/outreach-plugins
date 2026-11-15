@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-11-15 – outreach 0.9.0, datenbeschaffung 0.5.1, fulfillment 0.1.6 (benötigt MCP 4.16.0 für Budget in Credits und Fortsetzen nach einem Budget-Stopp)
+
+Kampagnen entstehen wie in der App, Läufe und Urteile folgen dem Server, und das Produkt heißt überall DealSupply (DS-231, DS-232, DS-233). Was neuer ist als MCP 4.15.0, nutzen die Skills nur, wenn `ping` 4.16.0 oder höher meldet; auf älteren Servern gelten die bisherigen Regeln.
+
+**outreach**
+- `outreach-campaign`, `outreach-copy` → Neue Kampagnen bekommen wie in der App die Variable `routing` (Routing-Absatz im Abschied, Prompt wörtlich aus dem Server, je Sprache und Anrede) und enden in jeder Mail mit der Grußformel und `{{accountSignature}}`; nach Name, Rolle oder Firma für eine Unterschrift wird nicht mehr gefragt. Der `intro`-Prompt trägt nur noch, was für die Kampagne gilt, die allgemeinen Opener-Regeln legt der Server dazu.
+- `outreach-campaign` → `edit_campaign` läuft zuerst ohne `confirm_overwrite`: Nur so sagt der Server, ob die Mails schon nach Instantly übertragen sind. Dann wird vor dem Ersetzen ausdrücklich gefragt.
+- `outreach-copy` (SKILL, `references/`, `kern/`) → feste Angebotssätze und Beispiele wie in der App; `kern/check_copy.py --sprache en` kennt die englische Grußformel und Anrede.
+- `outreach-pipeline` → Budget eines Server-Laufs als Betrag in Credits (`budget_credits`, ab MCP 4.16.0), `capped_by` nennt den Grund einer Kappung, gekappte Leads bleiben offen im Lauf. Ein Lauf, der am Budget stoppt, wird mit neuem Budget fortgesetzt (`resume_lead_run`, Angebot vorher über `quote_lead_run` mit `lead_run_id`) statt neu gestartet. Neue Ablehnungen `budget_too_low`, `budget_used_up`, `billing_mode_changed`. Bei eigenem OpenRouter-Key deckelt `budget_usd` den Lauf. Vor MCP 4.16.0 wird `budget_credits` nie gesendet.
+- `outreach-pipeline`, `outreach-abo-lauf` → Google-Bewertungen (`google_reviews`, ab MCP 4.16.0) sind ein fester Schritt des Server-Laufs; im Abo-Lauf nutzt der `lead-agent` Bewertungen, die schon am Lead liegen.
+- `outreach-research`, `lead-agent` → Die Recherche schreibt das Berichtsformat des Servers (neu `references/berichtsformat.md`); der Mail-Block wird erst nach der Recherche geladen (`get_lead_data` mit `stage`).
+- `outreach-qualify`, `lead-agent` → Urteile als offener Vorfilter, kein Urteil aus den Importdaten allein, aussortierte Leads nach geänderten Kriterien nur mit Zustimmung neu urteilen.
+- `outreach-verify`, `verify-agent`, `lead-agent` → Anker-Rangfolge und Plural erst ab drei Rezensionen wie der Server; `markWritten: satz_zu_lang` ist ein Befund; ein `routing`, das bei zwei angeschriebenen Personen die andere als Alternative nennt, wird abgelehnt.
+- `outreach-lists` → `check_leads_exist` hat einen gemeinsamen Deckel je Trefferliste; `lead_mutation_busy` bei `delete_list` (ab MCP 4.16.0): kurz warten und wiederholen.
+- `outreach-launch` → DealSupply als Produktname; die Checkliste erwartet die Signatur im Versandpostfach; neue Ansprache versendeter Leads auch direkt über `start_lead_run(reset_contacted=true)`, nur nach Zustimmung.
+- `outreach-setup` → Wer bisher nur über Akquise in die App kam, meldet sich zuerst dort an und verbindet danach im selben Browser. In Claude Code heißt die mitgebrachte Verbindung `plugin:outreach:dealsupply`.
+- `outreach-update` → Schritte für Claude Code bei einer alten Version (Marketplace und Plugin aktualisieren, Auto-Update einschalten, mehrere Profile, alte Quelle); ältere Verbindungen vor der Prüfung entfernen.
+- Live-Ansicht → erkennt die mitgebrachte Verbindung auch unter ihrem Namen in Claude Code; ein Lauf kommt auch aus `budget_exhausted` zurück.
+- README, `outreach-setup` → abgestimmt auf MCP 4.16.0. Leads finden, Personensuche und ähnliche Firmen führen die Skills noch nicht.
+
+**datenbeschaffung**
+- DealSupply als Produktname in allen Skills und Referenzen; die Referenz `listm8-mcp.md` heißt jetzt `dealsupply-mcp.md`.
+- `dealsupply-mcp.md` → gemeinsamer Deckel bei `check_leads_exist`; `delete_list` ab MCP 4.16.0 behält Leads mit laufendem Job oder offener E-Mail-Suche und meldet `lead_mutation_busy`.
+- `datenbeschaffung-update` → Schritte für Claude Code wie in `outreach-update`.
+
+**fulfillment**
+- Beschreibung des Plugins: Die Seite wird nicht auffindbar veröffentlicht, der Link am Lead gespeichert.
+- `fulfillment-update` → Schritte für Claude Code wie in `outreach-update`.
+
 ## 2026-11-10 – outreach 0.8.0 (benötigt ListM8 MCP 4.15.0 für „Angebot je Lead“)
 
 „Angebot je Lead“ folgt dem freigegebenen Wortlaut und der Nummerierung der App (DS-195, Server DS-206). Plugin und Server kommen im selben Release: Ein Server vor 4.15.0 zählt das Haupt-Angebot als letzte Nummer, dort legt das Plugin nur noch Kampagnen mit einem Angebot für alle an.

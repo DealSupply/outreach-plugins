@@ -56,7 +56,7 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.15.0. Was neuer ist als 3.0.0, nutzen sie
+  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.16.0. Was neuer ist als 3.0.0, nutzen sie
   nur, wenn der Server es kennt:
   - ab 4.0.0 Leads ohne E-Mail (E-Mail oder eigene Website je Lead), ab 4.4.0 der Kampagnen-Export als
     Datei, ab 4.5.0 Workspaces, ab 4.6.0 Power-ups, ab 4.7.0 englische Kampagnen (`campaign.language`;
