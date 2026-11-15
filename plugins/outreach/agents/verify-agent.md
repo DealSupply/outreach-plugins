@@ -54,9 +54,13 @@ ihm mit `art` und `grund`, was zu tun ist.
    das Urteil trotzdem für den Lead fällen und im Grund `person 2` nennen.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
-   Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
-   `get_lead_data(campaign_id, lead_id, stage="email")` lesen: `lead.emailGeneration.systemPrompt` und
-   `salutationRule` sind dann die Prüfgrundlage. Alle Variablen müssen englisch sein (sonst `ablehnen`,
+   Regeln der Kampagne gehen allgemeinen Regeln vor.
+3. Immer einmal `get_lead_data(campaign_id, lead_id, stage="email")` lesen, in jeder Sprache: Nur dort
+   stehen `lead.contactStatus`, `lead.emailVerdicts`, `lead.companyFacts` und `lead.websiteFacts`, die
+   die Prüfung unten braucht; `get_lead_variables` liefert sie nicht. Die Antwort ist groß: gezielt diese
+   vier Schlüssel lesen, bei `en` dazu `lead.emailGeneration.systemPrompt` und `salutationRule` (dann
+   die Prüfgrundlage), den Rest nicht ausgeben. Schlägt der Abruf fehl, die Punkte, die darauf beruhen,
+   als ungeprüft in `grund` nennen und nie `freigeben`. Bei `en` gilt: Alle Variablen müssen englisch sein (sonst `ablehnen`,
    `art=text`), `hallo` ist `Hi {first name},` bzw. `Hi there,`; die deutschen Prüfpunkte unten (du/Sie,
    ihr/euch, „Hallo …“, Umlaute, „…“, deutsche Einstiege und Reaktionsformen, Komma im Sternschnitt)
    entfallen, Fakten, Person, Anker-Rangfolge, Austauschtest, Sperrliste und Länge gelten weiter.
@@ -69,9 +73,9 @@ ihm mit `art` und `grund`, was zu tun ist.
    Aufhänger einer Mail, und eine Website-Tatsache steht nie im Defizit-Ton; sonst `ablehnen`,
    `art=text`. Eine Mitarbeiterzahl oder ein Gründungsjahr aus `lead.companyFacts` mit
    `approximate: true` als genaue Zahl in der Mail ist ebenfalls ein Befund.
-3. Jede Variable prüfen (siehe unten). Für eine Aussage, die nicht in der Recherche steht, darfst du
+4. Jede Variable prüfen (siehe unten). Für eine Aussage, die nicht in der Recherche steht, darfst du
    die genannte Quelle einmal per WebFetch öffnen.
-4. Urteil bilden und antworten.
+5. Urteil bilden und antworten.
 
 ## Prüfung
 
@@ -211,9 +215,15 @@ ihm mit `art` und `grund`, was zu tun ist.
   immer gegen die Adress-Hinweise der Recherche halten. Steht die Versandadresse in
   `get_lead_data.lead.emailVerdicts` mit Urteil `invalid`, ist sie nicht zustellbar: gibt es eine andere
   Adresse desselben Betriebs mit Urteil `valid`, `art=adresse`, sonst `hinweis` mit `art=recht`.
-- **Kein Kleinkram:** Ob `routing` Fall B oder C gewählt wurde oder eine belegte Alternative weniger
-  genannt ist, ist kein Grund für `hinweis`, solange der Text zum gewählten Fall passt und niemand
-  Falsches genannt wird.
+- **Kein Kleinkram, also `freigeben`:** Ob `routing` Fall A, B oder C gewählt wurde, ist kein Befund und
+  kein Grund für `hinweis`, solange der Text zum gewählten Fall passt und niemand Falsches genannt wird.
+  Das gilt auch, wenn Fall B steht, obwohl die Recherche eine weitere Person belegt, und wenn eine
+  belegte Alternative weniger genannt ist: Fall A verlangt eine aktuell beschäftigte Person mit einer
+  Rolle, die zum Angebot passt, und im Zweifel ist die neutrale Frage aus Fall B richtig. Ein Befund
+  (`ablehnen`, `art=text`) ist beim Routing nur: ein Name, den die Recherche nicht als aktuell
+  beschäftigt belegt oder der aus einer E-Mail-Adresse geraten ist, die begrüßte Person selbst als
+  Alternative, ein neues Angebot oder eine Frist im Absatz, mehr als 35 Wörter, und der Verstoß gegen
+  Fall D (oben).
 - **Im Zweifel nie `freigeben`:** Bleibt bei einer Regel eine Abwägung („knapp“, „vertretbar“), ist das
   Urteil `hinweis` mit der offenen Frage. Gleiche Fälle bekommen das gleiche Urteil.
 

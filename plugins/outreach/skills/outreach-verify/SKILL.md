@@ -9,7 +9,7 @@ description: Use when user says "outreach:verify", "mcp:verify", "verify emails"
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`: Workspace kennen, `workspace` nur bei Aufrufen ohne Objekt-ID mitgeben, vor jedem Schreiben oder Lauf den Workspace nennen.
 
-Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen via MCP Business Tools. Claude reviewt jede Variable, gibt qualifizierte Variablen frei (`approve_lead_variables`) oder lehnt unbrauchbare ab (`reject_lead_variables`). Behebbare Fehler werden dabei direkt nachgebessert und gegengeprüft, statt sie dem Nutzer vorzulegen.
+Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen via MCP Business Tools. Claude prüft jede Variable und fällt je Lead ein Urteil (freigeben, ablehnen, hinweis). Standard ist der Modus „nur Urteil“: Es wird nichts geschrieben. Erst im Modus „entscheiden“, nachdem der Nutzer die Urteile gesehen hat, werden Leads freigegeben (`approve_lead_variables`) oder abgelehnt (`reject_lead_variables`). Behebbare Fehler werden nur nach Zustimmung des Nutzers nachgebessert und danach gegengeprüft.
 
 > **Hinweis zur Parallelisierung:** Wenn dein Client parallele Subagents unterstützt (z.B. Claude Code), spawne pro Lead einen Subagent wie beschrieben. Andernfalls arbeite die Leads **sequentiell** mit exakt denselben Schritten ab — das Ergebnis ist identisch, nur langsamer.
 
@@ -273,15 +273,17 @@ Zeige Batch-Report:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Batch {batch_nr}/{total_batches} abgeschlossen
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Verarbeitet: {processed}/{total_leads} Leads
-Freigegeben: {approved_count} | Abgelehnt: {rejected_count} | Fehler: {error_count}
+Modus: {nur Urteil | entscheiden}
+Geprüft: {processed}/{total_leads} Leads
+Urteile: freigeben {freigeben_count} | ablehnen {ablehnen_count} | hinweis {hinweis_count} | Fehler: {error_count}
+Geschrieben (nur im Modus „entscheiden“): approved {approved_count} | rejected {rejected_count}
 Verbleibend: {remaining}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### Phase 5: Nächster Batch oder Abschluss
 
-Wenn `remaining > 0`: Zurück zu Phase 2 (nächster list_leads Aufruf).
+Wenn `remaining > 0`: Zurück zu Phase 2. Im Modus „entscheiden“ der nächste `list_leads`-Aufruf (entschiedene Leads fallen aus der Auswahl). Im Modus „nur Urteil“ ändert sich kein Status: die Leads einmal laden, die IDs behalten und mit `offset` weitergehen, sonst kommt derselbe Batch wieder.
 
 Wenn `remaining == 0` oder keine Leads mehr: Zeige Abschluss-Report:
 ```
@@ -289,10 +291,18 @@ Wenn `remaining == 0` oder keine Leads mehr: Zeige Abschluss-Report:
 MCP Verify abgeschlossen
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Kampagne: {campaign.name} (ID: {campaign.id})
-Gesamt verarbeitet: {total_processed} Leads
-Freigegeben: {total_approved} | Abgelehnt: {total_rejected} | Fehler: {total_errors}
-Status: Freigegebene Leads auf "approved" gesetzt (ready für CSV-Export; mit Auto-Push auf dem Weg nach Instantly)
-        Abgelehnte Leads auf "rejected" gesetzt (nicht im Export; siehe Hinweis)
+Modus: {nur Urteil | entscheiden}
+Gesamt geprüft: {total_processed} Leads
+Urteile: freigeben {total_freigeben} | ablehnen {total_ablehnen} | hinweis {total_hinweis} | Fehler: {total_errors}
+
+Im Modus „nur Urteil“:
+Status: Nichts geschrieben, kein Lead ist freigegeben oder abgelehnt. Die Urteile sind ein Vorschlag.
+        Nächster Schritt: Urteile ansehen, dann „entscheiden“ und, wenn gewünscht, nachbessern.
+
+Im Modus „entscheiden“:
+Status: {total_approved} Leads auf "approved" gesetzt (ready für CSV-Export; mit Auto-Push auf dem Weg nach Instantly)
+        {total_rejected} Leads auf "rejected" gesetzt (nicht im Export; siehe Hinweis)
+        {total_hinweis} Leads mit Hinweis unverändert: Die Entscheidung liegt beim Nutzer.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -410,7 +420,7 @@ Success-Response:
 
 ## Wichtige Hinweise
 
-1. **Voll autonom** — Keine Rückfragen während der Review. Durchlaufen bis fertig.
+1. **Zwischen den Rückfragen durchlaufen:** Gefragt wird vor dem Start (Batch-Größe, Modus), nach den Urteilen (entscheiden? nachbessern?) und vor jeder Freigabe. Innerhalb eines Batches keine Rückfragen je Lead.
 2. **{batch_size}er-Batches** — {batch_size} Leads pro Batch (vom User gewählt, Default 10, Maximum 200).
 3. **Parallel** — Alle Agents eines Batches gleichzeitig spawnen (ein Message-Block).
 4. **Idempotent** — Freigegebene/abgelehnte Leads tauchen nicht mehr in list_leads(`pending_review`) auf.

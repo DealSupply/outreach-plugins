@@ -51,7 +51,7 @@ Englisch:
 
 ## Die drei Fassungen des Prompts
 
-Wörtlich aus der App, Stand v4.20.0 (15.11.2026, zeichengleich mit dem Server geprüft). Wer keine MCP-Prompts lesen kann, nimmt die Fassung von hier. Im Blueprint steht der Text
+Wörtlich aus der App, Stand App v4.20.0 (MCP 4.22.0), am 15.11.2026 zeichengleich mit dem Server geprüft. Wer keine MCP-Prompts lesen kann, nimmt die Fassung von hier. Im Blueprint steht der Text
 als `prompt` der Variable `routing`, mit Zeilenumbrüchen als `\n` und `"` als `\"`.
 
 ### Deutsch, `salutation: "du"` (`prompts/shared/routing.md`)
