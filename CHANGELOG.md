@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-15 – outreach 0.10.2 (benötigt MCP 4.16.0 für Leads finden und die Personensuche)
+
+Nachbesserungen an den beiden Such-Skills nach einem Probelauf. Kein neues Werkzeug.
+
+**outreach**
+- `outreach-leads-finden` → Branchen mit mehreren Wortformen suchen (Tätigkeit, Beruf, englisch) und verwandte Branchen zusammen ins Angebot nehmen. Ob ein Budget für das ganze Gebiet reicht, sagt der Skill nach `limits.whole_areas` und den Zahlen, mit Budget nur als Schätzung. Hinweis `estimate_from_start_values`. Erste Statusabfrage nach etwa 10 Sekunden. `merged` erklärt: ein weiterer Standort derselben Firma ist berechnet, aber kein eigener Lead. Nach `cap_reached` Weitersuchen anbieten, ohne weitere Betriebe zu versprechen. Klarer: Stadt oder Postleitzahl, Parameter weglassen statt leer senden, `start_arguments` Feld für Feld übergeben.
+- `outreach-personensuche` → neuer Abschnitt, wie man sucht: breit anfangen, Branche oder Stichworte, für die Leitung alle fünf Führungsebenen statt eines Jobtitels, Jobtitel in beiden Sprachen. Vorgehen bei wenigen oder keinen Treffern: Zahlen aus `loosened` nennen, einen Lockerungsschritt vorschlagen, den Nutzer entscheiden lassen, das Gewerbe nie stillschweigend weglassen. Treffer vor dem Angebot auf Plausibilität ansehen. Bei `people.max` 0 kein Angebot zur Zustimmung und kein Start. Orte: nur den genau passenden Eintrag, `key` gehört nicht in den Filter, `exclude` ist nie Pflicht. `website_only` sortiert erst bei der Übernahme aus; `count` zählt in der Reihenfolge der Trefferliste.
+
 ## 2026-11-15 – outreach 0.10.1, datenbeschaffung 0.5.2 (benötigt MCP 4.17.0 für Website-Fakten und Firmenfakten)
 
 Die Skills folgen dem Server bis MCP 4.22.0 in allem, was noch fehlte (DS-107, DS-108, DS-109, DS-180, DS-237, DS-239, DS-244). Neues nutzen sie nur, wenn `ping` die Version meldet.
