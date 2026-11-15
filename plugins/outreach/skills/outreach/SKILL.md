@@ -1,6 +1,6 @@
 ---
 name: outreach
-description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“, „wie viele Credits habe ich“, „Guthaben“, „freie Plätze“, „Credits nachkaufen“, „Close“, „CRM“, „was ist in Close“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter. Enthält die Workspace-Regel, die alle Outreach-Skills befolgen.
+description: Einstieg für alles rund um Outreach-Kampagnen. Verwenden bei „outreach“, „was kann ich hier machen“, „wo fange ich an“, „Kampagne starten“, „Hilfe zu Outreach“, „woher bekomme ich Leads“, „wie viele Credits habe ich“, „Guthaben“, „freie Plätze“, „Credits nachkaufen“, „Close“, „CRM“, „was ist in Close“ oder wenn unklar ist, welcher Outreach-Skill passt. Fragt kurz nach dem Ziel und leitet an den passenden Skill weiter. Enthält die Workspace-Regel, die alle Outreach-Skills befolgen.
 ---
 
 # Outreach – Einstieg
@@ -22,6 +22,9 @@ passenden Skill. Dazu hält er die Workspace-Regel, auf die alle Outreach-Skills
 | eine Kampagne anlegen oder ändern | `outreach-campaign` |
 | mit dem Start-Satz aus der App eine Kampagne einrichten („Richte mit outreach die Kampagne #123 ein.“) | `outreach-campaign`, Ablauf „Genannte leere Kampagne füllen“: genau diese Kampagne füllen, nie eine neue anlegen |
 | Cold-Mail-Copy schreiben oder prüfen, ein Marketing-Offer formulieren | `outreach-copy` |
+| neue lokale Betriebe als Leads finden, nach Branche und Gebiet über Google Maps („Leads finden“, „Friseure in Freiburg“) | `outreach-leads-finden` (ab MCP 4.16.0): Angebot zeigen, nach Zustimmung starten, Stand abfragen, an eine Kampagne übergeben |
+| Entscheider in Firmen finden, nach Rolle, Branche, Größe und Ort („Personensuche“, „Geschäftsführer finden“), und ihre E-Mail-Adressen suchen | `outreach-personensuche` (ab MCP 4.16.0): blättern kostet nichts, Übernahme und E-Mail-Suche je nach Zustimmung zum Angebot |
+| Stand einer laufenden Suche nach neuen Leads, weitersuchen, abbrechen | `outreach-leads-finden` bzw. `outreach-personensuche` |
 | Leads importieren (CSV, Liste) | `outreach-import` |
 | Listen ansehen, anlegen, in eine Kampagne übernehmen | `outreach-lists` |
 | Leads qualifizieren | `outreach-qualify` |
@@ -32,7 +35,7 @@ passenden Skill. Dazu hält er die Workspace-Regel, auf die alle Outreach-Skills
 | einen Abo-Lauf direkt ausführen oder fortsetzen („Abo-Lauf“, „im Abo“, „ohne Server“, „als Workflow“) | `outreach-abo-lauf` |
 | Leads einer Kampagne als Excel oder CSV herunterladen (Freigaben, für Instantly, fürs CRM) | `outreach-export` |
 | Versand vorbereiten: Domains, Postfächer, Warm-up, Instantly, Auswertung | `outreach-launch` |
-| neue Leads beschaffen (Apify, Outscraper) | `datenbeschaffung` – gehört zum Plugin **datenbeschaffung**; ist es nicht installiert, auf `outreach-setup` verweisen |
+| neue Leads mit eigenem Konto bei Apify oder Outscraper beschaffen | `datenbeschaffung` – gehört zum Plugin **datenbeschaffung**; ist es nicht installiert, auf `outreach-setup` verweisen |
 | prüfen, welches Offer sich mit KI liefern lässt, oder für einen Lead, der geantwortet hat, die versprochene Demo bauen (Webseiten-Entwurf, SEO, Anzeigen, Leadliste, Muster-Kampagne) | `fulfillment` – gehört zum Plugin **fulfillment**; ist es nicht installiert: `/plugin install fulfillment@outreach-plugins` (Claude Code) bzw. im Marketplace installieren |
 | Guthaben, Credits, Preise, Limits, freie Plätze im Account, Nachkauf | kein eigener Skill: direkt `get_credit_balance` (nur lesend) aufrufen und erklären, siehe unten |
 | eine in der App eingerichtete Kampagne freigeben (`setup_state: open`, `start_lead_run` meldet `setup_open`) | `outreach-campaign`, Schritt „Freigeben“: `release_campaign` nur nach ausdrücklichem Ja (ab MCP 4.9.0) |
@@ -84,6 +87,10 @@ Stufe; beides gilt für alle Kampagnen.
 ## Regeln
 
 - Nichts Kostenpflichtiges starten, ohne dass der Nutzer genau diesen Umfang freigibt.
+- Für alles, was Credits kostet, gilt dieselbe Reihenfolge: erst das Angebot holen (`quote_…`), es dem
+  Nutzer zeigen, auf sein Ja zu genau diesem Angebot warten, erst dann starten. Das gilt für Server-Läufe
+  (`quote_lead_run`), Leads finden (`quote_prospect_search`), die Übernahme von Personen
+  (`quote_people_import`) und die E-Mail-Suche (`quote_people_email_search`).
 - Kennt der Nutzer sein Ziel nicht, zuerst eine Frage: „Willst du eine neue Kampagne aufsetzen,
   Leads verarbeiten oder neue Leads beschaffen?“
 
@@ -101,7 +108,9 @@ Workspace, auch der Bestand für den Dubletten-Abgleich.
    Importieren und Anlegen, etwa `list_campaigns`, `search_leads`, `list_lists`, `list_lead_runs`,
    `export_leads`, `check_leads_exist`, `import_leads`, `create_campaign`, `create_list`,
    `get_credit_balance` und `mark_leads_contacted` mit E-Mail-Adressen. Ohne Angabe laufen sie im
-   Standard-Workspace. Eine unbekannte uuid lehnt der Server mit `workspace_not_found` ab.
+   Standard-Workspace. Dasselbe gilt für `quote_prospect_search`, `start_prospect_search` ohne
+   `search_id`, `list_prospect_searches` und `create_people_search`; Werkzeuge mit `search_id` laufen im
+   Workspace der Suche. Eine unbekannte uuid lehnt der Server mit `workspace_not_found` ab.
 3. **Aufrufe mit Objekt-ID** (`campaign_id`, `lead_id`, `lead_ids`, `list_id`, `lead_run_id`,
    `job_id`) nie mit `workspace`, auch nicht `import_leads` oder `export_leads` mit `list_id`: Sie
    laufen von selbst im Workspace des Objekts. Passen Angabe und Objekt nicht zusammen, lehnt der
