@@ -203,12 +203,14 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 - [ ] intro: max. 2 Sätze, erster Buchstabe klein, weitere Sätze groß?
 - [ ] intro: ausschließlich positiv (Lob/anerkennende Beobachtung), über den Empfänger, kein Problem benannt?
 - [ ] intro: keine verbotenen Wörter/Formen („Lücke", „Hürde", „Problem", „leider", „schade", „noch nicht", „fehlt", „begrenzt", „veraltet", „ausbaufähig", „verschenkt Potenzial", Konjunktiv-Wunsch, Ratschlag, Selbstvorstellung/Pitch, Floskel wie „bin auf eure Webseite gestoßen")?
-- [ ] intro: Anker nach Rangfolge (Lob aus Bewertungstexten als Paraphrase, Plural nur bei mindestens 2 tragenden Bewertungen > abhebendes Website-Detail > Anzahl und Schnitt nur ab 30 Bewertungen und 4,5, gerundet, mit Komma, bei Widerspruch der kleinere Wert > Fallback); Stellenanzeige als Erkenntnis über den Betrieb, nicht als „du suchst“; zweiter Satz konkret und ohne Vorwegnahme des festen Texts; nichts, das einer anderen Person gehört, der angeschriebenen Person zugeschrieben?
+- [ ] intro: Anker nach der Rangfolge des Servers (1. Anzahl und Schnitt mit ein oder zwei Worten zum Inhalt, nur ab 30 Bewertungen und 4,5 und mit belegtem Lob, ohne Schluss > 2. Lob aus Bewertungstexten als Paraphrase, Plural oder „immer wieder“ nur, wenn mindestens drei Rezensionen dieses Lob tragen > 3. abhebendes Website-Detail > 4. Anzahl und Schnitt allein, gleiche Schwellen, gerundet, mit Komma, bei Widerspruch der kleinere Wert > 5. Fallback; bei mehreren tragenden Ankern der mit Bezug zum Angebot); Stellenanzeige als Erkenntnis über den Betrieb, nicht als „du suchst“; zweiter Satz konkret und ohne Vorwegnahme des festen Texts; nichts, das einer anderen Person gehört, der angeschriebenen Person zugeschrieben?
 - [ ] intro: Schluss nach der Rangfolge (hinter Kundenlob, Auszeichnung oder lobendem festem Folgesatz keiner, doppeltes Lob ist ein Befund; sonst eine kurze, schlichte Reaktion in der Vergangenheit direkt hinter dem benannten Detail, die es nicht wiederholen muss; eine Würdigung nur ausnahmsweise mit etwas Neuem, eine Folgerung „das zeigt, wie …“ oder Gutachten-Ton ist ein Befund; ein fehlender Schluss ist keiner), kein Mechanik-Nutzen („so können sich Interessierte vorab ein Bild machen“), kein leeres Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ohne Floskel oder Superlativ ohne Detail und ohne Erfundenes (nicht beim Fallback-Satz)? Die Reaktion schlägt der Server je Lead aus einer festen Liste vor: Wiederholungen über die Kampagne sind erwartet und kein Befund; gleich lautende Würdigungen und Mechanik-Nutzen (etwa „Interessierte können sich vorab orientieren“ bei Bewertungszahlen) sind einer.
 - [ ] intro: besteht den Austauschtest (passt nicht auf zehn andere Betriebe derselben Branche in der Stadt) und nennt nichts von der Sperrliste der Kampagne außer als Bewertungslob, oder ist wörtlich der Fallback-Satz aus dem Prompt?
 - [ ] Keine Frage, kein Ausrufezeichen, kein Link, keine sichtbaren Platzhalter ([…], {{…}}) in hallo/intro?
 - [ ] Schließt der feste Folgesatz der Entry-Mail („Genau deshalb …" / „Deswegen war ich so frei …") flüssig an, und bleibt die Entry-Mail mit diesem intro unter 120 Wörtern?
 - [ ] Nur bei „Angebot je Lead“ (Mail 1 mit `offer_text`, `angebot_ausfuehrung` und `offer_cta` ohne `offerRole`): `offer_text` und `offer_cta` sind Werte des Servers (Absatz 1 und 3 des gewählten Angebots), kein Befund zum Wortlaut. `angebot_ausfuehrung` (Absatz 2) folgt der Anweisung im Prompt: genau ein Satz, höchstens 25 Wörter, nach der Regel der Karte (C beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und nennt genau ein Detail, ohne „morgen“; A im Konjunktiv, nie als erledigte Arbeit), nichts über die Lieferzusage hinaus, keine Zahl, die sie nicht nennt, auch keine aus der Recherche (Bewertung, Punkte, Jahre, Kundenzahl), nichts, was das Intro dieses Leads schon nennt (Projekt, Kunde, Produkt, Auszeichnung, Ort, Zahl), keine Frist, kein Gespräch oder Termin, keine Frage, kein Lob, keine Wiederholung von Absatz 1, keine Bedingung im Text, nichts, das nach einem Mangel des Leads klingt, und es passt zum Angebot in `offer_text`. Die Wahl folgt „WAHL DES ANGEBOTS“: ein weiteres Angebot nur, wenn seine Bedingung im `WEBSITE-BEFUND` der Recherche belegt ist („unklar“ oder nicht erwähnt zählt nicht), sonst das Haupt-Angebot (ab MCP 4.15.0 Nummer 1), bei mehreren das mit der kleinsten Nummer. Eine andere Wahl ist ein Ablehnungsgrund.
+- [ ] Trägt `angebot_ausfuehrung` die Marke `markWritten: satz_zu_lang` (mehr als 25 Wörter, unverändert gespeichert)? Dann ablehnen und neu schreiben lassen.
+- [ ] Nennt `routing` bei zwei angeschriebenen Personen (Person 2 mit eigener Mail) die andere Person als Alternative statt offen zu sagen, dass sie auch geschrieben bekam (Fall D)? Dann ablehnen.
 - [ ] Ein fester zweiter Satz in Mail 1 und eine fehlende `angebot_ausfuehrung` sind kein Befund; fehlende Werte für Varianten (`betreff_b`, zweites Intro) nur, wenn die Kampagne Tests trägt.
 
 ### Inhaltliche Korrektheit
@@ -322,7 +324,8 @@ Gibt zurück:
   - `anchorWritten`, `closingWritten` — Tags einer Intro-Variable (ab MCP 4.10.0; Anker wie `kundenstimme`, `besonderheit`, `ersatzsatz`, `rueckfall`; Schluss `reaktion`, `kein_abschluss`, `wuerdigung`), sonst `null`
   - `fallback: true` — weitere Intro-Variante (`intro_b` …) ohne eigenen Text (keine Zeile, leer, fehlgeschlagen oder wörtlich wie Variante A): `value` ist der aktuelle Text von Variante A, `anchorWritten` ist `rueckfall`. Kein fehlender Wert, kein Ablehnungsgrund
   - `notStored: true` — zusätzlich bei einem Rückfall ohne eigene Zeile
-  - `markWritten` — was der Server beim Speichern bemerkt hat, nie eine Ablehnung: `betreff_rueckfall`, `rueckfall_trotz_anker`, `gleicher_gegenstand`; sonst `null`
+  - `markWritten` — was der Server beim Speichern bemerkt hat, nie eine Ablehnung: `betreff_rueckfall`, `rueckfall_trotz_anker`, `gleicher_gegenstand`, `satz_zu_lang` (der zweite Angebotssatz `angebot_ausfuehrung` hat mehr als 25 Wörter und ist unverändert gespeichert: ein Befund für `ablehnen`, `art=text`); sonst `null`
+  - `editedByHandAt` — gesetzt, wenn jemand den Text nach dem Schreiben von Hand geändert hat
   - `offerRole`, `templateState`, `deviationReason`, `deviationConfirmedAt` — ab MCP 4.11.0 bei Angebotsblöcken: `templateState: template` ist die Vorlage des Schwerpunkts (Serverwert, kein Befund zum Wortlaut), `adapted` eine Anpassung mit Grund
 - `offerFocus` — ab MCP 4.11.0 der Schwerpunkt des Leads (`focusRank`, `focusLabel`, `fitState`, `checkSource`, `checkAnswers`, `choiceState`)
 - `secondPerson` — ab MCP 4.11.0 Person 2 (`email`, `name`, `role`, `eligibility`, `reason`, `status`, eigene `variables`) oder `null`; eine Freigabe gilt für beide Personen
@@ -335,7 +338,7 @@ Gibt zurück:
 | `campaign_id` | int | **required** | Kampagnen-ID |
 | `lead_id` | int | **required** | Lead-ID |
 
-Setzt `LeadCampaignStatus.status = approved`. Voraussetzung: mindestens eine `LeadAIVariableValue` muss existieren — sonst `variables_not_found`. Solange für die Kampagne ein Lauf mit E-Mail-Stufe aktiv ist, lehnt das Tool mit `lead_run_active` ab.
+Setzt `LeadCampaignStatus.status = approved`. Voraussetzung: mindestens eine `LeadAIVariableValue` muss existieren — sonst `variables_not_found`. Gesperrt ist nur der einzelne Lead: `email_generation_active`, solange sein E-Mail-Job wartet oder läuft, `lead_run_active`, solange ein aktiver Lauf seine Mail noch schreibt. Die anderen Leads der Kampagne bleiben freigebbar.
 
 Success-Response:
 ```json
@@ -356,7 +359,7 @@ Success-Response:
 | `lead_id` | int | **required** | Lead-ID |
 | `reason` | string | **required** | Ablehnungsgrund (non-empty) |
 
-Setzt `LeadCampaignStatus.status = rejected`. `reason` wird nur im Logger-Audit-Trail festgehalten (leadId, campaignId, userId, reason). Leerer `reason` => `validation_failed`; ohne erzeugte Werte `variables_not_found`; bei aktivem E-Mail-Lauf `lead_run_active`.
+Setzt `LeadCampaignStatus.status = rejected`. `reason` wird nur im Logger-Audit-Trail festgehalten (leadId, campaignId, userId, reason). Leerer `reason` => `validation_failed`; ohne erzeugte Werte `variables_not_found`; solange ein aktiver Lauf die Mail dieses Leads noch schreibt `lead_run_active` bzw. `email_generation_active` (nur dieser Lead).
 
 Success-Response:
 ```json

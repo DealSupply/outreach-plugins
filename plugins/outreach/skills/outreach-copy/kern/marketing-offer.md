@@ -30,15 +30,17 @@ vorbereiten lassen, dass nach einer Antwort 5-10 Minuten eigene Arbeit bleiben.
 
 ## Die 5 bewährten Offer-Karten
 
-| Karte | Beispiel | Wann |
-|:------|:---------|:-----|
-| **A: Kostenlose Teildienstleistung** | „Kostenlose Recruiting-Anzeige“, „Kostenloses Google Ads Setup“ | Standard, funktioniert in 80 % der Fälle. Im Zweifel diese |
-| **B: Tester gesucht / Pilotprojekt** | „Wir suchen 3 Unternehmen für ein KI-Pilotprojekt“ | neues Produkt, wenig Referenzen, Exklusivität als Narrativ |
-| **C: Konkretes Deliverable (Reziprozität)** | „2-3 CVs passender Fachkräfte“, „Video mit 3 Hebeln“, „Website-Entwurf“ | kleine Zielgruppe, hohe Reply Rate nötig. Höchste Reply Rate, mehr Aufwand pro Lead |
-| **D: Förder-Hook** | „Der Staat zahlt bis zu 100 % der Weiterbildung“ | Absender hat förderfähige Produkte |
-| **E: Partner gesucht** | „Wir suchen Küchenstudios als Partner“ | Nischen-Anbieter, Kooperation auf Augenhöhe |
+| Karte | Beispiel | Passt, wenn | Passt nicht, wenn |
+|:------|:---------|:------------|:------------------|
+| **C: Konkretes Deliverable (Reziprozität)** | „2-3 CVs passender Fachkräfte“, „Video mit 3 Hebeln“, „Website-Entwurf“ | das Ergebnis zum einzelnen Lead passt und mit KI in 5 bis 10 Minuten Nutzerzeit bis morgen lieferbar ist | es je Lead mehr Zeit braucht oder nicht bis morgen lieferbar ist (dann A) |
+| **A: Kostenlose Teildienstleistung** | „Kostenlose Recruiting-Anzeige“, „Kostenloses Google Ads Setup“ | die Teilleistung nach der Antwort lieferbar ist, vorab für jeden Lead aber zu aufwendig | sich das Ergebnis je Lead schon bis morgen mit KI erstellen lässt (dann C) oder die Leistung ein Gespräch, eine Analyse oder ein Audit ist |
+| **E: Partner gesucht** | „Wir suchen Küchenstudios als Partner“ | der Absender nachweislich regelmäßig Anfragen für die Zielgruppe hat | es keinen Beleg für echte Anfragen gibt |
+| **B: Tester gesucht / Pilotprojekt** | „ein Pilotprojekt zur Neukundengewinnung“ | das Angebot neu ist, mit wenigen Referenzen und echt begrenzten Plätzen | das Angebot schon breit läuft oder die Plätze nicht wirklich begrenzt sind (künstliche Knappheit) |
+| **D: Förder-Hook** | „Der Staat zahlt bis zu 100 % der Weiterbildung“ | der Absender Programm und Quote nennt oder seine Website sie nennt | Programm oder Quote nicht belegt sind |
 
-Wähle GENAU EINE Karte und begründe die Wahl in einem Satz.
+Empfohlen ist genau eine Karte: C, wenn das Ergebnis je Lead mit KI in 5 bis 10 Minuten Nutzerzeit
+bis morgen lieferbar ist, sonst A. E nur mit Beleg für regelmäßige Anfragen, B nur bei echt
+begrenzten Plätzen, D nur mit Beleg. Wähle GENAU EINE Karte und begründe die Wahl in einem Satz.
 
 ## Offer-Qualitäts-Check
 
@@ -101,7 +103,7 @@ sich zu verpflichten.
 | Baustein | Vorlage |
 |:---------|:--------|
 | Betreff | „kurze Frage“ |
-| Überleitung + Offer | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [konkretes Deliverable] an.“ |
+| Überleitung + Offer | „Genau deshalb bieten wir aktuell für eine Handvoll [Empfänger] in [Region] [konkretes Deliverable] an.“ (eine Anzahl nur, wenn die Lieferzusage sie trägt) |
 | Zweiter Satz | Pflicht, eigener Absatz, fest: „Darin wäre alles genau auf euch zugeschnitten.“ (Sie: „Darin wäre alles genau auf Sie zugeschnitten.“); mit einem Angebot je Lead im Konjunktiv, was für diesen Lead konkret drin wäre, nie als erledigte Arbeit |
 | CTA | „Wäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.“ (Sie: „… das auch für Sie erstelle? …“) |
 
@@ -116,7 +118,7 @@ Dringlichkeit, aber nur, wenn die Plätze wirklich begrenzt sind.
 | Baustein | Vorlage |
 |:---------|:--------|
 | Betreff | „kurze Frage“ |
-| Überleitung + Offer | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
+| Überleitung + Offer | „Genau solche [Empfänger] suchen wir gerade. Wir starten [Pilotprojekt] mit einer Handvoll [Empfänger] in [Region].“ |
 | Zweiter Satz | Pflicht, eigener Absatz, fest: „Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“ (Sie: „Im Pilot bekommen Sie das kostenlos, dafür bräuchten wir nur ehrliches Feedback.“) |
 | CTA | „Wärst du grundsätzlich offen dafür?“ (Sie: „Wären Sie grundsätzlich offen dafür?“) |
 
@@ -128,7 +130,7 @@ Feinheiten macht man nach der Antwort.
 | Baustein | Vorlage |
 |:---------|:--------|
 | Betreff | „kurze Frage“ (nie „Website für …“; ist das Buchungssystem der Kern: „Frage zur Terminbuchung“) |
-| Überleitung + Offer | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
+| Überleitung + Offer | „Deswegen war ich so frei und habe dir [Deliverable] erstellt.“ |
 | Feinheiten-Satz | Pflicht, eigener Absatz, fest: „Ich bin gerade noch an den letzten Feinheiten dran.“ (Sie gleich); mit einem Angebot je Lead je Lead geschrieben: beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und nennt genau ein Detail des schon Erstellten, grammatisch vollständig (z. B. „an der …“), ohne „morgen“ |
 | CTA | „Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.“ (Sie: „… es Ihnen morgen zusende? …“; mit Wort für die Sache: „… wenn ich dir morgen den Entwurf zusende? …“; nie „Link“) |
 
@@ -148,7 +150,7 @@ Extrem stark, weil „der Staat zahlt“ ein unschlagbares Argument ist.
 | Baustein | Vorlage |
 |:---------|:--------|
 | Betreff | „kurze Frage“ |
-| Überleitung + Offer | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?“ Nennt der Nutzer Träger oder Programm, steht er statt „der Staat“ („das Land Baden-Württemberg“). |
+| Überleitung + Offer | „Wusstest du, dass der Staat aktuell bis zu [Quote] der Kosten für [Leistung] übernimmt?“ Nennt der Nutzer Träger oder Programm, steht er statt „der Staat“ („das Land Baden-Württemberg“). |
 | Zweiter Satz | entfällt |
 | CTA | „Wäre es in Ordnung, wenn ich dir kurz aufschreibe, welches Programm für dich infrage kommt? Völlig unverbindlich natürlich.“ (Sie: „… wenn ich Ihnen kurz aufschreibe, welches Programm für Sie infrage kommt? …“) |
 
@@ -162,7 +164,7 @@ Kein Verkauf, sondern Kooperation auf Augenhöhe: „Wir haben Kunden, die zu di
 | Baustein | Vorlage |
 |:---------|:--------|
 | Betreff | „kurze Frage“ |
-| Überleitung + Offer | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ |
+| Überleitung + Offer | „Genau solche [Empfänger] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ |
 | Zweiter Satz | entfällt |
 | CTA | „Wäre das grundsätzlich interessant?“ (gleich für Sie) |
 

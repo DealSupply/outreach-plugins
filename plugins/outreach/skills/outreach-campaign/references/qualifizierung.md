@@ -27,7 +27,7 @@
   Research-Aufgaben — bei Bedarfs-Offers ist die „schlechte" Website sogar das Verkaufsargument.
   Ebenso nie:
   - was nur das System weiß (Kontaktsperre, Bestandskunde, bereits angeschrieben): Das regelt
-    der Kontaktstatus in ListM8, nie der Kampagnentext;
+    der Kontaktstatus in DealSupply, nie der Kampagnentext;
   - der Bedarf, den das Angebot löst: Kein Ausschlussgrund schließt ihn aus („Praxis ohne
     Website“ bei einem Website-Angebot);
   Umgekehrt gehört hinein, wenn der Betrieb schon hat, was das Angebot liefert: Enthält das Angebot

@@ -1,7 +1,7 @@
 # Launch, Nachtelefonieren und Optimierung
 
 > Referenz zu `outreach-launch`. Versand, Antworten und Telefonate laufen beim Kunden in
-> Instantly bzw. im eigenen Postfach, nicht in ListM8. Bei einem Widerspruch zu `outreach-copy`
+> Instantly bzw. im eigenen Postfach, nicht in DealSupply. Bei einem Widerspruch zu `outreach-copy`
 > gilt `outreach-copy`, bei einem Widerspruch zur `SKILL.md` von `outreach-launch` gilt diese.
 
 ## Grundhaltung
@@ -12,12 +12,12 @@ Und beide werden regelmäßig übersprungen. Deshalb hat die Hälfte der „Cold
 
 ## Kampagne einrichten (in Instantly)
 
-1. [ ] Neue Kampagne erstellen, oder aus ListM8 heraus anlegen und verknüpfen (Reiter „Instantly" der ListM8-Kampagne)
-2. [ ] Leads übernehmen: Push der freigegebenen Leads aus ListM8 (manuell oder per Auto-Push) oder CSV-Export aus ListM8 hochladen
-3. [ ] Sequenz einrichten (Entry Mail + 3 FUPs — die vier Steps aus der Kampagne; alle im Thread von Step 1, nur Step 1 mit Betreff): per Sequenz-Übertragung aus ListM8 oder von Hand
-4. [ ] Nur wenn Tests gewählt sind (für Erfahrene, standardmäßig aus): Die Varianten von Mail 1 kommen mit der Sequenz-Übertragung aus ListM8 mit (Betreff-Test als B, Intro-Test als nächste Variante). Ohne gewählte Tests entfällt der Punkt, eine einzige Fassung von Mail 1 ist richtig. Eine erneute Sequenz-Übertragung ersetzt die Sequenz in Instantly nach Bestätigung, von Hand angelegte Varianten also mit
+1. [ ] Neue Kampagne erstellen, oder aus DealSupply heraus anlegen und verknüpfen (Reiter „Instantly" der DealSupply-Kampagne)
+2. [ ] Leads übernehmen: Push der freigegebenen Leads aus DealSupply (manuell oder per Auto-Push) oder CSV-Export aus DealSupply hochladen
+3. [ ] Sequenz einrichten (Entry Mail + 3 FUPs — die vier Steps aus der Kampagne; alle im Thread von Step 1, nur Step 1 mit Betreff): per Sequenz-Übertragung aus DealSupply oder von Hand
+4. [ ] Nur wenn Tests gewählt sind (für Erfahrene, standardmäßig aus): Die Varianten von Mail 1 kommen mit der Sequenz-Übertragung aus DealSupply mit (Betreff-Test als B, Intro-Test als nächste Variante). Ohne gewählte Tests entfällt der Punkt, eine einzige Fassung von Mail 1 ist richtig. Eine erneute Sequenz-Übertragung ersetzt die Sequenz in Instantly nach Bestätigung, von Hand angelegte Varianten also mit
 5. [ ] Alle 10 Sender-Accounts der Kampagne zuweisen
-6. [ ] Schedule: Mo-Fr, 09:00-17:00 mitteleuropäische Zeit (so legt ListM8 die Kampagne an, bleibt so)
+6. [ ] Schedule: Mo-Fr, 09:00-17:00 mitteleuropäische Zeit (so legt DealSupply die Kampagne an, bleibt so)
 7. [ ] Daily limit der Kampagne: Postfächer mal 30 (300 bei 10 Inboxen); am Postfach Daily campaign limit 30 und Campaign slow ramp an
 8. [ ] Open Tracking und Link Tracking aus, keine Links in den Mails (Ausnahme: wer Öffner in den ersten Minuten anruft)
 
@@ -40,10 +40,10 @@ Die Kampagne bekommt deshalb gleich 300 als Tageslimit; die Treppe macht Instant
 - [ ] Warmup läuft seit mind. 14 Tagen, Health Score über 90 %, am besten 98 bis 100 %
 - [ ] Campaign slow ramp an allen Postfächern an, Daily campaign limit 30, Tracking aus
 - [ ] E-Mails verifiziert (Bounce Rate Prognose unter 3 %)
-- [ ] AI-Opener der ersten 40 Mails manuell geprüft (rund 20 Minuten Lesezeit; in ListM8 im Review bzw. mit `outreach-verify`)
+- [ ] AI-Opener der ersten 40 Mails manuell geprüft (rund 20 Minuten Lesezeit; in DealSupply im Review bzw. mit `outreach-verify`)
 - [ ] Betreff nach `outreach-copy`: Step 1 mit 2-5 Wörtern, kein Spam-Wort, Firmenname nur als `{{ai.firma}}` (nie `{{lead.company}}`, nie `{{firstName}}`), Step 2, 3 und 4 ohne Betreff (Thread von Step 1)
 - [ ] Variablen korrekt gemappt (Variablen-Zuordnung im Reiter „Instantly" vollständig, sonst blockiert der Push; Vorschau mit einem freigegebenen Lead angesehen)
-- [ ] Sperrliste geladen: Kontaktstatus in ListM8 aktuell (`do_not_contact`, bereits Kontaktierte) und Blockliste in Instantly gepflegt
+- [ ] Sperrliste geladen: Kontaktstatus in DealSupply aktuell (`do_not_contact`, bereits Kontaktierte) und Blockliste in Instantly gepflegt
 - [ ] Feste Abmeldezeile unter der Signatur von Step 1 und 3 (Wortlaut in `outreach-copy`, Abschnitt „Anatomie der Entry-Mail“), kein „STOPP“ und keine Opt-out-Fachsprache, List-Unsubscribe-Header aktiv
 
 Der wichtigste Punkt ist die Stichprobe der AI-Opener. Wenn dort mehr als 8 von 40 durchfallen, wird nicht gestartet, sondern der Prompt nachgeschärft: Ablehnungen mit Begründung (`reject_lead_variables`, dazu `set_lead_email_feedback`), Prompt-Änderung über `outreach-campaign` (`update_ai_variable`; erzeugte Werte bleiben stehen, die betroffenen Leads neu zu generieren kostet erneut und nur mit ausdrücklicher Zustimmung).
@@ -97,7 +97,7 @@ Das Zielband aus der Kampagnen-Vorlage sind 4-6 % Reply Rate und eine Bounce Rat
 
 Review-Rhythmus: 30 Minuten pro Woche, ab Woche 4. Einzelne Tage sagen nichts - Reply Rates schwanken stark, Antworten kommen verzögert, und Follow-Ups tragen einen großen Teil der Ergebnisse. Bewertet wird pro Woche.
 
-Die Zahlen kommen aus Instantly. Mit verbundener Instantly-Integration zeigt ListM8 zusätzlich Kontaktiert, Antworten und Opportunities aus dem Kontaktstatus-Sync; diese Werte zählen pro Lead global (ein Lead in mehreren Kampagnen zählt in jeder), für den Wochen-Review gilt deshalb die Instantly-Statistik.
+Die Zahlen kommen aus Instantly. Mit verbundener Instantly-Integration zeigt DealSupply zusätzlich Kontaktiert, Antworten und Opportunities aus dem Kontaktstatus-Sync; diese Werte zählen pro Lead global (ein Lead in mehreren Kampagnen zählt in jeder), für den Wochen-Review gilt deshalb die Instantly-Statistik.
 
 Zur Beschwerdequote: Sie ist die einzige Zahl in der Tabelle, bei der ein Wert über der Schwelle unmittelbar die Zustellung aller Domains betrifft, nicht nur die Ergebnisse einer Kampagne. Getrieben wird sie fast immer von Copy und Zielgruppe - irreführende Betreffzeilen, ein Offer, das die Mail nicht hält, oder Empfänger, für die die Mail keinen Sinn ergibt.
 
@@ -164,7 +164,7 @@ Wenn nach 200 Mails pro Variante kein Unterschied erkennbar ist, sind die Varian
 
 Zwei Grundregeln: Ein Abmeldewunsch gilt dauerhaft und über alle Kampagnen und Postfächer hinweg. Und niemand diskutiert mit einem verärgerten Empfänger - das kostet nur Zeit und treibt die Beschwerdequote.
 
-Die zentrale Sperrliste ist in ListM8 der Kontaktstatus `do_not_contact`: Solche Leads schließt ListM8 von allen AI-Läufen, Kampagnen und Pushes aus. Der Kontaktstatus-Sync der Instantly-Integration übernimmt Bounces und Abmeldungen aus Instantly automatisch als `do_not_contact` (Antworten als `replied`, Interessierte als `opportunity`). Gesperrt wird zusätzlich von Hand mit `mark_leads_contacted(emails=[…], status="do_not_contact")`, sobald eine Abmeldung per Antwort, Telefon oder Brief kommt. Ohne Instantly-Integration auch kontaktierte Leads so nachtragen (`status="contacted"`), damit niemand doppelt angeschrieben wird.
+Die zentrale Sperrliste ist in DealSupply der Kontaktstatus `do_not_contact`: Solche Leads schließt DealSupply von allen AI-Läufen, Kampagnen und Pushes aus. Der Kontaktstatus-Sync der Instantly-Integration übernimmt Bounces und Abmeldungen aus Instantly automatisch als `do_not_contact` (Antworten als `replied`, Interessierte als `opportunity`). Gesperrt wird zusätzlich von Hand mit `mark_leads_contacted(emails=[…], status="do_not_contact")`, sobald eine Abmeldung per Antwort, Telefon oder Brief kommt. Ohne Instantly-Integration auch kontaktierte Leads so nachtragen (`status="contacted"`), damit niemand doppelt angeschrieben wird.
 
 ## Erwartungsmanagement
 

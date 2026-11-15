@@ -42,6 +42,9 @@ const origins = atom({ plugin: 'outreach', key: 'origins' } as const, {})
 const frame = atom({ plugin: 'outreach', key: 'frame' } as const, 0)
 const folded = atom({ plugin: 'outreach', key: 'folded' } as const, false)
 let configuredServer = 'dealsupply'
+/** Claude Code names a server this plugin brings along (.mcp.json) plugin_outreach_<name>. */
+const PLUGIN_SERVER_PREFIX = 'plugin_outreach_'
+const isConfigured = (server: string) => server === configuredServer || server === PLUGIN_SERVER_PREFIX + configuredServer
 let poller: { cancel: () => void } | null = null
 const missedRounds = new Map<string, number>()
 let spinner: { cancel: () => void } | null = null
@@ -93,16 +96,16 @@ const refreshServers = async ($: EngineInterface) => {
 const recognize = async ($: EngineInterface, tool: string): Promise<Recognized | null> => {
   const parsed = parseTool(tool)
   if (parsed === null || !OUR_TOOLS.has(parsed.name)) return null
-  if (parsed.server === configuredServer) return parsed
+  if (isConfigured(parsed.server)) return parsed
   if (!knownServers.has(parsed.server)) await refreshServers($)
   return knownServers.get(parsed.server) === true ? parsed : null
 }
 
-/** Every server recognised now, the configured one included. */
+/** Every server recognised now; when none of them is the configured one, both of its names are tried. */
 const outreachServers = async ($: EngineInterface): Promise<string[]> => {
   await refreshServers($)
   const found = [...knownServers].filter(([, ok]) => ok).map(([srv]) => srv)
-  return found.includes(configuredServer) ? found : [...found, configuredServer]
+  return found.some(isConfigured) ? found : [...found, PLUGIN_SERVER_PREFIX + configuredServer, configuredServer]
 }
 
 type El = ReturnType<EngineInterface['ui']['resolve']>
@@ -971,10 +974,14 @@ const statusCommand = async ($: EngineInterface, e: { args?: string }) => {
   await update($, folded, () => false)
   let active = 0
   let reached = 0
+  let configuredAnswered = false
   for (const server of await outreachServers($)) {
+    // The configured server under its second name only when the first gave no answer.
+    if (configuredAnswered && isConfigured(server)) continue
     try {
       const listed = await call($, server, 'list_lead_runs', { active_only: true })
       reached += 1
+      if (listed !== null && isConfigured(server)) configuredAnswered = true
       if (listed !== null) active += await putActiveRuns($, listed, server)
     } catch {
       // Not connected: the others may still answer.
@@ -1092,7 +1099,7 @@ export const register: Register = (on, options) => {
       if (listed !== null) await putActiveRuns($, listed, server)
       return ran
     }
-    // resume_lead_run brings a credits_exhausted run back: putRun keeps the view before, the band asks again.
+    // resume_lead_run brings a credits_exhausted or budget_exhausted run back: putRun keeps the view before, the band asks again.
     const isRun = name === 'start_lead_run' || name === 'resume_lead_run' || name === 'get_lead_run_status' || name === 'cancel_lead_run'
     if (!isRun) return ran
     const payload = payloadOf(ran.result)

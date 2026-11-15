@@ -1,12 +1,12 @@
 # Outreach-Übergabe — vom Scrape in die App
 
 > Der EINE Übergabe-Ablauf. `listen-qualitaet` führt ihn aus; kein Weg-Skill implementiert ihn selbst.
-> Voraussetzung: ListM8-MCP verbunden (Tools `check_leads_exist`, `create_list`, `import_leads`,
-> `get_job_status`, `add_leads_to_campaign`, `export_leads`; Signaturen in `listm8-mcp.md`).
+> Voraussetzung: DealSupply-MCP verbunden (Tools `check_leads_exist`, `create_list`, `import_leads`,
+> `get_job_status`, `add_leads_to_campaign`, `export_leads`; Signaturen in `dealsupply-mcp.md`).
 > Ohne MCP: CSV-Weg über die Oberfläche am Ende. Gescrapt wird beim Kunden mit eigenem Apify- oder
-> Outscraper-Konto; ListM8 importiert nur das fertige Ergebnis.
+> Outscraper-Konto; DealSupply importiert nur das fertige Ergebnis.
 > Workspace: Index, Prüfung, Liste und Import laufen im selben, gewählten Workspace; außerhalb des
-> Standards bekommen Aufrufe ohne Objekt-ID `workspace=<uuid>` (Regel: `listm8-mcp.md`, Abschnitt
+> Standards bekommen Aufrufe ohne Objekt-ID `workspace=<uuid>` (Regel: `dealsupply-mcp.md`, Abschnitt
 > „Workspace“).
 
 ## Der Ablauf (E2E-verifiziert am 19.08.2026)
@@ -48,7 +48,7 @@ check_leads_exist(emails=[...], domains=[...])     # bis 1.000 Einträge je Call
 ```
 
 Im selben Workspace wie der Index. E-Mails aller Zeilen mit Adresse und die Domains aller Zeilen
-ohne Adresse prüfen (ab ListM8 MCP 4.0.0). Für eine Zeile ohne E-Mail ist ein Domain-Treffer mit
+ohne Adresse prüfen (ab MCP 4.0.0). Für eine Zeile ohne E-Mail ist ein Domain-Treffer mit
 `match_kind: website_identity` derselbe Lead (wird nur verlinkt); `company_known` heißt „Firma
 bekannt“ (Warnung, kein Ausschluss). Liefert der Server kein `match_kind` (älterer Server,
 Teilstring-Vergleich), selbst nachprüfen: derselbe Lead nur, wenn der Host der `website` des
@@ -72,10 +72,10 @@ mit ihrer `list_id` landet dann von selbst dort, ohne `workspace`.
 
 ### 3. Import in die Liste
 
-**Kernfelder:** Jede Zeile braucht eine gültige `email` **oder** eine eigene `website` (ab ListM8
-MCP 4.0.0; Profil-Links wie Instagram oder Linktree zählen nicht, Baukasten-Subdomains schon). Fehlt
+**Kernfelder:** Jede Zeile braucht eine gültige `email` **oder** eine eigene `website` (ab MCP
+4.0.0; Profil-Links wie Instagram oder Linktree zählen nicht, Baukasten-Subdomains schon). Fehlt
 die E-Mail, das Feld weglassen. Ältere Server verlangen die E-Mail in jeder Zeile und lehnen sonst
-den ganzen Aufruf ab (`listm8-mcp.md`, Versionsprüfung).
+den ganzen Aufruf ab (`dealsupply-mcp.md`, Versionsprüfung).
 
 **WICHTIG — was ohne Mapping verloren geht:** `import_leads` kennt als Kernfelder nur
 `email`, `company`, `website`, `phoneNumber`, `city`, `status`. Die Google-Spalten aus

@@ -23,7 +23,7 @@ gilt diese SKILL.md.
 
 ## Kampagnensprache
 
-Jede Kampagne hat eine Sprache (`campaign.language`, ab ListM8-MCP 4.7.0): `de` (Standard) oder
+Jede Kampagne hat eine Sprache (`campaign.language`, ab MCP 4.7.0): `de` (Standard) oder
 `en`. Bei der Generierung steht sie in `get_lead_data` → `emailGeneration.language`. Fehlt das
 Feld (älterer Server), ist die Kampagne deutsch.
 
@@ -32,7 +32,7 @@ Feld (älterer Server), ist die Kampagne deutsch.
   Deutschen übersetzen. Die deutschen Sprachregeln dieses Skills (du/Sie, Anführungszeichen „…“,
   Umlaute, deutsche Beispielsätze und Reaktionsformen) gelten dort nicht. Stattdessen:
   - Anrede `Hi {first name},` (nur Vorname, ohne du/Sie); ohne benennbare Person `Hi there,`.
-  - Grußformel `Best,` über der Signatur.
+  - Grußformel `Best,` über `{{accountSignature}}`.
   - Betreff klein, 2–5 Wörter: Mail 1 `quick question`; Mail 2 bis 4 ohne Betreff im Thread von Mail 1.
   - Der Opener beginnt groß.
   - Die Reaktion im Opener ist ein eigener kurzer Satz oder ein „which“-Nebensatz, nie Komma plus
@@ -120,14 +120,14 @@ bzw. „deine Praxis“.
   Geschäftsführer einer Firma als Entscheider nennt. Ist keine Person klar erkennbar, steht nur
   „Hallo,“. Die Sie-Form geht analog mit Herr/Frau und Nachname, Fallback
   „Guten Tag,“; nie „Guten Tag Herr/Frau Nachname,“; ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18). Beide Personen einer Firma grüßen in derselben Form,
-  sobald ihre Anrede belegt ist (ListM8 macht aus „Guten Tag Herr Schneider,“ „Hallo Herr Schneider,“).
+  sobald ihre Anrede belegt ist (DealSupply macht aus „Guten Tag Herr Schneider,“ „Hallo Herr Schneider,“).
 - NIE „Hallo Herr/Frau Nachname,“ zusammen mit Du-Text (`du`), nie „Hallo <Firma> Team,“ oder
   „Hallo zusammen,“, nie „Hey …“, nie Sie und du gemischt.
 - Die Anrede kommt immer aus `{{ai.hallo}}`. Kein `{{firstName}}`, kein `{{companyName}}`, kein
   `{{custom.vorname}}` direkt in Betreff oder Body: Es gibt kein Vornamen-Feld, und ein leeres
   Attribut ergibt „Hallo ,“. Liegt der Vorname als Custom-Attribut aus dem Import vor (Schlüssel
   zeigt `get_lead_data` unter `customAttributes`), nennt der `hallo`-Prompt ihn als Quelle.
-- Titel („Dr.“) nur in der Sie-Form und nur, wenn er belegt ist.
+- Keine Titel („Dr.“, „Prof.“), auch nicht in der Sie-Form (wie der Anrede-Prompt der App).
 
 ## Schritt 1: Offer-Typ wählen
 
@@ -135,16 +135,47 @@ Der Marketing-Offer ist nicht die Dienstleistung des Nutzers, sondern der Türö
 konkrete, greifbare Ding, das den Erstkontakt trägt. Wähle GENAU EINE Karte und begründe die
 Wahl dem Nutzer in einem Satz.
 
-| Karte | Wann | Überleitung (statisch, für alle Leads gleich) |
+Empfohlen ist genau eine Karte, nach derselben Regel wie in der App: **C**, wenn das Ergebnis je Lead
+mit KI in 5 bis 10 Minuten Nutzerzeit bis morgen lieferbar ist, **sonst A**. E nur, wenn der Absender
+belegt regelmäßig Anfragen für die Zielgruppe hat, B nur bei einem neuen Angebot mit echt begrenzten
+Plätzen, D nur mit Beleg. C, A, E und B stehen immer zur Wahl, auch wenn sie nicht empfohlen sind; D
+ohne Beleg passt nicht.
+
+| Karte | Passt, wenn | Passt nicht, wenn |
 |---|---|---|
-| A: Kostenlose Teildienstleistung | Standard, funktioniert in 80 % der Fälle. Im Zweifel diese. | „Genau deshalb bieten wir aktuell für [Anzahl] Unternehmen in [Region] ein kostenloses [Deliverable] an.“ |
-| B: Tester/Pilotprojekt | Neues Produkt, wenig Referenzen, Exklusivität als Narrativ | „Genau solche Unternehmen suchen wir gerade. Wir starten [Projekt] mit [Anzahl] Betrieben in [Region].“ |
-| C: Konkretes Deliverable (Reziprozität) | Kleine Zielgruppe, hohe Reply Rate nötig. Höchste Reply Rate, mehr Aufwand pro Lead. | „Deswegen war ich so frei und habe [Deliverable] für dich erstellt.“ |
-| D: Förder-Hook | Nutzer hat förderfähige Produkte | „Wusstest du, dass der Staat aktuell bis zu [Prozent] der [Kosten] übernimmt?“ (nennt der Nutzer Träger oder Programm, steht er statt „der Staat“: „das Land Baden-Württemberg“) |
-| E: Partner gesucht | Nischen-Anbieter, Kooperation auf Augenhöhe | „Genau solche [Branche] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ |
+| C: Konkretes Deliverable (in der App „Schon erledigte Vorarbeit“) | das Ergebnis zum einzelnen Lead passt und mit KI in 5 bis 10 Minuten Nutzerzeit bis morgen lieferbar ist | es je Lead mehr als 5 bis 10 Minuten Nutzerzeit braucht oder nicht bis morgen lieferbar ist (dann A) |
+| A: Kostenlose Teildienstleistung („Kostenlose Teilleistung“) | die Teilleistung nach der Antwort lieferbar ist, vorab für jeden Lead aber zu aufwendig | sich das Ergebnis je Lead schon bis morgen mit KI erstellen lässt (dann C) oder die Leistung ein Gespräch, eine Analyse oder ein Audit ist |
+| E: Partner gesucht | der Absender nachweislich regelmäßig Anfragen für die Zielgruppe hat | es keinen Beleg für echte Anfragen gibt |
+| B: Tester/Pilotprojekt („Pilotprojekt“) | das Angebot neu ist, mit wenigen Referenzen und echt begrenzten Plätzen | das Angebot schon breit läuft oder die Plätze nicht wirklich begrenzt sind (künstliche Knappheit) |
+| D: Förder-Hook („Förderung“) | der Nutzer Programm und Quote nennt oder seine Website sie nennt | Programm oder Quote nicht belegt sind: eine Förderquote zu nennen wäre geraten |
+
+Die Überleitung (der Angebotssatz) ist für alle Leads gleich und steht wörtlich wie in der App:
+
+| Karte | du | Sie |
+|---|---|---|
+| C | „Deswegen war ich so frei und habe dir [Deliverable] erstellt.“ | „Deswegen war ich so frei und habe Ihnen [Deliverable] erstellt.“ |
+| A | „Genau deshalb bieten wir aktuell für eine Handvoll [Empfänger] in [Region] [Deliverable] an.“ | gleich |
+| B | „Genau solche [Empfänger] suchen wir gerade. Wir starten [Pilotprojekt] mit einer Handvoll [Empfänger] in [Region].“ | gleich |
+| D | „Wusstest du, dass [Träger] aktuell bis zu [Quote] der Kosten für [Leistung] übernimmt?“ | „Wussten Sie, dass …“ |
+| E | „Genau solche [Empfänger] suchen wir als Partner. Wir haben regelmäßig [Anfragen], die zu dir passen würden.“ | „… die zu Ihnen passen würden.“ |
+
+Englisch: C “So I went ahead and put together [deliverable] for you.”, A “That's exactly why we're
+currently offering [deliverable] to a handful of [recipients] in [region].”, B “That's exactly the kind
+of [recipients] we're looking for right now. We're launching [pilot project] with a handful of them in
+[region].”, D “Right now, businesses like yours can get up to [rate] of the cost of [service] covered
+through [funder].”, E “That's exactly the kind of [recipients] we're looking for as partners. We
+regularly get [inquiries] that would be a great fit for you.”
 
 Die Klammern füllst du beim Schreiben der Sequenz aus den Angaben des Nutzers; im fertigen Text
-steht keine Klammer mehr. Pronomen an die `salutation` anpassen (Standard `du`: dir/dich/dein).
+steht keine Klammer mehr. [Empfänger] ist die Zielgruppe im Plural („Praxen“, ohne Angabe
+„Betriebe“), [Region] die Region (ohne Angabe „deiner Region“, Sie „Ihrer Region“). Es heißt „eine
+Handvoll“, nie eine erfundene Anzahl; eine Anzahl („20 Firmen“) nur, wenn die Lieferzusage des
+Nutzers sie trägt. [Träger] nennt Programm oder Träger, wie der Nutzer sie schreibt („das Land
+Baden-Württemberg“), ohne Angabe „der Staat“; [Quote] die belegte Quote ohne „bis zu“ („50 %“), das
+„bis zu“ steht schon im Satz. [Deliverable], [Pilotprojekt] und [Anfragen] passen grammatisch in die
+Lücke: bei B ohne eigenes „mit“ und ohne Wort aus dem Satz drumherum („starten“, „Handvoll“), bei E
+ohne „regelmäßige“ und ohne eigenen Relativsatz, Anfragen von Kunden der Empfänger, nie von den
+Empfängern selbst.
 
 Das Offer muss ALLE drei Punkte erfüllen, sonst umformulieren:
 
@@ -169,7 +200,7 @@ Werbekampagnen-Struktur“, „eine Lead-Liste inklusive Outreach-Sequenz“, �
 1. Das Marketing-Offer, das der Nutzer im Gespräch selbst benennt: 1:1 übernehmen, nur
    sprachlich glätten.
 2. Sonst aus dem Angebot des Nutzers abgeleitet (seine Leistungen und Kanäle aus dem Gespräch).
-3. Sonst einen Vorschlag nach Karte A machen und vom Nutzer bestätigen lassen.
+3. Sonst einen Vorschlag nach der Empfehlungsregel (C, sonst A) machen und vom Nutzer bestätigen lassen.
 
 Regeln:
 
@@ -192,7 +223,8 @@ Feste Überleitung + Offer        3. statisch, benennt KEIN lead-spezifisches Pr
 Zweiter Satz zum Angebot         4. eigener Absatz, je Karte: A, B und C der feste
                                     Satz der Karte, D und E keiner
 EIN Frage-CTA                    5. niedrige Hürde, eigener Absatz
-Signatur im Klartext             6. Grußformel, Name, „Rolle - Firma“
+Grußformel + Signatur            6. nach zwei Leerzeilen „Viele Grüße“, darunter
+                                    {{accountSignature}}
 Abmeldezeile                     7. nach einer Leerzeile unter der Signatur (Step 1 und 3)
 ```
 
@@ -246,10 +278,10 @@ diese Regeln:
   15 bis 20 (nachzählen, ein Strichpunkt zählt mit); Pronomen gemäß `salutation`. Kein zweiter Prüf-
   oder Korrekturlauf.
 
-**Für Erfahrene: „Angebot je Lead“ (nur Karte A und C, ab ListM8-MCP 4.15.0):** Auf ausdrücklichen
+**Für Erfahrene: „Angebot je Lead“ (nur Karte A und C, ab MCP 4.15.0):** Auf ausdrücklichen
 Wunsch wählt die KI je Lead eines von bis zu vier Angeboten des Kunden (Haupt-Angebot plus höchstens
 drei weitere, je mit einer Bedingung aus den sieben Website-Merkmalen der Recherche) und schreibt den
-zweiten Absatz; Angebotssatz und Schlussfrage des gewählten Angebots setzt ListM8 ein. Es ist eine
+zweiten Absatz; Angebotssatz und Schlussfrage des gewählten Angebots setzt DealSupply ein. Es ist eine
 KI-Variable mit der abgenommenen Vorlage, keine Zusatzlogik: Mail 1 trägt an der Stelle der drei
 Sätze `{{ai.offer_text}}`, `{{ai.angebot_ausfuehrung}}` und `{{ai.offer_cta}}` in drei eigenen
 Absätzen, die Antworten der Karten stehen im Station-Block des Blueprints, und Mail 3 endet neutral
@@ -268,12 +300,12 @@ welches Programm für Sie infrage kommt? …“), E „Wäre das grundsätzlich 
 Hat die Kampagne Schwerpunkte mit einem Wort für die Sache (etwa „den Entwurf“, „das Setup“, „die
 Anzeigen“), steht es bei C an der Stelle von „es“, mit anderer Wortstellung: „Wäre es in Ordnung,
 wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“, bei A an der Stelle von
-„das“. Jede Kampagne hat außerdem ein eigenes Wort für die Sache (in ListM8 auf der Angebots-Seite unter der Schlussfrage, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3 und gilt dort, solange Mail 3 nicht das Wort des Schwerpunkts trägt (Variable `{{ai.offer_noun}}`); Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link“ im Schlusssatz (nicht „… wenn ich dir morgen den Link dazu schicke?“), die Sache
+„das“. Jede Kampagne hat außerdem ein eigenes Wort für die Sache (in DealSupply auf der Angebots-Seite unter der Schlussfrage, vom Assistenten vorgeschlagen): Es steht nur in der Frage von Mail 3 und gilt dort, solange Mail 3 nicht das Wort des Schwerpunkts trägt (Variable `{{ai.offer_noun}}`); Mail 1 behält „es“ bzw. „das“; ohne Wort nimmt Mail 3 die Frage aus Mail 1 wörtlich (06.11.2026). Kein „Link“ im Schlusssatz (nicht „… wenn ich dir morgen den Link dazu schicke?“), die Sache
 wird zugesendet. „morgen“ und „zusenden“ nur bei C, und nur, wenn der Nutzer das Deliverable nach der
 Antwort wirklich bis zum nächsten Tag liefern kann, sonst „… wenn ich es dir zusende?“. Der Zusatz
 „Völlig unverbindlich natürlich.“ senkt die Hürde und ist kein zweiter CTA. Eine Schlussfrage, die
 der Nutzer selbst bestätigt hat, gilt wörtlich. Mit „Angebot je Lead“ hat jedes Angebot seine
-eigene Schlussfrage mit seinem Wort für die Sache; ListM8 setzt die des gewählten Angebots ein
+eigene Schlussfrage mit seinem Wort für die Sache; DealSupply setzt die des gewählten Angebots ein
 (`{{ai.offer_cta}}`). Der Betreff von Step 1 ist bei jeder Karte „kurze Frage“. Kein Terminvorschlag
 und kein Link in Mail 1.
 
@@ -301,7 +333,7 @@ Wäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natü
 Karte A:
 
 ```
-Genau deshalb bieten wir aktuell für [Anzahl] Praxen in [Region] einen kostenlosen Entwurf
+Genau deshalb bieten wir aktuell für eine Handvoll Praxen in [Region] einen kostenlosen Entwurf
 für eine neue Startseite mit Online-Terminbuchung an.
 
 Darin wäre alles genau auf euch zugeschnitten.
@@ -313,14 +345,14 @@ Karte B:
 
 ```
 Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für persönliche
-Erstmails mit [Anzahl] Agenturen in [Region].
+Erstmails mit einer Handvoll Agenturen in [Region].
 
 Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.
 
 Wärst du grundsätzlich offen dafür?
 ```
 
-Karte C mit „Angebot je Lead“ (Body von Step 1, die drei Absätze setzen KI und ListM8 je Lead):
+Karte C mit „Angebot je Lead“ (Body von Step 1, die drei Absätze setzen KI und DealSupply je Lead):
 
 ```
 {{ai.hallo}}
@@ -334,17 +366,14 @@ Karte C mit „Angebot je Lead“ (Body von Step 1, die drei Absätze setzen KI 
 {{ai.offer_cta}}
 ```
 
-**Signatur:** Name, Rolle und Firma des ABSENDERS als Klartext aus den Angaben des Nutzers, z. B.
-„Viele Grüße\nAngela Selbert\nGeschäftsführerin - njoy online marketing GmbH“. Nie
-`{{sender.firstName}}`, `{{sender.company}}` o. Ä. (gibt es nicht). Ohne bekannten Absendernamen
-nur „Viele Grüße“. Schlank: keine Auszeichnungen, Links, Telefonnummern oder Social-Leisten.
-
-**Signatur aus dem Konto:** Füllt `outreach-campaign` eine Kampagne, die die App angelegt hat
-(Start-Satz „Richte mit outreach die Kampagne #… ein“, Ablauf „Genannte leere Kampagne füllen“),
-steht statt der Klartext-Signatur direkt unter der Grußformel `{{accountSignature}}`:
-„…?\n\n\nViele Grüße\n{{accountSignature}}“ (englisch „…?\n\n\nBest,\n{{accountSignature}}“). Instantly setzt dort
-die Signatur des Versandpostfachs ein. Dann nicht nach Name, Rolle und Firma fragen und keine
-Unterschrift in den Mailtext schreiben; was unter der Signatur steht, folgt unter `{{accountSignature}}`.
+**Signatur:** Jede Mail endet mit der Grußformel und direkt darunter `{{accountSignature}}`:
+„…?\n\n\nViele Grüße\n{{accountSignature}}“ (englisch „…?\n\n\nBest,\n{{accountSignature}}“).
+Beim Versand setzt Instantly dort die Signatur des Versandpostfachs ein, mit Name, Rolle und Firma
+des Absenders. Keine eigene Unterschrift mit Name, Rolle oder Firma im Mailtext, auch nicht, wenn der
+Nutzer sie nennt, und nie `{{sender.firstName}}`, `{{sender.company}}` o. Ä. (gibt es nicht). Name,
+Rolle und Firma trägt der Nutzer schlank in die Signatur jedes Versandpostfachs ein (keine
+Auszeichnungen, Links, Telefonnummern oder Social-Leisten; siehe `outreach-launch`). So schreibt es
+auch die App (Stand 10.11.2026).
 
 **Abstand vor dem Gruß:** Zwischen dem letzten Satz (der Schlussfrage) und der Grußformel stehen
 zwei Leerzeilen, eine mehr als zwischen den Absätzen; die Signatur folgt direkt unter der
@@ -395,7 +424,7 @@ MUSS:
   derselbe Satz: Der Block `SCHLUSS DES OPENERS` im System-Prompt (`emailGeneration.systemPrompt`)
   schlägt je Lead eine Form vor, als Richtung und Tonlage, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel; passt der
   Vorschlag nicht („schön“ oder „sympathisch“ hinter einer Bewertungszahl oder einem technischen
-  Detail), eine eigene bilden. Fehlt der Block (älterer Server), die Reaktion je Lead selbst variieren. Hinter einer Bewertungszahl steht immer die Reaktion.
+  Detail), eine eigene bilden. Fehlt der Block (älterer Server), die Reaktion je Lead selbst variieren. Hinter einer Bewertungszahl ohne Worte zum Inhalt steht die Reaktion, außer der Satz ist schon lang.
   Hinter Firmengeschichte, Gründung oder Alter des Betriebs heißt die Reaktion immer „das hab ich richtig gern gelesen“ (Sie-Form gleich, englisch „That was really nice to read.“), auch wenn der Vorschlag eine andere nennt; „das fand ich richtig sympathisch“ passt dort nicht (E54, 06.11.2026).
   3) Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über den Betrieb sagt,
   das nicht schon im Detail steht (Anerkennung mit Inhalt „da steckt richtig viel Handarbeit drin“,
@@ -429,16 +458,36 @@ MUSS:
   („das sieht man selten“, „beeindruckend“) (siehe Positiver Schluss). Die Formeln machen alle Opener gleich (gilt zusätzlich
   zu den übrigen Opener-Regeln). Auch in Beispielen und Prompts nie als Muster stehen lassen:
   Modelle kopieren Beispiele.
-- Anker-Rangfolge: 1) Lob aus Bewertungstexten (Paraphrase; Plural oder „immer wieder“ nur, wenn
-  mindestens 2 Bewertungen es tragen) 2) abhebendes Detail von der Website, auch Wachstum oder
-  Stellenanzeige als Erkenntnis 3) Anzahl und Schnitt der Bewertungen als eigener Anker, nur bei
-  mindestens 30 Bewertungen und einem Schnitt ab 4,5; Zahl gerundet („über 200“), Schnitt mit Komma
-  („4,8“); Werte aus dem Import (Google-Profil) gelten als Quelle, bei widersprüchlichen Quellen
-  der kleinere Wert; unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen; die Zahl kommt erst,
-  wenn weder Bewertungslob noch ein abhebendes Website-Detail besteht (eine hohe Zahl überholt keine
-  eigene Akademie und kein eigenes Verfahren), und schließt mit der Reaktion, nie mit „so können sich
-  Interessierte vorab orientieren“ 4) Fallback der Kampagne. Die Reihenfolge
-  der Kampagne hat Vorrang, wo sie etwas anderes festlegt.
+- Anker-Rangfolge (wie der Server, Block ANKER-REIHENFOLGE; den ersten Anker nehmen, der den
+  Austauschtest besteht):
+  1) Anzahl und Schnitt der Bewertungen mit ein oder zwei Worten zum Inhalt, nur bei mindestens
+  30 Bewertungen und einem Schnitt ab 4,5 und nur, wenn die Recherche ein Lob mit Inhalt belegt;
+  ohne Schluss, weil die Worte zum Inhalt selbst ein Lob sind.
+  2) Lob aus Bewertungstexten (Paraphrase), auch eine einzelne Rezension aus den letzten 18 Monaten.
+  3) Abhebendes Detail: Besonderheit, Projekt, Auszeichnung oder Geschichte, untereinander
+  gleichrangig; auch Wachstum oder Stellenanzeige als Erkenntnis.
+  4) Anzahl und Schnitt allein, ohne Worte zum Inhalt (dieselben Schwellen), mit einer Reaktion als
+  Schluss; nie vor einer Kundenstimme oder einem abhebenden Detail, auch wenn die Kampagne
+  Bewertungen zuerst nennt.
+  5) Ersatzsatz der Kampagne.
+  Legt der Prompt der Variable eine eigene Reihenfolge fest, gilt diese (mit der Ausnahme bei Rang 4).
+  **Bezug zum Angebot:** Bestehen mehrere belegte Anker, gewinnt der, der zum Angebot der Kampagne
+  passt (Hotel, Angebot für Tagungsgäste: die Rezension zum Seminarraum, nicht das Lob fürs Essen);
+  die Reihenfolge entscheidet nur unter den Ankern mit Bezug. Keinen Bezug erfinden.
+  **Plural nur ab drei:** Verallgemeinerung („immer wieder“, „viele“, „mehrere“, „oft“, Plurale wie
+  „Gäste loben“) nur, wenn mindestens drei Rezensionen genau dieses Lob tragen; bei einer oder zwei
+  steht das Lob im Singular („jemand schreibt, dass …“). Keine Anzahl der Rezensionen zu einem Lob im
+  Text („zwei Gäste“). Ein Ein-Wort-Kommentar, bloße Eigenschaftswörter („kompetent“, „freundlich“) oder
+  eine einzelne Rezension, die älter als 18 Monate ist, tragen kein Lob.
+  **Bewertungszahlen:** Anzahl genau oder abgerundet, nie zu hoch: „über“ nur, wenn die genannte Zahl
+  kleiner ist als die echte („80 Bewertungen“ bei genau 80); unter 1.000 auf die Zehnerstelle darunter
+  („über 60“ bei 63), ab 1.000 auf die Hunderterstelle („über 1.200“ bei 1.234). Schnitt mit Komma
+  („4,8“, auch „5,0“). Werte aus dem Import (Google-Profil) gelten als Quelle, bei widersprüchlichen
+  Quellen der kleinere Wert; nur unabhängige Plattformen. Reicht Google nicht (unter 30 Bewertungen
+  oder unter 4,5), dürfen Anzahl und Schnitt eines anderen Bewertungsportals stehen, mit denselben
+  Schwellen dort und dem Portal im Satz („bei Treatwell“, „bei Jameda“); reichen beide, hat Google
+  Vorrang. Hinter einer Zahl ohne Worte zum Inhalt steht die Reaktion, nie „so können sich
+  Interessierte vorab orientieren“.
 - Einstiege abwechseln, keiner ist Standard: nach der letzten Ziffer der Lead-ID 0-2 „mir ist
   aufgefallen, dass …“, 3-5 „ich hab mir … angeschaut“, 6-7 „beim Stöbern auf deiner Website …“,
   8-9 direkt mit dem Detail. Ausnahme: Ein Bewertungsanker nennt im Einstieg die Quelle (siehe
@@ -496,7 +545,7 @@ offen, wo das steht, und wirkt wie aus dem Nichts.
 Lieber Fallback als Floskel: Ein generischer Opener („deine Website macht einen professionellen
 Eindruck“) ist schlechter als der ehrliche Fallback-Satz.
 
-Hinweis: Der ListM8-Server legt beim Generieren zusätzlich eigene Intro-Regeln in den Prompt
+Hinweis: Der DealSupply-Server legt beim Generieren zusätzlich eigene Intro-Regeln in den Prompt
 (u. a. Empfänger direkt ansprechen statt „Die Praxis hat …“, keine Kunden-, Projekt-, Ergebnis-
 oder Bewertungszahlen aus Selbstangaben der Website, den Befund selbst als Lob tragen statt mit
 einer Bewertungsfloskel abzuschließen). Gründungsjahr mit seinem Ereignis und Teamgröße sind
@@ -535,7 +584,7 @@ Beide Seiten brauchen einen Beleg aus der Recherche:
 den Intro-Regeln oben. Das gilt bei fehlendem `WEBSITE-BEFUND`, bei „unklar“, wenn die Website die
 Stärke schon zeigt („ja“), wenn kein Anker trägt (dann der Fallback-Satz) und wenn die Beobachtung
 nicht zum Angebot passt. Aus dem Schweigen eines Berichts wird nie ein „nein“. Der Wert bleibt in
-der Chance-Variable und geht in Variante B hinaus; Instantly wertet nach Variante aus, ListM8 zeigt
+der Chance-Variable und geht in Variante B hinaus; Instantly wertet nach Variante aus, DealSupply zeigt
 den Anteil der Rückfälle.
 
 Was bei einer Chance-Variable von den Intro-Regeln oben abweicht (nur für ein belegtes Chance-Intro):
@@ -572,21 +621,22 @@ Beispiele (erfunden, nur Struktur, nie wörtlich übernehmen):
 mit Stärke und Beobachtung, jeden Rückfall als `"lob"`. Der Winkel ist keine Variable und steht
 nie im JSON der Variablen.
 
-## Prompts der AI-Variablen `hallo`, `intro` und `angebot_ausfuehrung`
+## Prompts der AI-Variablen `hallo`, `intro`, `routing` und `angebot_ausfuehrung`
 
-Pflicht sind genau diese zwei Variablen (`sortOrder` 1 und 2). `angebot_ausfuehrung` gibt es in
-neuen Kampagnen nur mit „Angebot je Lead“, dann zusammen mit `offer_text` und `offer_cta` direkt
-nach `intro`; mit Tests kommen `betreff_b` und das zweite Intro dazu (`references/fuer-erfahrene.md`).
+Jede neue Kampagne hat `hallo`, `intro` und `routing`, wie in der App. `angebot_ausfuehrung` gibt es
+in neuen Kampagnen nur mit „Angebot je Lead“, dann zusammen mit `offer_text` und `offer_cta` direkt
+nach `intro`; mit Tests kommen `betreff_b` und das zweite Intro dazu (`references/fuer-erfahrene.md`);
+`routing` steht zuletzt.
 Weitere sind optional (z. B.
 `proof`, `research_hook`, oder `firma` als Kurzname, wie `outreach-campaign` ihn vorsieht).
 Namen: nur `a-zA-Z0-9_`, mit Buchstaben beginnend, eindeutig. Jede Variable wird pro Lead EINMAL
 erzeugt: `{{ai.intro}}` steht deshalb NUR in Step 1; Follow-ups nutzen `{{ai.hallo}}` plus festen
-Text.
+Text; `{{ai.routing}}` steht nur im Abschied.
 
-Jeder Prompt ist eigenständig (Server-Minimum 10 Zeichen, besser ausführlich): Bei der
-Generierung sieht das Modell NUR diesen Prompt, die Lead-Daten, die Recherche und den
-Kampagnenkontext, nicht diesen Skill. Er enthält Kontext (wer schreibt, was angeboten wird, für
-wen), Ziel, Aufgabe, verbotene Formulierungen und Tonfall.
+Bei der Generierung sieht das Modell den Prompt der Variable, die Lead-Daten, die Recherche, den
+Kampagnenkontext und die Regeln, die der Server für Anrede und Opener mitgibt, nicht diesen
+Skill (Server-Minimum 10 Zeichen je Prompt). Der Prompt trägt deshalb, was für diese Kampagne gilt;
+was der Server ohnehin mitgibt, wird nicht kopiert.
 
 Der `hallo`-Prompt MUSS enthalten:
 
@@ -598,37 +648,75 @@ Der `hallo`-Prompt MUSS enthalten:
   Vornamen. Dazu das Verbot, Namen, Titel oder Rollen zu erfinden;
 - das Verbot von Platzhaltern in Klammern, Gedankenstrichen und Emojis; echte Umlaute.
 
-Der `intro`-Prompt MUSS enthalten:
+Der `intro`-Prompt enthält nur Kampagnenspezifisches, wie der Prompt der App
+(`intro-station.md`) und der Blueprint-Guide es verlangen. Die allgemeinen Opener-Regeln (Abhebung,
+Austauschtest, Anker-Reihenfolge, Bezug zum Angebot, positiver Schluss, Einstieg, Anrede, Verbote,
+Form) legt der Server zur Laufzeit dazu; sie werden NICHT in den Prompt kopiert, auch keine
+Floskel- oder Verbotslisten und keine Beispielsätze. Eine Kopie überstimmt den Server: Die
+Anker-Reihenfolge im Prompt gilt vor der des Servers, und alte Regelstände blieben in der Kampagne
+stehen. Aufbau:
 
-- Kontext: Absender, Angebot und den festen Folgesatz, an den das Intro anschließt (z. B.
-  „Deswegen war ich so frei …“);
-- die Abhebungs-Typen und den Austauschtest (zehn andere Betriebe derselben Branche in der Stadt;
-  ein Nutzen rettet keine Standardleistung), höchstens ein Gegensatzpaar aus der Branche als
-  Fund, nie als fertiger Satz;
-- die Sperrliste der Kampagne (dieselbe wie in `researchAgentConfig.additionalPrompt`);
-- die Anker-Rangfolge (Lob aus Bewertungstexten > abhebendes Website-Detail, auch Stellenanzeige
-  als Erkenntnis statt „du suchst“ > Anzahl und Schnitt > Fallback) samt Sterne-Regel: Zahlen
-  nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5, gerundet, mit Komma, Import-Werte
-  als Quelle, bei Widerspruch der kleinere Wert;
-- den positiven Schluss mit der Rangfolge (kein Schluss, wenn das Detail selbst ein Lob ist,
-  Kundenstimme oder Auszeichnung; sonst eine kurze Reaktion am Detail, je Lead wechselnd;
-  eine Würdigung nur ausnahmsweise mit etwas Neuem und Konkretem, nie „das zeigt, wie …“; nie ein
-  Mechanik-Nutzen, nie ein leeres Prüfer-Urteil) und Leitplanken (nichts erfinden, keine Floskel,
-  keine feste Wendung), ohne ausformulierte Beispiel-Schlüsse;
-- den Einstiegswechsel nach der letzten Ziffer der Lead-ID, mit Quelle im Einstieg bei
-  Bewertungsankern;
-- die Verbotsliste aus den Intro-Regeln, einschließlich der Floskeln „finde ich spannend/stark“;
-- Form: max. 2 Sätze, erster Buchstabe klein, weitere Sätze groß, über den Empfänger,
-  Pronomen gemäß `salutation`;
-- einen ausformulierten FALLBACK-Satz für den Fall, dass kein belastbares Detail gefunden wird,
-  plus die Anweisung, diesen Fallback zu nutzen statt eine Floskel zu erfinden. Der Fallback
-  behauptet nichts Unbelegtes über den Lead („so gut bewertet“, „seit Jahren“, „viele
-  zufriedene Kunden“).
+- **Kontext:** Absender (Firma), Angebot, Zielgruppe, Ansprache (du oder Sie), dazu der feste
+  Folgesatz der Mail 1, an den das Intro anschließt (z. B. „Deswegen war ich so frei …“), mit dem
+  Hinweis, dass Angebot, Überleitung und Stand der Arbeit im festen Text stehen und das Intro sie
+  nicht nennt und nicht vorwegnimmt; „Dies ist Email 1 von 4 der Sequenz.“
+- **Sperrliste** der Kampagne (dieselbe wie in `researchAgentConfig.additionalPrompt`).
+- **Ersatzsatz** für den Fall ohne Anker, der den Austauschtest besteht: genau ein Satz, ohne
+  Einstieg und ohne Schluss, Branche und Region je Lead aus den Lead-Daten (nie als Klammer
+  stehen lassen). Er behauptet nichts Unbelegtes über den Lead („so gut bewertet“, „seit Jahren“,
+  „viele zufriedene Kunden“) und bezieht sich nur auf Branche oder Thema des Angebots. Standard der
+  App: „als [Branche] in [Ort oder Region] bist du genau die Art Unternehmen, die wir suchen.“
+- **Eigene Anker-Reihenfolge** nur, wenn die Kampagne bewusst von der des Servers abweichen soll.
+- Schluss: „Schreibe jetzt nur den Opener. Nichts danach.“
+
+Muster (die Vorlage der App, Platzhalter in `%…%` füllen):
+
+```text
+# Opener
+
+Die allgemeinen Opener-Regeln (Abhebung, Austauschtest, Anker-Reihenfolge, positiver Schluss, Einstieg, Anrede) bekommst du zur Laufzeit. Hier steht nur, was für diese Kampagne gilt.
+
+## Kontext
+
+Du schreibst den Opener einer Cold-E-Mail.
+
+- Absender: %firma%
+- Angebot: %angebot%
+- Zielgruppe: %zielgruppe%
+- Ansprache: %ansprache%
+
+Dein Text steht direkt unter der Anrede und wird im festen Mailtext %folgesatz% Das Angebot, die Überleitung und der Stand der Arbeit stehen also im festen Text. Du nennst sie nicht und nimmst sie nicht vorweg.
+
+Dies ist Email 1 von 4 der Sequenz.
+
+## Sperrliste
+
+%sperrliste%
+
+## Ersatzsatz
+
+Gibt die Recherche keinen Anker her, der den Austauschtest besteht, schreibe genau diesen Satz, ohne Einstieg und ohne Schluss (Branche und Region pro Lead aus den Lead-Daten einsetzen, nie als Klammer stehen lassen): "%ersatzsatz%"
+
+**Schreibe jetzt nur den Opener. Nichts danach.**
+```
+
+`%folgesatz%` ist der Rest eines Satzes, etwa „mit dem Satz „Deswegen war ich so frei …“
+fortgesetzt.“ Die Intro-Regeln oben gelten trotzdem: für das Prüfen der Werte und überall, wo das
+Plugin Intros selbst schreibt (`outreach-generate`, Abo-Lauf).
+
+Der `routing`-Prompt ist wörtlich der Prompt der App, nicht selbst formuliert oder gekürzt: deutsch
+je `salutation` die Du- oder die Sie-Fassung des ROUTING-PROMPTs aus dem MCP-Prompt
+`campaign_blueprint_guide`, englisch die englische Fassung aus `references/routing-baustein.md`
+(der Guide liefert nur die deutschen). Er schreibt je Lead den Routing-Absatz des Abschieds (höchstens 35 Wörter,
+beginnt groß) in vier Fällen: A andere belegte Ansprechpartner mit Namen, B der feste Team-Satz,
+C bei Einzelbetrieb oder eindeutig zuständigem Empfänger eine weiche Nachfrage zum Angebot der
+ersten Mail, D bei einer zweiten angeschriebenen Person der Firma der Hinweis auf sie. Details:
+`references/routing-baustein.md`.
 
 Der `angebot_ausfuehrung`-Prompt einer neuen Kampagne ist immer die Anweisung von „Angebot je Lead“:
 die abgenommene Vorlage (Deutsch Du, Deutsch Sie, Englisch), gefüllt aus den Karten des Kunden,
 nach `references/fuer-erfahrene.md`, Teil 2. Nicht frei formulieren, nicht kürzen, keine eigenen
-Regeln dazuschreiben; der Kunde sieht sie vor dem Anlegen. Beim Import ersetzt ListM8 den Prompt
+Regeln dazuschreiben; der Kunde sieht sie vor dem Anlegen. Beim Import ersetzt DealSupply den Prompt
 durch die Anweisung, die es selbst aus den Karten baut (ohne `offerPrompt`); kleine Abweichungen der
 gezeigten Fassung schaden deshalb nicht. `offer_text` und `offer_cta` tragen den
 festen Prompt „Vom Server gesetzt: …“ und nie eine `offerRole`.
@@ -659,7 +747,7 @@ ihn. Wird er auf Wunsch des Nutzers überarbeitet, MUSS er enthalten:
 Ein vollständig ausformuliertes Paar `hallo`/`intro` steht in `references/beispiel-blueprint.md`;
 die Anweisung von „Angebot je Lead“ mit Beispiel in `references/fuer-erfahrene.md`.
 
-## Platzhalter in ListM8
+## Platzhalter in DealSupply
 
 Aufgelöst werden nur diese Platzhalter (abschließende Liste für Betreff und Body):
 
@@ -667,7 +755,7 @@ Aufgelöst werden nur diese Platzhalter (abschließende Liste für Betreff und B
 - `{{lead.company}}`, `{{lead.website}}`, `{{lead.city}}` (der Server löst zusätzlich
   `lead.email` und `lead.phoneNumber` auf; in Copy nicht verwenden)
 - `{{custom.<schlüssel>}}` (Custom-Attribute aus dem Import; leer, wenn der Lead keinen Wert hat)
-- `{{accountSignature}}` nur im Body und nur bei der Signatur aus dem Konto (siehe Signatur)
+- `{{accountSignature}}` nur im Body, in jeder Mail direkt unter der Grußformel (siehe Signatur)
 
 Alles andere (`{{firstName}}`, `{{companyName}}`, `{{sender.*}}`, If-Blöcke, Default-Syntax)
 landet als Rohtext beim Empfänger. Ein nicht erzeugter AI-Wert erscheint als „[NOT GENERATED]“.
@@ -686,10 +774,10 @@ deshalb nur in Step 1, in Step 2, 3 und 4 bleibt er leer.
 
 | Step | Rolle | `delayDays` | Wörter max. | Betreff | Inhalt |
 |---|---|---|---|---|---|
-| 1 | Entry Mail | 0 | 120 (Ziel 50-90) | eigener, öffnet den Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (A/B/C der feste Satz der Karte, D/E keiner) + EIN CTA, jeder als eigener Absatz + Signatur; mit „Angebot je Lead“ statt der drei Sätze `{{ai.offer_text}}`, `{{ai.angebot_ausfuehrung}}`, `{{ai.offer_cta}}` in drei Absätzen |
+| 1 | Entry Mail | 0 | 120 (Ziel 50-90; englisch 100), auch mit „Angebot je Lead“ | eigener, öffnet den Thread | `{{ai.hallo}}` + `{{ai.intro}}` + feste Überleitung mit Offer + zweiter Satz zum Angebot als eigener Absatz (A/B/C der feste Satz der Karte, D/E keiner) + EIN CTA, jeder als eigener Absatz + Grußformel und `{{accountSignature}}` + Abmeldezeile; mit „Angebot je Lead“ statt der drei Sätze `{{ai.offer_text}}`, `{{ai.angebot_ausfuehrung}}`, `{{ai.offer_cta}}` in drei Absätzen |
 | 2 | Erinnerung | 3 | 50 | leer, Thread von Mail 1 | `{{ai.hallo}}` + nur nachhaken, weich wie eine schnell getippte Nachricht („du hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail angekommen ist“). Kein Doppelpunkt-Opener, kein Offer, kein neuer Aspekt, kein `{{ai.intro}}` |
-| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Höchstens ein kurzer eigener Satz, dann dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Karten ohne Wort für die Sache (B, D, E, eigene Frage) nehmen die Frage aus Mail 1 wörtlich; Mail 3 endet mit einer Frage, nie mit einer bloßen Aufforderung („sag einfach kurz Bescheid“). Einzige Ausnahme ist „Angebot je Lead“: Dann endet Mail 3 neutral mit „Melde dich gerne, wenn das Thema für dich relevant ist.“ (Sie „Melden Sie sich gerne, wenn das Thema für Sie relevant ist.“, englisch “Feel free to get in touch if this is relevant for you.”), weil jeder Lead ein anderes Angebot bekommen haben kann (W5). Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}`. Eine eigene Schlussfrage weicht in ListM8 der Frage aus Mail 1 (seit 06.11.2026). Mit Schwerpunkten oder „Angebot je Lead“ nennen Mail 2 bis 4 nie einen Schwerpunkt oder ein einzelnes Angebot (sie gelten für alle Leads, das Angebot ist je Lead verschieden); ListM8 streicht einen Satz, der ein Schwerpunkt-Label enthält |
-| 4 | Abschied mit Routing-Hinweis | 7 | 60 | leer, Thread von Mail 1 | `{{ai.hallo}}` + Tür offen lassen, ohne Druck und ohne Vorwurf + Routing-Hinweis („sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte“). Kein Offer |
+| 3 | Neuer Winkel (Mehrwert + Social Proof) | 5 | 80 | leer, Thread von Mail 1 | `{{ai.hallo}}` + EIN Beleg als erster Absatz, nach der Anrede klein weiter wie Mail 1: eine Case Story, eine Zahl, ein Ergebnis. HIER steht der Social Proof. Der Beleg steht als ganzer Satz aus Sicht des Absenders, mit ich oder wir, wie es zur Kampagne passt („wir haben schon über 1.000 Unternehmer begleitet“), nie dem Empfänger zugeschrieben (kein „ihr gebt an“, kein „du hast“). Zahlen und Fakten genau wie im Beleg des Nutzers: kein „bis zu“, „über“, „mehr als“ oder anderer Zusatz, der dort nicht steht; ein Ergebnis bleibt ein berichtetes Ergebnis, nie eine Zusage. Der Beleg steht für sich: kein Satz dahinter, der ihn erklärt, einordnet, relativiert oder abschwächt; eine kurze Geschichte mit Ergebnis hat höchstens zwei Sätze, ohne neue Zahl und ohne neue Tatsache. Fehlt ein Beleg, bringt Mail 3 einen neuen Winkel als ganzen Gedanken, ohne Zahl, ohne Fallbeispiel und ohne Kundennamen. Direkt nach dem Beleg dieselbe Schlussfrage wie Mail 1 mit dem Wort für die Sache statt „es“ (Karte C: „Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.“), damit die Mail ohne Mail 1 verständlich ist. Karten ohne Wort für die Sache (B, D, E, eigene Frage) nehmen die Frage aus Mail 1 wörtlich; Mail 3 endet mit einer Frage, nie mit einer bloßen Aufforderung („sag einfach kurz Bescheid“). Einzige Ausnahme ist „Angebot je Lead“: Dann endet Mail 3 neutral mit „Melde dich gerne, wenn das Thema für dich relevant ist.“ (Sie „Melden Sie sich gerne, wenn das Thema für Sie relevant ist.“, englisch “Feel free to get in touch if this is relevant for you.”), weil jeder Lead ein anderes Angebot bekommen haben kann (W5). Kein eigener Satz um das Angebot („Falls du … sehen möchtest, melde dich“), kein neues Offer, kein `{{ai.intro}}`. Eine eigene Schlussfrage weicht in DealSupply der Frage aus Mail 1 (seit 06.11.2026). Mit Schwerpunkten oder „Angebot je Lead“ nennen Mail 2 bis 4 nie einen Schwerpunkt oder ein einzelnes Angebot (sie gelten für alle Leads, das Angebot ist je Lead verschieden); DealSupply streicht einen Satz, der ein Schwerpunkt-Label enthält. Mit Grußformel, `{{accountSignature}}` und Abmeldezeile |
+| 4 | Abschied mit Routing | 7 | 60 | leer, Thread von Mail 1 | `{{ai.hallo}}` + der feste Abschiedssatz der App („da ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung.“, in der Sie-Form gleich; englisch “Since I haven't heard back, I'll assume the timing isn't right, and that's completely fine.”) + `{{ai.routing}}` als eigener Absatz, nie ein fester Routing-Satz + Grußformel und `{{accountSignature}}`. Kein Offer |
 
 - Gezählt wird der Body ohne Betreff und ohne Signatur, den Bezug aus `{{ai.intro}}` (bis zu
   2 Sätzen) eingerechnet. Die Limits sind Obergrenzen: kürzer ist erlaubt und meist besser.
@@ -700,17 +788,21 @@ deshalb nur in Step 1, in Step 2, 3 und 4 bleibt er leer.
   gewählten Ansprache. Das erste Wort nach `{{ai.hallo}}` (in jedem Step) schreibt man klein, weil
   es auf „Hallo …,“ folgt: „du hast sicher …“, nicht „Du hast sicher …“, auch in der Sie-Form („da ich
   bisher nichts gehört habe“, „ich wollte kurz nachfragen“, „bei rund 80 Gründungen …“); „Sie“, Namen
-  und Substantive bleiben groß. ListM8 setzt ein solches Wort am Anfang des ersten Absatzes auch selbst
+  und Substantive bleiben groß. DealSupply setzt ein solches Wort am Anfang des ersten Absatzes auch selbst
   klein (seit 06.11.2026).
 - **Dringlichkeit** ist kein Standard-Step. Nur wenn der Nutzer einen echten Zeit- oder
   Kapazitätsgrund nennt, kommt sie als zusätzlicher Step zwischen Step 3 und den Abschied
   (dann 5 Steps, `delayDays` 0/3/5/7/7; Wortlimit 60; leerer Betreff, Thread von Mail 1). Ohne
   echten Grund entfällt sie, nichts Erfundenes und keine künstliche Knappheit.
-- Fehlt dem Nutzer ein echter Beleg für Step 3: nachfragen, nicht erfinden.
-- Der Routing-Hinweis in Step 4 steht als fester Satz im Body. Hat die Kampagne ein
-  Recherche-Ziel für Ansprechpartner, ersetzt die AI-Variable `routing` ihn durch eine Version mit
-  belegten Namen („bin ich bei dir richtig oder eher bei Anna oder Tom?“); Vorlage und Regeln in
-  `references/routing-baustein.md`.
+- Fehlt dem Nutzer ein echter Beleg für Step 3: nachfragen, nicht erfinden; ohne Beleg bringt Step 3
+  einen neuen Winkel ohne Zahl, ohne Fallbeispiel und ohne Kundennamen.
+- Der Abschied trägt den Routing-Absatz immer als `{{ai.routing}}` (wie die App seit 31.10.2026):
+  je Lead mit belegten Namen aus der Recherche („Ich bin mir nicht sicher, ob ich damit bei dir
+  richtig bin oder eher bei Anna oder Tom. Gib mir gern kurz Bescheid.“), ohne belegte Namen der
+  feste Team-Satz, bei Einzelbetrieb eine weiche Nachfrage zum Angebot. Body im JSON:
+  `{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung.\n\n{{ai.routing}}\n\n\nViele Grüße\n{{accountSignature}}`.
+  Prompt und Fälle: `references/routing-baustein.md`. Bestehende Kampagnen mit festem Routing-Satz
+  behalten ihn, außer der Nutzer will umstellen.
 
 ## Für Erfahrene: Tests in Mail 1 (A/B-Test)
 
@@ -760,7 +852,7 @@ Gut: „Frage zu Becker Bäder“, „Frage zu Immobilien Braun“, „Frage zu 
 
 In `check_copy.py` steht er als Zeile
 „Betreff B: …“ unter „Betreff: …“; den Kurznamen der Firma (zählt als ein Wort) gibt `--firma` oder
-eine Zeile „Kurzname: …“ an.
+eine Zeile „Kurzname: …“ an; `--sprache en` prüft eine englische Entry Mail gegen 100 Wörter.
 
 NICHT: „Kostenlose Beratung für …“ (zu lang, Spam), „Exklusives Angebot - jetzt zugreifen!“
 (Spam-Trigger), „Re: Ihre Anfrage“ (Fake-Reply).
@@ -815,12 +907,15 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
 7. Zeichen-Scan: M-Striche, Emojis, Bold, Bulletpoints, Links in Step 1?
 8. Spam-Scan: Betreff und Body gegen die Wortliste. „kostenlos“ höchstens einmal im Body?
 9. Platzhalter-Scan: kein [Klammer-Feld]? Jede `{{…}}`-Variable gegen die abschließende Liste
-   prüfen. Signatur als Klartext (bei Signatur aus dem Konto `{{accountSignature}}` unter der Grußformel), keine `{{sender.*}}`-Variablen?
+   prüfen. Endet jede Mail mit der Grußformel und `{{accountSignature}}` darunter, ohne Unterschrift
+   mit Name, Rolle oder Firma und ohne `{{sender.*}}`-Variablen?
 10. Betreff von Step 1: 2-5 Wörter, kein Spam-Wort, keine Großschreibung, keine Ankündigung,
     Firmenname nur über `{{ai.firma}}`? Step 2, Step 3 und Step 4 ohne Betreff?
-11. Enthält der `intro`-Prompt Austauschtest, Sperrliste der Kampagne, Anker-Rangfolge mit
-    Sterne-Regel, positiven Schluss, Einstiegswechsel, die Verbote UND einen Fallback-Satz, der
-    keine unbelegte Tatsache behauptet? Steht dieselbe Sperrliste in den Research-Vorgaben?
+11. Trägt der `intro`-Prompt nur Kontext (mit dem festen Folgesatz), Sperrliste und einen
+    Ersatzsatz, der keine unbelegte Tatsache behauptet, ohne kopierte Opener-Regeln, Verbotslisten
+    oder Beispielsätze (eine eigene Anker-Reihenfolge nur, wenn die Kampagne bewusst abweicht)?
+    Steht dieselbe Sperrliste in den Research-Vorgaben? Ist der `routing`-Prompt wörtlich die
+    Fassung der App zu Sprache und `salutation` (`references/routing-baustein.md`), und trägt der Abschied `{{ai.routing}}` als eigenen Absatz?
 12. Passen `salutation`, `hallo`-Prompt und die Pronomen des festen Texts zusammen (kein
     „Hallo Herr/Frau …“, „… Team,“ oder „Hallo zusammen,“ mit Du-Text, kein du/ihr-Wechsel in einem Satz und keine Anrede mit ihr/euch, auch
     nicht ohne Ansprechpartner: „Hallo,“ und „dein Team“)?
@@ -838,22 +933,28 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
     Schluss? Schlusssatz ohne „Link“?
 17. Varianten von Mail 1 nur, wenn der Nutzer Tests gewählt hat, und dann genau wie in
     `references/fuer-erfahrene.md`, Teil 1?
+18. Step 3: steht der Beleg als Ich- oder Wir-Satz mit den Zahlen genau wie vom Nutzer genannt,
+    ohne Satz dahinter, der ihn erklärt oder einordnet, direkt gefolgt von der Schlussfrage?
+    Opener-Regeln in Beispielwerten: Plural oder „immer wieder“ nur ab drei Rezensionen mit
+    diesem Lob?
 
 ## Prüfliste nach Code-Regeln
 
-Diese Regeln lassen sich mechanisch prüfen. ListM8 prüft sie beim Anlegen nicht, also prüfst du
+Diese Regeln lassen sich mechanisch prüfen. DealSupply prüft sie beim Anlegen nicht, also prüfst du
 sie: vor dem Anlegen der Sequenz und beim Review der Werte abhaken. „Hart“ = Fehler, „weich“ =
 Hinweis, der begründet werden muss.
 
 | Regel | Prüfung | Stufe |
 |---|---|---|
-| Wortlimit | Step 1-4 max. 120/50/80/60 Wörter, ein zusätzlicher Dringlichkeits-Step max. 60 (Platzhalter zählen nicht mit, den Intro-Umfang einrechnen) | hart |
+| Wortlimit | Step 1-4 max. 120/50/80/60 Wörter (englisch Step 1 max. 100), ein zusätzlicher Dringlichkeits-Step max. 60 (Platzhalter zählen nicht mit, den Intro-Umfang einrechnen; gilt auch mit „Angebot je Lead“) | hart |
 | Zielkorridor | Entry-Mail unter 50 Wörtern: trägt der Bezug? | weich |
 | Kein Gedankenstrich | kein „—“ und kein „–“ im Text | hart |
 | Anführungszeichen geschlossen | jedes „ schließt mit “, nie mit " | hart |
 | Kein Pitch | kein „wir helfen“, „wir sind ein/eine/der/die/seit“, „wir bieten“, „seit (über) N Jahren“, „als zertifizierter/offizieller/Google/Meta … Partner“, „mein Name ist“, „unser Unternehmen“ | hart |
 | Kein Platzhalter | kein sichtbares `[Feld]` | hart |
-| Bekannte Variablen | nur `{{ai.*}}`, `{{lead.company}}`, `{{lead.website}}`, `{{lead.city}}`, `{{custom.*}}` | hart |
+| Bekannte Variablen | nur `{{ai.*}}`, `{{lead.company}}`, `{{lead.website}}`, `{{lead.city}}`, `{{custom.*}}`, im Body `{{accountSignature}}` | hart |
+| Signatur | jede Mail endet mit der Grußformel und `{{accountSignature}}` darunter, keine Unterschrift mit Name, Rolle oder Firma | hart |
+| Routing | der Abschied trägt `{{ai.routing}}` als eigenen Absatz, kein fester Routing-Satz; die Variable `routing` existiert | hart |
 | Kein Emoji | keine Emojis/Symbole | hart |
 | Keine Formatierung | kein `**fett**`, keine Zeile, die mit „-“, „*“ oder „•“ beginnt | weich |
 | „kostenlos“ | höchstens einmal pro Mail | weich |
@@ -885,9 +986,10 @@ Hinweis, der begründet werden muss.
 - `references/marketing-offer.md` — Karten A-E im Detail, Werttest, Offer-Killer,
   Reziprozität, was kein Offer ist.
 - `references/beispiel-blueprint.md` — vollständiger Blueprint (Karte C, Du-Form, 4 Steps,
-  `hallo`- und `intro`-Prompt, fester zweiter Satz) zum Anlegen mit `create_campaign`, dazu die
+  `hallo`-, `intro`- und `routing`-Variable, fester zweiter Satz, `{{accountSignature}}`) zum Anlegen mit `create_campaign`, dazu die
   Variante für Karte A und B.
 - `references/fuer-erfahrene.md` — Tests in Mail 1 und „Angebot je Lead“: die Frage beim Anlegen,
   Felder, Vorlage DE und EN, Blueprint, Beispiel, Prüfung.
+- `references/routing-baustein.md` — der Abschied mit `{{ai.routing}}`: Body, Prompt, Fälle.
 - Skill `outreach-launch` — Versand nach dem Export (Domains, Warm-up, Instantly, KPIs) und wann
   bei schwachen Zahlen Copy, Offer oder Liste geändert werden.

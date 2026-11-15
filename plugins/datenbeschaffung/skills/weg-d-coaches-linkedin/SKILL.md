@@ -14,7 +14,7 @@ Es wird kein Kundenkonto hinterlegt, also gibt es kein Sperr-Risiko — hartes A
 aus `../datenbeschaffung-referenzen/references/apify-actors.md`.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 ## Schritt 1 — Filter statt Freitext (die wichtigste Regel)
 
@@ -105,7 +105,7 @@ liest LinkedIn nicht, ohne Import fehlen sie der Mail. `build_csv.py` übersetzt
 mitnehmen (`csv-spalten.md`).
 
 Profile ohne E-Mail sind normal: LinkedIn ist eine Personen-, keine Kontaktdatenquelle. Wo eine
-Firmen-Website vorliegt, schließt `impressum-enrichment` die Lücke, oder ab ListM8 MCP 4.0.0 die
+Firmen-Website vorliegt, schließt `impressum-enrichment` die Lücke, oder ab MCP 4.0.0 die
 Recherche der Plattform (Lead mit Website importieren). Personen ohne Website und ohne E-Mail
 haben kein Kontaktmerkmal: Sie fallen bei der Übergabe heraus (der LinkedIn-Link ist ein
 Profil-Link, keine Website).

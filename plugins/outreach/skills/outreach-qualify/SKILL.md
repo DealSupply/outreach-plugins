@@ -22,7 +22,13 @@ Dieser Skill orchestriert die Lead-Qualifizierung via MCP Business Tools. Claude
 
 Vor dem Workflow `ping` und `list_campaigns` mit dem Auftrag abgleichen. Ausschließlich den fachlichen ICP-/Angebots-Fit bewerten. Allgemeine Werbehinweise aus Website, Impressum, AGB oder Datenschutzerklärung nur als Hinweis mit Quelle in `qualificationSnapshotJson` festhalten (z. B. unter `contactNotices`): deswegen allein weder Score senken noch `not_qualified` setzen. Echte gespeicherte Kontaktstatus (kontaktiert, `do_not_contact` …) sind verbindlich und werden nie aus Website-Text abgeleitet oder entfernt. Opt-in, rechtliche Prüfung und Versandentscheidung bleiben beim Kunden; ein positiver Fit gibt keinen Versand frei.
 
-**Urteile gelten pro Kampagne und sind final:** Das Urteil wird nur für die angegebene `campaign_id` geschrieben; eine Qualifizierung aus einer anderen Kampagne zählt hier als „nie geprüft". Ein in dieser Kampagne bereits abgeschlossenes Urteil (`qualificationStatus=completed`) lässt sich mit `write_lead_details` nicht mehr ändern oder leeren (`verdict_final`); die Queue (`qualification_status="pending"`) zeigt solche Leads nicht mehr.
+**Urteile gelten pro Kampagne und sind final:** Das Urteil wird nur für die angegebene `campaign_id` geschrieben; eine Qualifizierung aus einer anderen Kampagne zählt hier als „nie geprüft". Ein in dieser Kampagne bereits abgeschlossenes Urteil (`qualificationStatus=completed`) lässt sich mit `write_lead_details` nicht mehr ändern oder leeren (`verdict_final`); die Queue (`qualification_status="pending"`) zeigt solche Leads nicht mehr. Positive Urteile werden nie ersetzt.
+
+**Neu urteilen (nur `not_qualified`, nur mit Zustimmung):** Hat der Nutzer die Kriterien geändert, lassen sich aussortierte Leads nach den neuen Kriterien noch einmal urteilen. Erst fragen, dann:
+- Server-Lauf: `quote_lead_run(…, requalify_not_qualified=true)` nennt in `requalifiable_count`, wie viele es sind; Ablauf und Preis in `outreach-pipeline`, Schritt 3.
+- Abo-Lauf bzw. dieser Skill: Auswahl mit `list_leads(campaign_id, run_stages=["qualification"], requalify_not_qualified=true, qualification_filter="not_qualified")` (Listen-Modus, `lead_ids` einmal festhalten), dann je Lead ein Agent mit dem Auftrag „neu urteilen“. Diese Auswahl enthält nur Urteile der Qualifizierung; Urteile, die die Recherche gesetzt hat, zählen erst mit `run_stages=["qualification", "research"]` als offen. Sollen auch sie neu geurteilt werden, so auswählen und den Auftrag „neu urteilen, nur Qualifizierung und Recherche“ geben. Er schreibt das neue Urteil mit `write_lead_details(…, replace_final_verdict=true)` und vollständigen Qualifizierungsfeldern (`qualificationStatus: "completed"` und `qualificationFitLevel` sind Pflicht; nicht gesendete Qualifizierungsfelder werden geleert). Ein Urteil, das die Recherche gesetzt hat, ersetzt der Server nur zusammen mit einer neuen Recherche im selben Aufruf (sonst `verdict_needs_research`); dann braucht der Auftrag auch die Recherche-Stufe. Kontaktierte Leads und Leads mit Mail im Review, freigegeben oder exportiert bleiben unberührt (`verdict_locked`).
+
+**Urteilsregeln:** Die Agents urteilen wie der Server-Lauf als offener Vorfilter (Vorlage unten, Schritt 4): `not_qualified` nur mit konkretem Grund, im Zweifel `mid_qualified`. Ein falsch aussortierter Lead ist endgültig verloren, ein durchgelassener Grenzfall kostet nur eine Recherche.
 
 ## Workflow-Übersicht
 
@@ -35,7 +41,7 @@ Vor dem Workflow `ping` und `list_campaigns` mit dem Auftrag abgleichen. Ausschl
    |
 3. Für jeden Lead: Sub-Agent spawnen (parallel)
    -> get_lead_data() -> Kriterien lesen -> Website analysieren -> bewerten
-   -> write_lead_details(qualificationStatus=completed, fitLevel, score, ...)
+   -> write_lead_details(qualificationStatus=completed, qualificationFitLevel, score, ...)
    |
 4. Batch-Report -> nächster Batch (Queue ist idempotent: qualifizierte Leads
    fallen aus qualification_status="pending" heraus)
@@ -94,10 +100,13 @@ LEAD: {lead.company} (ID: {lead.id})
 3. Analysiere den Lead:
    - Website (lead.website) per WebFetch laden; wichtige Unterseiten (Leistungen, Über uns, Impressum) bei Bedarf zusätzlich.
    - Custom Attributes (Google-Rating, Kategorie etc.) einbeziehen.
-   - Website nicht erreichbar ist KEIN automatischer Disqualifier — bewerte streng nach den Kampagnen-Kriterien (eine fehlende/schwache Website kann je nach Angebot sogar FUER den Lead sprechen).
-4. Bewerte gegen die Kriterien:
-   - Trifft ein fachlicher Disqualifier zu → fitLevel "not_qualified". Allgemeine Website-/Impressums-Werbehinweise zählen ausdrücklich NICHT dazu; sie verändern weder Fit noch Score und werden nur als Hinweis (contactNotices) im Snapshot dokumentiert. Echte gespeicherte Kontaktstatus niemals entfernen oder aus Website-Text ableiten.
-   - Sonst fitLevel nach Stärke des Fits: "mid_qualified" | "qualified" | "highly_qualified".
+   - Website nicht erreichbar ist KEIN Disqualifier (eine fehlende/schwache Website kann je nach Angebot sogar FUER den Lead sprechen); dann urteilst du aus den Importdaten.
+4. Bewerte gegen die Kriterien. Die Qualifizierung ist ein offener Vorfilter wie im Server-Lauf: ein falsch aussortierter Lead ist endgültig verloren, ein durchgelassener Grenzfall kostet nur eine Recherche. Im Zweifel durchlassen.
+   - "not_qualified" nur mit konkretem, benennbarem Grund: ein Disqualifier der Kampagne trifft belegt zu, ein gelistetes No-Go, ein eindeutig falscher Geschäftstyp (Kerngeschäft außerhalb des Zielkunden; eine Zusatzleistung oder thematische Nähe ist keine Überschneidung) oder kein erkennbarer Geschäftsbetrieb. Ohne konkreten Grund keine Ablehnung. Allgemeine Website-/Impressums-Werbehinweise zählen ausdrücklich NICHT dazu; sie verändern weder Fit noch Score und werden nur als Hinweis (contactNotices) im Snapshot dokumentiert. Echte gespeicherte Kontaktstatus niemals entfernen oder aus Website-Text ableiten.
+   - "mid_qualified": passt, aber die Evidenz ist dünn oder unsicher, oder nur teilweise Überschneidung. Unsicherheit oder „passt halbwegs“ ist nie ein Ablehnungsgrund.
+   - "qualified": Fit positiv belegt (nicht nur keine No-Gos); "highly_qualified": besonders starker Fit.
+   - Nur Importdaten (keine Website-Evidenz): passen sie, höchstens "mid_qualified" und "nur Importdaten" in der Zusammenfassung. Passen sie erkennbar nicht oder spräche nur aus ihnen ein Ausschlussgrund: KEIN Urteil schreiben (ohne Website-Evidenz zählt eine Ablehnung nicht als Urteil, der Server-Lauf lässt den Lead dann ebenfalls offen), Schritt 5 entfällt, Antwort "OFFEN lead={lead.id}: nur Importdaten, kein Urteil".
+   - Geschmacksurteile (hässliche Website, wenig Inhalt) sind nie ein Disqualifier, außer die Kampagne sagt es.
    - score 0-100 konsistent zum fitLevel (not_qualified: 0-39, mid: 40-59, qualified: 60-79, highly: 80-100).
 5. Schreibe das Ergebnis:
    write_lead_details(campaign_id={campaign.id}, lead_id={lead.id}, fields={
@@ -108,18 +117,19 @@ LEAD: {lead.company} (ID: {lead.id})
      "qualificationSummary": "<2-4 Sätze in der Sprache aus writeBack.summaryLanguage: warum dieses fitLevel, welche Kriterien erfüllt/verletzt>",
      "qualificationSnapshotJson": { "businessFitLevel": "<fitLevel>", "contactNotices": [...], "criteria_matched": [...], "disqualifiers_hit": [...], "evidence": [{"claim": "...", "source": "<URL>"}] }
    })
+   Nur beim Auftrag „neu urteilen“ (der Nutzer hat zugestimmt): denselben Aufruf mit replace_final_verdict=true und allen Feldern oben. Antwortet er verdict_needs_research, verdict_locked oder verdict_being_judged: nicht wiederholen, den Code melden.
 
 ## Regeln
 
 - NICHTS ERFINDEN: Jede Behauptung in summary/snapshot braucht eine beobachtete Quelle (Website-Inhalt, Attribut). Unbelegtes weglassen.
 - Die Kampagnen-Kriterien schlagen jede eigene Heuristik.
 - Deutsch, korrekte Umlaute (Ä/Ö/Ü/ß — niemals AE/OE/UE/ss). Ausnahme: qualificationSummary steht in der Sprache aus writeBack.summaryLanguage (bei "en" auf Englisch); fitLevel, status und Schlüssel bleiben die festen Werte.
-- Antworte am Ende NUR mit: "OK lead={lead.id} fitLevel=<...> score=<...>" oder "FEHLER lead={lead.id}: <Grund>".
+- Antworte am Ende NUR mit: "OK lead={lead.id} fitLevel=<...> score=<...>", "OFFEN lead={lead.id}: nur Importdaten, kein Urteil" oder "FEHLER lead={lead.id}: <Grund>".
 ```
 
 ## Phase 3: Report & nächster Batch
 
-Wie /outreach-generate: Batch-Report (Erfolg/Fehler/Verbleibend), dann erneut `list_leads` bis `remaining == 0`. Fehlgeschlagene Leads bleiben `qualification_status=pending` und tauchen im nächsten Lauf wieder auf — kein automatischer Einzel-Retry.
+Wie /outreach-generate: Batch-Report (Erfolg/Fehler/Verbleibend), dann erneut `list_leads` bis `remaining == 0`. Fehlgeschlagene Leads bleiben `qualification_status=pending` und tauchen im nächsten Lauf wieder auf — kein automatischer Einzel-Retry. Leads mit `OFFEN` aus der Vorlage bzw. `OK lead=<id> fit=offen … grund=nur-importdaten` vom `outreach:lead-agent` (nur Importdaten, kein Urteil) bleiben ebenfalls `pending`: ihre IDs festhalten, in diesem Lauf nicht erneut vergeben; die Schleife endet, sobald nur noch solche Leads übrig sind und im Abschluss-Report mit Grund nennen.
 
 Abschluss-Report + Hinweis: "Nächster Schritt: /outreach-research — qualifizierte Leads recherchieren".
 
@@ -128,7 +138,10 @@ Abschluss-Report + Hinweis: "Nächster Schritt: /outreach-research — qualifizi
 | Fehler | Aktion |
 |--------|--------|
 | leads[] leer | "Keine unqualifizierten Leads" -> STOP |
-| `verdict_final` | In dieser Kampagne schon ein abgeschlossenes Urteil — Lead ist erledigt, nicht erneut schreiben |
+| `verdict_final` | In dieser Kampagne schon ein abgeschlossenes Urteil — Lead ist erledigt, nicht erneut schreiben (positive Urteile lassen sich nie ersetzen) |
+| `verdict_locked` | Beim Neu-Urteilen: der Lead ist kontaktiert oder hat eine Mail im Review, freigegeben oder exportiert — Urteil bleibt, Lead überspringen |
+| `verdict_needs_research` | Beim Neu-Urteilen: das alte Urteil hat die Recherche gesetzt — nur zusammen mit einer neuen Recherche im selben Aufruf ersetzbar; ohne Recherche-Stufe den Lead überspringen und melden |
+| `verdict_being_judged` | Ein Qualifizierungs- oder Recherche-Job urteilt gerade über den Lead — nicht wiederholen, später prüfen |
 | `validation_failed`, `invalid_enum`, `unknown_field` | Feld bzw. Wert aus dem Fehlertext korrigieren (erlaubte Werte stehen in `writeBack`) und einmal neu schreiben; sonst Lead als Fehler notieren |
 | write_lead_details error (sonstiger Code) | Fehler notieren, weiter mit nächstem Lead |
 | `contact_gate` | Kontaktstatus des Leads ist nicht `not_contacted` (kontaktiert, exportiert, gesperrt …) — Lead überspringen, nicht erneut schreiben |

@@ -5,21 +5,33 @@
 
 ## Die Anker-Hierarchie (Server kennt sie — dein Fokus verstärkt sie fürs Angebot)
 
-Maßgeblich ist der Abschnitt „Abhebung und Austauschtest“ in `outreach-copy` →
-`references/copy-lehre.md`. Für die Recherche heißt das:
+Maßgeblich ist die Anker-Reihenfolge des Servers (`emailGeneration.systemPrompt`, Block
+ANKER-REIHENFOLGE); Hintergrund in `outreach-copy` → `references/copy-lehre.md`, „Abhebung und
+Austauschtest“. Für die Recherche heißt das:
 
-1. **Lob aus Bewertungstexten** (bester Anker, immer zuerst recherchieren): Google-Bewertungen über
-   Bewertungsportale und Verzeichnisse, Trusted Shops, Shop-Bewertungen. Konkrete paraphrasierbare
-   Aussagen über DIESEN Betrieb (was genau gelobt wird, wie viele Bewertungen dieses Lob tragen).
-2. **Abhebendes Detail von der Website**: eigener Name oder eigenes Konzept, ungewöhnliche Zeit oder
-   Zahl, eigenes Verfahren, seltene Spezialisierung, Auszeichnung. Auch Stellenanzeigen/Wachstum:
-   festhalten, was die Anzeige über den Betrieb verrät (Wachstum, Spezialisierung, Projekt), nicht
-   nur dass gesucht wird.
-3. **Anzahl und Schnitt der Bewertungen** als eigener Anker, nur bei mindestens 30 Bewertungen und
-   einem Schnitt ab 4,5; darunter trägt die Zahl keinen Anker. Werte aus
-   dem Import (Google-Profil in den Lead-Attributen) gelten als Quelle; widersprechen sich Quellen,
-   den kleineren Wert notieren.
-4. **Fallback der Kampagne** (Branche/Region): steht im `intro`-Prompt, nicht in der Recherche.
+1. **Anzahl und Schnitt der Bewertungen mit Worten zum Inhalt:** nur bei mindestens 30 Bewertungen
+   und einem Schnitt ab 4,5 und nur, wenn ein Lob mit Inhalt belegt ist. Deshalb Anzahl und Schnitt
+   mit Quelle notieren und dazu, was die Bewertungen konkret loben und wie viele Rezensionen genau
+   dieses Lob tragen (der Opener verallgemeinert erst ab drei).
+2. **Lob aus Bewertungstexten** (immer zuerst recherchieren): Google-Bewertungen über Bewertungsportale
+   und Verzeichnisse, Trusted Shops, Shop-Bewertungen. Konkrete, paraphrasierbare Aussagen über DIESEN
+   Betrieb; eine einzelne Rezension trägt nur, wenn sie aus den letzten 18 Monaten stammt (Datum
+   notieren).
+3. **Abhebendes Detail von der Website**: eigener Name oder eigenes Konzept, ungewöhnliche Zeit oder
+   Zahl, eigenes Verfahren, seltene Spezialisierung, Projekt, Auszeichnung oder Siegel (ohne
+   Altersgrenze), Firmengeschichte mit ihrem Ereignis. Auch Stellenanzeigen/Wachstum: festhalten, was
+   die Anzeige über den Betrieb verrät (Wachstum, Spezialisierung, Projekt), nicht nur dass gesucht wird.
+4. **Anzahl und Schnitt allein**, ohne Worte zum Inhalt: dieselben Schwellen (30 Bewertungen, 4,5),
+   nie vor einer Kundenstimme oder einem abhebenden Detail. Werte aus dem Import (Google-Profil in den
+   Lead-Attributen) gelten als Quelle; widersprechen sich Quellen, den kleineren Wert notieren. Reicht
+   Google nicht, dürfen Anzahl und Schnitt eines anderen Bewertungsportals der Branche stehen
+   (Treatwell, Jameda …), mit denselben Schwellen auf diesem Portal und mit dem Portal als Quelle.
+5. **Ersatzsatz der Kampagne** (Branche/Region): steht im `intro`-Prompt, nicht in der Recherche.
+
+**Bezug zum Angebot:** Bestehen mehrere Anker, nimmt der Opener den, der zum Angebot der Kampagne
+passt (bei einem Hotel und Tagungsgästen die Rezension zum Seminarraum, nicht das Lob fürs Essen).
+Der Fokus-Text darf deshalb nennen, welche Funde zum Angebot passen; die Recherche kennt das Angebot
+sonst nicht.
 
 **Austauschtest:** Ein Fund, der auf zehn andere Betriebe derselben Branche in der Stadt passt, ist
 kein Anker, auch nicht mit Nutzen („digital scannen, hilft bei Würgereiz“).
@@ -56,7 +68,7 @@ Sperrliste (nie als Opener-Anker vormerken, außer als Lob aus Bewertungstexten)
 Heizungstausch, Wärmepumpe allgemein, Notdienst, barrierefreies Bad, Meisterbetrieb, Beratung vor Ort.
 ```
 
-Die eigene Kontaktadresse eines Leads, der ohne E-Mail importiert wurde (ab ListM8 MCP 4.0.0), muss
+Die eigene Kontaktadresse eines Leads, der ohne E-Mail importiert wurde (ab MCP 4.0.0), muss
 nicht in den Fokus-Text: Die Regeln dafür bringt der Server selbst mit (`researchGeneration.contactEmail`
 in `get_lead_data`). Ein Punkt „Kontaktadresse“ im Fokus-Text ist nur eine Gedächtnisstütze; maßgeblich
 bleiben die Regeln des Servers (persönliche Adresse von Inhaber oder Geschäftsführung vor info@, nie

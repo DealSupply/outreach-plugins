@@ -3,10 +3,11 @@
 > Referenz zu `outreach-copy`. Ein fiktiver Absender (Jonas Weber, Weber Webdesign) mit
 > erfundenen Belegen; Namen und Zahlen stehen hier nur, weil sie in diesem Beispiel die
 > „Angaben des Nutzers“ sind. In einer echten Kampagne kommt jede Zahl, jeder Name und jede
-> Kapazitätsangabe vom Nutzer.
+> Kapazitätsangabe vom Nutzer. Name, Rolle und Firma des Absenders stehen nicht im Mailtext: Jede
+> Mail endet mit `{{accountSignature}}`, die Instantly mit der Signatur des Versandpostfachs füllt.
 
 Schema v1, wie `create_campaign(blueprint=…)` es erwartet (geprüft gegen den
-Blueprint-Validator von ListM8: `schemaVersion` 1, `campaign.name` 3-255 Zeichen, `campaign.language` `de` oder `en` (optional, ab MCP 4.7.0, Standard `de`), Config-Blöcke
+Blueprint-Validator von DealSupply: `schemaVersion` 1, `campaign.name` 3-255 Zeichen, `campaign.language` `de` oder `en` (optional, ab MCP 4.7.0, Standard `de`), Config-Blöcke
 als Objekte, `salutation` ∈ `du`/`sie` (der Server nimmt noch `team` an, der Skill setzt es nie), Variablennamen `^[a-zA-Z][a-zA-Z0-9_]*$` und
 eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 leer erlaubt (Thread), `delayDays` ganze Zahl ≥ 0,
 `delayUnit` `days` oder `hours`, max. 25 Variablen und 25 Steps).
@@ -15,7 +16,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
 
 | Punkt | Wahl | Warum |
 |---|---|---|
-| Offer-Karte | C: Konkretes Deliverable (Reziprozität) | kleine Zielgruppe, hohe Reply Rate nötig |
+| Offer-Karte | C: Konkretes Deliverable (Reziprozität) | der Entwurf ist je Praxis mit KI in 5 bis 10 Minuten bis morgen lieferbar (Empfehlungsregel der App: dann C, sonst A) |
 | Marketing-Offer | fertiger Entwurf der neuen Startseite inklusive Online-Terminbuchungs-Flow | Deliverable, kein Gespräch; vom Nutzer lieferbar |
 | Zweiter Satz zum Angebot | der feste Satz der Karte C: „Ich bin gerade noch an den letzten Feinheiten dran.“ | Standard seit 10.11.2026 wie in der App: für alle Leads gleich, als Text im Body, eigener Absatz zwischen Angebotssatz und Schlussfrage; das „morgen“ steht im Schlusssatz. Karte A und B siehe „Variante Karte A und B“ unten |
 | Für Erfahrene | keine Tests, ein Angebot für alle | Standard; Tests und „Angebot je Lead“ nur auf Wunsch, siehe „Für Erfahrene“ unten |
@@ -23,9 +24,11 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
 | Sprache | `language: "de"` | deutschsprachige Praxen; eine englische Kampagne hat eigene Regeln (`outreach-copy`, Abschnitt „Kampagnensprache“) |
 | Ansprache | `salutation: "du"`: „Hallo Vorname,“ (Person der Versandadresse, bei info@ o. Ä. der Inhaber aus der Recherche), Fallback „Hallo,“, durchgehend du/dir/dein | Du-Form, eine Person (Inhaberin/Inhaber) |
 | Betreffs | Step 1 „kurze Frage“, Step 2, 3 und 4 leer | Entwurfs-Angebot (Karte C): Frage statt Ankündigung; Step 2 bis 4 antworten im Thread von Mail 1 |
-| Sequenz | 4 Steps, `delayDays` 0/3/5/7 | Standard; Step 3 ist der neue Winkel mit Social Proof, Step 4 der Abschied mit Routing-Hinweis; ohne echten Zeit- oder Kapazitätsgrund des Nutzers keine Dringlichkeits-Mail |
+| Sequenz | 4 Steps, `delayDays` 0/3/5/7 | Standard; Step 3 ist der neue Winkel mit dem Beleg als Ich-Satz, Step 4 der Abschied der App mit `{{ai.routing}}`; ohne echten Zeit- oder Kapazitätsgrund des Nutzers keine Dringlichkeits-Mail |
+| Variablen | `hallo`, `intro`, `routing` | wie die App; der `intro`-Prompt trägt nur Kontext, Sperrliste und Ersatzsatz (die Opener-Regeln gibt der Server), der `routing`-Prompt ist wörtlich die Du-Fassung der App (`routing-baustein.md`, „Die drei Fassungen“; hier als Platzhalter gezeigt, beim Anlegen den echten Text einsetzen) |
+| Signatur | „Viele Grüße“, darunter `{{accountSignature}}` | wie die App; keine Unterschrift mit Name, Rolle oder Firma im Mailtext |
 | Sperrliste | Angstpatienten, Lachgas, Sedierung/Narkose, Kinderbehandlung, Notdienst, Prophylaxe/Dentalhygiene, digitaler Scan/Abdruck, Implantate allgemein; für Beauty und Dermatologie Botox/Hyaluron, Microneedling, Laser-Haarentfernung | branchenübliche Leistungen tragen keinen Opener (Austauschtest); steht gleichlautend in `researchAgentConfig.additionalPrompt` und im `intro`-Prompt |
-| Wörter (fester Text ohne Signatur) | 41 / 23 / 54 / 55 | Step 1 mit Anrede und Bezug (bis 2 Sätze, höchstens 30 Wörter) etwa 70, unter 120 |
+| Wörter (fester Text ohne Signatur) | 41 / 23 / 37 / 20 | Step 1 mit Anrede und Bezug (bis 2 Sätze, höchstens 30 Wörter) etwa 70, unter 120; Step 4 mit dem Routing-Absatz (höchstens 35) unter 60 |
 
 ## Blueprint
 
@@ -88,7 +91,7 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
     "researchAgentConfig": {
       "additionalPrompt": "Finde pro Praxis genau einen Anker für den Mail-Opener: etwas, das diese Praxis von anderen ihrer Branche abhebt und positiv verwendbar ist. Beginne immer mit den Bewertungen und prüfe in dieser Reihenfolge: 1) Bewertungstexte (Treffer von Bewertungsportalen und Verzeichnissen öffnen): was Patienten konkret über DIESE Praxis schreiben und wie viele Bewertungen dieses Lob tragen, 2) Website: EIN abhebendes Detail (eigenes Konzept oder eigener Name, ungewöhnliche Sprechzeiten, eigenes Verfahren, seltene Spezialisierung, Auszeichnung), auch Wachstum, ein neuer Behandler oder Standort aus einer Stellenanzeige (was die Anzeige über die Praxis verrät, nicht dass gesucht wird), 3) Anzahl und Schnitt der Bewertungen mit Quelle; Werte aus den Lead-Attributen des Imports (Google-Profil) gelten als Quelle, widersprechen sich Quellen, notiere den kleineren Wert. Austauschtest: Ein Fund, der auf zehn andere Praxen derselben Branche in der Stadt passt, ist kein Anker. Sperrliste (branchenübliche Leistungen, nie als Anker vormerken, außer als Lob aus Bewertungstexten): Angstpatienten, Lachgas, Sedierung oder Narkose, Kinderbehandlung, Notdienst, Prophylaxe und Dentalhygiene, digitaler Scan oder Abdruck, Implantate allgemein; bei Beauty-Studios und dermatologischen Praxen zusätzlich Faltenbehandlung mit Botox oder Hyaluron, Microneedling, Laser-Haarentfernung. Erfasse zusätzlich: Vorname der Inhaberin oder des Inhabers (bei einer generischen Praxisadresse wie info@ ist das die Person, an die die Mail gehen soll), ob eine Online-Terminbuchung eingebunden ist, wie alt die Website wirkt, Stadt. Notiere nur, was du wirklich auf der Website, in Bewertungsportalen, in Verzeichnissen oder in den Lead-Attributen siehst. Keine Vermutungen, keine erfundenen Zahlen.",
       "researchDepth": "quick",
-      "researchPriorities": "Lob aus Bewertungstexten > abhebendes Website-Detail (auch Wachstum/Stellenanzeige) > Anzahl und Schnitt der Bewertungen (ab 30 Bewertungen und 4,5) > Fallback"
+      "researchPriorities": "Anzahl und Schnitt mit belegtem Lob (ab 30 Bewertungen und 4,5) > Lob aus Bewertungstexten > abhebendes Website-Detail (auch Wachstum/Stellenanzeige) > Anzahl und Schnitt allein > Ersatzsatz"
     },
     "emailAgentConfig": {
       "emailLanguage": "Deutsch (DACH)",
@@ -104,8 +107,13 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
     },
     {
       "name": "intro",
-      "prompt": "Du schreibst den Opener einer Cold-Mail. Absender ist Jonas Weber, selbstständiger Webdesigner, der Websites für inhabergeführte ästhetische Praxen baut (Zahnärzte mit Ästhetik-Fokus, Beauty-Studios, dermatologische Privatpraxen im DACH-Raum). Angeboten wird im weiteren Verlauf der Mail ein fertig vorbereiteter Entwurf einer neuen Startseite inklusive Online-Terminbuchung. Dein Text steht direkt unter der Anrede \"Hallo ...,\" und wird danach mit einem festen Satz fortgesetzt, der mit \"Deswegen war ich so frei ...\" beginnt.\n\nZiel: eine Beobachtung, die diese Praxis von anderen ihrer Branche abhebt und als Lob endet, damit der feste Satz danach einen Grund hat. Das kann nur jemand schreiben, der wirklich auf Website, Google-Profil oder Bewertungen war. Der Empfänger soll merken: hier hat sich jemand Mühe gemacht.\n\nAufgabe: Schreibe maximal 2 kurze Sätze, zusammen höchstens 30 Wörter, mit EINEM Detail statt gestapelter Lobpunkte. Beginne mit einem Kleinbuchstaben, weil dein Text direkt auf die Anrede mit Komma folgt; nur der erste Buchstabe ist klein, ein zweiter Satz beginnt groß. Schreibe inhaltlich über den Empfänger, nie über den Absender; Einstiegsrahmen wie \"ich hab mir ... angeschaut\" oder \"mir ist aufgefallen\" sind erlaubt und keine Selbstvorstellung. Ton: locker, authentisch, Du-Form im Singular (du, dein, dir, nie ihr, euch, Sie), wie eine kurze Nachricht an einen Bekannten. Der letzte Satz muss so enden, dass ein Satz mit \"Deswegen war ich so frei ...\" nahtlos anschließt, ohne dass du ein Problem, eine Lücke oder einen Bedarf benannt hast.\n\nWas abhebt: ein Eigenname oder eigenes Konzept, eine ungewöhnliche Sprechzeit oder Zahl, ein eigenes Verfahren, eine seltene Spezialisierung, eine Auszeichnung, ein Lob aus Bewertungen, auffällige Bewertungszahlen.\n\nAustauschtest: Passt dein Satz auf zehn andere Praxen derselben Branche in der Stadt, ist er kein Aufhänger. Dann nimm den nächsten Anker, zuletzt den Fallback. Ein Nutzen rettet keine Standardleistung. Dasselbe Thema besteht als Lob aus Bewertungstexten (was Patienten über DIESE Praxis schreiben), nicht als Zeile aus der Leistungsliste. Fällt durch: Lachgas für Angstpatienten. Besteht: ein eigenes Kronen-Konzept mit der Krone am selben Termin.\n\nSperrliste (branchenübliche Leistungen, die keinen Opener tragen, außer als Lob aus Bewertungstexten): Angstpatienten, Lachgas, Sedierung oder Narkose, Kinderbehandlung, Notdienst, Prophylaxe und Dentalhygiene, digitaler Scan oder Abdruck, Implantate allgemein; bei Beauty-Studios und dermatologischen Praxen zusätzlich Faltenbehandlung mit Botox oder Hyaluron, Microneedling, Laser-Haarentfernung.\n\nAnker-Reihenfolge, nimm den ersten, der den Austauschtest besteht:\n1. Lob aus Bewertungstexten: eine konkrete Paraphrase dessen, was Patienten an dieser Praxis loben. Plural oder \"immer wieder\" nur, wenn mindestens 2 Bewertungen dieses Lob tragen.\n2. Abhebendes Detail von der Website, auch Wachstum oder eine Stellenanzeige als Erkenntnis über die Praxis (Wachstum, Spezialisierung, neues Projekt), ohne zu sagen, dass die Praxis sucht oder einstellt.\n3. Anzahl und Schnitt der Bewertungen als eigener Anker, nur bei mindestens 30 Bewertungen und einem Schnitt ab 4,5: Zahl gerundet (\"über 200\"), Schnitt mit Komma (\"4,8\"). Werte aus dem Import (Google-Profil) gelten als Quelle; widersprechen sich Quellen, nimm den kleineren Wert. Unter 30 Bewertungen oder unter 4,5 keine Bewertungszahlen.\n4. Fallback.\n\nPositiver Schluss: Kein Schluss, wenn das Detail schon selbst ein Lob ist (ein Lob aus Bewertungstexten, eine Auszeichnung) oder der feste Satz danach lobt: nie zweimal loben. Sonst, nach einem neutralen Faktum oder einer Bewertungszahl, eine kurze persönliche Reaktion, die am Detail hängt, in der Vergangenheit erzählt, kurz und ohne Übertreibung (Muster: \"das fand ich richtig schön\", \"das hat mir gut gefallen\", \"das hat mich angesprochen\"; oder eine eigene kurze Reaktion im selben Ton, höchstens etwa sechs Wörter; nie allein, nie als feste Wendung, von Lead zu Lead wechselnd). Eine Würdigung nur ausnahmsweise, wenn sie etwas Neues und Konkretes über die Praxis sagt, das nicht schon im Detail steht; nie im Gutachten-Ton und nie als \"das zeigt, wie ...\" oder \"das spricht für ...\" über Ausrichtung, Erfahrung oder Qualität. Seltenheit nie im allgemeinen \"man\" und nie als Vergleich mit anderen Praxen (\"bietet sonst kaum eine Praxis an\"); im Zweifel die Reaktion oder gar kein Schluss, nie zwei Schlussformen hintereinander. Nie ein Mechanik-Nutzen, der erklärt, was man dank des Details tun oder sich sparen kann, in jeder Satzform (\"so können sich Interessierte vorab ein Bild machen\", \"so kann man unverbindlich nachfragen\"). Nie ein leeres Prüfer-Urteil über die Qualität der Arbeit, das aus dem Detail nicht folgt (\"das wirkt vertrauenswürdig\", \"so einen Schnitt hält man nur, wenn die Arbeit stimmt\", \"da machst du vieles richtig\", \"zeigt, dass die Behandlung ankommt\"). Nichts erfinden, nur was direkt aus dem Detail folgt (nie \"deine Patienten lieben das\", nie \"alle positiv\"). Nicht beim Fallback.\n\nEinstieg: Kein Einstieg ist Standard. Wähle ihn nach der letzten Ziffer der Lead-ID: 0-2 \"mir ist aufgefallen, dass ...\", 3-5 \"ich hab mir ... angeschaut\", 6-7 \"beim Stöbern auf deiner Website ...\", 8-9 direkt mit dem Detail. Ein Bewertungsanker nennt immer die Quelle im Einstieg (\"ich hab mir deine Bewertungen angeschaut, und ...\"). Steht keine Lead-ID im Kontext, wähle den Einstieg passend zum Anker und nicht immer denselben.\n\nStreng verboten:\n- Jede Form von Kritik, Defizit oder Verbesserungsvorschlag. Keine Wörter wie Problem, Lücke, Hürde, fehlt, veraltet, ausbaufähig, begrenzt, noch nicht, leider, schade, verschenkt Potenzial.\n- Konjunktiv-Wünsche wie \"wäre schön, wenn ...\" oder \"wäre sinnvoll, wenn ...\".\n- Auditartige Formulierungen, Ratschläge, Bevormundung.\n- Selbstvorstellung oder Pitch: kein \"Wir sind\", \"Mein Name ist\", \"Wir helfen\", \"Ich bin auf deine Webseite gestoßen\".\n- Floskeln, Superlative und Lobadjektive ohne Inhalt wie \"tolle Webseite\", \"ich war beeindruckt von deinem Auftritt\", \"finde ich spannend\", \"finde ich stark\", \"Hammer\", \"beeindruckend\" ohne Detail, \"das sieht man selten\", \"das sieht man nicht immer\", \"hat man nicht alle Tage\", \"das spricht für sich\".\n- Ein zweiter Satz ist konkret und wiederholt oder nimmt nicht vorweg, was der feste Text danach sagt.\n- Der angesprochenen Person nichts zuschreiben, was einer anderen Person gehört (zum Beispiel den Podcast des Inhabers in einer Mail an eine Mitarbeiterin); nenne die Person dann beim Namen.\n- Erfundene Fakten, Namen, Rollen oder Zahlen. Nenne Bewertungszahlen nur, wenn sie im Research oder in den Lead-Attributen belegt sind.\n- Sichtbare Platzhalter in Klammern, M-Striche, Gedankenstriche als Trenner, Emojis, Bold, Aufzählungen.\n- Mehr als 2 Sätze.\n\nFallback: Wenn kein Anker den Austauschtest besteht, schreibe genau diesen Satz: \"eine inhabergeführte Praxis zu leiten, bedeutet viel Verantwortung, und das sehe ich mit Respekt.\" Der Fallback behauptet nichts Unbelegtes über die Praxis. Er bleibt wörtlich, ohne angehängten Schluss. Nutze diesen Fallback lieber, als eine Beobachtung zu erfinden oder eine generische Floskel zu schreiben.\n\nDeutsche Rechtschreibung mit echten Umlauten und ß.",
+      "prompt": "# Opener\n\nDie allgemeinen Opener-Regeln (Abhebung, Austauschtest, Anker-Reihenfolge, positiver Schluss, Einstieg, Anrede) bekommst du zur Laufzeit. Hier steht nur, was für diese Kampagne gilt.\n\n## Kontext\n\nDu schreibst den Opener einer Cold-E-Mail.\n\n- Absender: Weber Webdesign (Jonas Weber), Websites für inhabergeführte ästhetische Praxen\n- Angebot: ein fertiger Entwurf der neuen Startseite inklusive Online-Terminbuchung\n- Zielgruppe: inhabergeführte ästhetische Praxen im DACH-Raum (Zahnarztpraxen mit Ästhetik-Fokus, Beauty- und Ästhetik-Studios, dermatologische Privatpraxen)\n- Ansprache: du, die Person im Singular\n\nDein Text steht direkt unter der Anrede und wird im festen Mailtext mit dem Satz „Deswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.“ fortgesetzt. Das Angebot, die Überleitung und der Stand der Arbeit stehen also im festen Text. Du nennst sie nicht und nimmst sie nicht vorweg.\n\nDies ist Email 1 von 4 der Sequenz.\n\n## Sperrliste\n\nAngstpatienten, Lachgas, Sedierung oder Narkose, Kinderbehandlung, Notdienst, Prophylaxe und Dentalhygiene, digitaler Scan oder Abdruck, Implantate allgemein; bei Beauty-Studios und dermatologischen Praxen zusätzlich Faltenbehandlung mit Botox oder Hyaluron, Microneedling, Laser-Haarentfernung. Diese Themen tragen keinen Opener, außer als Lob aus Bewertungstexten.\n\n## Ersatzsatz\n\nGibt die Recherche keinen Anker her, der den Austauschtest besteht, schreibe genau diesen Satz, ohne Einstieg und ohne Schluss (Branche und Region pro Lead aus den Lead-Daten einsetzen, nie als Klammer stehen lassen): \"als [Branche] in [Ort oder Region] bist du genau die Art Praxis, die ich suche.\"\n\n**Schreibe jetzt nur den Opener. Nichts danach.**",
       "sortOrder": 2
+    },
+    {
+      "name": "routing",
+      "prompt": "<Routing-Prompt der App, Du-Fassung aus routing-baustein.md, wörtlich>",
+      "sortOrder": 3
     }
   ],
   "sequence": {
@@ -113,28 +121,28 @@ eindeutig, Prompt ≥ 10 Zeichen, `subject` in Step 1 nicht leer und ab Step 2 l
       {
         "stepNumber": 1,
         "subject": "kurze Frage",
-        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran.\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.",
+        "body": "{{ai.hallo}}\n\n{{ai.intro}}\n\nDeswegen war ich so frei und habe dir einen kompletten Entwurf für eine neue Startseite erstellt, inklusive eingebautem Online-Terminbuchungs-Flow.\n\nIch bin gerade noch an den letzten Feinheiten dran.\n\nWäre es in Ordnung, wenn ich es dir morgen zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\n{{accountSignature}}\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.",
         "delayDays": 0,
         "delayUnit": "days"
       },
       {
         "stepNumber": 2,
         "subject": "",
-        "body": "{{ai.hallo}}\n\ndu hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail bei dir angekommen ist.\n\nEin kurzes Ja reicht mir.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\ndu hast sicher viel um die Ohren, ich wollte nur sichergehen, dass meine Mail bei dir angekommen ist.\n\nEin kurzes Ja reicht mir.\n\n\nViele Grüße\n{{accountSignature}}",
         "delayDays": 3,
         "delayUnit": "days"
       },
       {
         "stepNumber": 3,
         "subject": "",
-        "body": "{{ai.hallo}}\n\nbei der Praxis Dr. Sommer in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten bis zu verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen.\n\nWäre es in Ordnung, wenn ich dir morgen den Entwurf für deine neue Startseite zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.",
+        "body": "{{ai.hallo}}\n\nich habe die Website der Praxis Dr. Sommer neu aufgesetzt, danach haben sich ihre Online-Terminanfragen in vier Monaten verdreifacht.\n\nWäre es in Ordnung, wenn ich dir morgen den Entwurf für deine neue Startseite zusende? Völlig unverbindlich natürlich.\n\n\nViele Grüße\n{{accountSignature}}\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid.",
         "delayDays": 5,
         "delayUnit": "days"
       },
       {
         "stepNumber": 4,
         "subject": "",
-        "body": "{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung. Sag mir gern kurz Bescheid, falls ich mich damit besser bei jemand anderem im Team melden sollte. Der Entwurf bleibt bei mir liegen, falls das Thema irgendwann wieder aktuell wird.\n\nAlles Gute für die Praxis.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign",
+        "body": "{{ai.hallo}}\n\nda ich bisher nichts gehört habe, gehe ich davon aus, dass es gerade nicht passt. Das ist absolut in Ordnung.\n\n{{ai.routing}}\n\n\nViele Grüße\n{{accountSignature}}",
         "delayDays": 7,
         "delayUnit": "days"
       }
@@ -152,8 +160,9 @@ dem Blueprint oben ändern sich drei Stellen gemeinsam:
 
 1. Step 1 `body`: Angebotssatz der Karte, darunter der feste Satz der Karte, darunter der CTA der
    Karte, jeder als eigener Absatz.
-2. `intro`-Prompt: Der feste Folgesatz heißt „Genau deshalb …“ (A) bzw. „Genau solche Praxen …“ (B)
-   statt „Deswegen war ich so frei …“, und das Angebot ist kein fertig vorbereiteter Entwurf.
+2. `intro`-Prompt: Der feste Folgesatz unter „Kontext“ heißt „Genau deshalb bieten wir aktuell …“ (A)
+   bzw. „Genau solche Praxen suchen wir gerade …“ (B) statt „Deswegen war ich so frei …“, und das
+   Angebot ist kein fertig vorbereiteter Entwurf.
 3. `offer_contract`: Titel und CTA der Karte; der Betreff von Step 1 bleibt „kurze Frage“. Step 3
    endet mit der Schlussfrage der Karte aus Step 1 (A: „Wäre es in Ordnung, wenn ich das auch für dich
    erstelle? Völlig unverbindlich natürlich.“, B: „Wärst du grundsätzlich offen dafür?“).
@@ -163,7 +172,7 @@ dem Blueprint oben ändern sich drei Stellen gemeinsam:
 Step 1 `body`:
 
 ```json
-"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau deshalb biete ich aktuell für fünf Praxen im DACH-Raum einen kostenlosen Entwurf für eine neue Startseite mit Online-Terminbuchung an.\n\nDarin wäre alles genau auf euch zugeschnitten.\n\nWäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau deshalb bieten wir aktuell für eine Handvoll Praxen im DACH-Raum einen kostenlosen Entwurf für eine neue Startseite mit Online-Terminbuchung an.\n\nDarin wäre alles genau auf euch zugeschnitten.\n\nWäre es in Ordnung, wenn ich das auch für dich erstelle? Völlig unverbindlich natürlich.\n\n\nViele Grüße\n{{accountSignature}}\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
 ```
 
 ### Karte B
@@ -171,7 +180,7 @@ Step 1 `body`:
 Step 1 `body`:
 
 ```json
-"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suchen wir gerade. Wir starten ein Pilotprojekt für Startseiten mit Online-Terminbuchung mit fünf Praxen im DACH-Raum.\n\nIm Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.\n\nWärst du grundsätzlich offen dafür?\n\n\nViele Grüße\nJonas Weber\nInhaber - Weber Webdesign\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
+"{{ai.hallo}}\n\n{{ai.intro}}\n\nGenau solche Praxen suchen wir gerade. Wir starten ein Pilotprojekt für buchbare Praxis-Startseiten mit einer Handvoll Praxen im DACH-Raum.\n\nIm Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.\n\nWärst du grundsätzlich offen dafür?\n\n\nViele Grüße\n{{accountSignature}}\n\nFalls das gerade kein Thema für dich ist, gib mir kurz Bescheid."
 ```
 
 Die festen Sätze der Karten gelten wörtlich, auch in der Sie-Form („Darin wäre alles genau auf Sie
@@ -191,7 +200,7 @@ in `fuer-erfahrene.md`. Gegenüber dem Blueprint oben ändert sich:
 - **„Angebot je Lead“ (Karte A und C):** `campaign.station` mit den Antworten der Karten, in Step 1
   `{{ai.offer_text}}\n\n{{ai.angebot_ausfuehrung}}\n\n{{ai.offer_cta}}` statt Angebotssatz, festem
   Satz und Schlussfrage, die drei Variablen `offer_text`, `angebot_ausfuehrung` (die Anweisung nach
-  der Vorlage, ListM8 baut sie beim Import selbst) und `offer_cta`, und Step 3 endet mit „Melde dich gerne, wenn das Thema für dich relevant
+  der Vorlage, DealSupply baut sie beim Import selbst) und `offer_cta`, und Step 3 endet mit „Melde dich gerne, wenn das Thema für dich relevant
   ist.“ statt mit der Schlussfrage. Vollständiges Beispiel mit diesem Absender:
   `fuer-erfahrene.md`, Teil 2.
 
@@ -201,19 +210,19 @@ Standard ist `du` im Singular. Ohne benennbaren Ansprechpartner lautet der Gruß
 Text bleibt im Singular („dein Team“, „deine Praxis“); eine Ihr- oder Team-Form gibt es nicht. Nur
 wenn der Nutzer die Kampagne siezen will (Kampagnen an sehr große Unternehmen), ändert man drei
 Stellen gemeinsam: `emailAgentConfig.salutation`, die Format-Regeln im `hallo`-Prompt und die
-Pronomen im festen Sequenztext (inklusive `offer_contract.cta` und der Pronomen-Vorgabe im
-`intro`-Prompt).
+Pronomen im festen Sequenztext (inklusive `offer_contract.cta` und der Zeile „Ansprache“ im
+`intro`-Prompt) und die Fassung des `routing`-Prompts (Sie-Fassung, `routing-baustein.md`).
 
 | `salutation` | `hallo`-Regel im Prompt | fester Text, Beispiel Step 1 |
 |---|---|---|
-| `sie` | „Hallo Frau <Nachname>,“ / „Hallo Herr <Nachname>,“, Titel nur wenn belegt; Fallback „Guten Tag,“ | „Deswegen war ich so frei und habe Ihnen einen kompletten Entwurf … erstellt …“ / „Wäre es in Ordnung, wenn ich es Ihnen morgen zusende? Völlig unverbindlich natürlich.“ |
+| `sie` | „Hallo Frau <Nachname>,“ / „Hallo Herr <Nachname>,“ (Frau/Herr nur, wenn belegt, sonst „Guten Tag <Vorname> <Nachname>,“), keine Titel; Fallback „Guten Tag,“ | „Deswegen war ich so frei und habe Ihnen einen kompletten Entwurf … erstellt …“ / „Wäre es in Ordnung, wenn ich es Ihnen morgen zusende? Völlig unverbindlich natürlich.“ |
 
 Nie „Hallo Herr/Frau …“ zusammen mit Du-Text.
 
 ## Optional: Kurzname `firma`
 
 Führt die Kampagne nach `outreach-campaign` den Kurznamen als AI-Variable `firma`, kommt sie
-dazu (Reihenfolge `hallo`, `firma`, `intro`, `sortOrder` 1-3; mit „Angebot je Lead“ danach `offer_text`, `angebot_ausfuehrung`, `offer_cta`). Der Betreff
-von Step 1 bleibt „kurze Frage“; nur Karte A, B und E tragen den Namen im Betreff, und dann
-ausschließlich als `{{ai.firma}}`, nie als rohes `{{lead.company}}`. Am Copy-Regelwerk ändert
-das nichts.
+dazu (Reihenfolge `hallo`, `firma`, `intro`, `sortOrder` 1-3; mit „Angebot je Lead“ danach `offer_text`, `angebot_ausfuehrung`, `offer_cta`; `routing` zuletzt). Der Betreff
+von Step 1 bleibt bei jeder Karte „kurze Frage“; einen Firmennamen im Betreff gibt es nur über den
+Betreff-Test (Variante B mit `betreff_b`, `fuer-erfahrene.md`), nie als rohes `{{lead.company}}`. Im
+Text steht `{{ai.firma}}` statt `{{lead.company}}`. Am Copy-Regelwerk ändert das nichts.
