@@ -17,7 +17,7 @@ Diese Abschnitte liest der Server später maschinell, sie sind Pflicht:
 - `### Weitere Ansprechpartner` (höchstens zwei Personen oder genau eine Zeile „Routing nicht sinnvoll“):
   Daraus schreibt die Variable `routing` ihre Fälle.
 
-„Anker-Regeln oben“ und „RANGFOLGE DER ANKER“ meinen `researchGeneration.anchorRules` aus `get_lead_data`.
+„Anker-Regeln oben“ und „RANGFOLGE DER ANKER“ meinen `lead.researchGeneration.anchorRules` aus `get_lead_data`.
 Die eckigen Klammern sind Platzhalter: durch belegte Inhalte ersetzen, nie stehen lassen. Fehlt ein Wert,
 steht dort, was die Vorlage dafür vorsieht („nicht festgestellt“, „keine Hinweise gefunden“, „unklar (Grund)“,
 „keine“).

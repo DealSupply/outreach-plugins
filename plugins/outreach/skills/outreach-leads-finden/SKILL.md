@@ -41,17 +41,18 @@ Fragen, was fehlt, und nichts erfinden:
 
 Eine Suche nimmt nur Schlüssel aus dem Katalog, keinen Freitext.
 
-- `search_prospect_categories(query)`: liefert `categories[].key` (etwa `gcid:electrician`) mit deutschem und englischem Namen. Bei mehreren passenden Treffern den Nutzer wählen lassen.
-- `search_prospect_areas(query, country?, type?)`: liefert `areas[].area_key` mit `label`. `radius_allowed` sagt, ob ein Umkreis möglich ist. Bei `radius_required: true` gibt es den Ortsnamen im Bundesland mehrfach: einen Umkreis angeben oder über die Postleitzahl suchen.
+- `search_prospect_categories(query)`: liefert `categories[].key` (etwa `gcid:electrician`) mit deutschem und englischem Namen. Die Suche findet nur Branchen, deren Name jedes Wort der Anfrage enthält. Deshalb ein Wort je Aufruf und mehrere Wortformen nacheinander suchen: die Tätigkeit, die Berufsbezeichnung und den englischen Begriff (etwa „Physiotherapie“, „Physiotherapeut“, „physiotherapist“). Betriebe derselben Art führen oft verschiedene Branchen; eine einzige Branche findet dann nur einen Teil. Verwandte Branchen zusammen ins Angebot nehmen (bis zu 10) und dem Nutzer die Auswahl mit Namen nennen, bevor das Angebot kommt. Faustregel: mindestens drei Wortformen suchen (Tätigkeit, Berufsbezeichnung, englisch); findet eine nichts, sagt das nichts über die anderen. Erst wenn alle drei zusammen nur eine Branche ergeben, dem Nutzer sagen, dass der Katalog nur diese eine führt.
+- `search_prospect_areas(query, country?, type?)`: liefert `areas[].area_key` mit `label`. `radius_allowed` sagt, ob ein Umkreis möglich ist. Bei `radius_required: true` gibt es den Ortsnamen im Bundesland mehrfach: einen Umkreis angeben oder über die Postleitzahl suchen. Gibt es zu einem Ort sowohl die Stadt als auch eine Postleitzahl, die Stadt nehmen; `postal_code_count` zeigt, wie viele Postleitzahlen sie umfasst. Eine einzelne Postleitzahl nur, wenn der Nutzer genau diesen Teil will. Gibt es den Ortsnamen mehrfach oder weicht der Zusatz ab (der Nutzer sagt „Rheinfelden (Baden)“, der Katalog führt „Rheinfelden (Baden-Württemberg)“ und daneben einen gleichnamigen Ort in der Schweiz), den gewählten Eintrag mit Land und Bundesland nennen und bestätigen lassen, bevor das Angebot kommt; `country` grenzt die Suche auf `DE`, `AT` oder `CH` ein.
 - Optional `list_prospect_area_postal_codes(area_key, radius_km?, category_keys)`: zeigt die Postleitzahlen des Gebiets und wann der Workspace sie für diese Branchen zuletzt durchsucht hat. Wer nur das Offene will, gibt die offenen Postleitzahlen einzeln als Gebiete ins Angebot.
 
 ### 3. Angebot holen
 
-`quote_prospect_search(category_keys, areas=[{area_key, radius_km?}], budget_credits?, …)`. Der Aufruf startet nichts und bucht nichts.
+`quote_prospect_search(category_keys, areas=[{area_key, radius_km?}], budget_credits?, …)`. Der Aufruf startet nichts und bucht nichts. Was der Nutzer nicht will, bleibt im Angebot weg: ohne Filter und ohne Rezensionen die Parameter `min_rating`, `min_reviews`, `exclude_chains` und `reviews_per_place` nicht setzen. Das gilt nur für diesen Aufruf. Die `start_arguments` der Antwort tragen die Standardwerte trotzdem (`reviews_per_place` 0, `exclude_chains` false, `rescan_covered` false) und gehen unverändert in den Start; `rescan_covered: false` mitzusenden ist richtig, verboten ist nur `true` ohne ausdrücklichen Wunsch.
 
 Dem Nutzer zeigen:
 
-- den Satz aus `offer`, sinngemäß auf Deutsch und mit unveränderten Zahlen;
+- den Satz aus `offer`, sinngemäß auf Deutsch und mit unveränderten Zahlen (der Server liefert ihn auf Englisch);
+- ob die Suche das ganze Gebiet abdeckt, nur nach `limits.whole_areas` und den Zahlen, nie nach dem Satz allein: `limits.whole_areas: true` gibt es nur ohne Budget. Mit Budget ist „das Budget reicht für das ganze Gebiet“ eine Schätzung (`estimate.entries` liegt unter `limits.max_entries`); die Suche kann trotzdem am Budget enden. Dann so sagen: „Nach der Schätzung reicht das Budget für das Gebiet. Findet die Suche mehr Betriebe, endet sie am Budget, und du kannst weitersuchen.“;
 - den Höchstbetrag `credits.max` (mehr wird nie abgebucht) und das Guthaben `credits.available`;
 - bei Hinweisen in `hints`, was sie bedeuten (Tabelle unten).
 
@@ -67,24 +68,25 @@ Vor der Frage nach der Zustimmung prüfen:
 | Hinweis `cap_limits_result` | Das Budget reicht nicht für die ganzen Gebiete | sagen, dass danach weitergesucht werden kann |
 | Hinweis `budget_below_entry_price` | Das Budget bezahlt keinen einzigen Eintrag | Budget erhöhen oder Rezensionen senken |
 | Hinweis `filters_reduce_leads` | Filter sortieren Einträge aus, die trotzdem bezahlt werden | dem Nutzer sagen |
+| Hinweis `estimate_from_start_values` | Die Schätzung stammt aus Ausgangswerten der Branche, nicht aus gemessenen Suchen | sagen, dass die Zahl nur ein Richtwert ist; der Höchstbetrag hält |
 | `estimate.rough: true` | Für die Branche gibt es keine belastbare Schätzung | sagen, dass die Zahl deutlich abweichen kann; ein Budget empfehlen |
 
-Was bezahlt wird: jeder gefundene Betrieb mit eigener Website und gesuchter Branche, auch wenn er schon als Lead im Konto ist. Nicht bezahlt wird ein Betrieb ohne Website, ein Ort einer anderen Branche und ein Betrieb, den das Konto in den letzten 90 Tagen schon über Leads finden bezahlt hat. Mit Rezensionstexten ist die genannte Zahl der Einträge eine Untergrenze, der Höchstbetrag hält trotzdem.
+Was bezahlt wird: jeder gefundene Betrieb mit eigener Website und gesuchter Branche, auch wenn er schon als Lead im Konto ist, und auch ein weiterer Standort derselben Firma. Deshalb nie neue Leads in Höhe der Einträge versprechen. Nicht bezahlt wird ein Betrieb ohne Website, ein Ort einer anderen Branche und ein Betrieb, den das Konto in den letzten 90 Tagen schon über Leads finden bezahlt hat. Mit Rezensionstexten ist die genannte Zahl der Einträge eine Untergrenze, der Höchstbetrag hält trotzdem.
 
 ### 4. Zustimmung einholen und starten
 
 Fragen, etwa: „Soll ich die Suche zu diesem Angebot starten? Abgebucht werden höchstens X Credits.“ Erst nach einem klaren Ja:
 
-`start_prospect_search` mit den `start_arguments` des Angebots, unverändert, dazu eine neue `request_id` (UUID). Optional `list_id` (bestehende Liste) oder `list_name` (Name der neuen Liste).
+`start_prospect_search` mit den `start_arguments` des Angebots, unverändert, dazu eine neue `request_id` (UUID). Optional `list_id` (bestehende Liste) oder `list_name` (Name der neuen Liste). `start_arguments` ist kein eigener Parameter: Jedes Feld daraus wird ein Parameter des Aufrufs (`category_keys`, `areas`, `budget_credits`, `quote_hash` …), `request_id` und `list_name` bzw. `list_id` stehen daneben.
 
 - Bleibt die Antwort aus (Zeitüberschreitung), denselben Aufruf mit **derselben** `request_id` wiederholen: Der Server liefert dann die schon gestartete Suche und startet keine zweite.
 - Bei `price_changed` oder `quote_changed` trägt die Meldung ein neues Angebot: zeigen, neu zustimmen lassen, mit dem neuen `quote_hash` starten.
 
-Die Antwort nennt `search_id` und `app_url` (Seite der Suche in der App). Beides dem Nutzer nennen.
+Die Antwort nennt `search_id` und `app_url` (Seite der Suche in der App). Beides dem Nutzer nennen. `is_terminal` und `progress` stehen nicht in dieser Antwort, erst im Status (Schritt 5).
 
 ### 5. Stand abfragen
 
-`get_prospect_search_status(search_id)` alle 30 bis 60 Sekunden, bis `is_terminal: true`. Ein Gebiet kann einige Minuten dauern.
+`get_prospect_search_status(search_id)`, bis `is_terminal: true`. Die erste Abfrage nach etwa 10 Sekunden: Eine kleine Suche ist dann oft schon fertig. Läuft sie noch, alle 30 bis 60 Sekunden; ein Gebiet kann einige Minuten dauern. Zwischen den Abfragen wirklich warten (ein Warte-Befehl deiner Umgebung, etwa `sleep 30` in der Shell); gibt es keinen, dem Nutzer den Stand nennen und auf seine Nachfrage erneut abfragen, nicht ohne Pause in Schleife abfragen.
 
 Zwischendurch kurz berichten: `progress.places_so_far` (gefundene Betriebe), `progress.new_leads_so_far`, `progress.areas_done` von `progress.areas_total`, und `progress.credits_so_far` (bisher berechnet). `progress.credits_max` nur nennen, wenn `progress.budget` true ist. Die berechneten Credits steigen Gebiet für Gebiet, nicht mit jedem Fund.
 
@@ -96,14 +98,14 @@ Der Nutzer muss nicht warten: Die Suche läuft auf dem Server weiter. Mit `list_
 
 Am Ende aus `get_prospect_search_status`:
 
-- `report.new_leads` (neue Leads), `report.known_leads` (schon im Konto, in die Liste verknüpft), `report.entries_by_outcome`, bei aussortierten Einträgen `report.filtered_by_reason`;
+- `report.new_leads` (neue Leads), `report.known_leads` (schon im Konto, in die Liste verknüpft), `report.entries_by_outcome`, bei aussortierten Einträgen `report.filtered_by_reason`. Einträge und Leads sind nicht dieselbe Zahl: `merged` ist ein weiterer Standort einer Firma, die schon ein Eintrag der Suche ist (gleiche Website); er ist berechnet, wird aber kein eigener Lead. Die Differenz dem Nutzer in einem Satz erklären;
 - `credits.spent` (berechnet); der Rest der Reservierung ist wieder frei;
 - `list_name` und `app_url`.
 
 | `stop_reason` | Bedeutung | Was tun |
 |---|---|---|
 | `areas_exhausted` | Alle Gebiete sind durchsucht | Ergebnis berichten. Ist `disrupted_areas` über 0, siehe unten |
-| `cap_reached` | Das Budget ist aufgebraucht, es ist noch Gebiet offen | Weitersuchen anbieten (Schritt 8) |
+| `cap_reached` | Das Budget ist aufgebraucht, bevor das Gebiet zu Ende durchsucht war | Bei `resumable: true` Weitersuchen anbieten (Schritt 8), ohne weitere Betriebe zu versprechen: Ob noch welche offen sind, zeigt erst das Angebot fürs Weitersuchen. Auch eine Stadt mit einer einzigen Postleitzahl kann so enden |
 | `lead_limit_reached` | Der Plan ist voll | Leads löschen oder Plan wechseln lassen, dann weitersuchen |
 | `cancelled` | Abgebrochen | Was bis dahin gefunden wurde, ist berechnet und importiert |
 | `failed` | Fehlgeschlagen (`failure` nennt den Grund) | dem Nutzer sagen; später weitersuchen, wenn `resumable` true ist |

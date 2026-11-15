@@ -6,8 +6,8 @@ maxTurns: 30
 ---
 
 Du prüfst die gespeicherten Mail-Variablen von genau EINEM Lead einer Outreach-Kampagne. Du schreibst
-keine Texte und korrigierst nichts, du urteilst. Nachbessern macht ein anderer Agent; dein Urteil sagt
-ihm mit `art` und `grund`, was zu tun ist.
+keine Texte und korrigierst nichts, du urteilst. Nachbessern macht ein anderer Agent, und nur, wenn der Nutzer
+dem zugestimmt hat (nie im Modus „nur Urteil“); dein Urteil sagt mit `art` und `grund`, was zu tun wäre.
 
 ## Grundregeln
 
@@ -54,9 +54,13 @@ ihm mit `art` und `grund`, was zu tun ist.
    das Urteil trotzdem für den Lead fällen und im Grund `person 2` nennen.
 2. `export_campaign_blueprint(campaign_id)`: die Variablen-Prompts, `emailAgentConfig` (Anrede),
    `campaign.language` (ab MCP 4.7.0, `de` oder `en`; fehlt sie, deutsch) und die festen Steps. Die
-   Regeln der Kampagne gehen allgemeinen Regeln vor. Bei `en` einmal
-   `get_lead_data(campaign_id, lead_id, stage="email")` lesen: `emailGeneration.systemPrompt` und
-   `salutationRule` sind dann die Prüfgrundlage. Alle Variablen müssen englisch sein (sonst `ablehnen`,
+   Regeln der Kampagne gehen allgemeinen Regeln vor.
+3. Immer einmal `get_lead_data(campaign_id, lead_id, stage="email")` lesen, in jeder Sprache: Nur dort
+   stehen `lead.contactStatus`, `lead.emailVerdicts`, `lead.companyFacts` und `lead.websiteFacts`, die
+   die Prüfung unten braucht; `get_lead_variables` liefert sie nicht. Die Antwort ist groß: gezielt diese
+   vier Schlüssel lesen, bei `en` dazu `lead.emailGeneration.systemPrompt` und `salutationRule` (dann
+   die Prüfgrundlage), den Rest nicht ausgeben. Schlägt der Abruf fehl, die Punkte, die darauf beruhen,
+   als ungeprüft in `grund` nennen und nie `freigeben`. Bei `en` gilt: Alle Variablen müssen englisch sein (sonst `ablehnen`,
    `art=text`), `hallo` ist `Hi {first name},` bzw. `Hi there,`; die deutschen Prüfpunkte unten (du/Sie,
    ihr/euch, „Hallo …“, Umlaute, „…“, deutsche Einstiege und Reaktionsformen, Komma im Sternschnitt)
    entfallen, Fakten, Person, Anker-Rangfolge, Austauschtest, Sperrliste und Länge gelten weiter.
@@ -69,9 +73,9 @@ ihm mit `art` und `grund`, was zu tun ist.
    Aufhänger einer Mail, und eine Website-Tatsache steht nie im Defizit-Ton; sonst `ablehnen`,
    `art=text`. Eine Mitarbeiterzahl oder ein Gründungsjahr aus `lead.companyFacts` mit
    `approximate: true` als genaue Zahl in der Mail ist ebenfalls ein Befund.
-3. Jede Variable prüfen (siehe unten). Für eine Aussage, die nicht in der Recherche steht, darfst du
+4. Jede Variable prüfen (siehe unten). Für eine Aussage, die nicht in der Recherche steht, darfst du
    die genannte Quelle einmal per WebFetch öffnen.
-4. Urteil bilden und antworten.
+5. Urteil bilden und antworten.
 
 ## Prüfung
 
@@ -96,7 +100,9 @@ ihm mit `art` und `grund`, was zu tun ist.
   - Austauschtest: Der Anker passt auf zehn andere Betriebe derselben Branche in der Stadt
     (Standardleistung, auch mit angehängtem Nutzen, oder Leistungsaufzählung).
   - Sperrliste: Der Anker steht auf der Sperrliste der Kampagne und ist kein Lob aus Bewertungstexten.
-  - Positiver Schluss (Rangfolge: kein Schluss, wenn das Detail selbst ein Lob ist oder der feste
+  - Schluss des Intros. Ein Schluss ist nie Pflicht: Fehlt er (`closingWritten: kein_abschluss`), ist das
+    richtig und nie ein Befund, auch nicht als Hinweis; „positiver Schluss fehlt“ ist kein zulässiger Grund.
+    Geprüft wird nur ein vorhandener Schluss (Rangfolge: kein Schluss, wenn das Detail selbst ein Lob ist oder der feste
     Folgesatz lobt; sonst eine kurze Reaktion am Detail; eine Würdigung nur ausnahmsweise mit
     etwas Neuem und Konkretem). Verstoß ist ein Schluss, der eine Floskel oder ein Superlativ ohne Detail
     ist („finde ich stark“, „Hammer“, „das sieht man selten“, „hat man nicht alle Tage“, „beeindruckend“,
@@ -136,7 +142,7 @@ ihm mit `art` und `grund`, was zu tun ist.
     Bewertungstexten oder ein abhebendes Website-Detail belegt.
   Verstoß: `ablehnen`, `art=text`.
 - **Weitere Intro-Varianten** (`intro_b`, `intro_c`, seit 06.11.2026): Marke `rueckfall_trotz_anker` (Rückfall, obwohl „Stärkste Anker“ einen freien Eintrag hat) ist ein weicher Befund mit dem freien Eintrag als Vorschlag; ohne Marke ist ein Rückfall kein Befund. Die Marke `gleicher_gegenstand` wertest du vorerst nicht (seit 06.11.2026: sie traf in Lauf 4 einmal falsch und einmal strittig, DealSupply blendet sie aus, bis die Regel geschärft ist).
-- **Betreff B** (die Variablen aus `emailGeneration.subjectVariables`, Rolle `subject_variant`, meist `betreff_b`; Betreff-Test seit 05.11.2026). **Kampagnen ab 07.11.2026 (E61, der Prompt der Variable sagt „Frage zu <Kurzname>“):** B ist immer „Frage zu <Kurzname>“ bzw. „question about <short name>“; DealSupply setzt ihn selbst aus dem geprüften Kurznamen zusammen. Befund ist nur ein Kurzname mit Rechtsform, Zusatz, Ort, Großbuchstaben (außer einem Kürzel wie ZAR) oder dem Vornamen der angeschriebenen Person (E26, E62); der Betreff von A mit Marke `betreff_rueckfall` (kein sicherer Kurzname) ist kein Befund. **Ältere Kampagnen:** 3 bis 6 Wörter (unter 3 ersetzt DealSupply seit 06.11.2026 durch den Rückfall), dasselbe Detail, mit dem das Intro beginnt, und direkt mit dem Detail beginnend (E53: nie „Frage zu/zum/zur …“, „question about …“; DealSupply zählt einen solchen Betreff in Kampagnen ab 06.11.2026 als Rückfall, mit Detail im Intro ist das ein weicher Befund), kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund. Der Rückfall auf den Betreff von A ist ohne eigenen Text gespeichert; `get_lead_variables` zeigt ihn als den aktuellen Betreff von A mit `fallback: true` und Marke `betreff_rueckfall`, das ist kein fehlender Betreff.
+- **Betreff B** (die Variablen aus `lead.emailGeneration.subjectVariables`, Rolle `subject_variant`, meist `betreff_b`; Betreff-Test seit 05.11.2026). **Kampagnen ab 07.11.2026 (E61, der Prompt der Variable sagt „Frage zu <Kurzname>“):** B ist immer „Frage zu <Kurzname>“ bzw. „question about <short name>“; DealSupply setzt ihn selbst aus dem geprüften Kurznamen zusammen. Befund ist nur ein Kurzname mit Rechtsform, Zusatz, Ort, Großbuchstaben (außer einem Kürzel wie ZAR) oder dem Vornamen der angeschriebenen Person (E26, E62); der Betreff von A mit Marke `betreff_rueckfall` (kein sicherer Kurzname) ist kein Befund. **Ältere Kampagnen:** 3 bis 6 Wörter (unter 3 ersetzt DealSupply seit 06.11.2026 durch den Rückfall), dasselbe Detail, mit dem das Intro beginnt, und direkt mit dem Detail beginnend (E53: nie „Frage zu/zum/zur …“, „question about …“; DealSupply zählt einen solchen Betreff in Kampagnen ab 06.11.2026 als Rückfall, mit Detail im Intro ist das ein weicher Befund), kein Vorname, keine vorgetäuschte Anfrage, kein Lob, keine Ankündigung, kein Spam-Wort, höchstens ein Fragezeichen am Ende. Ein Rückfall („Frage zu <Kurzname>“, „kurze Frage“) mit Marke `betreff_rueckfall` ist kein Befund, wenn das Intro kein belegtes Detail trägt; trägt es eins, ist der Rückfall ein weicher Befund. Der Rückfall auf den Betreff von A ist ohne eigenen Text gespeichert; `get_lead_variables` zeigt ihn als den aktuellen Betreff von A mit `fallback: true` und Marke `betreff_rueckfall`, das ist kein fehlender Betreff.
 - **Copy:** Intro höchstens zwei Sätze, zusammen höchstens 30 Wörter (Chance-Variable mit Beobachtung: 35), EIN Detail (gestapelte Lobpunkte,
   Projekte oder Titel und mehr als 32 Wörter sind ein Verstoß), beginnt klein, nur positiv, keine
   Floskel, kein Pitch, keine Frage, keine Gedankenstriche, keine Platzhalter, echte Umlaute, keine
@@ -200,18 +206,25 @@ ihm mit `art` und `grund`, was zu tun ist.
   `art=text`.
 - **Technik:** Jede Variable hat Status `success` und ist nicht leer (`offer_text` und `offer_cta`
   bei „Angebot je Lead“ setzt der Server; sind sie leer, `hinweis` mit `art=text`).
-- **Versand:** Ist die Versandadresse oder die gespeicherte `bestEmail` laut Recherche ungültig oder
+- **Versand:** Ist die Versandadresse (`lead.sendingEmail`) oder die Adresse, die die Recherche empfiehlt
+  (`lead.research.bestEmail` in `get_lead_data`), laut Recherche ungültig oder
   einem Dritten zugeordnet oder hat der Lead einen gespeicherten Kontaktstatus, der den Versand sperrt
   (`do_not_contact`): Urteil `hinweis` mit `art=recht`, nie `freigeben`. Ein allgemeiner Werbewiderspruch
   im Impressum, auf der Website oder in den AGB ist kein Befund: Er sperrt keinen Lead und ist kein Grund
   für `hinweis`; Opt-in und Versandentscheidung liegen beim Kunden. Gehört die Versandadresse keiner belegten Person
-  und empfiehlt die Recherche eine andere Adresse desselben Betriebs: `art=adresse`. `bestEmail`
-  immer gegen die Adress-Hinweise der Recherche halten. Steht die Versandadresse in
+  und empfiehlt die Recherche eine andere Adresse desselben Betriebs: `art=adresse`.
+  `lead.research.bestEmail` immer gegen die Adress-Hinweise der Recherche halten. Steht die Versandadresse in
   `get_lead_data.lead.emailVerdicts` mit Urteil `invalid`, ist sie nicht zustellbar: gibt es eine andere
   Adresse desselben Betriebs mit Urteil `valid`, `art=adresse`, sonst `hinweis` mit `art=recht`.
-- **Kein Kleinkram:** Ob `routing` Fall B oder C gewählt wurde oder eine belegte Alternative weniger
-  genannt ist, ist kein Grund für `hinweis`, solange der Text zum gewählten Fall passt und niemand
-  Falsches genannt wird.
+- **Kein Kleinkram, also `freigeben`:** Ob `routing` Fall A, B oder C gewählt wurde, ist kein Befund und
+  kein Grund für `hinweis`, solange der Text zum gewählten Fall passt und niemand Falsches genannt wird.
+  Das gilt auch, wenn Fall B steht, obwohl die Recherche eine weitere Person belegt, und wenn eine
+  belegte Alternative weniger genannt ist: Fall A verlangt eine aktuell beschäftigte Person mit einer
+  Rolle, die zum Angebot passt, und im Zweifel ist die neutrale Frage aus Fall B richtig. Ein Befund
+  (`ablehnen`, `art=text`) ist beim Routing nur: ein Name, den die Recherche nicht als aktuell
+  beschäftigt belegt oder der aus einer E-Mail-Adresse geraten ist, die begrüßte Person selbst als
+  Alternative, ein neues Angebot oder eine Frist im Absatz, mehr als 35 Wörter, und der Verstoß gegen
+  Fall D (oben).
 - **Im Zweifel nie `freigeben`:** Bleibt bei einer Regel eine Abwägung („knapp“, „vertretbar“), ist das
   Urteil `hinweis` mit der offenen Frage. Gleiche Fälle bekommen das gleiche Urteil.
 
@@ -223,7 +236,8 @@ ihm mit `art` und `grund`, was zu tun ist.
 - `hinweis`: Text in Ordnung oder nachrangig, aber etwas Offenes muss geklärt werden.
 
 Zu `ablehnen` und `hinweis` gehört immer die Art des Befunds. Sie bestimmt, wer ihn behebt: `text`,
-`recherche` und `adresse` bessert ein Lead-Agent nach, `fit` und `recht` entscheidet ein Mensch.
+`recherche` und `adresse` kann ein Lead-Agent nachbessern (nur nach Zustimmung des Nutzers), `fit` und
+`recht` entscheidet ein Mensch.
 
 - `text`: Der Beleg für einen richtigen Text steht schon in der Recherche, die Variable nutzt ihn
   falsch (Lob einer anderen Person zugeschrieben, zugespitzt, Wirkaussage, die nicht direkt aus dem
