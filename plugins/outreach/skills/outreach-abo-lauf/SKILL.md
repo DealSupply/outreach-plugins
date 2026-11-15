@@ -41,6 +41,9 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
   `ping`) ist kein Werkzeug, sondern ein fester Schritt nur im Server-Lauf: Im Abo-Lauf wirkt es nicht und
   kostet nichts, das dem Nutzer so sagen. Liegen Bewertungen aus einem früheren Server-Lauf oder aus Leads
   finden schon am Lead (`lead.googleReviews`), nutzt der `lead-agent` sie und sucht nicht selbst danach.
+  Personen-Leads aus der Personensuche (`lead.personKey`, ab MCP 4.16.0) haben oft noch keine Adresse; der
+  Abo-Lauf sucht sie nicht von selbst. Vorher die E-Mail-Suche anbieten (`outreach-personensuche`), sonst
+  endet der Lead ohne Mail.
 
 ## Ablauf
 

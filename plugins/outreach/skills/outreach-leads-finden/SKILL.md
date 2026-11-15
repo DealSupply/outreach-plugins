@@ -88,7 +88,9 @@ Die Antwort nennt `search_id` und `app_url` (Seite der Suche in der App). Beides
 
 Zwischendurch kurz berichten: `progress.places_so_far` (gefundene Betriebe), `progress.new_leads_so_far`, `progress.areas_done` von `progress.areas_total`, und `progress.credits_so_far` (bisher berechnet). `progress.credits_max` nur nennen, wenn `progress.budget` true ist. Die berechneten Credits steigen Gebiet für Gebiet, nicht mit jedem Fund.
 
-Der Nutzer muss nicht warten: Die Suche läuft auf dem Server weiter. Mit `list_prospect_searches` findet sich jede Suche später wieder (`search` nimmt Wörter wie „Friseur Freiburg“).
+Endet ein Gebiet an der Obergrenze der Suche, während das Budget noch Einträge zahlt, läuft es als Rest-Gebiet weiter (ab MCP 4.22.0): In `areas` steht es dann ein weiteres Mal mit demselben `area_key`, `progress.areas_total` zählt jede Zeile, und `progress.percent` fällt mit der neuen Zeile zurück. Das ist kein Fehler; Gebiete für den Bericht nach `area_key` zusammenfassen.
+
+Der Nutzer muss nicht warten: Die Suche läuft auf dem Server weiter. Mit `list_prospect_searches` findet sich jede Suche später wieder (`search` nimmt Wörter wie „Friseur Freiburg“); `disrupted_areas` zeigt dort schon, ob eine Suche von einer Störung betroffen war.
 
 ### 6. Ergebnis berichten
 
@@ -119,10 +121,10 @@ Die Leads liegen in der Liste der Suche. Verarbeitet werden sie erst in einer Ka
 - `get_prospect_search_status` nennt vorab `hand_over_leads` (so viele würde eine Übergabe nehmen) und `hand_over_held_back` (so viele bleiben draußen).
 - `hand_over_prospect_search(search_id, campaign_id)` für eine bestehende Kampagne (`list_campaigns`) oder `hand_over_prospect_search(search_id, new_campaign_name)` für eine neue. Genau eines von beiden. Kostet keine Credits.
 - Übergeben werden nur Leads mit Kontaktstatus `not_contacted`, die in keiner anderen Kampagne stecken. Die übrigen zählt `held_back`: dem Nutzer nennen, damit niemand doppelt angeschrieben wird.
-- Eine neue Kampagne entsteht mit leerer Sequenz: weiter mit `outreach-campaign`.
+- Eine neue Kampagne entsteht mit leerer Sequenz: weiter mit `outreach-campaign`. Ab MCP 4.18.0 nimmt sie den ersten Blueprint ohne `confirm_overwrite` an.
 - Leads späterer Läufe derselben Suche wandern nicht von selbst mit. `campaign_pending` im Status zeigt, wie viele noch fehlen; dann die Übergabe wiederholen.
 
-Danach verarbeitet `outreach-pipeline` die Leads. Leads aus Leads finden haben eine Website, aber oft noch keine E-Mail-Adresse: Die Recherche sucht sie. Findet sie keine, bekommt der Lead keine Mail.
+Danach verarbeitet `outreach-pipeline` die Leads. Leads aus Leads finden haben eine Website, aber oft noch keine E-Mail-Adresse: Die Recherche sucht sie. Findet sie keine, bekommt der Lead keine Mail. Mitgekaufte Rezensionstexte liegen am Lead (Attribut „Rezensionstexte“) und kosten im Lauf nicht noch einmal, auch nicht mit eingeschaltetem Power-up Google-Bewertungen.
 
 ### 8. Weitersuchen und weitere Gebiete
 
