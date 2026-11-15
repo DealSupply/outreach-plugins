@@ -67,7 +67,7 @@ Betreff: (leer, läuft im Thread von Step 1)
 
 Hallo {{Vorname}},
 
-bei einer Zahnarztpraxis in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen.
+ich habe die Website einer Zahnarztpraxis in Stuttgart neu aufgesetzt, danach haben sich ihre Online-Terminanfragen in vier Monaten verdreifacht.
 
 Wäre es in Ordnung, wenn ich dir morgen den Entwurf zusende? Völlig unverbindlich natürlich.
 
@@ -97,7 +97,7 @@ Inhaber - Weber Webdesign
 
 Je Lead eines, nach den Regeln in `copy-lehre.md`, Teil 2:
 
-- „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ (Bewertungslob, ohne Schluss)
+- „ich hab mir deine Bewertungen angeschaut, und mehrere Patienten schreiben, dass du jeden Schritt vorher erklärst.“ (Bewertungslob von mindestens drei Rezensionen, ohne Schluss)
 - „mir ist aufgefallen, dass deine Praxis donnerstags bis 20 Uhr Termine hat, das hat mich angesprochen.“ (ungewöhnliche Zeit, Reaktion)
 - „beim Stöbern auf deiner Website hab ich dein Kronen-Konzept entdeckt, die Krone am selben Termin. Respekt, dass du das an einem Tag hinbekommst.“ (eigenes Konzept, Würdigung als Ausnahme)
 
@@ -115,7 +115,7 @@ Hallo Max,
 
 mir ist aufgefallen, dass jedes Objekt bei dir ein festes Reinigungsteam hat, das man vorab mit Foto sieht, das fand ich richtig sympathisch.
 
-Genau deshalb bieten wir aktuell für zwei Unternehmen in der Region München ein kostenloses Google Ads Setup an.
+Genau deshalb bieten wir aktuell für eine Handvoll Reinigungsfirmen in der Region München ein kostenloses Google Ads Setup an.
 
 Darin wäre alles genau auf euch zugeschnitten.
 
@@ -139,7 +139,7 @@ Hallo Max,
 
 mir ist aufgefallen, dass du auf deiner Website jeden Kunden mit einer eigenen kleinen Fallstudie vorstellst, das hat mir gut gefallen.
 
-Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für persönliche Erstmails mit drei Agenturen in Köln.
+Genau solche Agenturen suchen wir gerade. Wir starten ein Pilotprojekt für persönliche Erstmails mit einer Handvoll Agenturen in Köln.
 
 Im Pilot bekommt ihr das kostenlos, dafür bräuchten wir nur ehrliches Feedback.
 
@@ -161,9 +161,9 @@ Betreff: kurze Frage
 
 Hallo Max,
 
-ich hab mir deine Bewertungen angeschaut, und ein Kunde schreibt, dass deine Lieferung schneller war als bei Amazon.
+ich hab mir deine Bewertungen angeschaut, und jemand schreibt, dass deine Lieferung schneller da war als bei Amazon.
 
-Deswegen war ich so frei und habe ein kurzes Video mit drei konkreten Hebeln für deinen Shop aufgenommen.
+Deswegen war ich so frei und habe dir ein kurzes Video mit drei konkreten Hebeln für deinen Shop erstellt.
 
 Ich bin gerade noch an den letzten Feinheiten dran.
 
@@ -184,7 +184,7 @@ Hallo Max,
 
 mir ist aufgefallen, dass du Holzfenster im Denkmalschutz nachbaust, Profil für Profil nach dem Original, das hat mich angesprochen.
 
-Genau solche Handwerksbetriebe suchen wir als Partner. Wir haben regelmäßig Anfragen von Bauherren in der Region, die genau solche Projekte umsetzen wollen und einen zuverlässigen Betrieb suchen.
+Genau solche Handwerksbetriebe suchen wir als Partner. Wir haben regelmäßig Anfragen von Bauherren aus der Region, die zu dir passen würden.
 
 Wäre das grundsätzlich interessant?
 
@@ -258,7 +258,7 @@ Betreff: (leer, läuft im Thread von Step 1)
 
 Hallo {{Vorname}},
 
-bei einer Zahnarztpraxis in Stuttgart haben sich die Online-Terminanfragen nach dem Relaunch in vier Monaten verdreifacht. Der größte Hebel war, dass Terminwünsche nicht mehr nur mitten in der Sprechstunde am Telefon landen.
+ich habe die Website einer Zahnarztpraxis in Stuttgart neu aufgesetzt, danach haben sich ihre Online-Terminanfragen in vier Monaten verdreifacht.
 
 Melde dich gerne, wenn das Thema für dich relevant ist.
 
