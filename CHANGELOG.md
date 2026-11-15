@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-15 – outreach 0.10.0 (benötigt MCP 4.16.0 für Leads finden und die Personensuche)
+
+Neue Leads direkt aus DealSupply: lokale Betriebe über Google Maps und Entscheider in Firmen über die Personensuche. Beides führt das Plugin jetzt Schritt für Schritt. Jeder Schritt, der Credits kostet, läuft erst nach der Zustimmung des Nutzers zum Angebot. Die Werkzeuge gibt es ab MCP 4.16.0 (`ping`); auf älteren Servern sagen die Skills das dem Nutzer.
+
+**outreach**
+- Neu `outreach-leads-finden` → Branche und Gebiet aus dem Katalog (`search_prospect_categories`, `search_prospect_areas`), Angebot (`quote_prospect_search`) zeigen, nach Zustimmung starten (`start_prospect_search`), Stand abfragen (`get_prospect_search_status`), Ergebnis berichten, an eine bestehende oder neue Kampagne übergeben (`hand_over_prospect_search`). Dazu weitersuchen (`resume_prospect_search`), weitere Gebiete in dieselbe Liste, aussortierte Einträge ohne Mehrkosten übernehmen (`import_prospect_entries`), abbrechen. Eine Störung der Datenquelle wird als Störung gemeldet, nie als leeres Gebiet.
+- Neu `outreach-personensuche` → Filterwerte aus dem Katalog (`search_people_filter_values`), Suche anlegen und kostenlos blättern (`create_people_search`, `list_people_results`, `update_prospect_search`), Angebot für die Übernahme (`quote_people_import`) und nach Zustimmung übernehmen (`import_people`), Angebot für die E-Mail-Suche (`quote_people_email_search`) und nach Zustimmung starten (`start_people_email_search`), stoppen (`cancel_people_step`).
+- `outreach` → leitet zu beiden Skills weiter; eine Regel für alles, was Credits kostet: erst Angebot, dann Zustimmung, dann Start. Die Workspace-Regel nennt die neuen Werkzeuge.
+- Ist eine Funktion für ein Konto nicht freigeschaltet (`feature_disabled`), sagen die Skills das freundlich und nennen den Import als Weg.
+- `outreach-setup`, README → abgestimmt auf MCP 4.22.0. Ähnliche Firmen führen die Skills noch nicht.
+
 ## 2026-11-15 – outreach 0.9.0, datenbeschaffung 0.5.1, fulfillment 0.1.6 (benötigt MCP 4.16.0 für Budget in Credits und Fortsetzen nach einem Budget-Stopp)
 
 Kampagnen entstehen wie in der App, Läufe und Urteile folgen dem Server, und das Produkt heißt überall DealSupply (DS-231, DS-232, DS-233). Was neuer ist als MCP 4.15.0, nutzen die Skills nur, wenn `ping` 4.16.0 oder höher meldet; auf älteren Servern gelten die bisherigen Regeln.
