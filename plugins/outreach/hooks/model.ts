@@ -52,8 +52,9 @@ export const TERMINAL_RUN = new Set([
   'completed',
   'completed_with_failures',
   'cancelled',
+  // Ends a run can come back from (get_lead_run_status.resumable): resume_lead_run picks the same run up
+  // again, after a top-up or, from MCP 4.16.0, with a new budget. A byok budget stop stays final.
   'budget_exhausted',
-  // The only end a run comes back from: resume_lead_run picks the same run up again after a top-up.
   'credits_exhausted',
   'limit_exhausted',
   'provider_exhausted',
@@ -122,7 +123,7 @@ export function inWorkspaceOf(row: Obj, answer: Obj): Obj {
 /**
  * A run from get_lead_run_status / list_lead_runs (camelCase resource plus snake_case extras),
  * start_lead_run (snake_case) or resume_lead_run (id, run_status and lead_total only: the rest
- * comes from the view before, the run is back from credits_exhausted).
+ * comes from the view before, the run is back from credits_exhausted or budget_exhausted).
  */
 export function runFrom(p: Obj, previous?: RunView): RunView | null {
   const id = str(p.id) || str(p.lead_run_id)

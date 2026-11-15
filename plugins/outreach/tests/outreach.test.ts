@@ -143,6 +143,28 @@ describe('which MCP server is ours', () => {
     await foreign.unmount()
   })
 
+  test('the server this plugin brings along is ours under its Claude Code name plugin_outreach_dealsupply', async ($, on) => {
+    engineDraws(on)
+    on('tool.list', () => ({ value: [] }))
+    const ui = await $.ui.mount({ ...toolRow('mcp__plugin_outreach_dealsupply__list_leads', LIST_LEADS), surface: 'terminal' })
+    expect(await ui.find({ text: /Dr\. Huber Zahnmedizin/ })).toBeDefined()
+    await ui.unmount()
+  })
+
+  test('/outreach-status asks the plugin server under its Claude Code name first, and the bare name only without an answer', async ($, on) => {
+    engineDraws(on)
+    mock.clock(on)
+    const asked: string[] = []
+    on('tool.list', () => ({ value: [] }))
+    on('mcp.call', (_$, e) => {
+      asked.push(String((e as { server: string }).server))
+      return { value: { content: [{ type: 'text', text: JSON.stringify({ runs: [RUN_STATUS], count: 1 }) }], isError: false } }
+    })
+    const res = await $.command.run({ command: 'outreach-status' } as Parameters<typeof $.command.run>[0])
+    expect(String((res as { text?: string }).text)).toContain('1 laufende')
+    expect(asked).toEqual(['plugin_outreach_dealsupply'])
+  })
+
   test('a link the server sends wins over the configured app address', async $ => {
     const withLinks = {
       ...LIST_LEADS,
@@ -253,6 +275,29 @@ describe('run status', () => {
     const card = await $.ui.mount({ ...toolRow('mcp__dealsupply__resume_lead_run', resumed), surface: 'terminal' })
     expect(await card.find({ text: /Lead-Run fortgesetzt · 150 Leads/ })).toBeDefined()
     await card.unmount()
+  })
+
+  test('budget_exhausted ends a run; resume_lead_run with a new budget brings the same run back (MCP 4.16.0)', async ($, on) => {
+    engineDraws(on)
+    const clock = mock.clock(on)
+    const stopped = { ...RUN_STATUS, status: 'budget_exhausted', is_terminal: true, resumable: true, statusReason: 'Lauf-Budget erreicht' }
+    const resumed = { status: 'success', lead_run_id: 'run-1', run_status: 'preparing', lead_total: 150 }
+    on('tool.call', ($, e) => ({ result: String((e as { tool: string }).tool).endsWith('resume_lead_run') ? resumed : stopped }))
+    on('mcp.call', (_$, e) => {
+      const body = (e as { tool: string }).tool === 'list_lead_runs' ? { runs: [RUN_STATUS], count: 1 } : RUN_STATUS
+      return { value: { content: [{ type: 'text', text: JSON.stringify(body) }], isError: false } }
+    })
+    await toolCall($, 'mcp__dealsupply__get_lead_run_status', { lead_run_id: 'run-1' })
+    let band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '· Lauf-Budget erreicht' })).toBeDefined()
+    await band.unmount()
+
+    await toolCall($, 'mcp__dealsupply__resume_lead_run', { lead_run_id: 'run-1', budget_credits: 20 })
+    band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+    expect(await band.find({ text: '· Lauf-Budget erreicht' })).toBeUndefined()
+    expect(await band.find({ text: '· 150 Leads' })).toBeDefined()
+    await band.unmount()
+    await clock.advance(20_000)
   })
 
   test('a checked run shows in the band, not as a card in the chat', async ($, on) => {

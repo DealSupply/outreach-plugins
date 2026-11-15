@@ -28,7 +28,7 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
 - **Workspace:** Alle Aufrufe des Laufs tragen `campaign_id` und `lead_id` und laufen damit im Workspace
   der Kampagne. Den Agents keinen Workspace mitgeben (Workspace-Regel im Skill `outreach`). Vor dem
   Start den Workspace nennen.
-- **Power-ups** (ListM8-MCP ab 4.6.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
+- **Power-ups** (MCP ab 4.6.0): Vor dem Start `list_power_ups(campaign_id)` lesen und dem Nutzer
   nennen, was eingeschaltet ist, was ein Treffer kostet und dass jede andere Antwort die Anbietergebühr
   kostet (meist Hundertstel Credits). Mit eingeschalteten Power-ups bucht also auch der Abo-Lauf
   Credits. Eingeschaltete Tools nutzt der `lead-agent`
@@ -37,7 +37,10 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
   `research`, der Standard, oder `qualification`; ab Werk überall aus, `list_power_ups` zeigt `stages`).
   Der Quali-Schalter prüft in Server-Läufen nach jedem passenden Urteil die Adressen des Leads; im
   Abo-Lauf erlaubt er `verify_email`, `find_person_email` nur der Recherche-Schalter. Im Bericht: Anzahl der Treffer und die gebuchten Credits
-  (`credits` in den `run_power_up`-Antworten).
+  (`credits` in den `run_power_up`-Antworten). Google-Bewertungen (`google_reviews`, ab MCP 4.16.0 laut
+  `ping`) ist kein Werkzeug, sondern ein fester Schritt nur im Server-Lauf: Im Abo-Lauf wirkt es nicht und
+  kostet nichts, das dem Nutzer so sagen. Liegen Bewertungen aus einem früheren Server-Lauf oder aus Leads
+  finden schon am Lead (`lead.googleReviews`), nutzt der `lead-agent` sie und sucht nicht selbst danach.
 
 ## Ablauf
 
@@ -78,8 +81,8 @@ Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt
 |---|---|---|
 | `campaign_id` | Kampagne | – |
 | `leads` | `[{ id, company }]` aus `list_leads` | – |
-| `server` | Name des Outreach-Servers, wenn mehrere verbunden sind (z. B. `listm8`) | leer |
-| `stufen` | Einschränkung wie „nur Qualifizierung und Recherche“; leer = alle Stufen | leer |
+| `server` | Name des Outreach-Servers, wenn mehrere verbunden sind (z. B. `dealsupply`) | leer |
+| `stufen` | Einschränkung wie „nur Qualifizierung und Recherche“; leer = alle Stufen. Für aussortierte Leads nach einer Änderung der Kriterien, nur mit Zustimmung des Nutzers: „neu urteilen, nur Qualifizierung“ bzw. „neu urteilen, nur Qualifizierung und Recherche“ (Auswahl und Regeln: `outreach-qualify`, Abschnitt „Neu urteilen“) | leer |
 | `pruefen` | Größe der Stichprobe (0 = keine, Anzahl der Leads = alle) | 10 |
 | `nur_pruefen` | `true`: Leads haben schon Mail-Variablen, nur prüfen und nachbessern (aus `outreach-verify`); `pruefen` dann = Anzahl der Leads | `false` |
 | `bauen`, `pruefer` | Modelle | `haiku`, `sonnet` |
@@ -124,7 +127,7 @@ return ergebnis.map((r, i) => r ?? { bau: `FEHLER lead=${leads[i].id} stufe=work
 
 Je Lead kommt `{ bau, urteil?, nach?, gegen? }` zurück:
 
-- `bau`: `OK lead=… fit=… recherche=… mail=…` bzw. `FEHLER …`. `fit=not_qualified` heißt aussortiert.
+- `bau`: `OK lead=… fit=… recherche=… mail=…` bzw. `FEHLER …`. `fit=not_qualified` heißt aussortiert, `fit=offen` (`grund=nur-importdaten`) heißt ohne Urteil: Website ohne Evidenz und die Importdaten allein passen nicht; der Lead bleibt offen und geht mit diesem Grund an den Nutzer.
 - `urteil` (nur Stichprobe): `URTEIL lead=… ergebnis=<freigeben|ablehnen|hinweis> art=…`.
 - `nach` und `gegen`: eine Runde Nachbessern für `art=text|recherche|adresse` und die Gegenprüfung.
   Besteht die Gegenprüfung nicht oder lautet `nach` `UNVERÄNDERT`, geht der Lead mit Grund an den Nutzer,
