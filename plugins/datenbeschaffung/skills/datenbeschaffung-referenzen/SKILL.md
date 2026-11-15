@@ -7,8 +7,9 @@ description: Dieses Referenzpaket wird von Datenbeschaffungs-Master und Weg-Skil
 
 Kein eigenständiger Skill, sondern die geteilte Wissensbasis der Datenbeschaffungs-Familie.
 Wird zusammen mit den anderen Skills installiert; Master, Weg-Skills und `listen-qualitaet`
-lesen von hier (`references/`). DealSupply scrapt nicht: Der Kunde scrapt mit eigenem Apify- oder
-Outscraper-Konto außerhalb von DealSupply, bereinigt die Ergebnisse und importiert sie als CSV über die
+lesen von hier (`references/`). In den Wegen dieses Plugins scrapt der Kunde mit eigenem Apify- oder
+Outscraper-Konto außerhalb von DealSupply (lokale Betriebe und Entscheider findet DealSupply ab MCP 4.16.0
+auch selbst: `outreach-leads-finden`, `outreach-personensuche` im Plugin outreach), bereinigt die Ergebnisse und importiert sie als CSV über die
 Oberfläche oder per MCP `import_leads`. Für die DealSupply-Seite zuerst `references/dealsupply-mcp.md` lesen.
 
 Preise in `kosten.md` und `apify-actors.md` sind Richtwerte mit Prüfdatum; vor jedem Lauf den aktuellen

@@ -15,8 +15,12 @@ sobald eine Zeile ohne gültige E-Mail dabei ist. Welcher Kontrakt gilt, entsche
 
 ## Was DealSupply heute (nicht) kann
 
-- DealSupply scrapt **nicht**. Es gibt keinen Quellenkatalog, keine serverseitigen Quellenläufe, keine
-  Beschaffungsaufträge und kein serverseitiges Impressum oder Verifizieren.
+- DealSupply findet ab MCP 4.16.0 selbst neue Leads: lokale Betriebe über Google Maps (Leads finden) und
+  Entscheider in Firmen (Personensuche). Beides führt das Plugin outreach (`outreach-leads-finden`,
+  `outreach-personensuche`); für diese Fälle zuerst dorthin verweisen. Diese Referenz deckt die beiden
+  Suchen nicht ab.
+- Für die Wege dieses Plugins gilt weiter: DealSupply führt keine Scrape-Läufe bei Apify oder Outscraper
+  aus, hat dafür keinen Quellenkatalog und kein serverseitiges Impressum.
 - Der Kunde scrapt mit **eigenem Apify- oder Outscraper-Konto** außerhalb von DealSupply, bereinigt die
   Ergebnisse und lädt sie hoch: über die Oberfläche (Leads, CSV-Import) oder per MCP `import_leads`,
   optional in eine Liste (`create_list`, `list_id`).
@@ -207,10 +211,13 @@ Bis zu 10000 Leads je Aufruf; Aufruf asynchron, Antwort mit `job_id`.
   `google_rezensionstexte` (Zeilen `JJJJ-MM-TT · N★ · Text` oder Array aus `{text,
   publishedAtDate, stars}`, ohne Namen der Verfasser) und `business_status`. Die Rezensionen
   liest die Recherche als eigenen Block und sucht dann nicht noch einmal nach Bewertungen.
-- **Place ID und CID am Lead (ab MCP 4.12.0):** Der Server erkennt die Place ID unter jedem
+- **Place ID und CID am Lead (ab MCP 4.16.0):** Der Server erkennt die Place ID unter jedem
   Spaltennamen, der sie nennt („Place ID“, „Google Place ID“ …), in Google-Maps-Links
-  (`place_id:`, `query_place_id=`, `!1s0x…:0x…`) und als `ChIJ…`-Wert in jeder Spalte; die CID
-  leitet er selbst aus der Place ID ab. Die `place_id` reicht also, umbenennen ist nicht nötig.
+  (`place_id:`, `query_place_id=`, `placeid=`, `!1s0x…:0x…`) und als `ChIJ…`-Wert in jeder Spalte; die CID
+  leitet er selbst aus der Place ID ab. Mit bestehenden Leads gleicht nur eine Place ID ab, die unter
+  einem Schlüssel steht, der nach Place ID heißt; eine aus einem Link füllt nur ein leeres Feld. Beide
+  Kennungen werden nie überschrieben. `get_lead_data` und `export_leads` zeigen sie als `googlePlaceId`
+  und `googleCid`.
   Ältere Server kennen nur `place_id`/`placeId`/`google_place_id`. Kurzlinks (`maps.app.goo.gl`)
   ersetzen die Place ID nicht. Ohne Place ID sucht das Bewertungs-Power-up den Eintrag später
   über Name und Ort, bei Ketten und Praxen mit mehreren Ärzten trifft das öfter daneben.
