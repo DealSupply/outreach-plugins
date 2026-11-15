@@ -93,7 +93,7 @@ Im Blueprint (ab MCP 4.11.0) stehen sie unter `sequence.steps[0].variants`, je
 - **Zweites Intro** `intro_b` (bzw. `intro_c` neben dem Betreff-Test) mit `"role": "intro_variant"`,
   wörtlich dem Prompt von `intro` und `"description": "Intro der Variante B von Mail 1: das nächstbeste Intro mit einem anderen Anker. Gibt es keinen weiteren guten Anker, steht hier wörtlich das Intro aus Variante A."`
   (bei `intro_c` „Variante C“; englisch `"Intro of variant B of email 1: the next best intro with a different anchor. Without another good anchor it carries the intro of variant A word for word."`).
-  Welches Intro wohin gehört, regelt der Server bei der Generierung (`emailGeneration.introVariables`).
+  Welches Intro wohin gehört, regelt der Server bei der Generierung (`lead.emailGeneration.introVariables`).
 
 Regeln für einen sauberen Test bleiben: genau ein Hebel je Variante, gleiches Angebot, gleiche
 Follow-ups. Die Launch-Checkliste (`outreach-launch`) nennt den Test nur, wenn er gewählt ist.

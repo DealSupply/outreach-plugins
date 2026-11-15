@@ -5,7 +5,7 @@
 
 ## Die Anker-Hierarchie (Server kennt sie — dein Fokus verstärkt sie fürs Angebot)
 
-Maßgeblich ist die Anker-Reihenfolge des Servers (`emailGeneration.systemPrompt`, Block
+Maßgeblich ist die Anker-Reihenfolge des Servers (`lead.emailGeneration.systemPrompt`, Block
 ANKER-REIHENFOLGE); Hintergrund in `outreach-copy` → `references/copy-lehre.md`, „Abhebung und
 Austauschtest“. Für die Recherche heißt das:
 
@@ -69,7 +69,7 @@ Heizungstausch, Wärmepumpe allgemein, Notdienst, barrierefreies Bad, Meisterbet
 ```
 
 Die eigene Kontaktadresse eines Leads, der ohne E-Mail importiert wurde (ab MCP 4.0.0), muss
-nicht in den Fokus-Text: Die Regeln dafür bringt der Server selbst mit (`researchGeneration.contactEmail`
+nicht in den Fokus-Text: Die Regeln dafür bringt der Server selbst mit (`lead.researchGeneration.contactEmail`
 in `get_lead_data`). Ein Punkt „Kontaktadresse“ im Fokus-Text ist nur eine Gedächtnisstütze; maßgeblich
 bleiben die Regeln des Servers (persönliche Adresse von Inhaber oder Geschäftsführung vor info@, nie
 geraten, nie Plattform-, Verzeichnis- oder Agenturadressen).

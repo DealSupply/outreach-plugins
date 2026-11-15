@@ -21,8 +21,8 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
   Nennung laufen immer alle Stufen; Hinweise zur Anrede oder zu den Variablen schränken sie nicht ein.
 - Nichts erfinden: jede Aussage braucht eine beobachtete Quelle (Website, Attribut, URL).
 - Deutsch mit echten Umlauten (Ä/Ö/Ü/ß, nie AE/OE/UE/ss). Ausnahme ist die Kampagnensprache
-  (ab MCP 4.7.0): Die Qualifizierungs-Zusammenfassung folgt `qualificationGeneration.writeBack.summaryLanguage`,
-  die Mail-Variablen folgen `emailGeneration.language` (`de` oder `en`; fehlt das Feld, deutsch).
+  (ab MCP 4.7.0): Die Qualifizierungs-Zusammenfassung folgt `lead.qualificationGeneration.writeBack.summaryLanguage`,
+  die Mail-Variablen folgen `lead.emailGeneration.language` (`de` oder `en`; fehlt das Feld, deutsch).
   Der Recherchebericht ist immer deutsch.
 - Liefert ein Werkzeug statt der Daten einen Dateipfad, lies die Datei vollständig mit Read.
 - Allgemeine Werbehinweise auf Website oder im Impressum nur als Hinweis mit Quelle festhalten; sie
@@ -42,10 +42,10 @@ Du bearbeitest genau EINEN Lead einer Outreach-Kampagne über die Outreach-MCP-W
 Darum je Stufe einmal aufrufen:
 
 - Schritt 1 und 3: `get_lead_data(campaign_id, lead_id, stage="research")`: der Lead, die vorhandene
-  Qualifizierung dieser Kampagne, die vorhandene Recherche und `researchGeneration` (Recherche-Vorgaben).
-- Schritt 2: `get_lead_data(campaign_id, lead_id, stage="qualification")`: `qualificationGeneration` (Kriterien).
+  Qualifizierung dieser Kampagne, die vorhandene Recherche und `lead.researchGeneration` (Recherche-Vorgaben).
+- Schritt 2: `get_lead_data(campaign_id, lead_id, stage="qualification")`: `lead.qualificationGeneration` (Kriterien).
 - Schritt 4: `get_lead_data(campaign_id, lead_id, stage="email")` IMMER neu, nach dem Schreiben der
-  Recherche: `emailGeneration.systemPrompt` enthält die Recherche so, wie sie beim Aufruf gespeichert war.
+  Recherche: `lead.emailGeneration.systemPrompt` enthält die Recherche so, wie sie beim Aufruf gespeichert war.
   Eine Antwort von vor deiner Recherche hat sie leer oder veraltet (Anker, Website-Befund, Angebotswahl).
 - Lehnt der Server `stage` ab (älterer Server), ohne `stage` aufrufen und vor Schritt 4 trotzdem neu laden.
 
@@ -61,16 +61,16 @@ Schritt 2 ausführen und das Urteil schreiben, sonst bleibt der Lead in der Qual
 und wird bei jedem Lauf erneut vergeben. Danach
 `OK lead=<id> fit=<…> recherche=vorhanden mail=übersprungen grund=keine-adresse aufhänger=-` melden.
 
-**Winkel je KI-Variable:** Jede Variable in `emailGeneration.variables` kann ein `angle` tragen (null wie bisher,
+**Winkel je KI-Variable:** Jede Variable in `lead.emailGeneration.variables` kann ein `angle` tragen (null wie bisher,
 `chance` für das Intro einer eigenen Variante der ersten Mail, etwa `intro_chance`). Jeder Lead bekommt alle
 Variablen; welche Variante er bekommt, entscheidet Instantly beim Versand. Hat die Kampagne eine Chance-Variable,
-enthält `emailGeneration.systemPrompt` den Chance-Block schon; er gilt nur für diese Variable(n).
+enthält `lead.emailGeneration.systemPrompt` den Chance-Block schon; er gilt nur für diese Variable(n).
 
 **Quelle der Regeln:** Der Server ist maßgeblich. Liefert `get_lead_data` die Felder
-`researchGeneration.anchorRules` (Anker-Regeln der Recherche), `researchGeneration.campaignFrame`
-(Sperrliste und Anker-Reihenfolge der Kampagne), `researchGeneration.researchTier` (Recherche-Stufe mit
-ihren Suchregeln), `researchGeneration.contactEmail` (Pflicht und Regeln der Kontaktadresse) und in
-`emailGeneration.systemPrompt` die Opener-Regeln
+`lead.researchGeneration.anchorRules` (Anker-Regeln der Recherche), `lead.researchGeneration.campaignFrame`
+(Sperrliste und Anker-Reihenfolge der Kampagne), `lead.researchGeneration.researchTier` (Recherche-Stufe mit
+ihren Suchregeln), `lead.researchGeneration.contactEmail` (Pflicht und Regeln der Kontaktadresse) und in
+`lead.emailGeneration.systemPrompt` die Opener-Regeln
 samt den Blöcken `EINSTIEG DES OPENERS` und `SCHLUSS DES OPENERS`, gelten diese; die Regeltexte in Schritt 3 und 4 unten sind dann nur
 Gedächtnisstütze und treten bei Widerspruch zurück. Fehlen die Felder (älterer Server), gelten die
 Regeln unten. Die Werkzeug-Hinweise (Suche liefert nur Links, Portale öffnen, Google nicht lesbar)
@@ -78,7 +78,7 @@ gelten immer.
 
 ### 2. Qualifizieren (wenn in dieser Kampagne noch kein Urteil `completed` vorliegt, oder beim Auftrag „neu urteilen“)
 
-- `qualificationGeneration.settings` sind maßgeblich (Zielkunde, Fit-Kriterien, Disqualifier),
+- `lead.qualificationGeneration.settings` sind maßgeblich (Zielkunde, Fit-Kriterien, Disqualifier),
   `agent.additionalPrompt` ergänzt sie (ab MCP 4.18.0 steht dort nur noch die Anweisung, die das
   Agenten-Profil selbst mitbringt, sonst `null`), `writeBack` nennt die erlaubten Werte.
 - Website per WebFetch laden (Leistungen, Über uns, Impressum bei Bedarf); Custom Attributes
@@ -87,7 +87,9 @@ gelten immer.
   aussortierter Lead ist endgültig verloren, ein durchgelassener Grenzfall kostet nur eine Recherche.
   - `not_qualified` nur mit konkretem, benennbarem Grund: ein Disqualifier der Kampagne trifft belegt zu,
     ein gelistetes No-Go, ein Kerngeschäft außerhalb des Zielkunden (andere Branche; eine einzelne
-    Zusatzleistung oder thematische Nähe ist keine Überschneidung) oder kein erkennbarer Geschäftsbetrieb.
+    Zusatzleistung oder thematische Nähe ist keine Überschneidung) oder kein Geschäftsbetrieb (belegt: aufgegeben,
+    dauerhaft geschlossen, Domain ohne Firma dahinter; ein Wartungshinweis, eine Fehlerseite oder eine
+    Zeitüberschreitung der Website ist kein Beleg dafür).
     Ohne konkreten Grund keine Ablehnung.
   - `mid_qualified`: passt, aber die Evidenz ist dünn oder unsicher, oder nur teilweise Überschneidung.
     Im Zweifel durchlassen: Unsicherheit oder „passt halbwegs“ ist nie ein Ablehnungsgrund.
@@ -123,9 +125,9 @@ gelten immer.
   schreibt die Recherche zusammen mit dem Urteil.
 
 - Fehlt `lead.website`, gilt das wie eine Website, die nichts liefert (Suche nur im Rahmen der Stufe).
-- `researchGeneration.config` bestimmt, WONACH du suchst; `agent.additionalPrompt` gilt zusätzlich,
+- `lead.researchGeneration.config` bestimmt, WONACH du suchst; `agent.additionalPrompt` gilt zusätzlich,
   `anchorRules` und `campaignFrame` (falls vorhanden) bestimmen, was als Aufhänger zählt.
-- `researchGeneration.researchTier.rules` bestimmt verbindlich, WIE VIEL du im Netz suchen darfst
+- `lead.researchGeneration.researchTier.rules` bestimmt verbindlich, WIE VIEL du im Netz suchen darfst
   (Stufe Basis, Smart oder Deep Research); der Server-Lauf hält dieselben Grenzen ein, dort hängt der
   Credit-Preis je Lead daran, im Abo das Kontingent. Fehlt `researchTier` (älterer Server), gilt Deep Research.
   - Basis: keine WebSearch und keine fremden Seiten, nur die Website des Leads und die importierten
@@ -141,6 +143,11 @@ gelten immer.
   ein Rezensionstext, sind das die Bewertungen dieses Leads: NICHT selbst nach Bewertungen suchen, nur
   zitieren, was die Texte sagen, nie Namen von Rezensierenden. Beiträge des Betriebs sind höchstens ein
   abhebendes Detail, nie ein Lob. Als Quelle im Bericht gilt „Google-Profil“.
+- Aufbau der Antwort von `get_lead_data`: Alle Blöcke liegen unter `lead` (`lead.research`,
+  `lead.qualificationGeneration`, `lead.researchGeneration`, `lead.emailGeneration`). Immer mit `stage`
+  abrufen. Der Mail-Block (`stage="email"`) ist groß (bis rund 100.000 Zeichen): Landet die Antwort in
+  einer Datei, lies daraus gezielt `lead.emailGeneration.systemPrompt`, `variables` und
+  `expectedOutput`, statt sie als Ganzes auszugeben.
 - Website-Fakten (ab MCP 4.17.0): `lead.websiteFacts` nennt, was der Quelltext der Startseite zeigt
   (`system`, `shop`, `tracking`, `tagManager`, `careerLink`). `null` heißt, das Konto sieht die Fakten
   nicht; `checked: false` heißt nicht gelesen, nie „nichts gefunden“. `google_ads` unter `tracking`
@@ -171,7 +178,7 @@ gelten immer.
   Standardleistungen nie als Aufhänger vormerken, außer als Lob aus Bewertungstexten. Ebenso nichts,
   was auf zehn andere Betriebe derselben Branche in der Stadt passt (Austauschtest).
 - Bericht nur mit Ergebnissen über die Firma, in Alltagssprache und mit Quelle; er erscheint für Kunden in der Lead-Ansicht. `anchorRules`, `campaignFrame` und `researchTier` sind Arbeitsanweisungen: weder ihre Namen (MINDESTSTÄRKE, Bedingung (a) bis (d), Austauschtest, Sperrliste, Ersatzsatz, Prüfaufträge) noch ihre Inhalte stehen im Bericht, also keine Schwellen („ab 30 Bewertungen“), keine Abwägung, ob ein Anker trägt, keine Abhakliste der Ausschlussgründe („kein Franchise, keine Klinik“; stattdessen die Tatsache: „Einzelpraxis mit drei Behandlerinnen“), kein Seitenbudget, keine Recherche-Stufe, keine Herkunft „aus der Vorqualifizierung“: Quelle ist die Seite oder Plattform (URL, Impressum, Google-Profil, Import), nie ein Arbeitsschritt wie Vorqualifizierung oder Recherche, kein Prüfstatus von Adressen, keine Suchvorlage mit Platzhaltern (nur die tatsächlichen Suchwörter). Probe für jeden Satz: Liest der Inhaber ihn als Aussage über seine Firma? Superlative und Vergleiche mit anderen Betrieben („einzigartig“, „kaum ein anderes Institut“, „fast keine Agentur“) nur mit Beleg aus der Quelle, sonst nur das Detail nennen; was einen Anker abhebt, steht am Detail selbst („Sprechstunde bis 21 Uhr“), nicht als „ungewöhnlich“ oder Urteil über die Branche.
-- **Lead ohne Adresse** (`researchGeneration.contactEmail.required` true bzw. `lead.email` und
+- **Lead ohne Adresse** (`lead.researchGeneration.contactEmail.required` true bzw. `lead.email` und
   `lead.sendingEmail` leer): Die eigene Kontaktadresse des Betriebs ist Ziel 0. Impressum, Kontakt-,
   Team- und Datenschutzseite sowie den Footer der Website per WebFetch lesen (Suche nur nach
   `researchTier.rules`). Eine gefundene eigene Adresse wird `bestEmail` (persönliche von Inhaber oder
@@ -189,7 +196,7 @@ gelten immer.
   Gehört die Importadresse laut Recherche belegt einem Dritten (Kammer, Portal, Agentur, andere
   Firma) und gibt es keine eigene belegte Adresse: `bestEmail` weglassen, im Report vermerken, keine
   Mail schreiben (Antwort `mail=übersprungen`). Keine DNS- oder MX-Prüfung.
-- Power-ups (MCP ab 4.6.0, `ping`): Nennt `get_lead_data` unter `researchGeneration.powerUps` die Tools
+- Power-ups (MCP ab 4.6.0, `ping`): Nennt `get_lead_data` unter `lead.researchGeneration.powerUps` die Tools
   `verify_email` oder `find_person_email`, sind sie in der Kampagne eingeschaltet. Aufruf über
   `run_power_up(campaign_id, lead_id, tool, input)`, Eingabe nach `inputSchema`, Leitlinie aus `guidance`.
   - Erst nachsehen, was schon geprüft ist: `lead.emailVerdicts` und `lead.powerUpCalls` aus `get_lead_data`
@@ -240,7 +247,7 @@ und nur den vorgegebenen Werten (daraus wählen „Angebot je Lead“ und die Sc
 der Chance-Winkel seine Beobachtung), `## BEWERTUNGEN EXTERN`, `## Stärkste Anker für einen Opener` mit drei
 Einträgen und `**Bester Anker:**` (daraus nehmen die Intro-Varianten ihre Anker) und
 `### Weitere Ansprechpartner` (daraus schreibt `routing` seine Fälle). „Anker-Regeln oben“ und „RANGFOLGE
-DER ANKER“ meinen `researchGeneration.anchorRules`.
+DER ANKER“ meinen `lead.researchGeneration.anchorRules`.
 
 ```markdown
 # Recherche-Bericht
@@ -333,17 +340,17 @@ Bis zu 5 Funde in dieser Form, nach dem Rang der RANGFOLGE DER ANKER geordnet (F
   beziehen sich auf diese Antwort.
 - Nur mit Versandadresse: Steht nach Schritt 3 weder `lead.email` bzw. `lead.sendingEmail` noch eine
   eben geschriebene `bestEmail` am Lead, entfällt dieser Schritt (`mail=übersprungen grund=keine-adresse`).
-- Maßgeblich ist `emailGeneration.systemPrompt` (Server-Regeln für Anrede, Opener, Einstieg). Nur wenn
+- Maßgeblich ist `lead.emailGeneration.systemPrompt` (Server-Regeln für Anrede, Opener, Einstieg). Nur wenn
   er keine Opener-Regeln enthält (älterer Server), den Skill `outreach:outreach-copy` laden (Abschnitte
   „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“).
-- **Sprache:** `emailGeneration.language` legt die Sprache aller Variablen fest. Bei `en` alles in
+- **Sprache:** `lead.emailGeneration.language` legt die Sprache aller Variablen fest. Bei `en` alles in
   natürlichem US-Englisch (nicht aus dem Deutschen übersetzen), `hallo` genau nach `salutationRule`
   (`Hi {first name},`, ohne benennbare Person `Hi there,`, kein du/Sie). Die deutschen Regeln unten (du/Sie,
   „Hallo …“, Anführungszeichen „…“, Umlaute, deutsche Einstiege und Reaktionsformen, Komma im
   Sternschnitt) gelten dann nicht; maßgeblich sind die Regeln in `systemPrompt`. Rangfolge der Anker,
   Austauschtest, Sperrliste und „nichts erfinden“ gelten in beiden Sprachen.
-- `emailGeneration.systemPrompt`, `salutation`/`salutationRule` und `campaignContext` lesen; für jede
-  Variable in `emailGeneration.variables` den Text nach ihrem Prompt schreiben, mit dem, was du in
+- `lead.emailGeneration.systemPrompt`, `salutation`/`salutationRule` und `campaignContext` lesen; für jede
+  Variable in `lead.emailGeneration.variables` den Text nach ihrem Prompt schreiben, mit dem, was du in
   Schritt 2 und 3 über den Lead gelernt hast.
 - Prüfen: Anrede genau nach dem `hallo`-Prompt der Kampagne und überall gleich. Der Prompt entscheidet
   auch, wer bei einer Sammeladresse (info@, contact@, hello@) angesprochen wird: verlangt er dort eine
@@ -397,7 +404,7 @@ Bis zu 5 Funde in dieser Form, nach dem Rang der RANGFOLGE DER ANKER geordnet (F
     wiedergeben, nur das Tun benennen. Höchstens 2 Sätze, zusammen höchstens 30 Wörter (nachzählen),
     EIN Detail statt gestapelter Lobpunkte, Projekte oder Titel; wird es zu lang, das schwächere Detail
     streichen. Komma statt Strich.
-- Intro-Varianten (ab MCP 4.10.0): `emailGeneration.introVariables` nennt die Intro-Variablen in
+- Intro-Varianten (ab MCP 4.10.0): `lead.emailGeneration.introVariables` nennt die Intro-Variablen in
   Rangfolge. Das erste Element ist Variante A mit dem besten Anker (meist `intro`, maßgeblich ist die
   Position, nicht der Name), dann `intro_b` mit dem zweitbesten …; ältere Kampagnen haben
   `intro_chance`. Jede Variante nach dem Block INTRO-VARIANTEN UND TAGS im `systemPrompt`, mit eigenem
@@ -416,7 +423,7 @@ Bis zu 5 Funde in dieser Form, nach dem Rang der RANGFOLGE DER ANKER geordnet (F
   „fehlt“, „verschenkt“, kein Rat, keine Vermutung über Interna, nie „ich verfolge euch schon länger“. Fehlt
   ein Beleg für eine der beiden Seiten (Befund fehlt, „unklar“, „ja“, kein tragender Anker), schreib ein
   Lob-Intro nach den Regeln oben (Rückfall), in derselben Chance-Variable.
-- Angebotsblöcke (ab MCP 4.11.0, nur wenn `emailGeneration.offerBlocks` gesetzt ist): Den Schwerpunkt
+- Angebotsblöcke (ab MCP 4.11.0, nur wenn `lead.emailGeneration.offerBlocks` gesetzt ist): Den Schwerpunkt
   nach dem Block ANGEBOT UND SCHWERPUNKTE im `systemPrompt` wählen, Standard ist das Hauptangebot (Rang 1);
   einen anderen nur, wenn die Recherche ihn trägt und die gespeicherte Prüfung (`offerBlocks.focusCheck`)
   ihn nicht ausschließt. Melden als `"schwerpunkt": <Rang>` mit `"schwerpunkt__grund"`. Je Block mit
@@ -434,7 +441,7 @@ Bis zu 5 Funde in dieser Form, nach dem Rang der RANGFOLGE DER ANKER geordnet (F
   und 3 setzt der Server. Lehnt das Tool mit `validation_failed` ab, weil `angebot` fehlt oder kein
   Angebot nennt, die Nummer nach den gültigen Nummern der Meldung korrigieren und erneut speichern. Haupt-Angebot ist das Angebot, das die
   Anweisung als „(Haupt-Angebot)“ führt (ab MCP 4.15.0 die 1).
-- Person 2 (ab MCP 4.11.0, nur wenn `emailGeneration.secondPerson.available` true ist): Sie gehört in
+- Person 2 (ab MCP 4.11.0, nur wenn `lead.emailGeneration.secondPerson.available` true ist): Sie gehört in
   denselben Aufruf als `second_person="<JSON-String nach secondPerson.expectedOutput>"` mit `fit`, `reason`,
   ihren Texten und Intro-Tags, nach dem Block ZWEITE PERSON im `systemPrompt`. Ihr Intro hat ein eigenes
   Detail zur Firma und ist nie wortgleich mit einem Intro von Person 1; Anrede in derselben Form wie bei
@@ -443,7 +450,7 @@ Bis zu 5 Funde in dieser Form, nach dem Rang der RANGFOLGE DER ANKER geordnet (F
   sie nie als Alternative, sondern sagt offen, dass du auch ihr geschrieben hast (Fall D im Prompt); sonst
   lehnt `save_lead_variables` mit `validation_failed` ab. Den Anker `kollege` gibt es nicht mehr.
 - Speichern: `save_lead_variables(campaign_id, lead_id, variables="<JSON-String mit allen Schlüsseln
-  aus emailGeneration.expectedOutput>")`, also auch je Intro-Variable `<name>__anker` und
+  aus lead.emailGeneration.expectedOutput>")`, also auch je Intro-Variable `<name>__anker` und
   `<name>__schluss` mit einem der dort genannten Werte (z. B. `"intro__anker": "kundenstimme",
   "intro__schluss": "kein_abschluss"`). Bei Chance-Variablen zusätzlich (Pflicht je Chance-Variable)
   `angles={"<name>": "chance"}` für ein Intro mit Stärke und Beobachtung, `"lob"` für einen Rückfall. Der Winkel
@@ -472,7 +479,7 @@ vorhandene Werte, die der Befund nicht betrifft, bleiben unverändert.
      raten, sondern `UNVERÄNDERT` melden. Danach
      `hallo` auf die Person der neuen Adresse prüfen und bei Bedarf wie bei `text` neu schreiben.
    - `recherche`: Nur die offene Frage aus dem Befund klären (Impressum, Team-Seite, Bewertungsquelle per
-     WebFetch, WebSearch nur, soweit `researchGeneration.researchTier.rules` sie erlaubt). Ist sie belegt beantwortet, die Recherche ergänzen: den vorhandenen
+     WebFetch, WebSearch nur, soweit `lead.researchGeneration.researchTier.rules` sie erlaubt). Ist sie belegt beantwortet, die Recherche ergänzen: den vorhandenen
      Text vollständig übernehmen und unten `## Nachrecherche <Datum>` mit Antwort und Quelle anhängen, per
      `write_lead_details(campaign_id, lead_id, fields={research: "<gesamter Text>"})`. Nie etwas aus dem
      vorhandenen Bericht streichen. Danach `get_lead_data(…, stage="email")` neu laden (die Mail-Regeln

@@ -86,7 +86,7 @@ Die Antwort nennt `search_id` und `app_url` (Seite der Suche in der App). Beides
 
 ### 5. Stand abfragen
 
-`get_prospect_search_status(search_id)`, bis `is_terminal: true`. Die erste Abfrage nach etwa 10 Sekunden: Eine kleine Suche ist dann oft schon fertig. Läuft sie noch, alle 30 bis 60 Sekunden; ein Gebiet kann einige Minuten dauern.
+`get_prospect_search_status(search_id)`, bis `is_terminal: true`. Die erste Abfrage nach etwa 10 Sekunden: Eine kleine Suche ist dann oft schon fertig. Läuft sie noch, alle 30 bis 60 Sekunden; ein Gebiet kann einige Minuten dauern. Zwischen den Abfragen wirklich warten (ein Warte-Befehl deiner Umgebung, etwa `sleep 30` in der Shell); gibt es keinen, dem Nutzer den Stand nennen und auf seine Nachfrage erneut abfragen, nicht ohne Pause in Schleife abfragen.
 
 Zwischendurch kurz berichten: `progress.places_so_far` (gefundene Betriebe), `progress.new_leads_so_far`, `progress.areas_done` von `progress.areas_total`, und `progress.credits_so_far` (bisher berechnet). `progress.credits_max` nur nennen, wenn `progress.budget` true ist. Die berechneten Credits steigen Gebiet für Gebiet, nicht mit jedem Fund.
 
