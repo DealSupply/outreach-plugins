@@ -56,7 +56,7 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.16.0. Was neuer ist als 3.0.0, nutzen sie
+  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.22.0. Was neuer ist als 3.0.0, nutzen sie
   nur, wenn der Server es kennt:
   - ab 4.0.0 Leads ohne E-Mail (E-Mail oder eigene Website je Lead), ab 4.4.0 der Kampagnen-Export als
     Datei, ab 4.5.0 Workspaces, ab 4.6.0 Power-ups, ab 4.7.0 englische Kampagnen (`campaign.language`;
@@ -77,7 +77,10 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     `lead_counts.open`, neue Fehlercodes (etwa `budget_used_up`, `budget_too_low`, `lead_mutation_busy`
     bei `delete_list`) und die
     Google-Bewertungen am Lead (`lead.googleReviews`). Auf 4.15.0 gelten die bisherigen Regeln; die
-    Skills nennen diese Stellen mit „ab 4.16.0 (laut `ping`)“.
+    Skills nennen diese Stellen mit „ab 4.16.0 (laut `ping`)“;
+  - ab 4.16.0 außerdem Leads finden über Google Maps (`outreach-leads-finden`) und die Personensuche
+    (`outreach-personensuche`). Auf älteren Servern fehlen diese Werkzeuge; die beiden Skills sagen das
+    dem Nutzer dann.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App
