@@ -70,9 +70,10 @@ Text nie.
   Dass eine alte Vorlage oder die Branche siezt, ist kein Grund für eine Abweichung.
 - **Die Person nie mit ihr/euch ansprechen**, auch nicht im Gruß: kein „Hallo <Firma> Team,“, kein
   „Hallo zusammen,“, kein „Hey …“, nie Sie und du gemischt.
-- **Tatsachen über einen Betrieb mit mehreren Personen** dürfen mit ihr/euer stehen („dass ihr nach
-  ISO 9001 zertifiziert seid“, „auf eurer Website“) oder mit „dein Team“, „deine Firma“, je
-  nachdem, was natürlicher klingt. Innerhalb eines Satzes nicht zwischen du und ihr wechseln
+- **Geht es um die Firma**, ihr Team, ihre Leistung oder das, was die Firma bekommt, steht bei einem
+  Betrieb mit mehreren Personen ihr/euer („dass ihr nach ISO 9001 zertifiziert seid“, „auf eurer
+  Website“, „auf euch zugeschnitten“); „dein Team“, „deine Firma“ geht auch, je nachdem, was
+  natürlicher klingt. Innerhalb eines Satzes nicht zwischen du und ihr wechseln
   („deine Bewertungen …, dass ihr …“ ist falsch). Bei Solo-Selbstständigen nur du/dein.
 - **Firmenleistungen gehören dem Betrieb:** nie „du hast die Anlage gebaut“ an eine
   Geschäftsführerin oder einen Vertriebsleiter. „du hast …“ nur, wenn die Person es nachweislich
@@ -82,7 +83,8 @@ Text nie.
   (info@, kontakt@, office@, hallo@ …) der Entscheider aus der Recherche (Inhaber,
   Geschäftsführung), damit die Mail dort ankommt oder weitergeleitet wird. Personenmarken und
   Ein-Personen-Betriebe immer mit Vornamen, auch hinter info@. Ist keine Person klar erkennbar,
-  steht nur „Hallo,“ und der Text bleibt im Singular („dein Team“, „dein Betrieb“).
+  steht nur „Hallo,“ und der Leser selbst bleibt im Singular (du, nie als Gruppe); über die Firma
+  ihr/euer oder „dein Team“, „dein Betrieb“.
 - **Gemischte Zielgruppen:** Der feste Text nennt den Empfänger nur mit einer Bezeichnung, die auf
   jeden Lead passt. Mischt die Liste Firmen und Einzelpersonen, „dein Business“ oder „für dich“
   statt „deine Agentur“.

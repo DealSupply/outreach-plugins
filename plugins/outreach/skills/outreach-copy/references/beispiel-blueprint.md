@@ -207,7 +207,7 @@ in `fuer-erfahrene.md`. Gegenüber dem Blueprint oben ändert sich:
 ## Variante der Ansprache: Sie
 
 Standard ist `du` im Singular. Ohne benennbaren Ansprechpartner lautet der Gruß „Hallo,“ und der
-Text bleibt im Singular („dein Team“, „deine Praxis“); eine Ihr- oder Team-Form gibt es nicht. Nur
+Leser selbst bleibt im Singular; über die Firma ihr/euer oder „dein Team“, „deine Praxis“. Eine Ihr- oder Team-Form als Anrede gibt es nicht. Nur
 wenn der Nutzer die Kampagne siezen will (Kampagnen an sehr große Unternehmen), ändert man drei
 Stellen gemeinsam: `emailAgentConfig.salutation`, die Format-Regeln im `hallo`-Prompt und die
 Pronomen im festen Sequenztext (inklusive `offer_contract.cta` und der Zeile „Ansprache“ im
