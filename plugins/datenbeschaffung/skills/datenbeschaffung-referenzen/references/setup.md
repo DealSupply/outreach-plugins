@@ -1,7 +1,7 @@
 # Setup — Apify verbinden und Selbsttest
 
-> Der Kunde scrapt mit **eigenem Apify-Konto** außerhalb von ListM8. Der Token bleibt beim Kunden:
-> nicht im Chat abfragen oder ausgeben und nirgends in ListM8 hinterlegen.
+> Der Kunde scrapt mit **eigenem Apify-Konto** außerhalb von DealSupply. Der Token bleibt beim Kunden:
+> nicht im Chat abfragen oder ausgeben und nirgends in DealSupply hinterlegen.
 
 > Die EINE Setup-Referenz. Jeder Weg-Skill verweist hierher, keiner wiederholt sie.
 > Zuletzt geprüft: 2026-08-19.
@@ -12,10 +12,10 @@
 |---|---|---|
 | Apify-Account | apify.com | Free-Plan: 5 $ Startguthaben (reicht für die ersten Piloten). Starter ~39 $/Monat für laufende Beschaffung |
 | API-Token | **https://console.apify.com/settings/integrations** (genau diese URL — kein anderer Pfad) | — |
-| ListM8-MCP verbunden | Seite „MCP & Skills“ der App (`/mcp`) | — (optional, aber empfohlen: Vorab-Abgleich + direkter Import per `import_leads`) |
+| DealSupply-MCP verbunden | Seite „MCP & Skills“ der App (`/mcp`) | — (optional, aber empfohlen: Vorab-Abgleich + direkter Import per `import_leads`) |
 
 Arbeitet der Nutzer in mehreren Workspaces der App, laufen Abgleich und Import im gewählten
-Workspace (`listm8-mcp.md`, Abschnitt „Workspace“). Vor dem ersten Abgleich klären, welcher es ist.
+Workspace (`dealsupply-mcp.md`, Abschnitt „Workspace“). Vor dem ersten Abgleich klären, welcher es ist.
 
 ## Die drei Zugriffswege auf Apify
 

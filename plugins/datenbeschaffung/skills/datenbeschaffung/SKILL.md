@@ -1,14 +1,14 @@
 ---
 name: datenbeschaffung
-description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Datenbeschaffungs-Pakets. Führt über ICP, Bestandsabgleich, Kostenfreigabe und den manuellen Weg (Apify oder Outscraper mit eigenem Konto, Bereinigung, CSV) zum Import in ListM8. weg-* nicht direkt starten.
+description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Datenbeschaffungs-Pakets. Führt über ICP, Bestandsabgleich, Kostenfreigabe und den manuellen Weg (Apify oder Outscraper mit eigenem Konto, Bereinigung, CSV) zum Import in DealSupply. weg-* nicht direkt starten.
 ---
 
-# Datenbeschaffung mit ListM8
+# Datenbeschaffung mit DealSupply
 
-Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in ListM8 führen. ListM8 selbst scrapt
+Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in DealSupply führen. DealSupply selbst scrapt
 nicht: Der Kunde nutzt Apify (bzw. Outscraper) mit **eigenem Konto und eigenem Token außerhalb von
-ListM8**, scrapt dort, bereinigt die Ergebnisse, exportiert CSV oder JSON und lädt sie in ListM8
-hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an, nicht in ListM8.
+DealSupply**, scrapt dort, bereinigt die Ergebnisse, exportiert CSV oder JSON und lädt sie in DealSupply
+hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an, nicht in DealSupply.
 
 ## Leitsätze
 
@@ -16,7 +16,7 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
    fachliche Qualifizierung und der spätere Review bleiben eigene Schritte.
 2. **Nur beschaffen, was die Plattform nicht selbst findet.** Die Recherche liest Website und
    Impressum, findet den Ansprechpartner und dessen persönliche Adresse. Die Beschaffung liefert
-   die Liste, je Lead eine Adresse (info@ reicht) **oder** die eigene Website (ab ListM8 MCP
+   die Liste, je Lead eine Adresse (info@ reicht) **oder** die eigene Website (ab MCP
    4.0.0: fehlt die Adresse, sucht die Recherche sie; ein Profil-Link wie Instagram oder Linktree
    reicht nicht) und das, was nur auf der Quelle steht: Google-Bewertung und Rezensionen,
    Follower, Plattform-Bewertung, Shop-Technologie. Details je Quelle:
@@ -38,11 +38,11 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
 Erstes Mal oder Zweifel am Zugang? Zuerst `datenbeschaffung-setup` ausführen (prüft
 Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst kurz:
 
-- **ListM8-MCP verbunden?** `ping` aufrufen. Mit MCP sind Bestandsabgleich und direkter Import
+- **DealSupply-MCP verbunden?** `ping` aufrufen. Mit MCP sind Bestandsabgleich und direkter Import
   möglich; ohne MCP am Ende CSV-Übergabe über die Oberfläche und den fehlenden Bestandsabgleich
   ausdrücklich melden. Fehlen die Tools, zuerst Verbindung und Berechtigungen klären.
 - **Workspace:** Abgleich, Liste und Import laufen im gewählten Workspace der App. Vor dem ersten
-  Abgleich klären, welcher es ist (Regel: `../datenbeschaffung-referenzen/references/listm8-mcp.md`,
+  Abgleich klären, welcher es ist (Regel: `../datenbeschaffung-referenzen/references/dealsupply-mcp.md`,
   Abschnitt „Workspace“).
 - **Server-Version merken:** `ping.version` ab `4.0.0` heißt Übergabemodus `kontakt` (E-Mail oder
   eigene Website je Lead), darunter oder ohne Version `email` (jede Zeile braucht eine Adresse).
@@ -55,8 +55,8 @@ Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst k
   `get_job_status`) braucht `leads:read`; Importieren, Listen anlegen/löschen und Zuordnen braucht
   `leads:write`.
 
-Signaturen und Felder der ListM8-Tools stehen in
-`../datenbeschaffung-referenzen/references/listm8-mcp.md`.
+Signaturen und Felder der DealSupply-Tools stehen in
+`../datenbeschaffung-referenzen/references/dealsupply-mcp.md`.
 
 ## Phase 1: ICP und Anti-ICP bestätigen
 
@@ -105,11 +105,11 @@ Adresse sucht danach die Recherche der Plattform.“
   nach ausdrücklichem Ja einen Anreicherungs-Lauf planen.
 - Der Weg-Skill schreibt die Spalten über `build_csv.py`; nur Rohfelder mit Einstieg zusätzlich
   per `--keep`.
-- **Kontaktlücke** (Leads mit eigener Website, aber ohne Adresse): ab ListM8 4.0.0 entscheidet der
+- **Kontaktlücke** (Leads mit eigener Website, aber ohne Adresse): ab MCP 4.0.0 entscheidet der
   Nutzer, ob vorab angereichert wird oder die Recherche sucht. Entscheidungstabelle in
   `datenumfang.md`, Abschnitt „Die Kontaktlücke“. Dem Nutzer sinngemäß sagen: „N Leads haben eine
   eigene Website, aber keine Adresse. Ich kann sie so importieren, dann sucht die Recherche in
-  ListM8 die Kontaktadresse; findet sie keine, scheidet der Lead aus und bekommt keine Mail. Bis
+  DealSupply die Kontaktadresse; findet sie keine, scheidet der Lead aus und bekommt keine Mail. Bis
   dahin kostet er im Server-Lauf etwa 2 bis 3 Cent bzw. Abo-Kontingent und einen Platz im
   Lead-Kontingent. Vorab das Impressum über dein Apify-Konto auszulesen kostet rund 0,2 Cent je
   Domain, lohnt ab etwa 50 Domains und liefert geprüfte Adressen vor dem Import. Vorab anreichern
@@ -128,7 +128,7 @@ Mit MCP auch `get_credit_balance` lesen (nur lesend): Die geplante Zahl **neuer*
 lehnt der Import ab. Das vor dem bezahlten Scrape klären: kleinere Menge, nicht benötigte Leads
 löschen (gibt Plätze sofort frei) oder Plan wechseln. Steht `account.subscription_required` auf
 `true`, gibt es kein aktives Abo und es lässt sich nichts importieren: erst einen Plan wählen, dann
-scrapen. Import und Listen kosten in ListM8 keine Credits.
+scrapen. Import und Listen kosten in DealSupply keine Credits.
 
 ## Phase 4: Kosten nennen, Freigabe einholen, Weg-Skill ausführen
 
@@ -150,7 +150,7 @@ scrapen. Import und Listen kosten in ListM8 keine Credits.
 ## Phase 5: Pflicht-Endstation
 
 `listen-qualitaet` laden und vollständig durchlaufen: Format prüfen, gegen den Bestand abgleichen,
-E-Mails verifizieren, 20er-Stichprobe, Import in ListM8. Kein Lauf endet mit einer Roh-CSV.
+E-Mails verifizieren, 20er-Stichprobe, Import in DealSupply. Kein Lauf endet mit einer Roh-CSV.
 
 Danach auf ausdrücklichen Verarbeitungsauftrag die Liste einer bestätigten Kampagne zuordnen
 (`add_leads_to_campaign`) und über den Outreach-Workflow `start_lead_run` für `qualification`,
@@ -175,5 +175,5 @@ Nach jedem Lauf ein kompakter Block: Weg, Query und Filter, Pilot-Trefferquote, 
 Rezensionstext bzw. Plattform-Einstieg (aus dem Bericht von `build_csv.py`), Stückzahlen je Stufe
 (roh, nach Dedup, nach Verifizierung, übergeben, davon ohne E-Mail mit Website, verworfen je Grund),
 reale Kosten beim Anbieter und was beim nächsten
-Lauf anders gemacht würde. Die Herkunft steht dauerhaft an der Liste in ListM8 (`source` bei
+Lauf anders gemacht würde. Die Herkunft steht dauerhaft an der Liste in DealSupply (`source` bei
 `create_list`).

@@ -38,7 +38,7 @@ Apollo ist als Quelle in Europa DSGVO-verifiziert - bei Rückfragen ist „die D
 
 ## Listen-Qualitäts-Check
 
-- [ ] **Spalten vorhanden:** E-Mail oder eigene Website je Zeile (ab ListM8 MCP 4.0.0; ältere Server: E-Mail), Firma, Website, Vorname, Nachname (optional: Branche, MA-Größe, Region); Format nach `csv-spalten.md`
+- [ ] **Spalten vorhanden:** E-Mail oder eigene Website je Zeile (ab MCP 4.0.0; ältere Server: E-Mail), Firma, Website, Vorname, Nachname (optional: Branche, MA-Größe, Region); Format nach `csv-spalten.md`
 - [ ] **E-Mails verifiziert:** Verifier-Schritt in `listen-qualitaet` oder in Instantly (Bounce Rate unter 3 % halten). Adressen, die erst die Recherche der Plattform findet, laufen nicht durch den Verifier: vor dem Versand in Instantly prüfen
 - [ ] **Sperrliste abgeglichen:** Bestandskunden, bereits kontaktierte Leads, Wettbewerber entfernt
 - [ ] **ICP-Check:** Stichprobe von 20 Leads manuell prüfen - sind das wirklich potenzielle Kunden? (Schwelle: `listen-qualitaet`, Schritt 4)
@@ -69,7 +69,7 @@ Jede Kampagne prüft beim Import gegen eine zentrale Sperrliste. Was dort hinein
 
 Der letzte Punkt gilt dauerhaft und über alle Kampagnen und Postfächer hinweg, nicht nur für die laufende Aussendung. Wer nach einer Abmeldung weiter angeschrieben wird, klickt auf Spam - und die Beschwerdequote ist der Wert, an dem die Zustellung aller Domains hängt. Ein Lead aus der Kampagne zu nehmen reicht dafür nicht, er muss in die zentrale Liste.
 
-In ListM8 ist das der globale Kontaktstatus: Abmeldungen als `do_not_contact`, bereits Angeschriebene als `contacted` (setzen mit `mark_leads_contacted`, aus Instantly per Kontaktstatus-Sync). Der Abgleich vor dem Scrape und vor dem Import (`export_leads(format="index")`, `check_leads_exist`, siehe `outreach-uebergabe.md`) berücksichtigt ihn. Bestandskunden und Wettbewerber, die nie als Lead in ListM8 standen, gehören als Domains in die Query-Ausschlüsse bzw. den Anti-ICP.
+In DealSupply ist das der globale Kontaktstatus: Abmeldungen als `do_not_contact`, bereits Angeschriebene als `contacted` (setzen mit `mark_leads_contacted`, aus Instantly per Kontaktstatus-Sync). Der Abgleich vor dem Scrape und vor dem Import (`export_leads(format="index")`, `check_leads_exist`, siehe `outreach-uebergabe.md`) berücksichtigt ihn. Bestandskunden und Wettbewerber, die nie als Lead in DealSupply standen, gehören als Domains in die Query-Ausschlüsse bzw. den Anti-ICP.
 
 ## Volumen richtig planen
 
