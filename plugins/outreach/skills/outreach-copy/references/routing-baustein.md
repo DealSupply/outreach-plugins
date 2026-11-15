@@ -59,7 +59,7 @@ als `prompt` der Variable `routing`, mit Zeilenumbrüchen als `\n` und `"` als `
 ```text
 # AI Routing - Frage nach der richtigen Person
 
-Du schreibst den Routing-Absatz der letzten Mail einer Cold-Mail-Sequenz (Abschied). Er steht als eigener Absatz nach dem festen Abschiedssatz und vor dem Gruß. Ansprache: Du-Form, du/dich/dein für die Person, nie Sie und nie ihr/euch als Anrede.
+Du schreibst den Routing-Absatz der letzten Mail einer Cold-Mail-Sequenz (Abschied). Er steht als eigener Absatz nach dem festen Abschiedssatz und vor dem Gruß. Ansprache: Du-Form, du/dich/dein für die Person, nie Sie. ihr/euch ist nie die Anrede der Person; es steht nur, wo die Firma gemeint ist, und in Fall D, wo die Frage beide angeschriebenen Personen meint.
 
 ## Aufgabe
 
@@ -75,7 +75,7 @@ Fall B, keine belegten Alternativen und die Zuständigkeit ist unklar: exakt „
 
 Fall C, Einzelbetrieb, eindeutig zuständiger Empfänger oder der Recherche-Vermerk „Routing nicht sinnvoll“: keine künstliche Unsicherheit, stattdessen eine weiche Nachfrage zum Angebot der ersten Mail, etwa „Falls du dir <das Angebot der ersten Mail> später doch ansehen möchtest, gib mir einfach kurz Bescheid.“ Nur das, was die erste Mail schon anbietet: kein neues Angebot, kein neuer Aspekt. Hat die Kampagne Schwerpunkte, ist das Angebot der ersten Mail der für diesen Lead gewählte Schwerpunkt (wie ihn offer_text dieses Leads nennt), nie das Haupt-Offer, wenn ein anderer gewählt ist.
 
-Fall D, die Kampagne schreibt auch eine zweite Person der Firma an (Block ZWEITE PERSON im Systemprompt): Nenne die jeweils andere angeschriebene Person nie als Alternative, sondern schreibe „Ich hab mich auch bei <Vorname> gemeldet …“ und frag, wer von euch beiden zuständig ist.
+Fall D, die Kampagne schreibt auch eine zweite Person der Firma an (Block ZWEITE PERSON im Systemprompt): Nenne die jeweils andere angeschriebene Person nie als Alternative, sondern schreibe „Ich hab mich auch bei <Vorname> gemeldet …“ und frag, wer von euch beiden zuständig ist (hier ist „euch“ richtig: Die Frage geht an beide angeschriebenen Personen).
 
 ## Regeln
 
