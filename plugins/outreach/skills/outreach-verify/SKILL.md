@@ -211,6 +211,8 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 - [ ] Nur bei „Angebot je Lead“ (Mail 1 mit `offer_text`, `angebot_ausfuehrung` und `offer_cta` ohne `offerRole`): `offer_text` und `offer_cta` sind Werte des Servers (Absatz 1 und 3 des gewählten Angebots), kein Befund zum Wortlaut. `angebot_ausfuehrung` (Absatz 2) folgt der Anweisung im Prompt: genau ein Satz, höchstens 25 Wörter, nach der Regel der Karte (C beginnt wörtlich mit „Ich bin gerade noch an den letzten Feinheiten dran, vor allem“ und nennt genau ein Detail, ohne „morgen“; A im Konjunktiv, nie als erledigte Arbeit), nichts über die Lieferzusage hinaus, keine Zahl, die sie nicht nennt, auch keine aus der Recherche (Bewertung, Punkte, Jahre, Kundenzahl), nichts, was das Intro dieses Leads schon nennt (Projekt, Kunde, Produkt, Auszeichnung, Ort, Zahl), keine Frist, kein Gespräch oder Termin, keine Frage, kein Lob, keine Wiederholung von Absatz 1, keine Bedingung im Text, nichts, das nach einem Mangel des Leads klingt, und es passt zum Angebot in `offer_text`. Die Wahl folgt „WAHL DES ANGEBOTS“: ein weiteres Angebot nur, wenn seine Bedingung im `WEBSITE-BEFUND` der Recherche belegt ist („unklar“ oder nicht erwähnt zählt nicht), sonst das Haupt-Angebot (ab MCP 4.15.0 Nummer 1), bei mehreren das mit der kleinsten Nummer. Eine andere Wahl ist ein Ablehnungsgrund.
 - [ ] Trägt `angebot_ausfuehrung` die Marke `markWritten: satz_zu_lang` (mehr als 25 Wörter, unverändert gespeichert)? Dann ablehnen und neu schreiben lassen.
 - [ ] Nennt `routing` bei zwei angeschriebenen Personen (Person 2 mit eigener Mail) die andere Person als Alternative statt offen zu sagen, dass sie auch geschrieben bekam (Fall D)? Dann ablehnen.
+- [ ] Nutzt eine Variable Tracking oder Pixel der Website als Aufhänger (`lead.websiteFacts.tracking`, `tagManager`, ab MCP 4.17.0), oder nennt sie eine Website-Tatsache im Defizit-Ton? Dann ablehnen. `checked: false` heißt nicht gelesen, nie „nichts gefunden“.
+- [ ] Steht eine Mitarbeiterzahl oder ein Gründungsjahr aus `lead.companyFacts` mit `approximate: true` als genaue Zahl in der Mail? Dann ablehnen.
 - [ ] Ein fester zweiter Satz in Mail 1 und eine fehlende `angebot_ausfuehrung` sind kein Befund; fehlende Werte für Varianten (`betreff_b`, zweites Intro) nur, wenn die Kampagne Tests trägt.
 
 ### Inhaltliche Korrektheit
@@ -232,7 +234,7 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
   - Interne Metriken im Text (Score-Werte, Fit-Level etc.)
   - Erfundene Findings, die nicht in der Research stehen
   - Anrede-Mix oder andere Style-Bruch
-  - Verstoß gegen die Copy-Regeln aus outreach-copy (Kritik-Opener, mehr als 2 Sätze, Großbuchstabe am Anfang, „Hallo Herr/Frau …" oder „Hallo zusammen," oder Anrede mit ihr/euch; ihr/euer für Tatsachen über den Betrieb ist erlaubt)
+  - Verstoß gegen die Copy-Regeln aus outreach-copy (Kritik-Opener, mehr als 2 Sätze, Großbuchstabe am Anfang, „Hallo Herr/Frau …" oder „Hallo zusammen," oder Anrede mit ihr/euch; ihr/euer für Tatsachen über den Betrieb und für das, was die Firma bekommt, ist erlaubt)
   - Bei „Angebot je Lead“: Absatz 2 bricht die Regeln der Anweisung, oder das gewählte Angebot passt laut Recherche nicht zum Lead
   - Falsche HTTPS/SSL-Behauptungen
 

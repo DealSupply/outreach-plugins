@@ -90,16 +90,16 @@ muss dieselben Pronomen tragen wie der gewählte Modus.
 
 | `salutation` | Pronomen im ganzen Text | `hallo` | Fallback ohne benennbare Person |
 |---|---|---|---|
-| `du` (Standard) | Person: du/dich/dir/dein, nie ihr/euch als Anrede; Tatsachen über den Betrieb auch ihr/euer (siehe unten) | „Hallo Vorname,“ | „Hallo,“ |
+| `du` (Standard) | Person: du/dich/dir/dein, nie ihr/euch als Anrede; über die Firma ihr/euer (siehe unten) | „Hallo Vorname,“ | „Hallo,“ |
 | `sie` (Ausnahme) | Sie/Ihnen/Ihre | „Hallo Frau Nachname,“ / „Hallo Herr Nachname,“ (Herr/Frau nur, wenn belegt; nie „Guten Tag Herr/Frau Nachname,“; ohne belegte Anrede „Guten Tag Vorname Nachname,“ (G18)) | „Guten Tag,“ |
 
 **Standard ist immer `du`, Singular** – auch bei Praxen, Kanzleien, Finanz und generischen Adressen:
-Die Mail richtet sich an den Ansprechpartner bzw. Entscheider, nicht an den Betrieb. Die Person wird nie mit ihr/euch angesprochen (keine Ihr- und keine Team-Form, auch nicht im Gruß). Tatsachen über einen Betrieb mit mehr als einer Person dürfen aber mit ihr/euer stehen („dass ihr nach ISO 9001 zertifiziert seid“, „auf eurer Website“) oder mit „dein Team“/„deine Firma“, je nachdem, was natürlicher klingt. Firmenleistungen (Projekte, Anlagen, Produkte, Zertifikate, Auszeichnungen) gehören dem Betrieb: nie „du hast die Anlage gebaut“ an eine Geschäftsführerin oder einen Vertriebsleiter; „du hast …“ nur, wenn die Person es nachweislich selbst getan hat, oder bei Ein-Personen-Betrieben, Personenmarken und kleinen Inhaberbetrieben, die sie verkörpert. Innerhalb eines Satzes nicht zwischen du und ihr wechseln („deine Bewertungen …, dass ihr …“ ist falsch). Ein „nie ihr/euch“ im Prompt einer Variable meint die Anrede der Person, nicht diese Tatsachen. Ohne benennbaren Ansprechpartner lautet der Gruß
-„Hallo,“ und der Text bleibt im Singular („dein Team“, „dein Betrieb“, „deine Praxis“). `sie` gilt nur,
+Die Mail richtet sich an den Ansprechpartner bzw. Entscheider, nicht an den Betrieb. Die Person wird nie mit ihr/euch angesprochen (keine Ihr- und keine Team-Form, auch nicht im Gruß). Geht es um die Firma, ihr Team, ihre Leistung oder das, was die Firma bekommt, steht bei einem Betrieb mit mehr als einer Person ihr/euer („dass ihr nach ISO 9001 zertifiziert seid“, „auf eurer Website“, „auf euch zugeschnitten“, „ich hab was für euch“); „dein Team“/„deine Firma“ geht auch, je nachdem, was natürlicher klingt. Das in keinem Variablen-Prompt verbieten. Firmenleistungen (Projekte, Anlagen, Produkte, Zertifikate, Auszeichnungen) gehören dem Betrieb: nie „du hast die Anlage gebaut“ an eine Geschäftsführerin oder einen Vertriebsleiter; „du hast …“ nur, wenn die Person es nachweislich selbst getan hat, oder bei Ein-Personen-Betrieben, Personenmarken und kleinen Inhaberbetrieben, die sie verkörpert. Innerhalb eines Satzes nicht zwischen du und ihr wechseln („deine Bewertungen …, dass ihr …“ ist falsch). Ein „nie ihr/euch“ im Prompt einer Variable meint die Anrede der Person, nicht diese Tatsachen. Ohne benennbaren Ansprechpartner lautet der Gruß
+„Hallo,“ und der Leser selbst bleibt im Singular (du, nie als Gruppe); über die Firma ihr/euer oder „dein Team“, „dein Betrieb“, „deine Praxis“. `sie` gilt nur,
 wenn der Nutzer es für die Kampagne wählt (Kampagnen, die gezielt sehr große Unternehmen
 ansprechen), nie automatisch je Lead. Dass eine alte Vorlage, eine Bestandskampagne oder die Branche
 siezt bzw. „ihr“ schreibt, ist KEIN Grund für eine Abweichung. Keine Mischform in der Anrede: „Hallo Max,“
-vor „ich hab was für euch“ ist ein Fehler. Den Wert `team`, den der Server noch annimmt, setzt dieser Skill nie.
+vor „wie seht ihr das?“ ist ein Fehler, weil die Frage die Person meint; „ich hab was für euch“ ist richtig, weil die Firma etwas bekommt. Den Wert `team`, den der Server noch annimmt, setzt dieser Skill nie.
 
 Der feste Text nennt den Empfänger nur mit einer Bezeichnung, die auf jeden Lead der Liste passt.
 Mischt die Zielgruppe Firmen und Einzelpersonen (Agenturen und Freelancer, Praxen und
@@ -918,7 +918,7 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
     Fassung der App zu Sprache und `salutation` (`references/routing-baustein.md`), und trägt der Abschied `{{ai.routing}}` als eigenen Absatz?
 12. Passen `salutation`, `hallo`-Prompt und die Pronomen des festen Texts zusammen (kein
     „Hallo Herr/Frau …“, „… Team,“ oder „Hallo zusammen,“ mit Du-Text, kein du/ihr-Wechsel in einem Satz und keine Anrede mit ihr/euch, auch
-    nicht ohne Ansprechpartner: „Hallo,“ und „dein Team“)?
+    nicht ohne Ansprechpartner: „Hallo,“; ihr/euer nur für die Firma)?
 13. Zeigst du dem Nutzer Beispielwerte für `hallo`/`intro`: fertiger Klartext ohne
     `{{…}}`-Platzhalter, Namen und Firmen erkennbar fiktiv, Angle-Reihenfolge und Verbote
     eingehalten?

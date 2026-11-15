@@ -5,8 +5,11 @@ description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen�
 
 # Datenbeschaffung mit DealSupply
 
-Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in DealSupply führen. DealSupply selbst scrapt
-nicht: Der Kunde nutzt Apify (bzw. Outscraper) mit **eigenem Konto und eigenem Token außerhalb von
+Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in DealSupply führen. Lokale Betriebe und
+Entscheider in Firmen findet DealSupply inzwischen selbst (ab MCP 4.16.0): Dafür zuerst auf
+`outreach-leads-finden` bzw. `outreach-personensuche` im Plugin outreach verweisen. Dieses Plugin führt den
+Weg mit eigenem Anbieterkonto, für alles, was diese beiden Suchen nicht abdecken oder was der Nutzer selbst
+beschaffen will: Der Kunde nutzt Apify (bzw. Outscraper) mit **eigenem Konto und eigenem Token außerhalb von
 DealSupply**, scrapt dort, bereinigt die Ergebnisse, exportiert CSV oder JSON und lädt sie in DealSupply
 hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an, nicht in DealSupply.
 

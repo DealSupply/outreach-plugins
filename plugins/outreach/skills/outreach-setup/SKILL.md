@@ -80,7 +80,13 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     Skills nennen diese Stellen mit „ab 4.16.0 (laut `ping`)“;
   - ab 4.16.0 außerdem Leads finden über Google Maps (`outreach-leads-finden`) und die Personensuche
     (`outreach-personensuche`). Auf älteren Servern fehlen diese Werkzeuge; die beiden Skills sagen das
-    dem Nutzer dann.
+    dem Nutzer dann. Dazu die Google-Kennungen am Lead (`googlePlaceId`, `googleCid`) und `personKey` bei
+    Leads aus der Personensuche;
+  - ab 4.17.0 Website-Fakten und Firmenfakten am Lead (`lead.websiteFacts`, `lead.companyFacts`); ab
+    4.18.0 trägt `agent.additionalPrompt` nur noch die Anweisung des Agenten-Profils; ab 4.19.0 lehnt die
+    E-Mail-Suche der Personensuche ohne aktives Abo ab; ab 4.20.0 ist `credits_so_far` einer Suche das
+    Berechnete; ab 4.21.0 meldet eine Suche Störungen der Datenquelle (`disrupted_areas`); ab 4.22.0 läuft
+    ein Gebiet an der Obergrenze als Rest-Gebiet weiter.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App

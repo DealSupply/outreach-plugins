@@ -79,7 +79,8 @@ gelten immer.
 ### 2. Qualifizieren (wenn in dieser Kampagne noch kein Urteil `completed` vorliegt, oder beim Auftrag „neu urteilen“)
 
 - `qualificationGeneration.settings` sind maßgeblich (Zielkunde, Fit-Kriterien, Disqualifier),
-  `agent.additionalPrompt` ergänzt sie, `writeBack` nennt die erlaubten Werte.
+  `agent.additionalPrompt` ergänzt sie (ab MCP 4.18.0 steht dort nur noch die Anweisung, die das
+  Agenten-Profil selbst mitbringt, sonst `null`), `writeBack` nennt die erlaubten Werte.
 - Website per WebFetch laden (Leistungen, Über uns, Impressum bei Bedarf); Custom Attributes
   einbeziehen. Eine nicht erreichbare Website ist kein Disqualifier.
 - Urteilsregeln wie im Server-Lauf: Die Qualifizierung ist ein offener Vorfilter. Ein falsch
@@ -140,6 +141,21 @@ gelten immer.
   ein Rezensionstext, sind das die Bewertungen dieses Leads: NICHT selbst nach Bewertungen suchen, nur
   zitieren, was die Texte sagen, nie Namen von Rezensierenden. Beiträge des Betriebs sind höchstens ein
   abhebendes Detail, nie ein Lob. Als Quelle im Bericht gilt „Google-Profil“.
+- Website-Fakten (ab MCP 4.17.0): `lead.websiteFacts` nennt, was der Quelltext der Startseite zeigt
+  (`system`, `shop`, `tracking`, `tagManager`, `careerLink`). `null` heißt, das Konto sieht die Fakten
+  nicht; `checked: false` heißt nicht gelesen, nie „nichts gefunden“. `google_ads` unter `tracking`
+  heißt eingerichtetes Tracking, nicht laufende Werbung; `tagManager: unread` heißt nie „kein Pixel“;
+  `careerLink` ist ein Link zu Stellen, kein Beleg für eine offene Stelle. Die Fakten im Bericht neutral
+  nennen, ohne Defizit-Ton. Tracking und Pixel sind nie Aufhänger einer Mail, weder im Intro noch im
+  Satz zum Angebot. Auf der Website verlinkte Social-Profile stehen in
+  `research.contactProfile.company.socialLinks`.
+- Firmenfakten (ab MCP 4.17.0): `lead.companyFacts` trägt `employeeCount` und `foundedYear`, je mit
+  `value`, `source` (`website`, `research`, `database`) und `approximate`; bei einer Spanne ist `value`
+  das untere Ende und `upTo` das obere. Im Bericht mit Quelle nennen. Ein Wert mit `approximate: true`
+  ist ein Näherungswert (bei Handwerk und Praxen oft zu niedrig): nie als genaue Zahl in eine Mail.
+- Personen-Leads (ab MCP 4.16.0): Trägt der Lead `lead.personKey`, ist er eine Person aus der
+  Personensuche. `website` ist die der Firma, mehrere Personen derselben Firma sind getrennte Leads; die
+  Mail geht an genau diese Person.
 - Bewertungen ohne Rezensionstext in `lead.googleReviews` (bei Deep Research ZUERST, nicht erst wenn die
   Website wenig hergibt; bei Smart nur in der einen erlaubten Suche): WebSearch nach dem Betrieb mit „Bewertungen“ liefert nur Links. Die Treffer von Bewertungsportalen
   per WebFetch öffnen (z. B. medicosearch, doktor.ch, local.ch, search.ch, jameda, docfinder,

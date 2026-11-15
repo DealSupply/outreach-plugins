@@ -95,7 +95,7 @@ LEAD: {lead.company} (ID: {lead.id})
 1. Rufe get_lead_data(campaign_id={campaign.id}, lead_id={lead.id}) auf.
 2. Lies lead.qualificationGeneration:
    - "settings" = die Kampagnen-Kriterien (Zielkunde, Fit-Kriterien, Disqualifier). Sie sind MASSGEBLICH.
-   - "agent.additionalPrompt" = zusätzliche Anweisung des Qualifizierungs-Agents; sie ergänzt die Kriterien, ersetzt sie nicht.
+   - "agent.additionalPrompt" = zusätzliche Anweisung des Qualifizierungs-Agents; sie ergänzt die Kriterien, ersetzt sie nicht. Ab MCP 4.18.0 steht dort nur noch die Anweisung, die das Agenten-Profil selbst mitbringt, sonst null; maßgeblich bleiben die Kriterien der Kampagne in "settings".
    - "writeBack" = erlaubte Werte für fitLevel/status, der Score-Bereich und "summaryLanguage" (Sprache der Kampagne, de oder en; ab MCP 4.7.0, fehlt es: de).
 3. Analysiere den Lead:
    - Website (lead.website) per WebFetch laden; wichtige Unterseiten (Leistungen, Über uns, Impressum) bei Bedarf zusätzlich.
