@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-11-15 – outreach 0.10.1, datenbeschaffung 0.5.2 (benötigt MCP 4.17.0 für Website-Fakten und Firmenfakten)
+
+Die Skills folgen dem Server bis MCP 4.22.0 in allem, was noch fehlte (DS-107, DS-108, DS-109, DS-180, DS-237, DS-239, DS-244). Neues nutzen sie nur, wenn `ping` die Version meldet.
+
+**outreach**
+- `lead-agent`, `outreach-research`, `outreach-generate` → Website-Fakten (`lead.websiteFacts`) und Firmenfakten (`lead.companyFacts`) ab MCP 4.17.0: neutral nennen, ohne Defizit-Ton; Tracking und Pixel sind nie Aufhänger einer Mail; „nicht geprüft“ heißt nie „nichts gefunden“; ein Näherungswert steht nie als genaue Zahl in einer Mail.
+- `outreach-verify`, `verify-agent` → prüfen genau das und lehnen sonst ab.
+- `outreach-copy` (SKILL, `kern/copy-lehre.md`, `references/`) → Geht es um die Firma oder um das, was sie bekommt, steht ihr/euer („auf euch zugeschnitten“, „ich hab was für euch“); die Person selbst bleibt im Singular. Das galt bisher als Fehler.
+- `outreach-campaign` → Schwerpunkte tragen `catchAll` am Auffang-Schwerpunkt; exportierte Schwerpunkte unverändert zurückschicken, sonst geht der Auffang verloren. `ctaNoun` bleibt ohne Anredewort. Eine Kampagne aus Leads finden nimmt den ersten Blueprint ohne Rückfrage an (ab MCP 4.18.0).
+- `outreach-qualify`, `outreach-research`, `lead-agent` → `agent.additionalPrompt` trägt ab MCP 4.18.0 nur noch die Anweisung des Agenten-Profils.
+- `outreach-import` → verweist auf `outreach-leads-finden` und `outreach-personensuche`; der Satz, Beschaffen passiere nur außerhalb von DealSupply, ist richtiggestellt. Place ID und CID: was der Server ab MCP 4.16.0 selbst erkennt und warum `place_id` weiter mitgegeben wird.
+- `outreach-lists` → verweist auf beide Skills; `export_leads` nennt `googlePlaceId` und `googleCid`; `check_leads_exist` nennt `person_key` bei Personen-Leads.
+- `outreach-pipeline`, `outreach-abo-lauf` → Personen-Leads ohne Adresse (`people_without_address_count`); `unknown_power_up` bei einem Schalter ohne passende Stufe.
+- `outreach-leads-finden` → Rest-Gebiet (ab MCP 4.22.0): dasselbe Gebiet kann ein zweites Mal erscheinen, der Fortschritt fällt dann zurück. Mitgekaufte Rezensionstexte kosten im Lauf nicht noch einmal.
+- `outreach-setup` → nennt die Stände 4.17.0 bis 4.22.0.
+
+**datenbeschaffung**
+- `datenbeschaffung`, `datenbeschaffung-referenzen`, `dealsupply-mcp.md` → Die Aussage, DealSupply finde selbst keine Leads, ist richtiggestellt: Für lokale Betriebe und Entscheider zuerst auf `outreach-leads-finden` und `outreach-personensuche` verweisen. Die Wege mit eigenem Anbieterkonto bleiben, wie sie sind.
+- `dealsupply-mcp.md` → Place ID und CID am Lead (ab MCP 4.16.0).
+
 ## 2026-11-15 – outreach 0.10.0 (benötigt MCP 4.16.0 für Leads finden und die Personensuche)
 
 Neue Leads direkt aus DealSupply: lokale Betriebe über Google Maps und Entscheider in Firmen über die Personensuche. Beides führt das Plugin jetzt Schritt für Schritt. Jeder Schritt, der Credits kostet, läuft erst nach der Zustimmung des Nutzers zum Angebot. Die Werkzeuge gibt es ab MCP 4.16.0 (`ping`); auf älteren Servern sagen die Skills das dem Nutzer.
