@@ -25,7 +25,10 @@ Hinweise (weich) sind kein Fehler, müssen aber begründet werden können.
 import re
 import sys
 
-INTRO_WORDS = 30  # Obergrenze des Intros, wird für {{Intro}} eingerechnet
+INTRO_WORDS = 30  # Obergrenze des Intros, wird für {{Intro}} bzw. {{ai.intro}} eingerechnet
+# Platzhalter der Sequenz in DealSupply: {{ai.intro}} zählt wie {{Intro}}, {{ai.hallo}} ist die Anrede.
+INTRO_TOKEN = r"\{\{\s*(?:ai\.)?intro\s*\}\}"
+SALUTATION_TOKEN = r"\{\{\s*(?:ai\.)?(?:hallo|anrede)\s*\}\}"
 
 SPAM = [
     "gratis", "100 %", "100%", "garantiert", "garantie", "jetzt zugreifen", "jetzt handeln",
@@ -150,7 +153,7 @@ def role(mail):
 def count_words(body_lines):
     words = 0
     for token in " ".join(body_lines).split():
-        if re.fullmatch(r"\{\{\s*intro\s*\}\}[.,]?", token, re.IGNORECASE):
+        if re.fullmatch(INTRO_TOKEN + r"[.,]?", token, re.IGNORECASE):
             words += INTRO_WORDS
         elif re.search(r"\{\{.*?\}\}", token):
             continue
@@ -205,7 +208,7 @@ def check(mail):
         soft.append("Link in Step 2 (Links erst ab Step 3)")
     elif links > 1:
         soft.append(f"{links} Links, höchstens einer")
-    if re.search(r"\{\{\s*intro\s*\}\}", low) and kind != "entry":
+    if re.search(INTRO_TOKEN, low) and kind != "entry":
         hard.append("{{Intro}} steht außerhalb der Entry Mail")
     if kind == "entry":
         for hit in re.finditer(OFFER_TERMS, low):
@@ -221,7 +224,7 @@ def check(mail):
             hard.append("Step 3 ohne Schlussfrage: dieselbe Frage wie in Step 1 (mit dem Wort für die Sache, wo die Karte eins hat), mit einem Angebot je Lead der neutrale Schluss")
         if len(mail["body"]) > 1 and re.match(r"^(Ein|Eine|Einen|Einem|Einer|Der|Die|Das|Den|Dem|Zwei|Drei|Vier|Fünf|Unser|Unsere|Mein|Meine|Viele)\b", mail["body"][1]):
             soft.append("Step 3 nach der Anrede groß weiter: klein weiterschreiben wie in Step 1")
-    if mail["body"] and not re.match(r"^(hallo|guten tag|servus|moin|grüß|hi\b|hello\b)", mail["body"][0], re.IGNORECASE):
+    if mail["body"] and not re.match(r"^(hallo|guten tag|servus|moin|grüß|hi\b|hello\b|" + SALUTATION_TOKEN + ")", mail["body"][0], re.IGNORECASE):
         soft.append("keine Anrede am Anfang")
     hit = re.search(OPT_OUT, "\n".join([subject, body] + mail["sig"] + mail["tail"]).lower())
     if hit:

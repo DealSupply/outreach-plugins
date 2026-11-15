@@ -24,7 +24,7 @@ gilt diese SKILL.md.
 ## Kampagnensprache
 
 Jede Kampagne hat eine Sprache (`campaign.language`, ab MCP 4.7.0): `de` (Standard) oder
-`en`. Bei der Generierung steht sie in `get_lead_data` → `emailGeneration.language`. Fehlt das
+`en`. Bei der Generierung steht sie in `get_lead_data` → `lead.emailGeneration.language`. Fehlt das
 Feld (älterer Server), ist die Kampagne deutsch.
 
 - **`de`:** Dieser Skill gilt vollständig, mit allen deutschen Sprachregeln.
@@ -44,7 +44,7 @@ Feld (älterer Server), ist die Kampagne deutsch.
     `If this isn't a priority right now, just let me know.`
   - Anführungszeichen “…”.
 
-  Maßgeblich sind die Regeln, die der Server mitgibt (`emailGeneration.systemPrompt`,
+  Maßgeblich sind die Regeln, die der Server mitgibt (`lead.emailGeneration.systemPrompt`,
   `salutationRule`). Die Regeln oben sind geprüft; eine ausführliche englische Copy-Lehre
   (Beispiele, Offer-Karten A–E) kann später folgen.
 
@@ -421,7 +421,7 @@ MUSS:
   Vergangenheit erzählt wie unter Kollegen, im Ton der Formen mit den besten Antwortquoten
   (Prod-Dump 23.10.2026): „das fand ich richtig schön“, „das hat mir gut gefallen“, „das fand ich richtig sympathisch“, „das hat mich angesprochen“; „richtig“ ist erlaubt, Übertreibung („total begeistert“)
   und Floskeln nicht; am Detail und nie ohne es. Sie wechselt von Lead zu Lead, nie steht in allen Mails
-  derselbe Satz: Der Block `SCHLUSS DES OPENERS` im System-Prompt (`emailGeneration.systemPrompt`)
+  derselbe Satz: Der Block `SCHLUSS DES OPENERS` im System-Prompt (`lead.emailGeneration.systemPrompt`)
   schlägt je Lead eine Form vor, als Richtung und Tonlage, nicht als Pflicht. Passt eine eigene kurze Reaktion besser zum Detail, im selben Ton formulieren (bei einer historischen Kegelbahn etwa „da musste ich direkt schmunzeln“), höchstens etwa sechs Wörter, keine Floskel; passt der
   Vorschlag nicht („schön“ oder „sympathisch“ hinter einer Bewertungszahl oder einem technischen
   Detail), eine eigene bilden. Fehlt der Block (älterer Server), die Reaktion je Lead selbst variieren. Hinter einer Bewertungszahl ohne Worte zum Inhalt steht die Reaktion, außer der Satz ist schon lang.
@@ -559,7 +559,7 @@ So läuft ein A/B-Test der Intros: Mail 1 hat in Instantly mehrere Varianten, Va
 `{{ai.intro}}`, Variante B die Chance-Variable; Instantly verteilt die Varianten beim Versand.
 Jeder Lead bekommt alle Variablen. Alle anderen Variablen, auch das normale `intro`, folgen allein
 den Intro-Regeln oben. Maßgeblich ist der Server: Hat die Kampagne eine Chance-Variable, enthält
-`emailGeneration.systemPrompt` den Block „CHANCE-WINKEL (nur für KI-Variablen mit Winkel chance)“;
+`lead.emailGeneration.systemPrompt` den Block „CHANCE-WINKEL (nur für KI-Variablen mit Winkel chance)“;
 dieser Abschnitt ist die Gedächtnisstütze dazu. Die Chance-Variable steht in ihrer Variante
 anstelle des normalen Intros direkt vor dem festen Folgesatz: für sich allein schreiben, ohne
 Bezug auf `intro`.
@@ -842,7 +842,7 @@ Step 2, Step 3 und Step 4 (und eine optionale Dringlichkeits-Mail): Betreff LEER
 Thread von Step 1. Kein neuer Betreff-Text, kein „Re:“. Ein eigener Betreff in Step 3 („kurzes
 Update“) bricht den Thread; so lief es bis 05.11.2026, bestehende Kampagnen behalten das.
 
-**Betreff-Test (für Erfahrene, standardmäßig aus; Betreff B seit 07.11.2026 „Frage zu {{Firma}}“):** Neue Kampagnen starten ohne Tests, in der App wie im Plugin (seit 10.11.2026). Nur auf Wunsch entsteht der Betreff-Test (Bau: `references/fuer-erfahrene.md`, Teil 1): Variante B von Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`. Welche Variable der Betreff von B ist, sagt `emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name. Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`, `emailGeneration.subjectVariables`) und sagt, welche Fassung gilt:
+**Betreff-Test (für Erfahrene, standardmäßig aus; Betreff B seit 07.11.2026 „Frage zu {{Firma}}“):** Neue Kampagnen starten ohne Tests, in der App wie im Plugin (seit 10.11.2026). Nur auf Wunsch entsteht der Betreff-Test (Bau: `references/fuer-erfahrene.md`, Teil 1): Variante B von Mail 1 ist wörtlich Variante A, nur mit dem Betreff `{{ai.betreff_b}}`. Welche Variable der Betreff von B ist, sagt `lead.emailGeneration.subjectVariables` (Rolle `subject_variant`), nicht der Name. Variante A behält „kurze Frage“. Ist der Intro-Test zusätzlich an, läuft er als Variante C mit „kurze Frage“ und `{{ai.intro_c}}`. Der Prompt der Variable kommt vom Server (`get_lead_data`, `lead.emailGeneration.subjectVariables`) und sagt, welche Fassung gilt:
 
 - **Kampagnen ab 07.11.2026 (E61):** Der Betreff von B lautet immer „Frage zu {{Firma}}“, englisch „question about {{Firma}}“, kein Detail und kein anderer Wortlaut. Der Kurzname steht unter `firma`: ohne Rechtsform (GmbH, GmbH & Co. KG, e.K., UG, Ltd), ohne Zusätze wie „Meisterbetrieb“ und ohne Ort, normal geschrieben statt in Großbuchstaben, außer die Firma führt ihren Namen als Kürzel („ZAR“). Steckt der Vorname der angeschriebenen Person im Firmennamen, fällt er weg („Immobilien Thomas Braun“ wird „Frage zu Immobilien Braun“); das gilt je Person, auch für Person 2. `save_lead_variables` setzt den Betreff selbst aus `firma` zusammen und prüft den Kurznamen gegen Firmennamen, Website und Ort; ohne sicheren Kurznamen bekommt der Lead den Betreff von Variante A (ohne eigenen Text gespeichert, beim Versand der aktuelle Betreff von A, als Rückfall markiert). Melde `firma` deshalb immer und `<name>__rueckfall: "ja"` nur ohne sicheren Kurznamen.
 - **Ältere Kampagnen** behalten ihren gespeicherten Prompt mit dem persönlichen Betreff je Lead: 3 bis 6 Wörter, dasselbe Detail wie das Intro, beginnt direkt mit dem Detail, „Frage zu {{Firma}}“ nur als Rückfall (E22 bis E26, E53). Es gilt immer der Prompt der Variable.
@@ -939,6 +939,8 @@ oder Werte speicherst. Nach jeder Korrektur von vorne beginnen: Kürzungen erzeu
     diesem Lob?
 
 ## Prüfliste nach Code-Regeln
+
+**Skript:** `kern/check_copy.py` in diesem Skill prüft die Regeln der Tabelle unten. Aufruf: `python3 <Pfad des Skills>/kern/check_copy.py <datei.md> [--firma "<Kurzname>"] [--sprache de|en]`. Die Datei trägt je Mail eine Überschrift `## Step 1` bis `## Step 4`, darunter `Betreff: …` (bei Step 2 bis 4 `Betreff: (leer)`), dann den Body als Text mit echten Zeilenumbrüchen, die Grußformel, die Signatur und nach einer Leerzeile die Abmeldezeile. Die Bodies eines Blueprints lassen sich so übernehmen: `\n` als Zeilenumbruch schreiben, die Platzhalter bleiben stehen. `{{ai.hallo}}` am Anfang gilt als Anrede, `{{ai.intro}}` zählt mit 30 Wörtern, jeder andere Platzhalter mit null. Exit-Code 0 heißt keine harten Fehler; Hinweise müssen begründet werden können. Vor `create_campaign` bzw. `edit_campaign` einmal laufen lassen. Ein Beispiel im richtigen Format ist `kern/beispiele.md`.
 
 Diese Regeln lassen sich mechanisch prüfen. DealSupply prüft sie beim Anlegen nicht, also prüfst du
 sie: vor dem Anlegen der Sequenz und beim Review der Werte abhaken. „Hart“ = Fehler, „weich“ =
