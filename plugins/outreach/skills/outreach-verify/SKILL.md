@@ -31,6 +31,8 @@ nur wenige Einzelfälle. Darum:
   aus der Hauptsitzung, ohne Prüf-Agenten. Leads mit offenem Hinweis (`fit`, `recht` oder nach dem
   Nachbessern noch offen) bleiben draußen.
 
+> **Pfade:** In `get_lead_data` liegen alle Blöcke unter `lead` (`lead.emailGeneration.language`, `lead.emailGeneration.systemPrompt`, `lead.emailGeneration.salutationRule`, `lead.research`). Immer mit `stage` abrufen; der Mail-Block ist groß, gezielt die benötigten Schlüssel lesen.
+
 ## Mit dem verify-agent (Claude Code, Cowork)
 
 Steht der Agent `outreach:verify-agent` zur Verfügung, prüft je Lead genau EIN solcher Agent (Sonnet).
@@ -46,20 +48,24 @@ Die Art sagt, wer einen Befund behebt: `text`, `recherche` und `adresse` werden 
    Nach dem Bericht die Phase mit `action="end"` schließen.
 2. Leads wie in Phase 2 laden, dann je Lead ein Agent mit dem Auftrag
    „Kampagne <id>, Lead <id> (<Firma>). Server: <name>. Modus: nur Urteil“ bzw. „Modus: entscheiden“.
-   In Claude Code als Workflow nach `outreach-abo-lauf` mit `nur_pruefen: true` und den ausgewählten
-   Leads (gleiche Kette: prüfen → nachbessern → gegenprüfen, Modus „nur Urteil“). Ohne Workflow höchstens
-   10 gleichzeitig (`run_in_background: true`).
+   Höchstens 10 gleichzeitig (`run_in_background: true`). Der Workflow nach `outreach-abo-lauf` mit
+   `nur_pruefen: true` prüft, bessert nach und prüft gegen: Er schreibt also neue Versionen. Deshalb erst
+   starten, wenn der Nutzer dem Nachbessern zugestimmt hat (Schritt 4); für ein reines Urteil die
+   Prüf-Agents direkt starten.
 3. **Erste Läufe einer Kampagne im Modus „nur Urteil“:** Die Prüf-Agents setzen keinen Status. Erst wenn der
    Nutzer die Urteile gesehen hat, „entscheiden“; dann setzt der Agent `approved` bzw. `rejected`.
-4. **Nachbessern (Standard, ohne Rückfrage):** Kleine Fehler werden behoben, nicht dem Nutzer vorgelegt.
+4. **Nachbessern (nur nach Zustimmung des Nutzers, nie im Modus „nur Urteil“):** Im Modus „nur Urteil“
+   wird nichts geschrieben, auch keine nachgebesserte Version: Ein Fehlurteil des Prüfers würde sonst einen
+   guten Text überschreiben. Erst die Urteile zeigen (je Lead Ergebnis, Art und Grund) und fragen, ob
+   nachgebessert werden soll. Sagt der Nutzer ja, gilt für diesen Lauf:
    - Für jedes Urteil `ablehnen` oder `hinweis` mit `art=text|recherche|adresse` je Lead ein
      `outreach:lead-agent` (Haiku, Abo, keine Credits) mit dem Auftrag
      „Kampagne <id>, Lead <id> (<Firma>). Server: <name>. Nachbessern: art=<art>, Befund: <grund>“.
      Er schreibt eine neue Version (`save_lead_variables`), recherchiert bei `recherche` gezielt nach und
      stellt bei `adresse` die Versandadresse auf die belegte um. Höchstens 10 gleichzeitig. Gibt es
      `outreach_progress`, die Phase mit `phase="email"` und `total=<Anzahl>` anmelden.
-   - **Gegenprüfung:** Je nachgebessertem Lead (`NACHGEBESSERT …`) ein NEUER `verify-agent` im selben Modus
-     wie der Lauf. Wer geschrieben hat, prüft und gibt nie selbst frei, auch nicht die Hauptsitzung.
+   - **Gegenprüfung:** Je nachgebessertem Lead (`NACHGEBESSERT …`) ein NEUER `verify-agent` im Modus
+     „nur Urteil“. Wer geschrieben hat, prüft und gibt nie selbst frei, auch nicht die Hauptsitzung.
    - Höchstens eine Runde je Lead. Besteht die Gegenprüfung nicht oder meldet der Lead-Agent
      `UNVERÄNDERT`, geht der Lead mit Grund an den Nutzer.
    - Ist derselbe Befund bei drei oder mehr Leads aufgetreten, ist er systematisch: nicht einzeln
@@ -67,11 +73,11 @@ Die Art sagt, wer einen Befund behebt: `text`, `recherche` und `adresse` werden 
      betroffenen Leads neu generieren (siehe Stichprobe oben).
    - Ohne Subagents bessert die Hauptsitzung selbst nach (gleiche Regeln, Skill `outreach-copy`), gibt die
      Leads aber nicht frei, sondern legt sie dem Nutzer zur Freigabe vor.
-5. **An den Nutzer gehen nur `fit` und `recht`** sowie Leads, die nach einer Runde Nachbessern noch offen
+5. **Nach dem Nachbessern gehen an den Nutzer nur noch `fit` und `recht`** sowie Leads, die nach einer Runde Nachbessern noch offen
    sind, jeweils mit einer Empfehlung. Im Bericht steht je nachgebessertem Lead kurz, was geändert wurde
    (alter und neuer Anker, umgestellte Adresse).
 
-Ohne diesen Agenten gilt der Ablauf unten mit der Sub-Agent-Vorlage.
+Ohne diesen Agenten gilt der Ablauf unten mit der Sub-Agent-Vorlage. Sie folgt demselben Verfahren: drei Urteile, Standard ist „nur Urteil“, geschrieben wird erst im Modus „entscheiden“, nachgebessert nur nach Zustimmung (Schritt 4).
 
 ## Workflow-Übersicht
 
@@ -82,7 +88,8 @@ Ohne diesen Agenten gilt der Ablauf unten mit der Sub-Agent-Vorlage.
    -> Leads mit generierten, noch nicht freigegebenen Variablen
    |
 3. Für jeden Lead: Sub-Agent spawnen (parallel, bis zu {batch_size} gleichzeitig)
-   -> Jeder Agent: get_lead_variables() -> Review -> approve_lead_variables() oder reject_lead_variables()
+   -> Jeder Agent: get_lead_variables() -> Review -> Urteil (freigeben | ablehnen | hinweis);
+      nur im Modus „entscheiden“ approve_lead_variables() bzw. reject_lead_variables()
    |
 4. Batch-Report: "Batch 1/N done, X approved, Y rejected"
    |
@@ -170,6 +177,7 @@ KAMPAGNE: {campaign.name} (ID: {campaign.id})
 LEAD: {lead.company} (ID: {lead.id})
 LEAD VERSANDADRESSE: {lead.sendingEmail || lead.email}
 LEAD WEBSITE: {lead.website}
+MODUS: {nur Urteil | entscheiden}   (Standard: nur Urteil)
 
 ## Schritte
 
@@ -177,9 +185,15 @@ LEAD WEBSITE: {lead.website}
 2. Lies JEDE Variable in variables[] sorgfältig (name + value); eine Zeile mit fallback: true ist eine Intro-Variante im Rückfall: Sie zeigt den aktuellen Text von Variante A, ist kein fehlender Wert und kein Befund, weil sie gleich lautet
 3. Prüfe Research-Daten und Lead-Stammdaten für Kontext
 4. REVIEW — Prüfe JEDE Variable gegen die Verification-Checkliste (siehe unten)
-5. ENTSCHEIDUNG (binär):
-   a) ALLE Variablen OK -> approve_lead_variables(campaign_id={campaign.id}, lead_id={lead.id})
-   b) MINDESTENS EINE Variable unbrauchbar -> reject_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}, reason="...")
+5. URTEIL bilden, genau eines:
+   a) freigeben: ALLE Variablen bestehen die Checkliste
+   b) ablehnen: MINDESTENS EINE Variable ist unbrauchbar (Entscheidungslogik unten)
+   c) hinweis: ein kleiner Befund, der die Mail nicht unbrauchbar macht
+6. SCHREIBEN nur nach dem Modus:
+   - Modus „nur Urteil“: nichts schreiben, keinen Status setzen.
+   - Modus „entscheiden“: bei freigeben approve_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}),
+     bei ablehnen reject_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}, reason="..."),
+     bei hinweis nichts schreiben. Nie selbst nachbessern.
 
 ## Verification-Checkliste (pro Variable)
 
@@ -190,10 +204,10 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 - [ ] Informationen stimmen mit Lead-Daten überein? (Company, Website, Branche, Stadt)
 
 ### Sprache & Stil
-- [ ] In der Sprache der Kampagne? (`get_lead_data` → `emailGeneration.language`, ab MCP 4.7.0; fehlt es: Deutsch). Bei `en`: alles auf Englisch, `hallo` genau nach `salutationRule` („Hi Vorname,“ bzw. „Hi there,“), natürliches US-Englisch; die deutschen Punkte dieser Liste (Umlaute, „vorallem“, du/Sie, „Hallo …“, deutsche Einstiege und Reaktionen) entfallen, es gelten die Regeln aus `emailGeneration.systemPrompt`. Ein Wert in der falschen Sprache ist ein Ablehnungsgrund.
+- [ ] In der Sprache der Kampagne? (`get_lead_data` → `lead.emailGeneration.language`, ab MCP 4.7.0; fehlt es: Deutsch). Bei `en`: alles auf Englisch, `hallo` genau nach `salutationRule` („Hi Vorname,“ bzw. „Hi there,“), natürliches US-Englisch; die deutschen Punkte dieser Liste (Umlaute, „vorallem“, du/Sie, „Hallo …“, deutsche Einstiege und Reaktionen) entfallen, es gelten die Regeln aus `lead.emailGeneration.systemPrompt`. Ein Wert in der falschen Sprache ist ein Ablehnungsgrund.
 - [ ] Umlaute korrekt? (echte Ä/Ö/Ü/ä/ö/ü/ß, nicht AE/OE/UE/ae/oe/ue/ss)
 - [ ] Kein "vorallem"? (korrekt: "vor allem")
-- [ ] Anrede konsistent zwischen allen Variablen und passend zur Kampagnen-Ansprache (`get_lead_data` → `emailGeneration.salutationRule`)? Nie gemischt.
+- [ ] Anrede konsistent zwischen allen Variablen und passend zur Kampagnen-Ansprache (`get_lead_data` → `lead.emailGeneration.salutationRule`)? Nie gemischt.
 - [ ] Länge angemessen? (nicht zu kurz, nicht zu lang)
 - [ ] Keine Leerzeilen am Anfang oder Ende?
 - [ ] Keine M-dashes? (nur normale Bindestriche -)
@@ -204,7 +218,7 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 - [ ] intro: ausschließlich positiv (Lob/anerkennende Beobachtung), über den Empfänger, kein Problem benannt?
 - [ ] intro: keine verbotenen Wörter/Formen („Lücke", „Hürde", „Problem", „leider", „schade", „noch nicht", „fehlt", „begrenzt", „veraltet", „ausbaufähig", „verschenkt Potenzial", Konjunktiv-Wunsch, Ratschlag, Selbstvorstellung/Pitch, Floskel wie „bin auf eure Webseite gestoßen")?
 - [ ] intro: Anker nach der Rangfolge des Servers (1. Anzahl und Schnitt mit ein oder zwei Worten zum Inhalt, nur ab 30 Bewertungen und 4,5 und mit belegtem Lob, ohne Schluss > 2. Lob aus Bewertungstexten als Paraphrase, Plural oder „immer wieder“ nur, wenn mindestens drei Rezensionen dieses Lob tragen > 3. abhebendes Website-Detail > 4. Anzahl und Schnitt allein, gleiche Schwellen, gerundet, mit Komma, bei Widerspruch der kleinere Wert > 5. Fallback; bei mehreren tragenden Ankern der mit Bezug zum Angebot); Stellenanzeige als Erkenntnis über den Betrieb, nicht als „du suchst“; zweiter Satz konkret und ohne Vorwegnahme des festen Texts; nichts, das einer anderen Person gehört, der angeschriebenen Person zugeschrieben?
-- [ ] intro: Schluss nach der Rangfolge (hinter Kundenlob, Auszeichnung oder lobendem festem Folgesatz keiner, doppeltes Lob ist ein Befund; sonst eine kurze, schlichte Reaktion in der Vergangenheit direkt hinter dem benannten Detail, die es nicht wiederholen muss; eine Würdigung nur ausnahmsweise mit etwas Neuem, eine Folgerung „das zeigt, wie …“ oder Gutachten-Ton ist ein Befund; ein fehlender Schluss ist keiner), kein Mechanik-Nutzen („so können sich Interessierte vorab ein Bild machen“), kein leeres Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ohne Floskel oder Superlativ ohne Detail und ohne Erfundenes (nicht beim Fallback-Satz)? Die Reaktion schlägt der Server je Lead aus einer festen Liste vor: Wiederholungen über die Kampagne sind erwartet und kein Befund; gleich lautende Würdigungen und Mechanik-Nutzen (etwa „Interessierte können sich vorab orientieren“ bei Bewertungszahlen) sind einer.
+- [ ] intro: Ein Schluss ist nie Pflicht; fehlt er (`closingWritten: kein_abschluss`), ist das nie ein Befund. Nur ein vorhandener Schluss wird geprüft, nach der Rangfolge (hinter Kundenlob, Auszeichnung oder lobendem festem Folgesatz keiner, doppeltes Lob ist ein Befund; sonst eine kurze, schlichte Reaktion in der Vergangenheit direkt hinter dem benannten Detail, die es nicht wiederholen muss; eine Würdigung nur ausnahmsweise mit etwas Neuem, eine Folgerung „das zeigt, wie …“ oder Gutachten-Ton ist ein Befund; ein fehlender Schluss ist keiner), kein Mechanik-Nutzen („so können sich Interessierte vorab ein Bild machen“), kein leeres Prüfer-Urteil über die Qualität der Arbeit („das wirkt vertrauenswürdig“, „da machst du vieles richtig“), ohne Floskel oder Superlativ ohne Detail und ohne Erfundenes (nicht beim Fallback-Satz)? Die Reaktion schlägt der Server je Lead aus einer festen Liste vor: Wiederholungen über die Kampagne sind erwartet und kein Befund; gleich lautende Würdigungen und Mechanik-Nutzen (etwa „Interessierte können sich vorab orientieren“ bei Bewertungszahlen) sind einer.
 - [ ] intro: besteht den Austauschtest (passt nicht auf zehn andere Betriebe derselben Branche in der Stadt) und nennt nichts von der Sperrliste der Kampagne außer als Bewertungslob, oder ist wörtlich der Fallback-Satz aus dem Prompt?
 - [ ] Keine Frage, kein Ausrufezeichen, kein Link, keine sichtbaren Platzhalter ([…], {{…}}) in hallo/intro?
 - [ ] Schließt der feste Folgesatz der Entry-Mail („Genau deshalb …" / „Deswegen war ich so frei …") flüssig an, und bleibt die Entry-Mail mit diesem intro unter 120 Wörtern?
@@ -227,8 +241,9 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 
 ## Entscheidungslogik
 
-- **approve_lead_variables**: ALLE Variablen passen die Checkliste → freigegeben für CSV-Export; bei verknüpfter Kampagne mit Auto-Push geht der Lead danach nach Instantly
-- **reject_lead_variables(reason=...)**: MINDESTENS EINE Variable bricht die Checkliste oder ist grundlegend unbrauchbar:
+- **freigeben** (im Modus „entscheiden“ `approve_lead_variables`): ALLE Variablen passen die Checkliste → freigegeben für CSV-Export; bei verknüpfter Kampagne mit Auto-Push geht der Lead danach nach Instantly
+- **hinweis**: ein kleiner Befund, der die Mail nicht unbrauchbar macht (etwa ein doppeltes Lob im Schluss). Nie selbst entscheiden; der Nutzer sieht ihn im Bericht.
+- **ablehnen** (im Modus „entscheiden“ `reject_lead_variables(reason=...)`): MINDESTENS EINE Variable bricht die Checkliste oder ist grundlegend unbrauchbar:
   - Komplett generischer Text (kein Personalisierungs-Bezug)
   - Falsche Lead-Informationen (falsches Unternehmen, falsche Branche)
   - Interne Metriken im Text (Score-Werte, Fit-Level etc.)
@@ -240,9 +255,8 @@ Grundlage sind die Abschnitte „Kampagnensprache“, „Anrede und Ansprache“
 
 `reason` muss konkret sein (nennt die problematische Variable + den Defekt). Er steht nur im Audit-Log: Beim manuellen Re-Generate via `/outreach-generate` oder `save_lead_variables` den Grund selbst mitgeben; der Server-Lauf liest ihn nicht.
 
-Gib am Ende eine kurze Zusammenfassung zurück:
-- Entscheidung: approved / rejected
-- Bei rejection: welche Variable + warum
+Gib am Ende genau eine Zeile zurück:
+URTEIL lead={lead.id} ergebnis=<freigeben|ablehnen|hinweis> art=<text|recherche|adresse|fit|recht|-> geschrieben=<ja|nein> grund=<Variable und Defekt>
 ```
 
 ### Phase 4: Ergebnisse sammeln & Report
@@ -250,8 +264,8 @@ Gib am Ende eine kurze Zusammenfassung zurück:
 Warte bis ALLE Sub-Agents des Batches fertig sind (sie laufen im Background — du wirst benachrichtigt).
 
 Zähle:
-- Freigegeben (approve_lead_variables erfolgreich)
-- Abgelehnt (reject_lead_variables erfolgreich)
+- Urteile je Ergebnis: freigeben, ablehnen, hinweis
+- Im Modus „entscheiden“ zusätzlich: freigegeben (approve_lead_variables erfolgreich), abgelehnt (reject_lead_variables erfolgreich)
 - Fehler (Agent-Fehler oder Tool-Fehler)
 
 Zeige Batch-Report:
