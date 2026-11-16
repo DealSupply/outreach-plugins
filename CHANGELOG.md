@@ -1,14 +1,91 @@
 # Changelog
 
-## 2026-11-13 – outreach 0.8.1, datenbeschaffung 0.5.1 (benötigt ListM8 MCP 4.23.0 für das Zurücksetzen exportierter Leads)
+## 2026-11-16 – outreach 0.10.3, datenbeschaffung 0.5.3 (benötigt MCP 4.23.0 für das Zurücksetzen exportierter Leads)
 
-Passt zu ListM8 mit MCP 4.23.0 (DS-190). Hochgeladene, nie angeschriebene Leads lassen sich nach dem Löschen in Instantly zurücksetzen; ListM8 prüft dafür in einem Job, ob sie dort fehlen und ob Instantly eine Mail an sie listet. Ältere Server lehnen das Zurücksetzen weiter mit `reset_blocked.exported` ab.
+Passt zu DealSupply mit MCP 4.23.0 (DS-190). Hochgeladene, nie angeschriebene Leads lassen sich nach dem Löschen in Instantly zurücksetzen; DealSupply prüft dafür in einem Job, ob sie dort fehlen und ob Instantly eine Mail an sie listet. Ältere Server lehnen das Zurücksetzen weiter mit `reset_blocked.exported` ab.
 
 **outreach**
 - `outreach-launch` → Aufräumen: Leads in eine andere Kampagne holen (etwa eine Sie-Fassung): in Instantly löschen, `mark_leads_contacted(status="not_contacted", confirm_reset=true)`, dann `release_job.job_id` mit `get_job_status` abwarten (große Mengen dauern Minuten) und das Ergebnis je Grund dem Nutzer sagen.
 
 **datenbeschaffung**
-- `listm8-mcp.md` → `mark_leads_contacted`: `release_job` und die Gründe `exported`, `exported_sent`, `exported_unverified`, `instantly_unavailable` im Ergebnis des Jobs.
+- `dealsupply-mcp.md` → `mark_leads_contacted`: `release_job` und die Gründe `exported`, `exported_sent`, `exported_unverified`, `instantly_unavailable` im Ergebnis des Jobs.
+
+## 2026-11-15 – outreach 0.10.2 (benötigt MCP 4.16.0 für Leads finden und die Personensuche)
+
+Nachbesserungen an den beiden Such-Skills nach einem Probelauf. Kein neues Werkzeug.
+
+**outreach**
+- `outreach-leads-finden` → Branchen mit mehreren Wortformen suchen (Tätigkeit, Beruf, englisch) und verwandte Branchen zusammen ins Angebot nehmen. Ob ein Budget für das ganze Gebiet reicht, sagt der Skill nach `limits.whole_areas` und den Zahlen, mit Budget nur als Schätzung. Hinweis `estimate_from_start_values`. Erste Statusabfrage nach etwa 10 Sekunden. `merged` erklärt: ein weiterer Standort derselben Firma ist berechnet, aber kein eigener Lead. Nach `cap_reached` Weitersuchen anbieten, ohne weitere Betriebe zu versprechen. Klarer: Stadt oder Postleitzahl, Parameter weglassen statt leer senden, `start_arguments` Feld für Feld übergeben.
+- `outreach-personensuche` → neuer Abschnitt, wie man sucht: breit anfangen, Branche oder Stichworte, für die Leitung alle fünf Führungsebenen statt eines Jobtitels, Jobtitel in beiden Sprachen. Vorgehen bei wenigen oder keinen Treffern: Zahlen aus `loosened` nennen, einen Lockerungsschritt vorschlagen, den Nutzer entscheiden lassen, das Gewerbe nie stillschweigend weglassen. Treffer vor dem Angebot auf Plausibilität ansehen. Bei `people.max` 0 kein Angebot zur Zustimmung und kein Start. Orte: nur den genau passenden Eintrag, `key` gehört nicht in den Filter, `exclude` ist nie Pflicht. `website_only` sortiert erst bei der Übernahme aus; `count` zählt in der Reihenfolge der Trefferliste.
+- `outreach-personensuche` (dritter Test) → Suchregeln als eine Folge: Start mit Ort und einem Filter für das Gewerbe; Branche statt Stichworte, nie dazu; das kurze Kernwort nur in kleinen Gebieten; Jobtitel als Alternative zu den Führungsebenen mit den zusammengesetzten Titeln der Branche; `exact_job_titles` für Funktionen. Lockern: `loosened` zuerst lesen und nur den Schritt vorschlagen, der mehr verspricht; Umland vor Bundesland, die Zahl erst nach dem Umstellen; bei fremden Gewerben zurück auf das engere Gebiet. Ausdrücklich genannte Rolle und Größe fallen nur mit Zustimmung. Jobtitel nur, wenn die Führungsebenen null oder fast nichts liefern; das Weiten des Orts zählt nicht zu den zwei Änderungen und geht vom Stand mit Rolle aus.
+- Nachtest Verify und Kampagne → `outreach-campaign`: Die Prüfung auf vorhandene Leads liest den ganzen Bestand im Listenmodus (Urteil unter `qualification.fitLevel`) und gilt auch beim Bearbeiten, sobald sich Zielgruppe oder Angebot ändern; „Für Erfahrene“ nur beim Anlegen und beim Füllen einer leeren Kampagne. `outreach-verify`: Berichte je Modus mit einer Zeile für `hinweis`, Einleitung und Hinweise an Schritt 4 angeglichen. `verify-agent`: liest `get_lead_data` immer (Kontaktstatus, Adress-Urteile, Website- und Firmenfakten), Routing-Fall A, B oder C ist kein Befund. `kern/check_copy.py --dealsupply`: unbekannte Platzhalter, eigene Unterschrift, fehlendes `{{ai.hallo}}`, `{{ai.intro}}` oder `{{ai.routing}}` und „Link“ in einer Frage sind Fehler; der Skill nennt, was das Skript prüft und was nur der Agent. Neu `references/beispiel-sequenz.md` als Beispiel in der Form von DealSupply.
+- `outreach-personensuche` (Nachtest) → Stufenfolge für die Rolle: Führungsebenen, dann Jobtitel statt Führungsebenen, erst dann ohne Rolle mit Auswahl von Hand über `deselected`; eine ausdrücklich verlangte Rolle wird nie stillschweigend aufgegeben. Ein Katalogtreffer für eine Branche heißt nicht, dass die Firmen dort einsortiert sind. `count` zählt nach dem Abwählen. Vor dem Angebot nach dem Ziel fragen. `outreach-leads-finden` → `start_arguments` gelten unverändert, auch mit Standardwerten; Faustregel für Wortformen; gleichnamige Orte bestätigen lassen.
+- `get_lead_data` → Alle Blöcke liegen unter `lead` (`lead.emailGeneration`, `lead.researchGeneration`, `lead.qualificationGeneration`, `lead.research`); die Skills und Agenten schreiben die Pfade jetzt überall so. Immer mit `stage` abrufen; der Mail-Block ist groß, gezielt die benötigten Schlüssel lesen.
+- `outreach-verify`, `verify-agent` → Ein fehlender Schluss im Intro ist nie ein Befund. Im Modus „nur Urteil“ wird nichts geschrieben, auch nicht nachgebessert; nachgebessert wird erst nach Zustimmung des Nutzers. Die Sub-Agent-Vorlage folgt demselben Verfahren wie der `verify-agent` (drei Urteile, Schreiben nur im Modus „entscheiden“).
+- `outreach-campaign` → Leere Kampagne füllen: vorhandene Leads und ihre Urteile nennen, bevor für einen anderen Zielkunden eingerichtet wird. `setup_state` und `setup_path` können `null` sein. Routing-Prompt ohne MCP-Prompts aus `routing-baustein.md` (Stand v4.20.0). Schema: Werte für `tone`, `researchDepth`, `researchGoals`, `researchPriorities`.
+- `outreach-pipeline` → `skipReasons` kennt `no_offer_focus`; erste Statusabfrage nach etwa 10 Sekunden, dazwischen wirklich warten.
+- `outreach-copy` → `kern/check_copy.py` ist mit Pfad und Aufruf beschrieben und versteht die Platzhalter der Sequenz: `{{ai.hallo}}` gilt als Anrede, `{{ai.intro}}` zählt mit. Neu `tests/test_check_copy.py`.
+- `outreach-qualify`, `lead-agent`, `references/qualifizierung.md` → „Kein Geschäftsbetrieb“ braucht einen Beleg; eine vorübergehend nicht lesbare Website ist kein Ausschluss.
+
+## 2026-11-15 – outreach 0.10.1, datenbeschaffung 0.5.2 (benötigt MCP 4.17.0 für Website-Fakten und Firmenfakten)
+
+Die Skills folgen dem Server bis MCP 4.22.0 in allem, was noch fehlte (DS-107, DS-108, DS-109, DS-180, DS-237, DS-239, DS-244). Neues nutzen sie nur, wenn `ping` die Version meldet.
+
+**outreach**
+- `lead-agent`, `outreach-research`, `outreach-generate` → Website-Fakten (`lead.websiteFacts`) und Firmenfakten (`lead.companyFacts`) ab MCP 4.17.0: neutral nennen, ohne Defizit-Ton; Tracking und Pixel sind nie Aufhänger einer Mail; „nicht geprüft“ heißt nie „nichts gefunden“; ein Näherungswert steht nie als genaue Zahl in einer Mail.
+- `outreach-verify`, `verify-agent` → prüfen genau das und lehnen sonst ab.
+- `outreach-copy` (SKILL, `kern/copy-lehre.md`, `references/`) → Geht es um die Firma oder um das, was sie bekommt, steht ihr/euer („auf euch zugeschnitten“, „ich hab was für euch“); die Person selbst bleibt im Singular. Das galt bisher als Fehler.
+- `outreach-campaign` → Schwerpunkte tragen `catchAll` am Auffang-Schwerpunkt; exportierte Schwerpunkte unverändert zurückschicken, sonst geht der Auffang verloren. `ctaNoun` bleibt ohne Anredewort. Eine Kampagne aus Leads finden nimmt den ersten Blueprint ohne Rückfrage an (ab MCP 4.18.0).
+- `outreach-qualify`, `outreach-research`, `lead-agent` → `agent.additionalPrompt` trägt ab MCP 4.18.0 nur noch die Anweisung des Agenten-Profils.
+- `outreach-import` → verweist auf `outreach-leads-finden` und `outreach-personensuche`; der Satz, Beschaffen passiere nur außerhalb von DealSupply, ist richtiggestellt. Place ID und CID: was der Server ab MCP 4.16.0 selbst erkennt und warum `place_id` weiter mitgegeben wird.
+- `outreach-lists` → verweist auf beide Skills; `export_leads` nennt `googlePlaceId` und `googleCid`; `check_leads_exist` nennt `person_key` bei Personen-Leads.
+- `outreach-pipeline`, `outreach-abo-lauf` → Personen-Leads ohne Adresse (`people_without_address_count`); `unknown_power_up` bei einem Schalter ohne passende Stufe.
+- `outreach-leads-finden` → Rest-Gebiet (ab MCP 4.22.0): dasselbe Gebiet kann ein zweites Mal erscheinen, der Fortschritt fällt dann zurück. Mitgekaufte Rezensionstexte kosten im Lauf nicht noch einmal.
+- `outreach-setup` → nennt die Stände 4.17.0 bis 4.22.0.
+
+**datenbeschaffung**
+- `datenbeschaffung`, `datenbeschaffung-referenzen`, `dealsupply-mcp.md` → Die Aussage, DealSupply finde selbst keine Leads, ist richtiggestellt: Für lokale Betriebe und Entscheider zuerst auf `outreach-leads-finden` und `outreach-personensuche` verweisen. Die Wege mit eigenem Anbieterkonto bleiben, wie sie sind.
+- `dealsupply-mcp.md` → Place ID und CID am Lead (ab MCP 4.16.0).
+
+## 2026-11-15 – outreach 0.10.0 (benötigt MCP 4.16.0 für Leads finden und die Personensuche)
+
+Neue Leads direkt aus DealSupply: lokale Betriebe über Google Maps und Entscheider in Firmen über die Personensuche. Beides führt das Plugin jetzt Schritt für Schritt. Jeder Schritt, der Credits kostet, läuft erst nach der Zustimmung des Nutzers zum Angebot. Die Werkzeuge gibt es ab MCP 4.16.0 (`ping`); auf älteren Servern sagen die Skills das dem Nutzer.
+
+**outreach**
+- Neu `outreach-leads-finden` → Branche und Gebiet aus dem Katalog (`search_prospect_categories`, `search_prospect_areas`), Angebot (`quote_prospect_search`) zeigen, nach Zustimmung starten (`start_prospect_search`), Stand abfragen (`get_prospect_search_status`), Ergebnis berichten, an eine bestehende oder neue Kampagne übergeben (`hand_over_prospect_search`). Dazu weitersuchen (`resume_prospect_search`), weitere Gebiete in dieselbe Liste, aussortierte Einträge ohne Mehrkosten übernehmen (`import_prospect_entries`), abbrechen. Eine Störung der Datenquelle wird als Störung gemeldet, nie als leeres Gebiet.
+- Neu `outreach-personensuche` → Filterwerte aus dem Katalog (`search_people_filter_values`), Suche anlegen und kostenlos blättern (`create_people_search`, `list_people_results`, `update_prospect_search`), Angebot für die Übernahme (`quote_people_import`) und nach Zustimmung übernehmen (`import_people`), Angebot für die E-Mail-Suche (`quote_people_email_search`) und nach Zustimmung starten (`start_people_email_search`), stoppen (`cancel_people_step`).
+- `outreach` → leitet zu beiden Skills weiter; eine Regel für alles, was Credits kostet: erst Angebot, dann Zustimmung, dann Start. Die Workspace-Regel nennt die neuen Werkzeuge.
+- Ist eine Funktion für ein Konto nicht freigeschaltet (`feature_disabled`), sagen die Skills das freundlich und nennen den Import als Weg.
+- `outreach-setup`, README → abgestimmt auf MCP 4.22.0. Ähnliche Firmen führen die Skills noch nicht.
+
+## 2026-11-15 – outreach 0.9.0, datenbeschaffung 0.5.1, fulfillment 0.1.6 (benötigt MCP 4.16.0 für Budget in Credits und Fortsetzen nach einem Budget-Stopp)
+
+Kampagnen entstehen wie in der App, Läufe und Urteile folgen dem Server, und das Produkt heißt überall DealSupply (DS-231, DS-232, DS-233). Was neuer ist als MCP 4.15.0, nutzen die Skills nur, wenn `ping` 4.16.0 oder höher meldet; auf älteren Servern gelten die bisherigen Regeln.
+
+**outreach**
+- `outreach-campaign`, `outreach-copy` → Neue Kampagnen bekommen wie in der App die Variable `routing` (Routing-Absatz im Abschied, Prompt wörtlich aus dem Server, je Sprache und Anrede) und enden in jeder Mail mit der Grußformel und `{{accountSignature}}`; nach Name, Rolle oder Firma für eine Unterschrift wird nicht mehr gefragt. Der `intro`-Prompt trägt nur noch, was für die Kampagne gilt, die allgemeinen Opener-Regeln legt der Server dazu.
+- `outreach-campaign` → `edit_campaign` läuft zuerst ohne `confirm_overwrite`: Nur so sagt der Server, ob die Mails schon nach Instantly übertragen sind. Dann wird vor dem Ersetzen ausdrücklich gefragt.
+- `outreach-copy` (SKILL, `references/`, `kern/`) → feste Angebotssätze und Beispiele wie in der App; `kern/check_copy.py --sprache en` kennt die englische Grußformel und Anrede.
+- `outreach-pipeline` → Budget eines Server-Laufs als Betrag in Credits (`budget_credits`, ab MCP 4.16.0), `capped_by` nennt den Grund einer Kappung, gekappte Leads bleiben offen im Lauf. Ein Lauf, der am Budget stoppt, wird mit neuem Budget fortgesetzt (`resume_lead_run`, Angebot vorher über `quote_lead_run` mit `lead_run_id`) statt neu gestartet. Neue Ablehnungen `budget_too_low`, `budget_used_up`, `billing_mode_changed`. Bei eigenem OpenRouter-Key deckelt `budget_usd` den Lauf. Vor MCP 4.16.0 wird `budget_credits` nie gesendet.
+- `outreach-pipeline`, `outreach-abo-lauf` → Google-Bewertungen (`google_reviews`, ab MCP 4.16.0) sind ein fester Schritt des Server-Laufs; im Abo-Lauf nutzt der `lead-agent` Bewertungen, die schon am Lead liegen.
+- `outreach-research`, `lead-agent` → Die Recherche schreibt das Berichtsformat des Servers (neu `references/berichtsformat.md`); der Mail-Block wird erst nach der Recherche geladen (`get_lead_data` mit `stage`).
+- `outreach-qualify`, `lead-agent` → Urteile als offener Vorfilter, kein Urteil aus den Importdaten allein, aussortierte Leads nach geänderten Kriterien nur mit Zustimmung neu urteilen.
+- `outreach-verify`, `verify-agent`, `lead-agent` → Anker-Rangfolge und Plural erst ab drei Rezensionen wie der Server; `markWritten: satz_zu_lang` ist ein Befund; ein `routing`, das bei zwei angeschriebenen Personen die andere als Alternative nennt, wird abgelehnt.
+- `outreach-lists` → `check_leads_exist` hat einen gemeinsamen Deckel je Trefferliste; `lead_mutation_busy` bei `delete_list` (ab MCP 4.16.0): kurz warten und wiederholen.
+- `outreach-launch` → DealSupply als Produktname; die Checkliste erwartet die Signatur im Versandpostfach; neue Ansprache versendeter Leads auch direkt über `start_lead_run(reset_contacted=true)`, nur nach Zustimmung.
+- `outreach-setup` → Wer bisher nur über Akquise in die App kam, meldet sich zuerst dort an und verbindet danach im selben Browser. In Claude Code heißt die mitgebrachte Verbindung `plugin:outreach:dealsupply`.
+- `outreach-update` → Schritte für Claude Code bei einer alten Version (Marketplace und Plugin aktualisieren, Auto-Update einschalten, mehrere Profile, alte Quelle); ältere Verbindungen vor der Prüfung entfernen.
+- Live-Ansicht → erkennt die mitgebrachte Verbindung auch unter ihrem Namen in Claude Code; ein Lauf kommt auch aus `budget_exhausted` zurück.
+- README, `outreach-setup` → abgestimmt auf MCP 4.16.0. Leads finden, Personensuche und ähnliche Firmen führen die Skills noch nicht.
+
+**datenbeschaffung**
+- DealSupply als Produktname in allen Skills und Referenzen; die Referenz `listm8-mcp.md` heißt jetzt `dealsupply-mcp.md`.
+- `dealsupply-mcp.md` → gemeinsamer Deckel bei `check_leads_exist`; `delete_list` ab MCP 4.16.0 behält Leads mit laufendem Job oder offener E-Mail-Suche und meldet `lead_mutation_busy`.
+- `datenbeschaffung-update` → Schritte für Claude Code wie in `outreach-update`.
+
+**fulfillment**
+- Beschreibung des Plugins: Die Seite wird nicht auffindbar veröffentlicht, der Link am Lead gespeichert.
+- `fulfillment-update` → Schritte für Claude Code wie in `outreach-update`.
 
 ## 2026-11-10 – outreach 0.8.0 (benötigt ListM8 MCP 4.15.0 für „Angebot je Lead“)
 

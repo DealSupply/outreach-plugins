@@ -14,8 +14,11 @@
   lesen Modelle als Eintrittskarte, im Blindtest 23.10. kamen so Massagepraxen, Hotels und eine
   proktologische Praxis in eine Ästhetik-Kampagne.
 - **disqualifiers: NUR harte No-Gos, die ein Agent öffentlich prüfen kann.** Falsche Branche,
-  Wettbewerber, Konzern, Größenschwelle, kein Geschäftsbetrieb erkennbar, explizite Ausschlüsse
-  des Kunden. Jeder Disqualifier muss so konkret sein, dass die Ablehnung einen benennbaren
+  Wettbewerber, Konzern, Größenschwelle, kein Geschäftsbetrieb (belegt: Betrieb aufgegeben, dauerhaft
+  geschlossen, Domain ohne Firma dahinter), explizite Ausschlüsse des Kunden. „Kein Geschäftsbetrieb“
+  nie so schreiben, dass eine gerade nicht lesbare Website darunter fällt: Ein Wartungshinweis, eine
+  Fehlerseite oder eine Zeitüberschreitung sagt nichts über den Betrieb. Im Disqualifier deshalb
+  ausdrücklich ergänzen: „Eine vorübergehend nicht erreichbare Website ist kein Ausschluss.“ Jeder Disqualifier muss so konkret sein, dass die Ablehnung einen benennbaren
   Grund hat.
   - **Konzern** heißt: fremde Muttergesellschaft, Franchise oder Börsennotierung. Eine Gruppe
     eigener Betriebe derselben Inhaber ist kein Konzern.
@@ -27,7 +30,7 @@
   Research-Aufgaben — bei Bedarfs-Offers ist die „schlechte" Website sogar das Verkaufsargument.
   Ebenso nie:
   - was nur das System weiß (Kontaktsperre, Bestandskunde, bereits angeschrieben): Das regelt
-    der Kontaktstatus in ListM8, nie der Kampagnentext;
+    der Kontaktstatus in DealSupply, nie der Kampagnentext;
   - der Bedarf, den das Angebot löst: Kein Ausschlussgrund schließt ihn aus („Praxis ohne
     Website“ bei einem Website-Angebot);
   Umgekehrt gehört hinein, wenn der Betrieb schon hat, was das Angebot liefert: Enthält das Angebot

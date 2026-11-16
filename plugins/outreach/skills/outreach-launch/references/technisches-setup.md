@@ -1,6 +1,6 @@
 # Technisches Setup — Domains, Zapmail, Warmup, Sendelimits
 
-> Referenz zu `outreach-launch`. Alles hier passiert beim Kunden, außerhalb von ListM8: ListM8
+> Referenz zu `outreach-launch`. Alles hier passiert beim Kunden, außerhalb von DealSupply: DealSupply
 > versendet nichts, legt keine Domains oder Postfächer an und wärmt nichts auf. Bei einem
 > Widerspruch zu `outreach-copy` gilt `outreach-copy`, bei einem Widerspruch zur `SKILL.md` von
 > `outreach-launch` gilt diese.
@@ -13,7 +13,7 @@ Setup ist 60 % der Arbeit. Copy ist 30 %. Send-Strategie ist 10 %. Wer die Reihe
 
 Das Setup ist der Teil, den niemand sieht und der über alles entscheidet. Es kostet im empfohlenen Zuschnitt rund 125 EUR im Monat und zwei bis drei Stunden Arbeit - und ohne es ist jede Stunde Copy-Arbeit verschwendet.
 
-**Zeitrahmen:** 2-3 Stunden Setup, dann mindestens 14 Tage Warmup. Alles andere (Listen, Kampagne und Personalisierung in ListM8) läuft parallel.
+**Zeitrahmen:** 2-3 Stunden Setup, dann mindestens 14 Tage Warmup. Alles andere (Listen, Kampagne und Personalisierung in DealSupply) läuft parallel.
 
 **Die Reihenfolge ist nicht beliebig:** Domains beim Domain-Anbieter kaufen → mit Zapmail verbinden → Postfächer anlegen → nach Instantly exportieren → Warmup starten, Limits und „Campaign slow ramp“ setzen. Erst am Ende dieser Kette beginnen die 14 Tage. Wer Instantly zuerst kauft, hat zwei Wochen lang ein leeres Tool.
 
@@ -75,7 +75,7 @@ Die Freischaltung dauert laut Zapmail bei Google bis rund 3, bei Microsoft bis r
 - [ ] Warmup-Werte so lassen, wie Instantly sie vorschlägt (für alle über **Edit Accounts**): Increase per day 1, Daily warmup limit 10, Reply rate 30 %, **Disable slow warmup** aus
 - [ ] **Mindestens 14 Tage warten** bevor die erste Kampagne startet
 - [ ] Freigabe zusätzlich am **Health Score** festmachen (Spalte in **Email Accounts**): über 90 %, am besten 98 bis 100 %
-- [ ] Während dem Warmup: Listen bauen (`datenbeschaffung`) und die Kampagne in ListM8 vorbereiten (`outreach-campaign`, danach `outreach-pipeline`)
+- [ ] Während dem Warmup: Listen bauen (`datenbeschaffung`) und die Kampagne in DealSupply vorbereiten (`outreach-campaign`, danach `outreach-pipeline`)
 
 Warmup heißt: Die Postfächer schreiben sich gegenseitig, öffnen Mails und antworten. Für den Provider sieht das aus wie ein normal genutztes Postfach mit echter Interaktion. Ein Postfach, das an Tag 1 plötzlich 30 Mails an Fremde schickt, sieht aus wie ein gekapertes Konto.
 
@@ -87,12 +87,12 @@ Warmup heißt: Die Postfächer schreiben sich gegenseitig, öffnen Mails und ant
 
 - [ ] Sendelimit am Postfach: **Daily campaign limit** 30 Mails pro Inbox pro Tag, immer
 - [ ] **Campaign slow ramp** am Postfach einschalten (Email Accounts → Postfach → **Settings** → **Campaign Settings**, für alle über **Edit Accounts**; Instantly markiert ihn als „Recommended“): Start mit 2 Kampagnenmails am Tag, jeden Tag 2 mehr, an Tag 15 bei 30. Die Kampagne bekommt dann gleich ihr volles Tageslimit (Postfächer mal 30, bei 10 Postfächern 300), die Treppe macht Instantly
-- [ ] Sendefenster: Mo-Fr, 09:00-17:00 mitteleuropäische Zeit, so legt ListM8 die Kampagne an. Wochenenden aus
+- [ ] Sendefenster: Mo-Fr, 09:00-17:00 mitteleuropäische Zeit, so legt DealSupply die Kampagne an. Wochenenden aus
 - [ ] **Open- und Link-Tracking aus, keine Links in den Mails.** Einschalten nur, wer Öffnungen als Signal nutzt, um sofort (in den ersten Minuten) anzurufen, also selbst Cold Calling macht oder ein Team dafür hat. Neue Instantly-Kampagnen haben Open Tracking aus; Instantly rät für die erste Mail ebenfalls zu „No links, No open tracking“
 - [ ] Wer Tracking doch einschaltet: eine **eigene** Tracking-Domain verwenden, keine geteilte. Eine Tracking-Domain, über die viele fremde Absender laufen, überträgt deren Reputation auf deine Links
 - [ ] **List-Unsubscribe-Header** im Versandtool aktivieren. Das ist der technische Abmeldeweg, den Mail-Anbieter im Client als Ein-Klick-Abmeldung anzeigen - eine Textzeile im Body allein erfüllt das nicht. Kostet eine Einstellung und senkt die Beschwerdequote messbar
 
-Wird die Instantly-Kampagne aus ListM8 heraus angelegt (Reiter „Instantly" der Kampagne), setzt ListM8 einen Standard-Zeitplan (Mo-Fr 09:00-17:00, Zeitzone Europe/Belgrade, also mitteleuropäische Zeit); er bleibt so. In der Kampagne nur noch das Tageslimit (Postfächer mal 30) setzen.
+Wird die Instantly-Kampagne aus DealSupply heraus angelegt (Reiter „Instantly" der Kampagne), setzt DealSupply einen Standard-Zeitplan (Mo-Fr 09:00-17:00, Zeitzone Europe/Belgrade, also mitteleuropäische Zeit); er bleibt so. In der Kampagne nur noch das Tageslimit (Postfächer mal 30) setzen.
 
 Bei 10 Inboxen und 30 Mails ergibt das eine Obergrenze von 300 Mails pro Tag. Diese Grenze wird nicht ab Tag 1 gefahren, sondern über „Campaign slow ramp“ schrittweise erreicht: bei 10 Postfächern Tag 1 20, Tag 5 100, Tag 10 200, Tag 15 300 Mails - mehr in `launch-und-optimierung.md`.
 
@@ -113,15 +113,15 @@ Der Zielwert liegt unter 3 %. Die Notbremse - Versand anhalten und Liste bereini
 
 | Zweck | Tool |
 |:------|:-----|
-| Lead-Qualifizierung, Research und AI-Personalisierung | **ListM8** |
+| Lead-Qualifizierung, Research und AI-Personalisierung | **DealSupply** |
 | Versand und Warmup | Instantly |
 | Domains | Domain-Anbieter (GoDaddy, Hostinger u. a.) oder Cloudflare, verbunden mit Zapmail |
 | DNS und Postfächer | **Zapmail** (legt Google- oder Microsoft-Postfächer an und setzt SPF, DKIM, DMARC) |
 | CRM | z. B. Close |
 
-Instantly ist das Versandtool. ListM8 ist das Qualifizierungs-, Research- und Generierungstool und versendet nichts. Diese Trennung ist wichtig, wenn Kunden fragen, ob sie „das eine oder das andere" brauchen: Sie brauchen beides.
+Instantly ist das Versandtool. DealSupply ist das Qualifizierungs-, Research- und Generierungstool und versendet nichts. Diese Trennung ist wichtig, wenn Kunden fragen, ob sie „das eine oder das andere" brauchen: Sie brauchen beides.
 
-Was ListM8 bis zur Übergabe leistet (Qualifizierung, Research, Variablen, Review, CSV-Export oder Push nach Instantly), steht in der `SKILL.md` von `outreach-launch` unter „Wer macht was".
+Was DealSupply bis zur Übergabe leistet (Qualifizierung, Research, Variablen, Review, CSV-Export oder Push nach Instantly), steht in der `SKILL.md` von `outreach-launch` unter „Wer macht was".
 
 ## Kosten-Übersicht
 
@@ -134,7 +134,7 @@ Zapmail geprüft am 26.10.2026, die übrigen Werte sind Richtwerte aus der Vorla
 | Instantly (Hypergrowth, empfohlen: 25.000 Kontakte, 100.000+ Mails/Monat) | ca. 97 USD/Monat, jährlich ca. 78 USD/Monat |
 | **Gesamt** | **ca. 125 EUR/Monat im empfohlenen Hypergrowth-Zuschnitt**; mit dem kleineren Growth-Plan (47 USD, 1.000 Kontakte) als Einstieg rund 80 EUR |
 
-Dazu kommen je nach Vorgehen die Kosten für Leads (beim Datenanbieter) und für die Verarbeitung in ListM8 (Credits je Lead im Server-Lauf, im Abo-Lauf keine Credits). Wer das Setup sparen will, spart am einzigen Teil, der nicht verhandelbar ist.
+Dazu kommen je nach Vorgehen die Kosten für Leads (beim Datenanbieter) und für die Verarbeitung in DealSupply (Credits je Lead im Server-Lauf, im Abo-Lauf keine Credits). Wer das Setup sparen will, spart am einzigen Teil, der nicht verhandelbar ist.
 
 ## Checkliste: Setup fertig?
 
@@ -148,7 +148,7 @@ Dazu kommen je nach Vorgehen die Kosten für Leads (beim Datenanbieter) und für
 - [ ] Daily campaign limit 30 je Postfach, Campaign slow ramp an, Tageslimit der Kampagne Postfächer mal 30, Sendefenster Mo-Fr 09:00-17:00
 - [ ] Open- und Link-Tracking aus (außer für sofortiges Anrufen nach Öffnung), keine Links in den Mails
 - [ ] List-Unsubscribe-Header aktiviert
-- [ ] Signatur genau einmal: Nach `outreach-copy` steht sie als schlanker Klartext in der Sequenz. Eine Postfach-Signatur in Instantly nur, wenn die Sequenz keine eigene trägt, sonst steht sie doppelt. Trägt die Sequenz `{{accountSignature}}` (Kampagne aus dem Start-Satz der App), hat jedes Versandpostfach in Instantly eine schlanke Signatur mit Name, Rolle und Firma, sonst endet die Mail nach der Grußformel
+- [ ] Signatur genau einmal: Die Sequenz trägt unter der Grußformel `{{accountSignature}}` (so baut `outreach-copy` jede Kampagne, wie die App). Jedes Versandpostfach in Instantly braucht deshalb eine schlanke Signatur mit Name, Rolle und Firma, sonst endet die Mail nach der Grußformel. Ältere Kampagnen mit einer Signatur als Klartext in der Sequenz: dann keine Postfach-Signatur, sonst steht sie doppelt
 - [ ] Leadliste verifiziert, Bounce-Prognose unter 3 %
 
 Erst wenn jeder Punkt steht, geht die erste Kampagne live.

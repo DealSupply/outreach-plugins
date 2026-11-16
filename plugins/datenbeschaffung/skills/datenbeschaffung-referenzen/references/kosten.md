@@ -1,7 +1,7 @@
 # Kosten — belegte Größenordnungen
 
 > zuletzt geprüft: **2026-10-11** (Google Maps) bzw. **2026-08-19** (übrige) · GOLD-Tier · Quelle: echte Läufe (SHK Köln/Düsseldorf, Elektro Stuttgart).
-> Die Kosten fallen beim Anbieter (Apify/Outscraper) auf dem Konto des Kunden an, nicht in ListM8.
+> Die Kosten fallen beim Anbieter (Apify/Outscraper) auf dem Konto des Kunden an, nicht in DealSupply.
 > Regel: Vor JEDEM kostenpflichtigen Lauf die erwarteten Kosten aus dieser Tabelle kalkulieren
 > und dem Nutzer nennen. Jeder Lauf bekommt einen harten Deckel (`maxTotalChargeUsd`) und die ausdrückliche Freigabe des Nutzers.
 >

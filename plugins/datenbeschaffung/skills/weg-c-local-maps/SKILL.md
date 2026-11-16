@@ -11,10 +11,10 @@ Impressum nur noch als Lückenfüller. Der zweite Vorteil dieses Wegs: **Google-
 Rezensionen kommen gleich mit** und sind der Einstieg, den die Plattform selbst nicht abrufen kann
 (`../datenbeschaffung-referenzen/references/datenumfang.md`).
 Der Lauf geschieht im eigenen Apify-Konto des Kunden, das Ergebnis geht als CSV über
-`listen-qualitaet` nach ListM8 (Oberfläche oder MCP `import_leads`).
+`listen-qualitaet` nach DealSupply (Oberfläche oder MCP `import_leads`).
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von ListM8; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
 
 ## Schritt 1 — Kategorien statt Freitext
 
@@ -122,7 +122,7 @@ andere gibt; fehlt die Adresse im Scrape, nimmt es die aus dem Impressum.
 
 ## Schritt 5 — Die Kontaktlücke (die Leads ohne E-Mail)
 
-Ab ListM8 MCP 4.0.0 dürfen Leads mit eigener Website ohne Adresse importiert werden; die Recherche
+Ab MCP 4.0.0 dürfen Leads mit eigener Website ohne Adresse importiert werden; die Recherche
 sucht die Adresse dann selbst (Impressum, Kontaktseite). Nach Maps ist die Lücke aber meist echt:
 Im Test fanden Impressum- und Kontakt-Actors für 28 Domains ohne Adresse nur 1 bis 5
 (`erfahrungswerte.md`). Dem Nutzer die Zahl nennen und fragen: importieren (kostet Qualifizierung
