@@ -14,12 +14,12 @@ Sammeladresse — und, deutlich teurer, seine Mobilnummer bzw. Durchwahl.
 
 ## Die Reihenfolge (Kurs-Regel, nicht verhandelbar)
 
-1. Leads sammeln (Weg-Skill), eine Adresse je Lead reicht (info@), ab ListM8 MCP 4.0.0 auch nur
+1. Leads sammeln (Weg-Skill), eine Adresse je Lead reicht (info@), ab MCP 4.0.0 auch nur
    die eigene Website →
 2. Import und Recherche in der Plattform: Sie liest das Impressum, findet den Ansprechpartner und
    ersetzt die Rollen-Adresse durch die persönliche, wenn sie eine findet →
 3. dieser Skill, **optional**, nur für qualifizierte, wertvolle Leads, bei denen die Recherche einen
-   Namen, aber keine persönliche Adresse gefunden hat. Ab ListM8 MCP 4.0.0 auch für wertvolle
+   Namen, aber keine persönliche Adresse gefunden hat. Ab MCP 4.0.0 auch für wertvolle
    Leads, die ohne E-Mail importiert wurden und mangels Adresse ausgeschieden sind
    (`contactEmailState: not_found`), sofern die Recherche einen Namen fand.
 
@@ -31,7 +31,7 @@ und reichert auch Leads an, die die Qualifizierung danach aussortiert.
 FullEnrich oder BetterContact. FullEnrich lässt sich laut Kurs-Lektion per MCP anbinden: steht der
 Connector, läuft die Anreicherung ohne Oberfläche. Sonst CSV hochladen, Ergebnis herunterladen.
 Beide bündeln dieselbe Idee, die Auswahl entscheidet der Preis am Tag des Kaufs. Konto, Abrechnung
-und Lauf liegen beim Anbieter, nicht in ListM8; das Ergebnis kommt als CSV zurück und geht über
+und Lauf liegen beim Anbieter, nicht in DealSupply; das Ergebnis kommt als CSV zurück und geht über
 `listen-qualitaet` in den Import.
 
 ## Kostenlogik (ehrlich, und vor jedem Lauf nennen)

@@ -1,6 +1,6 @@
 # Outreach Plugins
 
-Ein Marketplace mit drei Plugins für Kunden der Outreach-Plattform – für Claude (App, claude.ai,
+Ein Marketplace mit drei Plugins für Kunden von DealSupply – für Claude (App, claude.ai,
 Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 
 | Plugin | Inhalt | Für wen |
@@ -9,7 +9,7 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 | **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
 | **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
-Die Skills passen zum Outreach-MCP 4.18.0 mit **46 Tools** und **7 Prompts** (ältere Server ab 3.0.0 gehen auch, Neues nutzen die Skills nur, wo der Server es kennt). Der MCP verarbeitet
+Die Skills passen zum Outreach-MCP 4.22.0 mit **72 Tools** und **7 Prompts** (ältere Server ab 3.0.0 gehen auch, Neues nutzen die Skills nur, wo der Server es kennt). Ähnliche Firmen führen die Skills noch nicht. Fehler und Wünsche melden sie nach einer Rückfrage ab MCP 4.33.0 (`report_feedback`). Der MCP verarbeitet
 Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
 (Instantly o. Ä.), nicht in der Plattform.
 
@@ -50,19 +50,28 @@ MCP-Verbindung separat über die App-Seite „MCP & Skills“.
 Nach der Installation: Skill **`outreach-setup`** aufrufen (bzw. **`datenbeschaffung-setup`** für das
 Plugin datenbeschaffung, **`fulfillment-setup`** für das Plugin fulfillment). Er prüft die Verbindung, räumt alte Skill-Kopien auf und zeigt die ersten Schritte.
 
-**Kunden einer anderen Outreach-App als DealSupply:** Die mitgelieferte Verbindung `dealsupply`
-nicht hinzufügen und den MCP der eigenen App über deren Seite „MCP & Skills“ hinzufügen.
-Skills und Live-Ansicht erkennen ihn an seinen Tools.
-
 **Umstieg von `akquise`:** Bis outreach 0.5.1 brachte das Plugin die Verbindung `akquise`
 (`outreach.akquise.de`) mit. Ab 0.6.0 heißt sie `dealsupply` und zeigt auf `app.dealsupply.ai`. Nach
-dem Update `dealsupply` einmal anmelden; eine von Hand angelegte Verbindung `akquise` entfernen.
+dem Update `dealsupply` einmal mit DealSupply anmelden (in Claude Code unter `/mcp` als
+`plugin:outreach:dealsupply`). Wer bisher nur über Akquise in die App kam, hat oft kein eigenes
+Passwort: zuerst in der App über Akquise anmelden (`https://app.dealsupply.ai/sso/akquise`), dann im
+selben Browser verbinden, sonst auf der Anmeldeseite „Passwort vergessen“. Eine von Hand angelegte Verbindung
+`akquise` wird nicht mehr gepflegt und zeigt die alte Marke Akquise; sie sollte entfernt werden.
 
-**Updates:** Skill `outreach-update`. In Claude Code am besten Auto-Update einschalten
-(`/plugin` → Marketplaces → `outreach-plugins`).
+**Updates:** Skill `outreach-update`. In Claude Code ist Auto-Update für Marketplaces von
+Drittanbietern standardmäßig aus. Wer eine ältere Version hat, aktualisiert einmal von Hand:
+
+```
+/plugin marketplace update outreach-plugins
+/reload-plugins
+```
+
+Bleibt die Version alt: `/plugin` → „Installed“ → „Update now“ bzw.
+`claude plugin update outreach@outreach-plugins`. Danach `/plugin` → „Marketplaces“ →
+`outreach-plugins` → Auto-Update einschalten. Mehrere Konfigurationsprofile: in jedem Profil.
 
 Das Repo lag bis Oktober 2026 unter `RankM8/outreach-plugins`. GitHub leitet die alte Adresse
-weiter; bestehende Installationen aktualisieren sich ohne Neuinstallation.
+weiter; neu installiert wird immer aus `DealSupply/outreach-plugins`.
 
 ## Aufbau
 
@@ -82,6 +91,8 @@ plugins/
       outreach-update     Aktualisieren
       outreach-campaign   Kampagne bauen und ändern nach der Cold-Mailing-SOP
       outreach-copy       Cold-Mail-Copy-Regeln (verbindlich für campaign, generate, verify)
+      outreach-leads-finden    neue lokale Betriebe über Google Maps finden (Angebot, Zustimmung, Start, Übergabe)
+      outreach-personensuche   Entscheider in Firmen finden, übernehmen, E-Mail-Adressen suchen
       outreach-import     Leads importieren
       outreach-lists      Listen verwalten
       outreach-export     Leads einer Kampagne als Excel oder CSV
@@ -125,7 +136,7 @@ plugins/
   Plugins erhöhen (`.claude-plugin/plugin.json` und `plugin.json`) und `CHANGELOG.md` ergänzen.
   Ohne neue Version bekommen installierte Plugins nichts Neues.
 - MCP-Tool-Änderungen im Produkt → betroffene Skills im selben Zug nachziehen.
-- Live-Ansicht: `claude plugin test plugins/outreach`; Manifeste: `claude plugin validate .`;
+- Live-Ansicht: `claude plugin test plugins/outreach`; Copy-Prüfskript: `python3 -I plugins/outreach/tests/test_check_copy.py`; Manifeste: `claude plugin validate .`;
   CSV-Skript der Datenbeschaffung: `python3 -I plugins/datenbeschaffung/tests/test_build_csv.py`
 - Kein `bin/`-Ordner in einem Plugin (claude.ai lehnt das ganze Plugin sonst ab), keine Symlinks.
 - Actor-Empfehlungen/Preise (`datenbeschaffung-referenzen/references/apify-actors.md`,
