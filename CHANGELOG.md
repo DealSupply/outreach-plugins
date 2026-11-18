@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-18 – outreach 0.10.3 (benötigt MCP 4.38.0 für die Meldungen zu fehlenden Agenten)
+
+Die Skills folgen dem Server bei Agenten, die ein Konto nicht hat (DS-330). Kein neues Werkzeug. Auf älteren Servern gelten die bisherigen Regeln.
+
+**outreach**
+- `outreach-campaign` → Ein Agent-Schlüssel, den das Konto nicht hat oder abgeschaltet hat, wird ab MCP 4.38.0 nicht mehr mit `validation_failed` abgelehnt: Der Server lässt ihn weg, die Kampagne nutzt den Standard-Agenten, und `warnings` nennt den Schlüssel. So lässt sich ein Blueprint aus einem anderen Konto anlegen. Der Schlüssel des Qualifizierungs-Agenten steht unter `qualificationSettings.__agentConfig.agentKey`.
+- `outreach-pipeline` → Neuer Fehler `agent_unavailable` bei `quote_lead_run` und `start_lead_run`: Die Kampagne oder `agent_key` nennt einen Agenten, den das Konto nicht hat; vorher lief der Lauf an und bearbeitete keinen Lead. Ausweg: `agent_key` weglassen oder die Kampagne mit `export_campaign_blueprint` lesen und mit `edit_campaign` zurückschreiben. Ein Lauf, dem der Agent unterwegs fehlt, endet als `failed` oder `completed_with_failures` mit Grund in `statusReason`; `skipReasons.unavailable` ist erklärt.
+- `outreach-setup` → nennt den Stand 4.38.0.
+
 ## 2026-11-15 – outreach 0.10.2 (benötigt MCP 4.16.0 für Leads finden und die Personensuche)
 
 Nachbesserungen an den beiden Such-Skills nach einem Probelauf. Kein neues Werkzeug.
