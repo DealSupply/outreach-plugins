@@ -12,7 +12,7 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
 
 - **Noch nicht eingerichtet?** (kein Outreach-MCP verbunden, erstes Mal, alte Skill-Kopien)
   → `outreach-setup`.
-- **Verbunden?** Ein Aufruf von `list_campaigns` (nur lesend) zeigt, ob die Verbindung steht.
+- **Verbunden und welche Version?** Ein Aufruf von `ping` (nur lesend) zeigt, ob die Verbindung steht, und nennt die Version des Servers. Sie gilt für das ganze Gespräch (Versions-Regel unten).
 - **Workspace geklärt?** Sonst nach der Workspace-Regel unten, Punkt 1.
 
 ## Wohin
@@ -28,7 +28,7 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
 | Stand einer laufenden Suche nach neuen Leads, weitersuchen, abbrechen | `outreach-leads-finden` bzw. `outreach-personensuche` |
 | Leads importieren (CSV, Liste) | `outreach-import` |
 | Listen ansehen, anlegen, in eine Kampagne übernehmen | `outreach-lists` |
-| Leads zählen oder filtern wie in der Filterspalte der App („wie viele Leads aus Wien habe ich?“, „welche Städte sind im Bestand?“), Ansichten ansehen, speichern oder löschen | `outreach-lists`, Abschnitt „Filter und Ansichten“ (ab MCP 4.32.0: `describe_lead_filters`, `count_leads`, `list_lead_views`, `save_lead_view`, `delete_lead_view`); für die Auswahl eines Laufs `outreach-pipeline` |
+| Leads zählen oder filtern wie in der Filterspalte der App, im ganzen Bestand („wie viele Leads aus Wien habe ich?“, „welche Städte sind im Bestand?“) oder in einer Kampagne („wie viele Leads der Kampagne 80 sind aus Wien?“, „wie viele warten dort auf die Freigabe?“), Ansichten ansehen, speichern oder löschen | `outreach-lists`, Abschnitt „Filter und Ansichten“ (ab MCP 4.32.0: `describe_lead_filters`, `count_leads`, `list_lead_views`, `save_lead_view`, `delete_lead_view`). Bestand: `place="global"`; Frage zu einer Kampagne: `place="campaign"` mit `campaign_id`. Für die Auswahl eines Laufs `outreach-pipeline` |
 | Leads qualifizieren | `outreach-qualify` |
 | Leads recherchieren | `outreach-research` |
 | Mail-Variablen generieren | `outreach-generate` |
@@ -102,6 +102,15 @@ Stufe; beides gilt für alle Kampagnen.
   (`quote_people_import`) und die E-Mail-Suche (`quote_people_email_search`).
 - Kennt der Nutzer sein Ziel nicht, zuerst eine Frage: „Willst du eine neue Kampagne aufsetzen,
   Leads verarbeiten oder neue Leads beschaffen?“
+
+## Versions-Regel
+
+Gilt für jeden Outreach-Skill. Viele Stellen sagen „ab MCP x“. So wird das geprüft, ohne doppelte Aufrufe:
+
+1. **Die Version kommt aus `ping`, einmal je Gespräch.** Ist sie im Gespräch schon bekannt (dieser Einstieg, `outreach-setup`, Schritt 0 eines anderen Skills), nicht noch einmal aufrufen. Ein Skill, der direkt aufgerufen wird und die Version braucht, ruft `ping` als Erstes auf.
+2. **Ein neues Werkzeug:** Steht es in der Tool-Liste deiner Umgebung, kennt der Server es; dafür braucht es kein `ping`. Fehlt es, gilt der Weg für ältere Server, den der Skill nennt.
+3. **Ein neuer Parameter oder ein neues Feld an einem alten Werkzeug** (etwa `filter` und `view_id`, `budget_credits`, `confirm_pushed_sequence_change`): Das zeigt die Tool-Liste nicht verlässlich. Hier entscheidet die Version aus `ping`. Einen Parameter, den die Version nicht kennt, nie mitschicken: Ältere Server übergehen ihn ohne Fehler.
+4. `list_campaigns` prüft nicht die Version, sondern nur, ob Kampagne und Workspace zum Auftrag passen.
 
 ## Workspace-Regel
 

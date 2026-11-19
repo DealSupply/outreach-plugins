@@ -209,7 +209,17 @@ Datenbeschaffung heißt das: den Bestand zählen und eingrenzen, ohne Seiten zu 
   gilt, wenn eine davon gilt; `"__none__"` heißt „nicht gesetzt“.
 - **`count_leads(filter, view_id, facets, value_search)`** gibt `total` und den angewandten Ausdruck
   zurück. Mit `facets` (bis 20 Auswahlfelder, etwa `["location.city"]`) die Zahl je Wert; so findet man
-  auch die Werte dynamischer Felder (Städte, Kategorien, Tags, Attribute), `value_search` engt sie ein.
+  auch die Werte dynamischer Felder (Städte, Kategorien, Tags, Attribute). In den Filter gehört der
+  `key` eines Werts (bei Städten klein geschrieben, `"baar"`), nicht das `label` („Baar“). Je
+  dynamischem Feld kommen höchstens die 50 Werte mit den meisten Leads, ohne Kennzeichen in der
+  Antwort: Bei 50 Werten die Liste nie als vollständig ausgeben und die Zahlen nicht zur Gesamtzahl
+  addieren (die steht in `total`); für einen bestimmten oder seltenen Wert mit `value_search`
+  nachfassen, das über die 50 hinaus sucht. `"__none__"` gilt auch bei dynamischen Feldern, obwohl der
+  Katalog es dort nicht aufführt: bei `location.city` trifft es die Leads ohne Ort.
+- **Leads ohne E-Mail:** `lead.email` mit `is_empty` heißt ohne E-Mail importiert (auch wenn die
+  Recherche später eine Adresse gefunden hat); `contact.sending_address` mit `is_empty` heißt, es gibt
+  gerade keine Adresse für eine Mail; `contact.email_state` trennt `present`, `searching` (keine
+  Adresse, Recherche noch nicht abgeschlossen) und `not_found` (keine Adresse, Recherche abgeschlossen).
 - **`list_lead_views(with_counts=true)`** nennt Systemansichten (`all`, `not_contacted`,
   `research_failed`, `interest_shown`) und gespeicherte Ansichten mit ihrer Zahl. Die `id` einer
   Ansicht geht als `view_id` an die Werkzeuge; ein `filter` daneben engt die Ansicht weiter ein.

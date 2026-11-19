@@ -41,7 +41,11 @@ Scope: `leads:read` fürs Lesen/Exportieren/Zählen, `leads:write` für Anlegen/
 | Ansicht löschen | `delete_lead_view(view_id)` | Ab MCP 4.32.0: nur nach Bestätigung; die Leads bleiben |
 | Liste löschen | `delete_list(list_id, delete_leads, confirm_delete)` | s. Löschregeln |
 
-## Filter und Ansichten (ab MCP 4.32.0 laut `ping`)
+## Filter und Ansichten (ab MCP 4.32.0)
+
+Version nach der Versions-Regel im Skill `outreach`: Stehen die fünf Werkzeuge in der Tool-Liste, kennt
+der Server sie; ob ein altes Werkzeug `filter` und `view_id` annimmt, sagt die Version aus `ping` (einmal
+je Gespräch).
 
 Die fünf Werkzeuge `describe_lead_filters`, `count_leads`, `list_lead_views`, `save_lead_view` und
 `delete_lead_view` arbeiten mit demselben Filter wie die Filterspalte der App: Ein Ausdruck wählt
@@ -55,7 +59,12 @@ Leads-Reiter einer Kampagne, `review` der Review einer Kampagne; die beiden letz
 `add_leads_to_campaign`, `mark_leads_contacted` und `bulk_set_lead_attributes` nehmen Filter und
 Ansichten des Orts `global`, `list_leads`, `quote_lead_run` und `start_lead_run` die des Orts
 `campaign` (`outreach-pipeline`). Am Ort `global` haben die Aufrufe keine Objekt-ID: `workspace`
-nach der Workspace-Regel mitgeben.
+nach der Workspace-Regel mitgeben. **Welcher Ort:** Fragt der Nutzer nach dem Bestand („wie viele
+Leads habe ich in Wien?“), ist es `global`. Nennt er eine Kampagne („wie viele in Kampagne 80?“),
+ist es `place="campaign"` mit `campaign_id`: Nur dort gibt es die Felder der Kampagne (Urteil,
+Stand der Mail, offene Arbeit), und die Zahl zählt nur Leads dieser Kampagne. Geht es um die
+Reiter des Reviews, `place="review"`. Der Katalog unterscheidet sich je Ort: `describe_lead_filters`
+immer mit demselben `place` und derselben `campaign_id` lesen wie die Zählung danach.
 
 **Ablauf:**
 
@@ -69,10 +78,40 @@ nach der Workspace-Regel mitgeben.
    `{"any":[…]}` gilt, wenn eine davon gilt. Der Wert `"__none__"` heißt „nicht gesetzt“. Mehrere
    positive Bedingungen auf Kampagnenfeldern gelten für dieselbe Kampagne; `not_in` und `is_empty`
    auf ihnen schließen einen Lead aus, sobald irgendeine Kampagne im Bereich passt.
-3. Werte dynamischer Felder (Städte, Kategorien, Tags, Attribute) stehen nicht im Katalog, sondern
-   an den Leads: `count_leads(…, facets=["location.city"])` listet sie mit Zahlen, `value_search`
-   engt auf Werte ein, die einen Text enthalten. Die Zahl je Wert zählt die Leads, die mit diesem
-   Wert unter allen ANDEREN Bedingungen passen würden, genau wie die Spalte der App.
+3. Werte dynamischer Felder (im Katalog `dynamic: true`: Städte, Kategorien, Tags, Attribute) stehen
+   nicht im Katalog, sondern an den Leads: `count_leads(…, facets=["location.city"])` listet sie mit
+   Zahlen. Die Zahl je Wert zählt die Leads, die mit diesem Wert unter allen ANDEREN Bedingungen
+   passen würden, genau wie die Spalte der App.
+   - **Der Wert für den Filter ist der `key` der Facette, nicht das `label`.** Bei Städten ist der
+     `key` klein geschrieben (`"baar"`), das `label` ist die Schreibweise für den Nutzer („Baar“).
+     In `values` gehört immer der `key`; dem Nutzer zeigst du das `label`.
+   - **Höchstens 50 Werte je dynamischem Feld.** Die Liste endet still nach den 50 Werten mit den
+     meisten Leads (absteigend nach Zahl), die Antwort kennzeichnet das nicht. Kommen genau 50
+     Werte, ist die Liste fast sicher unvollständig: nie als „alle Städte“ ausgeben und nie die
+     Zahlen zu einer Gesamtzahl addieren (die Gesamtzahl ist `total`). Dem Nutzer sagen, dass es die
+     50 häufigsten sind. Für „gibt es den Wert X?“ und für seltene Werte mit `value_search`
+     nachfassen: Es sucht über die 50 hinaus nach Werten, die den Text enthalten (auch dort
+     höchstens 50 Treffer). Felder mit festen Werten sind nicht begrenzt.
+   - **Gleichstand bei „die meisten“:** Liegen zwei Werte vorn gleichauf, beide mit ihrer Zahl
+     nennen und den Nutzer wählen lassen, nicht selbst einen nehmen. Dazu sagen, was gezählt ist:
+     `count_leads` zählt alle Leads des Orts, die der Filter trifft, nicht nur die mit offener
+     Arbeit. Ist „die meisten, für die noch etwas zu tun ist“ gemeint, die Bedingung `run.open_work`
+     (Ort `campaign`) in den Filter nehmen und neu zählen; im Zweifel nachfragen.
+   - **`"__none__"` bei dynamischen Feldern:** Der Katalog führt den Wert dort nicht als Option, er
+     gilt trotzdem: `{"field":"location.city","op":"in","values":["__none__"]}` trifft die Leads
+     ohne Ort. `total: 0` heißt dann, jeder Lead hat einen Ort, nicht, dass der Wert ungültig wäre.
+   - **„Leads ohne E-Mail“ sind je nach Frage ein anderes Feld:**
+
+     | Der Nutzer meint … | Bedingung |
+     |---|---|
+     | ohne E-Mail importiert (die Adresse des Leads selbst ist leer, auch wenn die Recherche später eine gefunden hat) | `lead.email` mit `is_empty` |
+     | hat gerade keine Adresse, an die eine Mail gehen könnte (weder importiert noch gefunden) | `contact.sending_address` mit `is_empty` (mit `is_set`: hat eine) |
+     | die Suche läuft noch bzw. steht noch aus (keine Adresse, Recherche nicht abgeschlossen) | `contact.email_state` `in` `["searching"]` |
+     | nicht gefunden (keine Adresse, Recherche abgeschlossen; diese Leads bekommen nie eine Mail) | `contact.email_state` `in` `["not_found"]` |
+     | nicht anschreibbar, mit Grund | `contact.send_block` `in` `["no_address"]` (keine Adresse), `["foreign_address"]` (die Adresse ist als fremd gesperrt, derselbe Grund wie `foreign_address` im Lauf), `["invalid_address"]` (das Postfach existiert laut Prüfung nicht); `["__none__"]` heißt: darf eine Mail bekommen |
+
+     `contact.email_state` `present` ist dasselbe wie `contact.sending_address` `is_set`. Ob ein
+     Feld am gewählten Ort vorkommt und welche Werte es dort hat, sagt `describe_lead_filters`.
 4. **Zählen, bevor etwas geschieht:** `count_leads(place, campaign_id, filter, view_id)` gibt
    `total` und den angewandten Ausdruck zurück. Die Zahl dem Nutzer nennen, bevor ein Filter in ein
    Werkzeug geht, das schreibt, exportiert oder einen Lauf anbietet.
@@ -81,12 +120,16 @@ nach der Workspace-Regel mitgeben.
    Filter eine andere, lehnt der Server ab (`validation_failed`): `filter.search` weglassen oder
    ohne `view_id` aufrufen.
 
-**Ansichten:** `list_lead_views` nennt je Ansicht `id`, `name`, `system`, Filter und Sortierung.
-Systemansichten haben einen Schlüssel als `id` (am Ort `global` etwa `all`, `not_contacted`,
-`research_failed`, `interest_shown`; am Ort `campaign` dazu die Arbeitsvorräte wie `mail_queue`,
-`awaiting_approval` und `qualified_unresearched`; am Ort `review` die Reiter `review_open`,
-`review_approved`, `review_exported`, `review_rejected`), gespeicherte Ansichten eine Nummer als
-Zeichenkette (eine Zahl geht auch). `createdBy` nennt, wer sie gespeichert hat; es ist `null`, wenn
+**Ansichten:** `list_lead_views` nennt je Ansicht `id`, `name`, `system`, `workQueue`, Filter und
+Sortierung; dieselbe Liste steht unter `views` in `describe_lead_filters`. Systemansichten haben
+einen Schlüssel als `id`: am Ort `global` `all`, `not_contacted`, `research_failed`,
+`interest_shown`; am Ort `campaign` dazu `mail_queue` (wartet auf die Mail), `awaiting_approval`
+und `qualified_unresearched`; am Ort `review` die Reiter `review_open`, `review_approved`,
+`review_exported`, `review_rejected`. Welche davon die App als Arbeitsvorrat führt, sagt
+`workQueue: true` (`research_failed`, `awaiting_approval`, `interest_shown`,
+`qualified_unresearched`); `all`, `not_contacted` und `mail_queue` sind Ansichten, kein
+Arbeitsvorrat. Die Liste nicht aus dem Gedächtnis nennen, sondern aus der Antwort. Gespeicherte
+Ansichten haben eine Nummer als Zeichenkette (eine Zahl geht auch). `createdBy` nennt, wer sie gespeichert hat; es ist `null`, wenn
 diese Person ihr Konto gelöscht hat, die Ansicht bleibt dann beim Workspace. Mit `with_counts=true`
 trägt jede Ansicht `count`; eine Ansicht, die ein gelöschtes Feld oder eine gelöschte Liste nennt,
 meldet stattdessen `count_error`, die übrigen zählen trotzdem. Am Ort `review` ist eine
@@ -94,8 +137,14 @@ Systemansicht ein Reiter wie in der App: Die Zahlen je Wert zählen dann innerha
 
 **Speichern und Löschen (schreibt, `leads:write`):** Eine Ansicht nur speichern, wenn der Nutzer
 das will, etwa weil er dieselbe Auswahl in der App oder in späteren Gesprächen wieder braucht; für
-eine einmalige Frage reicht der Ausdruck. Vorher mit `count_leads` prüfen und Name, Ort und
-Sichtbarkeit nennen: `visibility` `personal` (Standard, nur der Nutzer) oder `workspace` (alle im
+eine einmalige Frage reicht der Ausdruck. Vorher mit `count_leads` zählen und dem Nutzer Zahl, Name,
+Ort und Sichtbarkeit nennen, dann auf sein Ja warten, wie vor jedem Schreiben; hat er Name und
+Sichtbarkeit selbst so genannt und die Zahl stimmt mit seiner Erwartung überein, gilt sein Auftrag
+als Ja. Trifft der Filter 0 Leads, das vor dem Speichern sagen und fragen, ob er die leere Ansicht
+trotzdem will: Der Server legt sie ohne Hinweis an. Die Antwort trägt nur `id`, `name` und
+`workspace`, keinen Filter und keine Zahl: nach dem Speichern mit
+`list_lead_views(place, campaign_id, with_counts=true)` bestätigen, dass die Ansicht mit dem
+erwarteten Filter und der erwarteten Zahl dasteht, und dem Nutzer die `id` nennen. Sichtbarkeit: `visibility` `personal` (Standard, nur der Nutzer) oder `workspace` (alle im
 Workspace sehen sie; nur auf ausdrücklichen Wunsch). `sort_by` und `sort_direction` sind optional;
 eine Kampagnen-Ansicht wird in jeder Kampagne angeboten. Mit `view_id` ersetzt `save_lead_view`
 eine gespeicherte Ansicht statt eine neue anzulegen: vorher zeigen, was ersetzt wird. Ändern und
@@ -152,13 +201,25 @@ importiert oder angeschrieben), W „Firma bekannt“ (Warnung).
 **„Gib mir den Abgleichsindex"** → `export_leads(format="index")` → als Datei speichern —
 damit gleicht der Nutzer die extern gescrapten Ergebnisse lokal ab, bevor Anreicherung oder Verifizierung Geld kostet.
 
-**„Wie viele Leads aus Wien sind noch in keiner Kampagne?“** (ab MCP 4.32.0) →
-`describe_lead_filters()` → Ausdruck bauen → `count_leads(filter=…)` → die Zahl nennen. Erst wenn
+**„Wie viele Leads aus Wien sind noch in keiner Kampagne?“** (ab MCP 4.32.0, Bestand) →
+`describe_lead_filters(place="global")` → Ausdruck bauen (Stadt als `key`, also `"wien"`) →
+`count_leads(place="global", filter=…)` → die Zahl nennen. Erst wenn
 der Nutzer die Leads sehen oder nutzen will, `search_leads(filter=…)`, `export_leads(filter=…)` oder
 `add_leads_to_campaign(campaign_id, filter=…)` mit demselben Ausdruck.
 
-**„Welche Städte habe ich im Bestand?“** (ab MCP 4.32.0) → `count_leads(facets=["location.city"])` →
-die Werte mit Zahlen als kurze Liste; bei vielen Werten mit `value_search` eingrenzen.
+**„Welche Städte habe ich im Bestand?“** (ab MCP 4.32.0) →
+`count_leads(place="global", facets=["location.city"])` → die Werte (`label`) mit Zahlen als kurze
+Liste. Kommen 50 Werte, sind es nur die 50 häufigsten: das sagen und für einen bestimmten Ort mit
+`value_search` nachfassen.
+
+**„Wie viele Leads der Kampagne 80 sind aus Wien und warten auf die Freigabe?“** (ab MCP 4.32.0,
+Kampagne) → `describe_lead_filters(place="campaign", campaign_id=80)` →
+`count_leads(place="campaign", campaign_id=80, view_id="awaiting_approval", filter={"v":1,"where":[{"field":"location.city","op":"in","values":["wien"]}]})`
+→ die Zahl nennen. Ohne `place="campaign"` zählte der Aufruf den ganzen Bestand.
+
+**„Aus welcher Stadt hat Kampagne 80 die meisten Leads?“** →
+`count_leads(place="campaign", campaign_id=80, facets=["location.city"])` → der erste Wert; bei
+Gleichstand beide nennen. Gezählt sind alle Leads der Kampagne, nicht nur die mit offener Arbeit.
 
 **„Schieb Liste X in Kampagne Y"** → erst `get_list` (Zahlen + kontaktiert-Anteil zeigen) →
 Bestätigung → `add_leads_to_campaign(campaign_id, list_id)` → Report (added / already / dnc-skipped).
