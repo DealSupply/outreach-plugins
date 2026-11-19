@@ -1,7 +1,7 @@
 # DealSupply-MCP: Import- und Bestands-Tools
 
 Vertragsstand: MCP 4.0.0 (16.10.2026: Leads ohne E-Mail), Credits je Lead seit MCP 3.0.0,
-Workspaces seit MCP 4.5.0. Die Referenz deckt die Tools ab, die in der Datenbeschaffung gebraucht
+Workspaces seit MCP 4.5.0, Filter und Ansichten seit MCP 4.32.0. Die Referenz deckt die Tools ab, die in der Datenbeschaffung gebraucht
 werden. Die vollständige Werkzeugliste liefert die
 Tool-Discovery des MCP-Servers; jede Werkzeugbeschreibung dort ist der aktuelle Vertrag und geht
 dieser Referenz im Zweifel vor.
@@ -73,6 +73,9 @@ Workspace; ein Bestandsindex oder eine Prüfung aus einem anderen Workspace zäh
 | `list_lists` | Eigene Listen mit Zählern und Herkunft | read |
 | `get_list` | Eine Liste mit Metadaten und Leads (paginiert) | read |
 | `search_leads` | Suche im Lead-Bestand des Workspaces | read |
+| `describe_lead_filters` | Felder, Operatoren und Werte des Filters der App (ab MCP 4.32.0) | read |
+| `count_leads` | Leads eines Filters oder einer Ansicht zählen, auf Wunsch je Wert (ab MCP 4.32.0) | read |
+| `list_lead_views` | System- und gespeicherte Ansichten, auf Wunsch mit Zahlen (ab MCP 4.32.0) | read |
 | `get_credit_balance` | Konto: freie Plätze im Lead-Limit (`account`), Guthaben und Abrechnungsmodus; nur lesend | read |
 | `create_list` | Liste mit Herkunft anlegen | write |
 | `import_leads` | Leads importieren (asynchron, `job_id`) | write |
@@ -89,26 +92,37 @@ list_workspaces()
 check_leads_exist(emails?: string[], domains?: string[], workspace?: string)
 export_leads(format?: "json"|"csv"|"index" = "json", list_id?: integer,
              contact_status?: string = "", limit?: integer, offset?: integer = 0,
-             workspace?: string)
+             filter?: object, view_id?: string|integer, workspace?: string)
 list_lists(limit?: integer = 25, offset?: integer = 0, workspace?: string)
 get_list(list_id: integer, limit?: integer = 25, offset?: integer = 0)
 search_leads(query?: string = "", contact_status?: string = "", attribute_key?: string = "",
              attribute_value?: string = "", in_campaign?: string = "",
-             limit?: integer = 20, offset?: integer = 0, workspace?: string)
+             limit?: integer = 20, offset?: integer = 0,
+             filter?: object, view_id?: string|integer, workspace?: string)
+describe_lead_filters(place?: "global"|"campaign"|"review" = "global", campaign_id?: integer,
+                      workspace?: string)
+count_leads(place?: string = "global", campaign_id?: integer, filter?: object,
+            view_id?: string|integer, facets?: string[], value_search?: string, workspace?: string)
+list_lead_views(place?: string = "global", campaign_id?: integer, with_counts?: boolean = false,
+                workspace?: string)
 create_list(name: string, description?: string = "", source?: object, workspace?: string)
 get_credit_balance(workspace?: string)
 import_leads(leads: object[], campaign_id?: integer, list_id?: integer,
              attribute_mappings?: object, allow_partial?: boolean = false, workspace?: string)
 get_job_status(job_id: string)
-bulk_set_lead_attributes(lead_ids: integer[], attributes: object, create_missing?: boolean = false)
-add_leads_to_campaign(campaign_id: integer, list_id?: integer, lead_ids?: integer[])
+bulk_set_lead_attributes(lead_ids?: integer[], attributes: object, create_missing?: boolean = false,
+                         filter?: object, view_id?: string|integer, workspace?: string)
+add_leads_to_campaign(campaign_id: integer, list_id?: integer, lead_ids?: integer[],
+                      filter?: object, view_id?: string|integer)
 mark_leads_contacted(emails?: string[], lead_ids?: integer[], status?: string = "contacted",
-                     source?: string = "mcp", confirm_reset?: boolean = false, workspace?: string)
+                     source?: string = "mcp", confirm_reset?: boolean = false,
+                     filter?: object, view_id?: string|integer, workspace?: string)
 delete_list(list_id: integer, delete_leads?: boolean = false, confirm_delete?: boolean = false)
 ```
 
 `workspace` ist die uuid aus `list_workspaces` und gehört nur in Aufrufe ohne Objekt-ID (Abschnitt
-„Workspace“). Ältere Server kennen das Argument nicht.
+„Workspace“). Ältere Server kennen das Argument nicht. `filter` und `view_id` gibt es ab MCP 4.32.0
+(Abschnitt „Filter und Ansichten“); auf älteren Servern nie mitschicken.
 
 ## Bestand prüfen
 
@@ -174,6 +188,43 @@ Antwort: `email_matches[]` (`query`, `lead_id`, `email`, `contact_status`, `in_c
   Groß-/Kleinschreibung), `in_campaign` (`none` oder `any`). `limit` 1 bis 100. Liefert je Lead
   `email` (kann null sein), `sendingEmail`, Kontaktstatus sowie Kampagnen- und Listenzugehörigkeit. Für einzelne Existenzprüfungen im Bulk
   `check_leads_exist` bevorzugen.
+
+### Filter und Ansichten (ab MCP 4.32.0 laut `ping`)
+
+Ab MCP 4.32.0 wählen die Werkzeuge Leads mit demselben Filter wie die Filterspalte der App. Für die
+Datenbeschaffung heißt das: den Bestand zählen und eingrenzen, ohne Seiten zu laden.
+
+- **Wann:** für jede Frage nach einer Zahl oder Verteilung im Bestand („wie viele Leads habe ich in
+  Köln?“, „welche Städte und Kategorien sind schon da?“, „wie viele aus der Liste vom Oktober sind noch
+  nicht kontaktiert?“), vor einem Scrape, um die Lücke zu sehen, und für eine Auswahl, die mehr braucht
+  als Suchtext, ein Attribut und `in_campaign`. Der Abgleich einzelner Adressen und Domains bleibt bei
+  `check_leads_exist`, der lokale Abgleich großer Scrape-Ergebnisse beim Index aus `export_leads`.
+- **`describe_lead_filters(place="global")`** nennt Kategorien, Felder (etwa `location.city`, `list.id`,
+  `lead.created_at`, `contact.status`), Operatoren und feste Werte, dazu die Ansichten. Feldnamen und
+  Werte immer von dort nehmen.
+- **Ausdruck:** `{"v":1,"where":[Bedingung | {"any":[Bedingungen]}],"search":"Text"}`. Bedingung:
+  `{"field","op","values"}` (`in`, `not_in`), `{"field","op","value"}` (`eq`, `contains`,
+  `starts_with`, `gte`, `lte`, `before`, `after`, `last_days`), mit `"to"` bei `between`, nur
+  `{"field","op"}` bei `is_set` und `is_empty`. Bedingungen in `where` gelten zusammen, `{"any":[…]}`
+  gilt, wenn eine davon gilt; `"__none__"` heißt „nicht gesetzt“.
+- **`count_leads(filter, view_id, facets, value_search)`** gibt `total` und den angewandten Ausdruck
+  zurück. Mit `facets` (bis 20 Auswahlfelder, etwa `["location.city"]`) die Zahl je Wert; so findet man
+  auch die Werte dynamischer Felder (Städte, Kategorien, Tags, Attribute), `value_search` engt sie ein.
+- **`list_lead_views(with_counts=true)`** nennt Systemansichten (`all`, `not_contacted`,
+  `research_failed`, `interest_shown`) und gespeicherte Ansichten mit ihrer Zahl. Die `id` einer
+  Ansicht geht als `view_id` an die Werkzeuge; ein `filter` daneben engt die Ansicht weiter ein.
+- **`search_leads` und `export_leads`** nehmen `filter` und `view_id` zusätzlich zu ihren eigenen
+  Parametern; bei `search_leads` darf `query` dann leer sein.
+- **`add_leads_to_campaign`, `mark_leads_contacted`, `bulk_set_lead_attributes`** nehmen `filter` oder
+  `view_id` statt `lead_ids` (nie beides). Vorher mit `count_leads` zählen und die Zahl nennen. Mehr als
+  1000 Treffer lehnt der Server mit `limit_reached` ab (er schneidet nie ab), einen Filter ohne Bedingung
+  mit `validation_failed`, null Treffer mit `no_leads_matched`.
+- **Fehler:** `validation_failed: <Grund> at filter.<Pfad>` nennt die Stelle im Ausdruck; `not_found`
+  eine unbekannte, gelöschte oder fremde Ansicht.
+- Ansichten speichern und löschen (`save_lead_view`, `delete_lead_view`) führt der Skill
+  `outreach-lists` im Plugin outreach, ebenso die Orte `campaign` und `review`.
+- **Älterer Server** (kein `describe_lead_filters` in der Tool-Liste): Es bleibt bei `search_leads` mit
+  seinen eigenen Filtern, `export_leads` und `check_leads_exist`; `filter` und `view_id` nie mitschicken.
 
 ## Importieren
 
@@ -289,12 +340,13 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
 ## Nachbearbeiten
 
 - `bulk_set_lead_attributes`: dieselben Attributwerte auf bis zu 1000 Leads (höchstens 10
-  Attribute), z. B. `{"kategorie":"Sanitär","quelle":"apify 2026-10-03"}`. Attribute werden über
+  Attribute; die Leads über `lead_ids` oder ab MCP 4.32.0 über `filter`/`view_id`), z. B. `{"kategorie":"Sanitär","quelle":"apify 2026-10-03"}`. Attribute werden über
   den `fieldKey` angesprochen; unbekannte Keys schlagen fehl, außer `create_missing=true` (legt sie
   als Textattribute an). Bestehende Werte werden überschrieben. Antwort: `updated`,
   `missing_lead_ids`, `attributes_written`, `attributes_created`. Für unterschiedliche Werte je Lead
   `write_lead_details` verwenden.
-- `add_leads_to_campaign`: genau eines von `list_id` oder `lead_ids` (höchstens 1000). Mit `list_id`
+- `add_leads_to_campaign`: genau eines von `list_id`, `lead_ids` (höchstens 1000) oder ab MCP 4.32.0
+  `filter`/`view_id` (höchstens 1000 Treffer). Mit `list_id`
   darf die Liste höchstens 1000 Leads haben, sonst `limit_reached`; größere Listen in
   `lead_ids`-Blöcken verlinken oder in der Oberfläche über „Zur Kampagne hinzufügen“ an der Liste
   zuordnen. Bereits zugeordnete Leads werden übersprungen, `do_not_contact`-Leads **nie** verlinkt.
@@ -302,7 +354,7 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
   der Zielkampagne von vorn (Urteile gelten pro Kampagne), vorhandene Recherche wird wiederverwendet.
   Danach `start_lead_run`.
 - `mark_leads_contacted`: setzt den Kontaktstatus über alle Kampagnen des Workspaces (höchstens
-  1000), entweder `emails` oder `lead_ids`. `status` ist `contacted` (Standard), `replied`, `opportunity`, `do_not_contact` oder
+  1000), entweder `emails`, `lead_ids` oder ab MCP 4.32.0 `filter`/`view_id`. `status` ist `contacted` (Standard), `replied`, `opportunity`, `do_not_contact` oder
   `not_contacted` (Zurücksetzen nur mit `confirm_reset=true`). Status werden nie herabgestuft;
   `exported_to_instantly` setzt nur der Instantly-Push. Leads ohne E-Mail nur über `lead_ids`. Nicht gefundene Einträge stehen in
   `unmatched_emails` beziehungsweise `unmatched_lead_ids`. Dient dazu, extern kontaktierte Leads
@@ -351,6 +403,7 @@ App, `write_lead_details` mit `bestEmail`), fällt die Sperre von selbst weg.
 Nach dem Import: Liste prüfen (`get_list`), auf Wunsch einer bestätigten Kampagne zuordnen
 (`add_leads_to_campaign`) und über den Outreach-Workflow `start_lead_run` für `qualification`,
 `research`, `email` verarbeiten. `start_lead_run` nimmt keine `list_id`; die Auswahl der Leads
-erfolgt über die Kampagne. Vorher aktive Lead-Läufe prüfen (`list_lead_runs`). Der KI-Lauf kostet
+erfolgt über die Kampagne, ab MCP 4.32.0 auch über einen Filter oder eine Ansicht der Kampagne
+(`outreach-pipeline`). Vorher aktive Lead-Läufe prüfen (`list_lead_runs`). Der KI-Lauf kostet
 Credits je Lead, vorher zeigt `quote_lead_run` den Preis; im Abo-Lauf kostet er
 keine Credits. Beides ist getrennt vom Scrape beim Anbieter abzustimmen.

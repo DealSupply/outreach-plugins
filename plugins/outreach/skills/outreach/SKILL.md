@@ -20,6 +20,7 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
 | Der Nutzer will … | Skill |
 |---|---|
 | eine Kampagne anlegen oder ändern | `outreach-campaign` |
+| an einer bestehenden Kampagne eine Mail (Betreff, Text, Wartezeit), eine Einstellung (Name, Sprache, Anrede, Recherche-Stufe, Kriterien) oder einen Variablen-Prompt ändern, oder nur einen Teil ansehen | `outreach-campaign`, Phase 3, „Gezielt ändern“ (ab MCP 4.27.0: `get_campaign_part`, `update_campaign_mail`, `update_campaign_setting`; die Kampagne wird dafür nicht ersetzt) |
 | mit dem Start-Satz aus der App eine Kampagne einrichten („Richte mit outreach die Kampagne #123 ein.“) | `outreach-campaign`, Ablauf „Genannte leere Kampagne füllen“: genau diese Kampagne füllen, nie eine neue anlegen |
 | Cold-Mail-Copy schreiben oder prüfen, ein Marketing-Offer formulieren | `outreach-copy` |
 | neue lokale Betriebe als Leads finden, nach Branche und Gebiet über Google Maps („Leads finden“, „Friseure in Freiburg“) | `outreach-leads-finden` (ab MCP 4.16.0): Angebot zeigen, nach Zustimmung starten, Stand abfragen, an eine Kampagne übergeben |
@@ -27,6 +28,7 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
 | Stand einer laufenden Suche nach neuen Leads, weitersuchen, abbrechen | `outreach-leads-finden` bzw. `outreach-personensuche` |
 | Leads importieren (CSV, Liste) | `outreach-import` |
 | Listen ansehen, anlegen, in eine Kampagne übernehmen | `outreach-lists` |
+| Leads zählen oder filtern wie in der Filterspalte der App („wie viele Leads aus Wien habe ich?“, „welche Städte sind im Bestand?“), Ansichten ansehen, speichern oder löschen | `outreach-lists`, Abschnitt „Filter und Ansichten“ (ab MCP 4.32.0: `describe_lead_filters`, `count_leads`, `list_lead_views`, `save_lead_view`, `delete_lead_view`); für die Auswahl eines Laufs `outreach-pipeline` |
 | Leads qualifizieren | `outreach-qualify` |
 | Leads recherchieren | `outreach-research` |
 | Mail-Variablen generieren | `outreach-generate` |
@@ -51,6 +53,11 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
 
 - `billing_mode`: `credits` (Plattform-Credits) oder `byok` (das Konto zahlt die KI mit dem eigenen
   OpenRouter-Key; dann gibt es keine Credits, keine Preise und keinen Nachkauf, alle Credit-Felder sind `null`).
+- `own_ai_key` (ab MCP 4.37.0): `true` heißt, ein Credit-Konto lässt seine KI über den eigenen
+  OpenRouter-Schlüssel laufen (Option im Tarif, einschalten in den Workspace-Einstellungen, Reiter KI).
+  `billing_mode` bleibt `credits`, und das Guthaben gilt weiter, zahlt aber nur Power-ups und Daten
+  (Leads finden, Personensuche); die KI im Server-Lauf kostet keine Credits, dafür zählt die Lauf-Quote des
+  Plans (`outreach-pipeline`). Das ist nicht `byok`: Credits, Nachkauf und Power-ups bleiben.
 - Bei `credits`: `available` (verfügbar), `reserved` (gebunden in laufenden Server-Läufen), `by_origin`
   (Credits aus dem Abo verfallen, `next_expiry` nennt die nächsten; nachgekaufte Credits verfallen nie;
   `debt` ist eine offene Schuld). Beträge sind Credits mit bis zu drei Nachkommastellen, keine Währung.
@@ -62,8 +69,9 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
   gebuchte Credits werden dafür nicht erstattet.
 - `purchase` (beide Modi): `allowed` sagt, ob der Nutzer jetzt Credits kaufen kann, `app_url` führt zur
   Credits-Seite der App. Einen Nachkauf nur bei `allowed: true` vorschlagen; kaufen kann nur der Nutzer
-  selbst in der App. Sonst bleiben ein Planwechsel, ein günstigeres KI-Modell oder eine günstigere
-  Recherche-Stufe, oder der Abo-Lauf, der keine Credits kostet.
+  selbst in der App. Sonst bleiben ein Planwechsel, eine geringere Denktiefe der Agents oder eine günstigere
+  Recherche-Stufe (das KI-Modell wählt ab MCP 4.31.0 die App, nicht mehr der Nutzer), oder der Abo-Lauf, der
+  keine Credits kostet.
 
 Preise je Lead nie aus dem Gedächtnis nennen: Den verbindlichen Preis zeigt `quote_lead_run` vor einem
 Server-Lauf (`outreach-pipeline`). Wer ein Jahresabo hat, wechselt erst nach Ende der Laufzeit auf ein
@@ -109,7 +117,10 @@ Workspace, auch der Bestand für den Dubletten-Abgleich.
    Importieren und Anlegen, etwa `list_campaigns`, `search_leads`, `list_lists`, `list_lead_runs`,
    `export_leads`, `check_leads_exist`, `import_leads`, `create_campaign`, `create_list`,
    `get_credit_balance` und `mark_leads_contacted` mit E-Mail-Adressen. Ohne Angabe laufen sie im
-   Standard-Workspace. Dasselbe gilt für `quote_prospect_search`, `start_prospect_search` ohne
+   Standard-Workspace. Ab MCP 4.32.0 gehören dazu auch `describe_lead_filters`, `count_leads`,
+   `list_lead_views` und `save_lead_view` am Ort `global` sowie jedes Werkzeug, das seine Leads über
+   `filter` oder `view_id` der Lead-Datenbank statt über IDs wählt; mit `campaign_id` (Ort `campaign`
+   oder `review`) entscheidet die Kampagne. Dasselbe gilt für `quote_prospect_search`, `start_prospect_search` ohne
    `search_id`, `list_prospect_searches` und `create_people_search`; Werkzeuge mit `search_id` laufen im
    Workspace der Suche. Eine unbekannte uuid lehnt der Server mit `workspace_not_found` ab.
 3. **Aufrufe mit Objekt-ID** (`campaign_id`, `lead_id`, `lead_ids`, `list_id`, `lead_run_id`,

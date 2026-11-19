@@ -25,6 +25,14 @@ Braucht MCP 4.4.0 (`ping`). Kennt der Server `export_campaign_leads` nicht, auf 
    - `crm`: CSV fürs CRM. Firma, Ansprechpartner, Kontaktwege, Urteil, Status, eigene Felder.
 3. **Welche Leads:** `scope` = `approved` (Standard), `approved_new` (Freigaben, die noch nicht exportiert sind),
    `all` (alle der Kampagne) oder `selection` mit `lead_ids`.
+   - **Auswahl nach Filter oder Ansicht (ab MCP 4.32.0):** `export_campaign_leads` nimmt selbst keinen Filter.
+     Will der Nutzer nur einen Teil („nur die aus Wien“, „die Ansicht Score über 70“), die Leads mit
+     `list_leads(campaign_id, filter=…, view_id=…)` holen (Ort `campaign`; Aufbau des Ausdrucks: `outreach-lists`,
+     „Filter und Ansichten“) und deren `lead_ids` mit `scope="selection"` übergeben. Vorher mit
+     `count_leads(place="campaign", campaign_id, filter=…, view_id=…)` zählen: `list_leads` gibt höchstens 2000 IDs
+     zurück (`lead_ids_truncated`), bei mehr den Filter teilen und die IDs sammeln. Die Sperren des Exports gelten
+     weiter: Was nicht freigegeben oder gesperrt ist, nennt `dry_run` unter `excluded`. Auf älteren Servern die
+     Auswahl über `list_leads` im Listen-Modus oder bekannte IDs.
 4. **Erst zählen:** `export_campaign_leads(campaign_id, purpose, scope, dry_run=true)`. Dem Nutzer kurz nennen:
    `leads` in der Datei, was mit welchem Grund fehlt (`excluded`: `not_approved`, `do_not_contact`, `contacted`,
    `no_address`, `foreign_address`) und was markiert ist (`flagged`).
@@ -47,6 +55,9 @@ Braucht MCP 4.4.0 (`ping`). Kennt der Server `export_campaign_leads` nicht, auf 
 - Spalten nur ändern, wenn der Nutzer es will: `dry_run` nennt in `columns` die Schlüssel; `columns` oder `preset`
   (`full`, `sending`, `crm`) überschreiben den Zweck, ebenso `format` (`xlsx`, `csv`) und `sendable_only`.
 - Höchstens 25.000 Leads je Datei (`too_large`): Umfang eingrenzen oder in Auswahlen teilen.
+- Wie viele Leads in welchem Review-Reiter stehen (offen, freigegeben, exportiert, abgelehnt), nennt ab MCP 4.32.0
+  `list_lead_views(place="review", campaign_id, with_counts=true)` in einem Aufruf; `dry_run` bleibt die Zahl, die
+  für die Datei gilt.
 - `mark_exported` braucht `leads:write`; ohne das Recht ohne Markieren exportieren.
 - Zwei Personen je Firma (ab MCP 4.11.0): In solchen Kampagnen trägt die Datei die Spalten
   `second_person_email`, `_first_name`, `_last_name`, `_role` und `_status`. `rows_per_person=true` (nur CSV)
