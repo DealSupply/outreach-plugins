@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-17 – outreach 0.11.0 (nutzt MCP 4.33.0 zum Melden; folgt auf outreach 0.10.3)
+
+Fehler und Wünsche gehen aus dem Chat an DealSupply (DS-278). Die Skills fragen erst, gemeldet wird nur nach einem Ja. Das Werkzeug `report_feedback` gibt es ab MCP 4.33.0 und nur, wo DealSupply das Melden eingerichtet hat; fehlt es in der Tool-Liste, verweisen die Skills auf „Melden“ in der App, sonst ändert sich nichts.
+
+**outreach**
+- `outreach` → neue Melde-Regel für alle Skills: Nach einem Fehler, der sich nicht im Chat lösen lässt, kommt die Frage „Soll ich das als Fehler an DealSupply melden?“, gemeldet wird erst nach einem Ja mit `report_feedback` und `attach_last_failure=true`, damit die Aufzeichnung des Servers mitgeht statt einer Nacherzählung. Selbst lösbare Fehler (falsche ID, `validation_failed`, Scope, Workspace, Credits, Limits) sind kein Anlass. Kann DealSupply etwas nicht, bietet der Skill an, das als Wunsch zu melden. Kein Geheimnis und keine Daten von Leads im Text; danach der Weg zum Stand: Roadmap, Reiter „Meine Meldungen“, ein Punkt an „Roadmap“ zeigt Neues. `rate_limited` (höchstens 10 Meldungen je Stunde, zusammen mit der App) und `feedback_failed` (auf „Melden“ in der App verweisen) sind beschrieben.
+- `outreach-campaign`, `outreach-import`, `outreach-lists`, `outreach-export`, `outreach-qualify`, `outreach-research`, `outreach-generate`, `outreach-verify`, `outreach-pipeline`, `outreach-launch`, `outreach-leads-finden`, `outreach-personensuche` → verweisen auf die Melde-Regel.
+- `outreach-abo-lauf` → fragt nach dem Bericht einmal für alle Fehler der Agents, je Fehlerbild eine Meldung mit `failed_call_id`.
+- `lead-agent`, `verify-agent` → melden nie selbst, sondern nennen den Fehler in ihrer Antwort.
+- `outreach-setup`, README → nennen MCP 4.33.0 für das Melden.
+
 ## 2026-11-16 – outreach 0.10.3, datenbeschaffung 0.5.3 (benötigt MCP 4.23.0 für das Zurücksetzen exportierter Leads)
 
 Passt zu DealSupply mit MCP 4.23.0 (DS-190). Hochgeladene, nie angeschriebene Leads lassen sich nach dem Löschen in Instantly zurücksetzen; DealSupply prüft dafür in einem Job, ob sie dort fehlen und ob Instantly eine Mail an sie listet. Ältere Server lehnen das Zurücksetzen weiter mit `reset_blocked.exported` ab.

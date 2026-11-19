@@ -6,6 +6,8 @@ description: Use when user says "Leads finden", "neue Leads suchen", "lokale Bet
 # Leads finden: neue Betriebe über Google Maps
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`. `quote_prospect_search`, `start_prospect_search` (ohne `search_id`), `list_prospect_searches` und `list_prospect_area_postal_codes` bekommen `workspace=<uuid>`, wenn der gewählte Workspace nicht der Standard ist. Alle Werkzeuge mit `search_id` laufen von selbst im Workspace der Suche. Je Workspace läuft eine Suche zur Zeit.
+>
+> **Fehler und Wünsche:** Es gilt die Melde-Regel aus dem Skill `outreach`: Nach einem Fehler, den du nicht selbst lösen kannst, fragen, ob du ihn an DealSupply melden sollst, und erst nach einem Ja `report_feedback` mit `attach_last_failure=true` aufrufen. Einen Wunsch, den DealSupply nicht kann, als Wunsch melden anbieten.
 
 DealSupply sucht lokale Betriebe auf Google Maps nach Branche und Gebiet (Deutschland, Österreich, Schweiz), legt sie als Leads in eine Liste und übergibt sie auf Wunsch an eine Kampagne. Der Nutzer braucht dafür kein eigenes Konto bei einem Datenanbieter. Bezahlt wird in Credits je gefundenem Eintrag, nie mehr als der Höchstbetrag des Angebots.
 

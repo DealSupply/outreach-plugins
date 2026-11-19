@@ -6,6 +6,8 @@ description: Use when user says "Personensuche", "Entscheider finden", "Ansprech
 # Personensuche: Entscheider in Firmen finden
 
 > **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`. `create_people_search` bekommt `workspace=<uuid>`, wenn der gewählte Workspace nicht der Standard ist. Alle Werkzeuge mit `search_id` laufen von selbst im Workspace der Suche.
+>
+> **Fehler und Wünsche:** Es gilt die Melde-Regel aus dem Skill `outreach`: Nach einem Fehler, den du nicht selbst lösen kannst, fragen, ob du ihn an DealSupply melden sollst, und erst nach einem Ja `report_feedback` mit `attach_last_failure=true` aufrufen. Einen Wunsch, den DealSupply nicht kann, als Wunsch melden anbieten.
 
 Die Personensuche findet Entscheider in Firmen nach Rolle, Branche, Firmengröße und Ort. Sie hat drei Teile:
 

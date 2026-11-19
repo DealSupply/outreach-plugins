@@ -12,6 +12,8 @@ liefert `export_leads`, siehe `outreach-lists`.
 Braucht MCP 4.4.0 (`ping`). Kennt der Server `export_campaign_leads` nicht, auf die App verweisen: Kampagne öffnen →
 „Exportieren“.
 
+> **Fehler und Wünsche:** Es gilt die Melde-Regel aus dem Skill `outreach`: Nach einem Fehler, den du nicht selbst lösen kannst, fragen, ob du ihn an DealSupply melden sollst, und erst nach einem Ja `report_feedback` mit `attach_last_failure=true` aufrufen. Einen Wunsch, den DealSupply nicht kann, als Wunsch melden anbieten.
+
 ## Ablauf
 
 1. **Kampagne bestimmen:** `list_campaigns`, bei mehreren Treffern nachfragen.

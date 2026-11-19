@@ -86,7 +86,9 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     4.18.0 trägt `agent.additionalPrompt` nur noch die Anweisung des Agenten-Profils; ab 4.19.0 lehnt die
     E-Mail-Suche der Personensuche ohne aktives Abo ab; ab 4.20.0 ist `credits_so_far` einer Suche das
     Berechnete; ab 4.21.0 meldet eine Suche Störungen der Datenquelle (`disrupted_areas`); ab 4.22.0 läuft
-    ein Gebiet an der Obergrenze als Rest-Gebiet weiter.
+    ein Gebiet an der Obergrenze als Rest-Gebiet weiter;
+  - ab 4.33.0 Fehler und Wünsche an DealSupply melden (`report_feedback`, Melde-Regel im Skill
+    `outreach`), nur wenn der Server das Werkzeug anbietet; sonst verweisen die Skills auf „Melden“ in der App.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App
