@@ -92,6 +92,28 @@ immer mit demselben `place` und derselben `campaign_id` lesen wie die Zählung d
      50 häufigsten sind. Für „gibt es den Wert X?“ und für seltene Werte mit `value_search`
      nachfassen: Es sucht über die 50 hinaus nach Werten, die den Text enthalten (auch dort
      höchstens 50 Treffer). Felder mit festen Werten sind nicht begrenzt.
+   - **Will der Nutzer wirklich alle Werte** („gib mir alle Städte“), geht das in Schritten:
+     1. Die 50 häufigsten holen (`facets`) und ihre `key` merken.
+     2. Den Rest messen: `count_leads` mit demselben Filter plus
+        `{"field":"location.city","op":"not_in","values":[<die 50 keys>]}`. `total` ist dann die
+        Zahl der Leads außerhalb der gesammelten Werte. Das blättert nicht: Die Facette desselben
+        Felds zeigt weiter dieselben 50, weil sie unter allen ANDEREN Bedingungen zählt, die
+        Bedingung auf dem eigenen Feld also übergeht. `not_in` liefert nur die Restzahl.
+     3. Ist der Rest über 0, mit `value_search` und Teiltexten nachfassen (ohne die
+        `not_in`-Bedingung), etwa Anfangsbuchstaben oder häufige Silben; kommen bei einem Teiltext
+        wieder 50 Werte, ihn verlängern. Neue Werte zur Sammlung nehmen. Leads ohne Wert findet
+        `value_search` nie: sie mit `"op":"in","values":["__none__"]` eigens zählen.
+     4. **Abbruch:** Schritt 2 mit allen gesammelten `key` (und `"__none__"`) wiederholen, bis
+        `total` 0 ist. Bei Feldern mit einem Wert je Lead (Stadt) heißt das zugleich: Die Summe der
+        Zahlen aller gesammelten Werte plus die Leads ohne Wert ist das `total` des Filters. Bei
+        Feldern mit mehreren Werten je Lead (Tags) gilt nur die Restzahl 0, die Summe liegt dort
+        über `total`.
+     Das kostet viele Aufrufe. **Grenze:** Ist der Rest nach Schritt 2 größer als 200 Leads oder
+     ist er nach zehn Aufrufen mit `value_search` nicht bei 0, nicht weitersuchen, sondern dem
+     Nutzer sagen, wie viele Werte und Leads erfasst sind und wie viele Leads fehlen, und den
+     Export anbieten (`export_leads(format="csv", filter=…)` für den Bestand, `outreach-export`
+     für eine Kampagne): Dort steht der Ort in einer Spalte, die vollständige Liste entsteht dann
+     aus der Datei. Die unvollständige Liste nie als vollständig ausgeben.
    - **Gleichstand bei „die meisten“:** Liegen zwei Werte vorn gleichauf, beide mit ihrer Zahl
      nennen und den Nutzer wählen lassen, nicht selbst einen nehmen. Dazu sagen, was gezählt ist:
      `count_leads` zählt alle Leads des Orts, die der Filter trifft, nicht nur die mit offener
@@ -108,7 +130,8 @@ immer mit demselben `place` und derselben `campaign_id` lesen wie die Zählung d
      | hat gerade keine Adresse, an die eine Mail gehen könnte (weder importiert noch gefunden) | `contact.sending_address` mit `is_empty` (mit `is_set`: hat eine) |
      | die Suche läuft noch bzw. steht noch aus (keine Adresse, Recherche nicht abgeschlossen) | `contact.email_state` `in` `["searching"]` |
      | nicht gefunden (keine Adresse, Recherche abgeschlossen; diese Leads bekommen nie eine Mail) | `contact.email_state` `in` `["not_found"]` |
-     | nicht anschreibbar, mit Grund | `contact.send_block` `in` `["no_address"]` (keine Adresse), `["foreign_address"]` (die Adresse ist als fremd gesperrt, derselbe Grund wie `foreign_address` im Lauf), `["invalid_address"]` (das Postfach existiert laut Prüfung nicht); `["__none__"]` heißt: darf eine Mail bekommen |
+     | nicht anschreibbar, mit Grund | `contact.send_block` `in` `["no_address"]` (keine Adresse), `["foreign_address"]` (die Adresse ist als fremd gesperrt, derselbe Grund wie `foreign_address` im Lauf), `["invalid_address"]` (das Postfach existiert laut Prüfung nicht); `["__none__"]` heißt: von der Adresse her darf eine Mail raus |
+     | gesperrt, darf nie angeschrieben werden (Abmeldung, Bounce, Sperre) | `contact.status` `in` `["do_not_contact"]`. Das ist ein eigener Grund und steht nicht in `contact.send_block`: Für „alle, die ich nicht anschreiben kann“ beide Bedingungen in einem `{"any":[…]}` verbinden |
 
      `contact.email_state` `present` ist dasselbe wie `contact.sending_address` `is_set`. Ob ein
      Feld am gewählten Ort vorkommt und welche Werte es dort hat, sagt `describe_lead_filters`.

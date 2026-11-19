@@ -119,7 +119,9 @@ Workspaces des Nutzers. Kampagnen, Leads, Listen, Läufe und Guthaben gehören z
 Workspace, auch der Bestand für den Dubletten-Abgleich.
 
 1. **Workspace kennen.** Ist er im Gespräch noch nicht geklärt, `list_workspaces` aufrufen (nur
-   lesend). Ein Workspace: weiter, ohne zu fragen. Mehrere: Name, Rolle und Plan zeigen, fragen, in
+   lesend). Hat `ping` schon `workspace_count: 1` gemeldet, gibt es nur einen: Dann genügt der
+   Name aus `ping` (`default_workspace`) bzw. aus der ersten Antwort, `list_workspaces` ist nur
+   nötig, wenn die Rolle gebraucht wird. Ein Workspace: weiter, ohne zu fragen. Mehrere: Name, Rolle und Plan zeigen, fragen, in
    welchem gearbeitet wird, und die Wahl für das Gespräch merken.
 2. **Aufrufe ohne Objekt-ID** bekommen `workspace=<uuid>`, wenn der gewählte Workspace nicht der
    Standard ist (`default: true`). Das betrifft die Werkzeuge zum Auflisten, Suchen, Prüfen,
