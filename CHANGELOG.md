@@ -11,6 +11,16 @@ Fehler und Wünsche gehen aus dem Chat an DealSupply (DS-278). Die Skills fragen
 - `lead-agent`, `verify-agent` → melden nie selbst, sondern nennen den Fehler in ihrer Antwort.
 - `outreach-setup`, README → nennen MCP 4.33.0 für das Melden.
 
+## 2026-11-16 – outreach 0.10.3, datenbeschaffung 0.5.3 (benötigt MCP 4.23.0 für das Zurücksetzen exportierter Leads)
+
+Passt zu DealSupply mit MCP 4.23.0 (DS-190). Hochgeladene, nie angeschriebene Leads lassen sich nach dem Löschen in Instantly zurücksetzen; DealSupply prüft dafür in einem Job, ob sie dort fehlen und ob Instantly eine Mail an sie listet. Ältere Server lehnen das Zurücksetzen weiter mit `reset_blocked.exported` ab.
+
+**outreach**
+- `outreach-launch` → Aufräumen: Leads in eine andere Kampagne holen (etwa eine Sie-Fassung): in Instantly löschen, `mark_leads_contacted(status="not_contacted", confirm_reset=true)`, dann `release_job.job_id` mit `get_job_status` abwarten (große Mengen dauern Minuten) und das Ergebnis je Grund dem Nutzer sagen.
+
+**datenbeschaffung**
+- `dealsupply-mcp.md` → `mark_leads_contacted`: `release_job` und die Gründe `exported`, `exported_sent`, `exported_unverified`, `instantly_unavailable` im Ergebnis des Jobs.
+
 ## 2026-11-15 – outreach 0.10.2 (benötigt MCP 4.16.0 für Leads finden und die Personensuche)
 
 Nachbesserungen an den beiden Such-Skills nach einem Probelauf. Kein neues Werkzeug.
