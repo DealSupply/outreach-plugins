@@ -87,12 +87,30 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     E-Mail-Suche der Personensuche ohne aktives Abo ab; ab 4.20.0 ist `credits_so_far` einer Suche das
     Berechnete; ab 4.21.0 meldet eine Suche Störungen der Datenquelle (`disrupted_areas`); ab 4.22.0 läuft
     ein Gebiet an der Obergrenze als Rest-Gebiet weiter;
+  - ab 4.26.0 fragt `edit_campaign` eigens nach, bevor es Mails ersetzt, die schon in Instantly stehen
+    (`confirm_pushed_sequence_change`), und nennt unter `removed`, was es entfernt hat; ab 4.27.0 ändern
+    `update_campaign_mail` und `update_campaign_setting` eine einzelne Mail bzw. Einstellung, ohne die
+    Kampagne zu ersetzen, und `get_campaign_part` liest einen Teil samt Stand (`outreach-campaign`,
+    „Gezielt ändern“). Auf älteren Servern geht das nur über den Vollersatz oder in der App;
+  - ab 4.31.0 wählt die App die KI-Modelle, der Nutzer stellt nur Denktiefe und Recherche-Stufe ein
+    (Seite Agents); `model_not_priced` und `model_missing` sind dann ein Fall für den Support;
+  - ab 4.32.0 der Filter der App für Leads: `describe_lead_filters`, `count_leads`, `list_lead_views`,
+    `save_lead_view`, `delete_lead_view` und die Parameter `filter` und `view_id` an den Lead-Werkzeugen
+    (`outreach-lists`, „Filter und Ansichten“; Auswahl eines Laufs in `outreach-pipeline`). Auf älteren
+    Servern `filter` und `view_id` nie mitschicken;
+  - ab 4.37.0 die Option „Eigener KI-Schlüssel“ eines Credit-Kontos (`own_ai_key` in
+    `get_credit_balance`, `list_workspaces`, `quote_lead_run` und `start_lead_run`);
   - ab 4.33.0 Fehler und Wünsche an DealSupply melden (`report_feedback`, Melde-Regel im Skill
     `outreach`), nur wenn der Server das Werkzeug anbietet; sonst verweisen die Skills auf „Melden“ in der App.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
-  zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in den KI-Modell-Einstellungen der App
-  hinterlegt sein muss. In beiden Modi aus `account` die Leads im Account (`leads_in_account` von
+  zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in der App hinterlegt sein muss (Seite
+  Agents, früher KI-Modell-Einstellungen). Steht bei `billing_mode: credits` zusätzlich `own_ai_key: true`
+  (ab MCP 4.37.0), läuft die KI dieses Credit-Kontos über den eigenen OpenRouter-Schlüssel: Das Guthaben
+  nennen und dazusagen, dass es Power-ups und Daten zahlt und die KI im Server-Lauf keine Credits kostet.
+  Die Option gehört zum Tarif; ein Admin des Workspaces schaltet sie in den Workspace-Einstellungen,
+  Reiter KI. Fragt der Nutzer danach und fehlt das Feld oder steht es auf `false`, dorthin verweisen;
+  ohne die Option im Tarif fehlt die Kachel dort. In beiden Modi aus `account` die Leads im Account (`leads_in_account` von
   `lead_limit`, `-1` = unbegrenzt) nennen. Steht `subscription_required` auf `true`, gibt es kein
   aktives Abo: Der Nutzer wählt zuerst in der App einen Plan, sonst lässt sich nichts anlegen.
 
@@ -152,6 +170,6 @@ In Claude Code sind Updates fremder Marketplaces standardmäßig aus. Empfehlen:
 ## Abschluss
 
 Kurz berichten: Umgebung, Verbindung (ja/nein, Anzahl Kampagnen, Server-Version), Workspace (Name
-und Rolle, bei mehreren der gewählte), Abrechnungsmodus (Credits mit verfügbarem Guthaben oder eigener
-OpenRouter-Key), Leads im Account, aufgeräumte Kopien, Datenbeschaffung installiert ja/nein,
+und Rolle, bei mehreren der gewählte), Abrechnungsmodus (Credits mit verfügbarem Guthaben, Credits mit eigenem
+KI-Schlüssel oder eigener OpenRouter-Key), Leads im Account, aufgeräumte Kopien, Datenbeschaffung installiert ja/nein,
 Auto-Update ja/nein.

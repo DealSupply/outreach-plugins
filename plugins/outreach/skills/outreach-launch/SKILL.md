@@ -72,9 +72,14 @@ abhaken.
 ## Phase 2: Übergabe aus DealSupply
 
 1. `list_campaigns` und `export_campaign_blueprint(campaign_id)`: Stimmt die Kampagne, sind Sequenz
-   und Variablen nach `outreach-copy` geprüft?
+   und Variablen nach `outreach-copy` geprüft? Ab MCP 4.27.0 zeigt
+   `get_campaign_part(campaign_id, part="state")`, ob die Mails schon in Instantly stehen
+   (`mails_in_instantly`) und ob Instantly einen älteren Text hält als DealSupply
+   (`instantly_outdated`: dann fehlt noch die Übertragung der Änderungen).
 2. Freigegebene Leads prüfen: `list_leads` mit `campaign_status="approved"`. Fehlt der Review noch,
-   zuerst `outreach-verify`.
+   zuerst `outreach-verify`. Ab MCP 4.32.0 nennt `list_lead_views(place="review", campaign_id,
+   with_counts=true)` die Zahlen der Review-Reiter der App in einem Aufruf (offen, freigegeben,
+   exportiert, abgelehnt), ohne die Leads zu laden.
 3. Übergabe in der Oberfläche: Im Reiter „Instantly" der Kampagne die Instantly-Kampagne verknüpfen
    oder anlegen, die Sequenz übertragen, die Variablen-Zuordnung vervollständigen (ungemappte
    Pflicht-Platzhalter blockieren den Push), die Vorschau mit einem freigegebenen Lead ansehen,
@@ -119,11 +124,19 @@ Tests sind eine Option für Erfahrene (standardmäßig aus): Varianten von Mail 
 Launch-Check, wenn der Nutzer beim Anlegen Tests gewählt hat. Getestet wird immer nur eine Variable,
 mindestens 100 (besser 200) Mails je Variante und 7 Tage, in
 der Reihenfolge Offer → Betreff → Opener-Angle → CTA → FUP-Timing. Einen einzelnen Variablen-Prompt
-(etwa `intro`) ändert `update_ai_variable`; Änderungen an der Sequenz laufen über
-`export_campaign_blueprint` → `edit_campaign` (Vollersatz der Schritte). Erzeugte Werte bleiben
-dabei stehen; sie stammen aber aus dem alten Prompt, und sie neu zu generieren kostet erneut,
-deshalb das vorher ausdrücklich bestätigen lassen. Eine neue Sequenz-Übertragung ersetzt die Sequenz in
-Instantly samt dort angelegter Varianten.
+(etwa `intro`) ändert `update_ai_variable`. Betreff, Text oder Wartezeit einer einzelnen Mail ändert
+ab MCP 4.27.0 `update_campaign_mail` (Ablauf in `outreach-campaign`, „Gezielt ändern“): Das ist bei
+einer laufenden Kampagne der richtige Weg, weil die anderen Mails und alle Varianten samt ihrem Stand
+in Instantly bleiben. Das Werkzeug schickt nichts an Instantly: Dort gilt der alte Text, bis der
+Nutzer die Änderungen in der App überträgt (Reiter Versand, „Änderungen übertragen“); die Antwort
+sagt das unter `notes` (`instantly_needs_transfer`), das dem Nutzer weitergeben. Mails anhängen oder
+entfernen und der Umbau der Sequenz laufen über `export_campaign_blueprint` → `edit_campaign`
+(Vollersatz der Schritte); stehen die Mails schon in Instantly, fragt der Server ab MCP 4.26.0
+eigens nach (`confirm_pushed_sequence_change`), weil die Zahlen in Instantly danach an der falschen
+Mail hängen. Auf Servern vor 4.27.0 geht eine einzelne Mail nur über den Vollersatz oder in der App.
+Erzeugte Werte bleiben auf jedem Weg stehen; sie stammen aber aus dem alten Prompt, und sie neu zu
+generieren kostet erneut, deshalb das vorher ausdrücklich bestätigen lassen. Eine neue
+Sequenz-Übertragung ersetzt die Sequenz in Instantly samt dort angelegter Varianten.
 
 ## Phase 6: Rückmeldung nach DealSupply
 
@@ -134,7 +147,10 @@ Instantly samt dort angelegter Varianten.
 - Ohne Integration oder für Abmeldungen per Antwort, Telefon oder Brief:
   `mark_leads_contacted(emails=[…], status="do_not_contact" | "contacted" | "replied" | "opportunity")`,
   im Workspace der Kampagne (`workspace=<uuid>` außerhalb des Standards). Leads ohne E-Mail (ab MCP
-  4.0.0) nur über `lead_ids`. Status werden nie
+  4.0.0) nur über `lead_ids`. Ab MCP 4.32.0 nimmt das Werkzeug statt Adressen oder IDs auch die Leads
+  eines Filters oder einer Ansicht der Lead-Datenbank (`filter`, `view_id`; `outreach-lists`, „Filter
+  und Ansichten“): vorher mit `count_leads` zählen und die Zahl nennen, mehr als 1000 Treffer und ein
+  Filter ohne Bedingung werden abgelehnt. Status werden nie
   herabgestuft; ein Zurücksetzen auf `not_contacted` nur auf ausdrücklichen
   Wunsch und nie für gesperrte Leads.
 - Neue Ansprache versendeter Leads ohne Reaktion (etwa über eine neue Domain): In DealSupply fragt der

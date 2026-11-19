@@ -13,6 +13,8 @@ Stufen. Das kostet keine Credits und kein OpenRouter-Guthaben, nur Kontingent de
 
 Kommst du nicht über `outreach-pipeline`, zuerst dessen gemeinsame Schritte 0–2 erledigen (Umgebung und
 Konfiguration, kein aktiver Lauf, Lead-Auswahl und Stufen). Dieser Skill beginnt mit fertiger Lead-Liste.
+Ab MCP 4.32.0 kann sie aus einem Filter oder einer Ansicht der App kommen (`list_leads` mit `filter`
+bzw. `view_id` und `run_stages`, vorher `count_leads`; `outreach-pipeline`, gemeinsamer Ablauf, Schritt 2).
 
 ## Grundregeln
 
@@ -154,7 +156,9 @@ Qualifizierungsurteile sind final und werden übersprungen, eine vorhandene Rech
 - Nie einen `lead-agent` ohne Stufenangabe auf Leads mit gespeicherten Mail-Variablen ansetzen: Er
   schreibt sie neu. Zum Prüfen vorhandener Mails `nur_pruefen: true`.
 - Neue Sitzung: offene Leads mit `list_leads` wie beim Start ermitteln (für die Mail-Stufe
-  `campaign_status="processing"`) und nur diese in einem neuen Workflow laufen lassen. Nie Leads mit
+  `campaign_status="processing"`; kam die Auswahl aus einem Filter oder einer Ansicht, denselben
+  `filter` bzw. dieselbe `view_id` mit denselben `run_stages` erneut aufrufen, erledigte Leads fallen
+  dann von selbst heraus) und nur diese in einem neuen Workflow laufen lassen. Nie Leads mit
   gespeicherten Mail-Variablen erneut bauen lassen, das überschreibt sie.
 
 ## Verwandt
