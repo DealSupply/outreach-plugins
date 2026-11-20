@@ -79,14 +79,20 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     Google-Bewertungen am Lead (`lead.googleReviews`). Auf 4.15.0 gelten die bisherigen Regeln; die
     Skills nennen diese Stellen mit „ab 4.16.0 (laut `ping`)“;
   - ab 4.16.0 außerdem Leads finden über Google Maps (`outreach-leads-finden`) und die Personensuche
-    (`outreach-personensuche`). Auf älteren Servern fehlen diese Werkzeuge; die beiden Skills sagen das
-    dem Nutzer dann. Dazu die Google-Kennungen am Lead (`googlePlaceId`, `googleCid`) und `personKey` bei
+    (`outreach-personensuche`) und die ähnlichen Firmen (`outreach-aehnliche-firmen`). Auf älteren
+    Servern fehlen diese Werkzeuge; die Skills sagen das dem Nutzer dann. Dazu die Google-Kennungen am Lead (`googlePlaceId`, `googleCid`) und `personKey` bei
     Leads aus der Personensuche;
   - ab 4.17.0 Website-Fakten und Firmenfakten am Lead (`lead.websiteFacts`, `lead.companyFacts`); ab
     4.18.0 trägt `agent.additionalPrompt` nur noch die Anweisung des Agenten-Profils; ab 4.19.0 lehnt die
     E-Mail-Suche der Personensuche ohne aktives Abo ab; ab 4.20.0 ist `credits_so_far` einer Suche das
     Berechnete; ab 4.21.0 meldet eine Suche Störungen der Datenquelle (`disrupted_areas`); ab 4.22.0 läuft
     ein Gebiet an der Obergrenze als Rest-Gebiet weiter;
+  - ab 4.24.0 tragen Leads aus Leads finden die Attribute `maps_claim_status` und `maps_star_scores` und
+    `get_lead_data` die Liste `lead.mapsRanks` (reine Information); ab 4.25.0 kann eine neue
+    Personensuche Credits kosten (`search_cost`), ein Tageslimit gibt es dort nicht mehr; ab 4.28.0
+    verwirft eine gestoppte E-Mail-Suche die Adresse, die gerade gesucht wird; ab 4.29.0 die Probe je
+    Firma (`one_per_company`) und abgeschaltete Stichworte (`keywords_off`) der Personensuche; ab 4.30.0
+    speichert `save_lead_variables` einen Gedankenstrich als Komma;
   - ab 4.26.0 fragt `edit_campaign` eigens nach, bevor es Mails ersetzt, die schon in Instantly stehen
     (`confirm_pushed_sequence_change`), und nennt unter `removed`, was es entfernt hat; ab 4.27.0 ändern
     `update_campaign_mail` und `update_campaign_setting` eine einzelne Mail bzw. Einstellung, ohne die
@@ -101,7 +107,19 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
   - ab 4.37.0 die Option „Eigener KI-Schlüssel“ eines Credit-Kontos (`own_ai_key` in
     `get_credit_balance`, `list_workspaces`, `quote_lead_run` und `start_lead_run`);
   - ab 4.33.0 Fehler und Wünsche an DealSupply melden (`report_feedback`, Melde-Regel im Skill
-    `outreach`), nur wenn der Server das Werkzeug anbietet; sonst verweisen die Skills auf „Melden“ in der App.
+    `outreach`), nur wenn der Server das Werkzeug anbietet; sonst verweisen die Skills auf „Melden“ in der App;
+  - ab 4.34.0 nennt `find_similar_companies` bei Überlast eine Wartezeit (`rate_limited` mit
+    `retry_after`); ab 4.36.0 gibt das Zurücksetzen exportierter Leads ältere Übertragungen nur
+    gemeinsam frei (`outreach-launch`);
+  - ab 4.38.0 lässt der Import einer Kampagne einen Agenten weg, den das Konto nicht hat (`warnings`),
+    und Angebot, Start und Fortsetzen eines Laufs nennen ihn (`agent_unavailable`);
+  - ab 4.39.0 reicht der Umkreis einer Suche über Leads finden bis 100 km (vorher 50), und weitere
+    Gebiete einer Suche dürfen eigene Rezensionen und Filter haben (`search_settings_differ` entfällt);
+  - ab 4.40.0 nennt `approve_lead_variables` bei automatischer Übertragung an Instantly die ungeprüften
+    Versandadressen (`instantly.unchecked_addresses`, `instantly.only_deliverable`);
+  - ab 4.41.0 nennt das Angebot von Leads finden eine Spanne statt einer Zahl (`estimate.range`,
+    `credits.expected_low`, `credits.expected_high`), der Status die Spanne je Lauf (`runs[].estimate`)
+    und `budget_left`.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in der App hinterlegt sein muss (Seite

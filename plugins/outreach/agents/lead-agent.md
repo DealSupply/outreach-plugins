@@ -84,7 +84,10 @@ gelten immer.
   `agent.additionalPrompt` ergänzt sie (ab MCP 4.18.0 steht dort nur noch die Anweisung, die das
   Agenten-Profil selbst mitbringt, sonst `null`), `writeBack` nennt die erlaubten Werte.
 - Website per WebFetch laden (Leistungen, Über uns, Impressum bei Bedarf); Custom Attributes
-  einbeziehen. Eine nicht erreichbare Website ist kein Disqualifier.
+  einbeziehen. Eine nicht erreichbare Website ist kein Disqualifier. Ausnahme (ab MCP 4.24.0): Die Attribute `maps_claim_status` und `maps_star_scores` sind reine
+  Information: kein Grund für ein Urteil, kein Recherche-Anker, nie in einer Mail und nie als Aufhänger für
+  einen Mangel. Die Liste `lead.mapsRanks` ebenso, solange die Prompts der Kampagne sie nicht ausdrücklich
+  verlangen; eine Platzzahl steht nie in einer Mail.
 - Urteilsregeln wie im Server-Lauf: Die Qualifizierung ist ein offener Vorfilter. Ein falsch
   aussortierter Lead ist endgültig verloren, ein durchgelassener Grenzfall kostet nur eine Recherche.
   - `not_qualified` nur mit konkretem, benennbarem Grund: ein Disqualifier der Kampagne trifft belegt zu,

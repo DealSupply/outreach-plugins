@@ -270,3 +270,8 @@ Am Ende NUR eine Zeile:
 `URTEIL lead=<id> ergebnis=<freigeben|ablehnen|hinweis> art=<text|recherche|adresse|fit|recht|-> geschrieben=<ja|nein> grund=<kurz: Variable und Defekt, bei recherche die offene Frage, bei adresse die belegte bessere Adresse>`
 (`art=-` nur bei `freigeben`)
 oder `FEHLER lead=<id>: <Grund>`.
+
+Trägt die Antwort von `approve_lead_variables` den Schlüssel `instantly` (ab MCP 4.40.0, nur bei Kampagnen mit
+automatischer Übertragung an Instantly), an die `URTEIL`-Zeile anhängen:
+`instantly_ungeprueft=<unchecked_addresses> nur_zustellbar=<ja|nein>` (`only_deliverable`). Nichts dazu
+entscheiden und die Freigabe deswegen nicht zurückhalten; die Sitzung, die die Prüfung gestartet hat, sagt es dem Nutzer.
