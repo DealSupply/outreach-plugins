@@ -24,7 +24,8 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
 | mit dem Start-Satz aus der App eine Kampagne einrichten („Richte mit outreach die Kampagne #123 ein.“) | `outreach-campaign`, Ablauf „Genannte leere Kampagne füllen“: genau diese Kampagne füllen, nie eine neue anlegen |
 | Cold-Mail-Copy schreiben oder prüfen, ein Marketing-Offer formulieren | `outreach-copy` |
 | neue lokale Betriebe als Leads finden, nach Branche und Gebiet über Google Maps („Leads finden“, „Friseure in Freiburg“) | `outreach-leads-finden` (ab MCP 4.16.0): Angebot zeigen, nach Zustimmung starten, Stand abfragen, an eine Kampagne übergeben |
-| Entscheider in Firmen finden, nach Rolle, Branche, Größe und Ort („Personensuche“, „Geschäftsführer finden“), und ihre E-Mail-Adressen suchen | `outreach-personensuche` (ab MCP 4.16.0): blättern kostet nichts, Übernahme und E-Mail-Suche je nach Zustimmung zum Angebot |
+| Entscheider in Firmen finden, nach Rolle, Branche, Größe und Ort („Personensuche“, „Geschäftsführer finden“), und ihre E-Mail-Adressen suchen | `outreach-personensuche` (ab MCP 4.16.0): blättern kostet in der Regel nichts, Übernahme und E-Mail-Suche je nach Zustimmung zum Angebot |
+| mehr Firmen wie die guten Leads einer Kampagne, wie ein einzelner Lead oder wie Beispiel-Websites („ähnliche Firmen“, „mehr Firmen wie diese“) | `outreach-aehnliche-firmen` (ab MCP 4.16.0): ansehen kostet nichts, übernommen wird nach Zustimmung zum Angebot |
 | Stand einer laufenden Suche nach neuen Leads, weitersuchen, abbrechen | `outreach-leads-finden` bzw. `outreach-personensuche` |
 | Leads importieren (CSV, Liste) | `outreach-import` |
 | Listen ansehen, anlegen, in eine Kampagne übernehmen | `outreach-lists` |

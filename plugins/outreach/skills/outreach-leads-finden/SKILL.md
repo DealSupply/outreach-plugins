@@ -35,7 +35,7 @@ DealSupply sucht lokale Betriebe auf Google Maps nach Branche und Gebiet (Deutsc
 Fragen, was fehlt, und nichts erfinden:
 
 - **Branche:** Welche Betriebe? Bis zu 10 Branchen je Suche.
-- **Gebiet:** Bundesland, Stadt oder Postleitzahl, bei Stadt und PLZ auf Wunsch mit Umkreis (2 bis 50 km). Bis zu 50 Gebiete je Suche.
+- **Gebiet:** Bundesland, Stadt oder Postleitzahl, bei Stadt und PLZ auf Wunsch mit Umkreis (2 bis 50 km, ab MCP 4.39.0 bis 100 km). Bis zu 50 Gebiete je Suche. Ein großer Umkreis schneidet sehr viele Postleitzahlen an (100 km um eine Großstadt rund 900), und jede wird ganz durchsucht: Angebot und Reservierung wachsen entsprechend. Dort immer ein Budget vorschlagen.
 - **Budget:** Wie viele Credits höchstens? Für die erste Suche ein kleines Budget vorschlagen. Ohne Budget werden die ganzen Gebiete durchsucht.
 - **Nur auf Wunsch:** Rezensionstexte je Betrieb (`reviews_per_place`, kosten extra und landen am Lead), Mindestbewertung (`min_rating`), Mindestzahl Bewertungen (`min_reviews`), Ketten weglassen (`exclude_chains`). Die Filter sortieren nach der Suche aus und senken den Preis nicht.
 
@@ -54,9 +54,20 @@ Eine Suche nimmt nur Schlüssel aus dem Katalog, keinen Freitext.
 Dem Nutzer zeigen:
 
 - den Satz aus `offer`, sinngemäß auf Deutsch und mit unveränderten Zahlen (der Server liefert ihn auf Englisch);
+- wie viele Betriebe zu erwarten sind, als Spanne und nie als einzelne Zahl (Abschnitt „Die Spanne“ unten);
 - ob die Suche das ganze Gebiet abdeckt, nur nach `limits.whole_areas` und den Zahlen, nie nach dem Satz allein: `limits.whole_areas: true` gibt es nur ohne Budget. Mit Budget ist „das Budget reicht für das ganze Gebiet“ eine Schätzung (`estimate.entries` liegt unter `limits.max_entries`); die Suche kann trotzdem am Budget enden. Dann so sagen: „Nach der Schätzung reicht das Budget für das Gebiet. Findet die Suche mehr Betriebe, endet sie am Budget, und du kannst weitersuchen.“;
 - den Höchstbetrag `credits.max` (mehr wird nie abgebucht) und das Guthaben `credits.available`;
 - bei Hinweisen in `hints`, was sie bedeuten (Tabelle unten).
+
+**Die Spanne (ab MCP 4.41.0).** Wie viele Betriebe ein Gebiet hergibt, weiß vor der Suche niemand genau. Das Angebot nennt deshalb unter `estimate.range` eine Spanne, und so wird sie dem Nutzer gesagt:
+
+- **„Etwa X bis Y Betriebe“**, mit X aus `estimate.range.low` und Y aus `estimate.range.high`. Solange die beiden Zahlen verschieden sind, nie nur eine nennen und nie die Mitte ausrechnen. Die Kosten dazu stehen in `credits.expected_low` und `credits.expected_high` („für etwa A bis B Credits“). Fest zugesagt ist allein `credits.max`.
+- Mit Budget endet die Spanne am Budget. Was die ganzen Gebiete hergeben würden, steht daneben in `estimate.range.area_low` und `area_high`; `offer` nennt diese Schätzung dann mit. Sie als das weitergeben, was sie ist: die Schätzung für die ganzen Gebiete, nicht das, was diese Suche bringt.
+- **`estimate.range.or_more: true`** (ein Budget kann die Suche begrenzen und Rezensionstexte sind bestellt): `high` und `limits.max_entries` sind dann die vorsichtige Zahl, gerechnet mit allen bestellten Rezensionen je Betrieb. Betriebe mit weniger Rezensionen kosten weniger, dann werden es mehr Einträge, nie mehr Credits. Diese Zahl **nie „höchstens“, „maximal“ oder „Maximum“ nennen**, sondern: „etwa X bis Y Betriebe oder mehr, abgebucht werden höchstens Z Credits“. Sind `low` und `high` gleich (das Budget reicht nur bis zum unteren Ende der Schätzung für die Gebiete): „Y Betriebe oder mehr, wenn das Gebiet sie hergibt“. Eine Obergrenze gibt es dann nur für die Credits.
+- Eine Höchstzahl an Betrieben nur nennen, wenn `or_more` false ist und `offer` selbst „up to N entries“ sagt. Das ist der Fall, wenn das Budget höchstens bis `estimate.range.area_low` reicht; `low` und `high` sind dann gleich. Dann: „bis zu N Betriebe, je nachdem, wie viele die Suche findet“.
+- Ist `estimate.range.new_lead_share` gesetzt (Ketten sind ausgeschlossen oder es gibt schon Leads), nennt `offer` den Anteil der Einträge, der erfahrungsgemäß neue Leads wird. Diesen Satz mitgeben. Ist das Feld `null`, keinen Anteil nennen.
+- Bei `estimate.rough: true` dazusagen, dass die Spanne eine grobe Schätzung ist.
+- Auf älteren Servern fehlt `estimate.range`. Dann die Zahl aus `offer` als „ungefähr“ nennen und dazusagen, dass das Ergebnis deutlich darunter oder darüber liegen kann.
 
 Vor der Frage nach der Zustimmung prüfen:
 
@@ -67,13 +78,13 @@ Vor der Frage nach der Zustimmung prüfen:
 | `running_search_id` gesetzt | Im Workspace läuft schon eine Suche | deren Stand zeigen (Schritt 5), erst danach starten |
 | `credits.max` ist 0 oder Hinweis `nothing_to_search` | Alle Gebiete wurden für diese Branchen in den letzten 90 Tagen durchsucht | andere Gebiete oder Branchen vorschlagen; ein erneutes Durchsuchen kostet erneut und geht nur auf ausdrücklichen Wunsch |
 | Hinweis `areas_covered`, `postal_codes_covered` | Ein Teil ist schon durchsucht und wird übersprungen | dem Nutzer sagen, der Rest wird gesucht |
-| Hinweis `cap_limits_result` | Das Budget reicht nicht für die ganzen Gebiete | sagen, dass danach weitergesucht werden kann |
+| Hinweis `cap_limits_result` | Das Budget reicht nicht für die ganzen Gebiete (ab MCP 4.41.0 kommt der Hinweis erst, wenn das Budget unter `estimate.range.area_low` liegt, dem unteren Ende der Schätzung für die ganzen Gebiete) | sagen, dass danach weitergesucht werden kann |
 | Hinweis `budget_below_entry_price` | Das Budget bezahlt keinen einzigen Eintrag | Budget erhöhen oder Rezensionen senken |
 | Hinweis `filters_reduce_leads` | Filter sortieren Einträge aus, die trotzdem bezahlt werden | dem Nutzer sagen |
 | Hinweis `estimate_from_start_values` | Die Schätzung stammt aus Ausgangswerten der Branche, nicht aus gemessenen Suchen | sagen, dass die Zahl nur ein Richtwert ist; der Höchstbetrag hält |
 | `estimate.rough: true` | Für die Branche gibt es keine belastbare Schätzung | sagen, dass die Zahl deutlich abweichen kann; ein Budget empfehlen |
 
-Was bezahlt wird: jeder gefundene Betrieb mit eigener Website und gesuchter Branche, auch wenn er schon als Lead im Konto ist, und auch ein weiterer Standort derselben Firma. Deshalb nie neue Leads in Höhe der Einträge versprechen. Nicht bezahlt wird ein Betrieb ohne Website, ein Ort einer anderen Branche und ein Betrieb, den das Konto in den letzten 90 Tagen schon über Leads finden bezahlt hat. Mit Rezensionstexten ist die genannte Zahl der Einträge eine Untergrenze, der Höchstbetrag hält trotzdem.
+Was bezahlt wird: jeder gefundene Betrieb mit eigener Website und gesuchter Branche, auch wenn er schon als Lead im Konto ist, und auch ein weiterer Standort derselben Firma. Deshalb nie neue Leads in Höhe der Einträge versprechen. Nicht bezahlt wird ein Betrieb ohne Website, ein Ort einer anderen Branche und ein Betrieb, den das Konto in den letzten 90 Tagen schon über Leads finden bezahlt hat. Mit Rezensionstexten und Budget ist die Zahl der Einträge am Budget keine Obergrenze (siehe „Die Spanne“), der Höchstbetrag in Credits hält trotzdem.
 
 ### 4. Zustimmung einholen und starten
 
@@ -101,13 +112,14 @@ Der Nutzer muss nicht warten: Die Suche läuft auf dem Server weiter. Mit `list_
 Am Ende aus `get_prospect_search_status`:
 
 - `report.new_leads` (neue Leads), `report.known_leads` (schon im Konto, in die Liste verknüpft), `report.entries_by_outcome`, bei aussortierten Einträgen `report.filtered_by_reason`. Einträge und Leads sind nicht dieselbe Zahl: `merged` ist ein weiterer Standort einer Firma, die schon ein Eintrag der Suche ist (gleiche Website); er ist berechnet, wird aber kein eigener Lead. Die Differenz dem Nutzer in einem Satz erklären;
+- ab MCP 4.41.0 die Spanne aus dem Angebot neben dem Ergebnis: Jeder Lauf in `runs[]` trägt `estimate` (`low`, `high`, `or_more`) und `entries`. In einem Satz sagen, etwa: „Angekündigt waren etwa 85 bis 290 Betriebe, gefunden wurden 120.“ Liegt das Ergebnis außerhalb der Spanne, das offen sagen und nicht schönreden. Ausnahme: Bei `estimate.or_more: true` durfte der Lauf mehr Einträge bringen als `high`, das ist dann das angekündigte Ergebnis. Bei Läufen von vor 4.41.0 ist `estimate` `null`;
 - `credits.spent` (berechnet); der Rest der Reservierung ist wieder frei;
 - `list_name` und `app_url`.
 
 | `stop_reason` | Bedeutung | Was tun |
 |---|---|---|
 | `areas_exhausted` | Alle Gebiete sind durchsucht | Ergebnis berichten. Ist `disrupted_areas` über 0, siehe unten |
-| `cap_reached` | Das Budget ist aufgebraucht, bevor das Gebiet zu Ende durchsucht war | Bei `resumable: true` Weitersuchen anbieten (Schritt 8), ohne weitere Betriebe zu versprechen: Ob noch welche offen sind, zeigt erst das Angebot fürs Weitersuchen. Auch eine Stadt mit einer einzigen Postleitzahl kann so enden |
+| `cap_reached` | Die Suche endete am Budget (ohne Budget an der Reservierung), bevor das Gebiet zu Ende durchsucht war | Ab MCP 4.41.0 zuerst `budget_left` lesen: Bei `true` war noch ein merklicher Teil übrig (mindestens ein Zehntel des Budgets, ohne Budget der Reservierung), das Gebiet gab wenig passende Betriebe her. Dann **nicht** „Budget aufgebraucht“ sagen, sondern dass das Gebiet wenig hergab; was nicht berechnet wurde, ist wieder frei. Bei `resumable: true` Weitersuchen anbieten (Schritt 8), ohne weitere Betriebe zu versprechen: Ob noch welche offen sind, zeigt erst das Angebot fürs Weitersuchen. Auch eine Stadt mit einer einzigen Postleitzahl kann so enden |
 | `lead_limit_reached` | Der Plan ist voll | Leads löschen oder Plan wechseln lassen, dann weitersuchen |
 | `cancelled` | Abgebrochen | Was bis dahin gefunden wurde, ist berechnet und importiert |
 | `failed` | Fehlgeschlagen (`failure` nennt den Grund) | dem Nutzer sagen; später weitersuchen, wenn `resumable` true ist |
@@ -128,7 +140,7 @@ Die Leads liegen in der Liste der Suche. Verarbeitet werden sie erst in einer Ka
 - Eine neue Kampagne entsteht mit leerer Sequenz: weiter mit `outreach-campaign`. Ab MCP 4.18.0 nimmt sie den ersten Blueprint ohne `confirm_overwrite` an.
 - Leads späterer Läufe derselben Suche wandern nicht von selbst mit. `campaign_pending` im Status zeigt, wie viele noch fehlen; dann die Übergabe wiederholen.
 
-Danach verarbeitet `outreach-pipeline` die Leads. Leads aus Leads finden haben eine Website, aber oft noch keine E-Mail-Adresse: Die Recherche sucht sie. Findet sie keine, bekommt der Lead keine Mail. Mitgekaufte Rezensionstexte liegen am Lead (Attribut „Rezensionstexte“) und kosten im Lauf nicht noch einmal, auch nicht mit eingeschaltetem Power-up Google-Bewertungen.
+Danach verarbeitet `outreach-pipeline` die Leads. Leads aus Leads finden haben eine Website, aber oft noch keine E-Mail-Adresse: Die Recherche sucht sie. Findet sie keine, bekommt der Lead keine Mail. Mitgekaufte Rezensionstexte liegen am Lead (Attribut „Rezensionstexte“) und kosten im Lauf nicht noch einmal, auch nicht mit eingeschaltetem Power-up Google-Bewertungen. Ab MCP 4.24.0 tragen Leads aus Leads finden außerdem, soweit bekannt, die Attribute `maps_claim_status` (`ja` oder `nein`: ob der Google-Eintrag vom Betrieb beansprucht ist) und `maps_star_scores` (die Verteilung der Sterne in einer Zeile). Fehlt ein Attribut, ist der Wert nicht bekannt, das heißt nicht „nein“. Beide sind reine Information: `search_leads(attribute_key="maps_claim_status", attribute_value="nein")` filtert auf den genauen Wert (Schlüssel und Wert immer zusammen), in ein Urteil oder eine Mail gehören sie nicht.
 
 ### 8. Weitersuchen und weitere Gebiete
 
@@ -137,7 +149,12 @@ Danach verarbeitet `outreach-pipeline` die Leads. Leads aus Leads finden haben e
 1. `resume_prospect_search(search_id, budget_credits?)` ohne `quote_hash` liefert das Angebot für den Rest. Dem Nutzer `offer` zeigen.
 2. Nach seiner Zustimmung `resume_prospect_search(search_id, quote_hash, request_id, budget_credits)` mit demselben Budget wie im Angebot und einer neuen `request_id`. Danach wie Schritt 5.
 
-**Weitere Gebiete** in dieselbe Liste: `quote_prospect_search` mit denselben Rezensionen und Filtern und nur den neuen Gebieten, nach Zustimmung `start_prospect_search` mit den `start_arguments`, einer neuen `request_id` und `search_id` der bestehenden Suche (dann ohne `list_id` und `list_name`).
+Weitergesucht wird mit den Rezensionen und Filtern des Laufs, der die Gebiete offen ließ. Ab MCP 4.39.0 können die Läufe einer Suche verschiedene Einstellungen haben: Unterscheiden sich die offenen Gebiete darin oder in den offenen Branchen, nimmt ein Aufruf nur die, die zum ersten offenen Gebiet passen. Nach dem Lauf den Stand lesen und, solange `resumable` true ist, für den Rest ein weiteres Angebot holen.
+
+**Weitere Gebiete** in dieselbe Liste: `quote_prospect_search` mit nur den neuen Gebieten, nach Zustimmung `start_prospect_search` mit den `start_arguments`, einer neuen `request_id` und `search_id` der bestehenden Suche (dann ohne `list_id` und `list_name`).
+
+- Ab MCP 4.39.0 darf der neue Lauf eigene Rezensionen und Filter haben (`reviews_per_place`, `min_rating`, `min_reviews`, `exclude_chains`), etwa im Umland ohne Rezensionstexte. Den Nutzer fragen, statt die Einstellungen des ersten Laufs stillschweigend zu übernehmen. Im Status nennt `options` dann die Einstellungen des letzten Laufs, jeder Eintrag in `runs[]` seine eigenen.
+- Vor MCP 4.39.0 müssen Rezensionen und Filter dieselben sein wie bei der Suche, sonst lehnt der Start mit `search_settings_differ` ab.
 
 ### 9. Abbrechen
 
@@ -163,7 +180,7 @@ Der Server antwortet mit `<code>: <Meldung>`.
 | `source_unavailable` | Die Suche ist gerade nicht verfügbar | später erneut, nicht in einer Schleife |
 | `search_not_finished` | Ein Lauf der Suche läuft noch | Ende abwarten, dann übergeben oder übernehmen |
 | `resume_not_allowed` | Die Suche läuft noch oder es ist nichts mehr offen | Stand prüfen |
-| `search_settings_differ` | `search_id` mit anderen Rezensionen oder Filtern als die Suche | Angebot mit den Einstellungen der Suche holen |
+| `search_settings_differ` | nur vor MCP 4.39.0: `search_id` mit anderen Rezensionen oder Filtern als die Suche | Angebot mit den Einstellungen der Suche holen. Ab 4.39.0 gibt es den Fehler nicht mehr |
 | `entries_not_importable` | Eine `place_id` lässt sich nicht übernehmen | die genannten weglassen; es wurde nichts übernommen |
 | `lead_mutation_busy` | Eine andere Änderung an den Leads läuft | kurz warten und wiederholen |
 | `workspace_mismatch`, `campaign_not_found`, `list_not_found` | Kampagne, Liste und Suche liegen nicht im selben Workspace oder sind unbekannt | Workspace prüfen (Skill `outreach`) |
@@ -174,6 +191,7 @@ Der Server antwortet mit `<code>: <Meldung>`.
 ## Verwandt
 
 - `outreach-personensuche`: Entscheider in Firmen finden statt lokaler Betriebe.
+- `outreach-aehnliche-firmen`: Firmen finden, die guten Leads oder Beispiel-Websites ähneln.
 - `outreach-campaign`, `outreach-pipeline`: Kampagne einrichten und die Leads verarbeiten.
 - `outreach-lists`: die Liste der Suche ansehen oder in eine weitere Kampagne übernehmen.
 - `outreach-import`: eigene Listen (CSV) importieren.

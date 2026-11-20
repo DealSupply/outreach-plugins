@@ -54,6 +54,15 @@ Braucht MCP 4.4.0 (`ping`). Kennt der Server `export_campaign_leads` nicht, auf 
 - KI-Variablen und Mails stehen nur bei freigegebenen Leads. Fehlen Freigaben, zuerst `outreach-verify`.
 - Spalten nur ändern, wenn der Nutzer es will: `dry_run` nennt in `columns` die Schlüssel; `columns` oder `preset`
   (`full`, `sending`, `crm`) überschreiben den Zweck, ebenso `format` (`xlsx`, `csv`) und `sendable_only`.
+- Ungeprüfte Adressen: Der Export prüft keine Adressen und hält dafür nichts zurück. Die Einstellung „Nur
+  zustellbare Adressen“ einer Kampagne (ab DealSupply v4.22.0) gilt nur für die Übertragung an Instantly, nicht
+  für die Datei. Beim Zweck `sending` dem Nutzer deshalb sagen, dass die Datei auch Leads mit ungeprüfter
+  Versandadresse enthalten kann, und eine Prüfung der Adressen vor dem Versand empfehlen: in der App über die Auswahl
+  der Leads („Adressen prüfen“, kostet Credits), als Power-up im Lauf oder im Versandwerkzeug. Siehe
+  `outreach-launch`, Phase 2.
+- Leads aus Leads finden tragen ab MCP 4.24.0 die Attribute `maps_claim_status` und `maps_star_scores`. In der
+  Datei sind das die Spalten `attr_maps_claim_status` und `attr_maps_star_scores` (Zwecke `overview` und `crm`,
+  nicht `sending`); eine leere Zelle heißt „nicht bekannt“.
 - Höchstens 25.000 Leads je Datei (`too_large`): Umfang eingrenzen oder in Auswahlen teilen.
 - Wie viele Leads in welchem Review-Reiter stehen (offen, freigegeben, exportiert, abgelehnt), nennt ab MCP 4.32.0
   `list_lead_views(place="review", campaign_id, with_counts=true)` in einem Aufruf; `dry_run` bleibt die Zahl, die

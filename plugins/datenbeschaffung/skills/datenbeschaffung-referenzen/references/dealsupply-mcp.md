@@ -381,7 +381,10 @@ Antwort: `job_id`, `appUrl`, `type`, `status` (`pending`, `processing`, `complet
   seine Kampagne ihm seit dem Push keine Mail geschickt hat; die Recherche bleibt, und der Lead darf
   wieder in dieselbe Instantly-Kampagne. Gründe im Ergebnis: `exported` (liegt noch in Instantly),
   `exported_sent` (hat eine Mail bekommen), `exported_unverified` (nicht bestätigbar, etwa anderer
-  Workspace), `instantly_unavailable` (Instantly hat nicht geantwortet, später erneut). Vor 4.23.0
+  Workspace), `instantly_unavailable` (Instantly hat nicht geantwortet, später erneut). Ab MCP 4.36.0 gibt der Job
+  Leads aus älteren Übertragungen nur gemeinsam frei: Führt deren Instantly-Kampagne eine Adresse oder hat sie eine
+  angeschrieben, die zu keinem Lead des Kontos gehört, bleiben sie gesperrt, und das Ergebnis nennt sie und zählt die
+  unbekannten Adressen. Vor 4.23.0
   stehen exportierte Leads als `exported` in `reset_blocked`.
 
 ## Aufräumen

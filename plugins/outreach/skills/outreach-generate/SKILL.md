@@ -241,7 +241,7 @@ Gibt vollen Generierungs-Context zurück. Alle Blöcke liegen unter `lead`: `lea
 - Stammdaten (email, company, website, city, phoneNumber, score, sendingEmail, secondaryEmails, contactStatus) und `appUrl`-Links
 - `qualification` — Urteil DIESER Kampagne (status, fitLevel, category, summary, completedAt, snapshot); in einer anderen Kampagne qualifizierte Leads zeigen hier ein leeres Urteil
 - `research` (text, bestEmail, decisionMaker, contactRecommendation)
-- `customAttributes` (key-value Paare)
+- `customAttributes` (key-value Paare). Ausnahme (ab MCP 4.24.0): Die Attribute `maps_claim_status` und `maps_star_scores` sind reine Information: kein Grund für ein Urteil, kein Recherche-Anker, nie in einer Mail und nie als Aufhänger für einen Mangel. Die Liste `lead.mapsRanks` (Platz in den Maps-Suchen des Kontos) ebenso, solange die Prompts der Kampagne sie nicht ausdrücklich verlangen; eine Platzzahl steht nie in einer Mail.
 - `websiteFacts` (ab MCP 4.17.0; `null`, solange das Konto die Fakten nicht sieht): was der Quelltext der Startseite zeigt (`checked`, `system`, `shop`, `tracking`, `tagManager`, `careerLink`). `checked: false` heißt nicht gelesen, nie „nichts gefunden“. Neutral verwenden, ohne Defizit-Ton; Tracking und Pixel sind nie Aufhänger einer Mail
 - `companyFacts` (ab MCP 4.17.0; `null`, solange nichts bekannt ist): `employeeCount` und `foundedYear`, je mit `value`, `source` und `approximate` (bei einer Spanne `upTo`). Ein Wert mit `approximate: true` steht nie als genaue Zahl in einer Mail
 - `googleReviews` (ab MCP 4.16.0), `googlePlaceId`, `googleCid` und `personKey` (gesetzt bei einem Lead aus der Personensuche, sonst `null`)
@@ -255,6 +255,8 @@ Gibt vollen Generierungs-Context zurück. Alle Blöcke liegen unter `lead`: `lea
 - Weitere Intro-Varianten (`intro_b`, `intro_c` …, seit 06.11.2026): Jede nimmt den nächsten freien Eintrag aus „Stärkste Anker“ (auch gleicher Typ bei anderem Gegenstand). Rückfall (`<name>__anker: "rueckfall"`, leerer Wert) nur, wenn kein freier Eintrag zu einem anderen Gegenstand mehr da ist, mit Grund unter `<name>__grund`. Zwei Varianten enden nie mit demselben Schluss (`save_lead_variables` lehnt das mit `validation_failed` ab); einzige Ausnahme ist die feste Reaktion hinter Firmengeschichte, Gründung oder Alter, „das hab ich richtig gern gelesen“ („That was really nice to read.“, E54), die bei gleichem Typ und anderem Gegenstand in beiden Varianten stehen darf. Melde den Anker `geschichte` ehrlich, sobald das Intro an Firmengeschichte, Gründung oder Alter hängt: Dann setzt `save_lead_variables` die feste Reaktion selbst ein, wenn das Intro mit einer anderen bekannten Reaktion endet (DS-172; nicht, wenn der Intro-Prompt der Kampagne den Schluss selbst regelt), und nennt das in `server_adjusted`. Ebenso macht es aus einer Sie-Begrüßung „Guten Tag Herr/Frau …,“ „Hallo Herr/Frau Nachname,“. Ein Intro von Person 2 darf mit keinem Intro von Person 1 wortgleich sein, gleich welche Variante. `save_lead_variables` lehnt für Rückfälle nichts ab, nennt aber in `intro_marks` „rueckfall_trotz_anker“ und „gleicher_gegenstand“
 
 ### save_lead_variables
+
+Ab MCP 4.30.0 speichert der Server einen Gedankenstrich in einem Wert oder Betreff als Komma (eine Spanne wie „9-17“ behält ihren Bindestrich) und lehnt deswegen nichts ab. Trotzdem ohne Gedankenstrich schreiben: Ein Satz, der auf den Strich gebaut ist, liest sich mit Komma oft holprig.
 
 | Parameter | Typ | Default | Beschreibung |
 |-----------|-----|---------|--------------|

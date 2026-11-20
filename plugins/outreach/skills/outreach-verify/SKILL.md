@@ -15,7 +15,7 @@ Dieser Skill orchestriert den automatischen Review von AI-generierten Variablen 
 
 > **Hinweis zur Parallelisierung:** Wenn dein Client parallele Subagents unterstützt (z.B. Claude Code), spawne pro Lead einen Subagent wie beschrieben. Andernfalls arbeite die Leads **sequentiell** mit exakt denselben Schritten ab — das Ergebnis ist identisch, nur langsamer.
 
-> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto, Workspace und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt den Status `approved` (bereit für den CSV-Export, `export_leads`). Ist die Kampagne mit Instantly verknüpft und Auto-Push an, plant die Freigabe die Übertragung nach Instantly ein, wie in der App; sonst sind Push und Export eigene Schritte. Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`, für Mails im Review mit `regenerate_emails=true`; ohne den Schalter überspringt der Lauf sie); Änderungen an einem Variablen-Prompt über `update_ai_variable`, am festen Text einer Mail der Vorlage ab MCP 4.27.0 über `update_campaign_mail` (`outreach-campaign`, „Gezielt ändern“), auf älteren Servern und für den Umbau der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
+> **Wichtig:** Vor dem Review `ping` und `list_campaigns` prüfen: Konto, Workspace und Kampagne müssen zum Auftrag passen. Der fertige Mailtext entsteht erst beim Export aus E-Mail-Schritten und Variablen; geprüft werden hier die gespeicherten Variablenwerte (`get_lead_variables`), nicht ein gerenderter Gesamttext. `approve_lead_variables` setzt den Status `approved` (bereit für den CSV-Export, `export_leads`). Ist die Kampagne mit Instantly verknüpft und Auto-Push an, plant die Freigabe die Übertragung nach Instantly ein, wie in der App; sonst sind Push und Export eigene Schritte. Ab MCP 4.40.0 nennt die Antwort dann unter `instantly.unchecked_addresses`, wie viele freigegebene Leads mit ungeprüfter Versandadresse auf diese Übertragung warten: Ist die Zahl über 0, das dem Nutzer vor weiteren Freigaben sagen (Abschnitt `approve_lead_variables` unten). Während aktiver E-Mail-Läufe warten. Korrigiert wird nie inline: inhaltliche Korrekturen von Werten laufen über eine vollständige neue Version mit `save_lead_variables` oder eine ausdrücklich gestartete Neugenerierung (`start_lead_run`, Stufe `email`, für Mails im Review mit `regenerate_emails=true`; ohne den Schalter überspringt der Lauf sie); Änderungen an einem Variablen-Prompt über `update_ai_variable`, am festen Text einer Mail der Vorlage ab MCP 4.27.0 über `update_campaign_mail` (`outreach-campaign`, „Gezielt ändern“), auf älteren Servern und für den Umbau der Vorlage über `export_campaign_blueprint` + `edit_campaign` (Replace-all der Schritte). Generierte Werte bleiben dabei stehen; sie neu zu erzeugen kostet erneut und braucht die ausdrückliche Zustimmung.
 
 ## Standard: Stichprobe statt Vollprüfung
 
@@ -201,6 +201,8 @@ MODUS: {nur Urteil | entscheiden}   (Standard: nur Urteil)
    - Modus „entscheiden“: bei freigeben approve_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}),
      bei ablehnen reject_lead_variables(campaign_id={campaign.id}, lead_id={lead.id}, reason="..."),
      bei hinweis nichts schreiben. Nie selbst nachbessern.
+     Trägt die Antwort von approve_lead_variables den Schlüssel instantly (ab MCP 4.40.0), an die Antwortzeile
+     anhängen: instantly_ungeprueft=<unchecked_addresses> nur_zustellbar=<ja|nein>
 
 ## Verification-Checkliste (pro Variable)
 
@@ -278,6 +280,7 @@ Warte bis ALLE Sub-Agents des Batches fertig sind (sie laufen im Background — 
 Zähle:
 - Urteile je Ergebnis: freigeben, ablehnen, hinweis
 - Im Modus „entscheiden“ zusätzlich: freigegeben (approve_lead_variables erfolgreich), abgelehnt (reject_lead_variables erfolgreich)
+- Im Modus „entscheiden“ (ab MCP 4.40.0): Nennt eine Antwortzeile `instantly_ungeprueft=<n>` mit n über 0, die höchste Zahl des Batches merken. Vor dem nächsten Batch dem Nutzer sagen, was das heißt (Abschnitt `approve_lead_variables`: ungeprüft an Instantly bzw. bei `nur_zustellbar=ja` wartend in der App), und bei ungeprüftem Versand fragen, ob weiter freigegeben werden soll
 - Fehler (Agent-Fehler oder Tool-Fehler)
 
 Zeige Batch-Report:
@@ -391,6 +394,23 @@ Success-Response:
   "campaign_status": "approved"
 }
 ```
+
+Ist die Kampagne mit Instantly verknüpft und die automatische Übertragung an, trägt die Antwort ab MCP 4.40.0 zusätzlich `instantly`:
+
+```json
+{ "instantly": { "auto_push": true, "only_deliverable": false, "unchecked_addresses": 12 } }
+```
+
+- `unchecked_addresses`: so viele freigegebene Leads warten auf die Übertragung und haben eine Versandadresse ohne gültiges Prüfergebnis (nie geprüft oder die Prüfung ist zu alt), der gerade freigegebene mitgezählt. Die Freigabe wird deswegen nie abgelehnt.
+- `only_deliverable`: die Einstellung „Nur zustellbare Adressen“ der Kampagne. Schalten lässt sie sich nur in der App (Kampagne, Reiter „Versand“).
+- Ohne Verknüpfung oder ohne automatische Übertragung fehlt der Schlüssel: Dann übergibt die Freigabe nichts an Instantly, und die App fragt beim Übertragen von Hand selbst nach.
+
+**Ungeprüfte Adressen vor weiteren Freigaben ansprechen.** Ist `unchecked_addresses` über 0, nach dieser Freigabe anhalten und dem Nutzer sagen, was gilt, bevor weitere Leads freigegeben werden:
+
+- `only_deliverable: false`: „X freigegebene Leads haben eine ungeprüfte Versandadresse und gehen so an Instantly. Unzustellbare Adressen schaden dem Ruf der Absender-Domain.“ Auf den E-Mail-Check hinweisen: in der App im Reiter „Versand“ („Jetzt prüfen“, die App nennt dort die Credits, die er kostet) oder als Power-up im Lauf (`list_power_ups`). Nicht jedes Konto hat ihn; dann die Prüfung in Instantly nennen. Dazu die Einstellung „Nur zustellbare Adressen“ im selben Reiter nennen. Dann fragen, ob trotzdem weiter freigegeben werden soll.
+- `only_deliverable: true`: Nichts Ungeprüftes geht hinaus. Sagen, dass X Leads freigegeben in der App warten, bis eine Prüfung ihre Adresse als zustellbar bestätigt; unsichere Adressen (das Postfach lässt sich nicht bestätigen) warten, bis der Lead eine andere Adresse bekommt oder die Einstellung aus ist. Auf den E-Mail-Check hinweisen. Weiter freigeben ist dann unbedenklich.
+
+Einmal je Kampagne und Gespräch reicht; steigt die Zahl später deutlich, noch einmal nennen. Der CSV-Export ist davon unberührt.
 
 ### reject_lead_variables
 

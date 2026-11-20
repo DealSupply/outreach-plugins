@@ -89,6 +89,25 @@ abhaken.
    Ohne Integration: CSV-Export der Kampagne (`outreach-export`, Zweck `sending`, `scope="approved_new"`,
    `mark_exported=true`) in Instantly hochladen und die Variablen dort zuordnen.
    Export und Push nehmen nie Leads ohne Versandadresse mit (ab MCP 4.0.0).
+   **Ungeprüfte Adressen (DealSupply ab v4.22.0, MCP 4.40.0):** Eine Adresse, die nie geprüft wurde, kann
+   unzustellbar sein, und viele Rückläufer schaden dem Ruf der Absender-Domain. Deshalb vor der ersten
+   Übertragung einer Kampagne mit dem Nutzer klären:
+   - Beim Übertragen von Hand fragt die App nach, wenn Versandadressen ungeprüft sind. Der E-Mail-Check
+     steht im Reiter „Versand“ der Kampagne („Jetzt prüfen“, die App nennt dort die Credits, die er kostet)
+     und als Power-up im Lauf (`list_power_ups`). Nicht jedes Konto hat ihn; fehlt er, die Prüfung in
+     Instantly einschalten.
+   - Die Einstellung „Nur zustellbare Adressen“ im selben Reiter (je Kampagne, nur in der App schaltbar):
+     Ist sie an, gehen nur Leads mit dem Prüfergebnis „zustellbar“ an Instantly, von Hand wie automatisch.
+     Ungeprüfte und unsichere Adressen bleiben freigegeben in der App, bis eine Prüfung sie als zustellbar
+     bestätigt.
+     Der CSV-Export bleibt davon unberührt.
+   - Mit Auto-Push fragt niemand nach: Freigaben werden gesammelt und kurz darauf übertragen. Über den MCP nennt
+     `approve_lead_variables` dann `instantly.unchecked_addresses` und `instantly.only_deliverable`
+     (`outreach-verify`); eine Zahl über 0 dem Nutzer vor weiteren Freigaben sagen.
+   - Nach einer Übertragung zeigt die App im Reiter „Versand“, wie viele Leads in Instantly angekommen sind
+     und wie viele nicht, je Grund mit dem, was zu tun ist. Über den MCP gibt es diese Zahlen nicht: Fragt
+     der Nutzer, warum Leads in Instantly fehlen, dorthin verweisen. Ein freigegebener Lead, dessen
+     Kontaktstatus noch `not_contacted` ist, ist nicht angekommen oder wartet noch.
    Adressen, die erst die Recherche gefunden hat (Leads ohne E-Mail importiert), sind nicht
    verifiziert: vor dem Versand die Verifizierung in Instantly einschalten oder die Adressen
    nachprüfen (`listen-qualitaet`, Schritt 3).
@@ -175,6 +194,12 @@ Sequenz-Übertragung ersetzt die Sequenz in Instantly samt dort angelegter Varia
   Schlüssel ohne Leserecht für Mails), dem Nutzer sagen, nicht wiederholen; `instantly_unavailable`
   Instantly hat nicht geantwortet, in ein paar Minuten erneut aufrufen. Ältere Server melden
   `reset_blocked.exported` und setzen nicht zurück.
+  Ab MCP 4.36.0 gibt der Job Leads aus älteren Übertragungen nur gemeinsam frei: Führt deren
+  Instantly-Kampagne eine Adresse oder hat sie eine angeschrieben, die zu keinem Lead des Kontos gehört
+  (etwa von Hand hochgeladen oder seither geändert), bleiben alle diese Leads der Kampagne gesperrt. Das Ergebnis nennt sie in einem
+  eigenen Satz und zählt die unbekannten Adressen: dem Nutzer so weitergeben und nicht wiederholen,
+  bevor er die fremden Adressen in Instantly geklärt hat. Einzeln lassen sich solche Leads auch in der
+  App nicht zurücksetzen.
 - Die nächste Liste entsteht, während die Kampagne läuft (`datenbeschaffung`); der Bestandsabgleich
   dort berücksichtigt den Kontaktstatus.
 
