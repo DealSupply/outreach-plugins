@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-24 – outreach 0.14.0 (nutzt MCP 4.48.0 für den Autopiloten einer Kampagne)
+
+Passt zu DealSupply mit MCP 4.48.0 (DS-355, DS-367). Neues nutzt der Skill nur, wenn `ping` die Version meldet und der Server die Werkzeuge anbietet; ältere Server und Konten ohne freigeschalteten Autopiloten arbeiten wie bisher.
+
+**outreach**
+- Neuer Skill `outreach-autopilot` (ab MCP 4.48.0): Der Autopilot einer Kampagne sorgt von allein für Nachschub an Leads, innerhalb eines Tagesbudgets. Der Skill liest Zustand, offene Punkte, Lagebild, Verbrauch, Testlauf und Eingang (`get_autopilot`), richtet Suchauftrag (Firmen über Google Maps oder Personen), maximales Gebiet, Tagesbudget und Art der Freigabe ein (`set_up_autopilot`, Teil für Teil), holt einen Vorschlag der App für den Suchauftrag (`suggest_autopilot_search_order`), startet den Testlauf (`start_autopilot_trial`), schaltet ein, pausiert, setzt fort und schaltet ab (`switch_autopilot`) und beantwortet Vorschläge für ein neues Gebiet oder weitere Branchen (`answer_autopilot_proposal`). Drei Regeln: einschalten und fortsetzen nur auf ausdrückliches Wort zu genau dem gezeigten Stand, kein Testlauf ohne Zustimmung zu `trial.max_credits`, Zahlen nur aus den Antworten. Tabellen für Zustände, Wartegründe, offene Punkte und Fehler.
+- `outreach` → Wegweiser für den Autopiloten. `outreach-setup`, README → nennen den Stand 4.48.0, die sechs Werkzeuge und dass der Server sie nur freigeschalteten Konten anbietet.
+
 ## 2026-11-20 – outreach 0.13.0, datenbeschaffung 0.5.5 (nutzt MCP 4.38.0 bis 4.41.0 und die ähnlichen Firmen ab MCP 4.16.0)
 
 Passt zu DealSupply v4.22.0 mit MCP 4.41.0 (DS-312, DS-311, DS-321, DS-322, DS-329, DS-330, dazu DS-190, DS-242, DS-243, DS-252, DS-257, DS-261, DS-266). Die Skills folgen dem Server von 4.37.0 bis 4.41.0 und holen nach, was sie aus früheren Versionen noch nicht kannten. Neues nutzen sie nur, wenn `ping` die Version meldet; ältere Server arbeiten wie bisher.

@@ -119,7 +119,11 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     Versandadressen (`instantly.unchecked_addresses`, `instantly.only_deliverable`);
   - ab 4.41.0 nennt das Angebot von Leads finden eine Spanne statt einer Zahl (`estimate.range`,
     `credits.expected_low`, `credits.expected_high`), der Status die Spanne je Lauf (`runs[].estimate`)
-    und `budget_left`.
+    und `budget_left`;
+  - ab 4.48.0 den Autopiloten einer Kampagne (`outreach-autopilot`): `get_autopilot`,
+    `set_up_autopilot`, `suggest_autopilot_search_order`, `start_autopilot_trial`, `switch_autopilot`
+    und `answer_autopilot_proposal`. Der Server bietet diese sechs Werkzeuge nur Konten an, für die der
+    Autopilot freigeschaltet ist; fehlen sie in der Tool-Liste, sagt der Skill das dem Nutzer.
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in der App hinterlegt sein muss (Seite
