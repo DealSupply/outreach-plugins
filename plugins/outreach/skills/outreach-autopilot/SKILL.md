@@ -38,7 +38,7 @@ Pausieren und Abschalten brauchen keine Rückfrage, wenn der Nutzer es verlangt:
 
 ### 1. Stand lesen
 
-`get_autopilot(campaign_id)`. Bei `autopilot: null` gibt es noch keinen (`readiness.blockers` nennt dann `autopilot_missing`). Sonst steht unter `autopilot.state`, wo er ist:
+`get_autopilot(campaign_id)`. Bei `autopilot: null` gibt es noch keinen (`readiness.blockers` nennt dann `autopilot_missing` und dahinter, was der Kampagne selbst noch fehlt). Sonst steht unter `autopilot.state`, wo er ist:
 
 | `state` | Bedeutung |
 |---|---|
@@ -138,7 +138,8 @@ Passen die Treffer nicht, den Suchauftrag mit dem Nutzer ändern (`set_up_autopi
 | `trial.outcome` `no_verdict` | gefunden, aber keine Firma oder Person wurde beurteilt; der Testlauf gilt nicht als bestanden | Qualifizierung der Kampagne prüfen (Skill `outreach-campaign`), dann neu starten; der neue Testlauf kostet erneut |
 | `trial.outcome` `nothing_found` | der Auftrag findet nichts | Auftrag weiter fassen |
 | `autopilot_cycle_running` | es läuft schon ein Durchgang | warten und `get_autopilot` lesen |
-| `autopilot_state_changed` | der Autopilot ist nicht mehr in der Einrichtung | den Testlauf gibt es nur vor dem Einschalten |
+| `autopilot_not_in_setup` | der Autopilot ist nicht mehr in der Einrichtung | den Testlauf gibt es nur vor dem Einschalten, nicht wiederholen |
+| `usage_limit_exceeded` | das Lead-Limit des Kontos lässt keine zehn neuen Leads zu | Platz schaffen oder Plan wechseln, Credits helfen nicht |
 | `autopilot_not_ready` | es fehlt noch etwas, die Punkte stehen im Text | Punkte abarbeiten |
 
 ### 5. Einschalten
@@ -177,6 +178,7 @@ Bei `state: "waiting"` sagt `waiting_reason`, worauf:
 | `area_exhausted` | im maximalen Gebiet findet er nichts Neues mehr, oder die Personenfilter sind ausgeschöpft | einen Vorschlag annehmen oder Gebiet bzw. Filter mit `set_up_autopilot` erweitern |
 | `review_backlog` | zu viele Mails warten auf Freigabe | Mails freigeben (Skill `outreach-verify`) |
 | `credits_exhausted` | das Guthaben ist leer | Credits kaufen lassen |
+| `lead_limit` | das Lead-Limit des Kontos ist erreicht | Platz schaffen oder Plan wechseln, Credits helfen nicht |
 | `pace_unknown` | er kennt das Sendetempo nicht | `start_send_rate_per_day` setzen |
 | `setup_open` | die Einrichtung der Kampagne ist wieder offen | Kampagne fertigstellen |
 | `instantly_error` | Instantly antwortet nicht wie erwartet oder die Verknüpfung fehlt | in der App prüfen |
