@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-27 – datenbeschaffung 0.6.1 (DealSupply ist der Standardweg, externe Quellen die Ausnahme)
+
+DS-398, Ergänzung von Giuliano vom 26.11.2026: Die Skills lasen sich, als bräuchten Kunden standardmäßig einen Apify-Zugang.
+
+**datenbeschaffung**
+- `datenbeschaffung` beginnt mit einer Weiche (Phase 0): Mit verbundenem DealSupply, das in Credits rechnet, führt er zuerst zu `outreach-leads-finden` (lokale Betriebe in DACH über Maps), `outreach-personensuche` (Entscheider nach Rolle, auch in Software-Firmen) und `outreach-aehnliche-firmen`. Extern nur für Zielgruppen, die DealSupply nicht abdeckt (Onlineshops ohne Maps-Eintrag, B2C-Coaches auf Instagram, Händler auf Amazon, Etsy, eBay, Ziele außerhalb DACH, Vollerhebung aller SaaS einer Region, sehr große Mengen), wenn der Pilot in DealSupply schlecht liefert, bei Konten mit eigenem KI-Schlüssel (`byok`) oder Servern unter MCP 4.16.0. Ohne DealSupply-Konto bleibt der externe Weg bis zur Datei für Instantly.
+- `datenbeschaffung-setup` prüft zuerst die Verbindung zu DealSupply und die Abrechnung; Apify (mit der Preisfalle im kostenlosen Plan vorn) und Outscraper nur, wenn ein externer Weg gebraucht wird.
+- Beschreibung des Plugins (beide Manifeste, Marketplace, README) und die Beschreibungen von `datenbeschaffung` und `datenbeschaffung-setup` nennen DealSupply als Standard und externe Quellen als Ausnahme.
+
 ## 2026-11-26 – datenbeschaffung 0.6.0 (der ganze Weg ohne DealSupply bis Instantly, Wissen aus dem Kurshandbuch)
 
 DS-398. Das Plugin „datenbeschaffung“ führt jetzt auch ohne DealSupply-Konto bis zu einer Liste, die Instantly einliest, und kennt die Zahlen und Faustregeln aus dem Kurshandbuch „Datenbeschaffung“ (Stand 19.08.2026). Mit DealSupply bleibt der Weg wie bisher. Neue Zahlen stammen aus dem Kurshandbuch (Kapitel jeweils genannt) oder aus dem Bestand des Plugins.

@@ -1,6 +1,6 @@
 ---
 name: datenbeschaffung-setup
-description: Richtet das Plugin datenbeschaffung ein und prüft die Voraussetzungen, mit oder ohne DealSupply-Konto. Verwenden bei „Datenbeschaffung einrichten“, „Apify verbinden“, „Apify-Token“, „Outscraper einrichten“, „funktioniert mein Scraping-Zugang“ oder direkt nach der Installation des Plugins. Warnt vor der Preisfalle im kostenlosen Apify-Plan, prüft Outreach-Verbindung (optional), Apify-Zugang (kostenloser Selbsttest), optional Outscraper, räumt alte Skill-Kopien auf – ohne kostenpflichtige Läufe.
+description: Richtet das Plugin datenbeschaffung ein und prüft die Voraussetzungen. Verwenden bei „Datenbeschaffung einrichten“, „Apify verbinden“, „Apify-Token“, „Outscraper einrichten“, „funktioniert mein Scraping-Zugang“ oder direkt nach der Installation des Plugins. Prüft zuerst die Verbindung zu DealSupply, dem Standardweg (Leads finden, Personensuche, ähnliche Firmen ohne eigenes Apify-Konto). Apify (mit Warnung vor der Preisfalle im kostenlosen Plan, kostenloser Selbsttest) und Outscraper nur, wenn ein externer Weg gewählt ist oder kein DealSupply-Konto da ist. Räumt alte Skill-Kopien auf, ohne kostenpflichtige Läufe.
 ---
 
 # Datenbeschaffung einrichten
@@ -13,20 +13,11 @@ Die Details zu Konto, Token und Zugriffswegen stehen in
 `../datenbeschaffung-referenzen/references/setup.md` und `zugriff.md`. Dieser Skill führt nur durch
 die Prüfung, er wiederholt sie nicht.
 
-## Zuerst sagen: die Preisfalle im kostenlosen Apify-Plan
-
-Bevor irgendetwas eingerichtet wird, dem Nutzer das in eigenen Worten sagen (Zahlen aus
-`../datenbeschaffung-referenzen/references/kosten.md`, „Preisfalle“, und `apify-actors.md`):
-
-> Nimm für die Datenbeschaffung nicht den kostenlosen Apify-Plan. Dort kostet das Prüfen einer
-> Adresse 0,10 $ statt 0,0006 $: 200 Adressen kosten 20 $ statt 12 Cent. Auch Google Maps kostet
-> dort etwa das Doppelte, und Zusätze wie die Prüfung im Maps-Actor 0,10 $ je Treffer. Die 5 $
-> Startguthaben reichen für einen ersten Test; für die laufende Beschaffung brauchst du einen
-> bezahlten Plan (Starter rund 39 $ im Monat). Deine Preisstufe steht in der Apify-Konsole unter
-> Billing.
-
-Steht der Nutzer noch im kostenlosen Plan, das im Abschluss festhalten; `listen-qualitaet` prüft
-dort dann nur die riskanten Adressen.
+**Standard ist DealSupply selbst:** Mit verbundenem DealSupply findet der Nutzer lokale Betriebe,
+Entscheider und ähnliche Firmen ohne eigenes Apify-Konto (`outreach-leads-finden`,
+`outreach-personensuche`, `outreach-aehnliche-firmen`). Apify und Outscraper werden nur
+eingerichtet, wenn ein externer Weg gebraucht wird (Weiche im Einstieg `datenbeschaffung`,
+Phase 0) oder kein DealSupply-Konto da ist.
 
 **Token bleiben beim Kunden:** Apify- oder Outscraper-Schlüssel nie im Chat abfragen, ausgeben oder
 irgendwohin senden. Der Nutzer hinterlegt sie selbst (Apify-Connector, Umgebungsvariable, CLI-Login).
@@ -39,14 +30,17 @@ es in den bezahlten Claude-Tarifen; die Skripte des Plugins (Bereinigung, Sperrl
 Instantly) brauchen Python, also Claude Code, Codex oder die Claude-App mit eingeschalteter
 Code-Ausführung. Fehlt das, sagen, welche Schritte die KI dann von Hand machen muss.
 
-## 2. DealSupply-Verbindung prüfen (optional)
+## 2. DealSupply-Verbindung prüfen (der Standardweg)
 
-Das Plugin funktioniert auch ohne DealSupply-Konto. Für Bestandsabgleich und direkten Import
-braucht es die Verbindung zur App; ohne Konto endet jeder Lauf mit einer Datei für Instantly und
-einer eigenen Sperrliste (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
+Mit DealSupply findet der Nutzer die meisten Zielgruppen in der App selbst, und Bestandsabgleich
+und Import laufen direkt. Das Plugin funktioniert aber auch ohne DealSupply-Konto; dann endet jeder
+Lauf mit einer Datei für Instantly und einer eigenen Sperrliste
+(`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 - `list_lists` aufrufen (nur lesend).
-  - **Antwort kommt:** Verbindung steht, Anzahl der Listen nennen.
+  - **Antwort kommt:** Verbindung steht, Anzahl der Listen nennen. `get_credit_balance` lesen: Bei
+    `billing_mode: byok` gibt es Leads finden, Personensuche und ähnliche Firmen nicht, dann ist
+    für neue Leads ein externer Weg nötig.
   - **Workspace:** Gibt es `list_workspaces`, aufrufen und den Workspace in einem Satz nennen. Bei
     mehreren fragen, in welchen importiert werden soll; ist es nicht der Standard, die Listen mit
     `list_lists(workspace=<uuid>)` neu zählen. Mit der Rolle `viewer` geht dort nur der Abgleich,
@@ -60,9 +54,29 @@ einer eigenen Sperrliste (`../datenbeschaffung-referenzen/references/ohne-dealsu
       ein Export aus dem eigenen CRM gebraucht wird (Bestandskunden, Ex-Kunden, Abmeldungen) und
       die Liste am Ende als Datei für Instantly kommt.
 
-## 3. Apify-Zugang prüfen (Pflicht)
+## 3. Apify-Zugang prüfen (nur für den externen Weg)
 
-Den ersten verfügbaren Weg nehmen (Reihenfolge und Aufrufe: `zugriff.md`):
+Nur, wenn der Nutzer kein DealSupply-Konto hat, sein Konto mit eigenem KI-Schlüssel rechnet oder
+er eine Zielgruppe sucht, die DealSupply nicht abdeckt (Onlineshops ohne Maps-Eintrag, B2C-Coaches
+auf Instagram, Händler auf Amazon, Etsy, eBay, Ziele außerhalb von Deutschland, Österreich und der
+Schweiz). Sonst diesen Schritt und Schritt 4 überspringen und sagen, dass Apify erst gebraucht
+wird, wenn ein externer Weg dazukommt.
+
+**Zuerst die Preisfalle im kostenlosen Apify-Plan.** Bevor Apify eingerichtet wird, dem Nutzer
+das in eigenen Worten sagen (Zahlen aus `../datenbeschaffung-referenzen/references/kosten.md`,
+„Preisfalle“, und `apify-actors.md`):
+
+> Nimm für die Datenbeschaffung nicht den kostenlosen Apify-Plan. Dort kostet das Prüfen einer
+> Adresse 0,10 $ statt 0,0006 $: 200 Adressen kosten 20 $ statt 12 Cent. Auch Google Maps kostet
+> dort etwa das Doppelte, und Zusätze wie die Prüfung im Maps-Actor 0,10 $ je Treffer. Die 5 $
+> Startguthaben reichen für einen ersten Test; für die laufende Beschaffung brauchst du einen
+> bezahlten Plan (Starter rund 39 $ im Monat). Deine Preisstufe steht in der Apify-Konsole unter
+> Billing.
+
+Steht der Nutzer noch im kostenlosen Plan, das im Abschluss festhalten; `listen-qualitaet` prüft
+dort dann nur die riskanten Adressen.
+
+Dann den ersten verfügbaren Weg nehmen (Reihenfolge und Aufrufe: `zugriff.md`):
 
 1. **Apify-MCP** vorhanden (`search-actors`, `call-actor` …)? → `search-actors` mit keywords
    „Google Maps“ ausführen. Treffer = verbunden.
@@ -79,7 +93,7 @@ Der E-Mail-Verifier für `listen-qualitaet` ist ebenfalls ein Apify-Actor; ein e
 nicht nötig. Nach dem Selbsttest den Nutzer fragen, in welchem Apify-Plan er ist (Konsole →
 Billing), und bei „kostenlos“ die Preisfalle oben noch einmal kurz nennen.
 
-## 4. Outscraper (optional)
+## 4. Outscraper (optional, nur für den externen Weg)
 
 Nur nötig für sehr große Volumina (`outscraper-bulk`, ab etwa 10.000 Leads). Frage: „Planst du
 Beschaffungen in dieser Größe?“
@@ -106,6 +120,6 @@ Marketplaces → `outreach-plugins` → Auto-Update einschalten. Sonst `datenbes
 ## Abschluss
 
 Kurz berichten: Umgebung, Modus (mit oder ohne DealSupply), DealSupply-Verbindung ja/nein
-(Workspace, Anzahl Listen), Apify-Zugang ja/nein und über welchen Weg, Apify-Plan (kostenlos oder
-bezahlt), Outscraper ja/nein/nicht nötig, aufgeräumte Kopien, Auto-Update ja/nein. Danach weiter
+(Workspace, Anzahl Listen, Abrechnung), Apify-Zugang ja/nein/nicht nötig und über welchen Weg,
+Apify-Plan (kostenlos oder bezahlt), Outscraper ja/nein/nicht nötig, aufgeräumte Kopien, Auto-Update ja/nein. Danach weiter
 mit dem Einstieg `datenbeschaffung`.

@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "datenbeschaffung",
-  "version": "0.6.0",
-  "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und in DealSupply importieren oder ohne DealSupply als Datei für Instantly übergeben.",
+  "version": "0.6.1",
+  "description": "Leads beschaffen: standardmäßig mit DealSupply selbst (Leads finden, Personensuche, ähnliche Firmen, ohne eigenes Apify-Konto). Als Ausnahme externe Quellen mit eigenem Apify- oder Outscraper-Konto für Zielgruppen, die DealSupply nicht abdeckt, oder ohne DealSupply-Konto bis zur Datei für Instantly.",
   "author": {
     "name": "DealSupply"
   },
@@ -17,7 +17,7 @@
     "com.openai": {
       "interface": {
         "displayName": "Datenbeschaffung",
-        "shortDescription": "Leads mit Apify oder Outscraper beschaffen, für DealSupply oder Instantly",
+        "shortDescription": "Leads mit DealSupply finden, externe Quellen als Ausnahme",
         "developerName": "DealSupply",
         "category": "Productivity",
         "capabilities": [

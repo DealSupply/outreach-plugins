@@ -1,25 +1,29 @@
 ---
 name: datenbeschaffung
-description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“, „Liste für Instantly“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Plugins datenbeschaffung, mit oder ohne DealSupply-Konto. Führt über ICP, Bestandsabgleich bzw. eigene Sperrliste, Kostenfreigabe und den Weg mit eigenem Apify- oder Outscraper-Konto (Bereinigung, CSV) zum Import in DealSupply oder zu einer Datei für Instantly. weg-* nicht direkt starten.
+description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“, „Liste für Instantly“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Plugins datenbeschaffung. Standard ist DealSupply selbst: Mit verbundenem DealSupply führt er zuerst zu Leads finden, Personensuche und ähnlichen Firmen, ohne eigenes Apify-Konto. Externe Quellen (eigenes Apify- oder Outscraper-Konto, Bereinigung, CSV) nur als Ausnahme, wenn DealSupply die Zielgruppe nicht abdeckt oder der Pilot dort schlecht liefert, und für alle ohne DealSupply-Konto (Ende mit einer Datei für Instantly). weg-* nicht direkt starten.
 ---
 
-# Datenbeschaffung, mit oder ohne DealSupply
+# Datenbeschaffung: DealSupply zuerst, externe Quellen als Ausnahme
 
 Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste führen. Dieser Skill gehört zum eigenen
-Plugin **„datenbeschaffung“** aus dem Marketplace `outreach-plugins`; das Plugin `outreach` braucht
-es nur für die Verbindung zu DealSupply. Der Nutzer arbeitet mit **eigenem Apify- (bzw.
-Outscraper-)Konto und eigenem Token**, scrapt dort, bereinigt die Ergebnisse und übergibt die Liste:
+Plugin **„datenbeschaffung“** aus dem Marketplace `outreach-plugins`.
 
-- **Mit DealSupply:** Import in DealSupply (MCP-Tool `import_leads` oder Oberfläche). Lokale
-  Betriebe und Entscheider findet DealSupply inzwischen selbst (ab MCP 4.16.0): Dafür zuerst auf
-  `outreach-leads-finden` bzw. `outreach-personensuche` im Plugin outreach verweisen; dieses Plugin
-  führt den Weg für alles, was diese Suchen nicht abdecken oder was der Nutzer selbst beschaffen
-  will.
-- **Ohne DealSupply:** Das Plugin funktioniert auch ohne DealSupply-Konto. Dann holt es Adresse und
-  Geschäftsführer selbst, gleicht gegen eine eigene Sperrliste ab und endet mit einer Datei für
-  Instantly. Was sich ändert: `../datenbeschaffung-referenzen/references/ohne-dealsupply.md`.
+**Der Standardweg ist DealSupply selbst** (ab MCP 4.16.0, Skills im Plugin `outreach`): lokale
+Betriebe über `outreach-leads-finden`, Entscheider nach Rolle über `outreach-personensuche`, mehr
+Firmen wie die guten Leads über `outreach-aehnliche-firmen`. Dafür braucht der Nutzer kein eigenes
+Apify-Konto und zahlt in Credits. Eine externe Quelle empfiehlt dieser Skill nur, wenn DealSupply
+die Zielgruppe nicht abdeckt oder ein Pilot dort schlecht liefert (Weiche in Phase 0). Sonst zahlt
+der Nutzer doppelt.
 
-Kosten fallen beim Anbieter an, nicht in DealSupply.
+Der externe Weg läuft mit **eigenem Apify- (bzw. Outscraper-)Konto und eigenem Token**: scrapen,
+bereinigen, übergeben.
+
+- **Mit DealSupply-Konto:** Import in DealSupply (MCP-Tool `import_leads` oder Oberfläche).
+- **Ohne DealSupply-Konto** (etwa aus einem Kurs): Das Plugin funktioniert auch dann. Es holt
+  Adresse und Geschäftsführer selbst, gleicht gegen eine eigene Sperrliste ab und endet mit einer
+  Datei für Instantly (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
+
+Kosten des externen Wegs fallen beim Anbieter an, nicht in DealSupply.
 
 ## Leitsätze
 
@@ -50,17 +54,54 @@ Kosten fallen beim Anbieter an, nicht in DealSupply.
 7. **Token bleiben beim Kunden.** Apify- oder Outscraper-Token nicht im Chat abfragen, ausgeben oder
    an einen anderen Dienst senden.
 
-## Phase 0: Voraussetzungen prüfen
+## Phase 0: Weiche: DealSupply oder externe Quelle
 
-Erstes Mal oder Zweifel am Zugang? Zuerst `datenbeschaffung-setup` ausführen (prüft
-Outreach-Verbindung, Apify-Zugang samt Preisstufe und optional Outscraper, ohne Kosten). Sonst kurz:
+Zuerst `ping` aufrufen und, wenn er antwortet, `get_credit_balance` lesen (nur lesend). Für die
+Weiche reicht die Zielgruppe in einem Halbsatz („Elektriker in Stuttgart“, „Shopify-Shops für
+Tierbedarf“). Den genauen ICP-Satz klärt danach der DealSupply-Skill bzw. beim externen Weg
+Phase 1.
 
-- **Modus bestimmen** (Tabelle in `../datenbeschaffung-referenzen/references/ohne-dealsupply.md`):
-  `ping` aufrufen. Antwortet er, Modus **mit DealSupply** (Bestandsabgleich und direkter Import).
-  Fehlt das Tool, fragen, ob der Nutzer ein DealSupply-Konto hat. Mit Konto: Übergabe als CSV über
-  die Oberfläche, den fehlenden Bestandsabgleich ausdrücklich melden (oder erst die Verbindung
-  einrichten). Ohne Konto: Modus **ohne DealSupply**, Ende mit einer Datei für Instantly. Den
-  Modus in einem Satz nennen und an alle folgenden Skills weitergeben.
+**1. DealSupply verbunden, Konto rechnet in Credits** (`billing_mode` nicht `byok`, ein aktiver
+Plan): Erst klären, ob DealSupply die Zielgruppe selbst findet. Ist das so, dorthin führen und
+diesen Skill hier beenden; der Nutzer braucht kein Apify.
+
+| Zielgruppe | Zuerst in DealSupply | Extern nur, wenn |
+|---|---|---|
+| Lokale Betriebe mit Google-Maps-Eintrag in Deutschland, Österreich, Schweiz (Handwerk, Praxen, Gastro, Kanzleien, Agenturen, auch Industrie und Hersteller) | `outreach-leads-finden` | der Pilot dort schlecht liefert (siehe unten), mehr als 50 Gebiete in einer Suche nötig sind oder sehr große Mengen gewünscht sind (`outscraper-bulk`) |
+| Entscheider nach Rolle in Firmen (Geschäftsführer, Marketingleitung, Vertrieb), auch B2B-Coaches und Berater mit Firma, auch in Software-Firmen | `outreach-personensuche` | die Probe der Suche zu wenig passende Personen zeigt; für eine möglichst vollständige Liste aller SaaS-Firmen einer Region `weg-f-saas` |
+| Mehr Firmen wie die besten Kunden oder wie Leads, die geantwortet haben | `outreach-aehnliche-firmen` | dafür gibt es im Plugin keinen externen Weg; DealSupply findet ähnliche Firmen nur in Deutschland, Österreich, Schweiz |
+| Onlineshops ohne Maps-Eintrag | nicht abgedeckt | extern: `weg-b-ecom-google`, `weg-b-storeleads` |
+| B2C-Coaches und Personal Brands, vor allem auf Instagram | nicht abgedeckt | extern: Weg D (Tabelle in Phase 2) |
+| Händler auf Amazon, Etsy, eBay | nicht abgedeckt | extern: `weg-e-plattform` |
+| Ziele außerhalb von Deutschland, Österreich und der Schweiz | Leads finden und ähnliche Firmen nicht; ob die Personensuche Orte im Zielland kennt, mit `search_people_filter_values` prüfen (kostet nichts) | extern mit `ausserhalb-dach.md` |
+
+**Schlecht geliefert** heißt: Das Angebot nennt deutlich weniger Betriebe als gebraucht, die
+Probe der Personensuche zeigt überwiegend Unpassende, oder die 20er-Stichprobe der in DealSupply
+gefundenen Leads liegt unter 16 von 20 und lässt sich mit anderen Branchen oder Filtern nicht
+beheben. Dann sagen, was DealSupply geliefert hat, und den externen Weg mit Kosten vorschlagen.
+Auch ein ausdrücklicher Wunsch des Nutzers nach einer eigenen Quelle zählt; dann einmal sagen,
+dass DealSupply dieselbe Zielgruppe ohne eigenes Konto abdeckt.
+
+**2. DealSupply verbunden, aber `billing_mode: byok`** (eigener KI-Schlüssel), ohne aktiven Plan
+oder mit einem Server unter MCP 4.16.0: Leads finden, Personensuche und ähnliche Firmen gehen dort
+nicht. Bei fehlendem Plan erst einen Plan wählen lassen; sonst den externen Weg nehmen, Import in
+DealSupply.
+
+**3. Kein DealSupply-MCP:** fragen, ob der Nutzer ein DealSupply-Konto hat. Mit Konto zuerst die
+Verbindung einrichten (`datenbeschaffung-setup`), dann Weiche 1. Ohne Konto: Modus **ohne
+DealSupply**, externer Weg, Ende mit einer Datei für Instantly.
+
+Erst wenn der externe Weg feststeht, geht es hier weiter.
+
+## Phase 0b: Voraussetzungen für den externen Weg
+
+Erstes Mal oder Zweifel am Zugang? `datenbeschaffung-setup` ausführen (prüft Apify-Zugang samt
+Preisstufe, sobald ein externer Weg gewählt ist, und optional Outscraper, ohne Kosten). Sonst kurz:
+
+- **Modus nennen** (Tabelle in `../datenbeschaffung-referenzen/references/ohne-dealsupply.md`):
+  mit DealSupply (Bestandsabgleich und Import; ohne Verbindung als CSV über die Oberfläche, dann
+  den fehlenden Bestandsabgleich ausdrücklich melden) oder ohne DealSupply (Datei für Instantly).
+  Den Modus in einem Satz nennen und an alle folgenden Skills weitergeben.
 - **Workspace** (nur mit DealSupply): Abgleich, Liste und Import laufen im gewählten Workspace der App. Vor dem ersten
   Abgleich klären, welcher es ist (Regel: `../datenbeschaffung-referenzen/references/dealsupply-mcp.md`,
   Abschnitt „Workspace“).
@@ -96,10 +137,13 @@ Liegt die Region außerhalb von Deutschland, Österreich und der Schweiz, vor de
 belegt ist und was nicht: Alle Messwerte des Plugins stammen aus DACH, ohne Impressumspflicht
 kommen weniger Adressen.
 
-## Phase 2: Weg auswählen
+## Phase 2: Externen Weg auswählen
 
 Die Kernfrage: **Wo trifft man diese Zielgruppe am wahrscheinlichsten?** Dem Nutzer die Wahl mit
-einem Satz Begründung vorlegen, nicht den ganzen Baum erklären.
+einem Satz Begründung vorlegen, nicht den ganzen Baum erklären. Mit DealSupply-Konto gilt die
+Tabelle nur für Zielgruppen, die die Weiche in Phase 0 nach außen geschickt hat: Lokale Betriebe
+und Entscheider in DACH laufen dann über DealSupply, die Zeilen dafür sind der Weg ohne
+DealSupply-Konto oder nach einem schwachen Pilot.
 
 | Zielgruppe | Weg-Skill |
 |---|---|

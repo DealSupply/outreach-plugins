@@ -1,7 +1,7 @@
 {
   "name": "datenbeschaffung",
-  "version": "0.6.0",
-  "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und in DealSupply importieren oder ohne DealSupply als Datei für Instantly übergeben.",
+  "version": "0.6.1",
+  "description": "Leads beschaffen: standardmäßig mit DealSupply selbst (Leads finden, Personensuche, ähnliche Firmen, ohne eigenes Apify-Konto). Als Ausnahme externe Quellen mit eigenem Apify- oder Outscraper-Konto für Zielgruppen, die DealSupply nicht abdeckt, oder ohne DealSupply-Konto bis zur Datei für Instantly.",
   "author": {
     "name": "DealSupply"
   },
