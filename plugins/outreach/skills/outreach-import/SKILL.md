@@ -95,7 +95,7 @@ Erwartete Tool-Fehler sind MCP-Tool-Results mit `isError: true`; ihr Text beginn
 ## Hinweise
 
 - `secondaryEmails` wird vom Bulk-Import-Pfad nicht verarbeitet (nur via `write_lead_details`).
-- **Kosten bei Leads ohne E-Mail:** Sie durchlaufen Qualifizierung und Recherche, auch wenn am Ende keine Adresse gefunden wird (Server-Lauf etwa 2 bis 3 Cent je Lead bzw. Abo-Kontingent), und belegen einen Platz im `max_leads`-Kontingent. Bei großen Listen dem Nutzer anbieten, die Adressen vorab zu beschaffen (Plugin `datenbeschaffung`, `impressum-enrichment`).
+- **Kosten bei Leads ohne E-Mail:** Sie durchlaufen Qualifizierung und Recherche, auch wenn am Ende keine Adresse gefunden wird (im Server-Lauf Credits nach dem Angebot von `quote_lead_run`, im Abo-Lauf das eigene Kontingent), und belegen einen Platz im `max_leads`-Kontingent. Bei großen Listen dem Nutzer anbieten, die Adressen vorab zu beschaffen (Plugin `datenbeschaffung`, `impressum-enrichment`).
 - Import und Verarbeitung sind getrennt: Nach dem Job-Ende `start_lead_run` (vorher `list_lead_runs(active_only=true)` prüfen).
 
 ## Verwandt

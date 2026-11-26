@@ -28,6 +28,8 @@ Sprache, Ansprache und Kampagnenkontext kommen pro Lead aus `get_lead_data` (`le
 
 **Copy-Regeln (Pflicht):** Bevor `hallo` oder `intro` für einen Lead geschrieben wird, den Skill `outreach-copy` laden und dessen Abschnitte „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“ einhalten. Der Orchestrator lädt den Skill EINMAL und hängt die drei Abschnitte wörtlich an jeden Agenten-Prompt an; die Subagents laden ihn nicht selbst (spart Kontext je Lead). Der Variablen-Prompt der Kampagne geht vor, solange er diesen Regeln nicht widerspricht; widerspricht er ihnen (z. B. Kritik-Opener, „Hallo Herr …“ bei Du-Form), vor dem Start den Nutzer darauf hinweisen und die Prompts über `/outreach-campaign` korrigieren lassen, statt gegen die Regeln zu generieren.
 
+Maßgeblich für die Werte eines Leads sind die Regeln, die der Server in `lead.emailGeneration.systemPrompt` mitgibt; es sind dieselben, die `get_copy_rules` (ab MCP 4.45.0) für die ganze Kampagne liefert. Weichen die angehängten Abschnitte aus `outreach-copy` davon ab, gilt `systemPrompt`. `get_copy_rules` ist für Mails und Prompts der Kampagne da, nicht je Lead: Für die Werte eines Leads wird es nicht aufgerufen.
+
 ## Workflow-Übersicht
 
 ```
@@ -35,6 +37,9 @@ Sprache, Ansprache und Kampagnenkontext kommen pro Lead aus `get_lead_data` (`le
    |
 2. list_leads(campaign_id, limit={batch_size})
    -> {batch_size} Leads mit Basisdaten (~0.5 KB/Lead)
+   -> leer? Ab MCP 4.44.0 nennen campaign_leads_total und hint, warum: Die Warteschlange zeigt
+      nur qualifizierte, recherchierte Leads ohne Mail. Hat die Kampagne Leads, fehlen dort
+      Qualifizierung oder Recherche (outreach-pipeline), nicht die Leads selbst.
    |
 3. Für jeden Lead: Sub-Agent spawnen (parallel, bis zu {batch_size} gleichzeitig)
    -> Jeder Agent: get_lead_data() -> generiert Variablen -> save_lead_variables()

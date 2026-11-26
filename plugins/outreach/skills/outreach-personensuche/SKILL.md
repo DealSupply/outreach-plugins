@@ -5,7 +5,7 @@ description: Use when user says "Personensuche", "Entscheider finden", "Ansprech
 
 # Personensuche: Entscheider in Firmen finden
 
-> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`. `create_people_search` bekommt `workspace=<uuid>`, wenn der gewählte Workspace nicht der Standard ist. Alle Werkzeuge mit `search_id` laufen von selbst im Workspace der Suche.
+> **Workspace:** Es gilt die Workspace-Regel aus dem Skill `outreach`. `create_people_search` und `list_prospect_searches` bekommen `workspace=<uuid>`, wenn der gewählte Workspace nicht der Standard ist. Alle Werkzeuge mit `search_id` laufen von selbst im Workspace der Suche.
 >
 > **Fehler und Wünsche:** Es gilt die Melde-Regel aus dem Skill `outreach`: Nach einem Fehler, den du nicht selbst lösen kannst, fragen, ob du ihn an DealSupply melden sollst, und erst nach einem Ja `report_feedback` mit `attach_last_failure=true` aufrufen. Einen Wunsch, den DealSupply nicht kann, als Wunsch melden anbieten.
 
@@ -70,6 +70,8 @@ Freitext ohne Katalog: `job_titles`, `keywords`, `company_names`, `domains`, `bu
 
 ### 3. Suche anlegen und Treffer ansehen
 
+**Begonnene Suche weiterführen (ab MCP 4.44.0).** Sagt der Nutzer, er habe schon eine Personensuche begonnen (auch in der App), oder soll eine frühere weitergehen: `list_prospect_searches(kind="people")` zeigt die Personensuchen des Workspace samt der in der App begonnenen Entwürfe, dann mit `get_people_search(search_id)` lesen und dort weitermachen, statt eine neue anzulegen. Ohne `kind` kommen nur die Suchen über Google Maps. Auf älteren Servern gibt es die Liste nicht; dann nach der `search_id` oder dem Link aus der App fragen.
+
 `create_people_search(filters)` legt die Suche als Entwurf an und liefert `search_id` und `revision`. Aufbau der Filter:
 
 ```json
@@ -119,7 +121,7 @@ Danach wieder `list_people_results`, bis der Nutzer mit der Auswahl zufrieden is
 - `count`: die ersten n Personen in der Reihenfolge, in der `list_people_results` sie zeigt, ohne Angabe alle. Darunter können Personen sein, die schon im Konto sind; sie kosten nichts. Für die erste Übernahme eine kleine Zahl vorschlagen.
 - `deselected`: Personen (`id` aus `list_people_results`), die der Nutzer nicht will. Abgewählt wird zuerst, `count` zählt danach: bei 17 Treffern und 15 abgewählten Personen bleiben 2, auch ohne `count`. Bei einer kleinen Liste wählt man von Hand aus: alle übrigen abwählen und `count` weglassen. Bei vielen Treffern umgekehrt: einzelne Ausreißer aus den ersten Seiten abwählen und `count` setzen; `count` nimmt dann die ersten n der übrigen.
 - `website_only` (Standard true): nur Personen mit Firmen-Website werden Leads. Aussortiert wird erst bei der Übernahme, nicht im Angebot: `people.reachable` und `people.max` zählen Personen ohne Website und Personen, die schon im Konto sind, noch mit; `people.max` und `credits.max` sind deshalb Obergrenzen. Nach der Übernahme stehen sie unter `people.free` und sind nicht berechnet.
-- Ziel: eine bestehende Liste oder der Name einer neuen; ohne beides entsteht eine neue Liste. Mit `campaign_id` oder `new_campaign_name` gehen die Personen am Ende gleich in diese Kampagne. Das Ziel gehört zum Angebot, ein anderes Ziel ist ein anderes Angebot. Deshalb **vor dem Angebot fragen**, wohin die Personen sollen: in eine bestehende Liste, in eine neue Liste (Name vorschlagen) oder gleich in eine Kampagne. Nennt der Nutzer nichts, sagen, dass eine neue Liste entsteht.
+- Ziel: eine bestehende Liste oder der Name einer neuen; ohne beides entsteht eine neue Liste. Mit `campaign_id` oder `new_campaign_name` gehen die Personen am Ende gleich in diese Kampagne. Das Ziel gehört zum Angebot, ein anderes Ziel ist ein anderes Angebot. Deshalb **vor dem Angebot fragen**, wohin die Personen sollen: in eine bestehende Liste, in eine neue Liste (Name vorschlagen) oder gleich in eine Kampagne. Nennt der Nutzer nichts, sagen, dass eine neue Liste entsteht. **Weitere Übernahme aus derselben Suche:** Hat die Suche schon Personen übernommen, gehört die `list_id` ihres letzten Schritts in das Angebot (`get_people_search`, `steps[]`), damit die neuen Personen in dieselbe Liste kommen. Ohne `list_id` entsteht bei jeder Übernahme eine neue Liste mit demselben Namen. Will der Nutzer bewusst eine andere Liste, gilt seine Wahl.
 
 Dem Nutzer zeigen: den Satz aus `offer` (sinngemäß auf Deutsch, Zahlen unverändert), `people.max` (höchstens so viele werden neue Leads und kosten), `credits.max` (mehr wird nie abgebucht) und `credits.available`. Personen, die schon im Konto sind, kommen kostenlos in die Liste.
 
@@ -143,7 +145,7 @@ Die Antwort nennt `import_id`. Stand: `get_people_search(search_id)` alle 10 bis
 
 Ohne Adresse lässt sich niemand anschreiben. Zwei Wege, den Nutzer wählen lassen:
 
-- **E-Mail-Suche hier:** `quote_people_email_search(search_id, count?)` liefert das Angebot. Nur eine bestätigte persönliche Adresse kostet; keine Adresse, eine nicht prüfbare Sammeladresse und eine Adresse, die schon ein anderer Lead hat, kosten nichts. Dem Nutzer `offer`, `people.open` (übernommen, ohne Adresse) und `credits.max` zeigen. Nach seinem Ja `start_people_email_search` mit den `start_arguments` und einer neuen `request_id`. Stand wieder über `get_people_search`: `searched` zählt die gesuchten Personen, `people.created` die gefundenen Adressen, `credits.charged` das Berechnete.
+- **E-Mail-Suche hier:** `quote_people_email_search(search_id, count?)` liefert das Angebot. Nur eine bestätigte persönliche Adresse kostet; keine Adresse, eine nicht prüfbare Sammeladresse und eine Adresse, die schon ein anderer Lead hat, kosten nichts. Dem Nutzer `offer`, `people.open` (übernommen, ohne Adresse) und `credits.max` zeigen. Steht ab MCP 4.44.0 `subscription_required: true` im Angebot, hat das Konto kein aktives Abo, und der Start würde mit `limit_reached` ablehnen: das zusammen mit dem Angebot sagen, nicht um Zustimmung bitten und nicht starten, sondern zuerst einen Plan wählen lassen (in der App). Das ist nicht dasselbe wie `purchase.blocker: no_subscription` in `get_credit_balance`, das den Nachkauf von Credits betrifft. Nach seinem Ja `start_people_email_search` mit den `start_arguments` und einer neuen `request_id`. Stand wieder über `get_people_search`: `searched` zählt die gesuchten Personen, `people.created` die gefundenen Adressen, `credits.charged` das Berechnete.
 - **Im Server-Lauf der Kampagne:** Mit eingeschaltetem E-Mail-Power-up sucht die Recherche die Adresse zuerst. `quote_lead_run` nennt dafür `people_without_address_count`. Weiter mit `outreach-pipeline`.
 
 Je Konto läuft eine E-Mail-Suche zur Zeit, über alle Suchen hinweg.

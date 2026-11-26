@@ -61,7 +61,8 @@ dem zugestimmt hat (nie im Modus „nur Urteil“); dein Urteil sagt mit `art` u
    stehen `lead.contactStatus`, `lead.emailVerdicts`, `lead.companyFacts` und `lead.websiteFacts`, die
    die Prüfung unten braucht; `get_lead_variables` liefert sie nicht. Die Antwort ist groß: gezielt diese
    vier Schlüssel lesen, bei `en` dazu `lead.emailGeneration.systemPrompt` und `salutationRule` (dann
-   die Prüfgrundlage), den Rest nicht ausgeben. Schlägt der Abruf fehl, die Punkte, die darauf beruhen,
+   die Prüfgrundlage), den Rest nicht ausgeben. `get_copy_rules` (ab MCP 4.45.0) nicht aufrufen: Die
+   Regeln für die Werte eines Leads trägt `systemPrompt`. Schlägt der Abruf fehl, die Punkte, die darauf beruhen,
    als ungeprüft in `grund` nennen und nie `freigeben`. Bei `en` gilt: Alle Variablen müssen englisch sein (sonst `ablehnen`,
    `art=text`), `hallo` ist `Hi {first name},` bzw. `Hi there,`; die deutschen Prüfpunkte unten (du/Sie,
    ihr/euch, „Hallo …“, Umlaute, „…“, deutsche Einstiege und Reaktionsformen, Komma im Sternschnitt)

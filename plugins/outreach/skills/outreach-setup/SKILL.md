@@ -56,7 +56,7 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
 
 - `ping`: Server-Version. Diese Skills setzen MCP 3.0.0 voraus. Liegt die Version darunter, kennt der
   Server noch keine Credits; das dem Nutzer sagen, Server-Läufe rechnen dann über das eigene
-  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.22.0. Was neuer ist als 3.0.0, nutzen sie
+  OpenRouter-Konto ab. Abgestimmt sind die Skills auf MCP 4.46.0. Was neuer ist als 3.0.0, nutzen sie
   nur, wenn der Server es kennt:
   - ab 4.0.0 Leads ohne E-Mail (E-Mail oder eigene Website je Lead), ab 4.4.0 der Kampagnen-Export als
     Datei, ab 4.5.0 Workspaces, ab 4.6.0 Power-ups, ab 4.7.0 englische Kampagnen (`campaign.language`;
@@ -119,7 +119,18 @@ Steht die Verbindung, zwei weitere lesende Aufrufe:
     Versandadressen (`instantly.unchecked_addresses`, `instantly.only_deliverable`);
   - ab 4.41.0 nennt das Angebot von Leads finden eine Spanne statt einer Zahl (`estimate.range`,
     `credits.expected_low`, `credits.expected_high`), der Status die Spanne je Lauf (`runs[].estimate`)
-    und `budget_left`.
+    und `budget_left`;
+  - ab 4.42.0 bringt eine neue Kampagne aus ähnlichen Firmen die Qualifizierungs-Regeln der
+    Ausgangskampagne mit, und `quote_changed` kommt bei der Übernahme nur noch, wenn sich das Angebot
+    selbst ändert; ab 4.42.1 stimmen Status und Zähler der ähnlichen Firmen mit dem Angebot überein;
+  - ab 4.44.0 nennt Leads finden zu jedem Gebiet das Land (`country`, `country_code`) und das angefragte
+    Budget (`credits.budget`), ein Abbruch berechnet nur, was bis dahin gefunden war, die Personensuchen
+    findet `list_prospect_searches(kind="people")`, und das Angebot der E-Mail-Suche nennt
+    `subscription_required`;
+  - ab 4.45.0 liefert `get_copy_rules` die Copy-Regeln der App ganz oder in Teilen (`outreach-copy`,
+    „Die Regeln der App zuerst“); ab 4.45.1 meldet `find_similar_companies` eine Ablehnung der
+    Datenquelle ohne Kosten als `rate_limited`; ab 4.46.0 tragen Telefonnummern ihre Art (`phoneType`,
+    `lead.phoneLines`: Mobil, Festnetz, Service oder ungeprüft).
 - `get_credit_balance`: Abrechnungsmodus und Konto. Bei `billing_mode: credits` die verfügbaren Credits
   (`available`) nennen; ein eigener OpenRouter-Key ist dann nicht nötig. Bei `billing_mode: byok`
   zahlt das Konto die KI mit dem eigenen OpenRouter-Key, der in der App hinterlegt sein muss (Seite

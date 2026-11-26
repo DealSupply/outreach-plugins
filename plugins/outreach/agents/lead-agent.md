@@ -347,7 +347,8 @@ Bis zu 5 Funde in dieser Form, nach dem Rang der RANGFOLGE DER ANKER geordnet (F
   eben geschriebene `bestEmail` am Lead, entfällt dieser Schritt (`mail=übersprungen grund=keine-adresse`).
 - Maßgeblich ist `lead.emailGeneration.systemPrompt` (Server-Regeln für Anrede, Opener, Einstieg). Nur wenn
   er keine Opener-Regeln enthält (älterer Server), den Skill `outreach:outreach-copy` laden (Abschnitte
-  „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“).
+  „Kampagnensprache“, „Anrede und Ansprache“ und „Intro-Regeln“). `get_copy_rules` (ab MCP 4.45.0) nicht
+  aufrufen: Es liefert dieselben Regeln für die ganze Kampagne, `systemPrompt` trägt sie für diesen Lead schon.
 - **Sprache:** `lead.emailGeneration.language` legt die Sprache aller Variablen fest. Bei `en` alles in
   natürlichem US-Englisch (nicht aus dem Deutschen übersetzen), `hallo` genau nach `salutationRule`
   (`Hi {first name},`, ohne benennbare Person `Hi there,`, kein du/Sie). Die deutschen Regeln unten (du/Sie,
