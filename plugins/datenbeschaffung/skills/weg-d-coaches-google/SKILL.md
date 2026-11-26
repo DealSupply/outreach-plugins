@@ -10,9 +10,11 @@ sitzen Ausbildungsakademien, Verbände, Verzeichnisse und Kursplattformen, die f
 Begriffe ranken. Die Trefferquote entscheidet sich an der Query, nicht am Volumen.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs. Positioniert sich die Zielgruppe stärker über einen
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs. Ohne DealSupply (Modus vom Master) ersetzt die eigene Sperrliste den Vorab-Abgleich, jede Zeile braucht am Ende eine Adresse, und wo hier steht, dass die Recherche die Adresse sucht, schließen `impressum-enrichment` bzw. `kontaktseiten-fallback` die Lücke (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`). Positioniert sich die Zielgruppe stärker über einen
 Kanal als über die eigene Website, sind `weg-d-coaches-linkedin` (B2B) oder `weg-d-instagram-*`
 (B2C) die besseren Wege — einmal gegenprüfen, dann hier weiter.
+
+Welcher der fünf Coach-Wege für wen passt und was er je 1.000 Leads kostet, zeigt die Tabelle im Einstieg `datenbeschaffung`, Phase 2. Die Wege finden kaum dieselben Coaches: Wer mehr Menge braucht, kombiniert sie, statt einen Weg zu überdehnen.
 
 ## Schritt 0 — Segment festlegen (erste Frage)
 
@@ -119,6 +121,9 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in impressum.json 
   --quelle "apify:<serp-actor>+impressum <datum>" --land <de|at|ch> \
   --out leads-<nische>-<region>-<datum>.csv
 ```
+
+**Personalisierungs-Hebel:** Positionierung und Angebot in eigenen Worten (Bio, Headline,
+Caption) und die Reichweite (`../datenbeschaffung-referenzen/references/personalisierung.md`).
 
 ## Schritt 6 — Übergabe
 

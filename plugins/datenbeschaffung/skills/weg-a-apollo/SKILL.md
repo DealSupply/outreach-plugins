@@ -27,7 +27,7 @@ Konto nie freigeben; Adressen mit Hinweis `geratene-adresse` nur nach Verifizier
 Engineering“ lieferte Bauingenieure.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz + Anti-ICP, Apollo-Account (Free reicht zum
-Testen), Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Testen), Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs. Ohne DealSupply (Modus vom Master) ersetzt die eigene Sperrliste den Vorab-Abgleich, jede Zeile braucht am Ende eine Adresse, und wo hier steht, dass die Recherche die Adresse sucht, schließen `impressum-enrichment` bzw. `kontaktseiten-fallback` die Lücke (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 ## Schritt 0 — Zugriffsweg
 
@@ -93,6 +93,11 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in apollo.json \
 
 LinkedIn-URL, Position und Mitarbeiterzahl als Zusatzspalten (`linkedin_url`, `position`,
 `mitarbeiter`) mitführen — sie wandern als Custom-Attribute mit und tragen die Personalisierung.
+
+**Personalisierungs-Hebel** (Kurshandbuch Kap. 4): Funding-Runde, letzter LinkedIn-Post der Person,
+Tech-Stack, neue Einstellungen. Der Export bringt Rolle, LinkedIn-Profil und Mitarbeiterzahl mit;
+den Rest notiert der Nutzer je Lead von Hand oder mit der KI aus LinkedIn und Website (`../datenbeschaffung-referenzen/references/personalisierung.md`).
+Neue Einstellungen gehören in den Filter, in die Mail nur bei einem Recruiting-Angebot (`icp.md`).
 
 ## Schritt 5 — Übergabe
 

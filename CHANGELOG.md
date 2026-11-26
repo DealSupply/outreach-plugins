@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-11-26 – datenbeschaffung 0.6.0 (der ganze Weg ohne DealSupply bis Instantly, Wissen aus dem Kurshandbuch)
+
+DS-398. Das Plugin „datenbeschaffung“ führt jetzt auch ohne DealSupply-Konto bis zu einer Liste, die Instantly einliest, und kennt die Zahlen und Faustregeln aus dem Kurshandbuch „Datenbeschaffung“ (Stand 19.08.2026). Mit DealSupply bleibt der Weg wie bisher. Neue Zahlen stammen aus dem Kurshandbuch (Kapitel jeweils genannt) oder aus dem Bestand des Plugins.
+
+**datenbeschaffung**
+- Modus mit oder ohne DealSupply: Der Einstieg `datenbeschaffung` bestimmt ihn über `ping` bzw. eine Frage und gibt ihn an alle Skills weiter. Ohne DealSupply spricht kein Skill mehr von „der Recherche der Plattform“; jede Zeile braucht eine Adresse (`--uebergabe email`), `impressum-enrichment` ist Pflicht und übernimmt den Geschäftsführer, die Sperrliste kommt aus dem eigenen CRM, und am Ende steht eine Datei für Instantly mit Anleitung (Blocklist zuerst importieren, Zuordnung, Dubletten-Prüfung, „Verify leads“). Neue Referenz `ohne-dealsupply.md`.
+- Neue Skripte mit Tests (`tests/test_instantly.py`): `sperrliste.py` baut aus CRM-Exporten die Blocklist für Instantly (Spalte `Blocked`, Domain statt Firmenadresse, private Postfächer als Adresse, Kurshandbuch Kap. 9) und nimmt gesperrte Zeilen aus der Lead-Liste; `instantly_csv.py` übersetzt die fertige Liste in die Spaltennamen, die Instantly verlangt (Hilfe von Instantly, 26.11.2026), und macht aus dem Inhaber Vor- und Nachname, wo der Name eindeutig ist.
+- `listen-qualitaet`: ehrlich, was Handarbeit bleibt (20er-Stichprobe, CRM-Export); Sperrliste statt Bestandsabgleich ohne DealSupply; Prüfung der Adressen wahlweise in Instantly (0,25 Credits je Lead laut Instantly); keine Liste älter als sechs Monate (Kap. 2, FAQ); Kaskade 100 % → rund 55 % versandbereit (Kap. 9).
+- `enrichment-waterfall`: auch ohne DealSupply nutzbar, mit dem Namen aus dem Impressum; Reihenfolge des manuellen Waterfalls (Hunter, Apollo, Findymail) und Preise ab (Kap. 10).
+- `weg-e-plattform`: falscher Satz „keine Kurs-Lektion“ gestrichen; EU-Marktplätze vor amazon.com, Qualitäts-Einschätzung je Seller (Aktivität, Reputation, Vollständigkeit), Kostentabelle je 100, 500 und 1.000 Seller, eigene Website über Social-Links oder den Seller-Namen (Kap. 8).
+- `weg-b-storeleads`, `weg-b-ecom-google`: Dropshipping und Print-on-Demand ausschließen, eigene Domain, UND/ODER im Advanced-Modus, Shop-Signale (Warenkorb, versandkostenfrei, Euro-Preise) in der Prüfliste, Kosten für 500 Shops mit Impressum (4 bis 5 $), Personalisierungs-Hebel (Kap. 5); weitere Nischen nach demselben Muster, als ungeprüft markiert.
+- Weg D: Übersicht „welcher der fünf Coach-Wege für wen“ mit Kosten je 1.000 Leads und dem Hinweis, dass sich die Wege kaum überschneiden (Kap. 7), im Einstieg; die vier Coach-Skills verweisen darauf.
+- `impressum-enrichment`, `kontaktseiten-fallback`: Trefferquoten je Website-Typ, Qualitätsschwelle (60 bis 70 %, unter 50 % Ursache suchen), Batches von 200, Fallback bringt 5 bis 15 % mehr (Kap. 10); unter 20 Domains liest die KI Impressum und Kontaktseite selbst, kostenlos.
+- Außerhalb DACH: neue Referenz `ausserhalb-dach.md` (was belegt ist, was nicht, Ländercode und Städte des Ziellands, Grenzen je Werkzeug); `website_suche.py` nimmt `--land` und `--sprache`.
+- `datenbeschaffung-setup`: Preisfalle im kostenlosen Apify-Plan gleich zu Beginn, DealSupply-Verbindung optional, bezahlter Claude-Tarif und Python.
+- Personalisierungs-Hebel je Weg (Kap. 2, 4 bis 6): neue Referenz `personalisierung.md`, Hinweis in jedem Weg-Skill und im Einstieg.
+- `kosten.md`: Abschnitt „Richtwerte aus dem Kurshandbuch“. Einstieg nennt das Plugin richtig (eigenes Plugin „datenbeschaffung“, `outreach` nur für die Verbindung).
+
 ## 2026-11-20 – outreach 0.13.0, datenbeschaffung 0.5.5 (nutzt MCP 4.38.0 bis 4.41.0 und die ähnlichen Firmen ab MCP 4.16.0)
 
 Passt zu DealSupply v4.22.0 mit MCP 4.41.0 (DS-312, DS-311, DS-321, DS-322, DS-329, DS-330, dazu DS-190, DS-242, DS-243, DS-252, DS-257, DS-261, DS-266). Die Skills folgen dem Server von 4.37.0 bis 4.41.0 und holen nach, was sie aus früheren Versionen noch nicht kannten. Neues nutzen sie nur, wenn `ping` die Version meldet; ältere Server arbeiten wie bisher.

@@ -1,7 +1,7 @@
 {
   "name": "datenbeschaffung",
-  "version": "0.5.5",
-  "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und als CSV importieren.",
+  "version": "0.6.0",
+  "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und in DealSupply importieren oder ohne DealSupply als Datei für Instantly übergeben.",
   "author": {
     "name": "DealSupply"
   },

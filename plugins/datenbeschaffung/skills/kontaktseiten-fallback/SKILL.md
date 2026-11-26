@@ -1,6 +1,6 @@
 ---
 name: kontaktseiten-fallback
-description: Optionaler Fallback-Baustein des Datenbeschaffungs-Pakets: fills the remaining email and phone gaps by crawling contact pages (/kontakt, /contact, /impressum, /pages/kontakt …) for rows an Impressum run could not resolve; typical cases are non-DACH domains and modern onepagers. Since MCP 4.0.0 optional: leads with an own website may be imported without email and the platform's research looks for the address. Invoked by weg-* skills or after impressum-enrichment; never triggered directly by the user.
+description: Fallback-Baustein des Datenbeschaffungs-Pakets: fills the remaining email and phone gaps by crawling contact pages (/kontakt, /contact, /impressum, /pages/kontakt …) for rows an Impressum run could not resolve; typical cases are non-DACH domains and modern onepagers. With DealSupply optional since MCP 4.0.0 (leads with an own website may be imported without email and the platform's research looks for the address); without DealSupply the last way to give a row an address. Invoked by weg-* skills or after impressum-enrichment; never triggered directly by the user.
 ---
 
 # Kontaktseiten-Fallback — die zweite Runde
@@ -10,34 +10,49 @@ auf einer separaten Kontaktseite — oder haben gar kein Impressum, weil sie nic
 Impressumspflicht unterliegen. Dieser Baustein crawlt gezielt die typischen Kontaktseiten-Pfade
 und füllt **ausschließlich leere Zellen**. Alles, was schon in der CSV steht, bleibt unberührt.
 Der Lauf findet beim Anbieter statt (Apify, eigenes Konto des Kunden) — DealSupply selbst crawlt keine
-Kontaktseiten. Das Ergebnis wandert als CSV über `listen-qualitaet` in den Import.
+Kontaktseiten. Das Ergebnis wandert als CSV über `listen-qualitaet` in den Import bzw. ohne
+DealSupply in die Datei für Instantly.
+
+Was zu erwarten ist: Nach einem Impressum-Lauf bringt die zweite Runde laut Kurshandbuch
+typischerweise 5 bis 15 % zusätzliche Treffer (Kap. 10). Hinter einem Maps-Lauf mit
+Kontaktanreicherung war es im eigenen Test deutlich weniger (1 von 28, `apify-actors.md`).
 
 ## Wann dieser Baustein NICHT genommen wird
 
 Die wichtigste Regel steht am Anfang, weil sie am häufigsten verletzt wird:
 
-- **Nicht für die Erstanreicherung.** Eine frische Domain-Liste läuft immer zuerst durch
+- **Nicht für die Erstanreicherung in DACH.** Eine frische DACH-Domain-Liste läuft immer zuerst durch
   `impressum-enrichment` — direkt, in einem Batch. Der Umweg über den Kontaktseiten-Fallback
   kostet Zeit (jeder Poll ist ein zusätzlicher Schritt) und liefert weniger Felder: keine
   Entscheider, keine Rollen, kein HRB, keine USt-Id.
 - **Nicht für DACH-Domains, die noch keinen Impressum-Lauf hatten.** Erst Impressum, dann die Lücke.
 - **Nicht bei kleinen Restmengen.** Bleiben nach dem Impressum-Lauf nur eine Handvoll Zeilen
-  offen, ist die Lücke billiger akzeptiert als geschlossen (Trichter-Prinzip).
-- **Meist nicht nötig ab MCP 4.0.0, wenn die Liste klein ist:** Zeilen mit eigener Website
-  dürfen ohne E-Mail importiert werden, die Recherche liest dann selbst Kontakt- und
+  offen, ist ein Apify-Lauf zu teuer: mit DealSupply die Lücke akzeptieren (Trichter-Prinzip), ohne
+  DealSupply die Seiten kostenlos selbst öffnen (Schritt 1).
+- **Mit DealSupply meist nicht nötig ab MCP 4.0.0, wenn die Liste klein ist:** Zeilen mit eigener
+  Website dürfen ohne E-Mail importiert werden, die Recherche liest dann selbst Kontakt- und
   Impressumsseite. Entscheidung nach `../datenbeschaffung-referenzen/references/datenumfang.md`,
-  Abschnitt „Die Kontaktlücke“.
+  Abschnitt „Die Kontaktlücke“. Ohne DealSupply gibt es diese Recherche nicht: Was hier keine
+  Adresse bekommt, fällt aus der Liste.
 
 Passend ist er genau dann: **Nicht-DACH-Domains** (`.com`, `.co.uk`, `.nl` — kein Impressum
-vorhanden), **moderne Onepager und Baukasten-Seiten**, deren Kontaktdaten nur im Kontaktbereich
-stehen, und Zeilen, die der Impressum-Actor ohne Ergebnis zurückgegeben hat.
+vorhanden; Erwartung und Grenzen in `../datenbeschaffung-referenzen/references/ausserhalb-dach.md`),
+**moderne Onepager und Baukasten-Seiten**, deren Kontaktdaten nur im Kontaktbereich stehen, und
+Zeilen, die der Impressum-Actor ohne Ergebnis zurückgegeben hat.
 
 ## Schritt 1 — Lücke messen
 
 Die angereicherte CSV auswerten, bevor Geld ausgegeben wird: Wie viele Zeilen haben keine E-Mail,
-wie viele keine Telefonnummer? Beide Zahlen dem Nutzer nennen. Sind es weniger als ~20 Zeilen:
-Lücke akzeptieren und zurück an den rufenden Weg-Skill. Auf einem Server ab 4.0.0 zusätzlich die
-Option nennen, die Lücke ohne Anreicherung an die Recherche zu geben (Zeilen mit eigener Website).
+wie viele keine Telefonnummer? Beide Zahlen dem Nutzer nennen. Sind es weniger als ~20 Zeilen,
+lohnt kein Apify-Lauf (Mindestdeckel des Actors, `apify-actors.md`):
+
+- Mit DealSupply ab Server 4.0.0: die Lücke ohne Anreicherung an die Recherche geben (Zeilen mit
+  eigener Website), sonst Lücke akzeptieren.
+- Ohne DealSupply: Die KI öffnet die Kontaktseiten dieser Zeilen selbst (Pfade aus Schritt 2, in
+  Claude Code mit dem Web-Abruf), kostenlos. Funde wie in Schritt 5 zurückschreiben, `quelle` um
+  `+kontaktseiten-selbst` ergänzen; sie sind ungeprüft und laufen durch die Prüfung der Adressen.
+
+Danach zurück an den rufenden Weg-Skill.
 
 ## Schritt 2 — Kontaktseiten-URLs bauen
 
@@ -81,7 +96,8 @@ Treffer über die Root-Domain zurück in die vorhandene Roh-CSV mergen. Zwei Reg
 
 Das CSV-Format bleibt exakt `../datenbeschaffung-referenzen/references/csv-spalten.md`; neue Spalten entstehen hier keine.
 Gewinn berichten: wie viele E-Mails und Telefonnummern dazugekommen sind, wie viele Zeilen weiter
-leer bleiben.
+leer bleiben, und das mit den 5 bis 15 % aus dem Kurs vergleichen. Ohne DealSupply fallen die
+Zeilen, die leer bleiben, aus der Liste: die Zahl nennen.
 
 ## Schritt 6 — Cloudflare-geschützte Adressen (optional)
 

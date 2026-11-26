@@ -62,3 +62,10 @@ wenn sie einen Einstieg tragen (`datenumfang.md`).
 5. **Mehrzeilige Zellen** (`google_rezensionstexte`) stehen in Anführungszeichen; App-Import und
    `import_leads` lesen sie zeilenweise.
 6. Dateinamen: `leads-<nische>-<region>-<jjjjmmtt>.csv` — z. B. `leads-shk-koeln-20260819.csv`.
+
+## Datei für Instantly (ohne DealSupply)
+
+Für den Import in Instantly übersetzt `instantly_csv.py` dieses Format in die Spaltennamen, die
+Instantly verlangt (`Email`, `FirstName`, `LastName`, `CompanyName`, `Website`, `Phone`, `JobTitle`,
+`LinkedIn`, dazu eigene Variablen wie `Firma`, `Stadt`, `Inhaber`, `GoogleBewertung`). `quelle`,
+`hinweis` und `place_id` bleiben in der eigenen CSV. Regeln und Import: `ohne-dealsupply.md`.

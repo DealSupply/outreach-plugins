@@ -86,7 +86,7 @@ machen:
 
 Kosten je Lauf vorab beim Anbieter kalkulieren und dem Nutzer nennen — die Kostenfreigabe des
 Masters gilt auch hier, obwohl `kosten.md` nur Apify-Preise belegt. Der Job läuft im eigenen
-Outscraper-Konto des Kunden; gestartet wird nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Outscraper-Konto des Kunden; gestartet wird nur nach ausdrücklicher Freigabe genau dieses Umfangs. Ohne DealSupply (Modus vom Master) ersetzt die eigene Sperrliste den Vorab-Abgleich, jede Zeile braucht am Ende eine Adresse, und wo hier steht, dass die Recherche die Adresse sucht, schließen `impressum-enrichment` bzw. `kontaktseiten-fallback` die Lücke (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 ## Schritt 3 — Ergebnis holen
 
@@ -138,6 +138,8 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in outscraper.json
 
 Deduplizierung über Läufe hinweg macht `../datenbeschaffung-referenzen/scripts/dedup.py` gegen den Bestandsindex — nicht von
 Hand, und nicht über eine eigene Konsolidierungs-Datei.
+
+**Personalisierungs-Hebel** wie bei Weg C: Bewertung, Rezension, Region (`../datenbeschaffung-referenzen/references/personalisierung.md`).
 
 ## Schritt 6 — Übergabe
 

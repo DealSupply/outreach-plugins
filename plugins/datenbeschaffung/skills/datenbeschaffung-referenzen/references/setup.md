@@ -10,9 +10,10 @@
 
 | Was | Wo | Kosten |
 |---|---|---|
-| Apify-Account | apify.com | Free-Plan: 5 $ Startguthaben (reicht für die ersten Piloten). Starter ~39 $/Monat für laufende Beschaffung |
+| Bezahlter Claude-Tarif (oder Codex, ChatGPT Desktop) | claude.ai | Plugins gibt es nur in den bezahlten Tarifen; die Skripte brauchen Python (Claude Code, Codex, Claude-App mit Code-Ausführung) |
+| Apify-Account | apify.com | Free-Plan: 5 $ Startguthaben (reicht für die ersten Piloten). Starter ~39 $/Monat für laufende Beschaffung. **Preisfalle im Free-Plan:** Prüfen einer Adresse 0,10 $ statt 0,0006 $, Maps etwa doppelt so teuer (`kosten.md`) |
 | API-Token | **https://console.apify.com/settings/integrations** (genau diese URL — kein anderer Pfad) | — |
-| DealSupply-MCP verbunden | Seite „MCP & Skills“ der App (`/mcp`) | — (optional, aber empfohlen: Vorab-Abgleich + direkter Import per `import_leads`) |
+| DealSupply-MCP verbunden | Seite „MCP & Skills“ der App (`/mcp`) | — (optional: Vorab-Abgleich + direkter Import per `import_leads`; ohne DealSupply-Konto endet der Lauf mit einer Datei für Instantly, `ohne-dealsupply.md`) |
 
 Arbeitet der Nutzer in mehreren Workspaces der App, laufen Abgleich und Import im gewählten
 Workspace (`dealsupply-mcp.md`, Abschnitt „Workspace“). Vor dem ersten Abgleich klären, welcher es ist.

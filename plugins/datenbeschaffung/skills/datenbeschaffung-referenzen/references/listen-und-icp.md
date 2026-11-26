@@ -69,9 +69,16 @@ Jede Kampagne prüft beim Import gegen eine zentrale Sperrliste. Was dort hinein
 
 Der letzte Punkt gilt dauerhaft und über alle Kampagnen und Postfächer hinweg, nicht nur für die laufende Aussendung. Wer nach einer Abmeldung weiter angeschrieben wird, klickt auf Spam - und die Beschwerdequote ist der Wert, an dem die Zustellung aller Domains hängt. Ein Lead aus der Kampagne zu nehmen reicht dafür nicht, er muss in die zentrale Liste.
 
+Ohne DealSupply ist das die eigene Sperrliste aus dem CRM-Export (`sperrliste.py`) plus die
+Blocklist in Instantly, mit Domains statt Adressen bei Firmen (`ohne-dealsupply.md`).
+
 In DealSupply ist das der globale Kontaktstatus: Abmeldungen als `do_not_contact`, bereits Angeschriebene als `contacted` (setzen mit `mark_leads_contacted`, aus Instantly per Kontaktstatus-Sync). Der Abgleich vor dem Scrape und vor dem Import (`export_leads(format="index")`, `check_leads_exist`, siehe `outreach-uebergabe.md`) berücksichtigt ihn. Bestandskunden und Wettbewerber, die nie als Lead in DealSupply standen, gehören als Domains in die Query-Ausschlüsse bzw. den Anti-ICP.
 
 ## Volumen richtig planen
+
+Aus 100 Rohzeilen bleiben nach Sperrliste, Prüfung der Adressen und Stichprobe etwa 55
+versandbereit (Kaskade aus dem Kurshandbuch, Kap. 9, in `listen-qualitaet`). Und keine Liste nutzen,
+die älter als sechs Monate ist (Kap. 2): Nachschub frisch beschaffen.
 
 Bei 300 Mails pro Tag und einer Sequenz mit Entry Mail plus Follow-Ups braucht eine Kampagne dauerhaft Nachschub. Die Liste für die nächste Runde entsteht während der laufenden Kampagne, nicht erst wenn die aktuelle leer ist - sonst entsteht eine Lücke in der Pipeline.
 

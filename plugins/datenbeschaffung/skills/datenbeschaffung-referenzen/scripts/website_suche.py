@@ -3,7 +3,8 @@
 
     # 1. Suchanfragen bauen (eine je Firma) -> Input für den SERP-Actor (apify-actors.md)
     python3 website_suche.py anfragen --in startbase.json --out serp-input.json
-    # 2. Actor laufen lassen (limit "10", country "DE"), Ergebnis als serp.json speichern
+    #    außerhalb Deutschlands mit --land GB --sprache en (Ländercode des Actors, großgeschrieben)
+    # 2. Actor laufen lassen (limit "10", country wie --land), Ergebnis als serp.json speichern
     # 3. Treffer übernehmen
     python3 website_suche.py zuordnen --in startbase.json --serp serp.json --out mit-website.json
 
@@ -69,13 +70,15 @@ def main() -> int:
     ap.add_argument("--in", dest="inp", required=True)
     ap.add_argument("--serp")
     ap.add_argument("--out", required=True)
+    ap.add_argument("--land", default="DE", help="Ländercode der Suche (großgeschrieben, z. B. DE, AT, GB)")
+    ap.add_argument("--sprache", default="de", help="Sprache der Suche (z. B. de, en, fr)")
     args = ap.parse_args()
     rows = json.load(open(args.inp, encoding="utf-8"))
     todo = [r for r in rows if not r.get("website")]
 
     if args.modus == "anfragen":
         queries = sorted({query_of(r) for r in todo})
-        json.dump({"keyword": "\n".join(queries), "limit": "10", "country": "DE", "hl": "de",
+        json.dump({"keyword": "\n".join(queries), "limit": "10", "country": args.land.upper(), "hl": args.sprache.lower(),
                    "include_merged": False}, open(args.out, "w", encoding="utf-8"), ensure_ascii=False)
         print(f"{len(queries)} Suchanfragen für {len(todo)} Firmen ohne Website -> {args.out}")
         return 0

@@ -2,6 +2,8 @@
 
 > DIE eine Städteliste — jeder Skill referenziert sie, keiner kopiert sie.
 > Regel: **eine Region pro Durchlauf** scrapen (erleichtert Dedupe), Pilotstadt zuerst.
+> Für andere Länder gibt es hier keine Liste: `ausserhalb-dach.md` (Städte des Ziellands vorschlagen
+> und bestätigen lassen, `build_queries.py --region custom --cities "…"`).
 
 ## Deutschland Top 15
 

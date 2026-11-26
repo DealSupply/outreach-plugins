@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "datenbeschaffung",
-  "version": "0.5.5",
-  "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und als CSV importieren.",
+  "version": "0.6.0",
+  "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und in DealSupply importieren oder ohne DealSupply als Datei für Instantly übergeben.",
   "author": {
     "name": "DealSupply"
   },
@@ -17,7 +17,7 @@
     "com.openai": {
       "interface": {
         "displayName": "Datenbeschaffung",
-        "shortDescription": "Leads mit Apify oder Outscraper beschaffen und importieren",
+        "shortDescription": "Leads mit Apify oder Outscraper beschaffen, für DealSupply oder Instantly",
         "developerName": "DealSupply",
         "category": "Productivity",
         "capabilities": [

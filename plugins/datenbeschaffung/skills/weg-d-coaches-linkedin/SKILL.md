@@ -14,7 +14,9 @@ Es wird kein Kundenkonto hinterlegt, also gibt es kein Sperr-Risiko — hartes A
 aus `../datenbeschaffung-referenzen/references/apify-actors.md`.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs. Ohne DealSupply (Modus vom Master) ersetzt die eigene Sperrliste den Vorab-Abgleich, jede Zeile braucht am Ende eine Adresse, und wo hier steht, dass die Recherche die Adresse sucht, schließen `impressum-enrichment` bzw. `kontaktseiten-fallback` die Lücke (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
+
+Welcher der fünf Coach-Wege für wen passt und was er je 1.000 Leads kostet, zeigt die Tabelle im Einstieg `datenbeschaffung`, Phase 2. Die Wege finden kaum dieselben Coaches: Wer mehr Menge braucht, kombiniert sie, statt einen Weg zu überdehnen.
 
 ## Schritt 1 — Filter statt Freitext (die wichtigste Regel)
 
@@ -109,6 +111,9 @@ Firmen-Website vorliegt, schließt `impressum-enrichment` die Lücke, oder ab MC
 Recherche der Plattform (Lead mit Website importieren). Personen ohne Website und ohne E-Mail
 haben kein Kontaktmerkmal: Sie fallen bei der Übergabe heraus (der LinkedIn-Link ist ein
 Profil-Link, keine Website).
+
+**Personalisierungs-Hebel:** Positionierung und Angebot in eigenen Worten (Bio, Headline,
+Caption) und die Reichweite (`../datenbeschaffung-referenzen/references/personalisierung.md`).
 
 ## Schritt 6 — Übergabe
 

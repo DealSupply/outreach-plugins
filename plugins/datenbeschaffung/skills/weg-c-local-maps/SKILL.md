@@ -14,7 +14,7 @@ Der Lauf geschieht im eigenen Apify-Konto des Kunden, das Ergebnis geht als CSV 
 `listen-qualitaet` nach DealSupply (Oberfläche oder MCP `import_leads`).
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs. Ohne DealSupply (Modus vom Master) ersetzt die eigene Sperrliste den Vorab-Abgleich, jede Zeile braucht am Ende eine Adresse, und wo hier steht, dass die Recherche die Adresse sucht, schließen `impressum-enrichment` bzw. `kontaktseiten-fallback` die Lücke (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 ## Schritt 1 — Kategorien statt Freitext
 
@@ -134,6 +134,11 @@ recherchieren: ohne Adresse fallen sie bei der Übergabe heraus. Auf älteren Se
 Import eine Adresse je Lead (info@ reicht). Keine Entscheider-, Register- oder
 Mobilnummern-Daten dazukaufen: Den Ansprechpartner und seine persönliche Adresse sucht die
 Recherche der Plattform.
+
+**Personalisierungs-Hebel** (Kurshandbuch Kap. 6): die eigene Google-Bewertung und eine Rezension
+zitieren, der regionale Bezug (Stadtteil) und die Aktualität („seit 2022 zertifiziert“). Die
+ersten beiden kommen als Spalten mit (`rating`, `google_rezensionstexte`, `city`), die Aktualität
+steht auf der Website (`../datenbeschaffung-referenzen/references/personalisierung.md`).
 
 ## Schritt 6 — Übergabe
 

@@ -1,6 +1,6 @@
 ---
 name: datenbeschaffung-setup
-description: Richtet das Plugin datenbeschaffung ein und prüft die Voraussetzungen. Verwenden bei „Datenbeschaffung einrichten“, „Apify verbinden“, „Apify-Token“, „Outscraper einrichten“, „funktioniert mein Scraping-Zugang“ oder direkt nach der Installation des Plugins. Prüft Outreach-Verbindung, Apify-Zugang (kostenloser Selbsttest), optional Outscraper, räumt alte Skill-Kopien auf – ohne kostenpflichtige Läufe.
+description: Richtet das Plugin datenbeschaffung ein und prüft die Voraussetzungen, mit oder ohne DealSupply-Konto. Verwenden bei „Datenbeschaffung einrichten“, „Apify verbinden“, „Apify-Token“, „Outscraper einrichten“, „funktioniert mein Scraping-Zugang“ oder direkt nach der Installation des Plugins. Warnt vor der Preisfalle im kostenlosen Apify-Plan, prüft Outreach-Verbindung (optional), Apify-Zugang (kostenloser Selbsttest), optional Outscraper, räumt alte Skill-Kopien auf – ohne kostenpflichtige Läufe.
 ---
 
 # Datenbeschaffung einrichten
@@ -13,17 +13,37 @@ Die Details zu Konto, Token und Zugriffswegen stehen in
 `../datenbeschaffung-referenzen/references/setup.md` und `zugriff.md`. Dieser Skill führt nur durch
 die Prüfung, er wiederholt sie nicht.
 
+## Zuerst sagen: die Preisfalle im kostenlosen Apify-Plan
+
+Bevor irgendetwas eingerichtet wird, dem Nutzer das in eigenen Worten sagen (Zahlen aus
+`../datenbeschaffung-referenzen/references/kosten.md`, „Preisfalle“, und `apify-actors.md`):
+
+> Nimm für die Datenbeschaffung nicht den kostenlosen Apify-Plan. Dort kostet das Prüfen einer
+> Adresse 0,10 $ statt 0,0006 $: 200 Adressen kosten 20 $ statt 12 Cent. Auch Google Maps kostet
+> dort etwa das Doppelte, und Zusätze wie die Prüfung im Maps-Actor 0,10 $ je Treffer. Die 5 $
+> Startguthaben reichen für einen ersten Test; für die laufende Beschaffung brauchst du einen
+> bezahlten Plan (Starter rund 39 $ im Monat). Deine Preisstufe steht in der Apify-Konsole unter
+> Billing.
+
+Steht der Nutzer noch im kostenlosen Plan, das im Abschluss festhalten; `listen-qualitaet` prüft
+dort dann nur die riskanten Adressen.
+
 **Token bleiben beim Kunden:** Apify- oder Outscraper-Schlüssel nie im Chat abfragen, ausgeben oder
 irgendwohin senden. Der Nutzer hinterlegt sie selbst (Apify-Connector, Umgebungsvariable, CLI-Login).
 
 ## 1. Umgebung erkennen
 
 Claude Code (Shell und Dateisystem vorhanden), Claude App / claude.ai / Cowork (keine Shell) oder
-ChatGPT Desktop / Codex. In einem Satz nennen; davon hängt der Apify-Zugriffsweg ab.
+ChatGPT Desktop / Codex. In einem Satz nennen; davon hängt der Apify-Zugriffsweg ab. Plugins gibt
+es in den bezahlten Claude-Tarifen; die Skripte des Plugins (Bereinigung, Sperrliste, Datei für
+Instantly) brauchen Python, also Claude Code, Codex oder die Claude-App mit eingeschalteter
+Code-Ausführung. Fehlt das, sagen, welche Schritte die KI dann von Hand machen muss.
 
-## 2. Outreach-Verbindung prüfen
+## 2. DealSupply-Verbindung prüfen (optional)
 
-Für Bestandsabgleich und Import braucht die Datenbeschaffung die Verbindung zur Outreach-App.
+Das Plugin funktioniert auch ohne DealSupply-Konto. Für Bestandsabgleich und direkten Import
+braucht es die Verbindung zur App; ohne Konto endet jeder Lauf mit einer Datei für Instantly und
+einer eigenen Sperrliste (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 - `list_lists` aufrufen (nur lesend).
   - **Antwort kommt:** Verbindung steht, Anzahl der Listen nennen.
@@ -32,10 +52,13 @@ Für Bestandsabgleich und Import braucht die Datenbeschaffung die Verbindung zur
     `list_lists(workspace=<uuid>)` neu zählen. Mit der Rolle `viewer` geht dort nur der Abgleich,
     kein Import. Fehlt das Tool (älterer Server), überspringen. Regel:
     `../datenbeschaffung-referenzen/references/dealsupply-mcp.md`, Abschnitt „Workspace“.
-  - **Kein Outreach-Tool vorhanden:** Das Plugin `outreach` aus demselben Marketplace installieren
-    (bringt die Verbindung mit) und dort `outreach-setup` ausführen. Ohne Verbindung geht
-    Datenbeschaffung trotzdem, aber ohne Bestandsabgleich; das Ergebnis kommt dann als CSV über die
-    Oberfläche der App.
+  - **Kein Outreach-Tool vorhanden:** fragen, ob der Nutzer ein DealSupply-Konto hat.
+    - **Ja:** Das Plugin `outreach` aus demselben Marketplace installieren (bringt die Verbindung
+      mit) und dort `outreach-setup` ausführen. Ohne Verbindung geht Datenbeschaffung trotzdem,
+      aber ohne Bestandsabgleich; das Ergebnis kommt dann als CSV über die Oberfläche der App.
+    - **Nein:** Modus ohne DealSupply. Nichts weiter einzurichten; sagen, dass für die Sperrliste
+      ein Export aus dem eigenen CRM gebraucht wird (Bestandskunden, Ex-Kunden, Abmeldungen) und
+      die Liste am Ende als Datei für Instantly kommt.
 
 ## 3. Apify-Zugang prüfen (Pflicht)
 
@@ -53,7 +76,8 @@ https://console.apify.com/settings/integrations kopieren, Apify-Connector verbin
 Umgebungsvariable setzen). Danach erneut prüfen.
 
 Der E-Mail-Verifier für `listen-qualitaet` ist ebenfalls ein Apify-Actor; ein eigener Zugang ist
-nicht nötig.
+nicht nötig. Nach dem Selbsttest den Nutzer fragen, in welchem Apify-Plan er ist (Konsole →
+Billing), und bei „kostenlos“ die Preisfalle oben noch einmal kurz nennen.
 
 ## 4. Outscraper (optional)
 
@@ -81,6 +105,7 @@ Marketplaces → `outreach-plugins` → Auto-Update einschalten. Sonst `datenbes
 
 ## Abschluss
 
-Kurz berichten: Umgebung, Outreach-Verbindung ja/nein (Workspace, Anzahl Listen), Apify-Zugang ja/nein und
-über welchen Weg, Outscraper ja/nein/nicht nötig, aufgeräumte Kopien, Auto-Update ja/nein. Danach
-weiter mit dem Einstieg `datenbeschaffung`.
+Kurz berichten: Umgebung, Modus (mit oder ohne DealSupply), DealSupply-Verbindung ja/nein
+(Workspace, Anzahl Listen), Apify-Zugang ja/nein und über welchen Weg, Apify-Plan (kostenlos oder
+bezahlt), Outscraper ja/nein/nicht nötig, aufgeräumte Kopien, Auto-Update ja/nein. Danach weiter
+mit dem Einstieg `datenbeschaffung`.

@@ -6,7 +6,7 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 | Plugin | Inhalt | Für wen |
 |---|---|---|
 | **outreach** | Kampagnen anlegen und ändern, Cold-Mail-Copy nach SOP, Leads importieren, qualifizieren, recherchieren, Mails generieren und prüfen, Launch vorbereiten. Bringt die MCP-Verbindung `dealsupply` (`app.dealsupply.ai`) und in Claude Code die Live-Ansicht (Lead-Vorschau, Fortschritt der Läufe) mit. | alle |
-| **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
+| **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. Funktioniert auch ohne DealSupply-Konto: Adresse und Geschäftsführer aus dem Impressum, Sperrliste aus dem eigenen CRM, Datei für Instantly. | wer Leads selbst beschafft, auch ohne DealSupply |
 | **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
 Die Skills passen zum Outreach-MCP 4.41.0 (DealSupply v4.22.0) mit **81 Tools** und **7 Prompts** (80 Tools, wo das Melden nicht eingerichtet ist; ältere Server ab 3.0.0 gehen auch, Neues nutzen die Skills nur, wo der Server es kennt). Ab MCP 4.16.0 führen sie Leads finden, die Personensuche und die ähnlichen Firmen; ab MCP 4.40.0 sagen sie vor weiteren Freigaben, wenn ungeprüfte Adressen an Instantly gehen, ab MCP 4.41.0 nennen sie bei Leads finden eine Spanne statt einer Zahl. Fehler und Wünsche melden sie nach einer Rückfrage ab MCP 4.33.0 (`report_feedback`). Ab MCP 4.27.0 ändern sie eine einzelne Mail oder Einstellung einer Kampagne gezielt (`update_campaign_mail`, `update_campaign_setting`, `get_campaign_part`), ab MCP 4.32.0 zählen und filtern sie Leads mit dem Filter der App und kennen gespeicherte Ansichten (`describe_lead_filters`, `count_leads`, `list_lead_views`, `save_lead_view`, `delete_lead_view`), ab MCP 4.37.0 kennen sie Credit-Konten mit eigenem KI-Schlüssel (`own_ai_key`). Der MCP verarbeitet
@@ -107,13 +107,13 @@ plugins/
   datenbeschaffung/
     .claude-plugin/plugin.json  plugin.json
     skills/
-      datenbeschaffung    Einstieg: Setup → ICP → Weg A–E → Weg → Qualität
+      datenbeschaffung    Einstieg: Setup → Modus (mit/ohne DealSupply) → ICP → Weg → Qualität
       datenbeschaffung-setup   Einrichtung: Outreach-Verbindung, Apify, Outscraper prüfen
       datenbeschaffung-update  Aktualisieren
       weg-*               die Beschaffungswege (Google, Apollo, Maps, Instagram, Plattformen …)
       outscraper-bulk     sehr große Volumina
       impressum-enrichment  kontaktseiten-fallback  enrichment-waterfall
-      listen-qualitaet    Pflicht-Endstation: Dedup → Verifizierung → Stichprobe → Übergabe
+      listen-qualitaet    Pflicht-Endstation: Dedup/Sperrliste → Verifizierung → Stichprobe → Import oder Datei für Instantly
       datenbeschaffung-referenzen   geteilte Referenzen und Skripte
                                     (die Skills lesen über ../datenbeschaffung-referenzen/)
   fulfillment/
@@ -138,7 +138,8 @@ plugins/
   Ohne neue Version bekommen installierte Plugins nichts Neues.
 - MCP-Tool-Änderungen im Produkt → betroffene Skills im selben Zug nachziehen.
 - Live-Ansicht: `claude plugin test plugins/outreach`; Copy-Prüfskript: `python3 -I plugins/outreach/tests/test_check_copy.py`; Manifeste: `claude plugin validate .`;
-  CSV-Skript der Datenbeschaffung: `python3 -I plugins/datenbeschaffung/tests/test_build_csv.py`
+  Skripte der Datenbeschaffung: `python3 -I plugins/datenbeschaffung/tests/test_build_csv.py`,
+  `test_dedup.py`, `test_weg_f_saas.py`, `test_instantly.py` (Sperrliste und Datei für Instantly)
 - Kein `bin/`-Ordner in einem Plugin (claude.ai lehnt das ganze Plugin sonst ab), keine Symlinks.
 - Actor-Empfehlungen/Preise (`datenbeschaffung-referenzen/references/apify-actors.md`,
   `kosten.md`) tragen ein „zuletzt geprüft“-Datum.

@@ -1,29 +1,42 @@
 ---
 name: datenbeschaffung
-description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Datenbeschaffungs-Pakets. Führt über ICP, Bestandsabgleich, Kostenfreigabe und den manuellen Weg (Apify oder Outscraper mit eigenem Konto, Bereinigung, CSV) zum Import in DealSupply. weg-* nicht direkt starten.
+description: Dieser Skill wird bei „Datenbeschaffung“, „Leads beschaffen“, „Leadliste aufbauen“, „Leads scrapen“, „Liste bauen“, „Liste für Instantly“ oder „wo finde ich Leads“ verwendet. Einziger Einstieg des Plugins datenbeschaffung, mit oder ohne DealSupply-Konto. Führt über ICP, Bestandsabgleich bzw. eigene Sperrliste, Kostenfreigabe und den Weg mit eigenem Apify- oder Outscraper-Konto (Bereinigung, CSV) zum Import in DealSupply oder zu einer Datei für Instantly. weg-* nicht direkt starten.
 ---
 
-# Datenbeschaffung mit DealSupply
+# Datenbeschaffung, mit oder ohne DealSupply
 
-Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste in DealSupply führen. Lokale Betriebe und
-Entscheider in Firmen findet DealSupply inzwischen selbst (ab MCP 4.16.0): Dafür zuerst auf
-`outreach-leads-finden` bzw. `outreach-personensuche` im Plugin outreach verweisen. Dieses Plugin führt den
-Weg mit eigenem Anbieterkonto, für alles, was diese beiden Suchen nicht abdecken oder was der Nutzer selbst
-beschaffen will: Der Kunde nutzt Apify (bzw. Outscraper) mit **eigenem Konto und eigenem Token außerhalb von
-DealSupply**, scrapt dort, bereinigt die Ergebnisse, exportiert CSV oder JSON und lädt sie in DealSupply
-hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an, nicht in DealSupply.
+Vom bestätigten Zielkundenprofil zur geprüften Lead-Liste führen. Dieser Skill gehört zum eigenen
+Plugin **„datenbeschaffung“** aus dem Marketplace `outreach-plugins`; das Plugin `outreach` braucht
+es nur für die Verbindung zu DealSupply. Der Nutzer arbeitet mit **eigenem Apify- (bzw.
+Outscraper-)Konto und eigenem Token**, scrapt dort, bereinigt die Ergebnisse und übergibt die Liste:
+
+- **Mit DealSupply:** Import in DealSupply (MCP-Tool `import_leads` oder Oberfläche). Lokale
+  Betriebe und Entscheider findet DealSupply inzwischen selbst (ab MCP 4.16.0): Dafür zuerst auf
+  `outreach-leads-finden` bzw. `outreach-personensuche` im Plugin outreach verweisen; dieses Plugin
+  führt den Weg für alles, was diese Suchen nicht abdecken oder was der Nutzer selbst beschaffen
+  will.
+- **Ohne DealSupply:** Das Plugin funktioniert auch ohne DealSupply-Konto. Dann holt es Adresse und
+  Geschäftsführer selbst, gleicht gegen eine eigene Sperrliste ab und endet mit einer Datei für
+  Instantly. Was sich ändert: `../datenbeschaffung-referenzen/references/ohne-dealsupply.md`.
+
+Kosten fallen beim Anbieter an, nicht in DealSupply.
 
 ## Leitsätze
 
 1. **Trichter-Prinzip.** Beschaffung liefert Kandidaten, keine garantierten Wunschkunden. Die
-   fachliche Qualifizierung und der spätere Review bleiben eigene Schritte.
-2. **Nur beschaffen, was die Plattform nicht selbst findet.** Die Recherche liest Website und
-   Impressum, findet den Ansprechpartner und dessen persönliche Adresse. Die Beschaffung liefert
-   die Liste, je Lead eine Adresse (info@ reicht) **oder** die eigene Website (ab MCP
-   4.0.0: fehlt die Adresse, sucht die Recherche sie; ein Profil-Link wie Instagram oder Linktree
-   reicht nicht) und das, was nur auf der Quelle steht: Google-Bewertung und Rezensionen,
-   Follower, Plattform-Bewertung, Shop-Technologie. Details je Quelle:
-   `../datenbeschaffung-referenzen/references/datenumfang.md`.
+   fachliche Qualifizierung und der spätere Review bleiben mit DealSupply eigene Schritte. Ohne
+   DealSupply gibt es sie nicht: Dann sind Pilot und 20er-Stichprobe die einzigen Prüfungen, ob ein
+   Lead passt, und der Anti-ICP gehört streng in Query und Filter.
+2. **Mit DealSupply nur beschaffen, was die Plattform nicht selbst findet.** Die Recherche liest
+   Website und Impressum, findet den Ansprechpartner und dessen persönliche Adresse. Die
+   Beschaffung liefert die Liste, je Lead eine Adresse (info@ reicht) **oder** die eigene Website
+   (ab MCP 4.0.0: fehlt die Adresse, sucht die Recherche sie; ein Profil-Link wie Instagram oder
+   Linktree reicht nicht) und das, was nur auf der Quelle steht: Google-Bewertung und
+   Rezensionen, Follower, Plattform-Bewertung, Shop-Technologie. Details je Quelle:
+   `../datenbeschaffung-referenzen/references/datenumfang.md`. **Ohne DealSupply** gibt es keine
+   Recherche: Jede Zeile braucht eine Adresse, und der Geschäftsführer kommt aus dem Impressum
+   (`ohne-dealsupply.md`). Nie von „der Recherche der Plattform“ sprechen, wenn kein DealSupply da
+   ist.
 3. **Kosten vorab bestätigen lassen.** Vor jedem kostenpflichtigen Lauf beim Anbieter die erwarteten
    Kosten nennen, einen harten Deckel setzen und die ausdrückliche Freigabe des Nutzers einholen.
    Gilt auch für Piloten und Wiederholungen.
@@ -31,7 +44,8 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
    ICP-Fit hochskalieren; darunter Query oder Filter schärfen.
 5. **Kontaktstatus respektieren.** `do_not_contact` niemals überschreiben oder umgehen. Auch andere
    kontaktierte Bestandsleads nicht ungeprüft erneut anschreiben. Ein Listenmitglied ist keine
-   Versandfreigabe.
+   Versandfreigabe. Ohne DealSupply übernimmt das die eigene Sperrliste (Kunden, Ex-Kunden,
+   Abmeldungen, Beschwerden).
 6. **Deutsch mit korrekten Umlauten.** Keine Gedankenstriche in Kunden-Copy verwenden.
 7. **Token bleiben beim Kunden.** Apify- oder Outscraper-Token nicht im Chat abfragen, ausgeben oder
    an einen anderen Dienst senden.
@@ -39,22 +53,27 @@ hoch (Oberfläche oder MCP-Tool `import_leads`). Kosten fallen beim Anbieter an,
 ## Phase 0: Voraussetzungen prüfen
 
 Erstes Mal oder Zweifel am Zugang? Zuerst `datenbeschaffung-setup` ausführen (prüft
-Outreach-Verbindung, Apify-Zugang und optional Outscraper, ohne Kosten). Sonst kurz:
+Outreach-Verbindung, Apify-Zugang samt Preisstufe und optional Outscraper, ohne Kosten). Sonst kurz:
 
-- **DealSupply-MCP verbunden?** `ping` aufrufen. Mit MCP sind Bestandsabgleich und direkter Import
-  möglich; ohne MCP am Ende CSV-Übergabe über die Oberfläche und den fehlenden Bestandsabgleich
-  ausdrücklich melden. Fehlen die Tools, zuerst Verbindung und Berechtigungen klären.
-- **Workspace:** Abgleich, Liste und Import laufen im gewählten Workspace der App. Vor dem ersten
+- **Modus bestimmen** (Tabelle in `../datenbeschaffung-referenzen/references/ohne-dealsupply.md`):
+  `ping` aufrufen. Antwortet er, Modus **mit DealSupply** (Bestandsabgleich und direkter Import).
+  Fehlt das Tool, fragen, ob der Nutzer ein DealSupply-Konto hat. Mit Konto: Übergabe als CSV über
+  die Oberfläche, den fehlenden Bestandsabgleich ausdrücklich melden (oder erst die Verbindung
+  einrichten). Ohne Konto: Modus **ohne DealSupply**, Ende mit einer Datei für Instantly. Den
+  Modus in einem Satz nennen und an alle folgenden Skills weitergeben.
+- **Workspace** (nur mit DealSupply): Abgleich, Liste und Import laufen im gewählten Workspace der App. Vor dem ersten
   Abgleich klären, welcher es ist (Regel: `../datenbeschaffung-referenzen/references/dealsupply-mcp.md`,
   Abschnitt „Workspace“).
 - **Server-Version merken:** `ping.version` ab `4.0.0` heißt Übergabemodus `kontakt` (E-Mail oder
-  eigene Website je Lead), darunter oder ohne Version `email` (jede Zeile braucht eine Adresse).
-  Den Modus an `listen-qualitaet` weitergeben (`build_csv.py --uebergabe …`).
+  eigene Website je Lead), darunter, ohne Version und **immer ohne DealSupply** `email` (jede Zeile
+  braucht eine Adresse). Den Modus an `listen-qualitaet` weitergeben (`build_csv.py --uebergabe …`).
 - **Scraping-Zugang:** erst nach der Wahl des Wegs (Phase 2) prüfen und nur, wenn der Weg ihn
   braucht. Fast alle Wege laufen über ein eigenes Apify-Konto samt Token (Details:
   `../datenbeschaffung-referenzen/references/setup.md`); Apollo mit eigenem Zugang und StoreLeads
-  brauchen ihn nicht. Fehlt er, Setup durchgehen, nicht improvisieren.
-- Scopes: Lesen (`check_leads_exist`, `export_leads`, `list_lists`, `get_list`, `search_leads`,
+  brauchen ihn nicht. Fehlt er, Setup durchgehen, nicht improvisieren. Im kostenlosen
+  Apify-Plan kostet das Prüfen der Adressen ein Vielfaches (`kosten.md`, Preisfalle): Das vor dem
+  ersten Lauf sagen.
+- Scopes (nur mit DealSupply): Lesen (`check_leads_exist`, `export_leads`, `list_lists`, `get_list`, `search_leads`,
   `get_job_status`) braucht `leads:read`; Importieren, Listen anlegen/löschen und Zuordnen braucht
   `leads:write`.
 
@@ -72,6 +91,11 @@ Bei unklarer Zielgruppe die 10-Wunschkunden-Frage aus der Referenz verwenden. Wa
 den ICP hinaus versandfähig macht (Quellen außerhalb der Weg-Skills, Datenqualität, Sperrliste,
 Volumenplanung), steht in `../datenbeschaffung-referenzen/references/listen-und-icp.md`.
 
+Liegt die Region außerhalb von Deutschland, Österreich und der Schweiz, vor der Wegwahl
+`../datenbeschaffung-referenzen/references/ausserhalb-dach.md` lesen und dem Nutzer sagen, was dort
+belegt ist und was nicht: Alle Messwerte des Plugins stammen aus DACH, ohne Impressumspflicht
+kommen weniger Adressen.
+
 ## Phase 2: Weg auswählen
 
 Die Kernfrage: **Wo trifft man diese Zielgruppe am wahrscheinlichsten?** Dem Nutzer die Wahl mit
@@ -84,9 +108,28 @@ einem Satz Begründung vorlegen, nicht den ganzen Baum erklären.
 | Software- und SaaS-Firmen, auch „alle SaaS in DACH“ | `weg-f-saas` (OMR Reviews und Startbase kostenlos, dazu LinkedIn-Firmen; keine Quelle allein findet mehr als etwa ein Viertel) |
 | Industrie, Hersteller, Maschinenbau | zuerst `weg-c-local-maps` mit deutschem Branchenwort und Bundesland (Test: 85 % passend, 95 % mit Adresse); trägt Maps nicht, LinkedIn-Firmensuche plus `impressum-enrichment` oder `weg-a-apollo` (Datenbank) |
 | E-Commerce, Onlineshops | `weg-b-ecom-google`; Beratung ohne Scrape: `weg-b-storeleads` |
-| Coaches und Personal Brands | `weg-d-coaches-google`, `weg-d-coaches-linkedin`, `weg-d-instagram-google`, `weg-d-instagram-hashtag` |
+| Coaches und Personal Brands | `weg-d-coaches-google`, `weg-d-coaches-linkedin`, `weg-d-instagram-google`, `weg-d-instagram-hashtag` (welcher für wen: Tabelle unten) |
 | Plattform-Verkäufer (Amazon, Etsy, eBay) | `weg-e-plattform` |
 | Sehr große Volumina (>10.000, Laufzeit egal) | `outscraper-bulk`, nie als Erstes anbieten (Jobs dauern 12 bis 24 h) |
+
+### Coaches: welcher der fünf Wege für wen
+
+Aus dem Kurshandbuch, Kap. 7 (Kosten je 1.000 Leads Stand 19.08.2026, Richtwert; vor dem Lauf mit
+`kosten.md` und dem Actor-Preis rechnen). Zuerst klären: B2B-Coach (tritt als Firma auf, Kunden sind
+Unternehmen) oder B2C-Coach (Personenmarke, Kunden sind Privatpersonen)?
+
+| Weg | Für | Quelle | Skill | Kosten je 1.000 Leads |
+|---|---|---|---|---|
+| Google | B2B-Coaches | Google und Impressum | `weg-d-coaches-google` (Segment B2B) | ca. 10 bis 15 $ |
+| LinkedIn | B2B-Coaches | LinkedIn-Profile | `weg-d-coaches-linkedin` | ca. 5 bis 10 $ |
+| Google-Website | B2C-Coaches mit eigener Website | Google und Impressum | `weg-d-coaches-google` (Segment B2C) | ca. 10 bis 15 $ |
+| Google-Instagram | B2C-Coaches auf Instagram | Google mit `site:instagram.com` | `weg-d-instagram-google` | ca. 5 bis 8 $ |
+| Instagram-Hashtag | B2C-Coaches, die posten, aber nirgends ranken | Instagram-Beiträge | `weg-d-instagram-hashtag` | ca. 3 bis 5 $ |
+
+Die Wege finden kaum dieselben Coaches, weil jeder eine andere Quelle anzapft (Kap. 7). Wer mehr
+Menge braucht, kombiniert deshalb die Wege seines Segments, statt einen Weg zu überdehnen, und
+führt die Listen danach über die Domain zusammen (`build_csv.py` dedupliziert). Coaches nur auf
+Instagram haben oft keine Website: Ohne Website und ohne Adresse sind sie für Cold Mail verloren.
 
 Passt kein Weg, **Recherchemodus:** Apify-Store durchsuchen, Kandidaten nach den Kriterien in
 `../datenbeschaffung-referenzen/references/apify-actors.md` bewerten, Mini-Pilot mit hartem Deckel
@@ -97,9 +140,16 @@ eintragen. Findet Apify nichts, Outscraper prüfen (Laufzeitwarnung). Auch dann 
 ## Phase 2b: Datenumfang festlegen
 
 `../datenbeschaffung-referenzen/references/datenumfang.md` lesen und dem Nutzer in einem Satz sagen,
-was dieser Weg mitbringt und was bewusst nicht beschafft wird, z. B.: „Wir holen Firma, Website,
-eine Adresse, Google-Bewertung und die neuesten Rezensionen. Ansprechpartner und persönliche
-Adresse sucht danach die Recherche der Plattform.“
+was dieser Weg mitbringt und was bewusst nicht beschafft wird, z. B. mit DealSupply: „Wir holen
+Firma, Website, eine Adresse, Google-Bewertung und die neuesten Rezensionen. Ansprechpartner und
+persönliche Adresse sucht danach die Recherche in DealSupply.“ Ohne DealSupply: „Wir holen Firma,
+Website, Google-Bewertung und Rezensionen, die Adresse und den Geschäftsführer aus dem Impressum.
+Wer danach keine Adresse hat, fällt aus der Liste.“
+
+Dazu den Personalisierungs-Hebel dieses Wegs nennen
+(`../datenbeschaffung-referenzen/references/personalisierung.md`): was als Spalte mitkommt und was
+der Nutzer sich beim Ansehen der Leads selbst notiert (bei Shops das Sortiment oder die
+Bewertungen, bei Betrieben vor Ort die Region).
 
 - Was die Quelle im Preis oder für einen kleinen Aufschlag mitliefert und einen Einstieg trägt,
   kommt mit (bei Google Maps immer Bewertung und Rezensionen).
@@ -118,7 +168,17 @@ Adresse sucht danach die Recherche der Plattform.“
   Domain, lohnt ab etwa 50 Domains und liefert geprüfte Adressen vor dem Import. Vorab anreichern
   oder direkt importieren?“
 
-## Phase 3: Vorab-Abgleich (nur mit MCP)
+**Ohne DealSupply** gelten die letzten beiden Punkte nicht: Die Kontaktlücke wird immer
+geschlossen (`impressum-enrichment` ist Pflicht für Domains ohne Adresse), der Geschäftsführer aus
+dem Impressum ist der Ansprechpartner, und Leads ohne Adresse fallen aus der Liste
+(`ohne-dealsupply.md`). Die Kosten dafür gehören in die Freigabe in Phase 4.
+
+## Phase 3: Vorab-Abgleich
+
+**Ohne DealSupply:** Die eigene Sperrliste aus dem CRM bauen (`sperrliste.py`, Ablauf in
+`ohne-dealsupply.md`): Den Export zieht der Nutzer selbst. Die Domains gehen in die
+Query-Ausschlüsse, und die Liste läuft vor jeder bezahlten Anreicherung einmal durch
+`sperrliste.py --in … --out …`. Das Folgende gilt nur mit MCP.
 
 VOR dem ersten kostenpflichtigen Lauf den Bestand ziehen und bekannte Domains in die
 Query-Ausschlüsse geben: `export_leads(format="index")` bzw. `check_leads_exist`, Ablauf in
@@ -137,23 +197,31 @@ scrapen. Import und Listen kosten in DealSupply keine Credits.
 
 1. Erwartete Kosten aus `../datenbeschaffung-referenzen/references/kosten.md` kalkulieren und mit
    Actor-Preis (aktuell im Apify-Store prüfen) nennen: „Das kostet etwa X $ beim Anbieter, harter
-   Deckel Y $. Ok?“ Die Abrechnung läuft über das eigene Konto des Kunden.
+   Deckel Y $. Ok?“ Die Abrechnung läuft über das eigene Konto des Kunden. Ohne DealSupply
+   gehören die Anreicherung aller Domains ohne Adresse und die Prüfung der Adressen mit in die
+   Summe.
 2. Ausdrückliche Freigabe abwarten. Ohne Freigabe kein kostenpflichtiger Lauf. Die Schätzung ist
    keine Preisgarantie; den Deckel nie still erhöhen.
 3. Den gewählten Weg-Skill laden und fahren. Er endet IMMER mit einer Roh-CSV im Format aus
    `../datenbeschaffung-referenzen/references/csv-spalten.md`, nie mit einer Übergabe und nie mit
    einem eigenen Qualitätsurteil. Zugriffsschicht (Apify-MCP, REST, CLI):
    `../datenbeschaffung-referenzen/references/zugriff.md`.
-4. Bei Leads ohne Adresse **optional** `impressum-enrichment` (DACH) bzw. `kontaktseiten-fallback`
-   nur für die Adresse nutzen, nach der Entscheidung aus Phase 2b und mit Kostenfreigabe (auf
-   Servern unter 4.0.0 ist das der einzige Weg, sie zu importieren). `enrichment-waterfall` ist
-   keine Lückenfüllung, sondern eine Ausnahme für wenige wertvolle Leads nach der Recherche
-   (siehe dort).
+4. Bei Leads ohne Adresse `impressum-enrichment` (DACH) bzw. `kontaktseiten-fallback` nutzen:
+   mit DealSupply **optional** und nur für die Adresse, nach der Entscheidung aus Phase 2b (auf
+   Servern unter 4.0.0 ist das der einzige Weg, sie zu importieren); **ohne DealSupply Pflicht**,
+   und der Geschäftsführer aus dem Impressum kommt mit. Immer mit Kostenfreigabe.
+   `enrichment-waterfall` ist keine Lückenfüllung, sondern eine Ausnahme für wenige wertvolle
+   Leads, deren Ansprechpartner schon bekannt ist (siehe dort).
 
 ## Phase 5: Pflicht-Endstation
 
-`listen-qualitaet` laden und vollständig durchlaufen: Format prüfen, gegen den Bestand abgleichen,
-E-Mails verifizieren, 20er-Stichprobe, Import in DealSupply. Kein Lauf endet mit einer Roh-CSV.
+`listen-qualitaet` laden und vollständig durchlaufen: Format prüfen, gegen den Bestand bzw. die
+eigene Sperrliste abgleichen, E-Mails verifizieren, 20er-Stichprobe, Import in DealSupply bzw. Datei
+für Instantly. Kein Lauf endet mit einer Roh-CSV. Dem Nutzer ehrlich sagen, was dabei Handarbeit
+bleibt: die 20 Leads selbst ansehen und, ohne DealSupply, den CRM-Export für die Sperrliste.
+
+**Ohne DealSupply** endet der Lauf hier mit der Datei für Instantly und der Anleitung zum Import
+(`ohne-dealsupply.md`). Der Rest dieser Phase gilt nur mit DealSupply.
 
 Danach auf ausdrücklichen Verarbeitungsauftrag die Liste einer bestätigten Kampagne zuordnen
 (`add_leads_to_campaign`) und über den Outreach-Workflow `start_lead_run` für `qualification`,
@@ -174,9 +242,10 @@ verbindlich ist `quote_lead_run`.
 
 ## Berichtsform
 
-Nach jedem Lauf ein kompakter Block: Weg, Query und Filter, Pilot-Trefferquote, Anteil mit Bewertung,
+Nach jedem Lauf ein kompakter Block: Modus (mit oder ohne DealSupply), Weg, Query und Filter,
+Pilot-Trefferquote, Anteil mit Bewertung,
 Rezensionstext bzw. Plattform-Einstieg (aus dem Bericht von `build_csv.py`), Stückzahlen je Stufe
-(roh, nach Dedup, nach Verifizierung, übergeben, davon ohne E-Mail mit Website, verworfen je Grund),
-reale Kosten beim Anbieter und was beim nächsten
-Lauf anders gemacht würde. Die Herkunft steht dauerhaft an der Liste in DealSupply (`source` bei
-`create_list`).
+(roh, nach Dedup bzw. Sperrliste, nach Verifizierung, übergeben, davon ohne E-Mail mit Website,
+ohne DealSupply: davon mit Vorname, verworfen je Grund), reale Kosten beim Anbieter und was beim
+nächsten Lauf anders gemacht würde. Die Herkunft steht mit DealSupply dauerhaft an der Liste
+(`source` bei `create_list`), ohne DealSupply in der Spalte `quelle` der eigenen CSV.
