@@ -3,6 +3,10 @@
 Die software-freien Cold-Mail-Copy-Regeln. Hier ist die eine Quelle der Wahrheit für Copy:
 Anatomie, Intro, Offer, Follow-ups, Betreff, Verbote, Selbstprüfung.
 
+Für Kampagnen in DealSupply gilt ab MCP 4.45.0 der Wortlaut der App (`get_copy_rules`, siehe
+`outreach-copy`, Abschnitt „Die Regeln der App zuerst“). Dieser Kern bleibt die Quelle für den
+Heartbeat-Skill, der ohne DealSupply arbeitet.
+
 | Datei | Inhalt |
 |---|---|
 | `copy-lehre.md` | die vollständige Copy-Lehre |

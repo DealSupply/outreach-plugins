@@ -22,10 +22,10 @@ passenden Skill. Dazu hält er die Workspace-Regel und die Melde-Regel, auf die 
 | eine Kampagne anlegen oder ändern | `outreach-campaign` |
 | an einer bestehenden Kampagne eine Mail (Betreff, Text, Wartezeit), eine Einstellung (Name, Sprache, Anrede, Recherche-Stufe, Kriterien) oder einen Variablen-Prompt ändern, oder nur einen Teil ansehen | `outreach-campaign`, Phase 3, „Gezielt ändern“ (ab MCP 4.27.0: `get_campaign_part`, `update_campaign_mail`, `update_campaign_setting`; die Kampagne wird dafür nicht ersetzt) |
 | mit dem Start-Satz aus der App eine Kampagne einrichten („Richte mit outreach die Kampagne #123 ein.“) | `outreach-campaign`, Ablauf „Genannte leere Kampagne füllen“: genau diese Kampagne füllen, nie eine neue anlegen |
-| Cold-Mail-Copy schreiben oder prüfen, ein Marketing-Offer formulieren | `outreach-copy` |
+| Cold-Mail-Copy schreiben oder prüfen, ein Marketing-Offer formulieren | `outreach-copy` (ab MCP 4.45.0 mit den Copy-Regeln der App aus `get_copy_rules`) |
 | neue lokale Betriebe als Leads finden, nach Branche und Gebiet über Google Maps („Leads finden“, „Friseure in Freiburg“) | `outreach-leads-finden` (ab MCP 4.16.0): Angebot zeigen, nach Zustimmung starten, Stand abfragen, an eine Kampagne übergeben |
 | Entscheider in Firmen finden, nach Rolle, Branche, Größe und Ort („Personensuche“, „Geschäftsführer finden“), und ihre E-Mail-Adressen suchen | `outreach-personensuche` (ab MCP 4.16.0): blättern kostet in der Regel nichts, Übernahme und E-Mail-Suche je nach Zustimmung zum Angebot |
-| mehr Firmen wie die guten Leads einer Kampagne, wie ein einzelner Lead oder wie Beispiel-Websites („ähnliche Firmen“, „mehr Firmen wie diese“) | `outreach-aehnliche-firmen` (ab MCP 4.16.0): ansehen kostet nichts, übernommen wird nach Zustimmung zum Angebot |
+| mehr Firmen wie die guten Leads einer Kampagne, wie ein einzelner Lead oder wie Beispiel-Websites („ähnliche Firmen“, „mehr Firmen wie diese“) | `outreach-aehnliche-firmen` (ab MCP 4.16.0): ansehen kostet nichts, übernommen wird nach Zustimmung zum Angebot. Nicht jedes Konto hat die Funktion schon; das zeigt erst der erste Aufruf (`feature_disabled`) |
 | Stand einer laufenden Suche nach neuen Leads, weitersuchen, abbrechen | `outreach-leads-finden` bzw. `outreach-personensuche` |
 | Leads importieren (CSV, Liste) | `outreach-import` |
 | Listen ansehen, anlegen, in eine Kampagne übernehmen | `outreach-lists` |
@@ -100,7 +100,8 @@ Stufe; beides gilt für alle Kampagnen.
 - Für alles, was Credits kostet, gilt dieselbe Reihenfolge: erst das Angebot holen (`quote_…`), es dem
   Nutzer zeigen, auf sein Ja zu genau diesem Angebot warten, erst dann starten. Das gilt für Server-Läufe
   (`quote_lead_run`), Leads finden (`quote_prospect_search`), die Übernahme von Personen
-  (`quote_people_import`) und die E-Mail-Suche (`quote_people_email_search`).
+  (`quote_people_import`), die E-Mail-Suche (`quote_people_email_search`) und die Übernahme ähnlicher
+  Firmen (`quote_similar_companies_import`).
 - Kennt der Nutzer sein Ziel nicht, zuerst eine Frage: „Willst du eine neue Kampagne aufsetzen,
   Leads verarbeiten oder neue Leads beschaffen?“
 
@@ -133,8 +134,10 @@ Workspace, auch der Bestand für den Dubletten-Abgleich.
    `list_lead_views` und `save_lead_view` am Ort `global` sowie jedes Werkzeug, das seine Leads über
    `filter` oder `view_id` der Lead-Datenbank statt über IDs wählt; mit `campaign_id` (Ort `campaign`
    oder `review`) entscheidet die Kampagne. Dasselbe gilt für `quote_prospect_search`, `start_prospect_search` ohne
-   `search_id`, `list_prospect_searches` und `create_people_search`; Werkzeuge mit `search_id` laufen im
-   Workspace der Suche. Eine unbekannte uuid lehnt der Server mit `workspace_not_found` ab.
+   `search_id`, `list_prospect_searches` (auch mit `kind="people"`), `list_prospect_area_postal_codes`,
+   `create_people_search`, `find_similar_companies` und für `quote_similar_companies_import` und
+   `import_similar_companies` mit `example_domains`; Werkzeuge mit `search_id` laufen im Workspace der
+   Suche, die ähnlichen Firmen eines Leads oder einer Kampagne im Workspace des Objekts. Eine unbekannte uuid lehnt der Server mit `workspace_not_found` ab.
 3. **Aufrufe mit Objekt-ID** (`campaign_id`, `lead_id`, `lead_ids`, `list_id`, `lead_run_id`,
    `job_id`) nie mit `workspace`, auch nicht `import_leads` oder `export_leads` mit `list_id`: Sie
    laufen von selbst im Workspace des Objekts. Passen Angabe und Objekt nicht zusammen, lehnt der

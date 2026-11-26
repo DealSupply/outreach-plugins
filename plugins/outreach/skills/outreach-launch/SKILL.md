@@ -127,6 +127,11 @@ Ab Tag 1 nachtelefonieren.
 30 Minuten pro Woche mit den Instantly-Zahlen gegen die KPI-Benchmarks. Diagnose immer in der Kette
 Beschwerden und Bounces → Open Rate → Reply Rate → Termine. Einzelne Tage nicht bewerten.
 
+Richtwerte (Stand 17.11.2026, Tabelle in `references/launch-und-optimierung.md`): Antwortrate ab 5 % gut,
+Ziel 10 bis 20 %, hängt stark vom Angebot ab. Positive Antworten mindestens 10 % der Antworten, Ziel 20 bis
+30 %. Die Öffnungsrate ist keine gute Kennzahl mehr; wenn gemessen, über 50 %, Ziel 80 bis 90 %. Die
+Grenzen zum Handeln stehen in der Tabelle unten.
+
 ## Phase 5: Optimieren — was ändern?
 
 | Befund | Was ändern | Wo |

@@ -19,7 +19,50 @@ Ausführliche Lehre mit allen Beispielen: `references/copy-lehre.md`. Offer-Lehr
 `references/marketing-offer.md`. Ein vollständig ausformulierter Blueprint:
 `references/beispiel-blueprint.md`. Tests in Mail 1 und „Angebot je Lead“ (beides für Erfahrene,
 standardmäßig aus): `references/fuer-erfahrene.md`. Bei einem Widerspruch zwischen diesen Dateien
-gilt diese SKILL.md.
+gilt diese SKILL.md, bei einem Widerspruch zu den Regeln der App (nächster Abschnitt) gelten die Regeln
+der App.
+
+## Die Regeln der App zuerst (ab MCP 4.45.0: `get_copy_rules`)
+
+Die Copy-Regeln für Betreff, Intro, Mail 1 bis 4, Anrede und Ausgabe stehen einmal, in der App. Steht
+`get_copy_rules` in der Tool-Liste, liest du sie dort und hältst dich an genau diesen Wortlaut. Die
+Regeln in diesem Skill und in `references/copy-lehre.md` sind dann nur noch Erklärung und Beispiel; wo
+sie von der App abweichen, gilt die App. Fehlt das Werkzeug (Server vor 4.45.0), gilt dieser Skill wie
+bisher.
+
+So wird gelesen:
+
+1. **Was zu lesen ist, hängt von der Aufgabe ab.**
+
+   | Aufgabe | Aufruf |
+   |---|---|
+   | eine **kleine Änderung**: nur der Betreff oder ein einzelner Satz einer bestehenden Mail | nur den passenden Teil samt Prüfliste: Betreff `["subject"]`, ein Satz in Mail 1 `["mail_1"]`, in Mail 2 bis 4 `["mail_2"]`, `["mail_3"]`, `["mail_4"]` |
+   | alles andere: eine ganze Mail, mehrere Sätze, ein Intro-Prompt oder ein anderer Variablen-Prompt, eine neue Kampagne, eine leere Kampagne füllen, eine neue Variable, Anrede oder Sprache umstellen | die ganzen Regeln in zwei Aufrufen: `get_copy_rules(parts=["intro"], …)` und `get_copy_rules(parts=["mails"], …)` |
+   | die Werte **eines Leads** schreiben oder prüfen (`outreach-generate`, `lead-agent`, `verify-agent`) | nichts von hier: `get_lead_data` trägt dieselben Regeln schon in `lead.emailGeneration.systemPrompt` |
+   | nur wissen, welche Teile es gibt | `get_copy_rules()` ohne `parts`: das Verzeichnis ohne Regeltext |
+
+   `["all"]` nicht in einem Aufruf: Rund 65.000 Zeichen schneiden manche Umgebungen ab
+   (`chars_total` zeigt, wie viel ankam). Klein ist nur der Betreff oder ein einzelner Satz einer Mail
+   (Entscheidung vom 26.11.2026); alles andere holt die ganzen Regeln. Nur die Wartezeit einer Mail zu
+   ändern, berührt keinen Text und braucht keine Regeln.
+2. **Zur Kampagne lesen.** Bei einer bestehenden Kampagne `campaign_id` mitgeben: Dann gelten ihre
+   Sprache und Anrede, und `fixed_mail_text` bringt ihre festen Sätze mit. Freigegebene feste Sätze einer
+   Kampagne gehen jeder Regel vor. Ohne Kampagne (neue Kampagne) `language` (`de`, `en`) und
+   `salutation` (`du`, `sie`) nach dem, was der Nutzer gewählt hat; Englisch hat keine Anrede.
+3. **Die Regeln sind für die App geschrieben.** Sie nennen Blöcke aus deren Prompt (etwa `FESTER
+   MAILTEXT`, `KAMPAGNE`, `WEBSITE-BEFUND`); `reading_notes` sagt, wo diese Daten über den MCP liegen.
+4. **Prüfen mit der Prüfliste des Teils.** Jeder Teil kommt mit `checklist`. Sie ist noch ein Entwurf
+   (`checklist_status: "draft"`): Sie ergänzt die Regeln, ersetzt sie nicht.
+5. **Nicht abschreiben.** Den Wortlaut nicht in eigene Dateien, Notizen oder Prompts kopieren und nicht
+   umformulieren, sondern bei Bedarf neu lesen. Ein Variablen-Prompt trägt nur, was für diese Kampagne
+   gilt (Abschnitt „Prompts der AI-Variablen“); die allgemeinen Regeln gibt die App ihm beim Schreiben
+   selbst mit.
+6. **Ein Teil, den der Server nicht kennt,** steht unter `warnings` und ist kein Fehler; `parts_available`
+   nennt die Teile.
+
+Was nur hier steht und die App nicht liefert, bleibt Aufgabe dieses Skills: das Gespräch zum Angebot
+(Offer-Karten, Werttest), der Aufbau einer neuen Kampagne als Blueprint, die Platzhalter von DealSupply,
+die Tests für Erfahrene und die Selbstprüfung des ganzen Blueprints.
 
 ## Kampagnensprache
 

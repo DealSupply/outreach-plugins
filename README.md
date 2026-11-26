@@ -9,7 +9,7 @@ Cowork, Claude Code) und für ChatGPT Desktop und Codex.
 | **datenbeschaffung** | Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen, als CSV bzw. per `import_leads` übernehmen. | wer Leads selbst beschafft |
 | **fulfillment** | Das Marketing-Offer liefern: prüfen, welches Offer sich mit KI liefern lässt, und für Leads, die geantwortet haben, die versprochene Demo bauen (Webseiten-Entwurf, SEO-Ergebnis, Anzeigen, Leadliste, Muster-Kampagne), nicht auffindbar bei Netlify veröffentlichen und den Link als `demo-url` am Lead speichern. Optional mit RankM8 für SEO-Daten. | wer Karte A oder C nutzt |
 
-Die Skills passen zum Outreach-MCP 4.41.0 (DealSupply v4.22.0) mit **81 Tools** und **7 Prompts** (80 Tools, wo das Melden nicht eingerichtet ist; ältere Server ab 3.0.0 gehen auch, Neues nutzen die Skills nur, wo der Server es kennt). Ab MCP 4.16.0 führen sie Leads finden, die Personensuche und die ähnlichen Firmen; ab MCP 4.40.0 sagen sie vor weiteren Freigaben, wenn ungeprüfte Adressen an Instantly gehen, ab MCP 4.41.0 nennen sie bei Leads finden eine Spanne statt einer Zahl. Fehler und Wünsche melden sie nach einer Rückfrage ab MCP 4.33.0 (`report_feedback`). Ab MCP 4.27.0 ändern sie eine einzelne Mail oder Einstellung einer Kampagne gezielt (`update_campaign_mail`, `update_campaign_setting`, `get_campaign_part`), ab MCP 4.32.0 zählen und filtern sie Leads mit dem Filter der App und kennen gespeicherte Ansichten (`describe_lead_filters`, `count_leads`, `list_lead_views`, `save_lead_view`, `delete_lead_view`), ab MCP 4.37.0 kennen sie Credit-Konten mit eigenem KI-Schlüssel (`own_ai_key`). Der MCP verarbeitet
+Die Skills passen zum Outreach-MCP 4.46.0 mit **82 Tools** und **7 Prompts** (81 Tools, wo das Melden nicht eingerichtet ist; ältere Server ab 3.0.0 gehen auch, Neues nutzen die Skills nur, wo der Server es kennt). Ab MCP 4.16.0 führen sie Leads finden, die Personensuche und die ähnlichen Firmen; ab MCP 4.40.0 sagen sie vor weiteren Freigaben, wenn ungeprüfte Adressen an Instantly gehen, ab MCP 4.41.0 nennen sie bei Leads finden eine Spanne statt einer Zahl, ab MCP 4.44.0 jedes Gebiet mit seinem Land. Ab MCP 4.45.0 lesen sie die Copy-Regeln der Mails aus der App (`get_copy_rules`) statt aus einer eigenen Fassung. Fehler und Wünsche melden sie nach einer Rückfrage ab MCP 4.33.0 (`report_feedback`). Ab MCP 4.27.0 ändern sie eine einzelne Mail oder Einstellung einer Kampagne gezielt (`update_campaign_mail`, `update_campaign_setting`, `get_campaign_part`), ab MCP 4.32.0 zählen und filtern sie Leads mit dem Filter der App und kennen gespeicherte Ansichten (`describe_lead_filters`, `count_leads`, `list_lead_views`, `save_lead_view`, `delete_lead_view`), ab MCP 4.37.0 kennen sie Credit-Konten mit eigenem KI-Schlüssel (`own_ai_key`). Der MCP verarbeitet
 Leads und verwaltet Kampagnen und Listen; er scrapt nicht. Versand läuft beim Kunden
 (Instantly o. Ä.), nicht in der Plattform.
 
@@ -90,7 +90,7 @@ plugins/
       outreach-setup      Einrichtung und Prüfung
       outreach-update     Aktualisieren
       outreach-campaign   Kampagne bauen und ändern nach der Cold-Mailing-SOP
-      outreach-copy       Cold-Mail-Copy-Regeln (verbindlich für campaign, generate, verify)
+      outreach-copy       Cold-Mail-Copy (verbindlich für campaign, generate, verify; ab MCP 4.45.0 mit den Regeln der App)
       outreach-leads-finden    neue lokale Betriebe über Google Maps finden (Angebot, Zustimmung, Start, Übergabe)
       outreach-personensuche   Entscheider in Firmen finden, übernehmen, E-Mail-Adressen suchen
       outreach-aehnliche-firmen  Firmen wie die guten Leads oder wie Beispiel-Websites ansehen und übernehmen
@@ -137,6 +137,10 @@ plugins/
   Plugins erhöhen (`.claude-plugin/plugin.json` und `plugin.json`) und `CHANGELOG.md` ergänzen.
   Ohne neue Version bekommen installierte Plugins nichts Neues.
 - MCP-Tool-Änderungen im Produkt → betroffene Skills im selben Zug nachziehen.
+- Neuer oder umbenannter Skill → den Skill-Katalog der App mitziehen (DS-394): im Repo ListM8
+  `client/src/pages/McpInfo/skillCatalog.ts` und die Beschreibung `mcp.skill.<name>` in
+  `api/translations/messages.de.yaml` und `messages.en.yaml`. Sonst fehlt der Skill auf der Seite
+  „MCP & Skills“ der App. Ein entfernter Skill kommt dort ebenso heraus.
 - Live-Ansicht: `claude plugin test plugins/outreach`; Copy-Prüfskript: `python3 -I plugins/outreach/tests/test_check_copy.py`; Manifeste: `claude plugin validate .`;
   CSV-Skript der Datenbeschaffung: `python3 -I plugins/datenbeschaffung/tests/test_build_csv.py`
 - Kein `bin/`-Ordner in einem Plugin (claude.ai lehnt das ganze Plugin sonst ab), keine Symlinks.

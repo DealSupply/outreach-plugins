@@ -45,6 +45,8 @@ Braucht MCP 4.4.0 (`ping`). Kennt der Server `export_campaign_leads` nicht, auf 
 8. **Ausliefern:**
    - Mit Shell (Claude Code): `curl -fLo "<filename>" "<download_url>"` ins Arbeitsverzeichnis, Pfad nennen.
    - Ohne Shell (Claude Desktop, claude.ai): den Link zeigen.
+   - Antwortet der Link trotz `ready` mit 404: Das war ein Fehler des Servers vor MCP 4.42.1 bei manchen Konten.
+     Dann den Export in der App anbieten und nach der Melde-Regel fragen, ob das gemeldet werden soll.
 
 ## Regeln
 
@@ -63,6 +65,10 @@ Braucht MCP 4.4.0 (`ping`). Kennt der Server `export_campaign_leads` nicht, auf 
 - Leads aus Leads finden tragen ab MCP 4.24.0 die Attribute `maps_claim_status` und `maps_star_scores`. In der
   Datei sind das die Spalten `attr_maps_claim_status` und `attr_maps_star_scores` (Zwecke `overview` und `crm`,
   nicht `sending`); eine leere Zelle heißt „nicht bekannt“.
+- Ab MCP 4.46.0 trägt die Datei zur Telefonnummer ihre internationale Form und die Art der Leitung: Spalten
+  `phone_number_e164` und `phone_type` (`mobile`, `landline`, `service`, `unchecked` = nicht geprüft), dazu
+  `profile_phone_types` zu den Nummern aus `profile_phones`. Für das Nachtelefonieren hilft das beim Sortieren;
+  gesucht wird dabei keine Nummer.
 - Höchstens 25.000 Leads je Datei (`too_large`): Umfang eingrenzen oder in Auswahlen teilen.
 - Wie viele Leads in welchem Review-Reiter stehen (offen, freigegeben, exportiert, abgelehnt), nennt ab MCP 4.32.0
   `list_lead_views(place="review", campaign_id, with_counts=true)` in einem Aufruf; `dry_run` bleibt die Zahl, die

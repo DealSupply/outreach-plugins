@@ -82,16 +82,24 @@ Die Anrede im Telefonat folgt der Ansprache der Kampagne (du, in Ausnahmefällen
 
 ## KPI-Benchmarks
 
+**Richtwerte für das Ergebnis** (Stand 17.11.2026):
+
+| Metrik | Gut | Ziel |
+|:-------|:----|:-----|
+| **Reply Rate** (Antwortrate) | ab 5 % | 10 bis 20 %; hängt stark vom Angebot (Marketing-Offer) ab |
+| **Positive Reply Rate** (positive Antworten, Anteil an allen Antworten) | mindestens 10 % der Antworten | 20 bis 30 % der Antworten |
+| **Open Rate** (Öffnungsrate, nur mit Tracking) | keine gute Kennzahl mehr; wenn gemessen, über 50 % | 80 bis 90 % |
+
+Die positiven Antworten zählen als Anteil der Antworten, nicht der verschickten Mails: Bei 100 Antworten sind 10 positive das Mindeste, 20 bis 30 das Ziel.
+
+**Richtwerte für die Zustellung:**
+
 | Metrik | Schlecht | OK | Gut | Sehr gut |
 |:-------|:---------|:---|:----|:---------|
-| **Open Rate** (nur mit Tracking) | unter 40 % | 40-55 % | 55-70 % | 70 %+ |
-| **Reply Rate** | unter 2 % | 2-4 % | 4-6 % | 6 %+ |
 | **Bounce Rate** | über 3 % | 2-3 % | 1-2 % | unter 1 % |
-| **Opportunity Rate** (positive Antworten) | unter 0,5 % | 0,5-1 % | 1-2 % | 2 %+ |
-| **Positive Reply Rate** | unter 0,5 % | 0,5-1 % | 1-2 % | 2 %+ |
 | **Spam-Beschwerdequote** | über 0,3 % | 0,1-0,3 % | unter 0,1 % | nahe 0 % |
 
-Das Zielband aus der Kampagnen-Vorlage sind 4-6 % Reply Rate und eine Bounce Rate unter 3 % — wer darunter bzw. darüber liegt, prüft Liste und Erstansprache, bevor er weiter skaliert.
+Wer unter 5 % Reply Rate oder über 3 % Bounce Rate liegt, prüft Liste und Erstansprache, bevor er weiter skaliert. Die Grenzen zum Handeln stehen unten bei den Sofort-Stopp-Schwellen und in der Diagnose.
 
 **Referenzwert:** eine Förder-Kampagne (4.473 Sequences): 82 % Open Rate, 3,15 % Reply Rate, 55 % Open Rate auf die Entry Mail
 

@@ -38,6 +38,7 @@ DealSupply sucht zu guten Leads Firmen, die ihnen ähneln, in Deutschland, Öste
 1. `ping`: Die Werkzeuge gibt es ab MCP 4.16.0. Meldet `ping` eine ältere Version oder fehlen die vier Werkzeuge in der Tool-Liste, dem Nutzer sagen, dass sein Server die ähnlichen Firmen noch nicht kennt.
 2. Workspace klären (Skill `outreach`).
 3. `get_credit_balance`: Bei `billing_mode: byok` gibt es die ähnlichen Firmen nicht. Bei `account.subscription_required` zuerst einen Plan wählen lassen, ohne aktives Abo lehnt die Übernahme ab. `available` und `account.free_slots` merken: Jeder neue Lead belegt einen Platz im Lead-Limit.
+4. **Ist die Funktion im Konto freigeschaltet?** Die vier Werkzeuge stehen in der Tool-Liste auch dann, wenn DealSupply die ähnlichen Firmen für das Konto noch nicht freigegeben hat; vorher fragen lässt sich das nicht. Es zeigt erst der erste Aufruf: Antwortet er mit `feature_disabled`, sind die ähnlichen Firmen (oder Leads finden, zu dem sie gehören) im Konto nicht verfügbar. Die Meldung des Servers sagt, welches von beiden. Dann hier aufhören: dem Nutzer freundlich sagen, dass die Funktion für sein Konto noch nicht zur Verfügung steht, kein weiteres Werkzeug dieses Skills versuchen und nichts zusagen, wann sie kommt. Als Weg für mehr Leads `outreach-import` (eigene Liste) oder, wo installiert, das Plugin `datenbeschaffung` nennen. Als ersten Aufruf deshalb den nehmen, der ohnehin kommt und nichts kostet: `list_similar_companies` bei Kampagne oder Lead; bei Beispiel-Websites `find_similar_companies` erst, wenn die Beispiele mit dem Nutzer abgestimmt sind.
 
 ## Ablauf
 
@@ -83,11 +84,19 @@ Hat eine Kampagne noch keine oder wenige Firmen: Die Sammlung läuft im Hintergr
 
 Ohne Ziel gehen die Firmen einer Kampagne zurück in dieselbe Kampagne, die eines Leads oder der Beispiele in eine neue Liste „Ähnliche Firmen: …“. Das dem Nutzer vor dem Angebot sagen.
 
-**Neue Kampagne aus ähnlichen Firmen: startet ohne Qualifizierungs-Regeln.** Eine Kampagne, die bei der Übernahme über `target_campaign_name` entsteht, übernimmt derzeit nicht die Regeln der Kampagne, aus der die Firmen stammen. Sie ist leer: keine Kriterien, keine Mails. DealSupply arbeitet daran, dass sie die Regeln der Ausgangskampagne mitbekommt. Bis dahin:
+**Neue Kampagne aus ähnlichen Firmen: welche Regeln sie mitbringt (ab MCP 4.42.0).** Eine Kampagne, die bei der Übernahme über `target_campaign_name` entsteht, startet mit den Qualifizierungs-Regeln der Kampagne, aus der die Firmen stammen: Wunschkunde, Angebots-Relevanz, Passt-Kriterien, Ausschlüsse, Zusatzhinweise, Kategorien-Anweisung und Agent. Recherche-Einstellungen, Mails und Schwerpunkte kommen nicht mit. Das gilt nur, wenn die Quelle eine Kampagne eindeutig nennt:
 
-- Dem Nutzer das **vor** dem Angebot sagen und als sicheren Weg vorschlagen: Übernahme in eine Liste oder in die Ausgangskampagne.
-- Will er trotzdem eine neue Kampagne: nach der Übernahme zuerst mit `outreach-campaign` Kriterien und Mails einrichten. Die Kriterien der Ausgangskampagne lassen sich dort als Vorlage lesen und nach Zustimmung übertragen.
-- **Kein Lauf in dieser Kampagne, bevor die Kriterien stehen.** Ohne Regeln würde die Qualifizierung die neuen Firmen nicht so prüfen wie die Leads, zu denen sie passen sollen.
+| Quelle | Regeln der neuen Kampagne |
+|---|---|
+| `campaign_id` | die dieser Kampagne |
+| `lead_id`, der Lead steckt in genau einer Kampagne | die dieser Kampagne |
+| `lead_id` ohne Kampagne oder in mehreren Kampagnen, `example_domains` | keine (nie die Regeln des Kontos) |
+
+- Dem Nutzer **vor** dem Angebot sagen, welche Regeln die neue Kampagne tragen wird, und dass Mails noch fehlen. Ohne Regeln (letzte Zeile) als sicheren Weg eine Liste oder eine bestehende Kampagne vorschlagen.
+- Nach der Übernahme die übernommenen Regeln mit `get_campaign_part(campaign_id, part="settings")` zeigen und fragen, ob sie so gelten sollen; ändern geht gezielt mit `update_campaign_setting` (`outreach-campaign`, „Gezielt ändern“). Ein Blueprint über `edit_campaign` auf diese Kampagne braucht danach `confirm_overwrite`, weil die Regeln als Einstellungen des Kunden gelten; erst ohne Zustimmung senden und die Rückfrage vorlegen.
+- Mails richtet `outreach-campaign` ein. **Kein Lauf in dieser Kampagne, bevor Regeln und Mails stehen.** Ohne Regeln würde die Qualifizierung die neuen Firmen nicht so prüfen wie die Leads, zu denen sie passen sollen.
+- Eine bestehende Zielkampagne (`target_campaign_id`) behält ihre eigenen Regeln.
+- Auf Servern vor 4.42.0 startet eine neue Kampagne ganz ohne Regeln: dann zuerst mit `outreach-campaign` die Kriterien einrichten (die der Ausgangskampagne als Vorlage, nach Zustimmung) und vorher keinen Lauf starten.
 
 ### 4. Angebot holen
 
@@ -135,7 +144,7 @@ Dann berichten:
 
 **Das Angebot hat sich geändert (`quote_changed`).** Die Meldung trägt das neue Angebot. Zeigen, neu zustimmen lassen, mit dem neuen `quote_hash` und einer neuen `request_id` starten.
 
-Bei einer Kampagne als Quelle kommt das oft, solange im Hintergrund weitere ähnliche Firmen zu ihren Leads eintreffen, typisch in der Zeit nach einem Lauf: Das Angebot umfasst immer alle neuen Firmen der Kampagne, und jede Firma, die dazukommt, ändert es, auch eine, die schon Lead ist. Eine Übernahme direkt nach einem Lauf kann deshalb mehrmals hintereinander scheitern. DealSupply arbeitet daran. So damit umgehen:
+Ab MCP 4.42.0 kommt `quote_changed` nur noch, wenn sich ändert, was das Angebot zusagt: mehr oder weniger neue Firmen, ein anderer Preis, ein anderes Ziel oder andere freie Plätze bei `fit_to_free_slots`. Dass nur die Zahl bekannter oder gesperrter Firmen wandert, lehnt keinen Start mehr ab. Bei einer Kampagne als Quelle bleibt es dabei, solange im Hintergrund weitere neue Firmen zu ihren Leads eintreffen, typisch in der Zeit nach einem Lauf: Das Angebot umfasst immer alle neuen Firmen der Kampagne. Eine Übernahme direkt nach einem Lauf kann deshalb mehr als einmal scheitern (auf älteren Servern auch dann, wenn nur bekannte Firmen dazukommen). So damit umgehen:
 
 - Dem Nutzer ehrlich sagen, was passiert ist: Es sind inzwischen weitere Vorschläge eingetroffen, es wurde nichts übernommen und nichts abgebucht. Die neuen Zahlen nennen („jetzt N Firmen für höchstens M Credits“).
 - **Einmal** neu zustimmen lassen. Scheitert auch dieser Start mit `quote_changed`, nicht weiter wiederholen.
@@ -149,9 +158,11 @@ Endet die Übernahme mit `status: failed`: Was bis dahin übernommen wurde, blei
 
 - In eine **Liste** übernommen: `outreach-lists` (Liste in eine Kampagne übernehmen), dann `outreach-pipeline`.
 - In eine **bestehende Kampagne** übernommen: `outreach-pipeline`. Die neuen Firmen durchlaufen Qualifizierung, Recherche und Mail wie jeder andere Lead; ähnlich heißt nicht qualifiziert.
-- In eine **neue Kampagne** übernommen: erst `outreach-campaign` (Hinweis in Schritt 3), dann `outreach-pipeline`.
+- In eine **neue Kampagne** übernommen: erst die übernommenen Regeln zeigen und die Mails mit `outreach-campaign` einrichten (Hinweis in Schritt 3), dann `outreach-pipeline`.
 
 Übernommene Firmen zeigt `list_similar_companies` danach als `known`.
+
+**Status `new`, aber schon Lead:** Auf Servern vor MCP 4.42.1 konnten `list_similar_companies` und `find_similar_companies` Firmen als `new` zeigen, die als ältere Leads schon im Konto sind (Website mit „www.“ oder Schrägstrich gespeichert); das Angebot zählte sie richtig als `known`. Dort gelten die Zahlen aus dem Angebot, und weniger neue Firmen im Angebot als in der Liste sind dann kein Fehler. Ab 4.42.1 stimmen Liste, Zähler und Angebot überein.
 
 ## Fehler
 
@@ -159,11 +170,11 @@ Der Server antwortet mit `<code>: <Meldung>`.
 
 | Code | Bedeutung | Was tun |
 |---|---|---|
-| `feature_disabled` | Die ähnlichen Firmen sind für dieses Konto nicht freigeschaltet | dem Nutzer freundlich sagen, dass die Funktion für sein Konto noch nicht verfügbar ist; nicht erneut versuchen |
+| `feature_disabled` | Die ähnlichen Firmen oder Leads finden sind für dieses Konto nicht freigeschaltet (die Meldung sagt, welches) | Voraussetzungen, Punkt 4: freundlich sagen, dass die Funktion für das Konto noch nicht verfügbar ist, kein weiteres Werkzeug des Skills versuchen, nicht wiederholen; keine Meldung als Fehler |
 | `byok_account` | Das Konto rechnet nicht in Credits ab (`billing_mode: byok`) | die ähnlichen Firmen gibt es dort nicht. Ein Credit-Konto mit der Option „Eigener KI-Schlüssel“ ist nicht betroffen |
-| `rate_limited` | Die ähnlichen Firmen sind gerade stark gefragt; die Meldung nennt meist `retry_after` in Sekunden (ab MCP 4.34.0 bei Überlast 60 Sekunden), sonst eine Minute | so lange warten, dann einmal erneut; keine Schleife. Auch ein Abruf, der so endet, zählt gegen das Tageslimit |
+| `rate_limited` | Die ähnlichen Firmen sind gerade stark gefragt; die Meldung nennt meist `retry_after` in Sekunden (ab MCP 4.34.0 bei Überlast 60 Sekunden), sonst eine Minute. Ab MCP 4.45.1 kommt der Code auch, wenn die Datenquelle einen Abruf ablehnt, ohne etwas zu berechnen; danach ist nichts gesperrt | so lange warten, dann einmal erneut; keine Schleife. Auch ein Abruf, der so endet, zählt gegen das Tageslimit |
 | `daily_limit` | Die Abrufe der Person für 24 Stunden sind aufgebraucht; die Meldung nennt `retry_after` in Sekunden | so lange warten; schon geholte Beispiele bleiben lesbar und lassen sich übernehmen |
-| `source_unavailable` | Zu den Beispielen kommt gerade nichts | später erneut oder andere Beispiele |
+| `source_unavailable` | Zu den Beispielen kommt gerade nichts. Ab MCP 4.45.1 gilt eine solche Sperre nach einem Abruf, der etwas gekostet hat, höchstens eine Stunde | später erneut, spätestens nach einer Stunde, oder andere Beispiele; keine Schleife |
 | `invalid_domain` | Ein Beispiel ist keine Firmen-Website (die Meldung nennt den Wert) | den Nutzer nach der Website der Firma fragen |
 | `examples_not_stored` | Zu diesen Beispielen wurde noch nichts geholt | erst `find_similar_companies` mit denselben Beispielen |
 | `quote_changed` | Das Angebot gilt nicht mehr | siehe Schritt 5 |
