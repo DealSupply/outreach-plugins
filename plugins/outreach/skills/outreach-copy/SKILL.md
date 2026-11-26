@@ -36,14 +36,15 @@ So wird gelesen:
 
    | Aufgabe | Aufruf |
    |---|---|
-   | eine Mail oder einen Variablen-Prompt **neu** schreiben (neue Kampagne, leere Kampagne füllen, Mail neu aufsetzen, neue Variable) | die ganzen Regeln in zwei Aufrufen: `get_copy_rules(parts=["intro"], …)` und `get_copy_rules(parts=["mails"], …)` |
-   | eine **kleine Änderung** an einer bestehenden Mail oder einem Prompt (Betreff, ein Satz, Wartezeit mit Text) | nur den passenden Teil samt Prüfliste: Betreff `["subject"]`, Mail 1 `["mail_1"]`, Mail 2 bis 4 `["mail_2"]` usw., ein Intro-Prompt `["intro"]`, die Anrede `["salutation"]`, der Routing-Absatz `["routing"]` |
+   | eine **kleine Änderung**: nur der Betreff oder ein einzelner Satz einer bestehenden Mail | nur den passenden Teil samt Prüfliste: Betreff `["subject"]`, ein Satz in Mail 1 `["mail_1"]`, in Mail 2 bis 4 `["mail_2"]`, `["mail_3"]`, `["mail_4"]` |
+   | alles andere: eine ganze Mail, mehrere Sätze, ein Intro-Prompt oder ein anderer Variablen-Prompt, eine neue Kampagne, eine leere Kampagne füllen, eine neue Variable, Anrede oder Sprache umstellen | die ganzen Regeln in zwei Aufrufen: `get_copy_rules(parts=["intro"], …)` und `get_copy_rules(parts=["mails"], …)` |
    | die Werte **eines Leads** schreiben oder prüfen (`outreach-generate`, `lead-agent`, `verify-agent`) | nichts von hier: `get_lead_data` trägt dieselben Regeln schon in `lead.emailGeneration.systemPrompt` |
    | nur wissen, welche Teile es gibt | `get_copy_rules()` ohne `parts`: das Verzeichnis ohne Regeltext |
 
    `["all"]` nicht in einem Aufruf: Rund 65.000 Zeichen schneiden manche Umgebungen ab
-   (`chars_total` zeigt, wie viel ankam). Wann eine Änderung „klein“ ist, ist nicht festgelegt; im
-   Zweifel die ganzen Regeln lesen.
+   (`chars_total` zeigt, wie viel ankam). Klein ist nur der Betreff oder ein einzelner Satz einer Mail
+   (Entscheidung vom 26.11.2026); alles andere holt die ganzen Regeln. Nur die Wartezeit einer Mail zu
+   ändern, berührt keinen Text und braucht keine Regeln.
 2. **Zur Kampagne lesen.** Bei einer bestehenden Kampagne `campaign_id` mitgeben: Dann gelten ihre
    Sprache und Anrede, und `fixed_mail_text` bringt ihre festen Sätze mit. Freigegebene feste Sätze einer
    Kampagne gehen jeder Regel vor. Ohne Kampagne (neue Kampagne) `language` (`de`, `en`) und
