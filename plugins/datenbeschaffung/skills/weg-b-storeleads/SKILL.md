@@ -36,6 +36,8 @@ wertlos. Deshalb:
 | Plattform | im Pro-Plan zwei wählbare (meist Shopify + WooCommerce; Custom Cart möglich) | Vor der Buchung festlegen — der Slot ist begrenzt |
 | Land | eine Region je Durchlauf | wie in allen Wegen |
 | Geschätzter Monatsumsatz | **mindestens 50.000 $** | sortiert Hobby-Shops aus |
+| Domain-Typ | **eigene Domain** | Eine Shopify-Subdomain deutet auf geringes Budget hin (Kurshandbuch Kap. 5) |
+| Tags Dropshipping und Print-on-Demand | **ausschließen** | Diese Shops haben meistens kein Budget für zusätzliche Dienstleistungen (Kap. 5) |
 
 Größenkorridor je nach Angebot: 50.000–200.000 $ trifft kleinere, gut erreichbare Shops;
 100.000–5 Mio. $ die etablierten Marken mit längerem Entscheidungsweg. Für den Erstkontakt ist der
@@ -51,7 +53,13 @@ Nach `../datenbeschaffung-referenzen/references/icp.md`, hier mit den Feldern, d
 | Größe | geschätzter Monatsumsatz, Traffic, Mitarbeiterzahl, Produktanzahl |
 | Region | Land, Stadt |
 | Trigger | installierte Apps, eingesetzte Technologien, Plattform-Wechsel-Historie, Review-Zahlen |
-| Anti-ICP | Kategorien und Technologien ausschließen; Filter lassen sich mit „und"/„oder" verknüpfen |
+| Anti-ICP | Kategorien und Technologien ausschließen, Dropshipping und Print-on-Demand immer |
+| Freitext | Volltextsuche nach Begriffen auf der Shop-Website (z. B. Hundezubehör, nachhaltige Mode), wenn die Kategorie zu grob ist |
+
+**UND/ODER im Advanced-Modus** (Button oben links): Mehrere Filter lassen sich dort mit UND und
+ODER verknüpfen. Beispiel aus dem Kurs (Kap. 5): Status = Aktiv UND Plattform = Shopify UND
+geschätzte monatliche Besuche > 10.000. So entstehen getrennte Listen je Segment, etwa eine je
+Anknüpfungspunkt aus Schritt 3, die später in eigene Kampagnen gehen.
 
 ## Schritt 3 — Die vier Anknüpfungspunkte, die diesen Weg rechtfertigen
 
@@ -76,7 +84,7 @@ Social-Profile. Vorher ein Sample ziehen und ansehen.
 
 Ehrlich einordnen: Die gelieferten Adressen sind überwiegend Service- und Info-Adressen des Shops.
 **Persönliche Entscheider-Adressen sind nicht dabei.** Für den Import reicht die Info-Adresse; die
-persönliche Adresse sucht die Recherche der Plattform.
+persönliche Adresse sucht mit DealSupply die Recherche der Plattform.
 
 ## Schritt 5 — Roh-CSV bauen
 
@@ -89,15 +97,29 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in storeleads.json
 ```
 
 Zusatzspalten behalten: `plattform`, `umsatz_geschaetzt`, `apps`, `instagram_url`, `linkedin_url` —
-sie sind der Personalisierungs-Stoff dieses Wegs.
+sie sind der Personalisierungs-Stoff dieses Wegs. Stehen eingesetzte Technologien und der letzte
+Plattformwechsel im Export, per `--keep technologien,plattform_wechsel` mitnehmen: Sie tragen den
+Tech-Use-Callout und die Plattform-Migration aus Schritt 3.
+
+**Personalisierungs-Hebel** (Kap. 5, Übersicht in
+`../datenbeschaffung-referenzen/references/personalisierung.md`): Sortiment („spezialisiert auf
+nachhaltige Hundesnacks“), Plattform („ihr seid auf Shopify“), fehlende Technologie („Google Ads,
+aber noch keine TikTok Ads“), eine Kundenbewertung zitieren und Saisonalität (vor Black Friday,
+Weihnachtsgeschäft, Sommersaison). Dem Nutzer sagen, welche davon als Spalte mitkommen und welche
+er beim Ansehen der Shops selbst notiert.
 
 ## Schritt 6 — Anreicherung
 
 Rollen-Adressen sind erlaubt (Trichter-Prinzip); Geschäftsführer und persönliche Adresse findet
-die Recherche der Plattform. `impressum-enrichment` optional, nur für Shops ganz ohne Adresse und
-nur für die Adresse; ab MCP 4.0.0 kann die Recherche auch diese Adresse auf der Shop-Website
-suchen (Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“). `enrichment-waterfall` erst nach
-der Recherche und nur für die Spitze der Liste.
+mit DealSupply die Recherche der Plattform. `impressum-enrichment` optional, nur für Shops ganz
+ohne Adresse und nur für die Adresse; ab MCP 4.0.0 kann die Recherche auch diese Adresse auf der
+Shop-Website suchen (Entscheidung nach `datenumfang.md`, „Die Kontaktlücke“).
+`enrichment-waterfall` erst nach der Recherche und nur für die Spitze der Liste.
+
+**Ohne DealSupply:** Den Namen des Geschäftsführers liefert StoreLeads selten (Kap. 5).
+`impressum-enrichment` deshalb für alle Shops ohne Adresse (Pflicht) und, auf Wunsch und mit
+genannten Kosten, auch für Shops mit Info-Adresse, damit der Name für die Anrede dazukommt
+(`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 ## Schritt 7 — Übergabe
 
@@ -108,6 +130,7 @@ An `listen-qualitaet` — immer, ohne Ausnahme.
 - **Filterarbeit vor der Plan-Entscheidung.** Ohne Pro-Plan gibt es keinen Export; die schönste
   Trefferliste bleibt dann in der Oberfläche stehen.
 - **Status-Filter vergessen** → Shops im Aufbau ohne Kontaktdaten in der Liste.
+- **Dropshipping und Print-on-Demand nicht ausgeschlossen** → Shops ohne Budget für Dienstleister.
 - **Umsatzuntergrenze vergessen** → Hobby-Shops ohne Budget.
 - **Umsatz und Traffic sind Schätzwerte.** Sie taugen zum Sortieren und Filtern, nicht als
   Tatsachenbehauptung in der Mail.

@@ -3,6 +3,12 @@
 > Stand 11.10.2026, abgeglichen mit dem Code der Plattform und einem Testlauf (15 Elektriker
 > Stuttgart, Google Maps). Grundsatz: **Beschaffe nur, was die Plattform nicht selbst findet.**
 > Alles andere kostet doppelt: einmal beim Scrapen, einmal in der Recherche.
+>
+> **Das gilt nur mit DealSupply.** Ohne DealSupply-Konto gibt es keine Recherche, keine
+> Qualifizierung und keinen Bestandsabgleich: Dann braucht jede Zeile eine Adresse,
+> `impressum-enrichment` ist Pflicht und übernimmt den Geschäftsführer, die Sperrliste kommt aus
+> dem eigenen CRM, und am Ende steht eine Datei für Instantly. Alles dazu in `ohne-dealsupply.md`;
+> die Tabellen „Je Quelle: immer mitnehmen“ und „Nie hochladen“ unten gelten in beiden Fällen.
 
 ## Was die Plattform pro Lead selbst erledigt
 
@@ -85,7 +91,7 @@ Entscheidung, jeweils mit dem Nutzer:
 | `max_leads` knapp | Vorab anreichern oder Leads ohne Adresse weglassen: jeder importierte Lead belegt einen Platz, auch wenn er später ausscheidet. |
 | Abo-Lauf mit knappem Kontingent und großer Liste | Vorab anreichern. |
 | Verifizierte Adressen vor dem Import gewünscht (Bounce unter 3 %) | Vorab anreichern: Adressen aus der Recherche laufen nicht durch den Verifier (`listen-qualitaet`). |
-| Nicht-DACH-Domains | Optional `kontaktseiten-fallback`, sonst die Recherche. |
+| Nicht-DACH-Domains | Optional `kontaktseiten-fallback`, sonst die Recherche. Erwartung und Grenzen: `ausserhalb-dach.md`. |
 
 Immer zuerst: die Adresse aus dem Impressum der Maps-Kontaktanreicherung nehmen (macht
 `build_csv.py` selbst, nur mit eigener Domain oder Freemail; fremde Firmen-Domains im Impressum sind
@@ -96,7 +102,8 @@ niemand recherchieren: Sie fliegen bei der Übergabe raus und werden berichtet.
 ungeprüft importieren: Im Test waren 23 von 51 unzustellbar. Nur verifiziert „gut“ übernehmen.
 
 Persönliche Adressen eines Entscheiders nie vorab kaufen. `enrichment-waterfall` nur für wenige
-wertvolle Leads, bei denen die Recherche einen Namen, aber keine persönliche Adresse gefunden hat.
+wertvolle Leads, bei denen die Recherche (ohne DealSupply: das Impressum) einen Namen, aber keine
+persönliche Adresse geliefert hat.
 
 ## Recherche-Tiefe empfehlen
 

@@ -13,7 +13,7 @@ manuell: Actor im eigenen Apify-Konto starten, Ergebnis prüfen, als CSV an `lis
 dort Import nach DealSupply (Oberfläche oder MCP `import_leads`).
 
 Voraussetzungen vom Master: bestätigter ICP-Satz, Zugriffsweg steht (`../datenbeschaffung-referenzen/references/zugriff.md`),
-Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs.
+Vorab-Abgleich gelaufen (`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Der Lauf beim Anbieter (Apify o. ä.) geschieht im eigenen Konto des Kunden außerhalb von DealSupply; Kosten fallen dort an, kostenpflichtige Läufe nur nach ausdrücklicher Freigabe genau dieses Umfangs. Ohne DealSupply (Modus vom Master) ersetzt die eigene Sperrliste den Vorab-Abgleich, jede Zeile braucht am Ende eine Adresse, und wo hier steht, dass die Recherche die Adresse sucht, schließen `impressum-enrichment` bzw. `kontaktseiten-fallback` die Lücke (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 Braucht der Nutzer Kontaktdaten ab Werk und ist die Zielgruppe über Firmografien beschreibbar,
 ist `weg-a-apollo` der kürzere Weg — einmal erwähnen, dann hier weitermachen.
@@ -113,6 +113,10 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in impressum.json 
   --quelle "apify:<serp-actor>+impressum <datum>" --land <de|at|ch> \
   --out leads-<branche>-<region>-<datum>.csv
 ```
+
+**Personalisierungs-Hebel** (Kurshandbuch Kap. 4): Der Suchtreffer selbst trägt keinen. Funding,
+LinkedIn-Post, Tech-Stack und neue Einstellungen notiert der Nutzer je Lead von Hand oder mit der
+KI aus LinkedIn und Website (`../datenbeschaffung-referenzen/references/personalisierung.md`).
 
 ## Schritt 6 — Übergabe
 

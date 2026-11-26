@@ -19,7 +19,7 @@ Qualitätssignal: Wer in zwei Quellen steht, verkauft sicher ein Produkt.
 
 Voraussetzungen vom Master: bestätigter ICP-Satz mit Größe und Region, Zugriffsweg steht
 (`../datenbeschaffung-referenzen/references/zugriff.md`), Vorab-Abgleich gelaufen
-(`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden).
+(`check_leads_exist` bzw. `export_leads(format="index")` + `dedup.py`, falls MCP verbunden). Ohne DealSupply (Modus vom Master) ersetzt die eigene Sperrliste den Vorab-Abgleich, jede Zeile braucht am Ende eine Adresse, und wo hier steht, dass die Recherche die Adresse sucht, schließen `impressum-enrichment` bzw. `kontaktseiten-fallback` die Lücke (`../datenbeschaffung-referenzen/references/ohne-dealsupply.md`).
 
 **Was kostet, was nicht:** OMR, Startbase, Sitzprüfung, Zusammenführen und das Einordnen durch
 Claude kosten nichts und brauchen kein Apify. Drei Stufen laufen im eigenen Apify-Konto des Kunden
@@ -215,6 +215,8 @@ python3 ../datenbeschaffung-referenzen/scripts/build_csv.py --in geprueft.json \
 Mit kommen Kategorie, OMR-Bewertung und Anzahl (`bewertung`, `bewertungen_anzahl`, `plattform`),
 LinkedIn-Seite, Mitarbeiter und Follower. Die Plattform liest weder OMR noch LinkedIn; was nicht
 importiert wird, fehlt der Mail.
+
+**Personalisierungs-Hebel:** OMR-Bewertung und Kategorie, kostenloser Test (`../datenbeschaffung-referenzen/references/personalisierung.md`).
 
 ## Schritt 9: Übergabe
 

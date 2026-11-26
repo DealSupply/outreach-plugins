@@ -89,3 +89,21 @@ Place-Preis enthalten; Rezensions-Stichworte nur mit den Ortsdetails (fallen mit
 0,10 $ je Adresse (GOLD 0,0006 $), Business-Leads und E-Mail-Verifizierung im Maps- und
 Kontakt-Actor 0,10 $ je Treffer. Bei Kunden im kostenlosen Plan diese Schritte nur mit genanntem
 Preis und kleiner Menge; die Preisstufe steht in der Apify-Konsole unter Billing.
+`datenbeschaffung-setup` sagt das gleich zu Beginn.
+
+## Richtwerte aus dem Kurshandbuch (Stand 19.08.2026)
+
+Aus dem Kurshandbuch „Datenbeschaffung“. Es sind Kurs-Richtwerte, keine eigenen Messungen dieses
+Plugins: Wo oben ein belegter Ist-Wert steht, gilt der. Vor jedem Lauf mit dem Actor-Preis rechnen.
+
+| Vorhaben | Richtwert | Kapitel |
+|---|---|---|
+| B2B über Google, eine Branche DACH-weit (800 bis 1.200 Leads) mit Impressum | 3 bis 6 $ | 4 |
+| Shops über Google: eine Nischen-Suche / DACH komplett / 500 Shops mit Impressum | ca. 0,02 $ / ca. 1,60 $ / 4 bis 5 $ | 5 |
+| Coaches je 1.000 Leads: Google B2B / LinkedIn / Google-Website B2C / Google-Instagram / Hashtag | 10 bis 15 $ / 5 bis 10 $ / 10 bis 15 $ / 5 bis 8 $ / 3 bis 5 $ | 7 |
+| Plattform-Verkäufer je 100 / 500 / 1.000 Seller: Amazon | ca. 0,40 $ / 2 $ / 4 $ | 8 |
+| dieselben: Etsy | ca. 0,50 $ / 2,50 $ / 5 $ | 8 |
+| dieselben: eBay | ca. 0,60 $ / 3 $ / 6 $ | 8 |
+| Impressum je 100 / 200 / 500 URLs | 0,50 bis 0,70 $ / 1 bis 1,50 $ / 2,50 bis 3,50 $ | 10 |
+| Kontaktseiten-Fallback je URL ohne E-Mail oder Telefon | 0,001 bis 0,002 $ | 10 |
+| Waterfall bei 2.000 Leads im Monat: nur E-Mails / mit Mobilnummern | ca. 104 $ / 500 bis über 1.000 $ | 10 |

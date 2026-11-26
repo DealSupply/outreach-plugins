@@ -12,7 +12,7 @@
     {
       "name": "datenbeschaffung",
       "source": "./plugins/datenbeschaffung",
-      "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und als CSV importieren.",
+      "description": "Leads beschaffen mit Apify oder Outscraper im eigenen Konto, Liste prüfen und in DealSupply importieren oder ohne DealSupply als Datei für Instantly übergeben.",
       "category": "productivity"
     },
     {

@@ -3,7 +3,7 @@
 > Der EINE Übergabe-Ablauf. `listen-qualitaet` führt ihn aus; kein Weg-Skill implementiert ihn selbst.
 > Voraussetzung: DealSupply-MCP verbunden (Tools `check_leads_exist`, `create_list`, `import_leads`,
 > `get_job_status`, `add_leads_to_campaign`, `export_leads`; Signaturen in `dealsupply-mcp.md`).
-> Ohne MCP: CSV-Weg über die Oberfläche am Ende. Gescrapt wird beim Kunden mit eigenem Apify- oder
+> Ohne MCP: CSV-Weg über die Oberfläche am Ende. Ohne DealSupply-Konto: `ohne-dealsupply.md`. Gescrapt wird beim Kunden mit eigenem Apify- oder
 > Outscraper-Konto; DealSupply importiert nur das fertige Ergebnis.
 > Workspace: Index, Prüfung, Liste und Import laufen im selben, gewählten Workspace; außerhalb des
 > Standards bekommen Aufrufe ohne Objekt-ID `workspace=<uuid>` (Regel: `dealsupply-mcp.md`, Abschnitt
@@ -160,7 +160,10 @@ Gelöscht werden nur nie kontaktierte Leads ohne Kampagne und ohne andere Liste 
 entkoppelt und gemeldet. Das gibt auch die Plätze im Lead-Limit sofort wieder frei; schon gebuchte
 Credits für gelöschte Leads werden nicht erstattet.
 
-## CSV-Fallback (kein MCP verbunden)
+## CSV-Fallback (DealSupply-Konto, aber kein MCP verbunden)
+
+Ohne DealSupply-Konto gilt dieser Abschnitt nicht: Dann endet der Lauf mit einer Datei für
+Instantly und einer eigenen Sperrliste (`ohne-dealsupply.md`).
 
 Die geprüfte Liste als CSV im Format aus `csv-spalten.md` liefern, dazu die Anleitung:
 „In der App: Leads → CSV-Import, Datei hochladen und Spalten zuordnen; die Zusatzspalten werden als Attribute angeboten."
